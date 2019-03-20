@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'IATSE Local 118 Vancouver') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -76,7 +76,6 @@
           </nav>
 
           <main role="main">
-
             <!-- Main jumbotron for a primary marketing message or call to action -->
             <div class="jumbotron">
                 @yield('content')         
