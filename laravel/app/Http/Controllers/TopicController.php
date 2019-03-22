@@ -15,8 +15,18 @@ class TopicController extends Controller
     public function index()
     {
         $data = [];
-	$data['test'] = 'test';
         return view('admin.topic', ['data'=>$data]);
+    }
+
+    /**
+     * List all the existing resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list()
+    {
+        $data = [];
+        return view('admin.listtopics', ['data'=>$data]);
     }
 
     /**

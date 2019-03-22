@@ -21,7 +21,7 @@ Route::get('/admin', 'AdminController@index')->name('admin');
 
 Route::get('/admin/topic', 'TopicController@index')->name('topic');
 
-Route::get('/admin/topics', 'TopicController@index')->name('topics');
+Route::get('/admin/topics', 'TopicController@list')->name('topics');
 
 Auth::routes();
 
