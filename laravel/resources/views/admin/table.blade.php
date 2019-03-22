@@ -1,4 +1,3 @@
-@section('table')
     <h2>Section title</h2>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
@@ -127,4 +126,3 @@
             </tbody>
         </table>
     </div>
-@endsection
