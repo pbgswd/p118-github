@@ -15,7 +15,7 @@ class AdminController extends Controller
     public function index()
     {
         $data=[];
-        return view('dashboard', ['data'=>$data]);
+        return view('admin.admin', ['data'=>$data]);
     }
 
     /**
