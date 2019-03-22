@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Hello;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
-class HelloController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(\App\Models\Hello $data)
+    public function index()
     {
-        //
-	$data['foundingYear'] = 1904;
-	$data['years'] = date('Y') - $data['foundingYear'];
-
-        return view('hello', ['data'=>$data]);
+        $data=[];
+        return view('dashboard', ['data'=>$data]);
     }
 
     /**
@@ -45,10 +42,10 @@ class HelloController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Hello  $hello
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(Hello $hello)
+    public function show(Admin $admin)
     {
         //
     }
@@ -56,10 +53,10 @@ class HelloController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Hello  $hello
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(Hello $hello)
+    public function edit(Admin $admin)
     {
         //
     }
@@ -68,10 +65,10 @@ class HelloController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Hello  $hello
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Hello $hello)
+    public function update(Request $request, Admin $admin)
     {
         //
     }
@@ -79,10 +76,10 @@ class HelloController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Hello  $hello
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Hello $hello)
+    public function destroy(Admin $admin)
     {
         //
     }
