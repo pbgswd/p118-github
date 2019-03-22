@@ -21,6 +21,8 @@ Route::get('/admin', 'AdminController@index')->name('admin');
 
 Route::get('/admin/topic', 'TopicController@index')->name('topic');
 
+Route::get('/admin/topics', 'TopicController@index')->name('topics');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

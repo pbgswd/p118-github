@@ -6,6 +6,4 @@
             Page for admin level management of content, privileges for executive, editors, webmin.
         </p>
 </div>
-    @include('admin.canvas')
-    @include('admin.table')
 @endsection
