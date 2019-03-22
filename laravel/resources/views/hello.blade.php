@@ -7,5 +7,7 @@
 IATSE Local 118 (International Alliance of Theatrical Stage Employees of the United States and Canada)
 is the labour union supplying technicians, stagehands, artisans and craftspeople to the Greater Vancouver entertainment industry, including live theatre, rock and roll, and trade shows, and conventions. Local 118 has a large, skilled, and experienced workforce ready to meet the needs of your production. </p>
     <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+    <a href="/admin">Admin</a>
+    <a href="/admin/topics">Topics</a>
     </div>
 @endsection
