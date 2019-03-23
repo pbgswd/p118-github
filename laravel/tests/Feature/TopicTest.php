@@ -23,7 +23,7 @@ class TopicTest extends TestCase
     public function testBasicTest()
     {
 
-        $response = $this->get('/admin/topic');
+        $response = $this->get('/admin/topic/create');
 
         if ($response->assertStatus(Response::HTTP_OK)) {
             $response->assertSeeText("Topics");
@@ -31,6 +31,8 @@ class TopicTest extends TestCase
         }
 
         $topics = factory(Topic::class, 2)->make();
+
+
 
         foreach ($topics as $topic) {
             echo "Topic Name: " . $topic['name'] . "\n";
