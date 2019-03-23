@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers;
 
+
+use DB;
+use Validator;
 use App\Models\Topic;
+//use App\Http\Requests;
 use Illuminate\Http\Request;
+//use App\Http\Controllers\Controller;
+
+
+
 
 class TopicController extends Controller
 {
@@ -14,8 +22,10 @@ class TopicController extends Controller
      */
     public function index()
     {
-        $data = [];
-        return view('admin.topic', ['data'=>$data]);
+ /*       $data = [];
+        $data['action'] = 'Add';
+
+        return view('admin.topic', ['data'=>$data]);*/
     }
 
     /**
@@ -36,7 +46,8 @@ class TopicController extends Controller
      */
     public function create()
     {
-        //
+        $topic = new \App\Models\Topic;
+        return view('admin.topic', ['data'=>['topic'=>$topic, 'action'=>'Create']]);
     }
 
     /**
@@ -45,9 +56,19 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, \App\Models\Topic $topic)
     {
-        //
+        $this->validate($request,
+            [
+                'topic.name' => 'required'
+            ]);
+
+        $topic->fill($request['topic']);
+        $topic->save();
+
+        flash()->success('You have edited this topic.');
+        return redirect()->route('topic_edit', [$topic->slug]);
+
     }
 
     /**
@@ -67,9 +88,11 @@ class TopicController extends Controller
      * @param  \App\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function edit(Topic $topic)
+    public function edit(\App\Models\Topic $topic)
     {
-        //
+        $data = ['topic'=>$topic, 'action'=>'Edit'];
+        return view('admin.topic', ['data'=> $data]);
+
     }
 
     /**

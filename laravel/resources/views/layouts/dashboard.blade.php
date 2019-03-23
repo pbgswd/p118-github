@@ -64,7 +64,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/topic">
+                        <a class="nav-link" href="/admin/topic/create">
                             <span data-feather="file"></span>
                             Add Topic
                         </a>
@@ -159,8 +159,7 @@
                             Twitter Bootstrap
                         </a>
                     </li>    
-
-		
+                </ul>
             </div>
         </nav>
 
