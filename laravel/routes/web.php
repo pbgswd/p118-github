@@ -19,16 +19,20 @@ Route::get('/hello', 'HelloController@index')->name('hello');
 
 Route::get('/admin', 'AdminController@index')->name('admin');
 
-Route::get('/admin/topic/create', 'TopicController@create')->name('topic');
 
-Route::post('/admin/topic/create', 'TopicController@store');
+Route::get('/admin/topics', 'TopicController@index')->name('topics_list');
 
-Route::get('/admin/topic/edit/{topic}', 'TopicController@')->name('topic_edit');
+Route::get('/admin/topic', 'TopicController@create')->name('topic_create');
 
-Route::post('/admin/topic/edit/{topic}', 'TopicController@store');
-Route::get('/admin/topic/delete', 'TopicController@destroy')->name('topic_delete');
+Route::post('/admin/topic', 'TopicController@store');
 
-Route::get('/admin/topics', 'TopicController@list')->name('topics');
+Route::get('/admin/topic/{topic}', 'TopicController@edit')->name('topic_edit');
+
+Route::post('/admin/topic/{topic}', 'TopicController@update');
+
+Route::post('/admin/topic/delete', 'TopicController@destroy');
+
+
 
 Auth::routes();
 
