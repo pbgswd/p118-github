@@ -13,7 +13,12 @@ class UpdateTopicsTable extends Migration
      */
     public function up()
     {
-        //
+        /*
+         * alter safe name to slug
+         * description can be null
+         * drop content
+         * drop topic type
+         */
     }
 
     /**
@@ -23,6 +28,11 @@ class UpdateTopicsTable extends Migration
      */
     public function down()
     {
-        //
+        /*
+         * alter slug to safe_name
+         * dont change description
+         * add content col
+         * add topic type col
+         */
     }
 }
