@@ -5,7 +5,7 @@
         $topic = $data['topic'];
     ?>
 
-    <h1 class="page-header">{{ $data['action'] }} Topic
+    <h1 class="page-header">{{ $data['action'] }} Page -- to be developed
         @if ($data['action'] == 'Edit')
             Edit {{ $topic->name }}
         @endif
@@ -19,7 +19,7 @@
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="topic[name]" value="{{ old('topic.name', $topic->name)}}" size="80" />
+                    <input type="text" class="form-control"  placeholder="Title" name="topic[name]" value="{{ old('topic.name', $topic->name)}}" size="40" />
                 </div>
             </div>
         </div>
@@ -28,6 +28,13 @@
             <div class="form-group">
                 <h4>Summary</h4>
                 <textarea name="topic[description]" placeholder="Summary content" class="form-control" cols="100" rows="6">{{old('topic.description', $topic->description)}}</textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <h4>Content</h4>
+                <textarea name="topic[content]" placeholder="Content" class="form-control" cols="100" rows="10">{{old('topic.content', $topic->content)}}</textarea>
             </div>
         </div>
 
@@ -44,6 +51,27 @@
             </div>
         </div>
 
+        <div class="col-md-2">
+            <h4>Topic type </h4>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="topic[is_page]" value="0" {{ checked( old('topic.is_page', $topic->is_page), false) }}>
+                        Topic (subject heading for posts)
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="topic[is_page]"  value="1" {{ checked( old('topic.is_page', $topic->is_page), true) }}>
+                        Single Page
+                    </label>
+                </div>
+            </div>
             <div class="col-md-2">
                 <h4>Sort Order</h4>
             </div>

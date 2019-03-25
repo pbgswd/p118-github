@@ -64,7 +64,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/topic/create">
+                        <a class="nav-link" href="/admin/topic/">
                             <span data-feather="file"></span>
                             Add Topic
                         </a>
