@@ -37,4 +37,20 @@ class Topic extends Model
             'allow_comments',
         ];
 
+
+
+    /**
+     * in urls, what field value is used to identify a Topic record?
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['slug'] = str_slug($value, '-');
+        return $this->attributes['name'] = $value;
+    }
+
 }

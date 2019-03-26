@@ -177,6 +177,7 @@
                     </button>
                 </div>
             </div>
+            @include('flash-messages')
             @yield('content')
         </main>
     </div>

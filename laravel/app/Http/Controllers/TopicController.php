@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 
 use DB;
-use Validator;
 use App\Models\Topic;
-//use App\Http\Requests;
 use Illuminate\Http\Request;
-//use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 
 
 
@@ -47,10 +45,13 @@ class TopicController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request,
+        $validator = $request->validate(
             [
-                'topic.name' => 'required'
+                'topic.name' => 'required|unique:topics,name|max:255',
+
             ]);
+
+        dd($validator);
 
         $topic = new Topic($request->input('topic'));
 

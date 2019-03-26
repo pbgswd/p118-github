@@ -44,6 +44,15 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-2"><h4>Scope</h4></div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control"  placeholder="Scope" name="topic[scope]" value="{{ old('topic.scope', $topic->scope)}}" size="80" />
+                </div>
+            </div>
+        </div>
+
             <div class="col-md-2">
                 <h4>Sort Order</h4>
             </div>

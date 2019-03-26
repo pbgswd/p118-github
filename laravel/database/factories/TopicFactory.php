@@ -16,17 +16,19 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Topic::class, function (Faker $faker) {
+
+    $title = $faker->text(5);
+    $slug = strtolower($title);
+
     return [
-        'name' => $faker->name,
-        'safe_name' => $faker->name,
+        'name' => $title,
+        'slug' => $slug,
         'description' => $faker->text(10),
-        'content' => $faker->text(30),
-        'image' => 'image.jpg',
+        'image' => strtolower($faker->text(5)).'.jpg',
         'scope' => 'public',
         'live' => 'yes',
         'sort_order' => 1000,
         'in_menu' => 'yes',
-        'topic_type' => 'entry',
         'allow_comments' => 'yes',
         ];
 });
