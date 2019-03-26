@@ -7,7 +7,7 @@
 
     <h1 class="page-header">{{ $data['action'] }} Topic
         @if ($data['action'] == 'Edit')
-            Edit {{ $topic->name }}
+            {{ $topic->name }}
         @endif
     </h1>
 
@@ -46,57 +46,61 @@
 
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2"><h4>Scope</h4></div>
-                <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Scope" name="topic[scope]" value="{{ old('topic.scope', $topic->scope)}}" size="80" />
+                <div class="col-sm">
+                    <h4>Scope</h4>
+                </div>
+                <div class="col-8">
+                    <input type="text" class="form-control"  placeholder="Scope" name="topic[scope]" value="{{ old('topic.scope', $topic->scope)}}" size="10" />
                 </div>
             </div>
         </div>
-
-            <div class="col-md-2">
-                <h4>Sort Order</h4>
-            </div>
-            <div class="col-md-3">
-                <input type="text" class="form-control"  placeholder="e.g.: 1000, 2000" name="topic[sort_order]" value="{{old('topic.sort_order',$topic->sort_order)}}" size="8" />
+        <div class="row">
+            <div class="form-group">
+                <div class="col">
+                    <h4>Sort Order</h4>
+                </div>
+                <div class="col-8">
+                    <input type="text" class="form-control"  placeholder="e.g.: 1000, 2000" name="topic[sort_order]" value="{{old('topic.sort_order',$topic->sort_order)}}" size="20" />
+                </div>
             </div>
         </div>
 
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
 
-        <div class="col-md-4">
-            <input name="topic[in_menu]" type="hidden" value="0" {{ checked(old('topic.in_menu',$topic->in_menu)) }} /></label>
-            <label>In Menu: <input name="topic[in_menu]" type="checkbox" value="1" {{ checked(old('topic.in_menu',$topic->in_menu)) }} /></label>
-        </div>
+        <div class="row">
+            <div class="col-sm">
+                <input name="topic[in_menu]" type="hidden" value="0" {{ checked(old('topic.in_menu',$topic->in_menu)) }} /></label>
+                <label>In Menu: <input name="topic[in_menu]" type="checkbox" value="1" {{ checked(old('topic.in_menu',$topic->in_menu)) }} /></label>
+            </div>
 
-        <div class="col-md-4">
-            <input name="topic[allow_comments]" type="hidden" value="0" {{ checked( old('topic.allow_comments', $topic->allow_comments) ) }} /></label>
-            <label>Allow Comments: <input name="topic[allow_comments]" type="checkbox" value="1" {{ checked(old('topic.allow_comments', $topic->allow_comments)) }} /></label>
-        </div>
+            <div class="col-sm">
+                <input name="topic[allow_comments]" type="hidden" value="0" {{ checked( old('topic.allow_comments', $topic->allow_comments) ) }} /></label>
+                <label>Allow Comments: <input name="topic[allow_comments]" type="checkbox" value="1" {{ checked(old('topic.allow_comments', $topic->allow_comments)) }} /></label>
+            </div>
 
-        <div class="col-md-4">
-            <input name="topic[live]" type="hidden" value="0" />
-            <label>Check now to make Live: <input name="topic[live]" type="checkbox" value="1" {{ checked( old('topic.live', $topic->live)) }} /></label>
+            <div class="col-sm">
+                <input name="topic[live]" type="hidden" value="0" />
+                <label>Check now to make Live: <input name="topic[live]" type="checkbox" value="1" {{ checked( old('topic.live', $topic->live)) }} /></label>
+            </div>
         </div>
 
         <div class="row" style="margin-top:60px;"> &nbsp;</div>
 
-
-        <div class="col-md-2">
-            <input class="btn btn-primary" type="submit" value="{{ $data['action'] }}" />
-        </div>
-
+        <div class="row">
+            <div class="col-sm">
+                <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
+            </div>
     </form>
 
-    <div class="col-md-8"> &nbsp;</div>
+         <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
-    <div class="col-md-2">
-        <form method="post" name="topic" action="{{route('topic_delete')}}">
-            <input type="hidden" name="id[]" value="{{ $topic->id }}">
-            <input class="btn btn-warning" type="submit" value="Delete">
-        </form>
-    </div>
+         <div class="col-sm" style="float:right">
+            <form method="post" name="topic" action="{{route('topic_destroy')}}">
+                <input type="hidden" name="id[]" value="{{ $topic->id }}">
+                <input class="btn btn-outline-danger" type="submit" value="Delete">
+            </form>
+         </div>
     @endif
+    </div>
     <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
-</div>
 @endsection

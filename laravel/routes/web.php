@@ -19,7 +19,6 @@ Route::get('/hello', 'HelloController@index')->name('hello');
 
 Route::get('/admin', 'AdminController@index')->name('admin');
 
-
 Route::get('/admin/topics', 'TopicController@index')->name('topics_list');
 
 Route::get('/admin/topic', 'TopicController@create')->name('topic_create');
@@ -30,7 +29,7 @@ Route::get('/admin/topic/{topic}', 'TopicController@edit')->name('topic_edit');
 
 Route::post('/admin/topic/{topic}', 'TopicController@update');
 
-Route::post('/admin/topic/delete', 'TopicController@destroy');
+Route::post('/admin/topic/delete', 'TopicController@destroy')->name('topic_destroy');
 
 
 

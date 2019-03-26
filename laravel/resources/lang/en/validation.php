@@ -131,6 +131,11 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'title' => [
+            'required' => 'You must enter a  :attribute.',
+            'unique' => 'The :attribute must not exist already. It must be unique.',
+        ],
+
     ],
 
     /*

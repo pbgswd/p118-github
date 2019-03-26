@@ -21,14 +21,14 @@ $factory->define(Topic::class, function (Faker $faker) {
     $slug = strtolower($title);
 
     return [
-        'name' => $title,
-        'slug' => $slug,
-        'description' => $faker->text(10),
-        'image' => strtolower($faker->text(5)).'.jpg',
-        'scope' => 'public',
-        'live' => 'yes',
-        'sort_order' => 1000,
-        'in_menu' => 'yes',
-        'allow_comments' => 'yes',
+        'topic.name' => $title,
+        'topic.slug' => $slug,
+        'topic.description' => $faker->text(10),
+        'topic.image' => strtolower($faker->text(5)).'.jpg',
+        'topic.scope' => 'public',
+        'topic.live' => 'yes',
+        'topic.sort_order' => 1000,
+        'topic.in_menu' => 'yes',
+        'topic.allow_comments' => 'yes',
         ];
 });

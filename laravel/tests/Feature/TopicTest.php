@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Session;
-//use App\User;
 use Tests\TestCase;
 use App\Models\Topic;
 use Illuminate\Http\Response;
@@ -30,8 +29,7 @@ class TopicTest extends TestCase
             echo "\n Admin create topics page \n";
         }
 
-        $topics = factory(Topic::class, 2)->make();
-
+        $topics = factory(Topic::class, 5)->make();
 
         foreach ($topics as $topic) {
 
@@ -43,20 +41,24 @@ class TopicTest extends TestCase
                 'POST',
                 '/admin/topic',
                 [
-                    'name' => $topic['name'],
-                    'description' => $topic['description'],
-                    'image' => $topic['image'],
-                    'scope' => $topic['scope'],
-                    'live' => $topic['live'],
-                    'in_menu' => $topic['in_menu'],
-                    'allow_comments' => $topic['allow_comments'],
+                    'topic.name' => $topic['name'],
+                    'topic.description' => $topic['description'],
+                    'topic.image' => $topic['image'],
+                    'topic.scope' => $topic['scope'],
+                    'topic.live' => $topic['live'],
+                    'topic.in_menu' => $topic['in_menu'],
+                    'topic.allow_comments' => $topic['allow_comments'],
                 ]
             );
 
+            // not submitting yet
+
+            echo  $topic['name'] . " has been posted. \n";
+
             $response = $this->get('/admin/topic');
             sleep(1);
+
             if ($response->assertStatus(Response::HTTP_OK)) {
-//                $response->assertSeeText($user['username']);
                 echo $topic['name'] . " has been stored in db. \n";
             }
 

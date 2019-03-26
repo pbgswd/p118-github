@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 
 use DB;
+use Session;
+use Validator;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-
 
 
 class TopicController extends Controller
@@ -44,22 +44,45 @@ class TopicController extends Controller
      */
     public function store(Request $request)
     {
+        //echo __METHOD__ . "method, line " . __LINE__ ."\n";
 
-        $validator = $request->validate(
-            [
-                'topic.name' => 'required|unique:topics,name|max:255',
+        $rules = [
+            'topic.name' => 'required|unique:topics,name|max:255',
+            'topic.scope' => 'required',
+            'topic.sort_order' => 'required',
+        ];
 
-            ]);
+        $validator = Validator::make($request->all(), $rules);
 
-        dd($validator);
+        //echo __METHOD__ . "method, line " . __LINE__ ."\n";
+
+        if ($validator->fails()) {
+
+           // need to identify which field has failed, to put it into an error messge with
+           // Session::flash('warning', "bla bla 1");
+           // Session::flash('info', "bla bla 2");
+           // dd($validator->errors());
+
+           // echo __METHOD__ . "method, line " . __LINE__ ."\n";
+
+            return redirect('admin/topic')
+                ->withErrors($validator)
+                ->withInput();
+
+        //echo __METHOD__ . "method, line " . __LINE__ ."\n";
+
+        }
+
+      //  echo __METHOD__ . "method, line " . __LINE__ ."\n";
 
         $topic = new Topic($request->input('topic'));
 
         $topic->save();
 
-        flash()->success('You have created this topic.');
-        return redirect()->route('topic_edit', [$topic->slug]);
+        //echo __METHOD__ . "method, line " . __LINE__ ."\n";
 
+        Session::flash('success', "You have saved a new topic");
+        return redirect()->route('topic_edit', [$topic->slug]);
     }
 
 
