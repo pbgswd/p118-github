@@ -7,7 +7,7 @@ use Tests\TestCase;
 use App\Models\Topic;
 use Illuminate\Http\Response;
 use Illuminate\Foundation\Testing\WithFaker;
-//use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 
@@ -29,7 +29,7 @@ class TopicTest extends TestCase
             echo "\n Admin create topics page \n";
         }
 
-        $topics = factory(Topic::class, 5)->make();
+        $topics = factory(Topic::class, 10)->make();
 
         foreach ($topics as $topic) {
 
@@ -48,6 +48,7 @@ class TopicTest extends TestCase
                     'topic.live' => $topic['live'],
                     'topic.in_menu' => $topic['in_menu'],
                     'topic.allow_comments' => $topic['allow_comments'],
+                    '_token' => Session::token(),
                 ]
             );
 

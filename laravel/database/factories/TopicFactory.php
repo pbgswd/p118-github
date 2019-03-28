@@ -17,13 +17,13 @@ use Faker\Generator as Faker;
 
 $factory->define(Topic::class, function (Faker $faker) {
 
-    $title = $faker->text(5);
+    $title = $faker->text(20);
     $slug = strtolower($title);
 
     return [
         'topic.name' => $title,
         'topic.slug' => $slug,
-        'topic.description' => $faker->text(10),
+        'topic.description' => $faker->text(50),
         'topic.image' => strtolower($faker->text(5)).'.jpg',
         'topic.scope' => 'public',
         'topic.live' => 'yes',

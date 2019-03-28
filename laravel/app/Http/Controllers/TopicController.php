@@ -121,6 +121,13 @@ class TopicController extends Controller
      */
     public function destroy(Topic $topic)
     {
+
+        // what to do with content under said topic?
         //delete data
+        Topic::destroy($request['id']);
+
+        Session::flash('success', str_plural('Topic', count($request['id'])) . ' deleted.');
+        return redirect()->route('listtopics');
+
     }
 }
