@@ -131,11 +131,12 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-        'title' => [
+        'topic.title' => [
             'required' => 'You must enter a  :attribute.',
             'unique' => 'The :attribute must not exist already. It must be unique.',
         ],
-
+        'topic.sort_order' => [
+            'required' => 'Please enter a numeric value for topic sort order'],
     ],
 
     /*
