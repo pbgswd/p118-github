@@ -15,3 +15,5 @@ storage/framework/cache/data/
 .env.testing~
 /.idea
 /.idea/*
+../.idea/
+../.idea/*
