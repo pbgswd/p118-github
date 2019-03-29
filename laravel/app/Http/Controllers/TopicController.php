@@ -134,12 +134,17 @@ class TopicController extends Controller
     {
 
         // what to do with content under said topic?
-        //delete data
-       // dd($request->all());
 
-        Topic::destroy($request['id']);
+        if(isset($request['id']))
+        {
+            Topic::destroy($request['id']);
 
-        Session::flash('success', str_plural('Topic', count($request['id'])) . ' deleted.');
+            Session::flash('success', str_plural('Topic', count($request['id'])) . ' deleted.');
+        }
+        else
+        {
+            Session::flash('success', 'No topics were deleted.');
+        }
 
         return redirect()->route('topics_list');
 
