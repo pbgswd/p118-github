@@ -29,8 +29,7 @@ Route::get('/admin/topic/{topic}', 'TopicController@edit')->name('topic_edit');
 
 Route::post('/admin/topic/{topic}', 'TopicController@update');
 
-Route::post('/admin/topic/delete', 'TopicController@destroy')->name('topic_destroy');
-
+Route::delete('/admin/topic/delete', 'TopicController@destroy')->name('topic_destroy');
 
 
 Auth::routes();
