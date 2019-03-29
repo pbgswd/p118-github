@@ -61,3 +61,16 @@
     </div>
 
 @endif
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <p>{{ $errors->first('sort_order') }}</p>
+        <ul>
+            @foreach ($errors->all() as $key => $error)
+                <li>{{ $key }} => {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
