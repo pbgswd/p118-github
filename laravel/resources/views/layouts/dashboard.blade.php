@@ -17,7 +17,7 @@
 
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/dashboard/">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -58,19 +58,19 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/admin">
+                        <a class="nav-link active" href="{{ route('admin')}}">
                             <span data-feather="home"></span>
                             Dashboard <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/topic/">
+                        <a class="nav-link" href="{{ route('topic_create') }}">
                             <span data-feather="file"></span>
                             Add Topic
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/topics">
+                        <a class="nav-link" href="{{route('topics_list')}}">
                             <span data-feather="file"></span>
                             List Topics
                         </a>
@@ -147,6 +147,7 @@
                     </a>
                 </h6>
                 <ul class="nav flex-column mb-2">
+
                     <li class="nav-item">
                         <a class="nav-link" href="https://laravel.com/" target="_blank">
                             <span data-feather="file-text"></span>
@@ -158,7 +159,13 @@
                             <span data-feather="file-text"></span>
                             Twitter Bootstrap
                         </a>
-                    </li>    
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('telescope')}}">
+                            <span data-feather="file-text"></span>
+                            Telescope
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
