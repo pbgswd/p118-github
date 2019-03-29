@@ -13,3 +13,5 @@ yarn-error.log
 storage/framework/cache/data/
 .env.testing
 .env.testing~
+/.idea
+/.idea/*

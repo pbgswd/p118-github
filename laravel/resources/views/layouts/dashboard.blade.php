@@ -76,6 +76,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('attachment_create')}}">
+                            <span data-feather="file"></span>
+                            Add Images & Attachments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('attachments_list')}}">
+                            <span data-feather="file"></span>
+                            List Images & Attachments
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="file"></span>
                             Orders
