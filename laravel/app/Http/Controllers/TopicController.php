@@ -18,10 +18,20 @@ class TopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\App\Models\Topic $topic)
     {
         $data = [];
-        return view('admin.listtopics', ['data'=>$data]);
+
+        /*
+            A thing for manipulating sort order
+            same page page=2
+            order by clause,
+            ascending, descending
+        */
+
+        $topics = Topic::orderBy('sort_order', 'ASC')->paginate(20);
+
+        return view('admin.listtopics', ['data'=>array('topics'=>$topics )]);
     }
 
 
@@ -33,6 +43,7 @@ class TopicController extends Controller
     public function create()
     {
         $topic = new \App\Models\Topic;
+
         return view('admin.topic', ['data'=>['topic'=>$topic, 'action'=>'Create']]);
     }
 
@@ -44,8 +55,6 @@ class TopicController extends Controller
      */
     public function store(Request $request)
     {
-        //echo __METHOD__ . "method, line " . __LINE__ ."\n";
-
         $rules = [
             'topic.name' => 'required|unique:topics,name|max:255',
             'topic.scope' => 'required',
@@ -54,32 +63,17 @@ class TopicController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
 
-        //echo __METHOD__ . "method, line " . __LINE__ ."\n";
-
         if ($validator->fails()) {
+            $errors = $validator->errors();
 
-           // need to identify which field has failed, to put it into an error messge with
-           // Session::flash('warning', "bla bla 1");
-           // Session::flash('info', "bla bla 2");
-           // dd($validator->errors());
-
-           // echo __METHOD__ . "method, line " . __LINE__ ."\n";
-
-            return redirect('admin/topic')
+            return redirect(route('topic_create'))
                 ->withErrors($validator)
                 ->withInput();
-
-        //echo __METHOD__ . "method, line " . __LINE__ ."\n";
-
         }
-
-      //  echo __METHOD__ . "method, line " . __LINE__ ."\n";
 
         $topic = new Topic($request->input('topic'));
 
         $topic->save();
-
-        //echo __METHOD__ . "method, line " . __LINE__ ."\n";
 
         Session::flash('success', "You have saved a new topic");
         return redirect()->route('topic_edit', [$topic->slug]);
@@ -110,7 +104,24 @@ class TopicController extends Controller
      */
     public function update(Request $request, Topic $topic)
     {
-        // form submission from update
+        $rules = [
+            'topic.name' => 'required|unique:topics,name|max:255',
+            'topic.scope' => 'required',
+            'topic.sort_order' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect(route('topic_edit'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $topic->fill($request['topic']);
+        $topic->save();
+
+        Session::flash('success', "You have edited the topic");
+        return redirect()->route('topic_edit', [$topic->slug]);
     }
 
     /**
@@ -119,15 +130,18 @@ class TopicController extends Controller
      * @param  \App\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Topic $topic)
+    public function destroy(Request $request, Topic $topic)
     {
 
         // what to do with content under said topic?
         //delete data
+       // dd($request->all());
+
         Topic::destroy($request['id']);
 
         Session::flash('success', str_plural('Topic', count($request['id'])) . ' deleted.');
-        return redirect()->route('listtopics');
+
+        return redirect()->route('topics_list');
 
     }
 }
