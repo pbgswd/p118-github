@@ -3,7 +3,10 @@
 <div class="container">
     <h1 class="display-3">List Topics</h1>
         <h3>
-            {!! $data['topics']->total()  !!} Topics.
+           <span class="badge badge-primary badge-pill">
+               {!! $data['topics']->total()  !!}
+           </span>
+            Topics.
         </h3>
 </div>
 
@@ -29,7 +32,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 @foreach ( $data['topics'] as $i )
                     <tr>
                         <td>
@@ -62,7 +64,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col"><input class="btn btn-outline-danger" type="submit" value="Delete Selected"></div>
+        <div class="col">
+            <i class="far fa-trash-alt fa-2x"></i>
+            <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
+        </div>
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
