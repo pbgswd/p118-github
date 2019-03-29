@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 
 use DB;
 use Session;
+use Storage;
 use Validator;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GrahamCampbell\Flysystem\Facades\Flysystem;
 
 
 class TopicController extends Controller
@@ -75,6 +77,59 @@ class TopicController extends Controller
 
         $topic->save();
 
+
+
+        /*
+         *
+         * $DELMSG='';
+         *
+
+        foreach($fileFormats['newsletter_file_types_descriptions'] as $k => $v)
+        {
+            $fileType = strtolower($k)."_file";
+
+            if (isset($_FILES['newsletter']['tmp_name'][$fileType]))
+            {
+                $newslettersData = new \App\Models\NewslettersData;
+
+                $newslettersData->fill(['file_name' => $_FILES['newsletter']['name'][$fileType],
+                                        'file_type' => $_FILES['newsletter']['type'][$fileType],
+                                        'newsletter_format_code' => $k]);
+
+                if ( !empty($_FILES['newsletter']['tmp_name'][$fileType]) )
+                {
+                    $stream = fopen($_FILES['newsletter']['tmp_name'][$fileType], 'r+');
+                    Flysystem::connection('newsletters')->put($_FILES['newsletter']['name'][$fileType], $stream);
+                    fclose($stream);
+
+                    if(Storage::exists('/' . env('NEWSLETTERS_FILES_DIR') . '/' . $_FILES['newsletter']['name'][$fileType]))
+                    {
+                        $newsletter->newslettersData()->save($newslettersData);
+                         $DELMSG .= ' Saved ' . $_FILES['newsletter']['name'][$fileType];
+                    }
+                    else
+                    {
+                        flash()->warning($_FILES['newsletter']['name'][$fileType] . ' was not saved. ' );
+                    }
+                }
+            }
+
+            if ( isset( $request['newsletter']['delete_file'][$k]) )
+            {
+            // delete files and rows when checkbox has been checked
+                Storage::delete('/'. env('NEWSLETTERS_FILES_DIR') .'/'. $request['newsletter'][$k]);
+                NewslettersData::destroy($request['newsletter']['delete_file'][$k]);
+                $DELMSG .= ' deleted '. $request['newsletter'][$k];
+            }
+        }
+
+
+         * */
+
+
+
+
+
         Session::flash('success', "You have saved a new topic");
         return redirect()->route('topic_edit', [$topic->slug]);
     }
@@ -120,6 +175,54 @@ class TopicController extends Controller
         $topic->fill($request['topic']);
         $topic->save();
 
+
+        /*
+ *
+ * $DELMSG='';
+ *
+
+foreach($fileFormats['newsletter_file_types_descriptions'] as $k => $v)
+{
+    $fileType = strtolower($k)."_file";
+
+    if (isset($_FILES['newsletter']['tmp_name'][$fileType]))
+    {
+        $newslettersData = new \App\Models\NewslettersData;
+
+        $newslettersData->fill(['file_name' => $_FILES['newsletter']['name'][$fileType],
+                                'file_type' => $_FILES['newsletter']['type'][$fileType],
+                                'newsletter_format_code' => $k]);
+
+        if ( !empty($_FILES['newsletter']['tmp_name'][$fileType]) )
+        {
+            $stream = fopen($_FILES['newsletter']['tmp_name'][$fileType], 'r+');
+            Flysystem::connection('newsletters')->put($_FILES['newsletter']['name'][$fileType], $stream);
+            fclose($stream);
+
+            if(Storage::exists('/' . env('NEWSLETTERS_FILES_DIR') . '/' . $_FILES['newsletter']['name'][$fileType]))
+            {
+                $newsletter->newslettersData()->save($newslettersData);
+                 $DELMSG .= ' Saved ' . $_FILES['newsletter']['name'][$fileType];
+            }
+            else
+            {
+                flash()->warning($_FILES['newsletter']['name'][$fileType] . ' was not saved. ' );
+            }
+        }
+    }
+
+    if ( isset( $request['newsletter']['delete_file'][$k]) )
+    {
+    // delete files and rows when checkbox has been checked
+        Storage::delete('/'. env('NEWSLETTERS_FILES_DIR') .'/'. $request['newsletter'][$k]);
+        NewslettersData::destroy($request['newsletter']['delete_file'][$k]);
+        $DELMSG .= ' deleted '. $request['newsletter'][$k];
+    }
+}
+
+
+ * */
+
         Session::flash('success', "You have edited the topic");
         return redirect()->route('topic_edit', [$topic->slug]);
     }
@@ -137,6 +240,22 @@ class TopicController extends Controller
 
         if(isset($request['id']))
         {
+
+
+
+            /*
+             *         $data = [];
+        $data['newsletter_data'] = NewslettersData::where('newsletter_id', $request->id)->get();
+        foreach($data['newsletter_data'] as $d)
+        {
+            Storage::delete('/'. env('NEWSLETTERS_FILES_DIR') .'/'. $d->file_name); // delete files
+            NewslettersData::destroy($d['id']); // delete newsletter_data rows associated with newsletter
+        }
+
+             * */
+
+
+
             Topic::destroy($request['id']);
 
             Session::flash('success', str_plural('Topic', count($request['id'])) . ' deleted.');
