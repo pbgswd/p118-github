@@ -24,3 +24,5 @@ laralvel/.env.testing~
 *.scss~
 .gitignore~
 *.md~
+
+idea/*
