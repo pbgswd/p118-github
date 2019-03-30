@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -67,7 +68,7 @@ class Topic extends Model
 
     public function setNameAttribute($value)
     {
-        $this->attributes['slug'] = str_slug($value, '-');
+        $this->attributes['slug'] = Str::slug($value, '-');
         return $this->attributes['name'] = $value;
     }
 
