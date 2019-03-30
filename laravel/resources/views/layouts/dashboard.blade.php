@@ -88,6 +88,45 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin')}}">
+                            <span data-feather="file"></span>
+                            List Pages
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin')}}">
+                            <span data-feather="file"></span>
+                            Add Page
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin')}}">
+                            <span data-feather="file"></span>
+                            List Scopes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin')}}">
+                            <span data-feather="file"></span>
+                            Add Scope
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin')}}">
+                            <span data-feather="file"></span>
+                            List Posts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin')}}">
+                            <span data-feather="file"></span>
+                            Add Post
+                        </a>
+                    </li>
+                </ul>
+<hr />
+                <ul class="nav flex-column">
+                    <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="file"></span>
                             Orders

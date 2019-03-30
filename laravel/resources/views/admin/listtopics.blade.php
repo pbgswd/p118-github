@@ -18,18 +18,18 @@
         <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
-                <tr>
-                    <th> @sortablelink('id','#') </th>
-                    <th> @sortablelink('name', 'Title') </th>
-                    <th> @sortablelink('scope', 'Scope') </th>
-                    <th> @sortablelink('livelive', 'Is <LiveLive></LiveLive>?') </th>
-                    <th> @sortablelink('sort_order', 'Sort Order') </th>
-                    <th> @sortablelink('in_menu', 'In Menu?') </th>
-                    <th> @sortablelink('allow_comments', 'Allow Comments?') </th>
-                    <th>Edit</th>
-                    <th> @sortablelink('created_at', 'Created At') </th>
-                    <th> @sortablelink('updated_at', 'Updated At') </th>
-                </tr>
+                    <tr>
+                        <th> @sortablelink('id','#') </th>
+                        <th> @sortablelink('name', 'Title') </th>
+                        <th> @sortablelink('scope', 'Scope') </th>
+                        <th> @sortablelink('livelive', 'Is LiveLive?') </th>
+                        <th> @sortablelink('sort_order', 'Sort Order') </th>
+                        <th> @sortablelink('in_menu', 'In Menu?') </th>
+                        <th> @sortablelink('allow_comments', 'Allow Comments?') </th>
+                        <th> Edit </th>
+                        <th> @sortablelink('created_at', 'Created At') </th>
+                        <th> @sortablelink('updated_at', 'Updated At') </th>
+                    </tr>
                 </thead>
                 <tbody>
                 @foreach ( $data['topics'] as $i )
@@ -51,7 +51,8 @@
                         <td>{{$i->sort_order}}</td>
                         <td>{{$i->in_menu == 'yes' ? 'yes' : 'no' }} </td>
                         <td>{{$i->allow_comments == 'yes' ? 'yes' : 'no' }} </td>
-                        <td><a href="{{route('topic_edit', $i->slug)}}" title="Edit {{$i->name}}">
+                        <td>
+                            <a href="{{route('topic_edit', $i->slug)}}" title="Edit {{$i->name}}">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>
@@ -59,9 +60,9 @@
                         <td>{{$i->updated_at}}</td>
                     </tr>
                 @endforeach
-                <tr>
-                    <td colspan="10">&nbsp;</td>
-                </tr>
+                    <tr>
+                        <td colspan="10">&nbsp;</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
