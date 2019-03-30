@@ -24,15 +24,10 @@ class TopicController extends Controller
     {
         $data = [];
 
-        /*
-            A thing for manipulating sort order
-            same page page=2
-            order by clause,
-            ascending, descending
-        */
-
         //$topics = Topic::orderBy('sort_order', 'ASC')->paginate(20);
-        $topics = Topic::sortable()->paginate(20);
+
+        $topics = Topic::sortable()->paginate(60);
+
         return view('admin.listtopics', ['data'=>array('topics'=>$topics )]);
     }
 
@@ -122,13 +117,7 @@ class TopicController extends Controller
                 $DELMSG .= ' deleted '. $request['newsletter'][$k];
             }
         }
-
-
          * */
-
-
-
-
 
         Session::flash('success', "You have saved a new topic");
         return redirect()->route('topic_edit', [$topic->slug]);
@@ -159,6 +148,10 @@ class TopicController extends Controller
      */
     public function update(Request $request, Topic $topic)
     {
+        //dd($topic);
+     //   dd($request->all());
+
+        // turn title into slug
         $rules = [
             'topic.name' => 'required|unique:topics,name|max:255',
             'topic.scope' => 'required',
@@ -172,7 +165,8 @@ class TopicController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $topic->fill($request['topic']);
+        $topic->fill($request->input('topic'));
+        //$topic->fill($request['topic']);
         $topic->save();
 
 
@@ -215,7 +209,7 @@ foreach($fileFormats['newsletter_file_types_descriptions'] as $k => $v)
 }
 
  * */
-        dd($topic);
+       //
 
         Session::flash('success', "You have edited the topic");
         return redirect()->route('topic_edit', [$topic->slug]);

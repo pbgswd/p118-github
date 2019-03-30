@@ -19,16 +19,16 @@
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>@sortablelink('Title')</th>
-                    <th>@sortablelink('Scope')</th>
-                    <th>@sortablelink('Is Live?')</th>
-                    <th>@sortablelink('Sort Order')</th>
-                    <th>@sortablelink('In Menu?')</th>
-                    <th>@sortablelink('Allow Comments?')</th>
+                    <th> @sortablelink('id','#') </th>
+                    <th> @sortablelink('name', 'Title') </th>
+                    <th> @sortablelink('scope', 'Scope') </th>
+                    <th> @sortablelink('livelive', 'Is <LiveLive></LiveLive>?') </th>
+                    <th> @sortablelink('sort_order', 'Sort Order') </th>
+                    <th> @sortablelink('in_menu', 'In Menu?') </th>
+                    <th> @sortablelink('allow_comments', 'Allow Comments?') </th>
                     <th>Edit</th>
-                    <th>@sortablelink('Created At')</th>
-                    <th>@sortablelink('Updated At')</th>
+                    <th> @sortablelink('created_at', 'Created At') </th>
+                    <th> @sortablelink('updated_at', 'Updated At') </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,17 +47,20 @@
                             </h4>
                         </td>
                         <td>{{$i->scope}}</td>
-                        <td>{{$i->live ? 'yes' : 'no' }}</td>
+                        <td>{{ $i->livelive == 1 ? 'yes' : 'no' }}</td>
                         <td>{{$i->sort_order}}</td>
-                        <td>{{$i->in_menu ? 'yes' : 'no'}}</td>
-                        <td>{{$i->allow_comments ? 'yes' : 'no'}}</td>
-                        <td><a href="{{route('topic_edit', $i->slug)}}" title="Edit {{$i->name}}"><i class="fas fa-edit"></i></span></a></td>
+                        <td>{{$i->in_menu == 'yes' ? 'yes' : 'no' }} </td>
+                        <td>{{$i->allow_comments == 'yes' ? 'yes' : 'no' }} </td>
+                        <td><a href="{{route('topic_edit', $i->slug)}}" title="Edit {{$i->name}}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
                         <td>{{$i->created_at}}</td>
                         <td>{{$i->updated_at}}</td>
                     </tr>
                 @endforeach
                 <tr>
-                    <td colspan="10"> </td>
+                    <td colspan="10">&nbsp;</td>
                 </tr>
                 </tbody>
             </table>
