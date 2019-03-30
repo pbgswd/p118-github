@@ -2,10 +2,28 @@
 
 namespace App\Models;
 
+use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
+
 
 class Topic extends Model
 {
+
+    use Sortable;
+
+    public $sortable = [
+        'id',
+        'name',
+        'image',
+        'scope',
+        'live',
+        'sort_order',
+        'in_menu',
+        'allow_comments',
+        'created_at',
+        'updated_at'
+    ];
+
     protected $dates =
         [
             'created_at',

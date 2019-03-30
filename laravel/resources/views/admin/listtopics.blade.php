@@ -20,15 +20,15 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Title</th>
-                    <th>Scope</th>
-                    <th>Is Live?</th>
-                    <th>Sort Order</th>
-                    <th>In Menu?</th>
-                    <th>Allow Comments?</th>
+                    <th>@sortablelink('Title')</th>
+                    <th>@sortablelink('Scope')</th>
+                    <th>@sortablelink('Is Live?')</th>
+                    <th>@sortablelink('Sort Order')</th>
+                    <th>@sortablelink('In Menu?')</th>
+                    <th>@sortablelink('Allow Comments?')</th>
                     <th>Edit</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
+                    <th>@sortablelink('Created At')</th>
+                    <th>@sortablelink('Updated At')</th>
                 </tr>
                 </thead>
                 <tbody>

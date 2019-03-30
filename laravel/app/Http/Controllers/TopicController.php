@@ -31,8 +31,8 @@ class TopicController extends Controller
             ascending, descending
         */
 
-        $topics = Topic::orderBy('sort_order', 'ASC')->paginate(20);
-
+        //$topics = Topic::orderBy('sort_order', 'ASC')->paginate(20);
+        $topics = Topic::sortable()->paginate(20);
         return view('admin.listtopics', ['data'=>array('topics'=>$topics )]);
     }
 
@@ -180,25 +180,20 @@ class TopicController extends Controller
  *
  * $DELMSG='';
  *
-
 foreach($fileFormats['newsletter_file_types_descriptions'] as $k => $v)
 {
     $fileType = strtolower($k)."_file";
-
     if (isset($_FILES['newsletter']['tmp_name'][$fileType]))
     {
         $newslettersData = new \App\Models\NewslettersData;
-
         $newslettersData->fill(['file_name' => $_FILES['newsletter']['name'][$fileType],
                                 'file_type' => $_FILES['newsletter']['type'][$fileType],
                                 'newsletter_format_code' => $k]);
-
         if ( !empty($_FILES['newsletter']['tmp_name'][$fileType]) )
         {
             $stream = fopen($_FILES['newsletter']['tmp_name'][$fileType], 'r+');
             Flysystem::connection('newsletters')->put($_FILES['newsletter']['name'][$fileType], $stream);
             fclose($stream);
-
             if(Storage::exists('/' . env('NEWSLETTERS_FILES_DIR') . '/' . $_FILES['newsletter']['name'][$fileType]))
             {
                 $newsletter->newslettersData()->save($newslettersData);
@@ -210,7 +205,6 @@ foreach($fileFormats['newsletter_file_types_descriptions'] as $k => $v)
             }
         }
     }
-
     if ( isset( $request['newsletter']['delete_file'][$k]) )
     {
     // delete files and rows when checkbox has been checked
@@ -220,8 +214,8 @@ foreach($fileFormats['newsletter_file_types_descriptions'] as $k => $v)
     }
 }
 
-
  * */
+        dd($topic);
 
         Session::flash('success', "You have edited the topic");
         return redirect()->route('topic_edit', [$topic->slug]);
