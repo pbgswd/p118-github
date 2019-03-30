@@ -178,6 +178,13 @@
                             Telescope
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://fontawesome.com/icons?d=gallery" target="_blank">
+                            <span data-feather="file-text"></span>
+                            FontAwesome Icons
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </nav>
