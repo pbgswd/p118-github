@@ -148,9 +148,8 @@ class TopicController extends Controller
      */
     public function update(Request $request, Topic $topic)
     {
-        //dd($topic);
-     //   dd($request->all());
-
+        // dd($topic);
+        // dd($request->all());
         // turn title into slug
         $rules = [
             'topic.name' => 'required|unique:topics,name|max:255',
@@ -165,51 +164,45 @@ class TopicController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
         $topic->fill($request->input('topic'));
         //$topic->fill($request['topic']);
         $topic->save();
 
-
-        /*
- *
- * $DELMSG='';
- *
-foreach($fileFormats['newsletter_file_types_descriptions'] as $k => $v)
-{
-    $fileType = strtolower($k)."_file";
-    if (isset($_FILES['newsletter']['tmp_name'][$fileType]))
+       $DELMSG='';
+       
+dd($_FILES);
+ 
+    if ( isset( $_FILES['topic']['image'] ) )
     {
-        $newslettersData = new \App\Models\NewslettersData;
-        $newslettersData->fill(['file_name' => $_FILES['newsletter']['name'][$fileType],
-                                'file_type' => $_FILES['newsletter']['type'][$fileType],
-                                'newsletter_format_code' => $k]);
-        if ( !empty($_FILES['newsletter']['tmp_name'][$fileType]) )
+        $topic  = new \App\Models\Topic;
+        $topic->fill(['image' => $_FILES['topic']['image']);
+
+        
+        if ( !empty($_FILES['topic']['tmp_name']['image']) )
         {
-            $stream = fopen($_FILES['newsletter']['tmp_name'][$fileType], 'r+');
-            Flysystem::connection('newsletters')->put($_FILES['newsletter']['name'][$fileType], $stream);
+            $stream = fopen($_FILES['newsletter']['tmp_name']['image'], 'r+');
+            Flysystem::connection('topic')->put($_FILES['topic']['image'], $stream);
             fclose($stream);
-            if(Storage::exists('/' . env('NEWSLETTERS_FILES_DIR') . '/' . $_FILES['newsletter']['name'][$fileType]))
+            
+            if(Storage::exists('/' . env('FILES_DIR') . '/' . $_FILES['topics']['image']))
             {
-                $newsletter->newslettersData()->save($newslettersData);
-                 $DELMSG .= ' Saved ' . $_FILES['newsletter']['name'][$fileType];
+                $topic->save();
+                 $DELMSG .= ' Saved ' . $_FILES['newsletter']['name']['image'];
             }
             else
             {
-                flash()->warning($_FILES['newsletter']['name'][$fileType] . ' was not saved. ' );
+                flash()->warning($_FILES['newsletter']['name']['image'] . ' was not saved. ' );
             }
         }
     }
-    if ( isset( $request['newsletter']['delete_file'][$k]) )
+    if ( isset( $request['topic']['delete_image']) )
     {
     // delete files and rows when checkbox has been checked
-        Storage::delete('/'. env('NEWSLETTERS_FILES_DIR') .'/'. $request['newsletter'][$k]);
-        NewslettersData::destroy($request['newsletter']['delete_file'][$k]);
-        $DELMSG .= ' deleted '. $request['newsletter'][$k];
+        Storage::delete('/'. env('FILES_DIR') .'/'. $request['topics']);
+        Topic::destroy($request['topic']['delete_image']);
+        $DELMSG .= ' deleted '. $request['topic']['image'];
     }
-}
-
- * */
-       //
 
         Session::flash('success', "You have edited the topic");
         return redirect()->route('topic_edit', [$topic->slug]);
