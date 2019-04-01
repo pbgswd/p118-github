@@ -6,7 +6,7 @@
            <span class="badge badge-primary badge-pill">
                {!! $data['topics']->total()  !!}
            </span>
-            Topics.
+            Topics. | <a href="{{ route('topic_create') }}">Create new topic <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 
@@ -21,8 +21,8 @@
                     <tr>
                         <th> @sortablelink('id','#') </th>
                         <th> @sortablelink('name', 'Title') </th>
-                        <th> @sortablelink('scope', 'Scope') </th>
-                        <th> @sortablelink('livelive', 'Is LiveLive?') </th>
+                        <th> @sortablelink('access_level', 'Access Level') </th>
+                        <th> @sortablelink('live', 'Is Live?') </th>
                         <th> @sortablelink('sort_order', 'Sort Order') </th>
                         <th> @sortablelink('in_menu', 'In Menu?') </th>
                         <th> @sortablelink('allow_comments', 'Allow Comments?') </th>
@@ -37,27 +37,27 @@
                         <td>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="id[]" value="{{$i->id}}" />
+                                    <input type="checkbox" name="id[]" value="{{ $i->id }}" />
                                 </label>
                             </div>
                         </td>
                         <td>
                             <h4>
-                                <a title="{{$i->name}}" href="{{ route('topic_edit', $i->slug)}}">{{$i->name}}</a>
+                                <a title="{{ $i->name }}" href="{{ route('topic_edit', $i->slug) }}">{{ $i->name }}</a>
                             </h4>
                         </td>
-                        <td>{{$i->scope}}</td>
-                        <td>{{ $i->livelive == 1 ? 'yes' : 'no' }}</td>
-                        <td>{{$i->sort_order}}</td>
-                        <td>{{$i->in_menu == 'yes' ? 'yes' : 'no' }} </td>
-                        <td>{{$i->allow_comments == 'yes' ? 'yes' : 'no' }} </td>
+                        <td> {{ $i->access_level }} </td>
+                        <td> {{ $i->live ? 'yes' : 'no' }} </td>
+                        <td> {{ $i->sort_order }} </td>
+                        <td> {{ $i->in_menu ? 'yes' : 'no' }} </td>
+                        <td> {{ $i->allow_comments ? 'yes' : 'no' }} </td>
                         <td>
-                            <a href="{{route('topic_edit', $i->slug)}}" title="Edit {{$i->name}}">
+                            <a href="{{ route('topic_edit', $i->slug) }}" title="Edit {{ $i->name }} ">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>
-                        <td>{{$i->created_at}}</td>
-                        <td>{{$i->updated_at}}</td>
+                        <td> {{ $i->created_at }} </td>
+                        <td> {{ $i->updated_at }} </td>
                     </tr>
                 @endforeach
                     <tr>

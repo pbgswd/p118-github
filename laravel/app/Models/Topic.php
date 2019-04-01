@@ -16,13 +16,13 @@ class Topic extends Model
         'id',
         'name',
         'image',
-        'scope',
+        'access_level',
         'live',
         'sort_order',
         'in_menu',
         'allow_comments',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $dates =
@@ -49,13 +49,12 @@ class Topic extends Model
             'description',
             'content',
             'image',
-            'scope',
+            'access_level',
             'sort_order',
             'live',
             'in_menu',
             'allow_comments',
         ];
-
 
 
     /**

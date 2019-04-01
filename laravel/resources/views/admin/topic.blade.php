@@ -10,6 +10,8 @@
             {{ $topic->name }}
         @endif
     </h1>
+        <h3>  <a href="{{ route('topics_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of topics</a>  </h3>
+
 
     <form method="post" name="topics" action="{{ url()->current() }}" class="needs-validation" novalidate>
         <input type="hidden" name="topic[id]" value="{{ $topic['id'] }}">
@@ -42,7 +44,7 @@
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
                         File input
                     </label>
-                    <input type="file" id="exampleInputFile" name="topic[image]" />
+                    <input type="file" id="inputFile" name="topic[image]" />
                     <p class="help-block">
                         Upload image for topic.
                     </p>
@@ -74,15 +76,20 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-6 col-sm-3 align-middle"><h4>Scope</h4></div>
-                    <div class="col-6 col-sm-3"><input type="text" class="form-control"  placeholder="Scope" name="topic[scope]" value="{{ old('topic.scope', $topic->scope)}}" size="20" required/></div>
+                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
+                    <div class="col-6 col-sm-3">
+                        <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="topic[access_level]" value="{{ old('topic.access_level', $topic->access_level)}}" size="30" required/>
+                        <p>Access Level: public, members, executive</p>
+                    </div>
                     <div class="col-6 col-sm-3"></div><div class="col-6 col-sm-3"></div>
                     <!-- Force next columns to break to new line -->
                     <div class="w-100"></div>
-
                     <div class="col-12">&nbsp;</div>
                     <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
-                    <div class="col-6 col-sm-3"><input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="topic[sort_order]" value="{{old('topic.sort_order',$topic->sort_order)}}" size="20" required/></div>
+                    <div class="col-6 col-sm-3">
+                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="topic[sort_order]" value="{{old('topic.sort_order',$topic->sort_order)}}" size="30" required/>
+                        <p>e.g.: 1000, 2000</p>
+                    </div>
                     <div class="invalid-feedback">
                         Please add a numeric sort order {{ @$errors->get('topic.sort_order')[0] }}
                     </div>
@@ -128,6 +135,6 @@
             </form>
          </div>
     @endif
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+    <div class="row" style="margin-top:100px;"> &nbsp;</div>
 </div>
 @endsection

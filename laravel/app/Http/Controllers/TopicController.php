@@ -9,6 +9,7 @@ use Storage;
 use Validator;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use GrahamCampbell\Flysystem\Facades\Flysystem;
 
@@ -20,14 +21,13 @@ class TopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(\App\Models\Topic $topic)
+    public function index(Request $request)
     {
         $data = [];
 
         //$topics = Topic::orderBy('sort_order', 'ASC')->paginate(20);
 
         $topics = Topic::sortable()->paginate(60);
-
         return view('admin.listtopics', ['data'=>array('topics'=>$topics )]);
     }
 
@@ -54,8 +54,8 @@ class TopicController extends Controller
     {
         $rules = [
             'topic.name' => 'required|unique:topics,name|max:255',
-            'topic.scope' => 'required',
-            'topic.sort_order' => 'required',
+            'topic.access_level' => 'required|string',
+            'topic.sort_order' => 'required|numeric',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -71,7 +71,6 @@ class TopicController extends Controller
         $topic = new Topic($request->input('topic'));
 
         $topic->save();
-
 
 
         /*
@@ -147,40 +146,50 @@ class TopicController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Topic $topic)
-    {
-        // dd($topic);
-        // dd($request->all());
-        // turn title into slug
-        $rules = [
-            'topic.name' => 'required|unique:topics,name|max:255',
-            'topic.scope' => 'required',
-            'topic.sort_order' => 'required',
-        ];
 
-        $validator = Validator::make($request->all(), $rules);
+    {
+
+        $validator = Validator::make($request->all(), [
+            'topics.name' => [
+                Rule::unique('topics')->ignore($topic),
+                'required|string|max:255',
+            ],
+            'topic.access_level' => 'required|string|max:255',
+            'topic.sort_order' =>  'required|numeric',
+        ]);
 
         if ($validator->fails()) {
-            return redirect(route('topic_edit'))
+            return redirect(route('topic_edit', $topic->slug))
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        $topic->fill($request->input('topic'));
-        //$topic->fill($request['topic']);
+        /*
+         * if ( !empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($_POST) )
+            echo 'The uploaded zip was too large. You must upload a file smaller than ' . ini_get("upload_max_filesize");
+        */
+
+        $topic->fill($request['topic']);
         $topic->save();
 
+
        $DELMSG='';
-       
-dd($_FILES);
+
  
-    if ( isset( $_FILES['topic']['image'] ) )
+    if ( isset( $request->topic['image'] ) )
     {
         $topic  = new \App\Models\Topic;
-        $topic->fill(['image' => $_FILES['topic']['image']);
+        $topic->fill($request->topic['image']);
 
         
         if ( !empty($_FILES['topic']['tmp_name']['image']) )
         {
+
+
+            Storage::disk('local')->put($request->topic['image'], 'Contents'); // works
+
+
+
             $stream = fopen($_FILES['newsletter']['tmp_name']['image'], 'r+');
             Flysystem::connection('topic')->put($_FILES['topic']['image'], $stream);
             fclose($stream);

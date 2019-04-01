@@ -102,13 +102,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('admin')}}">
                             <span data-feather="file"></span>
-                            List Scopes
+                            List Access Levels
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('admin')}}">
                             <span data-feather="file"></span>
-                            Add Scope
+                            Add Access Level
                         </a>
                     </li>
                     <li class="nav-item">

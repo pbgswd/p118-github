@@ -7,15 +7,15 @@ return [
     */
     'columns'                       => [
         'alpha'   => [
-            'rows'  => ['description', 'email', 'name', 'slug', 'scope', 'live'],
+            'rows'  => ['description', 'email', 'name', 'slug', 'access_level',],
             'class' => 'fa fa-sort-alpha',
         ],
         'amount'  => [
-            'rows'  => ['amount', 'price', 'livelive', 'sort_order'],
+            'rows'  => ['amount', 'price',],
             'class' => 'fa fa-sort-amount',
         ],
         'numeric' => [
-            'rows'  => ['created_at', 'updated_at', 'id'],
+            'rows'  => ['created_at', 'updated_at', 'id', 'live', 'allow_comments', 'sort_order', 'in_menu',],
             'class' => 'fa fa-sort-numeric',
         ],
     ],
@@ -39,7 +39,7 @@ return [
     /*
     generated icon is clickable non-clickable (default)
      */
-    'clickable_icon'                => true,
+    'clickable_icon'                => false,
 
     /*
     icon and text separator (any string)

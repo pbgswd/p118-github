@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_04_01_025748_update_topics_columns.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_04_01_065401_update_topic_column_scope.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Topic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/config/columnsortable.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/config/columnsortable.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listtopics.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listtopics.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/topic.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/topic.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,51 +22,12 @@
     <pharConfigPath>$PROJECT_DIR$/laravel/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/listtopics.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="16" column="28" lean-forward="true" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-              <folding>
-                <element signature="e#2725#2731#1#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="613">
-              <caret line="125" column="21" lean-forward="true" selection-start-line="125" selection-start-column="21" selection-end-line="125" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/laravel/routes/web.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="19" column="60" selection-start-line="19" selection-start-column="51" selection-end-line="19" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/laravel/config/columnsortable.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="69" lean-forward="true" selection-start-line="13" selection-start-column="69" selection-end-line="13" selection-end-column="69" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="344" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>tion upd</find>
+      <find>scopeA</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -70,17 +38,20 @@
       <list>
         <option value="$PROJECT_DIR$/laravel/tests/Feature/TopicTest.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/flash-messages.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/admin/topic.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/admin/listattachements.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/admin/attachment.blade.php" />
         <option value="$PROJECT_DIR$/laravel/app/Models/Attachment.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/AttachmentController.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/Topic.php" />
         <option value="$PROJECT_DIR$/laravel/routes/web.php" />
+        <option value="$PROJECT_DIR$/laravel/public/index.php" />
+        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_04_01_025748_update_topics_columns.php" />
+        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_04_01_065401_update_topic_column_scope.php" />
+        <option value="$PROJECT_DIR$/laravel/app/Models/Topic.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php" />
-        <option value="$PROJECT_DIR$/laravel/config/columnsortable.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/admin/listtopics.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/config/columnsortable.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/admin/topic.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/admin/listtopics.blade.php" />
       </list>
     </option>
   </component>
@@ -218,13 +189,6 @@
               <item name="project118" type="b2602c69:ProjectViewProjectNode" />
               <item name="project118" type="462c0819:PsiDirectoryNode" />
               <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project118" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project118" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -252,66 +216,7 @@
               <item name="project118" type="b2602c69:ProjectViewProjectNode" />
               <item name="project118" type="462c0819:PsiDirectoryNode" />
               <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="layouts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project118" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project118" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project118" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project118" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project118" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project118" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project118" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project118" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project118" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project118" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project118" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project118" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Illuminate" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project118" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project118" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Illuminate" type="462c0819:PsiDirectoryNode" />
-              <item name="Support" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -354,19 +259,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1553887544945</updated>
-      <workItem from="1553887546079" duration="21106000" />
+      <workItem from="1553887546079" duration="43004000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21106000" />
+    <option name="totallyTimeSpent" value="43004000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1680" height="1023" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.249694" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29008567" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -412,6 +316,17 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/laravel/resources/views/admin/listtopics.blade.php</url>
+          <line>4</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/confirm-delete.blade.php">
       <provider selected="true" editor-type-id="text-editor" />
@@ -456,27 +371,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/topic.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
-          <folding>
-            <element signature="e#540#564#0#HTML" expanded="true" />
-            <element signature="e#566#572#0#HTML" expanded="true" />
-            <element signature="e#1241#1265#0#HTML" expanded="true" />
-            <element signature="e#1267#1273#0#HTML" expanded="true" />
-            <element signature="e#2057#2081#0#HTML" expanded="true" />
-            <element signature="e#2019#2043#0#HTML" expanded="true" />
-            <element signature="e#2045#2051#0#HTML" expanded="true" />
-            <element signature="e#2962#2968#1#HTML" expanded="true" />
-            <element signature="e#2923#2947#0#HTML" expanded="true" />
-            <element signature="e#4373#4392#0#HTML" expanded="true" />
-            <element signature="e#5133#5157#0#HTML" expanded="true" />
-            <element signature="e#5159#5165#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/tests/Feature/TopicTest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -494,11 +388,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/config/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2733" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/vendor/laravel/framework/src/Illuminate/Support/helpers.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="317">
@@ -506,20 +395,92 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/config/filesystems.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="47" column="42" lean-forward="true" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_03_18_143208_create_topics_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="27" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/config/app.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-885">
+          <caret line="49" column="71" selection-start-line="49" selection-start-column="71" selection-end-line="49" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_04_01_025748_update_topics_columns.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="103" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="103" />
+          <folding>
+            <element signature="e#7#45#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_04_01_065401_update_topic_column_scope.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/app/Http/view_helpers.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/vendor/kyslik/column-sortable/src/ColumnSortable/Sortable.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="23" column="25" lean-forward="true" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_03_25_083736_update_topics_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="86" lean-forward="true" selection-start-line="23" selection-start-column="64" selection-end-line="23" selection-end-column="86" />
+          <folding>
+            <element signature="e#7#45#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/app/Models/Topic.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="687">
-          <caret line="70" column="59" lean-forward="true" selection-start-line="70" selection-start-column="59" selection-end-line="70" selection-end-column="59" />
+        <state relative-caret-position="540">
+          <caret line="57" column="4" selection-start-line="57" selection-start-column="4" selection-end-line="57" selection-end-column="4" />
           <folding>
             <element signature="e#30#57#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="73" column="61" lean-forward="true" selection-start-line="73" selection-start-column="61" selection-end-line="73" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="637">
-          <caret line="167" column="8" selection-start-line="167" selection-start-column="8" selection-end-line="167" selection-end-column="8" />
+        <state relative-caret-position="630">
+          <caret line="156" column="53" selection-start-line="156" selection-start-column="53" selection-end-line="156" selection-end-column="53" />
           <folding>
             <element signature="e#41#48#0#PHP" expanded="true" />
           </folding>
@@ -528,32 +489,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/laravel/config/columnsortable.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="69" lean-forward="true" selection-start-line="13" selection-start-column="69" selection-end-line="13" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/listtopics.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="16" column="28" lean-forward="true" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-          <folding>
-            <element signature="e#2725#2731#1#HTML" expanded="true" />
-          </folding>
+        <state relative-caret-position="465">
+          <caret line="52" column="46" lean-forward="true" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/laravel/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="19" column="60" selection-start-line="19" selection-start-column="51" selection-end-line="19" selection-end-column="60" />
+        <state relative-caret-position="225">
+          <caret line="24" column="79" lean-forward="true" selection-start-line="24" selection-start-column="79" selection-end-line="24" selection-end-column="79" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php">
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/topic.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="613">
-          <caret line="125" column="21" lean-forward="true" selection-start-line="125" selection-start-column="21" selection-end-line="125" selection-end-column="21" />
+        <state relative-caret-position="180">
+          <caret line="12" column="97" selection-start-line="12" selection-start-column="97" selection-end-line="12" selection-end-column="97" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/listtopics.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
