@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 @section('content')
 <div class="container">
-    <h1 class="display-3">List Topics</h1>
+    <h1 class="display-3"><i class="fas fa-list"></i> List Topics</h1>
         <h3>
            <span class="badge badge-primary badge-pill">
                {!! $data['topics']->total()  !!}
@@ -47,10 +47,10 @@
                             </h4>
                         </td>
                         <td> {{ $i->access_level }} </td>
-                        <td> {{ $i->live ? 'yes' : 'no' }} </td>
+                        <td> {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
                         <td> {{ $i->sort_order }} </td>
-                        <td> {{ $i->in_menu ? 'yes' : 'no' }} </td>
-                        <td> {{ $i->allow_comments ? 'yes' : 'no' }} </td>
+                        <td> {!! $i->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
+                        <td> {!! $i->allow_comments ? "<i class='fas fa-check'></i>" : '<i class="far fa-times-circle"></i>' !!} </td>
                         <td>
                             <a href="{{ route('topic_edit', $i->slug) }}" title="Edit {{ $i->name }} ">
                                 <i class="fas fa-edit"></i>

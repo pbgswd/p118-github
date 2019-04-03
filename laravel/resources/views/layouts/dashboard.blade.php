@@ -64,15 +64,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('topic_create') }}">
-                            <span data-feather="file"></span>
-                            Add Topic
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{route('topics_list')}}">
                             <span data-feather="file"></span>
-                            List Topics
+                            Topics
                         </a>
                     </li>
                     <li class="nav-item">

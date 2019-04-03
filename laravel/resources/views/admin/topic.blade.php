@@ -97,21 +97,26 @@
             </div>
             <div class="col-md-4">
                 <div class="col-sm">
-                    <label>
+
+                    <label>{{$topic->in_menu}}
+                        <input name="topic[in_menu]" type="hidden" value="0" />
                         <input name="topic[in_menu]" type="checkbox" value="1" {{ checked(old('topic.in_menu',$topic->in_menu)) }} /> In Menu
                     </label>
                 </div>
                 <div class="col-sm">
-                    <input name="topic[allow_comments]" type="hidden" value="0" {{ checked( old('topic.allow_comments', $topic->allow_comments) ) }} /></label>
-                    <label>
-                         <input name="topic[allow_comments]" type="checkbox" value="1" {{ checked(old('topic.allow_comments', $topic->allow_comments)) }} /> Allow Comments
+
+                    <label>{{$topic->allow_comments}}
+                        <input name="topic[allow_comments]" type="hidden" value="0" />
+                        <input name="topic[allow_comments]" type="checkbox" value="1" {{ checked(old('topic.allow_comments', $topic->allow_comments)) }} /> Allow Comments
                     </label>
                 </div>
                 <div class="col-sm">
-                    <input name="topic[live]" type="hidden" value="0" />
+
                     <label>
+                         <input name="topic[live]" type="hidden" value="0" />
                          <input name="topic[live]" type="checkbox" value="1" {{ checked( old('topic.live', $topic->live)) }} /> Check now to make Live
                     </label>
+                    <p>ie.: Draft or Published.</p>
                 </div>
             </div>
         </div>

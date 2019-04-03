@@ -55,7 +55,10 @@ class TopicController extends Controller
         $rules = [
             'topic.name' => 'required|unique:topics,name|max:255',
             'topic.access_level' => 'required|string',
-            'topic.sort_order' => 'required|numeric',
+            'topic.sort_order' =>  'required|numeric',
+            'topic.in_menu' => 'boolean',
+            'topic.allow_comments' => 'boolean',
+            'topic.live' => 'boolean',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -148,7 +151,6 @@ class TopicController extends Controller
     public function update(Request $request, Topic $topic)
 
     {
-
         $validator = Validator::make($request->all(), [
             'topics.name' => [
                 Rule::unique('topics')->ignore($topic),
@@ -156,6 +158,9 @@ class TopicController extends Controller
             ],
             'topic.access_level' => 'required|string|max:255',
             'topic.sort_order' =>  'required|numeric',
+            'topic.in_menu' => 'boolean',
+            'topic.allow_comments' => 'boolean',
+            'topic.live' => 'boolean',
         ]);
 
         if ($validator->fails()) {
@@ -187,8 +192,6 @@ class TopicController extends Controller
 
 
             Storage::disk('local')->put($request->topic['image'], 'Contents'); // works
-
-
 
             $stream = fopen($_FILES['newsletter']['tmp_name']['image'], 'r+');
             Flysystem::connection('topic')->put($_FILES['topic']['image'], $stream);
@@ -231,8 +234,6 @@ class TopicController extends Controller
         if(isset($request['id']))
         {
 
-
-
             /*
              *         $data = [];
         $data['newsletter_data'] = NewslettersData::where('newsletter_id', $request->id)->get();
@@ -244,11 +245,9 @@ class TopicController extends Controller
 
              * */
 
-
-
             Topic::destroy($request['id']);
 
-            Session::flash('success', str_plural('Topic', count($request['id'])) . ' deleted.');
+            Session::flash('success', Str::plural('Topic', count($request['id'])) . ' deleted.');
         }
         else
         {
