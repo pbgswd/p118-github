@@ -75,56 +75,37 @@ class TopicController extends Controller
 
         $topic->save();
 
+        $fileType = strtolower($k)."_file";
 
-        /*
-         *
-         * $DELMSG='';
-         *
-
-        foreach($fileFormats['newsletter_file_types_descriptions'] as $k => $v)
+      /*  if (isset($_FILES['newsletter']['tmp_name'][$fileType]))
         {
-            $fileType = strtolower($k)."_file";
+            $newslettersData = new \App\Models\NewslettersData;
 
-            if (isset($_FILES['newsletter']['tmp_name'][$fileType]))
+            $newslettersData->fill(['file_name' => $_FILES['newsletter']['name'][$fileType],
+                                    'file_type' => $_FILES['newsletter']['type'][$fileType],
+                                    'newsletter_format_code' => $k]);
+
+            if ( !empty($_FILES['newsletter']['tmp_name'][$fileType]) )
             {
-                $newslettersData = new \App\Models\NewslettersData;
+                $stream = fopen($_FILES['newsletter']['tmp_name'][$fileType], 'r+');
+                Flysystem::connection('newsletters')->put($_FILES['newsletter']['name'][$fileType], $stream);
+                fclose($stream);
 
-                $newslettersData->fill(['file_name' => $_FILES['newsletter']['name'][$fileType],
-                                        'file_type' => $_FILES['newsletter']['type'][$fileType],
-                                        'newsletter_format_code' => $k]);
-
-                if ( !empty($_FILES['newsletter']['tmp_name'][$fileType]) )
+                if(Storage::exists('/' . env('NEWSLETTERS_FILES_DIR') . '/' . $_FILES['newsletter']['name'][$fileType]))
                 {
-                    $stream = fopen($_FILES['newsletter']['tmp_name'][$fileType], 'r+');
-                    Flysystem::connection('newsletters')->put($_FILES['newsletter']['name'][$fileType], $stream);
-                    fclose($stream);
-
-                    if(Storage::exists('/' . env('NEWSLETTERS_FILES_DIR') . '/' . $_FILES['newsletter']['name'][$fileType]))
-                    {
-                        $newsletter->newslettersData()->save($newslettersData);
-                         $DELMSG .= ' Saved ' . $_FILES['newsletter']['name'][$fileType];
-                    }
-                    else
-                    {
-                        flash()->warning($_FILES['newsletter']['name'][$fileType] . ' was not saved. ' );
-                    }
+                    $newsletter->newslettersData()->save($newslettersData);
+                     $DELMSG .= ' Saved ' . $_FILES['newsletter']['name'][$fileType];
+                }
+                else
+                {
+                    flash()->warning($_FILES['newsletter']['name'][$fileType] . ' was not saved. ' );
                 }
             }
-
-            if ( isset( $request['newsletter']['delete_file'][$k]) )
-            {
-            // delete files and rows when checkbox has been checked
-                Storage::delete('/'. env('NEWSLETTERS_FILES_DIR') .'/'. $request['newsletter'][$k]);
-                NewslettersData::destroy($request['newsletter']['delete_file'][$k]);
-                $DELMSG .= ' deleted '. $request['newsletter'][$k];
-            }
-        }
-         * */
+        }*/
 
         Session::flash('success', "You have saved a new topic");
         return redirect()->route('topic_edit', [$topic->slug]);
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -134,11 +115,8 @@ class TopicController extends Controller
      */
     public function edit(\App\Models\Topic $topic)
     {
-
-        //edit version of form for initial loading
         $data = ['topic'=>$topic, 'action'=>'Edit'];
         return view('admin.topic', ['data'=> $data]);
-
     }
 
     /**
@@ -177,46 +155,51 @@ class TopicController extends Controller
         $topic->fill($request['topic']);
         $topic->save();
 
+        $DELMSG='';
 
-       $DELMSG='';
-
- 
-    if ( isset( $request->topic['image'] ) )
-    {
-        $topic  = new \App\Models\Topic;
-        $topic->fill($request->topic['image']);
-
-        
-        if ( !empty($_FILES['topic']['tmp_name']['image']) )
-        {
+        /*
+        // image vs file name of image. what to do here
+        // keep name of file persistent with data after upload
 
 
-            Storage::disk('local')->put($request->topic['image'], 'Contents'); // works
+                if ( isset( $request->topic['image'] ) )
+                {
+                    if ( $request->topic['image'] )
+                    {
 
-            $stream = fopen($_FILES['newsletter']['tmp_name']['image'], 'r+');
-            Flysystem::connection('topic')->put($_FILES['topic']['image'], $stream);
-            fclose($stream);
-            
-            if(Storage::exists('/' . env('FILES_DIR') . '/' . $_FILES['topics']['image']))
-            {
-                $topic->save();
-                 $DELMSG .= ' Saved ' . $_FILES['newsletter']['name']['image'];
-            }
-            else
-            {
-                flash()->warning($_FILES['newsletter']['name']['image'] . ' was not saved. ' );
+                        $path = $request->file($request->topic['image'])->store();
+
+                       // Storage::disk('public')->put($request->topic['image'], 'Contents'); // works
+                      //  Storagdisk('local')->put($request->topic['image'], 'Contents'); // works
+
+
+                        $stream = fopen($_FILES['newsletter']['tmp_name']['image'], 'r+');
+                        Flysystem::connection('topic')->put($_FILES['topic']['image'], $stream);
+                        fclose($stream);
+
+                        if(Storage::exists('/' . env('FILES_DIR') . '/' . $_FILES['topics']['image']))
+                        {
+                            $topic->save();
+                             $DELMSG .= ' Saved ' . $_FILES['newsletter']['name']['image'];
+                        }
+                        else
+                        {
+                            flash()->warning($_FILES['newsletter']['name']['image'] . ' was not saved. ' );
+                        }*/
             }
         }
-    }
-    if ( isset( $request['topic']['delete_image']) )
-    {
-    // delete files and rows when checkbox has been checked
-        Storage::delete('/'. env('FILES_DIR') .'/'. $request['topics']);
-        Topic::destroy($request['topic']['delete_image']);
-        $DELMSG .= ' deleted '. $request['topic']['image'];
-    }
+
+        if ( isset( $request['topic']['delete_image']) )
+        {
+        // delete files and rows when checkbox has been checked
+
+            Storage::disk('public')->delete( $request->topic['image'] );
+
+            Session::flash('info', "You have deleted the image");
+        }
 
         Session::flash('success', "You have edited the topic");
+
         return redirect()->route('topic_edit', [$topic->slug]);
     }
 

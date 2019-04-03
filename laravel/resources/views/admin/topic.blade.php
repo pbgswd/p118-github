@@ -13,7 +13,7 @@
         <h3>  <a href="{{ route('topics_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of topics</a>  </h3>
 
 
-    <form method="post" name="topics" action="{{ url()->current() }}" class="needs-validation" novalidate>
+    <form method="post" name="topics" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="topic[id]" value="{{ $topic['id'] }}">
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
@@ -37,19 +37,23 @@
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="exampleInputFile">
-                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        File input
-                    </label>
-                    <input type="file" id="inputFile" name="topic[image]" />
-                    <p class="help-block">
-                        Upload image for topic.
-                    </p>
+        <div class="row border border-info p-5 rounded-lg" style="border-width:6px; !important;">
+
+            @if( !$topic->image )
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputFile">
+                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                            File input
+                        </label>
+                        <input type="file" id="inputFile" name="topic[image]" />
+                        <p class="help-block">
+                            Upload image for topic.
+                        </p>
+                    </div>
                 </div>
-            </div>
+            @else
+
             <div class="col-md-6">
                 <div class="col">
                     <h4>
@@ -57,9 +61,10 @@
                         Image preview
                     </h4>
 
-                    @if($topic->image !='')
-                        <h5>Currently: {{$topic->image}}</h5>
-                        <img src="{{$topic->image}}" />
+                    @if( $topic->image  )
+                        <input type="hidden"  name="topic[image]" value="{{$topic->image}}" />
+                        <h5>Currently: {{ $topic->image }}</h5>
+                        <img src="/storage/{{$topic->image}}" />
                 </div>
 
                 <div class="col" style="margin-top: 3em;">
@@ -71,6 +76,7 @@
                     @endif
                 </div>
             </div>
+            @endif
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
@@ -98,14 +104,14 @@
             <div class="col-md-4">
                 <div class="col-sm">
 
-                    <label>{{$topic->in_menu}}
+                    <label>
                         <input name="topic[in_menu]" type="hidden" value="0" />
                         <input name="topic[in_menu]" type="checkbox" value="1" {{ checked(old('topic.in_menu',$topic->in_menu)) }} /> In Menu
                     </label>
                 </div>
                 <div class="col-sm">
 
-                    <label>{{$topic->allow_comments}}
+                    <label>
                         <input name="topic[allow_comments]" type="hidden" value="0" />
                         <input name="topic[allow_comments]" type="checkbox" value="1" {{ checked(old('topic.allow_comments', $topic->allow_comments)) }} /> Allow Comments
                     </label>

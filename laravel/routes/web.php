@@ -27,7 +27,6 @@ Route::post('/admin/topic/{topic}', 'TopicController@update');
 Route::delete('/admin/topic/delete', 'TopicController@destroy')->name('topic_destroy');
 
 
-
 Route::get('/admin/attachment', 'AttachmentController@create')->name('attachment_create');
 Route::get('/admin/attachments', 'AttachmentController@index')->name('attachments_list');
 
