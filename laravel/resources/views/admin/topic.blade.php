@@ -13,7 +13,7 @@
         <h3>  <a href="{{ route('topics_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of topics</a>  </h3>
 
 
-    <form method="post" name="topics" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form method="post" name="topic" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="topic[id]" value="{{ $topic['id'] }}">
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
@@ -46,7 +46,7 @@
                             <i class="fas fa-cloud-upload-alt fa-2x"></i>
                             File input
                         </label>
-                        <input type="file" id="inputFile" name="topic[image]" />
+                        <input type="file" id="inputFile" name="image" />
                         <p class="help-block">
                             Upload image for topic.
                         </p>

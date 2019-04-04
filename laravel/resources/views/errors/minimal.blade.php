@@ -10,6 +10,14 @@
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
         <!-- Styles -->
         <style>
             html, body {
@@ -49,14 +57,30 @@
         </style>
     </head>
     <body>
+    <div class="container">
         <div class="flex-center position-ref full-height">
-            <div class="code">
-                @yield('code')
+            <div class="row">
+                <div class="code">
+                    @yield('code')
+                </div>
+                <div class="message" style="padding: 10px;">
+                    @yield('message')
+                </div>
+            </div>
+<br clear="all" />
+            <div class="row">
+                <i class="far fa-arrow-alt-circle-left fa-3x"></i>
+                <button class="btn btn-primary btn-lg" onclick="goBack()">Go Back</button>
+                <script>
+                    function goBack() {
+                        window.history.back();
+                    }
+                </script>
             </div>
 
-            <div class="message" style="padding: 10px;">
-                @yield('message')
-            </div>
         </div>
+    </div>
+
+
     </body>
 </html>
