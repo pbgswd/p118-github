@@ -118,6 +118,7 @@
                         </a>
                     </li>
                 </ul>
+                <!--
 <hr />
                 <ul class="nav flex-column">
                     <li class="nav-item">
@@ -184,6 +185,8 @@
                         </a>
                     </li>
                 </ul>
+                -->
+
                 <hr />
 		<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                     <span>Web Resources</span>
@@ -217,7 +220,18 @@
                             FontAwesome Icons
                         </a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.tiny.cloud/" target="_blank">
+                            <span data-feather="file-text"></span>
+                            TinyMCE
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://vuejs.org/" target="_blank">
+                            <span data-feather="file-text"></span>
+                            Vue.js
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>

@@ -127,7 +127,6 @@ class TopicController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Topic $topic)
-
     {
         $validator = Validator::make($request->all(), [
             'topics.name' => [
@@ -147,81 +146,55 @@ class TopicController extends Controller
                 ->withInput();
         }
 
-        /*
-         * if ( !empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($_POST) )
-            echo 'The uploaded zip was too large. You must upload a file smaller than ' . ini_get("upload_max_filesize");
-        */
-
+        $data = $request['topic'];
 
         $DELMSG='';
 
         // image vs file name of image. what to do here
 
-      if ( isset( $request->image ) )
+        if ( isset( $request->image ) )
         {
-            if ( $request->image )
-            {
-//dd($_FILES['topic']['name']['image']);
+            // $path = Storage::putFile('public', $request->topic['image']);
 
-               // $path = Storage::putFile('public', $request->topic['image']);
+    /*       $path = Storage::putFileAs(
+            'public',
+            $request->topic['image'],
+            $_FILES['topic']['name']['image']
+    );*/
 
-/*                $path = Storage::putFileAs(
-                    'public',
-                    $request->topic['image'],
-                    $_FILES['topic']['name']['image']
-                );*/
-
-             //   $path = $request->file($request->topic['image'])->store();
+         //   $path = $request->file($request->topic['image'])->store();
 //file_put_contents
-               //Storage::disk('public')->put($request->topic['image'], 'Contents'); // works
-              //  Storagdisk('local')->put($request->topic['image'], 'Contents'); // works
+           //Storage::disk('public')->put($request->topic['image'], 'Contents'); // works
+          //  Storagdisk('local')->put($request->topic['image'], 'Contents'); // works
 /*
-                $stream = fopen($_FILES['newsletter']['tmp_name']['image'], 'r+');
-                Flysystem::connection('topic')->put($_FILES['topic']['image'], $stream);
-                fclose($stream);
+            $stream = fopen($_FILES['newsletter']['tmp_name']['image'], 'r+');
+            Flysystem::connection('topic')->put($_FILES['topic']['image'], $stream);
+            fclose($stream);
 
-                if(Storage::exists('/' . env('FILES_DIR') . '/' . $_FILES['topics']['image']))
-                {
-                    $topic->save();
-                     $DELMSG .= ' Saved ' . $_FILES['newsletter']['name']['image'];
-                }
-                else
-                {
-                    flash()->warning($_FILES['newsletter']['name']['image'] . ' was not saved. ' );
-                }
+            if(Storage::exists('/' . env('FILES_DIR') . '/' . $_FILES['topics']['image']))
+            {
+                $topic->save();
+                 $DELMSG .= ' Saved ' . $_FILES['newsletter']['name']['image'];
+            }
+            else
+            {
+                flash()->warning($_FILES['newsletter']['name']['image'] . ' was not saved. ' );
+            }
 */
 
+            $data['image'] = $request->file('image')->storeAs('', $request->file('image')->getClientOriginalName());
 
-                $data = $request['topic'];
-
-//dump($request->file('image'));
-
-                $data['image'] = $request->file('image')->storeAs('', $request->file('image')->getClientOriginalName());
-//dd($data);
-
-
-
-                /*
-                 * $data = $request['topic'];
-$data['image'] = $request->file('image')->getClientName();
-$request->file('file_field_name')->storeAs('new_path', 'new_name');
-$topic->fill($data);
-                 * */
-
-
-
-
-
-                $topic->fill($data);
-
-               // $topic->fill($request['topic']);
-                $topic->save();
-
-
-
-
-            }
+            /*
+             * $data = $request['topic'];
+    $data['image'] = $request->file('image')->getClientName();
+    $request->file('file_field_name')->storeAs('new_path', 'new_name');
+    $topic->fill($data);
+             * */
         }
+
+        $topic->fill($data);
+        $topic->save();
+
         if ( isset( $request['topic']['delete_image']) )
         {
         // delete files and rows when checkbox has been checked

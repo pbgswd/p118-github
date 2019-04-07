@@ -53,29 +53,22 @@
                     </div>
                 </div>
             @else
-
-            <div class="col-md-6">
-                <div class="col">
-                    <h4>
-                        <i class="far fa-images"></i>
-                        Image preview
-                    </h4>
-
-                    @if( $topic->image  )
-                        <input type="hidden"  name="topic[image]" value="{{$topic->image}}" />
-                        <h5>Currently: {{ $topic->image }}</h5>
-                        <img src="/storage/{{$topic->image}}" />
+                <div class="col-md-6">
+                    <div class="col">
+                        <h4>
+                            <i class="far fa-images"></i>
+                            Image preview
+                        </h4>
+                            <input type="hidden"  name="topic[image]" value="{{$topic->image}}" />
+                            <h5>Currently: {{ $topic->image }}</h5>
+                            <img src="/storage/{{$topic->image}}" />
+                    </div>
+                    <div class="col" style="margin-top: 3em;">
+                        <label>
+                            <input name="topic[delete_image]" type="checkbox" value="1" /> Check to delete image
+                        </label>
+                    </div>
                 </div>
-
-                <div class="col" style="margin-top: 3em;">
-                    <label>
-                        <input name="topic[delete_image]" type="checkbox" value="1" /> Check to delete image
-                    </label>
-                    @else
-                        <h5><i>No image uploaded</i></h5>
-                    @endif
-                </div>
-            </div>
             @endif
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
