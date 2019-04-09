@@ -232,6 +232,12 @@
                             Vue.js
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.vultr.com/" target="_blank">
+                            <span data-feather="file-text"></span>
+                            Vultr
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
