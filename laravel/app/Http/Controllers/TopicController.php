@@ -182,27 +182,26 @@ class TopicController extends Controller
             }
 */
 
-            $data['image'] = $request->file('image')->storeAs('', $request->file('image')->getClientOriginalName());
+$data['image'] = $request->file('image')
+    ->storeAs('', $request->file('image')
+    ->getClientOriginalName());
 
-            /*
-             * $data = $request['topic'];
-    $data['image'] = $request->file('image')->getClientName();
-    $request->file('file_field_name')->storeAs('new_path', 'new_name');
-    $topic->fill($data);
-             * */
+
+//$data['image'] = $request->file('image')->getClientOriginalName();
+//dd($data['image']);
+//$request->file('file_field_name')->storeAs('public', $data['image']);
+
+        }
+
+        if ( isset( $request['topic']['delete_image']) )
+        {
+            Storage::disk('public')->delete( $request->topic['image'] );
+            Session::flash('info', "You have deleted the image " . $data['image']);
+            $data['image'] = NULL;
         }
 
         $topic->fill($data);
         $topic->save();
-
-        if ( isset( $request['topic']['delete_image']) )
-        {
-        // delete files and rows when checkbox has been checked
-
-            Storage::disk('public')->delete( $request->topic['image'] );
-
-            Session::flash('info', "You have deleted the image");
-        }
 
         Session::flash('success', "You have edited the topic");
 

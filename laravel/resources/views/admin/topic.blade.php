@@ -39,6 +39,7 @@
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row border border-info p-5 rounded-lg" style="border-width:6px; !important;">
 
+
             @if( !$topic->image )
                 <div class="col-md-6">
                     <div class="form-group">
@@ -59,6 +60,9 @@
                             <i class="far fa-images"></i>
                             Image preview
                         </h4>
+
+                        **{{ asset('storage/'.$topic->image) }}**
+
                             <input type="hidden"  name="topic[image]" value="{{$topic->image}}" />
                             <h5>Currently: {{ $topic->image }}</h5>
                             <img src="/storage/{{$topic->image}}" />
