@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 
-use DB;
-use Session;
-use Storage;
-use Validator;
+use App\Http\Requests\Topic\DestroyRequest;
+use App\Http\Requests\Topic\StoreRequest;
+use App\Http\Requests\Topic\UpdateRequest;
 use App\Models\Topic;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
-use GrahamCampbell\Flysystem\Facades\Flysystem;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 class TopicController extends Controller
@@ -19,15 +21,12 @@ class TopicController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Request $request)
     {
-        $data = [];
-
-        //$topics = Topic::orderBy('sort_order', 'ASC')->paginate(20);
-
         $topics = Topic::sortable()->paginate(60);
+
         return view('admin.listtopics', ['data'=>array('topics'=>$topics )]);
     }
 
@@ -35,75 +34,31 @@ class TopicController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
-        $topic = new \App\Models\Topic;
+        $topic = new Topic;
 
-        return view('admin.topic', ['data'=>['topic'=>$topic, 'action'=>'Create']]);
+        return view('admin.topic', ['data' => ['topic' => $topic, 'action' => 'Create']]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $rules = [
-            'topic.name' => 'required|unique:topics,name|max:255',
-            'topic.access_level' => 'required|string',
-            'topic.sort_order' =>  'required|numeric',
-            'topic.in_menu' => 'boolean',
-            'topic.allow_comments' => 'boolean',
-            'topic.live' => 'boolean',
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-
-            return redirect(route('topic_create'))
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         $topic = new Topic($request->input('topic'));
+
+        $topic->image = $this->uploadImage($request);
 
         $topic->save();
 
-        $fileType = strtolower($k)."_file";
-
-      /*  if (isset($_FILES['newsletter']['tmp_name'][$fileType]))
-        {
-            $newslettersData = new \App\Models\NewslettersData;
-
-            $newslettersData->fill(['file_name' => $_FILES['newsletter']['name'][$fileType],
-                                    'file_type' => $_FILES['newsletter']['type'][$fileType],
-                                    'newsletter_format_code' => $k]);
-
-            if ( !empty($_FILES['newsletter']['tmp_name'][$fileType]) )
-            {
-                $stream = fopen($_FILES['newsletter']['tmp_name'][$fileType], 'r+');
-                Flysystem::connection('newsletters')->put($_FILES['newsletter']['name'][$fileType], $stream);
-                fclose($stream);
-
-                if(Storage::exists('/' . env('NEWSLETTERS_FILES_DIR') . '/' . $_FILES['newsletter']['name'][$fileType]))
-                {
-                    $newsletter->newslettersData()->save($newslettersData);
-                     $DELMSG .= ' Saved ' . $_FILES['newsletter']['name'][$fileType];
-                }
-                else
-                {
-                    flash()->warning($_FILES['newsletter']['name'][$fileType] . ' was not saved. ' );
-                }
-            }
-        }*/
-
         Session::flash('success', "You have saved a new topic");
+
         return redirect()->route('topic_edit', [$topic->slug]);
     }
 
@@ -111,92 +66,32 @@ class TopicController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Topic  $topic
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function edit(\App\Models\Topic $topic)
+    public function edit(Topic $topic)
     {
         $data = ['topic'=>$topic, 'action'=>'Edit'];
+
         return view('admin.topic', ['data'=> $data]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Topic  $topic
-     * @return \Illuminate\Http\Response
+     * @param UpdateRequest $request
+     * @param Topic $topic
+     * @return RedirectResponse
      */
-    public function update(Request $request, Topic $topic)
+    public function update(UpdateRequest $request, Topic $topic)
     {
-        $validator = Validator::make($request->all(), [
-            'topics.name' => [
-                Rule::unique('topics')->ignore($topic),
-                'required|string|max:255',
-            ],
-            'topic.access_level' => 'required|string|max:255',
-            'topic.sort_order' =>  'required|numeric',
-            'topic.in_menu' => 'boolean',
-            'topic.allow_comments' => 'boolean',
-            'topic.live' => 'boolean',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect(route('topic_edit', $topic->slug))
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         $data = $request['topic'];
 
-        $DELMSG='';
+        $data['image'] = $this->uploadImage($request);
 
-        // image vs file name of image. what to do here
-
-        if ( isset( $request->image ) )
-        {
-            // $path = Storage::putFile('public', $request->topic['image']);
-
-    /*       $path = Storage::putFileAs(
-            'public',
-            $request->topic['image'],
-            $_FILES['topic']['name']['image']
-    );*/
-
-         //   $path = $request->file($request->topic['image'])->store();
-//file_put_contents
-           //Storage::disk('public')->put($request->topic['image'], 'Contents'); // works
-          //  Storagdisk('local')->put($request->topic['image'], 'Contents'); // works
-/*
-            $stream = fopen($_FILES['newsletter']['tmp_name']['image'], 'r+');
-            Flysystem::connection('topic')->put($_FILES['topic']['image'], $stream);
-            fclose($stream);
-
-            if(Storage::exists('/' . env('FILES_DIR') . '/' . $_FILES['topics']['image']))
-            {
-                $topic->save();
-                 $DELMSG .= ' Saved ' . $_FILES['newsletter']['name']['image'];
-            }
-            else
-            {
-                flash()->warning($_FILES['newsletter']['name']['image'] . ' was not saved. ' );
-            }
-*/
-
-$data['image'] = $request->file('image')
-    ->storeAs('', $request->file('image')
-    ->getClientOriginalName());
-
-
-//$data['image'] = $request->file('image')->getClientOriginalName();
-//dd($data['image']);
-//$request->file('file_field_name')->storeAs('public', $data['image']);
-
-        }
-
-        if ( isset( $request['topic']['delete_image']) )
+        if (isset( $request['topic']['delete_image']))
         {
             Storage::disk('public')->delete( $request->topic['image'] );
-            Session::flash('info', "You have deleted the image " . $data['image']);
+            Session::flash('info', "You have deleted " . $data['image']);
             $data['image'] = NULL;
         }
 
@@ -211,38 +106,39 @@ $data['image'] = $request->file('image')
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Topic  $topic
-     * @return \Illuminate\Http\Response
+     * @param DestroyRequest $request
+     * @return RedirectResponse
      */
-    public function destroy(Request $request, Topic $topic)
+    public function destroy(DestroyRequest $request)
     {
+        $topic = Topic::find($request->id)->first();
 
-        // what to do with content under said topic?
-
-        if(isset($request['id']))
-        {
-
-            /*
-             *         $data = [];
-        $data['newsletter_data'] = NewslettersData::where('newsletter_id', $request->id)->get();
-        foreach($data['newsletter_data'] as $d)
-        {
-            Storage::delete('/'. env('NEWSLETTERS_FILES_DIR') .'/'. $d->file_name); // delete files
-            NewslettersData::destroy($d['id']); // delete newsletter_data rows associated with newsletter
+        if ($topic->image) {
+            Storage::disk('public')->delete($topic->image);
         }
 
-             * */
+        Topic::destroy($request->id);
 
-            Topic::destroy($request['id']);
-
-            Session::flash('success', Str::plural('Topic', count($request['id'])) . ' deleted.');
-        }
-        else
-        {
-            Session::flash('success', 'No topics were deleted.');
-        }
+        Session::flash('success', Str::plural('Topic', count($request->id)) . ' deleted.');
 
         return redirect()->route('topics_list');
-
     }
+
+    protected function uploadImage(FormRequest $request)
+    {
+        if (!$request->image) {
+            return null;
+        }
+
+        $imageName = $request->image->getClientOriginalName();
+
+        if (!$request->image->storeAs('public', $imageName)) {
+            Session::flash('warning', "Did not store " . $imageName);
+
+            return null;
+        }
+
+        return $imageName;
+    }
+
 }

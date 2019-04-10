@@ -1,5 +1,24 @@
 @extends('layouts.dashboard')
 @section('content')
+    <script>
+        tinymce.init({
+            selector: 'textarea#topic-description',
+            height: 200,
+            width:800,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor textcolor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tiny.cloud/css/codepen.min.css'
+            ]
+        });
+    </script>
+
 <div class="container">
     <?php
         $topic = $data['topic'];
@@ -32,15 +51,31 @@
                     <h4>Summary</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="topic[description]" placeholder="Summary content" class="form-control" cols="100" rows="6">{{old('topic.description', $topic->description)}}</textarea>
+                    <textarea name="topic[description]" id="topic-description" placeholder="Summary content" class="form-control">{{old('topic.description', $topic->description)}}</textarea>
                 </div>
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row border border-info p-5 rounded-lg" style="border-width:6px; !important;">
+            @if( $topic->image )
+                <div class="col-md-6">
+                    <div class="col">
+                        <h4>
+                            <i class="far fa-images"></i>
+                            Image preview
+                        </h4>
 
-
-            @if( !$topic->image )
+                        <h5>Currently: {{ $topic->image }}</h5>
+                        <img src="{{ asset('storage/'.$topic->image) }}" />
+                    </div>
+                    <div class="col" style="margin-top: 3em;">
+                        <input type="hidden"  name="topic[image]" value="{{$topic->image}}" />
+                        <label>
+                            <input name="topic[delete_image]" type="checkbox" value="1" /> Check to delete image
+                        </label>
+                    </div>
+                </div>
+            @else
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleInputFile">
@@ -51,26 +86,6 @@
                         <p class="help-block">
                             Upload image for topic.
                         </p>
-                    </div>
-                </div>
-            @else
-                <div class="col-md-6">
-                    <div class="col">
-                        <h4>
-                            <i class="far fa-images"></i>
-                            Image preview
-                        </h4>
-
-                        **{{ asset('storage/'.$topic->image) }}**
-
-                            <input type="hidden"  name="topic[image]" value="{{$topic->image}}" />
-                            <h5>Currently: {{ $topic->image }}</h5>
-                            <img src="/storage/{{$topic->image}}" />
-                    </div>
-                    <div class="col" style="margin-top: 3em;">
-                        <label>
-                            <input name="topic[delete_image]" type="checkbox" value="1" /> Check to delete image
-                        </label>
                     </div>
                 </div>
             @endif
