@@ -13,3 +13,6 @@ yarn-error.log
 storage/framework/cache/data/
 .env.testing
 .env.testing~
+.env.dusk.local
+.env.dusk.local~
+.env.dusk.local.example~

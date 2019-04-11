@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Str;
+use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
 
 
@@ -22,13 +20,21 @@ class User extends Authenticatable
         'updated_at',
     ];
 
+    protected $dates =
+        [
+            'created_at',
+            'updated_at'
+        ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -37,7 +43,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -49,14 +56,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-/*    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['slug'] = Str::slug($value, '-');
-        return $this->attributes['name'] = $value;
-    }*/
 }

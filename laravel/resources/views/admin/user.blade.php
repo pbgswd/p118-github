@@ -1,4 +1,7 @@
-@extends('layouts.dashboard')
+<?php
+$user = $data['user'];
+?>
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Member ' . ($data["action"] == "Edit" ? $user->name : '') ])
 @section('content')
     <script>
         tinymce.init({
@@ -20,16 +23,8 @@
     </script>
 
 <div class="container">
-    <?php
-        $user = $data['user'];
-    ?>
 
-    <h1 class="page-header"><i class="fas fa-edit"></i> {{ $data['action'] }} User
-        @if ($data['action'] == 'Edit')
-            {{ $user->name }}
-        @endif
-    </h1>
-        <h3>  <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of users</a>  </h3>
+    <h3>  <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of users</a>  </h3>
 
 
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
@@ -38,106 +33,25 @@
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2"><h4>Title</h4></div>
+                <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
                     <input type="text" class="form-control"  placeholder="Title" name="user[name]" value="{{ old('user.name', $user->name)}}" size="80" required/>
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2">
-                    <h4>Summary</h4>
-                </div>
+                <div class="col-lg-2"><h4>Email</h4></div>
                 <div class="col-lg-10">
-                    <textarea name="user[description]" id="user-description" placeholder="Summary content" class="form-control">{{old('user.description', $user->description)}}</textarea>
+                    <input type="text" class="form-control"  placeholder="Title" name="user[email]" value="{{ old('user.email', $user->email)}}" size="80" required/>
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row border border-info p-5 rounded-lg" style="border-width:6px; !important;">
-            @if( $user->image )
-                <div class="col-md-6">
-                    <div class="col">
-                        <h4>
-                            <i class="far fa-images"></i>
-                            Image preview
-                        </h4>
 
-                        <h5>Currently: {{ $user->image }}</h5>
-                        <img src="{{ asset('storage/'.$user->image) }}" />
-                    </div>
-                    <div class="col" style="margin-top: 3em;">
-                        <input type="hidden"  name="user[image]" value="{{$user->image}}" />
-                        <label>
-                            <input name="user[delete_image]" type="checkbox" value="1" /> Check to delete image
-                        </label>
-                    </div>
-                </div>
-            @else
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputFile">
-                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                            File input
-                        </label>
-                        <input type="file" id="inputFile" name="image" />
-                        <p class="help-block">
-                            Upload image for user.
-                        </p>
-                    </div>
-                </div>
-            @endif
-        </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
-                    <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="user[access_level]" value="{{ old('user.access_level', $user->access_level)}}" size="30" required/>
-                        <p>Access Level: public, members, executive</p>
-                    </div>
-                    <div class="col-6 col-sm-3"></div><div class="col-6 col-sm-3"></div>
-                    <!-- Force next columns to break to new line -->
-                    <div class="w-100"></div>
-                    <div class="col-12">&nbsp;</div>
-                    <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
-                    <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="user[sort_order]" value="{{old('user.sort_order',$user->sort_order)}}" size="30" required/>
-                        <p>e.g.: 1000, 2000</p>
-                    </div>
-                    <div class="invalid-feedback">
-                        Please add a numeric sort order {{ @$errors->get('user.sort_order')[0] }}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="col-sm">
 
-                    <label>
-                        <input name="user[in_menu]" type="hidden" value="0" />
-                        <input name="user[in_menu]" type="checkbox" value="1" {{ checked(old('user.in_menu',$user->in_menu)) }} /> In Menu
-                    </label>
-                </div>
-                <div class="col-sm">
 
-                    <label>
-                        <input name="user[allow_comments]" type="hidden" value="0" />
-                        <input name="user[allow_comments]" type="checkbox" value="1" {{ checked(old('user.allow_comments', $user->allow_comments)) }} /> Allow Comments
-                    </label>
-                </div>
-                <div class="col-sm">
 
-                    <label>
-                         <input name="user[live]" type="hidden" value="0" />
-                         <input name="user[live]" type="checkbox" value="1" {{ checked( old('user.live', $user->live)) }} /> Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
-                </div>
-            </div>
-        </div>
+
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="col-sm">

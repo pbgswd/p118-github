@@ -1,4 +1,7 @@
-@extends('layouts.dashboard')
+<?php
+$topic = $data['topic'];
+?>
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Topic ' . ($data["action"] == 'Edit' ? $topic->name : '') ])
 @section('content')
     <script>
         tinymce.init({
@@ -20,18 +23,7 @@
     </script>
 
 <div class="container">
-    <?php
-        $topic = $data['topic'];
-    ?>
-
-    <h1 class="page-header"><i class="fas fa-edit"></i> {{ $data['action'] }} Topic
-        @if ($data['action'] == 'Edit')
-            {{ $topic->name }}
-        @endif
-    </h1>
-        <h3>  <a href="{{ route('topics_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of topics</a>  </h3>
-
-
+    <h3>  <a href="{{ route('topics_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of topics</a>  </h3>
     <form method="post" name="topic" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="topic[id]" value="{{ $topic['id'] }}">
         {!! csrf_field() !!}

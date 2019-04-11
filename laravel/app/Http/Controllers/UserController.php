@@ -30,8 +30,12 @@ class UserController extends Controller
     public function store()
     {}
 
-    public function edit()
-    {}
+    public function edit(User $user)
+    {
+        $data = ['user'=>$user, 'action'=>'Edit'];
+
+        return view('admin.user', ['data'=> $data]);
+    }
 
     public function update()
     {}

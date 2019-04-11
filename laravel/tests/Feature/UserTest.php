@@ -39,7 +39,6 @@ class UserTest extends TestCase
 
         foreach ($users as $user)
         {
-
             echo "attempting to insert ". $user['name'] . "\n";
 
             $response = $this->post(

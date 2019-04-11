@@ -1,7 +1,6 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Topics'])
 @section('content')
 <div class="container">
-    <h1 class="display-3"><i class="fas fa-list"></i> List Topics</h1>
         <h3>
            <span class="badge badge-primary badge-pill">
                {!! $data['topics']->total()  !!}

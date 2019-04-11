@@ -1,7 +1,8 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Members'])
+
 @section('content')
 <div class="container">
-    <h1 class="display-3"><i class="fas fa-list"></i> List Members</h1>
+    <h1 class="display-3"></h1>
         <h3>
            <span class="badge badge-primary badge-pill">
                {!! $data['users']->total()  !!}
@@ -10,7 +11,7 @@
         </h3>
 </div>
 
-<form name="delete" method="POST" action="{{route('topic_destroy')}}">
+<form name="delete" method="POST" action="{{route('user_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
 
@@ -20,12 +21,8 @@
                 <thead>
                     <tr>
                         <th> @sortablelink('id','#') </th>
-                        <th> @sortablelink('name', 'Title') </th>
-                        <th> @sortablelink('access_level', 'Access Level') </th>
-                        <th> @sortablelink('live', 'Is Live?') </th>
-                        <th> @sortablelink('sort_order', 'Sort Order') </th>
-                        <th> @sortablelink('in_menu', 'In Menu?') </th>
-                        <th> @sortablelink('allow_comments', 'Allow Comments?') </th>
+                        <th> @sortablelink('name', 'Name') </th>
+                        <th> @sortablelink('email', 'Email') </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -43,16 +40,12 @@
                         </td>
                         <td>
                             <h4>
-                                <a title="{{ $i->name }}" href="{{ route('topic_edit', $i->slug) }}">{{ $i->name }}</a>
+                                <a title="{{ $i->name }}" href="{{ route('user_edit', $i->id) }}">{{ $i->name }}</a>
                             </h4>
                         </td>
-                        <td> {{ $i->access_level }} </td>
-                        <td> {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
-                        <td> {{ $i->sort_order }} </td>
-                        <td> {!! $i->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
-                        <td> {!! $i->allow_comments ? "<i class='fas fa-check'></i>" : '<i class="far fa-times-circle"></i>' !!} </td>
+                        <td> {{ $i->email }} </td>
                         <td>
-                            <a href="{{ route('topic_edit', $i->slug) }}" title="Edit {{ $i->name }} ">
+                            <a href="{{ route('user_edit', $i->id) }}" title="Edit {{ $i->name }} ">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>
@@ -61,7 +54,7 @@
                     </tr>
                 @endforeach
                     <tr>
-                        <td colspan="10">&nbsp;</td>
+                        <td colspan="6">&nbsp;</td>
                     </tr>
                 </tbody>
             </table>
