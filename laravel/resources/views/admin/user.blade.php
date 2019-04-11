@@ -24,7 +24,7 @@ $user = $data['user'];
 
 <div class="container">
 
-    <h3>  <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of users</a>  </h3>
+    <h3>  <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>  </h3>
 
 
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
@@ -35,7 +35,7 @@ $user = $data['user'];
             <div class="form-group">
                 <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="user[name]" value="{{ old('user.name', $user->name)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Name" name="user[name]" value="{{ old('user.name', $user->name)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@ $user = $data['user'];
             <div class="form-group">
                 <div class="col-lg-2"><h4>Email</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="user[email]" value="{{ old('user.email', $user->email)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email)}}" size="80" required/>
                 </div>
             </div>
         </div>

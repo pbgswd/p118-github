@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\User\DestroyUser;
+use App\Http\Requests\User\StoreUser;
+use App\Http\Requests\User\UpdateUser;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+
 
 class UserController extends Controller
 {
@@ -15,7 +21,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::sortable()->paginate(60);
+        $users = User::sortable()->paginate(10);
 
         return view('admin.listusers', ['data'=>array('users'=>$users )]);
     }
@@ -27,8 +33,16 @@ class UserController extends Controller
         return view('admin.user', ['data' => ['user' => $user, 'action' => 'Create']]);
     }
 
-    public function store()
-    {}
+    public function store(StoreUser $request)
+    {
+        $user = new User($request->input('user'));
+
+        $user->save();
+
+        Session::flash('success', "You have saved a new member");
+
+        return redirect()->route('user_edit', [$user->id]);
+    }
 
     public function edit(User $user)
     {
@@ -37,9 +51,21 @@ class UserController extends Controller
         return view('admin.user', ['data'=> $data]);
     }
 
-    public function update()
-    {}
+    public function update(UpdateUser $request, User $user)
+    {
+        $user->fill($request['user']);
+        $user->save();
+        Session::flash('success', "You have edited a member profile");
 
-    public function destroy()
-    {}
+        return redirect()->route('user_edit', [$user->id]);
+    }
+
+    public function destroy(DestroyUser $request)
+    {
+
+       User::destroy($request->id);
+       Session::flash('success', Str::plural('Member', count($request->id)) . ' deleted.');
+
+       return redirect()->route('users_list');
+    }
 }

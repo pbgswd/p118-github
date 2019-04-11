@@ -72,7 +72,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('users_list')}}">
                             <span data-feather="file"></span>
-                            Users
+                            Members
                         </a>
                     </li>
                     <li class="nav-item">

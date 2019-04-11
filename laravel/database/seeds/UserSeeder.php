@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 2; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $date = date('Y-m-d H:i:s');
             DB::table('users')->insert([
                 'name' => $faker->name,
