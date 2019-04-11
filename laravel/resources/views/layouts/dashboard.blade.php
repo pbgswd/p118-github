@@ -70,6 +70,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('users_list')}}">
+                            <span data-feather="file"></span>
+                            Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route('attachment_create')}}">
                             <span data-feather="file"></span>
                             Add Images & Attachments

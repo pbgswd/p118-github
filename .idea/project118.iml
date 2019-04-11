@@ -64,6 +64,7 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/sebastian/recursion-context" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/sebastian/resource-operations" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/sebastian/version" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/spatie/laravel-permission" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/swiftmailer/swiftmailer" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/console" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/contracts" />

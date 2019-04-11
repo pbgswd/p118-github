@@ -1,12 +1,12 @@
 @extends('layouts.dashboard')
 @section('content')
 <div class="container">
-    <h1 class="display-3"><i class="fas fa-list"></i> List Topics</h1>
+    <h1 class="display-3"><i class="fas fa-list"></i> List Members</h1>
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! $data['topics']->total()  !!}
+               {!! $data['users']->total()  !!}
            </span>
-            Topics. | <a href="{{ route('topic_create') }}">Create new topic <i class="far fa-arrow-alt-circle-right"></i> </a>
+            Members. | <a href="{{ route('user_create') }}">Create new member <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 
@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ( $data['topics'] as $i )
+                @foreach ( $data['users'] as $i )
                     <tr>
                         <td>
                             <div class="checkbox">
@@ -68,8 +68,7 @@
         </div>
     </div>
 
-
-
+    @if($data['users']->total() > 0)
     <div class="row">
         <div class="col">
             <i class="far fa-trash-alt fa-2x"></i>
@@ -78,15 +77,13 @@
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                    {!! $data['topics']->links() !!}
+                    {!! $data['users']->links() !!}
                 </ul>
             </div>
         </div>
         <div class="col"></div>
     </div>
-
-
-
+    @endif
     <div class="row" style="margin-top:6em;"></div>
 </form>
 

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
-use Illuminate\Database\Eloquent\Model;
 
 
 class Topic extends Model
