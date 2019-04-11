@@ -12,18 +12,12 @@ use Kyslik\ColumnSortable\Sortable;
 class User extends Authenticatable
 {
     use Notifiable;
-
     use Sortable;
 
     public $sortable = [
         'id',
         'name',
-        'image',
-        'access_level',
-        'live',
-        'sort_order',
-        'in_menu',
-        'allow_comments',
+        'email',
         'created_at',
         'updated_at',
     ];
@@ -55,7 +49,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getRouteKeyName()
+/*    public function getRouteKeyName()
     {
         return 'slug';
     }
@@ -64,5 +58,5 @@ class User extends Authenticatable
     {
         $this->attributes['slug'] = Str::slug($value, '-');
         return $this->attributes['name'] = $value;
-    }
+    }*/
 }
