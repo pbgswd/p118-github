@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Topic ' . ($data["action"] == 'Edit' ? $topic->name : '') ])
 @section('content')
 <div class="container">
     <?php

@@ -44,6 +44,13 @@
                             <h4>
                                 <a title="{{ $i->name }}" href="{{ route('topic_edit', $i->slug) }}">{{ $i->name }}</a>
                             </h4>
+                            @if (count($i->tags) > 0)
+                                (
+                                @foreach ( $i->tags as $tag )
+                                    {{$tag->name}}
+                                @endforeach
+                                )
+                            @endif
                         </td>
                         <td> {{ $i->access_level }} </td>
                         <td> {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>

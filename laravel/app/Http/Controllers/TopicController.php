@@ -25,7 +25,7 @@ class TopicController extends Controller
      */
     public function index(Request $request)
     {
-        $topics = Topic::sortable()->paginate(60);
+        $topics = Topic::sortable()->with('tagged')->paginate(20);
 
         return view('admin.listtopics', ['data'=>array('topics'=>$topics )]);
     }
@@ -51,11 +51,15 @@ class TopicController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $topic = new Topic($request->input('topic'));
+        $topic = new Topic($request->input('topic'), $request->input('tags'));
 
         $topic->image = $this->uploadImage($request);
 
         $topic->save();
+
+        if (!empty($request->tags)) {
+            $topic->tag(trim($request->tags, ','));
+         }
 
         Session::flash('success', "You have saved a new topic");
 
@@ -98,6 +102,15 @@ class TopicController extends Controller
         $topic->fill($data);
         $topic->save();
 
+        if (empty($request->tags))
+        {
+            $topic->untag();
+        }
+        else
+        {
+             $topic->retag(trim($request->tags, ','));
+        }
+
         Session::flash('success', "You have edited the topic");
 
         return redirect()->route('topic_edit', [$topic->slug]);
@@ -116,6 +129,8 @@ class TopicController extends Controller
         if ($topic->image) {
             Storage::disk('public')->delete($topic->image);
         }
+
+        $topic->untag();
 
         Topic::destroy($request->id);
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -11,6 +12,7 @@ class Topic extends Model
 {
 
     use Sortable;
+    use Taggable;
 
     public $sortable = [
         'id',

@@ -48,7 +48,7 @@ $topic = $data['topic'];
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row border border-info p-5 rounded-lg" style="border-width:6px; !important;">
+        <div class="row" style="border-width:6px; !important;">
             @if( $topic->image )
                 <div class="col-md-6">
                     <div class="col">
@@ -83,6 +83,7 @@ $topic = $data['topic'];
             @endif
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
@@ -91,7 +92,8 @@ $topic = $data['topic'];
                         <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="topic[access_level]" value="{{ old('topic.access_level', $topic->access_level)}}" size="30" required/>
                         <p>Access Level: public, members, executive</p>
                     </div>
-                    <div class="col-6 col-sm-3"></div><div class="col-6 col-sm-3"></div>
+                    <div class="col-6 col-sm-3"></div>
+                    <div class="col-6 col-sm-3"></div>
                     <!-- Force next columns to break to new line -->
                     <div class="w-100"></div>
                     <div class="col-12">&nbsp;</div>
@@ -105,9 +107,10 @@ $topic = $data['topic'];
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-sm">
 
+            <div class="col-md-4">
+                <div class="col-lg-2"><h4>Status</h4></div>
+                <div class="col-sm">
                     <label>
                         <input name="topic[in_menu]" type="hidden" value="0" />
                         <input name="topic[in_menu]" type="checkbox" value="1" {{ checked(old('topic.in_menu',$topic->in_menu)) }} /> In Menu
@@ -131,6 +134,19 @@ $topic = $data['topic'];
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-2"><h4>Tags</h4></div>
+                <div class="col-lg-10">
+                    <label><input type="text" name="tags" value="<?php echo htmlentities(old('tags', join(', ', $topic->tagNames()))); ?>"size="40" />
+                        <br />Add tags related to topic, comma separated.</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+
         <div class="row">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
