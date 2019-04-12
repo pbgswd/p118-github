@@ -13,14 +13,14 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <link rel="canonical" href="http://project118/hello/">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
           <style>
       .bd-placeholder-img {
@@ -39,11 +39,11 @@
       }
     </style>
     <!-- Custom styles for this template -->
-            <link href="css/jumbotron.css" rel="stylesheet">
+            <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
             </head>
             <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">{{config('app.name')}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -54,8 +54,11 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+                  <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
                 </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{route('admin')}}">Admin</a>
+                  </li>
                 <li class="nav-item">
                   <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
@@ -85,37 +88,38 @@
                 @yield('content')         
             </div>
 
-  <div class="container">
-              <!-- Example row of columns -->
-              <div class="row">
-                <div class="col-md-4">
-                  <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-                  <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-                  <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-    </div>
+          <div class="container">
+                      <!-- Example row of columns -->
+                      <div class="row">
+                        <div class="col-md-4">
+                          <h2>Heading</h2>
+                  <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+              </div>
+              <div class="col-md-4">
+                          <h2>Heading</h2>
+                  <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+              </div>
+              <div class="col-md-4">
+                          <h2>Heading</h2>
+                  <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+              </div>
+            </div>
 
-    <hr>
+            <hr>
 
-  </div> <!-- /container -->
+          </div> <!-- /container -->
 
       </main>
 
-<footer class="container">
-          <p>&copy; {{ config('app.name')}} <?php echo date('Y'); ?> </p>
-</footer>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-                        <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+        <footer class="container">
+                  <p>&copy; {{ config('app.name')}} <?php echo date('Y'); ?> </p>
+        </footer>
+        <script src="/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
+        <script src="/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
     </body>
 </html>
                         

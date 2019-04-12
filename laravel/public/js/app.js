@@ -49170,10 +49170,10 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/project118/laravel/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /var/www/project118/laravel/resources/sass/app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! /var/www/project118/laravel/resources/sass/dashboard.scss */"./resources/sass/dashboard.scss");
-module.exports = __webpack_require__(/*! /var/www/project118/laravel/resources/sass/jumbotron.scss */"./resources/sass/jumbotron.scss");
+__webpack_require__(/*! /home/peter/Documents/laratest/project118/laravel/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /home/peter/Documents/laratest/project118/laravel/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/peter/Documents/laratest/project118/laravel/resources/sass/dashboard.scss */"./resources/sass/dashboard.scss");
+module.exports = __webpack_require__(/*! /home/peter/Documents/laratest/project118/laravel/resources/sass/jumbotron.scss */"./resources/sass/jumbotron.scss");
 
 
 /***/ })

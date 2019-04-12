@@ -138,7 +138,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/project118/laravel/resources/js/dashboard.js */"./resources/js/dashboard.js");
+module.exports = __webpack_require__(/*! /home/peter/Documents/laratest/project118/laravel/resources/js/dashboard.js */"./resources/js/dashboard.js");
 
 
 /***/ })

@@ -33,6 +33,9 @@ Route::get('/admin/user/{user}', 'UserController@edit')->name('user_edit');
 Route::post('/admin/user/{user}', 'UserController@update');
 Route::delete('/admin/user/delete', 'UserController@destroy')->name('user_destroy');
 
+Route::get('contact', 'ContactController@show')->name('contact');
+Route::post('contact', 'ContactController@submit');
+
 Route::get('/admin/attachment', 'AttachmentController@create')->name('attachment_create');
 Route::get('/admin/attachments', 'AttachmentController@index')->name('attachments_list');
 
