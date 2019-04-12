@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 
+/**
+ * Class UserController
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
     /**
@@ -26,6 +30,10 @@ class UserController extends Controller
         return view('admin.listusers', ['data'=>array('users'=>$users )]);
     }
 
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $user = new User;
@@ -33,6 +41,10 @@ class UserController extends Controller
         return view('admin.user', ['data' => ['user' => $user, 'action' => 'Create']]);
     }
 
+    /**
+     * @param StoreUser $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StoreUser $request)
     {
         $user = new User($request->input('user'));
@@ -44,6 +56,10 @@ class UserController extends Controller
         return redirect()->route('user_edit', [$user->id]);
     }
 
+    /**
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(User $user)
     {
         $data = ['user'=>$user, 'action'=>'Edit'];
@@ -51,6 +67,11 @@ class UserController extends Controller
         return view('admin.user', ['data'=> $data]);
     }
 
+    /**
+     * @param UpdateUser $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateUser $request, User $user)
     {
         $user->fill($request['user']);
@@ -60,9 +81,12 @@ class UserController extends Controller
         return redirect()->route('user_edit', [$user->id]);
     }
 
+    /**
+     * @param DestroyUser $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(DestroyUser $request)
     {
-
        User::destroy($request->id);
        Session::flash('success', Str::plural('Member', count($request->id)) . ' deleted.');
 
