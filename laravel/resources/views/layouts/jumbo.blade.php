@@ -21,8 +21,7 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
-          <style>
+    <style>
       .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -31,6 +30,15 @@
       -ms-user-select: none;
       user-select: none;
   }
+      .dropcap {
+          font-size: 4rem;
+          color: #903;
+          float: left;
+          line-height: 60px;
+
+          padding-right: 4px;
+          padding-left: 3px;
+      }
 
       @media (min-width: 768px) {
           .bd-placeholder-img-lg {
@@ -39,87 +47,122 @@
       }
     </style>
     <!-- Custom styles for this template -->
-            <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
-            </head>
-            <body>
+    <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
+    </head>
+    <body>
+    <a name="top"></a>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">{{config('app.name')}}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-              <ul class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="#">{{config('app.name')}}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
+                    <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
                 </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{route('admin')}}">Admin</a>
-                  </li>
+                @guest
+                    @else
                 <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Disabled</a>
+                    <a class="nav-link" href="{{route('admin')}}">Admin</a>
+                </li>
+                @endguest
+                <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                  <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
                 </li>
-              </ul>
-              <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
-                &nbsp;
-                <a href="/login">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-                </a>
-            </div>
-          </nav>
+            </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
 
-          <main role="main">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav mr-auto">
+                    <div style="color: white">Left Div</div>
+                </ul>
+
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+                    @guest
+                        <li class="nav-item">
+                            <a href="/login">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                            </a>
+                        </li>
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="nav-item">
+                            <a id="" class="nav-link" href="#">
+                                {{ Auth::user()->name }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                            </form>
+                        </li>
+                    @endguest
+                </ul>
+            </div>
+
+
+
+
+        </div>
+    </nav>
+    <main role="main">
             <!-- Main jumbotron for a primary marketing message or call to action -->
             <div class="jumbotron">
-                @yield('content')         
+                @yield('content')
             </div>
-
           <div class="container">
-                      <!-- Example row of columns -->
-                      <div class="row">
-                        <div class="col-md-4">
+          <!-- Example row of columns -->
+              <div class="row">
+                    <div class="col-md-4">
                           <h2>Heading</h2>
-                  <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-              </div>
-              <div class="col-md-4">
-                          <h2>Heading</h2>
-                  <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-              </div>
-              <div class="col-md-4">
-                          <h2>Heading</h2>
-                  <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-              </div>
-            </div>
-
-            <hr>
-
-          </div> <!-- /container -->
-
-      </main>
-
-        <footer class="container">
-                  <p>&copy; {{ config('app.name')}} <?php echo date('Y'); ?> </p>
-        </footer>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+                  </div>
+                  <div class="col-md-4">
+                      <h2>Heading</h2>
+                      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                      <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+                  </div>
+                  <div class="col-md-4">
+                      <h2>Heading</h2>
+                      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                      <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+                  </div>
+          </div>
+          <hr>
+      </div> <!-- /container -->
+    </main>
+    <footer class="container">
+        <div class="text-left"><i class="far fa-copyright"></i>{{ config('app.name')}} <?php echo date('Y'); ?></div>
+            <div class="text-right"> <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
+        </div>
+    </footer>
         <script src="/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
         <script src="/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
     </body>
 </html>
                         
