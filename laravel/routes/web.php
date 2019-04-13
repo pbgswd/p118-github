@@ -11,10 +11,18 @@
 |
 */
 
-
-
+Route::group(['middleware' => 'web'], function () {
 Route::get('/', 'HelloController@index')->name('hello');
+Route::get('contact', 'ContactController@show')->name('contact');
+Route::post('contact', 'ContactController@submit');
+Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+});
 
+// ADMIN ONLY
+Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function () {
+
+Route::get('/', 'AdminController@index')->name('admin');
 Route::get('/admin', 'AdminController@index')->name('admin');
 
 Route::get('/admin/topics', 'TopicController@index')->name('topics_list');
@@ -31,12 +39,6 @@ Route::get('/admin/user/{user}', 'UserController@edit')->name('user_edit');
 Route::post('/admin/user/{user}', 'UserController@update');
 Route::delete('/admin/user/delete', 'UserController@destroy')->name('user_destroy');
 
-Route::get('contact', 'ContactController@show')->name('contact');
-Route::post('contact', 'ContactController@submit');
-
 Route::get('/admin/attachment', 'AttachmentController@create')->name('attachment_create');
 Route::get('/admin/attachments', 'AttachmentController@index')->name('attachments_list');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+});
