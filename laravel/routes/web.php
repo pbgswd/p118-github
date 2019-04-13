@@ -11,11 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/hello', 'HelloController@index')->name('hello');
+
+Route::get('/', 'HelloController@index')->name('hello');
 
 Route::get('/admin', 'AdminController@index')->name('admin');
 

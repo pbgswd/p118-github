@@ -4,7 +4,7 @@ namespace App\Http\Requests\Contact;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class \SubmitContact extends FormRequest
+class SubmitContact extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class \SubmitContact extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class \SubmitContact extends FormRequest
     public function rules()
     {
         return [
-            //
+            'email'        => 'required|email|min:6|max:255',
+            'name'         => 'required|min:2|max:255',
+            'mail_subject' => 'required|min:6|max:255',
+            'mail_body'    => 'required|min:6|max:2000'
         ];
     }
 }
