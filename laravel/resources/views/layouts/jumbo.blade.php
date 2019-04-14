@@ -13,7 +13,7 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 
     <link rel="canonical" href="http://project118/hello/">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -103,7 +103,7 @@
                             </a>
                         </li>
                         @if (Route::has('register'))
-                            <li class="nav-item">
+                            <li class="nav-item float-right">
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @endif
@@ -114,7 +114,7 @@
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                                <button class="btn btn-outline-success my-2 my-sm-0 float-right" type="submit">Logout</button>
                             </form>
                         </li>
                     @endguest
