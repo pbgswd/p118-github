@@ -27,6 +27,18 @@ class PageController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        $pages = Page::sortable()->with('tagged')->paginate(10);
+
+        return view('pages', ['data'=>array('pages'=>$pages )]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -72,7 +84,7 @@ class PageController extends Controller
         // public
         $data = ['page'=>$page, 'action'=>'Edit'];
 
-        return view('page_show', ['data'=> $data]);
+        return view('page', ['data'=> $data]);
     }
 
     /**

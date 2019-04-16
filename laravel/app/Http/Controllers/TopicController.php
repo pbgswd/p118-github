@@ -30,6 +30,29 @@ class TopicController extends Controller
         return view('admin.listtopics', ['data'=>array('topics'=>$topics )]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function list()
+    {
+        $topics = Topic::sortable()->with('tagged')->paginate(10);
+
+        return view('topics', ['data'=>array('topics'=>$topics )]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Topic  $topic
+     * @return Response
+     */
+    public function show(Topic $topic)
+    {
+        $data = ['topic'=>$topic, 'action'=>'Edit'];
+
+        return view('topic', ['data'=> $data]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

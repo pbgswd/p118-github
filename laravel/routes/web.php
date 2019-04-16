@@ -21,8 +21,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('contact', 'ContactController@submit');
     Route::get('/home', 'HomeController@index')->name('home');
 
+
+    Route::get('/pages', 'PageController@list')->name('pages');
     Route::get('/page/{page}', 'PageController@show')->name('page_show');
 
+    Route::get('/topics', 'TopicController@list')->name('topics');
+        Route::get('/topic/{topic}', 'TopicController@show')->name('topic_show');
 });
 
 
