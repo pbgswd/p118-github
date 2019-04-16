@@ -14,7 +14,7 @@ class Page extends Model
 
     public $sortable = [
         'id',
-        'name',
+        'title',
         'image',
         'access_level',
         'live',
@@ -45,7 +45,7 @@ class Page extends Model
      */
     protected $fillable =
         [
-            'name',
+            'title',
             'description',
             'content',
             'image',

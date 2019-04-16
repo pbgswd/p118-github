@@ -21,10 +21,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('contact', 'ContactController@submit');
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::get('/page/{page}', 'PageController@show')->name('page_show');
+
 });
 
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function () {
+
+    Route::get('/member', function () {
+        return view('admin.member');
+    });
 
     Route::get('/', 'AdminController@index')->name('admin');
 
@@ -41,6 +47,14 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('/user/{user}', 'UserController@edit')->name('user_edit');
     Route::post('/user/{user}', 'UserController@update');
     Route::delete('/user/delete', 'UserController@destroy')->name('user_destroy');
+
+
+    Route::get('/pages', 'PageController@index')->name('pages_list');
+    Route::get('/page', 'PageController@create')->name('page_create');
+    Route::post('/page', 'PageController@store');
+    Route::get('/page/{page}', 'PageController@edit')->name('page_edit');
+    Route::post('/page/{page}', 'PageController@update');
+    Route::delete('/page/delete', 'PageController@destroy')->name('page_destroy');
 
     Route::get('/attachment', 'AttachmentController@create')->name('attachment_create');
     Route::get('/attachments', 'AttachmentController@index')->name('attachments_list');

@@ -15,6 +15,16 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title')->unique();
+            $table->string('slug')->unique();
+            $table->string('description')->nullable();
+            $table->string('content');
+            $table->string('image')->nullable();
+            $table->string('access_level')->nullable();
+            $table->boolean('live');
+            $table->integer('sort_order')->unsigned()->nullable();
+            $table->boolean('in_menu');
+            $table->boolean('allow_comments');
             $table->timestamps();
         });
     }

@@ -66,7 +66,13 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="{{ route('admin')}}">
                                     <span data-feather="home"></span>
-                                    Dashboard <span class="sr-only">(current)</span>
+                                    Admin Dashboard <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/admin/member">
+                                    <span data-feather="home"></span>
+                                    Member Dashboard <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -94,7 +100,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin')}}">
+                                <a class="nav-link" href="{{route('pages_list')}}">
                                     <span data-feather="file"></span>
                                     List Pages
                                 </a>

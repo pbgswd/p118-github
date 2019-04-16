@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Page\DestroyPage;
+use App\Http\Requests\Page\StorePage;
+use App\Http\Requests\Page\UpdatePage;
 use App\Models\Page;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -39,7 +44,7 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePage $request)
     {
         $page = new Page($request->input('page'), $request->input('tags'));
 
@@ -90,7 +95,7 @@ class PageController extends Controller
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Page $page)
+    public function update(UpdatePage $request, Page $page)
     {
         $data = $request['page'];
 
@@ -127,7 +132,7 @@ class PageController extends Controller
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Page $page)
+    public function destroy(DestroyPage $request)
     {
         $page = Page::find($request->id)->first();
 

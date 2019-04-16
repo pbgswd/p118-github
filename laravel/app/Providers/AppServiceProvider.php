@@ -29,8 +29,23 @@ class AppServiceProvider extends ServiceProvider
 //        view()->composer('page_parts.content_feature', 'App\Http\ViewComposers@contentFeature');
 //        view()->composer('admin.admin_topics_menu', 'App\Http\ViewComposers@adminTopicsMenu');
 
+        /*
+         *
+         *
+         *        $this->registerPolicies();
+
+        // Implicitly grant "Admin" role all permissions
+        // This works in the app by using gate-related functions like auth()->user->can() and @can()
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('Admin') ? true : null;
+        });
+         *
+         *
+         * */
+
+
         if($this->app->environment('production')) {
-            \URL::forceSchema('https');
+            URL::forceSchema('https');
         }
 
     }

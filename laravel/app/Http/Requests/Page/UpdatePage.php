@@ -4,7 +4,7 @@ namespace App\Http\Requests\Page;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePage extends FormRequest
+class UpdatePage extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class StorePage extends FormRequest
     public function rules()
     {
         return [
-            'page.title' => 'required|unique:pages,title|max:255',
+            'page.title' => 'required|max:255|unique:pages,title,' . $this->route('page')->slug . ',slug',
             'page.description' => 'required',
             'page.content' => 'required',
             'page.access_level' => 'required|string|max:255',

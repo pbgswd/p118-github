@@ -1,121 +1,182 @@
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Topic ' . ($data["action"] == 'Edit' ? $topic->name : '') ])
+<?php
+$page = $data['page'];
+?>
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Page ' . ($data["action"] == 'Edit' ? $page->name : '') ])
 @section('content')
+    <script>
+        tinymce.init({
+            mode: 'textareas',
+            height: 200,
+            width:800,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor textcolor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tiny.cloud/css/codepen.min.css'
+            ]
+        });
+    </script>
+
 <div class="container">
-    <?php
-        $topic = $data['topic'];
-    ?>
-
-    <h1 class="page-header">{{ $data['action'] }} Page -- to be developed
-        @if ($data['action'] == 'Edit')
-            Edit {{ $topic->name }}
-        @endif
-    </h1>
-
-    <form method="post" name="posts" action="{{ url()->current() }}">
-        <input type="hidden" name="topic[id]" value="{{ $topic['id'] }}">
+    <h3>  <a href="{{ route('pages_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of pages</a>  </h3>
+    <form method="post" name="page" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <input type="hidden" name="page[id]" value="{{ $page['id'] }}">
         {!! csrf_field() !!}
-
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="topic[name]" value="{{ old('topic.name', $topic->name)}}" size="40" />
+                    <input type="text" class="form-control"  placeholder="Title" name="page[title]" value="{{ old('page.title', $page->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="form-group">
-                <h4>Summary</h4>
-                <textarea name="topic[description]" placeholder="Summary content" class="form-control" cols="100" rows="6">{{old('topic.description', $topic->description)}}</textarea>
+                <div class="col-lg-2">
+                    <h4>Summary</h4>
+                </div>
+                <div class="col-lg-10">
+                    <textarea name="page[description]" id="page-description" placeholder="Summary content" class="form-control">{{old('page.description', $page->description)}}</textarea>
+                </div>
             </div>
         </div>
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <h4>Content</h4>
+                </div>
+                <div class="col-lg-10">
+                    <textarea name="page[content]" id="page-content" placeholder="Content" class="form-control">{{old('page.content', $page->content)}}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row" style="border-width:6px; !important;">
+            @if( $page->image )
+                <div class="col-md-6">
+                    <div class="col">
+                        <h4>
+                            <i class="far fa-images"></i>
+                            Image preview
+                        </h4>
+
+                        <h5>Currently: {{ $page->image }}</h5>
+                        <img src="{{ asset('storage/'.$page->image) }}" />
+                    </div>
+                    <div class="col" style="margin-top: 3em;">
+                        <input type="hidden"  name="page[image]" value="{{$page->image}}" />
+                        <label>
+                            <input name="page[delete_image]" type="checkbox" value="1" /> Check to delete image
+                        </label>
+                    </div>
+                </div>
+            @else
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputFile">
+                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                            File input
+                        </label>
+                        <input type="file" id="inputFile" name="image" />
+                        <p class="help-block">
+                            Upload image for page.
+                        </p>
+                    </div>
+                </div>
+            @endif
+        </div>
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
+                    <div class="col-6 col-sm-3">
+                        <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="page[access_level]" value="{{ old('page.access_level', $page->access_level)}}" size="30" required/>
+                        <p>Access Level: public, members, executive</p>
+                    </div>
+                    <div class="col-6 col-sm-3"></div>
+                    <div class="col-6 col-sm-3"></div>
+                    <!-- Force next columns to break to new line -->
+                    <div class="w-100"></div>
+                    <div class="col-12">&nbsp;</div>
+                    <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
+                    <div class="col-6 col-sm-3">
+                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="page[sort_order]" value="{{old('page.sort_order',$page->sort_order)}}" size="30" required/>
+                        <p>e.g.: 1000, 2000</p>
+                    </div>
+                    <div class="invalid-feedback">
+                        Please add a numeric sort order {{ @$errors->get('page.sort_order')[0] }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="col-lg-2"><h4>Status</h4></div>
+                <div class="col-sm">
+                    <label>
+                        <input name="page[in_menu]" type="hidden" value="0" />
+                        <input name="page[in_menu]" type="checkbox" value="1" {{ checked(old('page.in_menu',$page->in_menu)) }} /> In Menu
+                    </label>
+                </div>
+                <div class="col-sm">
+
+                    <label>
+                        <input name="page[allow_comments]" type="hidden" value="0" />
+                        <input name="page[allow_comments]" type="checkbox" value="1" {{ checked(old('page.allow_comments', $page->allow_comments)) }} /> Allow Comments
+                    </label>
+                </div>
+                <div class="col-sm">
+
+                    <label>
+                         <input name="page[live]" type="hidden" value="0" />
+                         <input name="page[live]" type="checkbox" value="1" {{ checked( old('page.live', $page->live)) }} /> Check now to make Live
+                    </label>
+                    <p>ie.: Draft or Published.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
 
         <div class="row">
             <div class="form-group">
-                <h4>Content</h4>
-                <textarea name="topic[content]" placeholder="Content" class="form-control" cols="100" rows="10">{{old('topic.content', $topic->content)}}</textarea>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
-                    <input type="file" id="exampleInputFile" name="topic[image]">
-                    <p class="help-block">Example block-level help text here.</p>
+                <div class="col-lg-2"><h4>Tags</h4></div>
+                <div class="col-lg-10">
+                    <label><input type="text" name="tags" value="<?php echo htmlentities(old('tags', join(', ', $page->tagNames()))); ?>"size="40" />
+                        <br />Add tags related to page, comma separated.</label>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <h4>Image preview</h4>
-            </div>
-        </div>
-
-        <div class="col-md-2">
-            <h4>Topic type </h4>
-        </div>
-
-        <div class="row">
-            <div class="col-md-2">
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="topic[is_page]" value="0" {{ checked( old('topic.is_page', $topic->is_page), false) }}>
-                        Topic (subject heading for posts)
-                    </label>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="topic[is_page]"  value="1" {{ checked( old('topic.is_page', $topic->is_page), true) }}>
-                        Single Page
-                    </label>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <h4>Sort Order</h4>
-            </div>
-            <div class="col-md-3">
-                <input type="text" class="form-control"  placeholder="e.g.: 1000, 2000" name="topic[sort_order]" value="{{old('topic.sort_order',$topic->sort_order)}}" size="8" />
             </div>
         </div>
 
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
 
-        <div class="col-md-4">
-            <input name="topic[in_menu]" type="hidden" value="0" {{ checked(old('topic.in_menu',$topic->in_menu)) }} /></label>
-            <label>In Menu: <input name="topic[in_menu]" type="checkbox" value="1" {{ checked(old('topic.in_menu',$topic->in_menu)) }} /></label>
-        </div>
-
-        <div class="col-md-4">
-            <input name="topic[allow_comments]" type="hidden" value="0" {{ checked( old('topic.allow_comments', $topic->allow_comments) ) }} /></label>
-            <label>Allow Comments: <input name="topic[allow_comments]" type="checkbox" value="1" {{ checked(old('topic.allow_comments', $topic->allow_comments)) }} /></label>
-        </div>
-
-        <div class="col-md-4">
-            <input name="topic[live]" type="hidden" value="0" />
-            <label>Check now to make Live: <input name="topic[live]" type="checkbox" value="1" {{ checked( old('topic.live', $topic->live)) }} /></label>
-        </div>
-
-        <div class="row" style="margin-top:60px;"> &nbsp;</div>
-
-
-        <div class="col-md-2">
-            <input class="btn btn-primary" type="submit" value="{{ $data['action'] }}" />
-        </div>
-
+        <div class="row">
+            <div class="col-sm">
+                <i class="fas fa-edit fa-2x"></i>
+                <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
+            </div>
     </form>
 
-    <div class="col-md-8"> &nbsp;</div>
+         <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
-    <div class="col-md-2">
-        <form method="post" name="topic" action="{{route('topic_delete')}}">
-            <input type="hidden" name="id[]" value="{{ $topic->id }}">
-            <input class="btn btn-warning" type="submit" value="Delete">
-        </form>
-    </div>
+         <div class="col-sm" style="float:right">
+             <form name="delete" method="POST" action="{{route('page_destroy')}}">
+                 {!! csrf_field() !!}
+                 {!! method_field('DELETE') !!}
+                <i class="far fa-trash-alt fa-2x"></i>
+                <input type="hidden" name="id[]" value="{{ $page->id }}">
+                <input class="btn btn-outline-danger" type="submit" value="Delete">
+            </form>
+         </div>
     @endif
-    <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
+    <div class="row" style="margin-top:100px;"> &nbsp;</div>
 </div>
 @endsection
