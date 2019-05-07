@@ -48,8 +48,25 @@ $user = $data['user'];
             </div>
         </div>
 
-
-
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-2"><h4>Phone</h4></div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control"  placeholder="Phone" name="user[phone]" value="{{ old('user.phone', $user->phone)}}" size="80" required/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <ol>
+                <li>head shot</li>
+                <li>address</li>
+                <li>member status</li>
+                <li>since when</li>
+                <li>policies on sharing phone </li>
+                <li>policies on sharing email address</li>
+                <li>dues status</li>
+            </ol>
+        </div>
 
 
         <div class="row" style="margin-top:30px;"> &nbsp;</div>

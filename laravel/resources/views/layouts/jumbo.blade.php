@@ -59,7 +59,7 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('hello') }}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ route('hello') }}" title="Home Page {{ config('app.name') }}"><i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('topics')}}">Topics</a>
@@ -72,9 +72,12 @@
                 </li>
                 @guest
                     @else
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('admin')}}">Admin</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/site" title="Members"><i class="fas fa-industry"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin')}}" title="Admin"><i class="fas fa-tachometer-alt"></i></a>
+                    </li>
                 @endguest
                 <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
@@ -116,7 +119,7 @@
                     @else
                         <li class="nav-item">
                             <a id="" class="nav-link" href="#">
-                                {{ Auth::user()->name }}
+                                <i class="fas fa-user"></i> {{ Auth::user()->name }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
@@ -126,10 +129,6 @@
                     @endguest
                 </ul>
             </div>
-
-
-
-
         </div>
     </nav>
     <main role="main">

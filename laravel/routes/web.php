@@ -26,7 +26,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/page/{page}', 'PageController@show')->name('page_show');
 
     Route::get('/topics', 'TopicController@list')->name('topics');
-        Route::get('/topic/{topic}', 'TopicController@show')->name('topic_show');
+    Route::get('/topic/{topic}', 'TopicController@show')->name('topic_show');
+});
+
+Route::group(['middleware' =>  ['web', 'auth',]], function () {
+
+    //Route::get('/site', 'SiteController@index')->name('site');
+
+    Route::get('/site', function () {
+        return view('site');
+    });
 });
 
 

@@ -20,7 +20,7 @@ $topic = $data['topic'];
                 </div>
             </div>
         @endif
-        {{$topic->description}}
+        {!! $topic->description !!}
 
     </div>
 
