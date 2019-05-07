@@ -61,7 +61,6 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/user/{user}', 'UserController@update');
     Route::delete('/user/delete', 'UserController@destroy')->name('user_destroy');
 
-
     Route::get('/pages', 'PageController@index')->name('pages_list');
     Route::get('/page', 'PageController@create')->name('page_create');
     Route::post('/page', 'PageController@store');
