@@ -17,8 +17,10 @@ Route::group(['middleware' => 'web'], function () {
     Auth::routes();
     //Auth::routes(['register' => false, 'reset' => false]); // turn off register route
     Route::get('/', 'HelloController@index')->name('hello');
+
     Route::get('contact', 'ContactController@show')->name('contact');
     Route::post('contact', 'ContactController@submit');
+
     Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -70,5 +72,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
 
     Route::get('/attachment', 'AttachmentController@create')->name('attachment_create');
     Route::get('/attachments', 'AttachmentController@index')->name('attachments_list');
+
+    Route::get('/roles', 'RoleController@index')->name('roles_list');
 
 });

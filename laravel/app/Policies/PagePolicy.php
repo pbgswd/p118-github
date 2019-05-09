@@ -10,6 +10,11 @@ class PagePolicy
 {
     use HandlesAuthorization;
 
+    /*
+     * methods in PageController:
+     *  index list create store show edit update destroy
+     */
+
     /**
      * Determine whether the user can view the page.
      *

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Policies\PagePolicy;
 use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -11,6 +13,10 @@ class Page extends Model
 {
     use Sortable;
     use Taggable;
+
+    protected $policies = [
+        Page::class => PagePolicy::class,
+    ];
 
     public $sortable = [
         'id',

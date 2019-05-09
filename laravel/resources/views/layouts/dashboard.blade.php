@@ -88,51 +88,27 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('attachment_create')}}">
-                                    <span data-feather="file"></span>
-                                    Add Images & Attachments
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('attachments_list')}}">
                                     <span data-feather="file"></span>
-                                    List Images & Attachments
+                                    Images & Attachments
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('pages_list')}}">
                                     <span data-feather="file"></span>
-                                    List Pages
+                                    Pages
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('admin')}}">
                                     <span data-feather="file"></span>
-                                    Add Page
+                                    Posts
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin')}}">
+                                <a class="nav-link" href="{{route('roles_list')}}">
                                     <span data-feather="file"></span>
-                                    List Access Levels
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin')}}">
-                                    <span data-feather="file"></span>
-                                    Add Access Level
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin')}}">
-                                    <span data-feather="file"></span>
-                                    List Posts
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin')}}">
-                                    <span data-feather="file"></span>
-                                    Add Post
+                                    Roles
                                 </a>
                             </li>
                         </ul>

@@ -31,6 +31,7 @@ class ContactController extends Controller
     public function submit(SubmitContact $request)
     {
         dd($request->all());
+exit();
         $data = $request->all();
 
         return view('contact', ['data'=>$data]);

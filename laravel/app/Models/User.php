@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class User extends Authenticatable
 {
     use Notifiable;
     use Sortable;
+    use HasRoles;
 
     public $sortable = [
         'id',
