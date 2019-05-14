@@ -17,7 +17,7 @@ class RoleController extends Controller
 
         $roles = Role::with('role_has_permissions')->orderBy('id')->paginate(20);
 
-       // dd($roles);
+        dd($roles[0]['role_has_permissions']);
 
         return view('admin.roles', ['data' => array('roles' => $roles)]);
     }

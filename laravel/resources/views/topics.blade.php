@@ -12,7 +12,7 @@
         <!-- Example row of columns -->
         <div class="row">
             @foreach ( $data['topics'] as $i )
-                <div class="col-md-4 border border-dark rounded-lg mt-3 mr-3">
+                <div class="col-md-3 border border-dark rounded-lg mt-3 mr-3">
                     <h2>{{ $i->name }}</h2>
                     <p>{!! $i->description !!} </p>
                     <p>

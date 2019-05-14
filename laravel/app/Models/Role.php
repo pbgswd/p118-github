@@ -38,8 +38,12 @@ class Role extends Model
 
     public function role_has_permissions()
     {
-        return $this->belongsToMany('App\Models\RoleHasPermission', 'role_has_permissions',
-            'permission_id', 'role_id');
+        return $this->hasMany(RoleHasPermission::class);
     }
 
+    // role has permission on permission
+    // hasOne permission_id == id, I want the name column
+
 }
+
+
