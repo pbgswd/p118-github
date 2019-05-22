@@ -8,6 +8,7 @@ use App\Http\Requests\User\UpdateUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -62,7 +63,27 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $data = ['user'=>$user, 'action'=>'Edit'];
+        $currentUser = Auth::user();
+
+        $data = [
+            'user' => $user,
+            'action' => 'Edit',
+            'currentUserPermissions' => $currentUser->permissions,
+            'image' => 'image.jpg',
+            'share_image' => '',
+            'phone' => '',
+            'share_phone' => '',
+            'share_email' => '',
+            'street' => '',
+            'city' => '',
+            'postal_code' => '',
+            'country' => '',
+            'dues_status' => '',
+            'membership_number' => '',
+            'membership_status' => '',
+            'membership_date' => '',
+            'admin_notes' => '',
+        ];
 
         return view('admin.user', ['data'=> $data]);
     }

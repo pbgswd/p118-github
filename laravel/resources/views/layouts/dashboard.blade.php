@@ -263,5 +263,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
         <script src="{{ mix('/js/dashboard.js') }}"></script>
+        <script>
+            $(function()
+            {
+                // set up date pickers
+                $( '.datepicker' ).datepicker(
+                    {
+                        'dateFormat': 'yy-mm-dd',
+                        'minDate':  '-1',
+                        'maxDate':  '+24m'
+                    });
+            });
+        </script>
     </body>
 </html>

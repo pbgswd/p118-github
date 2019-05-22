@@ -33,12 +33,14 @@ class Role extends Model
      *************************************************************************/
 
     /**
-     * belongs to one Permission
+     * belongs to many Permissions
      */
 
     public function role_has_permissions()
     {
-        return $this->hasMany(RoleHasPermission::class);
+        // return $this->hasMany(RoleHasPermission::class);
+
+        return $this->hasManyThrough('App\Models\RoleHasPermission', 'App\Models\Permission', 'id', 'permission_id', 'id');
     }
 
     // role has permission on permission
