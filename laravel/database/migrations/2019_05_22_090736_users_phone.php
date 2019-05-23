@@ -17,7 +17,7 @@ class UsersPhone extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unique();
             $table->string('phone');
-            $table->boolean('primary')->nullable();
+            $table->boolean('primary');
             $table->timestamps();
         });
     }

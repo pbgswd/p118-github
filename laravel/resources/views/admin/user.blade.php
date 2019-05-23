@@ -120,7 +120,18 @@ $roles = $data['roles'];
                         <input name="user_info[share_phone]" type="checkbox" value="1" {{ checked(old('user_info.share_phone',$user_info['share_phone'])) }} />
                     </label>
                 </div>
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-primary">Add another phone number?</button>
+                </div>
+
+                <div class="col-3">
+                    <label> Set as primary number?
+                        <input name="user_phone[primary]" type="hidden" value="0" />
+                        <input name="user_phone[primary]" type="checkbox" value="1" {{ checked(old('user_phone.primary',$user_phone['primary'])) }} />
+                    </label>
+                </div>
             </div>
+
         </div>
         <div class="row">
              <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">

@@ -70,7 +70,7 @@ class UserController extends Controller
 
         // address table
 
-        // phone table
+        // phone table (array of phone numbers eventually)
 
         // membership table
 
@@ -86,6 +86,7 @@ class UserController extends Controller
 
         $user_phone = [
             'phone' => '1112223333',
+            'primary' => 1,
         ];
 
         $user_address = [
