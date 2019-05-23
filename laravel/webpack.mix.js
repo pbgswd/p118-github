@@ -12,10 +12,11 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/dashboard.js', 'public/js')
+   .js('resources/js/dashboard.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .sass('resources/sass/dashboard.scss', 'public/css')
-   .sass('resources/sass/jumbotron.scss', 'public/css').version();
+   .sass('resources/sass/jumbotron.scss', 'public/css')
+   .sass('resources/sass/_dropdown.scss', 'public/css').version();
 
 
 if (mix.inProduction()) {

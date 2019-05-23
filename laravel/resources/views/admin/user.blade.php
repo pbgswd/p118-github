@@ -1,12 +1,19 @@
 <?php
 $user = $data['user'];
+$user_info = $data['user_info'];
+$user_address = $data['user_address'];
+$user_phone = $data['user_phone'];
+$user_membership = $data['user_membership'];
+$currentUserPermissions = $data['currentUserPermissions'];
+$roles = $data['roles'];
+
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Member ' . ($data["action"] == "Edit" ? $user->name : '') ])
 @section('content')
 
     <script>
         tinymce.init({
-            selector: 'textarea#admin_notes',
+            selector: 'textarea#user_membership[admin_notes], textarea#about',
             height: 200,
             width:800,
             menubar: false,
@@ -41,39 +48,36 @@ $user = $data['user'];
             </div>
         </div>
 
-        <div class="row" style="border-width:6px; !important;">
-            @if( $user->image )
-                <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6 border border-primary rounded-lg border-3" style="margin:1em; padding:0.5em;">
+                @if( $user_info['image'] )
                     <div class="col">
                         <h4>
                             <i class="far fa-images"></i>
                             Image preview
                         </h4>
-
-                        <h5>Currently: {{ $user->image }}</h5>
-                        <img src="{{ asset('storage/'.$user->image) }}" />
+                        <h5>Currently: {{ $user_info['image'] }}</h5>
+                        <img src="{{ asset('storage/' . $user_info['image']) }}" height="100px" />
                     </div>
                     <div class="col" style="margin-top: 3em;">
-                        <input type="hidden"  name="user[image]" value="{{$user->image}}" />
-                        <label>
-                            <input name="user[delete_image]" type="checkbox" value="1" /> Check to delete image
-                        </label>
+                            <input type="hidden"  name="user_info[image]" value="{{$user_info['image']}}" />
+                            <label>
+                                <input name="user_info[delete_image]" type="checkbox" value="1" /> Check to delete image
+                            </label>
                     </div>
-                </div>
-            @else
-                <div class="col-md-6">
+                @else
                     <div class="form-group">
                         <label for="exampleInputFile">
                             <i class="fas fa-cloud-upload-alt fa-2x"></i>
                             File input
                         </label>
-                        <input type="file" id="inputFile" name="image" />
+                        <input type="file" id="inputFile" name="user_info[image]" />
                         <p class="help-block">
                             Upload image for your profile if you wish.
                         </p>
                     </div>
-                </div>
-            @endif
+                @endif
+            </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
 
@@ -92,8 +96,8 @@ $user = $data['user'];
                 <div class="col-10"><h5>Share email in contact information?</h5></div>
                 <div class="col-2">
                     <label>
-                        <input name="user[share_email]" type="hidden" value="0" />
-                        <input name="user[share_email]" type="checkbox" value="1" {{ checked(old('user.share_email',$user->share_email)) }} />
+                        <input name="user_info[share_email]" type="hidden" value="0" />
+                        <input name="user_info[share_email]" type="checkbox" value="1" {{ checked(old('user_info.share_email', $user_info['share_email'])) }} />
                     </label>
                 </div>
             </div>
@@ -103,7 +107,7 @@ $user = $data['user'];
             <div class="form-group">
                 <div class="col-lg-2"><h4>Phone</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Phone" name="user[phone]" value="{{ old('user.phone', $user->phone)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone]" value="{{ old('user_phone.phone', $user_phone['phone'])}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -112,36 +116,46 @@ $user = $data['user'];
                 <div class="col-6"><h5>Share phone in contact information?</h5></div>
                 <div class="col-3">
                     <label>
-                        <input name="user[share_phone]" type="hidden" value="0" />
-                        <input name="user[share_phone]" type="checkbox" value="1" {{ checked(old('user.share_phone',$user->share_phone)) }} />
+                        <input name="user_info[share_phone]" type="hidden" value="0" />
+                        <input name="user_info[share_phone]" type="checkbox" value="1" {{ checked(old('user_info.share_phone',$user_info['share_phone'])) }} />
                     </label>
                 </div>
             </div>
         </div>
-
+        <div class="row">
+             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
+            <div class="col-lg-10"><h4>About Me</h4></div>
+            <div class="col-lg-10">
+                <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user_info['about']) }} </textarea>
+            </div>
+             </span>
+        </div>
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-10"><h4>Primary Mailing Address</h4></div>
-                <div class="col-lg-10">
-                    Street <input type="text" class="form-control"  placeholder="Street" name="user[street]" value="{{ old('user.street', $user->street)}}" size="80" required/>
+                <div class="col-lg-3">
+                    Apt # <input type="text" class="form-control"  placeholder="Unit #" name="user_address[unit]" value="{{ old('user_address.unit', $user_address['unit']) }}" size="20" required/>
+                </div>
+                <div class="col-lg-6">
+                    Street <input type="text" class="form-control"  placeholder="Street" name="user_address[street]" value="{{ old('user_address.street', $user_address['street']) }}" size="80" required/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-10">
-                   City <input type="text" class="form-control"  placeholder="City" name="user[city]" value="{{ old('user.city', $user->city)}}" size="80" required/>
+                   City <input type="text" class="form-control"  placeholder="City" name="user_address[city]" value="{{ old('user_address.city', $user_address['city'])}}" size="80" required/>
                 </div>
             </div>
 
 
             <div class="col-lg-10">
-                Province
-                name="user[province]" value="{{ old('user.province', $user->province)}}"
+                Province {{ $user_address['province'] }}
+                name="user_address[province]" value="{{ old('user_address.province', $user_address['province']) }}"
             </div>
 
             <div class="col-8">
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Example Province select</label>
-                    <select name="province" class="form-control" id="exampleFormControlSelect1">
+                    <select name="user_address[province]" class="form-control" id="exampleFormControlSelect1">
                         <option value="">Select</option>
                         <option value="BC">British Columbia</option>
                         <option value="AB">Alberta</option>
@@ -152,17 +166,17 @@ $user = $data['user'];
             </div>
             <div class="form-group">
                 <div class="col-lg-10">
-                 Postal Code <input type="text" class="form-control"  placeholder="Postal Code" name="user[postal_code]" value="{{ old('user.postal_code', $user->postal_code)}}" size="80" required/>
+                 Postal Code <input type="text" class="form-control"  placeholder="Postal Code" name="user_address[postal_code]" value="{{ old('user_address.postal_code', $user_address['postal_code'])}}" size="80" required/>
                 </div>
 
-                    <div class="col-lg-10">
-                    Country (drop down menu)
-                 Country" name="user[country]" value=" {{ old('user.country', $user->country)}}
-                    </div>
+                <div class="col-lg-10">
+                    Country  {{ $user_address['country'] }}
+                 Country" name="user_address[country]" value=" {{ old('user_address.country', $user['country'] )}}
+                </div>
                 <div class="col-8">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Example Country select</label>
-                        <select name="province" class="form-control" id="exampleFormControlSelect1">
+                        <select name="user_address[country]" class="form-control" id="exampleFormControlSelect1">
                             <option value="">Select</option>
                             <option value="CA">Canada</option>
                             <option value="US">United States</option>
@@ -171,49 +185,47 @@ $user = $data['user'];
                 </div>
             </div>
         </div>
-
-        <div class="row" >
+        <div class="row">
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
                 <div class="col-lg-10"><h4>Membership</h4></div>
                 <div class="col-lg-10"><h4>Seniority Number</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="number" name="user[membership_number]" value="{{ old('user.membership_number', $user->membership_number)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="number" name="user_membership[seniority_number]" value="{{ old('user_membership.seniority_number', $user_membership['seniority_number'])}}" size="80" required/>
                 </div>
 
                 <div class="col-lg-10"><h4>Status</h4></div>
                 <div class="col-lg-10">
-                    Member Status <input type="text" class="form-control"  placeholder="status" name="user[membership_status]" value="{{ old('user.membership_date', $user->membership_status)}}" size="80" required/>
+                    Member Status <input type="text" class="form-control"  placeholder="status" name="user_membership[status]" value="{{ old('user_membership.membership_status', $user_membership['status'])}}" size="80" required/>
                 </div>
 
                 <div class="col-lg-10">
-                    Member Since  <input type="text" class="form-control"  placeholder="date" name="user[membership_date]" value="{{ old('user.membership_date', $user->membership_date)}}" size="80" required/>
-
-                <input type="text" class="datepicker"  name="user[publish_date]" value="{{ old('user.publish_date', $user->publish_date) }}" size="20" placeholder="Membership Date" />
-
-
+                    Member Since  <input type="text" class="form-control"  placeholder="date" name="user_membership[membership_date]" value="{{ old('user_membership.membership_date', $user_membership['membership_date'])}}" size="40" required/>
                 </div>
 
                 <div class="col-lg-10">
-                    Member Dues Status <input type="text" class="form-control"  placeholder="dues status, paid until..." name="user[member_since]" value="{{ old('user.postal_code', $user->postal_code)}}" size="80" required/>
+                    Member Dues Status <input type="text" class="form-control"  placeholder="dues status, paid until..." name="user_membership[membership_expires]" value="{{ old('user_membership.membership_expires', $user_membership['membership_expires'])}}" size="40" required/>
                 </div>
             </span>
         </div>
 
-        <div class="row">
-             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
-                 <h4>User website access privleges</h4>
-             </span>
-           &nbsp;
+        <div class="row">&nbsp;
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
                  <h4>User website roles</h4>
-             </span>
+                @foreach ($roles as $role)
+                    <div class="col-10">
+                        <input name="user[role][]" type="hidden" value="" {{ checked(old('user.role',$user->role)) }} /></label>
+                        <label><input name="user[role][]" type="checkbox" value="{{$role}}" {{ checked(old('user.role',$user->role)) }} /> {{$role}}  </label>
+                     </div>
+                @endforeach
+            </span>
+
         </div>
 
         <div class="row">
              <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
             <div class="col-lg-10"><h4>Admin notes (admin only)</h4></div>
             <div class="col-lg-10">
-                <textarea name="user[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control">{{old('user.admin_notes', $user->admin_notes)}}</textarea>
+                <textarea name="user_membership[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control">{{old('user_membership.admin_notes', $user_membership['admin_notes'])}}</textarea>
             </div>
              </span>
         </div>

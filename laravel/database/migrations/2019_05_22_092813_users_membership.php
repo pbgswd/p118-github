@@ -30,7 +30,7 @@ class UsersMembership extends Migration
             $table->timestamps();
         });
     }
-    }
+
 
     /**
      * Reverse the migrations.

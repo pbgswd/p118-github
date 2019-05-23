@@ -14,6 +14,8 @@ class User extends Authenticatable
     use Sortable;
     use HasRoles;
 
+    protected $guard_name = 'web';
+
     public $sortable = [
         'id',
         'name',

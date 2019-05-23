@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateUser;
+use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -63,26 +64,56 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $roles = Role::pluck('name', 'id');
+
+        // user_info table
+
+        // address table
+
+        // phone table
+
+        // membership table
+
         $currentUser = Auth::user();
+
+        $user_info = [
+            'image' => 'cat1happy.png',
+            'share_image' => '1',
+            'share_phone' => '1',
+            'share_email' => '1',
+            'about' => 'sdfasfaf',
+        ];
+
+        $user_phone = [
+            'phone' => '1112223333',
+        ];
+
+        $user_address = [
+            'unit' => '',
+            'street' => '34242 xx street',
+            'city' => 'chernobyl',
+            'postal_code' => 'X1X1X1',
+            'province' => 'BC',
+            'country' => 'CA',
+        ];
+
+        $user_membership = [
+            'membership_date' => '2017-01-30',
+            'membership_expires' => '2020-01-01',
+            'seniority_number' => '34234',
+            'status' => 'member',
+            'admin_notes' => 'test ',
+        ];
 
         $data = [
             'user' => $user,
+            'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,
-            'image' => 'image.jpg',
-            'share_image' => '',
-            'phone' => '',
-            'share_phone' => '',
-            'share_email' => '',
-            'street' => '',
-            'city' => '',
-            'postal_code' => '',
-            'country' => '',
-            'dues_status' => '',
-            'membership_number' => '',
-            'membership_status' => '',
-            'membership_date' => '',
-            'admin_notes' => '',
+            'user_info' => $user_info,
+            'user_phone' => $user_phone,
+            'user_address' => $user_address,
+            'user_membership' => $user_membership,
         ];
 
         return view('admin.user', ['data'=> $data]);
@@ -95,6 +126,7 @@ class UserController extends Controller
      */
     public function update(UpdateUser $request, User $user)
     {
+        dd($request->all());
         $user->fill($request['user']);
         $user->save();
         Session::flash('success', "You have edited a member profile");

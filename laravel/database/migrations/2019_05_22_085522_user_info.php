@@ -17,7 +17,6 @@ class UserInfo extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unique();
             $table->boolean('share_email');
-            $table->boolean('share_address');
             $table->boolean('share_phone');
             $table->string('image')->nullable();
             $table->string('about')->nullable();
