@@ -38,32 +38,73 @@ $roles = $data['roles'];
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="user[id]" value="{{ $user['id'] }}">
         {!! csrf_field() !!}
+
         <div class="row border border-primary rounded-lg border-3" style="margin-top:30px; padding:1em;">
+            <div class="col-lg-12">
+                <h3>Primary Contact Information</h3>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-2"><h4>Name</h4></div>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control"  placeholder="Name" name="user[name]" value="{{ old('user.name', $user->name)}}" size="80" required/>
+                    </div>
+                </div>
+            </div>
 
-        <div class="col-lg-12">
-            <h3>Primary Contact Information</h3>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-2"><h4>Name</h4></div>
-                <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Name" name="user[name]" value="{{ old('user.name', $user->name)}}" size="80" required/>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-2"><h4>Email</h4></div>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email)}}" size="80" required/>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-2"><h4>Email</h4></div>
-                <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email)}}" size="80" required/>
-                </div>
-            </div>
-        </div>
-        </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
+
+
         <div class="row">
             <div class="col-12 border border-primary rounded-lg border-3" style="margin:1em; padding:0.5em;">
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-2"><h4>Phone</h4></div>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone]" value="{{ old('user_phone.phone', $user_phone['phone'])}}" size="80" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-6"><h5>Share phone in contact information?</h5></div>
+                        <div class="col-3">
+                            <label>
+                                <input name="user_info[share_phone]" type="hidden" value="0" />
+                                <input name="user_info[share_phone]" type="checkbox" value="1" {{ checked(old('user_info.share_phone',$user_info['share_phone'])) }} />
+                            </label>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-outline-primary">Add another phone number?</button>
+                        </div>
+
+                        <div class="col-3">
+                            <label> Set as primary number?
+                                <input name="user_phone[primary]" type="hidden" value="0" />
+                                <input name="user_phone[primary]" type="checkbox" value="1" {{ checked(old('user_phone.primary',$user_phone['primary'])) }} />
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 border border-primary rounded-lg border-3" style="margin:1em; padding:0.5em;">
+                <div class="col-12"><h4>Member Info and Preferences</h4></div>
                 @if( $user_info['image'] )
                     <div class="col">
                         <h4>
@@ -105,36 +146,7 @@ $roles = $data['roles'];
             </div>
         </div>
 
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-2"><h4>Phone</h4></div>
-                <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone]" value="{{ old('user_phone.phone', $user_phone['phone'])}}" size="80" required/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-6"><h5>Share phone in contact information?</h5></div>
-                <div class="col-3">
-                    <label>
-                        <input name="user_info[share_phone]" type="hidden" value="0" />
-                        <input name="user_info[share_phone]" type="checkbox" value="1" {{ checked(old('user_info.share_phone',$user_info['share_phone'])) }} />
-                    </label>
-                </div>
-                <div class="col-12">
-                    <button type="button" class="btn btn-outline-primary">Add another phone number?</button>
-                </div>
 
-                <div class="col-3">
-                    <label> Set as primary number?
-                        <input name="user_phone[primary]" type="hidden" value="0" />
-                        <input name="user_phone[primary]" type="checkbox" value="1" {{ checked(old('user_phone.primary',$user_phone['primary'])) }} />
-                    </label>
-                </div>
-            </div>
-
-        </div>
 
 
             <div class="col-lg-10"><h4>About Me</h4></div>
