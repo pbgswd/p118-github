@@ -40,8 +40,28 @@ class UserController extends Controller
     public function create()
     {
         $user = new User;
+        $regions = $this->getFormOptions(['countries', 'statesprovs']);
+        $currentUser = Auth::user();
+        $roles = Role::pluck('name', 'id');
 
-        return view('admin.user', ['data' => ['user' => $user, 'action' => 'Create']]);
+        $data = [
+            'user' => $user,
+            'roles' => $roles,
+            'action' => 'Create',
+            'currentUserPermissions' => $currentUser->permissions,
+
+            'user_info' => [],
+            'user_phone' => '',
+            'user_address' => '',
+            'user_membership' => '',
+
+            'countries' =>  $regions['countries'],
+            'provinces' =>   $regions['statesprovs']['Provinces'],
+        ];
+
+        return view('admin.user', ['data'=> $data]);
+
+        //return view('admin.user', ['data' => ['user' => $user, 'action' => 'Create']]);
     }
 
     /**
@@ -68,6 +88,7 @@ class UserController extends Controller
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
 
         $roles = Role::pluck('name', 'id');
+        //dd($roles);
 
         // user_info table
 
@@ -133,8 +154,20 @@ class UserController extends Controller
     public function update(UpdateUser $request, User $user)
     {
         dd($request->all());
+
         $user->fill($request['user']);
+
+
+        // user_info table
+
+        // address table
+
+        // phone table (array of phone numbers eventually)
+
+        // membership table
+
         $user->save();
+
         Session::flash('success', "You have edited a member profile");
 
         return redirect()->route('user_edit', [$user->id]);

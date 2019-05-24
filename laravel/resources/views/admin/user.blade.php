@@ -38,7 +38,11 @@ $roles = $data['roles'];
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="user[id]" value="{{ $user['id'] }}">
         {!! csrf_field() !!}
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row border border-primary rounded-lg border-3" style="margin-top:30px; padding:1em;">
+
+        <div class="col-lg-12">
+            <h3>Primary Contact Information</h3>
+        </div>
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Name</h4></div>
@@ -49,7 +53,17 @@ $roles = $data['roles'];
         </div>
 
         <div class="row">
-            <div class="col-md-6 border border-primary rounded-lg border-3" style="margin:1em; padding:0.5em;">
+            <div class="form-group">
+                <div class="col-lg-2"><h4>Email</h4></div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email)}}" size="80" required/>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row">
+            <div class="col-12 border border-primary rounded-lg border-3" style="margin:1em; padding:0.5em;">
                 @if( $user_info['image'] )
                     <div class="col">
                         <h4>
@@ -60,10 +74,10 @@ $roles = $data['roles'];
                         <img src="{{ asset('storage/' . $user_info['image']) }}" height="100px" />
                     </div>
                     <div class="col" style="margin-top: 3em;">
-                            <input type="hidden"  name="user_info[image]" value="{{$user_info['image']}}" />
-                            <label>
-                                <input name="user_info[delete_image]" type="checkbox" value="1" /> Check to delete image
-                            </label>
+                        <input type="hidden"  name="user_info[image]" value="{{$user_info['image']}}" />
+                        <label>
+                            <input name="user_info[delete_image]" type="checkbox" value="1" /> Check to delete image
+                        </label>
                     </div>
                 @else
                     <div class="form-group">
@@ -77,19 +91,7 @@ $roles = $data['roles'];
                         </p>
                     </div>
                 @endif
-            </div>
-        </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
 
-        <div class="row">
-            <div class="col-lg-12"><h3>Primary Contact Information</h3></div>
-            <div class="form-group">
-                <div class="col-lg-2"><h4>Email</h4></div>
-                <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email)}}" size="80" required/>
-                </div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="form-group">
@@ -134,11 +136,12 @@ $roles = $data['roles'];
 
         </div>
 
-        <div class="row border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
+
             <div class="col-lg-10"><h4>About Me</h4></div>
             <div class="col-lg-10">
                 <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user_info['about']) }} </textarea>
             </div>
+        </div>
         </div>
 
         <div class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
@@ -148,19 +151,19 @@ $roles = $data['roles'];
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        Apt # <input type="text" class="form-control"  placeholder="Unit #" name="user_address[unit]" value="{{ old('user_address.unit', $user_address['unit']) }}" size="40" required/>
+                        Apt # <input type="text" class="form-control" placeholder="Apt #" name="user_address[unit]" value="{{ old('user_address.unit', $user_address['unit']) }}" size="40" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
-                    Street <input type="text" class="form-control"  placeholder="Street" name="user_address[street]" value="{{ old('user_address.street', $user_address['street']) }}" size="40" required/>
+                    Street <input type="text" class="form-control" placeholder="Street" name="user_address[street]" value="{{ old('user_address.street', $user_address['street']) }}" size="40" required/>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group">
                     <div class="col-6">
-                       City <input type="text" class="form-control"  placeholder="City" name="user_address[city]" value="{{ old('user_address.city', $user_address['city'])}}" size="40" required/>
+                       City <input type="text" class="form-control" placeholder="City" name="user_address[city]" value="{{ old('user_address.city', $user_address['city'])}}" size="40" required/>
                     </div>
                 </div>
             </div>
@@ -188,6 +191,18 @@ $roles = $data['roles'];
             </div>
         </div>
 
+        <div class="row">&nbsp;
+            <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
+                <h4>User website roles</h4>
+                @foreach ($roles as $id => $role)
+                    <div class="col-10">
+                        <label>
+                            <input name="user[role][{{$id}}]" type="checkbox" value="{{$role}}" {{ checked(old('user.role[$id]',$user['role'])) }} /> {{$role}}
+                        </label>
+                     </div>
+                @endforeach
+            </span>
+        </div>
 
         <div class="row">
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
@@ -209,24 +224,7 @@ $roles = $data['roles'];
                 <div class="col-lg-10">
                     Member Dues Status <input type="text" class="form-control"  placeholder="dues status, paid until..." name="user_membership[membership_expires]" value="{{ old('user_membership.membership_expires', $user_membership['membership_expires'])}}" size="40" required/>
                 </div>
-            </span>
-        </div>
 
-        <div class="row">&nbsp;
-            <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
-                 <h4>User website roles</h4>
-                @foreach ($roles as $role)
-                    <div class="col-10">
-                        <input name="user[role][]" type="hidden" value="" {{ checked(old('user.role',$user->role)) }} /></label>
-                        <label><input name="user[role][]" type="checkbox" value="{{$role}}" {{ checked(old('user.role',$user->role)) }} /> {{$role}}  </label>
-                     </div>
-                @endforeach
-            </span>
-
-        </div>
-
-        <div class="row">
-             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
             <div class="col-lg-10"><h4>Admin notes (admin only)</h4></div>
             <div class="col-lg-10">
                 <textarea name="user_membership[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control">{{old('user_membership.admin_notes', $user_membership['admin_notes'])}}</textarea>
