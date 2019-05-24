@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use App\Models\Options;
 
 
 /**
@@ -64,6 +65,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $regions = $this->getFormOptions(['countries', 'statesprovs']);
+
         $roles = Role::pluck('name', 'id');
 
         // user_info table
@@ -95,7 +98,7 @@ class UserController extends Controller
             'city' => 'chernobyl',
             'postal_code' => 'X1X1X1',
             'province' => 'BC',
-            'country' => 'CA',
+            'country' => 'Canada',
         ];
 
         $user_membership = [
@@ -115,6 +118,8 @@ class UserController extends Controller
             'user_phone' => $user_phone,
             'user_address' => $user_address,
             'user_membership' => $user_membership,
+            'countries' =>  $regions['countries'],
+            'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
 
         return view('admin.user', ['data'=> $data]);

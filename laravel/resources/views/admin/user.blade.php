@@ -13,7 +13,7 @@ $roles = $data['roles'];
 
     <script>
         tinymce.init({
-            selector: 'textarea#user_membership[admin_notes], textarea#about',
+            selector: 'textarea#admin_notes, textarea#about',
             height: 200,
             width:800,
             menubar: false,
@@ -133,69 +133,62 @@ $roles = $data['roles'];
             </div>
 
         </div>
-        <div class="row">
-             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
+
+        <div class="row border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
             <div class="col-lg-10"><h4>About Me</h4></div>
             <div class="col-lg-10">
                 <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user_info['about']) }} </textarea>
             </div>
-             </span>
         </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-10"><h4>Primary Mailing Address</h4></div>
-                <div class="col-lg-3">
-                    Apt # <input type="text" class="form-control"  placeholder="Unit #" name="user_address[unit]" value="{{ old('user_address.unit', $user_address['unit']) }}" size="20" required/>
-                </div>
-                <div class="col-lg-6">
-                    Street <input type="text" class="form-control"  placeholder="Street" name="user_address[street]" value="{{ old('user_address.street', $user_address['street']) }}" size="80" required/>
-                </div>
+
+        <div class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
+            <div class="row">
+                <div class="col-12"><h4>Primary Mailing Address</h4></div>
             </div>
-            <div class="form-group">
-                <div class="col-lg-10">
-                   City <input type="text" class="form-control"  placeholder="City" name="user_address[city]" value="{{ old('user_address.city', $user_address['city'])}}" size="80" required/>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        Apt # <input type="text" class="form-control"  placeholder="Unit #" name="user_address[unit]" value="{{ old('user_address.unit', $user_address['unit']) }}" size="40" required/>
+                    </div>
                 </div>
             </div>
-
-
-            <div class="col-lg-10">
-                Province {{ $user_address['province'] }}
-                name="user_address[province]" value="{{ old('user_address.province', $user_address['province']) }}"
+            <div class="row">
+                <div class="col-6">
+                    Street <input type="text" class="form-control"  placeholder="Street" name="user_address[street]" value="{{ old('user_address.street', $user_address['street']) }}" size="40" required/>
+                </div>
             </div>
-
-            <div class="col-8">
+            <div class="row">
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Example Province select</label>
-                    <select name="user_address[province]" class="form-control" id="exampleFormControlSelect1">
-                        <option value="">Select</option>
-                        <option value="BC">British Columbia</option>
-                        <option value="AB">Alberta</option>
-                        <option value="YUK">Yukon</option>
-                        <option value="NWT">Northwest Territories</option>
-                    </select>
+                    <div class="col-6">
+                       City <input type="text" class="form-control"  placeholder="City" name="user_address[city]" value="{{ old('user_address.city', $user_address['city'])}}" size="40" required/>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-lg-10">
-                 Postal Code <input type="text" class="form-control"  placeholder="Postal Code" name="user_address[postal_code]" value="{{ old('user_address.postal_code', $user_address['postal_code'])}}" size="80" required/>
-                </div>
-
-                <div class="col-lg-10">
-                    Country  {{ $user_address['country'] }}
-                 Country" name="user_address[country]" value=" {{ old('user_address.country', $user['country'] )}}
+            <div class="row">
+                <div class="col-10">
+                    Province
                 </div>
                 <div class="col-8">
+                    {{ select_options($data['provinces'], old('user_address.province', $user_address['province']), ['name' => 'user_address[province]', 'class' => 'form-control', 'placeholder' => 'Province']) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-10">
+                     Postal Code <input type="text" class="form-control"  placeholder="Postal Code" name="user_address[postal_code]" value="{{ old('user_address.postal_code', $user_address['postal_code'])}}" size="40" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Example Country select</label>
-                        <select name="user_address[country]" class="form-control" id="exampleFormControlSelect1">
-                            <option value="">Select</option>
-                            <option value="CA">Canada</option>
-                            <option value="US">United States</option>
-                        </select>
+                        {{ select_options($data['countries'], old('user_address.country', $user_address['country']), ['name' => 'user_address[country]', 'class' => 'form-control', 'placeholder' => 'Country']) }}
                     </div>
                 </div>
             </div>
         </div>
+
+
         <div class="row">
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
                 <div class="col-lg-10"><h4>Membership</h4></div>
