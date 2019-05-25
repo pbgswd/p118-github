@@ -69,14 +69,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="461">
-              <caret line="105" column="65" selection-start-line="105" selection-start-column="65" selection-end-line="105" selection-end-column="65" />
+            <state relative-caret-position="312">
+              <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
               <folding>
                 <element signature="e#1708#1745#0#HTML" expanded="true" />
                 <element signature="e#2591#2615#0#HTML" expanded="true" />
                 <element signature="e#2868#2902#0#HTML" expanded="true" />
                 <element signature="e#2719#2753#0#HTML" expanded="true" />
                 <element signature="e#3228#3252#0#HTML" expanded="true" />
+                <element signature="e#6658#6694#0#HTML" expanded="true" />
+                <element signature="e#11795#11819#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -508,12 +510,12 @@
       <workItem from="1557976919267" duration="904000" />
       <workItem from="1558403640394" duration="26712000" />
       <workItem from="1558555620406" duration="26853000" />
-      <workItem from="1558677297104" duration="6607000" />
+      <workItem from="1558677297104" duration="8961000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="276641000" />
+    <option name="totallyTimeSpent" value="278995000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1680" height="1023" extended-state="6" />
@@ -954,14 +956,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="105" column="65" selection-start-line="105" selection-start-column="65" selection-end-line="105" selection-end-column="65" />
+        <state relative-caret-position="312">
+          <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
           <folding>
             <element signature="e#1708#1745#0#HTML" expanded="true" />
             <element signature="e#2591#2615#0#HTML" expanded="true" />
             <element signature="e#2868#2902#0#HTML" expanded="true" />
             <element signature="e#2719#2753#0#HTML" expanded="true" />
             <element signature="e#3228#3252#0#HTML" expanded="true" />
+            <element signature="e#6658#6694#0#HTML" expanded="true" />
+            <element signature="e#11795#11819#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
