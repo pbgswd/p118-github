@@ -87,7 +87,7 @@ class UserController extends Controller
     {
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
 
-        $roles = Role::pluck('name', 'id');
+        $roles = Role::get(); //pluck('name', 'id');
         //dd($roles);
 
         // user_info table

@@ -13,12 +13,12 @@ class UsersPhone extends Migration
      */
     public function up()
     {
-        Schema::create('users_phone', function (Blueprint $table) {
+        Schema::create('phones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unique();
+            $table->unisgnedInteger('user_id');
             $table->string('phone');
             $table->boolean('primary');
-            $table->timestamps();
+           // $table->timestamps();
         });
     }
 

@@ -13,7 +13,7 @@ class UsersAddress extends Migration
      */
     public function up()
     {
-        Schema::create('users_address', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unique();
             $table->string('unit')->nullable();
@@ -22,7 +22,7 @@ class UsersAddress extends Migration
             $table->string('province');
             $table->string('postal_code');
             $table->string('country');
-            $table->timestamps();
+           // $table->timestamps();
         });
     }
 

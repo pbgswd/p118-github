@@ -20,7 +20,7 @@ class UserInfo extends Migration
             $table->boolean('share_phone');
             $table->string('image')->nullable();
             $table->string('about')->nullable();
-            $table->timestamps();
+           // $table->timestamps();
         });
     }
 
