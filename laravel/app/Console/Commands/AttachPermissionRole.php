@@ -37,7 +37,7 @@ class AttachPermissionRole extends AccessControl
                 if (!$permission || !$role) {
                     $this->error('Invalid permission or role name.');
                 } else {
-                    $role->attachPermission($permission);
+                    $role->givePermissionTo($permission);
                 }
         }
         $this->listArgumentOptions();
