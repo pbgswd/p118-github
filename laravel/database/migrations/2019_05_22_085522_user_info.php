@@ -15,13 +15,12 @@ class UserInfo extends Migration
     {
         Schema::create('users_info', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->boolean('share_email');
-            $table->boolean('share_phone');
+            $table->boolean('share_email')->default(false);
+            $table->boolean('share_phone')->default(false);
             $table->string('image')->nullable();
             $table->string('about')->nullable();
-            $table->timestamps();
         });
     }
 

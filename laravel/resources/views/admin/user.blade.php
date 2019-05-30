@@ -6,7 +6,7 @@ $user_phone = $data['user_phone'];
 $user_membership = $data['user_membership'];
 $currentUserPermissions = $data['currentUserPermissions'];
 $roles = $data['roles'];
-$user_role = $data['user_role']['role'];
+$user_roles = $data['user_roles'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i> ' . $data["action"] . ' Member ' . ($data["action"] == "Edit" ? $user->name : '') ])
 @section('content')
@@ -157,10 +157,10 @@ $user_role = $data['user_role']['role'];
             </div>
 
             <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                           City <input type="text" class="form-control" placeholder="City" name="user_address[city]" value="{{ old('user_address.city', $user_address['city'])}}" size="40" required/>
-                        </div>
+                <div class="col-6">
+                    <div class="form-group">
+                       City <input type="text" class="form-control" placeholder="City" name="user_address[city]" value="{{ old('user_address.city', $user_address['city'])}}" size="40" required/>
+                    </div>
                 </div>
             </div>
 
@@ -192,11 +192,12 @@ $user_role = $data['user_role']['role'];
 
         <div class="row col-12">&nbsp;
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
-                <h4>User website roles (Presently: {{$user_role}})</h4>
+                <h4>User website roles </h4>
                 @foreach ($roles as $role)
                     <div class="col-12">
                         <label>
-                            <input name="user_role[role]" type="checkbox" value="{{$role->name}}" {{ checked(old('user_role.role',$user_role)) }} /> {{$role->name}}
+                            <input name="user_roles[{{ $role->name }}]" type="checkbox" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_roles))  }} >
+                            {{$role->name}}
                             (
                              @foreach ($role->permissions as $p)
                                 {{ $p->name }}

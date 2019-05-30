@@ -83,8 +83,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-
-        //dd($user);
+        //dd($user->roles[0]['name']);
 
         // user_info table
 
@@ -96,21 +95,14 @@ class UserController extends Controller
 
         $currentUser = Auth::user(); // the logged in user, perms to edit?
 
-        $cu = $user->getRoleNames();
-
-
-
-        $user_role = $currentUser->getRoleNames();
-
-
-        //$permissions = $currentUser->getAllPermissions();
-
-
-
-
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
 
+        $user_roles = $user->getRoleNames()->toArray();
+
+        $user_roles = array_combine($user_roles, $user_roles);
+
+     //   dd($user_roles);
 
 //cat1happy.png
         $user_info = [
@@ -130,7 +122,7 @@ class UserController extends Controller
             'unit' => '',
             'street' => '34242 xx street',
             'city' => 'chernobyl',
-            'postal_code' => 'X1X1X1',
+            'postal_code' => 'X1X 1X1',
             'province' => 'BC',
             'country' => 'Canada',
         ];
@@ -140,21 +132,16 @@ class UserController extends Controller
             'membership_expires' => '2020-01-01',
             'seniority_number' => '34234',
             'status' => 'member',
-            'admin_notes' => 'test ',
-        ];
-
-        $user_roles = [
-            'permissions' => '',
-            'role' => $user_role[0],
+            'admin_notes' => 'test',
         ];
 
         $data = [
             'user' => $user,
+            'user_roles' => $user_roles,
             'user_info' => $user_info,
             'user_phone' => $user_phone,
             'user_address' => $user_address,
             'user_membership' => $user_membership,
-            'user_role' => $user_roles,
             'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,

@@ -60,4 +60,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+       * Get model for extra data associated with the user.
+    */
+
+/*    public function user_info()
+    {
+       return $this->hasOne(UserInfo::class);
+    }*/
+
 }
