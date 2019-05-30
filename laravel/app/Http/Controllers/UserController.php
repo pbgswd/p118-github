@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateUser;
+use App\Models\PhoneNumber;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -81,41 +82,36 @@ class UserController extends Controller
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(User $user)
+    public function edit(User $user, PhoneNumber $phoneNumber)
     {
-        //dd($user->roles[0]['name']);
 
         // user_info table
 
         // address table
 
-        // phone table (array of phone numbers eventually)
+        $user_phone = $user->phone_number();
+
+        dd($user_phone);
 
         // membership table
 
         $currentUser = Auth::user(); // the logged in user, perms to edit?
 
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
+
         $roles = Role::get();
-
         $user_roles = $user->getRoleNames()->toArray();
-
         $user_roles = array_combine($user_roles, $user_roles);
 
-     //   dd($user_roles);
 
 //cat1happy.png
+
         $user_info = [
             'image' => '',
             'share_image' => '1',
             'share_phone' => '1',
             'share_email' => '1',
             'about' => 'sdfasfaf',
-        ];
-
-        $user_phone = [
-            'phone' => '1112223333',
-            'primary' => 1,
         ];
 
         $user_address = [
@@ -157,12 +153,16 @@ class UserController extends Controller
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateUser $request, User $user)
+    public function update(UpdateUser $request, User $user, PhoneNumber $phoneNumber)
     {
-        dd($request->all());
 
         $user->fill($request['user']);
+        $user->save();
 
+        $phoneNumber->fill($request['user_phone']);
+        $phoneNumber->save();
+
+        dd($request->all());
 
         // user_info table
 
@@ -172,7 +172,7 @@ class UserController extends Controller
 
         // membership table
 
-        $user->save();
+
 
         Session::flash('success', "You have edited a member profile");
 

@@ -65,7 +65,9 @@ $user_roles = $data['user_roles'];
                 <div class="form-group">
                     <div class="col-lg-2"><h4>Phone</h4></div>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone]" value="{{ old('user_phone.phone', $user_phone['phone'])}}" size="80" required/>
+                        <input type="hidden" name="user_phone[user_id]" value="{{ $user['id'] }}">
+                        <input type="hidden" name="user_phone[id]" value="{{ $user_phone['id'] }}">
+                        <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]" value="{{ old('user_phone.phone_number', $user_phone['phone_number'])}}" size="80" required/>
                     </div>
                 </div>
             </div>

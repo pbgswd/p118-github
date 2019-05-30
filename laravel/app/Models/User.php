@@ -61,12 +61,12 @@ class User extends Authenticatable
     ];
 
     /**
-       * Get model for extra data associated with the user.
+       * Get model for phone data associated with the user.
     */
 
-/*    public function user_info()
+    public function phone_number()
     {
-       return $this->hasOne(UserInfo::class);
-    }*/
+       return $this->hasOne(PhoneNumber::class);
+    }
 
 }
