@@ -15,14 +15,15 @@ class UsersAddress extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unique();
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('unit')->nullable();
-            $table->string('street');
-            $table->string('city');
-            $table->string('province');
-            $table->string('postal_code');
-            $table->string('country');
-           // $table->timestamps();
+            $table->string('street')->nullable();
+            $table->string('city')->nullable();
+            $table->string('province')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('country')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -33,6 +34,6 @@ class UsersAddress extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_address');
+        Schema::dropIfExists('addresses');
     }
 }

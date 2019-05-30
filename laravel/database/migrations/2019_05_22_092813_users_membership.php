@@ -13,20 +13,15 @@ class UsersMembership extends Migration
      */
     public function up()
     {
-
-        // membership user id, user_id,  membership date,
-        // //dues state, dues paid until, member seniority number, in good standing?
-        // admin_notes(textarea)
-
-        Schema::create('users_membership', function (Blueprint $table) {
+        Schema::create('membership', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unique();
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->date('membership_date');
             $table->date('membership_expires');
-            $table->integer('seniority_number');
+            $table->unsignedInteger('seniority_number');
             $table->string('status');
             $table->string('admin_notes')->nullable();
-
             $table->timestamps();
         });
     }
@@ -39,6 +34,6 @@ class UsersMembership extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_membership');
+        Schema::dropIfExists('membership');
     }
 }

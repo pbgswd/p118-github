@@ -23,6 +23,7 @@
                         <th> @sortablelink('id','#') </th>
                         <th> @sortablelink('name', 'Name') </th>
                         <th> @sortablelink('email', 'Email') </th>
+                        <th> Role </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -44,6 +45,12 @@
                             </h4>
                         </td>
                         <td> {{ $i->email }} </td>
+                        <td>
+                            @foreach ($i->roles as $role)
+                            {{ $role['name'] }}
+                            @endforeach
+
+                        </td>
                         <td>
                             <a href="{{ route('user_edit', $i->id) }}" title="Edit {{ $i->name }} ">
                                 <i class="fas fa-edit"></i>

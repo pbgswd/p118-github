@@ -16,9 +16,11 @@ class UsersPhone extends Migration
         Schema::create('phones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unisgnedInteger('user_id');
-            $table->string('phone');
-            $table->boolean('primary');
-           // $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('phone', 20);
+            $table->string('label', 20);
+            $table->boolean('primary')->default(false);
+            $table->timestamps();
         });
     }
 
@@ -29,6 +31,6 @@ class UsersPhone extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_phone');
+        Schema::dropIfExists('phones');
     }
 }

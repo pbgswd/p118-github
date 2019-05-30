@@ -6,7 +6,7 @@ $user_phone = $data['user_phone'];
 $user_membership = $data['user_membership'];
 $currentUserPermissions = $data['currentUserPermissions'];
 $roles = $data['roles'];
-dd($currentUserPermissions);
+$user_role = $data['user_role']['role'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i> ' . $data["action"] . ' Member ' . ($data["action"] == "Edit" ? $user->name : '') ])
 @section('content')
@@ -60,64 +60,32 @@ dd($currentUserPermissions);
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
-
-        <div class="row">
-            <div class="col-12 border border-primary rounded-lg border-3" style="margin:1em; padding:0.5em;">
-
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-lg-2"><h4>Phone</h4></div>
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone]" value="{{ old('user_phone.phone', $user_phone['phone'])}}" size="80" required/>
-                        </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-2"><h4>Phone</h4></div>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone]" value="{{ old('user_phone.phone', $user_phone['phone'])}}" size="80" required/>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-12">Share phone in contact information?
-
-                            <label>
-                                <input name="user_info[share_phone]" type="hidden" value="0" />
-                                <input name="user_info[share_phone]" type="checkbox" value="1" {{ checked(old('user_info.share_phone',$user_info['share_phone'])) }} />
-                            </label>
-                        </div>
-                        <div class="col-12">
-                            <button type="button" class="btn btn-outline-primary">Add another phone number?</button>
-                        </div>
-
-                        <div class="col-12">
-                            <label> Set as primary number?
-                                <input name="user_phone[primary]" type="hidden" value="0" />
-                                <input name="user_phone[primary]" type="checkbox" value="1" {{ checked(old('user_phone.primary',$user_phone['primary'])) }} />
-                            </label>
-                        </div>
-                    </div>
-
-                </div>
-
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12 border border-primary rounded-lg border-3" style="margin:1em; padding:0.5em;">
+        <div class="border border-primary rounded-lg border-3" style="margin-top:1em; padding:1.5em;">
+            <div class="row" style="margin-bottom: 1em;">
                 <div class="col-12"><h4>Member Info and Preferences</h4></div>
                 @if( $user_info['image'] )
-                    <div class="col">
+                    <div class="col-12">
                         <h4>
                             <i class="far fa-images"></i>
                             Image preview
                         </h4>
                         <h5>Currently: {{ $user_info['image'] }}</h5>
                         <img src="{{ asset('storage/' . $user_info['image']) }}" height="100px" />
-                    </div>
-                    <div class="col" style="margin-top: 3em;">
+
                         <input type="hidden"  name="user_info[image]" value="{{$user_info['image']}}" />
                         <label>
-                            <input name="user_info[delete_image]" type="checkbox" value="1" /> Check to delete image
+                            <input name="user_info[delete_image]" type="checkbox" value="1" /> <h5>Check to delete image</h5>
                         </label>
                     </div>
                 @else
@@ -132,25 +100,38 @@ dd($currentUserPermissions);
                         </p>
                     </div>
                 @endif
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-6"><h5>Share email in contact information?</h5></div>
+                        <div class="col-2">
+                            <label>
+                                <input name="user_info[share_email]" type="hidden" value="0" />
+                                <input name="user_info[share_email]" type="checkbox" value="1" {{ checked(old('user_info.share_email', $user_info['share_email'])) }} />
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-
-
-            <div class="form-group">
-                <div class="col-10"><h5>Share email in contact information?</h5></div>
-                <div class="col-2">
-                    <label>
-                        <input name="user_info[share_email]" type="hidden" value="0" />
-                        <input name="user_info[share_email]" type="checkbox" value="1" {{ checked(old('user_info.share_email', $user_info['share_email'])) }} />
-                    </label>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="col-6"><h5>Share phone in contact information?</h5></div>
+                        <div class="col-2">
+                            <label>
+                                <input name="user_info[share_phone]" type="hidden" value="0" />
+                                <input name="user_info[share_phone]" type="checkbox" value="1" {{ checked(old('user_info.share_phone',$user_info['share_phone'])) }} />
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-        <div class="col-lg-10"><h4>About Me</h4></div>
-        <div class="col-lg-10">
-            <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user_info['about']) }} </textarea>
-        </div>
-        </div>
+            <div class="row">
+                <div class="col-lg-10"><h4>About Me</h4></div>
+                <div class="col-lg-10">
+                    <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user_info['about']) }} </textarea>
+                </div>
+            </div>
         </div>
 
         <div class="border border-primary rounded-lg border-3" style="margin-top:1em; padding:1em;">
@@ -211,11 +192,11 @@ dd($currentUserPermissions);
 
         <div class="row col-12">&nbsp;
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
-                <h4>User website roles</h4>
+                <h4>User website roles (Presently: {{$user_role}})</h4>
                 @foreach ($roles as $role)
                     <div class="col-12">
                         <label>
-                            <input name="user[role][]" type="checkbox" value="{{$role->id}}" {{ checked(old('user.role->id',$user['role'])) }} /> {{$role->name}}
+                            <input name="user_role[role]" type="checkbox" value="{{$role->name}}" {{ checked(old('user_role.role',$user_role)) }} /> {{$role->name}}
                             (
                              @foreach ($role->permissions as $p)
                                 {{ $p->name }}
@@ -264,6 +245,7 @@ dd($currentUserPermissions);
 
          <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
+        @hasanyrole('super-admin|admin')
          <div class="col-sm" style="float:right">
              (if admin)
              <form name="delete" method="POST" action="{{route('user_destroy')}}">
@@ -274,6 +256,7 @@ dd($currentUserPermissions);
                 <input class="btn btn-outline-danger" type="submit" value="Delete">
             </form>
          </div>
+        @endhasanyrole
     @endif
     <div class="row" style="margin-top:100px;"> &nbsp;</div>
 </div>

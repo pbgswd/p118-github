@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateUser;
-use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use App\Models\Options;
+use Spatie\Permission\Models\Role;
 
 
 /**
@@ -28,8 +27,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::sortable()->paginate(10);
-
+        $users = User::with('roles')->sortable()->paginate(10);
         return view('admin.listusers', ['data'=>array('users'=>$users )]);
     }
 
@@ -85,10 +83,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $regions = $this->getFormOptions(['countries', 'statesprovs']);
 
-        $roles = Role::get(); //pluck('name', 'id');
-        //dd($roles);
+        //dd($user);
 
         // user_info table
 
@@ -98,10 +94,27 @@ class UserController extends Controller
 
         // membership table
 
-        $currentUser = Auth::user();
+        $currentUser = Auth::user(); // the logged in user, perms to edit?
 
+        $cu = $user->getRoleNames();
+
+
+
+        $user_role = $currentUser->getRoleNames();
+
+
+        //$permissions = $currentUser->getAllPermissions();
+
+
+
+
+        $regions = $this->getFormOptions(['countries', 'statesprovs']);
+        $roles = Role::get();
+
+
+//cat1happy.png
         $user_info = [
-            'image' => 'cat1happy.png',
+            'image' => '',
             'share_image' => '1',
             'share_phone' => '1',
             'share_email' => '1',
@@ -130,15 +143,21 @@ class UserController extends Controller
             'admin_notes' => 'test ',
         ];
 
+        $user_roles = [
+            'permissions' => '',
+            'role' => $user_role[0],
+        ];
+
         $data = [
             'user' => $user,
-            'roles' => $roles,
-            'action' => 'Edit',
-            'currentUserPermissions' => $currentUser->permissions,
             'user_info' => $user_info,
             'user_phone' => $user_phone,
             'user_address' => $user_address,
             'user_membership' => $user_membership,
+            'user_role' => $user_roles,
+            'roles' => $roles,
+            'action' => 'Edit',
+            'currentUserPermissions' => $currentUser->permissions,
             'countries' =>  $regions['countries'],
             'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
