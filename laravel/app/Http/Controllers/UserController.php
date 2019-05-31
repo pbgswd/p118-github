@@ -60,12 +60,10 @@ class UserController extends Controller
             'roles' => $roles,
             'action' => 'Create',
             'currentUserPermissions' => $currentUser->permissions,
-
             'user_info' => $user_info,
             'user_phone' => $phone,
             'user_address' => $address,
             'user_membership' => $membership,
-
             'countries' =>  $regions['countries'],
             'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
@@ -81,17 +79,16 @@ class UserController extends Controller
     public function store(StoreUser $request)
     {
         $user = new User($request->input('user'));
-        $phone = new PhoneNumber($request->input('user_phone'));
-        $user_info = new UserInfo($request->input('user_info'));
-        $address = new Address($request->input('user_address'));
-        $user_roles = new Role($request->input('user_roles'));
-        $membership = new User($request->input('user_membership'));
-
         $user->save();
+        $phone = new PhoneNumber($request->input('user_phone'));
         $phone->save();
+        $user_info = new UserInfo($request->input('user_info'));
         $user_info->save();
+        $address = new Address($request->input('user_address'));
         $address->save();
+        $user_roles = new Role($request->input('user_roles'));
         $user_roles->save();
+        $membership = new User($request->input('user_membership'));
         $membership->save();
 
         Session::flash('success', "You have saved a new member");
@@ -144,26 +141,18 @@ class UserController extends Controller
      */
     public function update(UpdateUser $request, User $user, PhoneNumber $phoneNumber, UserInfo $user_info, Address $address, Role $user_roles, Membership $membership)
     {
-
         $user->fill($request['user']);
         $user->save();
-
         $phoneNumber->fill($request['user_phone']);
         $phoneNumber->save();
-
         $user_info->fill($request->input('user_info'));
-        $address->fill($request->input('user_address'));
-        $user_roles->fill($request->input('user_roles'));
-        $membership->fill($request->input('user_membership'));
-
-
         $user_info->save();
+        $address->fill($request->input('user_address'));
         $address->save();
+        $user_roles->fill($request->input('user_roles'));
         $user_roles->save();
+        $membership->fill($request->input('user_membership'));
         $membership->save();
-
-
-        dd($request->all());
 
         Session::flash('success', "You have edited a member profile");
 
