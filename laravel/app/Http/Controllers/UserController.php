@@ -78,18 +78,31 @@ class UserController extends Controller
      */
     public function store(StoreUser $request)
     {
-        $user = new User($request->input('user'));
+        //$user = new User($request->input('user'));
+
+        // new user needs a password
+        //$pass = str_random(8); // function deprecated
+       // $user = new User(array_merge($request['user'], ['password' => Hash::make($pass)]) );
+
+
+        $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]) );
+
         $user->save();
+
+        // get the user id, send it along to other saves.
+
         $phone = new PhoneNumber($request->input('user_phone'));
-        $phone->save();
+        $user->phone_number()->save($phone);
         $user_info = new UserInfo($request->input('user_info'));
-        $user_info->save();
+        $user->user_info()->save($user_info);
         $address = new Address($request->input('user_address'));
-        $address->save();
+        $user->address()->save($address);
+
+
         $user_roles = new Role($request->input('user_roles'));
         $user_roles->save();
         $membership = new User($request->input('user_membership'));
-        $membership->save();
+        $user->membership()->save($membership);
 
         Session::flash('success', "You have saved a new member");
 

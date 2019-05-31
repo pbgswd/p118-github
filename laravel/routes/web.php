@@ -58,7 +58,8 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
 
     Route::get('/users', 'UserController@index')->name('users_list');
     Route::get('/user', 'UserController@create')->name('user_create');
-    Route::post('/user', 'UserController@update');
+
+    Route::post('/user', 'UserController@store');
     Route::get('/user/{user}', 'UserController@edit')->name('user_edit');
     Route::post('/user/{user}', 'UserController@update');
     Route::delete('/user/delete', 'UserController@destroy')->name('user_destroy');

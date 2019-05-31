@@ -200,7 +200,7 @@ $user_roles = $data['user_roles'];
                 @foreach ($roles as $role)
                     <div class="col-12">
                         <label>
-                            <input name="user_roles[{{ $role->name }}]" type="checkbox" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_roles))  }} >
+                            <input name="user_roles['name'][]" type="checkbox" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_roles))  }} >
                             {{$role->name}}
                             (
                              @foreach ($role->permissions as $p)

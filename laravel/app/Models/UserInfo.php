@@ -10,13 +10,7 @@ class UserInfo extends Model
     protected $guard_name = 'web';
 
     protected $table = 'users_info';
-
-
-    protected $dates =
-        [
-            'created_at',
-            'updated_at'
-        ];
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +23,6 @@ class UserInfo extends Model
         'share_phone',
         'image',
         'about',
-
     ];
 
 
