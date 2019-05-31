@@ -13,7 +13,7 @@ class UsersMembership extends Migration
      */
     public function up()
     {
-        Schema::create('membership', function (Blueprint $table) {
+        Schema::create('memberships', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
@@ -34,6 +34,6 @@ class UsersMembership extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('membership');
+        Schema::dropIfExists('memberships');
     }
 }

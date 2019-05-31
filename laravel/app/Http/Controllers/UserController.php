@@ -72,7 +72,6 @@ class UserController extends Controller
 
         return view('admin.user', ['data'=> $data]);
 
-        //return view('admin.user', ['data' => ['user' => $user, 'action' => 'Create']]);
     }
 
     /**
@@ -82,8 +81,18 @@ class UserController extends Controller
     public function store(StoreUser $request)
     {
         $user = new User($request->input('user'));
+        $phone = new PhoneNumber($request->input('user_phone'));
+        $user_info = new UserInfo($request->input('user_info'));
+        $address = new Address($request->input('user_address'));
+        $user_roles = new Role($request->input('user_roles'));
+        $membership = new User($request->input('user_membership'));
 
         $user->save();
+        $phone->save();
+        $user_info->save();
+        $address->save();
+        $user_roles->save();
+        $membership->save();
 
         Session::flash('success', "You have saved a new member");
 
@@ -95,17 +104,13 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
-    public function edit(User $user, PhoneNumber $phoneNumber)
+    public function edit(User $user, PhoneNumber $phoneNumber, UserInfo $user_info, Address $address, Membership $membership)
     {
 
-        $user_phone = User::find(1)->phone_number;
-
-        // user_info table
-
-        // address table
-
-
-        // membership table
+        $phone = User::find(1)->phone_number;
+        $user_info = User::find(1)->user_info;
+        $address = User::find(1)->address;
+        $membership = User::find(1)->membership;
 
         $currentUser = Auth::user(); // the logged in user, perms to edit?
 
@@ -115,41 +120,13 @@ class UserController extends Controller
         $user_roles = $user->getRoleNames()->toArray();
         $user_roles = array_combine($user_roles, $user_roles);
 
-
-//cat1happy.png
-
-        $user_info = [
-            'image' => '',
-            'share_image' => '1',
-            'share_phone' => '1',
-            'share_email' => '1',
-            'about' => 'sdfasfaf',
-        ];
-
-        $user_address = [
-            'unit' => '',
-            'street' => '34242 xx street',
-            'city' => 'chernobyl',
-            'postal_code' => 'X1X 1X1',
-            'province' => 'BC',
-            'country' => 'Canada',
-        ];
-
-        $user_membership = [
-            'membership_date' => '2017-01-30',
-            'membership_expires' => '2020-01-01',
-            'seniority_number' => '34234',
-            'status' => 'member',
-            'admin_notes' => 'test',
-        ];
-
         $data = [
             'user' => $user,
             'user_roles' => $user_roles,
             'user_info' => $user_info,
-            'user_phone' => $user_phone,
-            'user_address' => $user_address,
-            'user_membership' => $user_membership,
+            'user_phone' => $phone,
+            'user_address' => $address,
+            'user_membership' => $membership,
             'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,
@@ -165,7 +142,7 @@ class UserController extends Controller
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateUser $request, User $user, PhoneNumber $phoneNumber)
+    public function update(UpdateUser $request, User $user, PhoneNumber $phoneNumber, UserInfo $user_info, Address $address, Role $user_roles, Membership $membership)
     {
 
         $user->fill($request['user']);
@@ -174,17 +151,19 @@ class UserController extends Controller
         $phoneNumber->fill($request['user_phone']);
         $phoneNumber->save();
 
+        $user_info->fill($request->input('user_info'));
+        $address->fill($request->input('user_address'));
+        $user_roles->fill($request->input('user_roles'));
+        $membership->fill($request->input('user_membership'));
+
+
+        $user_info->save();
+        $address->save();
+        $user_roles->save();
+        $membership->save();
+
+
         dd($request->all());
-
-        // user_info table
-
-        // address table
-
-        // phone table (array of phone numbers eventually)
-
-        // membership table
-
-
 
         Session::flash('success', "You have edited a member profile");
 
@@ -198,6 +177,17 @@ class UserController extends Controller
     public function destroy(DestroyUser $request)
     {
        User::destroy($request->id);
+
+       /*
+        * phone
+        * user_info
+        * address
+        * role
+        * membership
+        */
+
+       // revise count of membership seniority number
+
        Session::flash('success', Str::plural('Member', count($request->id)) . ' deleted.');
 
        return redirect()->route('users_list');

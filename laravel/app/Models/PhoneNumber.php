@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PhoneNumber extends Model
 {
+
+    protected $guard_name = 'web';
+
     protected $dates =
     [
         'created_at',
