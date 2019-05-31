@@ -76,6 +76,7 @@ $user_roles = $data['user_roles'];
         <div class="border border-primary rounded-lg border-3" style="margin-top:1em; padding:1.5em;">
             <div class="row" style="margin-bottom: 1em;">
                 <div class="col-12"><h4>Member Info and Preferences</h4></div>
+                <input type="hidden" name="user_info[user_id]" value="{{ $user_info['user_id'] }}">
                 @if( $user_info['image'] )
                     <div class="col-12">
                         <h4>
@@ -140,6 +141,7 @@ $user_roles = $data['user_roles'];
 
             <div class="row">
                 <div class="col-6"><h3>Primary Mailing Address</h3></div>
+                <input type="hidden" name="user_address[user_id]" value="{{ $user_address['user_id'] }}">
             </div>
 
             <div class="row">
@@ -213,7 +215,10 @@ $user_roles = $data['user_roles'];
 
         <div class="row">
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
-                <div class="col-lg-10"><h3>Membership</h3></div>
+                <div class="col-lg-10">
+                    <h3>Membership</h3>
+                     <input type="hidden" name="user_membership[user_id]" value="{{ $user_membership['user_id'] }}">
+                </div>
                 <div class="col-lg-10">
                   Seniority Number  <input type="text" class="form-control"  placeholder="number" name="user_membership[seniority_number]" value="{{ old('user_membership.seniority_number', $user_membership['seniority_number'])}}" size="80" required/>
                 </div>

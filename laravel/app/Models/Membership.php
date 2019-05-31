@@ -20,10 +20,13 @@ class Membership extends Model
      * @var array
      */
     protected $fillable = [
-
+        'user_id',
+        'membership_date',
+        'membership_expires',
+        'seniority_number',
+        'status',
+        'admin_notes',
     ];
-
-
 
     /**
      * The attributes that should be cast to native types.
@@ -31,6 +34,7 @@ class Membership extends Model
      * @var array
      */
     protected $casts = [
-
+        'membership_date'=> 'datetime',
+        'membership_expires' => 'datetime',
     ];
 }

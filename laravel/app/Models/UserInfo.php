@@ -24,9 +24,13 @@ class UserInfo extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
+        'share_email',
+        'share_phone',
+        'image',
+        'about',
 
     ];
-
 
 
     /**
@@ -35,7 +39,8 @@ class UserInfo extends Model
      * @var array
      */
     protected $casts = [
-
+        'share_email' => 'boolean',
+        'share_phone' => 'boolean',
     ];
 
 }

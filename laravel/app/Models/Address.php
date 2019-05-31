@@ -20,17 +20,13 @@ class Address extends Model
      * @var array
      */
     protected $fillable = [
-
+        'user_id',
+        'unit',
+        'street',
+        'city',
+        'province',
+        'postal_code',
+        'country',
     ];
 
-
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-
-    ];
 }
