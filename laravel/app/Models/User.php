@@ -69,4 +69,20 @@ class User extends Authenticatable
        return $this->hasOne(PhoneNumber::class);
     }
 
+    public function user_info()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
+
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
+
+    public function membership()
+    {
+        return $this->hasOne(Membership::class);
+    }
+
+
 }

@@ -86,6 +86,11 @@
       <path value="$PROJECT_DIR$/laravel/vendor/kyslik/column-sortable" />
       <path value="$PROJECT_DIR$/laravel/vendor/spatie/laravel-permission" />
       <path value="$PROJECT_DIR$/laravel/vendor/rtconner/laravel-tagging" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/translation-contracts" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

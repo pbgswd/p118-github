@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateUser;
+use App\Models\Address;
+use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
+use App\Models\UserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -39,20 +42,29 @@ class UserController extends Controller
     public function create()
     {
         $user = new User;
+        $phone = new PhoneNumber;
+        $user_info = new UserInfo;
+        $address = new Address;
+        $membership = new Membership;
+
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $currentUser = Auth::user();
-        $roles = Role::pluck('name', 'id');
+
+        $roles = Role::get();
+        $user_roles = $user->getRoleNames()->toArray();
+        $user_roles = array_combine($user_roles, $user_roles);
 
         $data = [
             'user' => $user,
+            'user_roles' => $user_roles,
             'roles' => $roles,
             'action' => 'Create',
             'currentUserPermissions' => $currentUser->permissions,
 
-            'user_info' => [],
-            'user_phone' => '',
-            'user_address' => '',
-            'user_membership' => '',
+            'user_info' => $user_info,
+            'user_phone' => $phone,
+            'user_address' => $address,
+            'user_membership' => $membership,
 
             'countries' =>  $regions['countries'],
             'provinces' =>   $regions['statesprovs']['Provinces'],
@@ -82,16 +94,16 @@ class UserController extends Controller
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
     public function edit(User $user, PhoneNumber $phoneNumber)
     {
+
+        $user_phone = User::find(1)->phone_number;
 
         // user_info table
 
         // address table
 
-        $user_phone = $user->phone_number();
-
-        dd($user_phone);
 
         // membership table
 
