@@ -86,7 +86,6 @@ class UserController extends Controller
 
 
         $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]) );
-
         $user->save();
 
         // get the user id, send it along to other saves.
@@ -99,8 +98,9 @@ class UserController extends Controller
         $user->address()->save($address);
 
 
-        $user_roles = new Role($request->input('user_roles'));
-        $user_roles->save();
+        //$user_roles = new Role($request->input('user_roles'));
+        //$user_roles->save();
+
         $membership = new User($request->input('user_membership'));
         $user->membership()->save($membership);
 
@@ -162,8 +162,10 @@ class UserController extends Controller
         $user_info->save();
         $address->fill($request->input('user_address'));
         $address->save();
-        $user_roles->fill($request->input('user_roles'));
-        $user_roles->save();
+
+//        $user_roles->fill($request->input('user_roles'));
+//        $user_roles->save();
+
         $membership->fill($request->input('user_membership'));
         $membership->save();
 

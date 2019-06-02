@@ -224,7 +224,7 @@ $user_roles = $data['user_roles'];
                 </div>
 
                 <div class="col-lg-10">
-                    Member Status <input type="text" class="form-control"  placeholder="status" name="user_membership[status]" value="{{ old('user_membership.membership_status', $user_membership['status'])}}" size="80" required/>
+                    Member Status <input type="text" class="form-control"  placeholder="status" name="user_membership[status]" value="{{ old('user_membership.status', $user_membership['status'])}}" size="80" required/>
                 </div>
 
                 <div class="col-lg-10">

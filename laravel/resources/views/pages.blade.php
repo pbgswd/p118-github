@@ -1,11 +1,8 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container">
+    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
         <h1 class="display-3">Pages</h1>
-        <h2>asd</h2>
-        <p>asdfasfd </p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
     </div>
 
     <div class="container">
