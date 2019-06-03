@@ -47,6 +47,7 @@ class Topic extends Model
      */
     protected $fillable =
         [
+            'user_id',
             'name',
             'description',
             'content',
@@ -71,6 +72,11 @@ class Topic extends Model
     {
         $this->attributes['slug'] = Str::slug($value, '-');
         return $this->attributes['name'] = $value;
+    }
+
+    public function users()
+    {
+        return $this->hasOne(User::class);
     }
 
 }
