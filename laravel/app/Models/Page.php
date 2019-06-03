@@ -51,6 +51,7 @@ class Page extends Model
      */
     protected $fillable =
         [
+            'user_id',
             'title',
             'description',
             'content',
@@ -76,4 +77,12 @@ class Page extends Model
         $this->attributes['slug'] = Str::slug($value, '-');
         return $this->attributes['name'] = $value;
     }
+
+    // relationship to users table
+
+    public function users()
+    {
+        return $this->hasOne(User::class);
+    }
+
 }
