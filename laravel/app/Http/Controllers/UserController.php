@@ -10,6 +10,7 @@ use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -78,31 +79,30 @@ class UserController extends Controller
      */
     public function store(StoreUser $request)
     {
-        //$user = new User($request->input('user'));
-
-        // new user needs a password
-        //$pass = str_random(8); // function deprecated
-       // $user = new User(array_merge($request['user'], ['password' => Hash::make($pass)]) );
-
 
         $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]) );
         $user->save();
 
-        // get the user id, send it along to other saves.
-
         $phone = new PhoneNumber($request->input('user_phone'));
         $user->phone_number()->save($phone);
+
         $user_info = new UserInfo($request->input('user_info'));
+
+// file upload
+        $user_info->image = $this->uploadImage($request);
+
         $user->user_info()->save($user_info);
+
         $address = new Address($request->input('user_address'));
         $user->address()->save($address);
 
+        $membership = new Membership($request->input('user_membership'));
+        $user->membership()->save($membership);
 
         //$user_roles = new Role($request->input('user_roles'));
         //$user_roles->save();
 
-        $membership = new User($request->input('user_membership'));
-        $user->membership()->save($membership);
+        // send new user an email with login instructions.
 
         Session::flash('success', "You have saved a new member");
 
@@ -195,5 +195,22 @@ class UserController extends Controller
        Session::flash('success', Str::plural('Member', count($request->id)) . ' deleted.');
 
        return redirect()->route('users_list');
+    }
+
+    protected function uploadImage(FormRequest $request)
+    {
+        if (!$request->image) {
+            return null;
+        }
+
+        $imageName = $request->image->getClientOriginalName();
+
+        if (!$request->image->storeAs('public', $imageName)) {
+            Session::flash('warning', "Did not store " . $imageName);
+
+            return null;
+        }
+
+        return $imageName;
     }
 }
