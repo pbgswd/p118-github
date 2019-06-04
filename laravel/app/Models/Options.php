@@ -1,10 +1,24 @@
 <?php
 
 namespace App\Models;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class Options
 {
+    public static function access_level()
+    {
+        $access = array();
+        $access = ['draft', 'review', 'public'];
+        return array_combine($access, $access);
+    }
+
+    public static function membership_level()
+    {
+        $membership = array();
+        $membership = ['non-member', 'permittee', 'member', 'office', 'executive', 'suspended', 'retired'];
+        return array_combine($membership, $membership);
+    }
+
     public static function state_prov()
     {
         $provinces = array();
