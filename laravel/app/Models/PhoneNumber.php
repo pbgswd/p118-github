@@ -27,7 +27,6 @@ class PhoneNumber extends Model
      */
     protected $fillable =
     [
-        'user_id',
         'phone_number',
         'label',
         'primary',

@@ -19,6 +19,13 @@ class Options
         return array_combine($membership, $membership);
     }
 
+    public static function phone_label()
+    {
+        $phone_labels = array();
+        $phone_labels = ['cel', 'home', 'work', 'other'];
+        return array_combine($phone_labels, $phone_labels);
+    }
+
     public static function state_prov()
     {
         $provinces = array();

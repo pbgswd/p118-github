@@ -65,9 +65,7 @@ $user_roles = $data['user_roles'];
                 <div class="form-group">
                     <div class="col-lg-2"><h4>Phone</h4></div>
                     <div class="col-lg-10">
-                        <input type="hidden" name="user_phone[user_id]" value="{{ $user['id'] }}">
-
-                        <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]" value="{{ old('user_phone.phone_number', $user_phone['phone_number'])}}" size="80" required/>
+                       <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]" value="{{ old('user_phone.phone_number', $user_phone['phone_number'])}}" size="80" required/>
                     </div>
                 </div>
             </div>
@@ -76,7 +74,6 @@ $user_roles = $data['user_roles'];
         <div class="border border-primary rounded-lg border-3" style="margin-top:1em; padding:1.5em;">
             <div class="row" style="margin-bottom: 1em;">
                 <div class="col-12"><h4>Member Info and Preferences</h4></div>
-                <input type="hidden" name="user_info[user_id]" value="{{ $user_info['user_id'] }}">
                 @if( $user_info['image'] )
                     <div class="col-12">
                         <h4>
@@ -85,7 +82,6 @@ $user_roles = $data['user_roles'];
                         </h4>
                         <h5>Currently: {{ $user_info['image'] }}</h5>
                         <img src="{{ asset('storage/' . $user_info['image']) }}" height="100px" />
-
                         <input type="hidden"  name="user_info[image]" value="{{$user_info['image']}}" />
                         <label>
                             <input name="user_info[delete_image]" type="checkbox" value="1" /> <h5>Check to delete image</h5>
@@ -97,7 +93,7 @@ $user_roles = $data['user_roles'];
                             <i class="fas fa-cloud-upload-alt fa-2x"></i>
                             File input
                         </label>
-                        <input type="file" id="inputFile" name="user_info[image]" />
+                        <input type="file" id="inputFile" name="image" />
                         <p class="help-block">
                             Upload image for your profile if you wish.
                         </p>
@@ -141,7 +137,6 @@ $user_roles = $data['user_roles'];
 
             <div class="row">
                 <div class="col-6"><h3>Primary Mailing Address</h3></div>
-                <input type="hidden" name="user_address[user_id]" value="{{ $user_address['user_id'] }}">
             </div>
 
             <div class="row">
@@ -200,7 +195,7 @@ $user_roles = $data['user_roles'];
                 @foreach ($roles as $role)
                     <div class="col-12">
                         <label>
-                            <input name="user_roles['name'][]" type="checkbox" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_roles))  }} >
+                            <input name="user_roles[]" type="checkbox" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_roles))  }} >
                             {{$role->name}}
                             (
                              @foreach ($role->permissions as $p)
@@ -217,7 +212,6 @@ $user_roles = $data['user_roles'];
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
                 <div class="col-lg-10">
                     <h3>Membership</h3>
-                     <input type="hidden" name="user_membership[user_id]" value="{{ $user_membership['user_id'] }}">
                 </div>
                 <div class="col-lg-10">
                   Seniority Number  <input type="text" class="form-control"  placeholder="number" name="user_membership[seniority_number]" value="{{ old('user_membership.seniority_number', $user_membership['seniority_number'])}}" size="80" required/>
@@ -241,7 +235,6 @@ $user_roles = $data['user_roles'];
             </div>
              </span>
         </div>
-
 
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">

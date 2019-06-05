@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateUser;
+use App\Http\Requests\User_Info\UpdateUserInfo;
 use App\Models\Address;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
@@ -87,10 +89,7 @@ class UserController extends Controller
         $user->phone_number()->save($phone);
 
         $user_info = new UserInfo($request->input('user_info'));
-
-// file upload
         $user_info->image = $this->uploadImage($request);
-
         $user->user_info()->save($user_info);
 
         $address = new Address($request->input('user_address'));
@@ -99,8 +98,8 @@ class UserController extends Controller
         $membership = new Membership($request->input('user_membership'));
         $user->membership()->save($membership);
 
-        //$user_roles = new Role($request->input('user_roles'));
-        //$user_roles->save();
+        $user_roles = new Role($request->input('user_roles'));
+        $user_roles->save();
 
         // send new user an email with login instructions.
 
@@ -114,13 +113,16 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
-    public function edit(User $user, PhoneNumber $phoneNumber, UserInfo $user_info, Address $address, Membership $membership)
+    public function edit(User $user)
     {
 
-        $phone = User::find(1)->phone_number;
-        $user_info = User::find(1)->user_info;
-        $address = User::find(1)->address;
-        $membership = User::find(1)->membership;
+        $phone = $user->phone_number;
+
+        $user_info = $user->user_info;
+
+        $address = $user->address;
+
+        $membership = $user->membership;
 
         $currentUser = Auth::user(); // the logged in user, perms to edit?
 
@@ -148,26 +150,58 @@ class UserController extends Controller
     }
 
     /**
-     * @param UpdateUser $request
+     * @param UpdateUser $userRequest
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateUser $request, User $user, PhoneNumber $phoneNumber, UserInfo $user_info, Address $address, Role $user_roles, Membership $membership)
+    public function update(UpdateUser $userRequest, User $user)
     {
-        $user->fill($request['user']);
+        $user->fill($userRequest['user']);
         $user->save();
-        $phoneNumber->fill($request['user_phone']);
-        $phoneNumber->save();
-        $user_info->fill($request->input('user_info'));
-        $user_info->save();
-        $address->fill($request->input('user_address'));
-        $address->save();
 
-//        $user_roles->fill($request->input('user_roles'));
-//        $user_roles->save();
+        if ($user->phone_number instanceof PhoneNumber) {
+            $user->phone_number->fill($userRequest['user_phone']);
+            $user->phone_number->save();
+        } else {
+            $phone = new PhoneNumber($userRequest['user_phone']);
+            $user->phone_number()->save($phone);
+        }
 
-        $membership->fill($request->input('user_membership'));
-        $membership->save();
+        if ($user->user_info instanceof UserInfo) {
+            $user_info = $userRequest['user_info'];
+            if (isset( $userRequest['user_info']['delete_image']))
+            {
+                Storage::disk('public')->delete( $userRequest['image'] );
+                Session::flash('info', "You have deleted " . $userRequest['image']);
+                $user_info['image'] = null;
+            } else {
+                $user_info['image'] = $this->uploadImage($userRequest);
+            }
+            $user->user_info->fill($user_info);
+            $user->user_info->save();
+        } else {
+            $user_info = new UserInfo($userRequest->input('user_info'));
+            $user_info->image = $this->uploadImage($userRequest);
+            $user->user_info()->save($user_info);
+        }
+
+        if ($user->address instanceof Address) {
+            $user->address->fill($userRequest['user_address']);
+            $user->address->save();
+        } else {
+            $address = new Address($userRequest['user_address']);
+            $user->address()->save($address);
+        }
+
+        $user->syncRoles($userRequest['user_roles']);
+
+        if ($user->membership instanceof Membership) {
+            $user->membership->fill($userRequest['user_membership']);
+            $user->membership->save();
+        } else {
+            $membership = new Membership($userRequest['user_membership']);
+            $user->membership()->save($membership);
+        }
 
         Session::flash('success', "You have edited a member profile");
 
@@ -200,7 +234,7 @@ class UserController extends Controller
     protected function uploadImage(FormRequest $request)
     {
         if (!$request->image) {
-            return null;
+            return $request->input('user_info.image');
         }
 
         $imageName = $request->image->getClientOriginalName();

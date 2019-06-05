@@ -20,7 +20,6 @@ class Membership extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
         'membership_date',
         'membership_expires',
         'seniority_number',

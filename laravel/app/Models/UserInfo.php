@@ -18,7 +18,6 @@ class UserInfo extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
         'share_email',
         'share_phone',
         'image',

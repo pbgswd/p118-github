@@ -101,13 +101,7 @@
                                     Pages
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin')}}">
-                                    <span data-feather="file"></span>
-                                    Posts
-                                </a>
-                            </li>
-                            <li class="nav-item">
+                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('roles_list')}}">
                                     <span data-feather="file"></span>
                                     Roles
@@ -184,57 +178,6 @@
                         -->
 
                         <hr />
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span>Web Resources</span>
-                            <a class="d-flex align-items-center text-muted" href="#">
-                                <span data-feather="plus-circle"></span>
-                            </a>
-                        </h6>
-                        <ul class="nav flex-column mb-2">
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="https://laravel.com/" target="_blank">
-                                    <span data-feather="file-text"></span>
-                                    Laravel
-                                </a>
-                            </li>
-                    <li class="nav-item">
-                                <a class="nav-link" href="https://getbootstrap.com/" target="_blank">
-                                    <span data-feather="file-text"></span>
-                                    Twitter Bootstrap
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('telescope')}}">
-                                    <span data-feather="file-text"></span>
-                                    Telescope
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="https://fontawesome.com/icons?d=gallery" target="_blank">
-                                    <span data-feather="file-text"></span>
-                                    FontAwesome Icons
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="https://www.tiny.cloud/" target="_blank">
-                                    <span data-feather="file-text"></span>
-                                    TinyMCE
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="https://vuejs.org/" target="_blank">
-                                    <span data-feather="file-text"></span>
-                                    Vue.js
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="https://www.vultr.com/" target="_blank">
-                                    <span data-feather="file-text"></span>
-                                    Vultr
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </nav>
 
