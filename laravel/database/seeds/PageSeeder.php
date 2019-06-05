@@ -21,6 +21,7 @@ class PageSeeder extends Seeder
             $date  = date('Y-m-d H:i:s');
 
             DB::table('pages')->insert([
+                'user_id' => 1,
                 'title' => $title,
                 'slug' => $slug,
                 'description' => $faker->text(30),

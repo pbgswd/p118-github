@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 
 /**
@@ -27,6 +28,7 @@ use Spatie\Permission\Models\Role;
  */
 class UserController extends Controller
 {
+    use HasRoles;
     /**
      * Display a listing of the resource.
      *
@@ -219,9 +221,11 @@ class UserController extends Controller
        /*
         * phone
         * user_info
+        * image Storage::disk('public')->delete( $userRequest['image'] );
         * address
         * role
         * membership
+        * user
         */
 
        // revise count of membership seniority number
