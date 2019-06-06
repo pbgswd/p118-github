@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateUser;
-use App\Http\Requests\User_Info\UpdateUserInfo;
 use App\Models\Address;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
@@ -39,7 +38,6 @@ class UserController extends Controller
         $users = User::with('roles')->sortable()->paginate(10);
         return view('admin.listusers', ['data'=>array('users'=>$users )]);
     }
-
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -119,17 +117,11 @@ class UserController extends Controller
     {
 
         $phone = $user->phone_number;
-
         $user_info = $user->user_info;
-
         $address = $user->address;
-
         $membership = $user->membership;
-
         $currentUser = Auth::user(); // the logged in user, perms to edit?
-
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
-
         $roles = Role::get();
         $user_roles = $user->getRoleNames()->toArray();
         $user_roles = array_combine($user_roles, $user_roles);
@@ -216,23 +208,24 @@ class UserController extends Controller
      */
     public function destroy(DestroyUser $request)
     {
-       User::destroy($request->id);
+        $users = User::find($request->id);
 
-       /*
-        * phone
-        * user_info
-        * image Storage::disk('public')->delete( $userRequest['image'] );
-        * address
-        * role
-        * membership
-        * user
-        */
+        foreach ($users as $user) {
+            PhoneNumber::where('user_id', $user->id)->delete();
+            Address::where('user_id', $user->id)->delete();
+            Membership::where('user_id', $user->id)->delete();
+            $user->syncRoles();
+            $user_info = UserInfo::where('user_id', $user->id)->first();
+            if ($user_info['image']) {
+                Storage::disk('public')->delete($user_info['image']);
+            }
+            UserInfo::destroy($user_info['id']);
+        }
+        User::destroy($request->id);
 
-       // revise count of membership seniority number
+        Session::flash('success', Str::plural('Member', count($request->id)) . ' deleted.');
 
-       Session::flash('success', Str::plural('Member', count($request->id)) . ' deleted.');
-
-       return redirect()->route('users_list');
+        return redirect()->route('users_list');
     }
 
     protected function uploadImage(FormRequest $request)

@@ -45,7 +45,7 @@ class UpdateUser extends FormRequest
             'user_roles' => 'required',
             'user_membership.membership_date' => 'date',
             'user_membership.membership_expires' => 'date',
-            'user_membership.seniority_number' => 'required|integer|unique',
+            'user_membership.seniority_number' => 'required|integer|unique:memberships,seniority_number,' . $this->route('user')->id . ',user_id',
             'user_membership.status' => 'string|required|max:255',
             'user_membership.admin_notes' => 'string|nullable|max:2000',
         ];
