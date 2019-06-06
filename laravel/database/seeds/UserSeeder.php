@@ -18,9 +18,12 @@ class UserSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
+        $roleIds = [1,2,3,4,6];
+        shuffle($roleIds);
 
-        for ($i = 0; $i < 2; $i++) {
+        for ($i = 0; $i < 20; $i++) {
 
+            shuffle($roleIds);
             $date = date('Y-m-d H:i:s');
 
             DB::table('users')->insert([
@@ -63,8 +66,11 @@ class UserSeeder extends Seeder
                 'updated_at' => $date,
             ]);
 
-           // $user = new User::find($userId);
-           // $user->assignRole('member');
+            DB::table('model_has_roles')->insert([
+                'role_id' => $roleIds[0],
+                'model_type' => 'App\Models\User',
+                'model_id' => $userId,
+            ]);
 
             DB::table('memberships')->insert([
                 'user_id' => $userId,
