@@ -19,18 +19,14 @@ class UserSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        $user_roles = array('writer', 'member', 'monkey', 'editor');
-        $user_roles = array_combine($user_roles, $user_roles);
+        for ($i = 0; $i < 2; $i++) {
 
-        for ($i = 24; $i < 2; $i++) {
             $date = date('Y-m-d H:i:s');
-
-            echo "starting \n";
 
             DB::table('users')->insert([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
-                'email_verified_at' => now(),
+                'email_verified_at' => $date,
                 'password' => bcrypt('secret'),
                 'created_at' => $date,
                 'updated_at' => $date,
@@ -52,31 +48,31 @@ class UserSeeder extends Seeder
                 'share_email' => $faker->boolean,
                 'share_phone' => $faker->boolean,
                 'image' => '',
-                'about' => $faker->text(200),
+                'about' => $faker->text(1000),
             ]);
 
             DB::table('addresses')->insert([
                 'user_id' => $userId,
-                'unit' => '',
-                'street' => $faker->address . " " . $faker->streetName,
+                'unit' => $faker->numberBetween(1, 55),
+                'street' => $faker->streetAddress,
                 'city' => $faker->city,
-                'province' => 'British Columbia',
+                'province' => 'BC',
                 'postal_code' => $faker->postcode,
                 'country' => 'Canada',
                 'created_at' => $date,
                 'updated_at' => $date,
             ]);
 
-            $role = new Role(array_rand($user_roles, 1));
-            $role->save();
+           // $user = new User::find($userId);
+           // $user->assignRole('member');
 
             DB::table('memberships')->insert([
                 'user_id' => $userId,
                 'membership_date' => '2010-02-01',
                 'membership_expires' => '2020-02-01',
-                'seniority_number' => $i,
+                'seniority_number' => $userId,
                 'status' => 'current',
-                'admin_notes' => $faker->text(200),
+                'admin_notes' => $faker->text(600),
                 'created_at' => $date,
                 'updated_at' => $date,
             ]);

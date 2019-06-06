@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Page;
 use Illuminate\Database\Seeder;
 
 class PageSeeder extends Seeder
@@ -14,7 +13,7 @@ class PageSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 2; $i++) {
 
             $title = $faker->text(20);
             $slug  = strtolower($title);
