@@ -28,6 +28,8 @@ use Spatie\Permission\Traits\HasRoles;
 class UserController extends Controller
 {
     use HasRoles;
+
+
     /**
      * Display a listing of the resource.
      *
@@ -150,6 +152,7 @@ class UserController extends Controller
      */
     public function update(UpdateUser $userRequest, User $user)
     {
+
         $user->fill($userRequest['user']);
         $user->save();
 

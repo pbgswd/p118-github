@@ -8,6 +8,7 @@ use App\Http\Requests\Page\UpdatePage;
 use App\Models\Page;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -109,6 +110,12 @@ class PageController extends Controller
      */
     public function update(UpdatePage $request, Page $page)
     {
+        if ($gate = Gate::allows('edit articles', $page)) {
+            echo 'Allowed';
+        } else {
+            abort(403); 
+        }
+
         $data = $request['page'];
 
         $data['image'] = $this->uploadImage($request);

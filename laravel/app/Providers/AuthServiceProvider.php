@@ -7,6 +7,7 @@ use App\Policies\PagePolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -16,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Page::class => PagePolicy::class,
+        //User::class => UserPolicy::class; // todo
     ];
 
     /**
@@ -23,16 +25,18 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(PagePolicy $gate)
     {
-        $this->registerPolicies();
+        //GateContract $gate
+        $this->registerPolicies($gate);
+
         Gate::before(function ($user, $ability) {
-            return $user->hasRole('Admin') ? true : null;
+            return $user->hasRole('super-admin') ? true : null;
         });
 
         /*
          *
-        // Implicitly grant "Admin" role all permissions
+        // Implicitly grant "super-admin" role all permissions
         // This works in the app by using gate-related functions like auth()->user->can() and @can()
          */
     }

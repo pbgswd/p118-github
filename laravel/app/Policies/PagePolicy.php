@@ -47,7 +47,7 @@ class PagePolicy
      */
     public function update(User $user, Page $page)
     {
-        //
+        return $user->id === $page->user_id;
     }
 
     /**
