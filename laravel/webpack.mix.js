@@ -8,15 +8,15 @@ const mix = require('laravel-mix');
  | Mix provides a clean, fluent API for defining some Webpack build steps
  | for your Laravel application. By default, we are compiling the Sass
  | file for the application as well as bundling up all the JS files.
- |
+ | .sass('resources/sass/_dropdown.scss', 'public/css').version();
  */
 
 mix.js('resources/js/app.js', 'public/js')
    .js('resources/js/dashboard.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .sass('resources/sass/dashboard.scss', 'public/css')
-   .sass('resources/sass/jumbotron.scss', 'public/css')
-   .sass('resources/sass/_dropdown.scss', 'public/css').version();
+   .sass('resources/sass/jumbotron.scss', 'public/css');
+
 
 
 if (mix.inProduction()) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Contact\SubmitContact;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -30,11 +31,13 @@ class ContactController extends Controller
      */
     public function submit(SubmitContact $request)
     {
-        dd($request->all());
-exit();
-        $data = $request->all();
+        Mail::send('emails.contact', ['data'=>$request->all()], function ($m) use ($request) {
+            $m->from($request['email'], $request['name']);
+            $m->to(env('ADMIN_EMAIL_RECIPIENT'), env('ADMIN_EMAIL_NAME'))->subject('Contact Page ' . $request['subject']);
+        });
 
-        return view('contact', ['data'=>$data]);
+        flash()->success('Your message was sent.');
+        return view('contact', ['data'=>array()]);
     }
 
 }

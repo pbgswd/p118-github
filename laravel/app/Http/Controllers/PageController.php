@@ -111,17 +111,16 @@ class PageController extends Controller
     public function update(UpdatePage $request, Page $page)
     {
         if ($gate = Gate::allows('edit articles', $page)) {
-            echo 'Allowed';
+           // echo 'Allowed';
         } else {
-            abort(403); 
+            abort(403);
         }
 
         $data = $request['page'];
 
         $data['image'] = $this->uploadImage($request);
 
-        if (isset( $request['page']['delete_image']))
-        {
+        if (isset( $request['page']['delete_image'])) {
             Storage::disk('public')->delete( $request->page['image'] );
             Session::flash('info', "You have deleted " . $data['image']);
             $data['image'] = NULL;
@@ -130,12 +129,9 @@ class PageController extends Controller
         $page->fill($data);
         $page->save();
 
-        if (empty($request->tags))
-        {
+        if (empty($request->tags)) {
             $page->untag();
-        }
-        else
-        {
+        } else {
             $page->retag(trim($request->tags, ','));
         }
 

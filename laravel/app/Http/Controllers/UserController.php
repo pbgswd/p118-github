@@ -74,7 +74,6 @@ class UserController extends Controller
         ];
 
         return view('admin.user', ['data'=> $data]);
-
     }
 
     /**
@@ -166,8 +165,7 @@ class UserController extends Controller
 
         if ($user->user_info instanceof UserInfo) {
             $user_info = $userRequest['user_info'];
-            if (isset( $userRequest['user_info']['delete_image']))
-            {
+            if (isset( $userRequest['user_info']['delete_image'])) {
                 Storage::disk('public')->delete( $userRequest['image'] );
                 Session::flash('info', "You have deleted " . $userRequest['image']);
                 $user_info['image'] = null;
