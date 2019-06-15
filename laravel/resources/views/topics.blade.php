@@ -1,17 +1,17 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
-        <div class="row">
+    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:2em;">
+        <div class="col-12">
             <h1 class="display-3">Topics</h1>
         </div>
-        <div class="row">
+        <div class="col-12">
             <h2>Information grouped by topic</h2>
         </div>
         <!-- Example row of columns -->
         <div class="row">
             @foreach ( $data['topics'] as $i )
-                <div class="col-md-3 border border-dark rounded-lg mt-3 mr-3" style="margin: 1em;">
+                <div class="col-3 border border-dark rounded-lg mt-3 mr-3" style="margin: 1em;">
                     <h2>{{ $i->name }}</h2>
                     <p>{!! $i->description !!} </p>
                     <p>
@@ -23,10 +23,7 @@
                     </p>
                 </div>
             @endforeach
-
         </div>
-
-
     <div class="row">
         <div class="col"></div>
         <div class="col">

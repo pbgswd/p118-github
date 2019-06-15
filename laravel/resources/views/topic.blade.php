@@ -6,13 +6,13 @@ $tags = join(', ', $topic->tagNames());
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
-        <div class="row">
+        <div class="col-12">
             <h1 class="display-3">{{$topic->name}}</h1>
         </div>
-        <div class="row">
+        <div class="col-12">
                 <h2>{!! $topic->description !!}</h2>
         </div>
-        <div class="row">
+        <div class="col-12">
             @if( $topic->image )
                 <div class="col-md-6">
                     <div class="col">
@@ -22,7 +22,7 @@ $tags = join(', ', $topic->tagNames());
             @endif
             {!! $topic->description !!}
         </div>
-        <div class="row">
+        <div class="col-12" style="margin: 2px;">
             Tags: {{$tags}}
         </div>
     </div>

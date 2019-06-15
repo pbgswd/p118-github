@@ -1,11 +1,11 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="container">
-    <h1 class="display-3">Contact Us</h1>
 
-
-
-    <div class="row">
+    <div class="row border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:2em;">
+        <div class="col-md-12 content">
+            <h1 class="display-3">Contact Us</h1>
+        </div>
         <div class="col-md-12 content">
             <form class="form-horizontal" role="form" action="{{route('contact')}}" method="post">
                 {!! csrf_field() !!}
@@ -36,22 +36,26 @@
                         <textarea name="mail_body" placeholder="Message" form-control input-lg" rows="3" cols="100">{{old('mail_body')}}</textarea>
                     </div>
                 </div>
-
-                <div class="col-sm-2 col-sm-offset-2">
-
-                    <button
-                            class="btn btn-primary g-recaptcha"
-                            data-sitekey="6LcxikAUAAAAAAvZhKMlu3bH9dndScyhJk5d4NoF"
-                            data-callback=""
-                            name="submit">
-                        Send
-                    </button>
-
-                </div>
-
-                <div class="col-sm-1 col-sm-offset-6">
-                    <button type="reset" class="btn btn-info btn-reset"  name="Reset">Reset</button>
+                <div class="row">
+                    <div class="col-6">
+                        <button
+                                class="btn btn-primary g-recaptcha"
+                                data-sitekey="6LcxikAUAAAAAAvZhKMlu3bH9dndScyhJk5d4NoF"
+                                data-callback=""
+                                name="submit">
+                            Send
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="reset"
+                                class="btn btn-info btn-reset"
+                                name="Reset">
+                            Reset
+                        </button>
+                    </div>
                 </div>
             </form>
-          </div>
+        </div>
+    </div>
+</div>
 @endsection
