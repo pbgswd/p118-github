@@ -6,19 +6,14 @@
           <meta name="description" content="">
           <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
           <meta name="generator" content="Jekyll v3.8.5">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name') }}</title>
-
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
-
     <link rel="canonical" href="http://project118/hello/">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <style>
@@ -39,7 +34,6 @@
           padding-right: 4px;
           padding-left: 3px;
       }
-
       @media (min-width: 768px) {
           .bd-placeholder-img-lg {
               font-size: 3.5rem;
@@ -50,114 +44,123 @@
     <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
     </head>
     <body>
-    <a name="top"></a>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="{{ route('hello') }}">{{config('app.name')}}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('hello') }}" title="Home Page {{ config('app.name') }}"><i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('topics')}}">Topics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('pages')}}">Pages</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Venues</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
-                </li>
-                @guest
-                    @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="/site" title="Members"><i class="fas fa-industry"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin')}}" title="Admin"><i class="fas fa-tachometer-alt"></i></a>
-                    </li>
-                @endguest
-                <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-            </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
+        <a name="top"></a>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="{{ route('hello') }}">{{config('app.name')}}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
-                    <div style="color: white">Left Div</div>
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('hello') }}" title="Home Page {{ config('app.name') }}"><i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('topics')}}">Topics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('pages')}}">Pages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hire Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
+                    </li>
                     @guest
+                        @else
                         <li class="nav-item">
-                            <a href="/login">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-                            </a>
+                            <a class="nav-link" href="#">Venues</a>
                         </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item float-right">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
                         <li class="nav-item">
-                            <a id="" class="nav-link" href="#">
-                                <i class="fas fa-user"></i> {{ Auth::user()->name }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button class="btn btn-outline-success my-2 my-sm-0 float-right" type="submit">Logout</button>
-                            </form>
+                            <a class="nav-link" href="#">Departments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Resources</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">People</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/site" title="Members"><i class="fas fa-industry"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('admin')}}" title="Admin"><i class="fas fa-tachometer-alt"></i></a>
                         </li>
                     @endguest
+                    <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
                 </ul>
-            </div>
-        </div>
-    </nav>
-    <main role="main">
-            <!-- Main jumbotron for a primary marketing message or call to action -->\
 
-            <div class="jumbotron">
-                @include('flash-messages')
-                @yield('content')
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+                        <div style="color: white">Left Div</div>
+                    </ul>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li class="nav-item">
+                                <a href="/login">
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                                </a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item float-right">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item">
+                                <a id="" class="nav-link" href="#">
+                                    <i class="fas fa-user"></i> {{ Auth::user()->name }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-outline-success my-2 my-sm-0 float-right" type="submit">Logout</button>
+                                </form>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
             </div>
-          <div class="container">
-          @yield('data')
-          </div>
-          <hr>
-      </div> <!-- /container -->
-    </main>
-    <footer class="container">
-        <div class="text-left"><i class="far fa-copyright"></i>{{ config('app.name')}} <?php echo date('Y'); ?></div>
-        <div>Terms of Use | Privacy Policy | Disclaimer </div>
-            <div class="text-right"> <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
-        </div>
-    </footer>
-        <script src="/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
-        <script src="/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-    </body>
+        </nav>
+        <main role="main">
+                <!-- Main jumbotron for a primary marketing message or call to action -->
+                <div class="jumbotron">
+                    @include('flash-messages')
+                    @yield('content')
+                </div>
+              <div class="container">
+              @yield('data')
+              </div>
+              <hr>
+          </div> <!-- /container -->
+        </main>
+        <footer class="container">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <div class="text-left"><i class="far fa-copyright"></i>{{ config('app.name')}} <?php echo date('Y'); ?></div>
+            <div><a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a> | <a href="#">Disclaimer</a> | <a href="#">Links</a> | <a href="#">Apply</a> </div>
+                <div class="text-right"> <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
+            </div>
+            <div style="height: 2em;"></div>
+        </footer>
+            <script src="/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
+            <script src="/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        </body>
 </html>
-                        
