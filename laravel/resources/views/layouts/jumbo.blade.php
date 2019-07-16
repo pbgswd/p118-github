@@ -68,6 +68,9 @@
                     <a class="nav-link" href="{{route('pages')}}">Pages</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="#">Venues</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
                 </li>
                 @guest
@@ -146,6 +149,7 @@
     </main>
     <footer class="container">
         <div class="text-left"><i class="far fa-copyright"></i>{{ config('app.name')}} <?php echo date('Y'); ?></div>
+        <div>Terms of Use | Privacy Policy | Disclaimer </div>
             <div class="text-right"> <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
         </div>
     </footer>
