@@ -135,6 +135,7 @@
             <!-- Main jumbotron for a primary marketing message or call to action -->\
 
             <div class="jumbotron">
+                @include('flash-messages')
                 @yield('content')
             </div>
           <div class="container">

@@ -21,7 +21,6 @@ class ContactController extends Controller
         $data = [];
 
         return view('contact', ['data'=>$data]);
-
     }
 
     /**
