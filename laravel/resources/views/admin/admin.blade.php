@@ -26,6 +26,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="http://getskeleton.com/" target="_blank">
+                <span data-feather="file-text"></span>
+                Skeleton
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{route('telescope')}}">
                 <span data-feather="file-text"></span>
                 Telescope
