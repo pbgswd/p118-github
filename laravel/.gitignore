@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/css/skeleton.css
+/public/css/normalize.css
 /storage/*.key
 /vendor
 .env
