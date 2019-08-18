@@ -136,23 +136,22 @@
             </div>
         </nav>
         <main role="main">
-                <!-- Main jumbotron for a primary marketing message or call to action -->
-                <div class="jumbotron">
-                    @include('flash-messages')
-                    @yield('content')
-                </div>
-              <div class="container">
-              @yield('data')
-              </div>
-              <hr>
-          </div> <!-- /container -->
+<!-- Main jumbotron for a primary marketing message or call to action -->
+            <div class="jumbotron">
+                @include('flash-messages')
+                @yield('content')
+            </div>
+            <div class="container">
+                @yield('data')
+                <hr />
+            </div> <!-- /container -->
         </main>
         <footer class="container">
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <div class="text-left"><i class="far fa-copyright"></i>{{ config('app.name')}} <?php echo date('Y'); ?></div>
+            <div class="text-left" style="margin-top: 2em;"><i class="far fa-copyright"></i> {{ config('app.name')}} <?php echo date('Y'); ?></div>
             <div><a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a> | <a href="#">Disclaimer</a> | <a href="#">Links</a> | <a href="#">Apply</a> </div>
                 <div class="text-right"> <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
             </div>
