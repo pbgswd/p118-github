@@ -63,7 +63,6 @@ class Page extends Model
             'allow_comments',
         ];
 
-
     /**
      * in urls, what field value is used to identify a Topic record?
      */
@@ -72,10 +71,10 @@ class Page extends Model
         return 'slug';
     }
 
-    public function setNameAttribute($value)
+    public function setTitleAttribute($value)
     {
         $this->attributes['slug'] = Str::slug($value, '-');
-        return $this->attributes['name'] = $value;
+        return $this->attributes['title'] = $value;
     }
 
     // relationship to users table

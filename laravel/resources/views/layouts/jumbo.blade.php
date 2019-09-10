@@ -56,6 +56,9 @@
                         <a class="nav-link" href="{{ route('hello') }}" title="Home Page {{ config('app.name') }}"><i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route('topics')}}">Topics</a>
                     </li>
                     <li class="nav-item">
@@ -67,10 +70,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Venues</a>
+                    </li>
                     @guest
                         @else
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Venues</a>
+                            <a class="nav-link" href="#">Collective Agreements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Sub Committees</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Departments</a>
@@ -147,12 +156,14 @@
             </div> <!-- /container -->
         </main>
         <footer class="container">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <div style="margin-bottom: 1em;">
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+            <div><a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a> | <a href="#">Disclaimer</a> | <a href="#">Links</a> | <a href="#">Apply for work</a> </div>
             <div class="text-left" style="margin-top: 2em;"><i class="far fa-copyright"></i> {{ config('app.name')}} <?php echo date('Y'); ?></div>
-            <div><a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a> | <a href="#">Disclaimer</a> | <a href="#">Links</a> | <a href="#">Apply</a> </div>
                 <div class="text-right"> <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
             </div>
             <div style="height: 2em;"></div>

@@ -11,6 +11,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -62,6 +63,7 @@ class TopicController extends Controller
     public function create()
     {
         $topic = new Topic;
+        $topic['user_id'] = Auth::id();
 
         return view('admin.topic', ['data' => ['topic' => $topic, 'action' => 'Create']]);
     }
@@ -82,8 +84,7 @@ class TopicController extends Controller
 
         if (!empty($request->tags)) {
             $topic->tag(trim($request->tags, ','));
-         }
-
+        }
         Session::flash('success', "You have saved a new topic");
 
         return redirect()->route('topic_edit', [$topic->slug]);

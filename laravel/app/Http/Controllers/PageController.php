@@ -8,6 +8,7 @@ use App\Http\Requests\Page\UpdatePage;
 use App\Models\Page;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -47,6 +48,7 @@ class PageController extends Controller
     public function create()
     {
         $page = new Page;
+        $page['user_id'] = Auth::id();
 
         return view('admin.page', ['data' => ['page' => $page, 'action' => 'Create']]);
     }
@@ -59,11 +61,12 @@ class PageController extends Controller
      */
     public function store(StorePage $request)
     {
+
         $page = new Page($request->input('page'), $request->input('tags'));
-
         $page->image = $this->uploadImage($request);
-
         $page->save();
+
+
 
         if (!empty($request->tags)) {
             $page->tag(trim($request->tags, ','));
@@ -82,9 +85,7 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
-        // public
         $data = ['page'=>$page, 'action'=>'Edit'];
-
         return view('page', ['data'=> $data]);
     }
 
