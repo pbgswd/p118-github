@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Requests\Topic\DestroyRequest;
 use App\Http\Requests\Topic\StoreRequest;
 use App\Http\Requests\Topic\UpdateRequest;

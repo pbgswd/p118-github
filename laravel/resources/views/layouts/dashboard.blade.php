@@ -90,6 +90,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{route('venues_list')}}">
+                                    <span data-feather="file"></span>
+                                    Venues
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('attachments_list')}}">
                                     <span data-feather="file"></span>
                                     Images & Attachments

@@ -29,6 +29,10 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/topics', 'TopicController@list')->name('topics');
     Route::get('/topic/{topic}', 'TopicController@show')->name('topic_show');
+
+    Route::get('/venues', 'VenueController@list')->name('venues');
+    Route::get('/venue/{venue}', 'VenueController@show')->name('venue_show');
+
 });
 
 Route::group(['middleware' =>  ['web', 'auth',]], function () {
@@ -73,6 +77,15 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
 
     Route::get('/attachment', 'AttachmentController@create')->name('attachment_create');
     Route::get('/attachments', 'AttachmentController@index')->name('attachments_list');
+
+
+    Route::get('/venues', 'VenueController@index')->name('venues_list');
+    Route::get('/venue', 'VenueController@create')->name('venue_create');
+    Route::post('/venue', 'VenueController@store');
+    Route::get('/venue/{venue}', 'VenueController@edit')->name('venue_edit');
+    Route::post('/venue/{venue}', 'VenueController@update');
+    Route::delete('/venue/delete', 'VenueController@destroy')->name('venue_destroy');
+
 
     Route::get('/roles', 'RoleController@index')->name('roles_list');
 

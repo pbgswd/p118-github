@@ -71,7 +71,7 @@
                         <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Venues</a>
+                        <a class="nav-link" href="{{route('venues')}}">Venues</a>
                     </li>
                     @guest
                         @else
