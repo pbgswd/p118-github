@@ -7,6 +7,7 @@
         "laravel"
     ],
     "license": "MIT",
+
     "require": {
         "php": "^7.2",
         "fideloper/proxy": "^4.0",
@@ -18,7 +19,11 @@
         "league/flysystem": "^1.0.55",
         "rtconner/laravel-tagging": "^3.2.3",
         "spatie/image": "^1.7.4",
-        "spatie/laravel-permission": "^3.0"
+        "spatie/laravel-permission": "^3.0",
+        "spatie/laravel-medialibrary": "^7.12"
+    },
+    "provide": {
+        "ext-imagick": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
