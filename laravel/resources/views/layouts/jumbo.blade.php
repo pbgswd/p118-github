@@ -56,7 +56,7 @@
                         <a class="nav-link" href="{{ route('hello') }}" title="Home Page {{ config('app.name') }}"><i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About Us</a>
+                        <a class="nav-link" href="/page/about-us">About Us</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('topics')}}">Topics</a>
