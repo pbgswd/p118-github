@@ -20,9 +20,7 @@
         "nesbot/carbon": "^2.24",
         "rtconner/laravel-tagging": "^3.2.3",
         "spatie/image": "^1.7.4",
-        "spatie/laravel-cookie-consent": "^2.9",
-        "spatie/laravel-medialibrary": "^7.12",
-        "spatie/laravel-permission": "^3.0"
+        "spatie/laravel-medialibrary": "^7.12"
     },
     "provide": {
         "ext-imagick": "*"
