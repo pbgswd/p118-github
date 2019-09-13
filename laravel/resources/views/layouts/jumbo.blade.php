@@ -162,7 +162,7 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
-            <div><a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a> | <a href="#">Disclaimer</a> | <a href="#">Links</a> | <a href="#">Apply for work</a> </div>
+            <div><a href="/page/terms-of-use">Terms of Use</a> | <a href="/page/privacy-policy">Privacy Policy</a> | <a href="/page/disclaimer">Disclaimer</a> | <a href="/page/links">Links</a> | <a href="/page/apply-for-work">Apply for work</a> </div>
             <div class="text-left" style="margin-top: 2em;"><i class="far fa-copyright"></i> {{ config('app.name')}} <?php echo date('Y'); ?></div>
                 <div class="text-right"> <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
             </div>
