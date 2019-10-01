@@ -23,7 +23,7 @@ class HelloController extends Controller
         {
              $data['birthday'] = "Happy Birthday IATSE Local 118! You are " . $data['years'] . " years young today!";
         }
-
+// add time zone management to Laravel
         return view('hello', ['data'=>$data]);
     }
 

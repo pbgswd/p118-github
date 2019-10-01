@@ -7,15 +7,15 @@ return [
     */
     'columns'                       => [
         'alpha'   => [
-            'rows'  => ['description', 'email', 'name', 'slug', 'access_level',],
+            'rows'  => ['description', 'email', 'name', 'slug'],
             'class' => 'fa fa-sort-alpha',
         ],
         'amount'  => [
-            'rows'  => ['amount', 'price',],
+            'rows'  => ['amount', 'price'],
             'class' => 'fa fa-sort-amount',
         ],
         'numeric' => [
-            'rows'  => ['created_at', 'updated_at', 'id', 'live', 'allow_comments', 'sort_order', 'in_menu',],
+            'rows'  => ['created_at', 'updated_at', 'level', 'id', 'phone_number'],
             'class' => 'fa fa-sort-numeric',
         ],
     ],
@@ -28,7 +28,6 @@ return [
     /*
     defines icon set to use when sorted data is none above (alpha nor amount nor numeric)
      */
-
     'default_icon_set'              => 'fa fa-sort',
 
     /*
