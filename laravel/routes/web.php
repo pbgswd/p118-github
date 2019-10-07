@@ -33,6 +33,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/venues', 'VenueController@list')->name('venues');
     Route::get('/venue/{venue}', 'VenueController@show')->name('venue_show');
 
+    Route::post('/search', 'SearchController@index')->name('search');
+
 });
 
 Route::group(['middleware' =>  ['web', 'auth',]], function () {
