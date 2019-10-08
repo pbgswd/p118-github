@@ -17,7 +17,6 @@
                     <h2>Modify your search term and try again in the search field, or use the navigation links to find what you are looking for.</h2>
                     <p><a class="btn btn-primary btn-lg" href="/" role="button">Return To Home Page</a></p>
                 </div>
-
             @else
                 @foreach ( $data['results'] as $r )
                     <div class="col-3 border border-dark rounded-lg mt-3 mr-3" style="margin: 1em;">

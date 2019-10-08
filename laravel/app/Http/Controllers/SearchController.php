@@ -31,7 +31,7 @@ class SearchController extends Controller
          * search with logged in or logged out state
          * consistently deliver results
          */
-        $data['results'] = []; //range(1, 12);
+        $data['results'] = range(1, 12);
 
         $data['plural'] = Str::plural('Result', count($data['results']));
         return view('search', ['data'=>$data]);

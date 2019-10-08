@@ -18,7 +18,7 @@ class CreateAttachmentsTable extends Migration
             $table->unsignedBigInteger('user_id')->default(1); //assuming user 1 exists if any users exist.
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('name');
-            $table->string('unique_name');
+            $table->string('slug');
             $table->timestamps();
         });
     }
