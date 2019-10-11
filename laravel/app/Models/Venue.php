@@ -36,4 +36,39 @@ class Venue extends Model
         'live'              => 'boolean',
     ];
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'id',
+        'name',
+        'description',
+        'image',
+        'access_level',
+        'live',
+        'sort_order',
+        'in_menu',
+    ];
+
+    /**
+     * in urls, what field value is used to identify a Topic record?
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['slug'] = Str::slug($value, '-');
+        return $this->attributes['name'] = $value;
+    }
+
+    public function users()
+    {
+        return $this->hasOne(User::class);
+    }
+
 }

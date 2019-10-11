@@ -1,15 +1,18 @@
+<?php
+$venues = $data['data'];
+?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Venues'])
 @section('content')
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! count($data['data']['venues'])  !!}
+               {!! count($venues['venues'])  !!}
            </span>
             Venues. | <a href="{{ route('venue_create') }}">Create new venue <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 
-    @if(count($data['data']['venues']) < 1)
+    @if(count($venues['venues']) < 1)
     No venues
     @else
 <form name="delete" method="POST" action="{{route('venue_destroy')}}">
@@ -34,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $data['venues'] as $v )
+                    @foreach ( $venues['venues'] as $v )
                         <tr>
                             <td>
                                 <div class="checkbox">

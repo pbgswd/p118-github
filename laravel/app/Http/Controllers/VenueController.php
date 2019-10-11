@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Venues\UpdateVenue;
 use Auth;
 use App\Models\Venue;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\Venues\StoreVenue;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 
 class VenueController extends Controller
@@ -53,8 +57,10 @@ class VenueController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreVenue $request)
     {
+       //todo migration to handle default user value in db table
+
         $venue = new Venue($request->input('venue'));
 
         $venue->image = $this->uploadImage($request);
@@ -86,8 +92,7 @@ class VenueController extends Controller
      */
     public function edit(Venue $venue)
     {
-        //
-        echo __METHOD__; exit();
+        return view('admin.venue', ['data' => ['venue' => $venue, 'action' => 'Edit']]);
     }
 
     /**
@@ -97,10 +102,21 @@ class VenueController extends Controller
      * @param  \App\Models\Venue  $venue
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Venue $venue)
+    public function update(UpdateVenue $request, Venue $venue)
     {
-        //
-        echo __METHOD__; exit();
+        $data = $request['venue'];
+        $data['image'] = $this->uploadImage($request);
+        if (isset( $request['venue']['delete_image']))
+        {
+            Storage::disk('public')->delete( $request->venue['image'] );
+            Session::flash('info', "You have deleted " . $data['image']);
+            $data['image'] = NULL;
+        }
+        $venue->fill($data);
+        $venue->save();
+        Session::flash('success', "You have edited the venue");
+
+        return redirect()->route('venue_edit', [$venue->slug]);
     }
 
     /**
@@ -113,5 +129,22 @@ class VenueController extends Controller
     {
         //
         echo __METHOD__; exit();
+    }
+
+    protected function uploadImage(FormRequest $request)
+    {
+        if (!$request->image) {
+            return null;
+        }
+
+        $imageName = $request->image->getClientOriginalName();
+
+        if (!$request->image->storeAs('public', $imageName)) {
+            Session::flash('warning', "Did not store " . $imageName);
+
+            return null;
+        }
+
+        return $imageName;
     }
 }
