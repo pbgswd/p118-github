@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use App\Http\Requests\Venues\StoreVenue;
@@ -16,10 +17,11 @@ class VenueController extends Controller
      */
     public function index()
     {
-        $venues = Venue::sortable()->paginate(20);
+        $data = [];
+        $data['venues'] = Venue::sortable()->paginate(20);
 
-        dd($venues);
-        return view('admin.listvenues', ['data'=>array('data'=>$venues)]);
+
+        return view('admin.listvenues', ['data'=>array('data'=>$data)]);
     }
     /**
      * Display a listing of the resource.
@@ -38,8 +40,11 @@ class VenueController extends Controller
      */
     public function create()
     {
-        //
-        echo __METHOD__; exit();
+        $venue = new Venue;
+        $venue['user_id'] = Auth::id();
+
+        return view('admin.venue', ['data' => ['venue' => $venue, 'action' => 'Create']]);
+
     }
 
     /**
@@ -50,7 +55,15 @@ class VenueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $venue = new Venue($request->input('venue');
+
+        $venue->image = $this->uploadImage($request);
+
+        $venue->save();
+
+        Session::flash('success', "You have saved a new venue");
+
+        return redirect()->route('venue_edit', [$venue->slug]);
     }
 
     /**

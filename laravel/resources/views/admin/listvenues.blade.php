@@ -3,12 +3,15 @@
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! count($data)  !!}
+               {!! count($data['data']['venues'])  !!}
            </span>
             Venues. | <a href="{{ route('venue_create') }}">Create new venue <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 
+    @if(count($data['data']['venues']) < 1)
+    No venues
+    @else
 <form name="delete" method="POST" action="{{route('venue_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
@@ -31,12 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @if ( count($data) < 1)
-                    <tr>
-                        <td colspan="10">no venues</td>
-                    </tr>
-                @else
-                    @foreach ( $data as $i )
+                    @foreach ( $data['venues'] as $v )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -47,24 +45,23 @@
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $i->name }}" href="{{ route('venue_edit', $i->slug) }}">{{ $i->name }}</a>
+                                    <a title="{{ $v->name }}" href="{{ route('venue_edit', $v->slug) }}">{{ $v->name }}</a>
                                 </h4>
                             </td>
-                            <td> {{ $i->access_level }} </td>
-                            <td> {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
-                            <td> {{ $i->sort_order }} </td>
-                            <td> {!! $i->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
+                            <td> {{ $v->access_level }} </td>
+                            <td> {!! $v->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                            <td> {{ $v->sort_order }} </td>
+                            <td> {!! $v->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
                             <td>  <i class='fas fa-check'></i><i class="far fa-times-circle"></i></td>
                             <td>
-                                <a href="{{ route('venue_edit', $i->slug) }}" title="Edit {{ $i->name }} ">
+                                <a href="{{ route('venue_edit', $v->slug) }}" title="Edit {{ $v->name }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $i->created_at }} </td>
-                            <td> {{ $i->updated_at }} </td>
+                            <td> {{ $v->created_at }} </td>
+                            <td> {{ $v->updated_at }} </td>
                         </tr>
                     @endforeach
-                @endif
                     <tr>
                         <td colspan="10">&nbsp;</td>
                     </tr>
@@ -92,5 +89,5 @@
 
     <div class="row" style="margin-top:6em;"></div>
 </form>
-
+@endif
 @endsection
