@@ -17,7 +17,9 @@ class VenueController extends Controller
     public function index()
     {
         $venues = Venue::sortable()->paginate(20);
-        return view('admin.listvenues', ['data'=>array('venues'=>$venues)]);
+
+        dd($venues);
+        return view('admin.listvenues', ['data'=>array('data'=>$venues)]);
     }
     /**
      * Display a listing of the resource.

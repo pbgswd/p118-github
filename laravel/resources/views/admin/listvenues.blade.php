@@ -3,7 +3,7 @@
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! $data['pages']->total()  !!}
+               {!! count($data)  !!}
            </span>
             Venues. | <a href="{{ route('venue_create') }}">Create new venue <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
@@ -31,41 +31,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ( $data['pages'] as $i )
+                @if ( count($data) < 1)
                     <tr>
-                        <td>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="id[]" value="{{ $i->id }}" />
-                                </label>
-                            </div>
-                        </td>
-                        <td>
-                            <h4>
-                                <a title="{{ $i->title }}" href="{{ route('venue_edit', $i->slug) }}">{{ $i->title }}</a>
-                            </h4>
-                            @if (count($i->tags) > 0)
-                                (
-                                @foreach ( $i->tags as $tag )
-                                    {{$tag->name}}
-                                @endforeach
-                                )
-                            @endif
-                        </td>
-                        <td> {{ $i->access_level }} </td>
-                        <td> {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
-                        <td> {{ $i->sort_order }} </td>
-                        <td> {!! $i->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
-                        <td> {!! $i->allow_comments ? "<i class='fas fa-check'></i>" : '<i class="far fa-times-circle"></i>' !!} </td>
-                        <td>
-                            <a href="{{ route('venue_edit', $i->slug) }}" title="Edit {{ $i->name }} ">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                        </td>
-                        <td> {{ $i->created_at }} </td>
-                        <td> {{ $i->updated_at }} </td>
+                        <td colspan="10">no venues</td>
                     </tr>
-                @endforeach
+                @else
+                    @foreach ( $data as $i )
+                        <tr>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="id[]" value="" />
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <h4>
+                                    <a title="{{ $i->name }}" href="{{ route('venue_edit', $i->slug) }}">{{ $i->name }}</a>
+                                </h4>
+                            </td>
+                            <td> {{ $i->access_level }} </td>
+                            <td> {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                            <td> {{ $i->sort_order }} </td>
+                            <td> {!! $i->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
+                            <td>  <i class='fas fa-check'></i><i class="far fa-times-circle"></i></td>
+                            <td>
+                                <a href="{{ route('venue_edit', $i->slug) }}" title="Edit {{ $i->name }} ">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                            <td> {{ $i->created_at }} </td>
+                            <td> {{ $i->updated_at }} </td>
+                        </tr>
+                    @endforeach
+                @endif
                     <tr>
                         <td colspan="10">&nbsp;</td>
                     </tr>
@@ -82,7 +81,7 @@
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                    {!! $data['venues']->links() !!}
+                   pagination
                 </ul>
             </div>
         </div>
