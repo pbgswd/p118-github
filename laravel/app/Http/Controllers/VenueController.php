@@ -55,7 +55,7 @@ class VenueController extends Controller
      */
     public function store(Request $request)
     {
-        $venue = new Venue($request->input('venue');
+        $venue = new Venue($request->input('venue'));
 
         $venue->image = $this->uploadImage($request);
 
