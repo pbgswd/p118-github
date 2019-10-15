@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Storage;
 use Validator;
@@ -21,19 +22,9 @@ class AttachmentController extends Controller
     public function index(\App\Models\Attachment $attachment)
     {
         $data = [];
+        $data['attachments'] = Attachment::orderBy('id', 'ASC')->paginate(20);
 
-        /*
-            A thing for manipulating sort order
-            same page page=2
-            order by clause,
-            ascending, descending
-        search for attachment
-        filter by type
-        */
-$attachments=[];
-        //$attachment = Attachment::orderBy('sort_order', 'ASC')->paginate(20);
-
-        return view('admin.listattachments', ['data'=>array('attachments'=>$attachments )]);
+        return view('admin.listattachments', ['data' => $data]);
     }
 
     /**
@@ -43,9 +34,10 @@ $attachments=[];
      */
     public function create()
     {
-        //
-        $attachments=[];
-        return view('admin.attachment', ['data'=>array('attachments'=>$attachments )]);
+        $attachment = new Attachment;
+        $attachment['user_id'] = Auth::id();
+
+        return view('admin.attachment', ['data'=> ['attachments' => $attachment, 'action' => 'Add']]);
     }
 
     /**
