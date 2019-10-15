@@ -33,7 +33,7 @@ class SubcommitteeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSubcommittee $request)
     {
         //
     }
@@ -67,7 +67,7 @@ class SubcommitteeController extends Controller
      * @param  \App\Models\Subcommittee  $subcommittee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subcommittee $subcommittee)
+    public function update(UpdateSubcommittee $request, Subcommittee $subcommittee)
     {
         //
     }
@@ -78,7 +78,7 @@ class SubcommitteeController extends Controller
      * @param  \App\Models\Subcommittee  $subcommittee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subcommittee $subcommittee)
+    public function destroy(DestroySubcommittee $subcommittee)
     {
         //
     }

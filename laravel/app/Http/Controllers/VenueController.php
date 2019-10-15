@@ -125,7 +125,7 @@ class VenueController extends Controller
      * @param  \App\Models\Venue  $venue
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Venue $venue)
+    public function destroy(DestroyVenue $venue)
     {
         //
         echo __METHOD__; exit();

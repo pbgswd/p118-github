@@ -46,7 +46,7 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAttachment $request)
     {
         //
     }
@@ -80,7 +80,7 @@ class AttachmentController extends Controller
      * @param  \App\Attachment  $attachment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Attachment $attachment)
+    public function update(UpdateAttachment $request, Attachment $attachment)
     {
         //
     }
@@ -91,7 +91,7 @@ class AttachmentController extends Controller
      * @param  \App\Attachment  $attachment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Attachment $attachment)
+    public function destroy(DestroyAttachment $attachment)
     {
         //
     }

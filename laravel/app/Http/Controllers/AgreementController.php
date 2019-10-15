@@ -33,7 +33,7 @@ class AgreementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAgreement $request)
     {
         //
     }
@@ -55,7 +55,7 @@ class AgreementController extends Controller
      * @param  \App\Models\Agreement  $agreement
      * @return \Illuminate\Http\Response
      */
-    public function edit(Agreement $agreement)
+    public function edit(UpdateAgreement $agreement)
     {
         //
     }
@@ -78,7 +78,7 @@ class AgreementController extends Controller
      * @param  \App\Models\Agreement  $agreement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Agreement $agreement)
+    public function destroy(DestroyAgreement $agreement)
     {
         //
     }
