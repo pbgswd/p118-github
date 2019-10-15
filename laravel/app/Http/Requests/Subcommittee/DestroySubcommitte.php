@@ -4,7 +4,7 @@ namespace App\Http\Requests\Subcommittee;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSubcommittee extends FormRequest
+class DestroySubcommitte extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

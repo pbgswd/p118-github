@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Subcommittee;
+namespace App\Http\Requests\Attachments;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSubcommittee extends FormRequest
+class UpdateAttachment extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

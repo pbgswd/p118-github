@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Subcommittee;
+namespace App\Http\Requests\Agreements;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSubcommittee extends FormRequest
+class DestroyAgreement extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
