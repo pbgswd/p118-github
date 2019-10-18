@@ -1,7 +1,7 @@
 <?php
 $attachments = $data['attachments'];
 ?>
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> List Attachements'])
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> List Attachements and Images'])
 @section('content')
     <div class="container">
         <h3>

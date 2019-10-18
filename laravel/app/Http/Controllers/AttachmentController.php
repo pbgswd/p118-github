@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Attachments\DestroyAttachment;
+use App\Http\Requests\Attachments\StoreAttachment;
+use App\Http\Requests\Attachments\UpdateAttachment;
+use App\Models\Attachment;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use Storage;
 use Validator;
-use App\Models\Attachment;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use GrahamCampbell\Flysystem\Facades\Flysystem;
 
 class AttachmentController extends Controller
 {

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Venues\UpdateVenue;
-use Auth;
-use App\Models\Venue;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Venues\DestroyVenue;
 use App\Http\Requests\Venues\StoreVenue;
+use App\Http\Requests\Venues\UpdateVenue;
+use App\Models\Venue;
+use Auth;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 

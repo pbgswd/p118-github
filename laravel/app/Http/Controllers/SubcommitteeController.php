@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Subcommittee\StoreSubcommittee;
+use App\Http\Requests\Subcommittee\UpdateSubcommittee;
 use App\Models\Subcommittee;
-use Illuminate\Http\Request;
 
 class SubcommitteeController extends Controller
 {

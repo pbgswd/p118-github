@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Agreements\DestroyAgreement;
+use App\Http\Requests\Agreements\StoreAgreement;
+use App\Http\Requests\Agreements\UpdateAgreement;
 use App\Models\Agreement;
 use Illuminate\Http\Request;
 
@@ -67,7 +70,7 @@ class AgreementController extends Controller
      * @param  \App\Models\Agreement  $agreement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agreement $agreement)
+    public function update(Request $request, UpdateAgreement $agreement)
     {
         //
     }
