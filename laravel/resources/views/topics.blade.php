@@ -6,6 +6,8 @@
             <h1 class="display-3">Topics</h1>
         </div>
         <div class="col-12">
+            <a href="{{ route('hello') }}">Home/</a>
+            <a href="{{route('topics')}}">Topics/</a>
             <h2>Information grouped by topic</h2>
         </div>
         <!-- Example row of columns -->

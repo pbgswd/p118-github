@@ -102,13 +102,18 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
+        $page = Page::find(1);
         $page->user;
-        $page->topics;
-//        dd($page->topics[0]->id);  12
+
+        $assignedTopics = [];
+        foreach($page->topics as $topic)
+        {
+            $assignedTopics[] = $topic->pivot->topic_id;
+        }
 
         $topics = Topic::all();
 
-        $data = ['page' => $page, 'topics' => $topics, 'action' => 'Edit'];
+        $data = ['page' => $page, 'topics' => $topics, 'assignedTopics' => $assignedTopics, 'action' => 'Edit'];
 
         return view('admin.page', ['data' => $data]);
     }
@@ -140,6 +145,23 @@ class PageController extends Controller
 
         $page->fill($data);
         $page->save();
+
+        // to update topic relations,
+        // get all the pre existing pivot rows and delete them
+
+        if(empty($data['topic_id'])){
+            $assignedTopics = [];
+            foreach($page->topics as $topic)
+            {
+                $assignedTopics[] = $topic->pivot->topic_id;
+            }
+            //dd($assignedTopics);
+            $page->topics()->detach($assignedTopics);
+        }
+        else
+        {
+            $page->topics()->sync($data['topic_id']);
+        }
 
         if (empty($request->tags)) {
             $page->untag();

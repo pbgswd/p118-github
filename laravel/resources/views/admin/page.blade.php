@@ -54,11 +54,14 @@ $topics = $data['topics'];
             <div class="form-group">
             @foreach ($topics as $topic)
                 <div class="form-check">
-                    <input class="form-check-input" name="page[topic_id][]" type="checkbox" value="{{$topic->id}}" id="{{$topic->name}}{{$topic->id}}" />
-
+                    <input class="form-check-input" name="page[topic_id][]" type="checkbox" value="{{$topic->id}}" id="{{$topic->name}}{{$topic->id}}"
+                        @if ( in_array($topic->id, $data['assignedTopics']) )
+                            checked
+                        @endif
+                    />
                     <label class="form-check-label" for="{{$topic->name}}{{$topic->id}}">
                         {{$topic->name}}
-                    </label><br />
+                    </label>
                 </div>
 
             @endforeach
