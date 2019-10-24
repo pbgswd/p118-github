@@ -1,5 +1,6 @@
 <?php
 $page = $data['page'];
+$topics = $data['topics'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Page ' . ($data["action"] == 'Edit' ? $page->name : '') ])
 @section('content')
@@ -28,7 +29,6 @@ $page = $data['page'];
         <input type="hidden" name="page[id]" value="{{ $page['id'] }}">
         <input type="hidden" name="page[user_id]" value="{{ $page['user_id'] }}">
         {!! csrf_field() !!}
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
@@ -48,7 +48,23 @@ $page = $data['page'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row" style="margin-top:3em;"> <h4>Select topics for this content</h4>&nbsp;</div>
+
+        <div class="row" style="margin-top:1em;"> &nbsp;
+            <div class="form-group">
+            @foreach ($topics as $topic)
+                <div class="form-check">
+                    <input class="form-check-input" name="page[topic_id][]" type="checkbox" value="{{$topic->id}}" id="{{$topic->name}}{{$topic->id}}" />
+
+                    <label class="form-check-label" for="{{$topic->name}}{{$topic->id}}">
+                        {{$topic->name}}
+                    </label><br />
+                </div>
+
+            @endforeach
+            </div>
+        </div>
+
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -178,6 +194,7 @@ $page = $data['page'];
             </form>
          </div>
     @endif
-    <div class="row" style="margin-top:100px;"> &nbsp;</div>
+</div>
+    <div class="row" style="margin-top:3em; margin-bottom: 3em;"> &nbsp;Page added by {{$page->user->name}}</div>
 </div>
 @endsection

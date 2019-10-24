@@ -27,6 +27,7 @@ $tags = join(', ', $page->tagNames());
                 Tags: {{$tags}}
             </div>
         @endif
+        <div class="row">Page added by {{$page->user->name}}</div>
     </div>
 <div class="row" style="margin-top:6em;"></div>
 </div>

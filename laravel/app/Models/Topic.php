@@ -79,4 +79,8 @@ class Topic extends Model
         return $this->hasOne(User::class);
     }
 
+    public function pages()
+    {
+        return $this->belongsToMany(Page::class);
+    }
 }

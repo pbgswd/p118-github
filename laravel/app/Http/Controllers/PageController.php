@@ -6,6 +6,8 @@ use App\Http\Requests\Page\DestroyPage;
 use App\Http\Requests\Page\StorePage;
 use App\Http\Requests\Page\UpdatePage;
 use App\Models\Page;
+use App\Models\Topic;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +51,10 @@ class PageController extends Controller
     {
         $page = new Page;
         $page['user_id'] = Auth::id();
+        $page->topics;
+        $topics = Topic::all();
 
-        return view('admin.page', ['data' => ['page' => $page, 'action' => 'Create']]);
+        return view('admin.page', ['data' => ['page' => $page, 'topics' => $topics,  'action' => 'Create']]);
     }
 
     /**
@@ -61,12 +65,9 @@ class PageController extends Controller
      */
     public function store(StorePage $request)
     {
-
         $page = new Page($request->input('page'), $request->input('tags'));
         $page->image = $this->uploadImage($request);
         $page->save();
-
-
 
         if (!empty($request->tags)) {
             $page->tag(trim($request->tags, ','));
@@ -85,8 +86,12 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
-        $data = ['page'=>$page, 'action'=>'Edit'];
-        return view('page', ['data'=> $data]);
+        $page->user;
+        $page->topics;
+
+        $data = ['page' => $page, 'action' => 'Edit'];
+
+        return view('page', ['data' => $data]);
     }
 
     /**
@@ -97,9 +102,15 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        $data = ['page'=>$page, 'action'=>'Edit'];
+        $page->user;
+        $page->topics;
+//        dd($page->topics[0]->id);  12
 
-        return view('admin.page', ['data'=> $data]);
+        $topics = Topic::all();
+
+        $data = ['page' => $page, 'topics' => $topics, 'action' => 'Edit'];
+
+        return view('admin.page', ['data' => $data]);
     }
 
     /**

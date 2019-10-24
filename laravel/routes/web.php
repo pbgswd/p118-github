@@ -23,7 +23,6 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-
     Route::get('/pages', 'PageController@list')->name('pages');
     Route::get('/page/{page}', 'PageController@show')->name('page_show');
 

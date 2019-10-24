@@ -74,14 +74,20 @@ class Page extends Model
     public function setTitleAttribute($value)
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['title'] = $value;
     }
 
     // relationship to users table
 
-    public function users()
+    public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function topics()
+    {
+        return $this->belongsToMany(Topic::class);
     }
 
 }

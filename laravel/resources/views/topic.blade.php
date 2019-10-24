@@ -1,6 +1,7 @@
 <?php
 $topic = $data['topic'];
 $tags = join(', ', $topic->tagNames());
+$pages = $topic->pages;
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -25,6 +26,14 @@ $tags = join(', ', $topic->tagNames());
         <div class="col-12" style="margin: 2px;">
             Tags: {{$tags}}
         </div>
+        @if (count($pages)  > 0)
+            <div class="col-12" style="margin: 2px;">
+                <h4>Related Pages</h4>
+                @foreach($pages as $page)
+                    <a href="{{ route('page_show', $page->slug) }}">{{$page['title']}}</a> <br />
+                @endforeach
+            </div>
+        @endif
     </div>
 </div>
 
