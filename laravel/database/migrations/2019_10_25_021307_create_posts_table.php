@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('title')->unique();
             $table->string('slug')->unique();
             $table->string('description')->nullable();
-            $table->string('content');
+            $table->text('content');
             $table->string('image')->nullable();
             $table->string('access_level')->nullable();
             $table->boolean('live');

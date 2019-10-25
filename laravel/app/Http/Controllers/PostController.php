@@ -30,6 +30,19 @@ class PostController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        $posts = Post::sortable()->with('tagged')->paginate(10);
+
+        return view('posts', ['data'=>array('posts'=>$posts )]);
+    }
+
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -78,7 +91,12 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $post->user;
+        $post->topics;
+
+        $data = ['post' => $post];
+
+        return view('post', ['data' => $data]);
     }
 
     /**

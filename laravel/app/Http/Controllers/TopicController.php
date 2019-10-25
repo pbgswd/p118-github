@@ -49,7 +49,7 @@ class TopicController extends Controller
     public function show(Topic $topic)
     {
         $topic->pages;
-//dd($topic->pages);
+        $topic->posts;
         $data = ['topic'=>$topic, 'action'=>'Edit'];
 
         return view('topic', ['data'=> $data]);

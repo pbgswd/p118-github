@@ -3,18 +3,18 @@
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
         <div class="col">
-            <h1 class="display-3">Pages</h1>
-            <h2>...as in single pages</h2>
+            <h1 class="display-3">posts</h1>
+            <h2>single posts</h2>
         </div>
         <div class="container">
             <!-- Example row of columns -->
             <div class="row">
-                @foreach ( $data['pages'] as $i )
+                @foreach ( $data['posts'] as $i )
                     <div class="col-md-3 border border-dark rounded-lg mt-3 mr-3">
                         <h2>{{ $i->title }}</h2>
                         <p>{!! $i->description !!} </p>
                         <p>
-                            <a class="btn btn-secondary" href="{{ route('page_show', $i->slug) }}" role="button">View details &raquo;</a>
+                            <a class="btn btn-secondary" href="{{ route('post_show', $i->slug) }}" role="button">View details &raquo;</a>
                         </p>
                     </div>
                 @endforeach
@@ -25,7 +25,7 @@
             <div class="col">
                 <div class="list-group">
                     <ul class="pagination">
-                        {!! $data['pages']->links() !!}
+                        {!! $data['posts']->links() !!}
                     </ul>
                 </div>
             </div>

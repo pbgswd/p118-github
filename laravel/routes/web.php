@@ -29,8 +29,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/topics', 'TopicController@list')->name('topics');
     Route::get('/topic/{topic}', 'TopicController@show')->name('topic_show');
 
-    Route::get('/pages', 'PageController@list')->name('pages');
-    Route::get('/page/{page}', 'PageController@show')->name('page_show');
+    Route::get('/posts', 'PostController@list')->name('posts');
+    Route::get('/post/{post}', 'PostController@show')->name('post_show');
 
     Route::post('/search', 'SearchController@index')->name('search');
 

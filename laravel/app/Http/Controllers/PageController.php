@@ -94,8 +94,9 @@ class PageController extends Controller
     {
         $page->user;
         $page->topics;
+        $page->posts;
 
-        $data = ['page' => $page, 'action' => 'Edit'];
+        $data = ['page' => $page];
 
         return view('page', ['data' => $data]);
     }

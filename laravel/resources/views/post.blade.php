@@ -1,62 +1,49 @@
 <?php
-$page = $data['page'];
-$tags = join(', ', $page->tagNames());
-$posts = $page->posts;
+$post = $data['post'];
+$tags = join(', ', $post->tagNames());
 ?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding: 2em">
         <div class="row">
-            @foreach ($page->topics as $topic)
+            @foreach ($post->topics as $topic)
                 <a href="{{ route('hello') }}">Home/</a> &nbsp;
                 <a href="{{route('topics')}}">Topics/</a> &nbsp;
                 <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}}/</a>&nbsp;
-                {{$page->title}}
+                {{$post->title}}
             @endforeach
         </div>
         <div  class="col-12">
-            <h1 class="display-3">{{$page->title}}</h1>
+            <h1 class="display-3">{{$post->title}}</h1>
         </div>
         <div class="col-12">
-            <h2>{!! $page->description !!}</h2>
+            <h2>{!! $post->description !!}</h2>
         </div>
         <div class="col-12">
-            @if( $page->image )
+            @if( $post->image )
                 <div class="col-md-6">
                     <div class="col">
-                        <img src="{{ asset('storage/'.$page->image) }}" />
+                        <img src="{{ asset('storage/'.$post->image) }}" />
                     </div>
                 </div>
             @endif
-            {!! $page->content !!}
+            {!! $post->content !!}
          </div>
         @if ($tags != '')
             <div class="row">
                 Tags: {{$tags}}
             </div>
         @endif
-        <div class="row">Page added by {{$page->user->name}}</div>
+        <div class="row">post added by {{$post->user->name}}</div>
         <div class="row">
-            @foreach ($page->topics as $topic)
+            @foreach ($post->topics as $topic)
                 <a href="{{ route('hello') }}">Home/</a> &nbsp;
                 <a href="{{route('topics')}}">Topics/</a> &nbsp;
                 <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}}/</a> &nbsp;
-                {{$page->title}}
+                {{$post->title}}
             @endforeach
         </div>
-
-        @if (count($posts)  > 0)
-            <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em; margin-top:1em;" >
-                <div class="col-12" style="margin: 2px;">
-                    <h4>Related Posts</h4>
-                    @foreach($posts as $post)
-                        <a href="{{ route('post_show', $post->slug) }}">{{$post['title']}}</a> <br />
-                    @endforeach
-                </div>
-            </div>
-        @endif
-
     </div>
 <div class="row" style="margin-top:6em;"></div>
 </div>

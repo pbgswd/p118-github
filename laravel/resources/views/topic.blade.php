@@ -2,6 +2,7 @@
 $topic = $data['topic'];
 $tags = join(', ', $topic->tagNames());
 $pages = $topic->pages;
+$posts = $topic->posts;
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -41,6 +42,18 @@ $pages = $topic->pages;
             </div>
         </div>
     @endif
+    @if (count($posts)  > 0)
+        <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em; margin-top:1em;" >
+            <div class="col-12" style="margin: 2px;">
+                <h4>Related Posts</h4>
+                @foreach($posts as $post)
+                    <a href="{{ route('post_show', $post->slug) }}">{{$post['title']}}</a> <br />
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+
 </div>
 <div class="row" style="margin-top:6em;"></div>
 @endsection
