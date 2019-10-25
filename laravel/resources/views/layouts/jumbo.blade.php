@@ -75,18 +75,18 @@
                         <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('venues')}}">Venues</a>
+                        <a class="nav-link" href="{{route('topic_show', 'venues')}}">Venues</a>
                     </li>
                     @guest
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Collective Agreements</a>
+                            <a class="nav-link" href="{{route('topic_show', 'collective-agreements')}}">Collective Agreements</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sub Committees</a>
+                            <a class="nav-link" href="{{route('topic_show', 'subcommittees')}}">Sub Committees</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Departments</a>
+                            <a class="nav-link" href="{{route('topic_show', 'departments')}}">Departments</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Resources</a>

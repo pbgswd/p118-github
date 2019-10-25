@@ -90,11 +90,32 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('venues_list')}}">
+                                <a class="nav-link" href="{{route('topic_edit', 'venues')}}">
                                     <span data-feather="file"></span>
                                     Venues
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('topic_edit', 'subcommittees')}}">
+                                    <span data-feather="file"></span>
+                                    Subcommittees
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('topic_edit', 'collective-agreements')}}">
+                                    <span data-feather="file"></span>
+                                    Agreements
+                                </a>
+                            </li>
+
+
+
+
+
+
+
+
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('attachments_list')}}">
                                     <span data-feather="file"></span>
