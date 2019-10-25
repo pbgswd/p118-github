@@ -54,7 +54,7 @@ class PageController extends Controller
         $page->topics;
         $topics = Topic::all();
 
-        return view('admin.page', ['data' => ['page' => $page, 'topics' => $topics,  'action' => 'Create']]);
+        return view('admin.page', ['data' => ['page' => $page,  'assignedTopics' => [], 'topics' => $topics,  'action' => 'Create']]);
     }
 
     /**
@@ -67,7 +67,12 @@ class PageController extends Controller
     {
         $page = new Page($request->input('page'), $request->input('tags'));
         $page->image = $this->uploadImage($request);
+
         $page->save();
+
+        if(!empty($request->input('page.topic_id'))) {
+            $page->topics()->sync($request->input('page.topic_id'));
+        }
 
         if (!empty($request->tags)) {
             $page->tag(trim($request->tags, ','));
@@ -102,7 +107,6 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        $page = Page::find(1);
         $page->user;
 
         $assignedTopics = [];
@@ -146,16 +150,12 @@ class PageController extends Controller
         $page->fill($data);
         $page->save();
 
-        // to update topic relations,
-        // get all the pre existing pivot rows and delete them
-
         if(empty($data['topic_id'])){
             $assignedTopics = [];
             foreach($page->topics as $topic)
             {
                 $assignedTopics[] = $topic->pivot->topic_id;
             }
-            //dd($assignedTopics);
             $page->topics()->detach($assignedTopics);
         }
         else
@@ -190,6 +190,15 @@ class PageController extends Controller
         }
 
         $page->untag();
+
+
+        $assignedTopics = [];
+        foreach($page->topics as $topic)
+        {
+            $assignedTopics[] = $topic->pivot->topic_id;
+        }
+        $page->topics()->detach($assignedTopics);
+
 
         Page::destroy($request->id);
 
