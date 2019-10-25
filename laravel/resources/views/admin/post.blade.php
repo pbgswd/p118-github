@@ -1,8 +1,8 @@
 <?php
-$page = $data['page'];
+$post = $data['post'];
 $topics = $data['topics'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Page ' . ($data["action"] == 'Edit' ? $page->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' . ($data["action"] == 'Edit' ? $post->name : '') ])
 @section('content')
     <script>
         tinymce.init({
@@ -24,16 +24,16 @@ $topics = $data['topics'];
     </script>
 
 <div class="container">
-    <h3>  <a href="{{ route('pages_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of pages</a>  </h3>
-    <form method="post" name="page" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-        <input type="hidden" name="page[id]" value="{{ $page['id'] }}">
-        <input type="hidden" name="page[user_id]" value="{{ $page['user_id'] }}">
+    <h3>  <a href="{{ route('posts_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>  </h3>
+    <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <input type="hidden" name="post[id]" value="{{ $post['id'] }}">
+        <input type="hidden" name="post[user_id]" value="{{ $post['user_id'] }}">
         {!! csrf_field() !!}
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="page[title]" value="{{ old('page.title', $page->title)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Title" name="post[title]" value="{{ old('post.title', $post->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@ $topics = $data['topics'];
                     <h4>Summary</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="page[description]" id="page-description" placeholder="Summary content" class="form-control">{{old('page.description', $page->description)}}</textarea>
+                    <textarea name="post[description]" id="post-description" placeholder="Summary content" class="form-control">{{old('post.description', $post->description)}}</textarea>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@ $topics = $data['topics'];
             <div class="form-group">
             @foreach ($topics as $topic)
                 <div class="form-check">
-                    <input class="form-check-input" name="page[topic_id][]" type="checkbox" value="{{$topic->id}}" id="{{$topic->name}}{{$topic->id}}"
+                    <input class="form-check-input" name="post[topic_id][]" type="checkbox" value="{{$topic->id}}" id="{{$topic->name}}{{$topic->id}}"
                         @if ( in_array($topic->id, $data['assignedTopics']) )
                             checked
                         @endif
@@ -74,13 +74,13 @@ $topics = $data['topics'];
                     <h4>Content</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="page[content]" id="page-content" placeholder="Content" class="form-control">{{old('page.content', $page->content)}}</textarea>
+                    <textarea name="post[content]" id="post-content" placeholder="Content" class="form-control">{{old('post.content', $post->content)}}</textarea>
                 </div>
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row" style="border-width:6px; !important;">
-            @if( $page->image )
+            @if( $post->image )
                 <div class="col-md-6">
                     <div class="col">
                         <h4>
@@ -88,13 +88,13 @@ $topics = $data['topics'];
                             Image preview
                         </h4>
 
-                        <h5>Currently: {{ $page->image }}</h5>
-                        <img src="{{ asset('storage/'.$page->image) }}" />
+                        <h5>Currently: {{ $post->image }}</h5>
+                        <img src="{{ asset('storage/'.$post->image) }}" />
                     </div>
                     <div class="col" style="margin-top: 3em;">
-                        <input type="hidden"  name="page[image]" value="{{$page->image}}" />
+                        <input type="hidden"  name="post[image]" value="{{$post->image}}" />
                         <label>
-                            <input name="page[delete_image]" type="checkbox" value="1" /> Check to delete image
+                            <input name="post[delete_image]" type="checkbox" value="1" /> Check to delete image
                         </label>
                     </div>
                 </div>
@@ -107,7 +107,7 @@ $topics = $data['topics'];
                         </label>
                         <input type="file" id="inputFile" name="image" />
                         <p class="help-block">
-                            Upload image for page.
+                            Upload image for post.
                         </p>
                     </div>
                 </div>
@@ -120,7 +120,7 @@ $topics = $data['topics'];
                 <div class="row">
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="page[access_level]" value="{{ old('page.access_level', $page->access_level)}}" size="30" required/>
+                        <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="post[access_level]" value="{{ old('post.access_level', $post->access_level)}}" size="30" required/>
                         <p>Access Level: public, members, executive</p>
                     </div>
                     <div class="col-6 col-sm-3"></div>
@@ -130,11 +130,11 @@ $topics = $data['topics'];
                     <div class="col-12">&nbsp;</div>
                     <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="page[sort_order]" value="{{old('page.sort_order',$page->sort_order)}}" size="30" required/>
+                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="post[sort_order]" value="{{old('post.sort_order',$post->sort_order)}}" size="30" required/>
                         <p>e.g.: 1000, 2000</p>
                     </div>
                     <div class="invalid-feedback">
-                        Please add a numeric sort order {{ @$errors->get('page.sort_order')[0] }}
+                        Please add a numeric sort order {{ @$errors->get('post.sort_order')[0] }}
                     </div>
                 </div>
             </div>
@@ -143,22 +143,22 @@ $topics = $data['topics'];
                 <div class="col-lg-2"><h4>Status</h4></div>
                 <div class="col-sm">
                     <label>
-                        <input name="page[in_menu]" type="hidden" value="0" />
-                        <input name="page[in_menu]" type="checkbox" value="1" {{ checked(old('page.in_menu',$page->in_menu)) }} /> In Menu
+                        <input name="post[in_menu]" type="hidden" value="0" />
+                        <input name="post[in_menu]" type="checkbox" value="1" {{ checked(old('post.in_menu',$post->in_menu)) }} /> In Menu
                     </label>
                 </div>
                 <div class="col-sm">
 
                     <label>
-                        <input name="page[allow_comments]" type="hidden" value="0" />
-                        <input name="page[allow_comments]" type="checkbox" value="1" {{ checked(old('page.allow_comments', $page->allow_comments)) }} /> Allow Comments
+                        <input name="post[allow_comments]" type="hidden" value="0" />
+                        <input name="post[allow_comments]" type="checkbox" value="1" {{ checked(old('post.allow_comments', $post->allow_comments)) }} /> Allow Comments
                     </label>
                 </div>
                 <div class="col-sm">
 
                     <label>
-                         <input name="page[live]" type="hidden" value="0" />
-                         <input name="page[live]" type="checkbox" value="1" {{ checked( old('page.live', $page->live)) }} /> Check now to make Live
+                         <input name="post[live]" type="hidden" value="0" />
+                         <input name="post[live]" type="checkbox" value="1" {{ checked( old('post.live', $post->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>
@@ -170,8 +170,8 @@ $topics = $data['topics'];
             <div class="form-group">
                 <div class="col-lg-2"><h4>Tags</h4></div>
                 <div class="col-lg-10">
-                    <label><input type="text" name="tags" value="<?php echo htmlentities(old('tags', join(', ', $page->tagNames()))); ?>"size="40" />
-                        <br />Add tags related to page, comma separated.</label>
+                    <label><input type="text" name="tags" value="<?php echo htmlentities(old('tags', join(', ', $post->tagNames()))); ?>"size="40" />
+                        <br />Add tags related to post, comma separated.</label>
                 </div>
             </div>
         </div>
@@ -188,16 +188,16 @@ $topics = $data['topics'];
          <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
-             <form name="delete" method="POST" action="{{route('page_destroy')}}">
+             <form name="delete" method="POST" action="{{route('post_destroy')}}">
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $page->id }}">
+                <input type="hidden" name="id[]" value="{{ $post->id }}">
                 <input class="btn btn-outline-danger" type="submit" value="Delete">
             </form>
          </div>
     @endif
 </div>
-    <div class="row" style="margin-top:3em; margin-bottom: 3em;"> &nbsp;Page added by {{$page->user->name}}</div>
+    <div class="row" style="margin-top:3em; margin-bottom: 3em;"> &nbsp;post added by {{$post->user->name}}</div>
 </div>
 @endsection

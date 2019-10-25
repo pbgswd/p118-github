@@ -13,7 +13,7 @@ class UpdatePost extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class UpdatePost extends FormRequest
     public function rules()
     {
         return [
-            //
+            'post.title' => 'required|max:255|unique:posts,title,' . $this->route('post')->slug . ',slug',
+            'post.description' => 'required',
+            'post.content' => 'required',
+            'post.access_level' => 'required|string|max:255',
+            'post.sort_order' =>  'required|numeric',
+            'post.in_menu' => 'boolean',
+            'post.allow_comments' => 'boolean',
+            'post.live' => 'boolean',
+            'image' => 'image',
         ];
     }
 }

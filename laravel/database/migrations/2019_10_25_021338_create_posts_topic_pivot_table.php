@@ -13,13 +13,12 @@ class CreatePostsTopicPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts_topic', function (Blueprint $table) {
+        Schema::create('post_topic', function (Blueprint $table) {
             $table->unsignedBigInteger('topic_id');
             $table->foreign('topic_id')->references('id')->on('topics');
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts');
-            $table->timestamps();
-        });
+          });
     }
 
     /**
@@ -29,6 +28,6 @@ class CreatePostsTopicPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts_topic');
+        Schema::dropIfExists('post_topic');
     }
 }

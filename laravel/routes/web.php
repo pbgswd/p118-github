@@ -83,7 +83,6 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/post/{post}', 'PostController@update');
     Route::delete('/post/delete', 'PostController@destroy')->name('post_destroy');
 
-
     Route::get('/attachment', 'AttachmentController@create')->name('attachment_create');
     Route::get('/attachments', 'AttachmentController@index')->name('attachments_list');
 

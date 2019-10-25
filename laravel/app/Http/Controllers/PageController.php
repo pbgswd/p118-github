@@ -7,7 +7,6 @@ use App\Http\Requests\Page\StorePage;
 use App\Http\Requests\Page\UpdatePage;
 use App\Models\Page;
 use App\Models\Topic;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +14,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+
+//use App\Models\User;
 
 class PageController extends Controller
 {
