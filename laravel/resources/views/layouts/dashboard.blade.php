@@ -107,15 +107,6 @@
                                     Agreements
                                 </a>
                             </li>
-
-
-
-
-
-
-
-
-
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('attachments_list')}}">
                                     <span data-feather="file"></span>
@@ -126,6 +117,12 @@
                                 <a class="nav-link" href="{{route('pages_list')}}">
                                     <span data-feather="file"></span>
                                     Pages
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('posts_list')}}">
+                                    <span data-feather="file"></span>
+                                    Posts
                                 </a>
                             </li>
                              <li class="nav-item">
