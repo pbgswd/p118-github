@@ -10,6 +10,7 @@ use App\Models\Topic;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -90,13 +91,19 @@ class PageController extends Controller
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function show(Page $page)
+    public function show(Page $page, Request $request)
     {
+
         $page->user;
         $page->topics;
         $page->posts;
+        $pages = Page::all(); // gets all, I want only the pages under the topic passed in.
 
-        $data = ['page' => $page];
+        // see https://laravel.com/docs/6.x/eloquent#advanced-subqueries
+
+        $topic_id  = $page->topics[0]->id;
+
+        $data = ['page' => $page, 'pages' => $pages];
 
         return view('page', ['data' => $data]);
     }

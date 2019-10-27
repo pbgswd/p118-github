@@ -50,7 +50,7 @@ class TopicController extends Controller
     {
         $topic->pages;
         $topic->posts;
-        $data = ['topic'=>$topic, 'action'=>'Edit'];
+        $data = ['topic'=>$topic];
 
         return view('topic', ['data'=> $data]);
     }

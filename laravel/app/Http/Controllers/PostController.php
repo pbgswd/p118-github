@@ -93,6 +93,7 @@ class PostController extends Controller
     {
         $post->user;
         $post->topics;
+        $post->page;
 
         $data = ['post' => $post];
 
