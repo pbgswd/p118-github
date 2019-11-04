@@ -88,4 +88,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
 
     Route::get('/roles', 'RoleController@index')->name('roles_list');
 
+    Route::get('/venues', 'VenueController@index')->name('venues_list');
+    Route::get('/venue', 'VenueController@create')->name('venue_create');
+    Route::post('/venue', 'VenueController@store');
+    Route::get('/venue/{venue}', 'VenueController@edit')->name('venue_edit');
+    Route::post('/venue/{venue}', 'VenueController@update');
+    Route::delete('/venue/delete', 'VenueController@destroy')->name('venue_destroy');
+
 });

@@ -45,6 +45,7 @@ $tags = join(', ', $post->tagNames());
             @endforeach
         </div>
     </div>
+
 <div class="row" style="margin-top:6em;"></div>
 </div>
 @endsection

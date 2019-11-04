@@ -49,9 +49,7 @@ $pages = $data['pages'];
 
     </div>
 
-
-
-    @if (count($pages)  > 0)
+    @if (count($pages) > 0)
         <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em; margin-top:1em;" >
             <div class="col-12" style="margin: 2px;">
                 <h4>Related Pages</h4>
@@ -62,7 +60,7 @@ $pages = $data['pages'];
         </div>
     @endif
 
-    @if (count($posts)  > 0)
+    @if (count($posts) > 0)
         <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em; margin-top:1em;" >
             <div class="col-12" style="margin: 2px;">
                 <h4>Related Posts</h4>
