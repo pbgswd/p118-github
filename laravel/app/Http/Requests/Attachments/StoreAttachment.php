@@ -24,7 +24,10 @@ class StoreAttachment extends FormRequest
     public function rules()
     {
         return [
-            //
+            // array of files?
+          'images' => 'required',
+          'images.*' => 'required|unique:attachments,name|max:255|distinct',
+
         ];
     }
 }

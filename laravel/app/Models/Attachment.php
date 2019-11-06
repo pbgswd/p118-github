@@ -19,9 +19,9 @@ class Attachment extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
         'user_id',
         'name',
+        'images',
         'slug',
     ];
 

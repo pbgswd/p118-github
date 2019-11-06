@@ -7,8 +7,10 @@ use App\Http\Requests\Attachments\StoreAttachment;
 use App\Http\Requests\Attachments\UpdateAttachment;
 use App\Models\Attachment;
 use DB;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Session;
+use Illuminate\Support\Facades\Session;
+//use Illuminate\Support\Facades\Storage;
 use Storage;
 use Validator;
 
@@ -35,9 +37,8 @@ class AttachmentController extends Controller
     public function create()
     {
         $attachment = new Attachment;
-        $attachment['user_id'] = Auth::id();
 
-        return view('admin.attachment', ['data'=> ['attachments' => $attachment, 'action' => 'Add']]);
+        return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Add']]);
     }
 
     /**
@@ -48,7 +49,19 @@ class AttachmentController extends Controller
      */
     public function store(StoreAttachment $request)
     {
-        //
+        $this->uploadImages($request);
+
+        foreach ($request->images as $image)
+        {
+            $attachment = new Attachment($request->input('attachment'));
+            $attachment['name'] = $image;
+            $attachment['user_id'] = Auth::id();
+            $attachment->save();
+        }
+/*
+        // get the date, month, year, make folder if not exist for storing stuff.
+*/
+        return redirect()->route('attachment_edit', [$attachment->slug]);
     }
 
     /**
@@ -59,7 +72,7 @@ class AttachmentController extends Controller
      */
     public function show(Attachment $attachment)
     {
-        //
+
     }
 
     /**
@@ -70,7 +83,7 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment)
     {
-        //
+        return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
 
     /**
@@ -82,7 +95,8 @@ class AttachmentController extends Controller
      */
     public function update(UpdateAttachment $request, Attachment $attachment)
     {
-        //
+
+        return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
 
     /**
@@ -94,5 +108,23 @@ class AttachmentController extends Controller
     public function destroy(DestroyAttachment $attachment)
     {
         //
+    }
+
+    protected function uploadImages(FormRequest $request)
+    {
+
+        if (!$request->images) {
+            return null;
+        }
+        foreach ($request->images as $k => $v) {
+
+           // $imageName = $request->images[$k]->getClientOriginalName();
+
+            if (!$request->images[$k]->storeAs('public', $request->images[$k])) {
+                Session::flash('warning', "Did not store " . $v);
+                return null;
+            }
+        }
+        return $v;
     }
 }

@@ -90,7 +90,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('topic_edit', 'venues')}}">
+                                <a class="nav-link" href="{{route('venues_list')}}">
                                     <span data-feather="file"></span>
                                     Venues
                                 </a>
