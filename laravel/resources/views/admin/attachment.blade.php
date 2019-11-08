@@ -1,13 +1,12 @@
 <?php
 $attachment = $data['attachment'];
 ?>
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> Add Attachement'])
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> ' . $data['action'] . ' Attachement'])
 
 
 @section('content')
 <div class="container">
-    <h1>{{ $data['action'] }} Attachement</h1>
-    <form method="post" name="attachment" action="{{ url()->current() }}" enctype="multipart/form-attachment" class="needs-validation" novalidate>
+    <form method="post" name="attachment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="attachment[id]" value="{{ $attachment['id'] }}">
         {!! csrf_field() !!}
         <div class="col-md-6">
@@ -16,6 +15,7 @@ $attachment = $data['attachment'];
                     <i class="fas fa-cloud-upload-alt fa-2x"></i>
                     File input
                 </label>
+
                 <input type="file" id="inputFile" name="images[]" multiple />
                 <p class="help-block">
                     Upload image for attachment.

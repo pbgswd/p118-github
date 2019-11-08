@@ -1,5 +1,6 @@
 <?php
 $attachments = $data['attachments'];
+dd($attachments);
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> List Attachements and Images'])
 @section('content')
@@ -23,7 +24,7 @@ $attachments = $data['attachments'];
                     <tr>
                         <th> @sortablelink('id','#') </th>
                         <th> @sortablelink('name', 'Name') </th>
-                        <th> @sortablelink('slug', 'Slug') </th>
+                        <th> @sortablelink('id', 'Id') </th>
                         <th> @sortablelink('user_id', 'Uploaded By') </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
@@ -42,7 +43,7 @@ $attachments = $data['attachments'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $a->name }}" href="{{ route('attachment_edit', $a->slug) }}">{{ $a->name }}</a>
+                                    <a title="{{ $a->name }}" href="{{ route('attachment_edit', $a->id) }}">{{ $a->name }}</a>
                                 </h4>
                             </td>
                             <td>

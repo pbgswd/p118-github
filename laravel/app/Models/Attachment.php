@@ -21,30 +21,13 @@ class Attachment extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'images',
-        'slug',
+        'file_type',
     ];
 
     protected $dates = [
             'created_at',
             'updated_at'
         ];
-
-    /**
-     * in urls, what field value is used to identify an attachment record?
-     */
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
-    public function setTitleAttribute($value)
-    {
-        $this->attributes['slug'] = Str::slug($value, '-');
-        return $this->attributes['slug'] = $value;
-    }
-
-
 
     /**
      * relationships

@@ -24,10 +24,18 @@ class StoreAttachment extends FormRequest
     public function rules()
     {
         return [
-            // array of files?
           'images' => 'required',
-          'images.*' => 'required|unique:attachments,name|max:255|distinct',
-
+          //'mage.*' => 'unique:attachments,name|max:255|distinct',
         ];
+
+        /* https://www.itsolutionstuff.com/post/laravel-validation-for-multiple-files-in-arrayexample.html
+         * [
+        'images.*' => 'required|mimes:jpg,jpeg,png,bmp|max:2000'
+      ],[
+        'images.*.required' => 'Please upload an image only',
+        'images.*.mimes' => 'Only jpeg, png, jpg and bmp images are allowed',
+        'images.*.max' => 'Sorry! Maximum allowed size for an image is 2MB',
+    ]
+         */
     }
 }
