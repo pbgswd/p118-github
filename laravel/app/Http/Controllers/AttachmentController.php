@@ -13,6 +13,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Storage;
 use Validator;
 
@@ -91,6 +92,7 @@ class AttachmentController extends Controller
 /*
         // get the date, month, year, make folder if not exist for storing stuff.
 */
+        Session::flash('success', Str::plural(count($request->images) . ' Attachment', count($request->images)) . ' uploaded.');
         return redirect()->route('attachment_edit', [$attachment->slug]);
     }
 
@@ -113,10 +115,7 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment)
     {
-
-      // dd($attachment);
-
-
+        // image data?
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
 
@@ -129,7 +128,6 @@ class AttachmentController extends Controller
      */
     public function update(UpdateAttachment $request, Attachment $attachment)
     {
-
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
 
@@ -139,9 +137,17 @@ class AttachmentController extends Controller
      * @param  \App\Attachment  $attachment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DestroyAttachment $attachment)
+    public function destroy(DestroyAttachment $request)
     {
-        //
+        $attachments = Attachment::find($request->id);
+        foreach($attachments as $a)
+        {
+            Storage::disk('public')->delete($a['name']);
+            Attachment::destroy($a->id);
+        }
+        Session::flash('success', Str::plural(count($request->id) .' Attachment', count($request->id)) . ' deleted.');
+
+        return redirect()->route('attachments_list');
     }
 
     protected function uploadImages(FormRequest $request)

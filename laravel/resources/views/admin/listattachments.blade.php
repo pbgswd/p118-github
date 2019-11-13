@@ -35,7 +35,7 @@ $attachments = $data['attachments'];
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="id[]" value="" />
+                                        <input type="checkbox" name="id[]" value="{{$a->id}}" />
                                     </label>
                                 </div>
                             </td>

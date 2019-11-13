@@ -5,25 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
-      <change afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_11_13_090953_update_users_info_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/project118.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project118.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AttachmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AttachmentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Requests/User/StoreUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Requests/User/StoreUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Attachment.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Attachment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/UserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/UserInfo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/config/filesystems.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/database/migrations/2019_11_06_011237_update_attachments_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_11_06_011237_update_attachments_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/attachment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/attachment.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listattachments.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listattachments.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -230,7 +214,7 @@
       <workItem from="1559763305659" duration="31827000" />
       <workItem from="1560132745324" duration="5416000" />
       <workItem from="1560238244560" duration="3367000" />
-      <workItem from="1573535665406" duration="31310000" />
+      <workItem from="1573535665406" duration="33251000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
