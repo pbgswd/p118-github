@@ -93,7 +93,13 @@ class AttachmentController extends Controller
         // get the date, month, year, make folder if not exist for storing stuff.
 */
         Session::flash('success', Str::plural(count($request->images) . ' Attachment', count($request->images)) . ' uploaded.');
-        return redirect()->route('attachment_edit', [$attachment->slug]);
+
+        /*
+        if one file, go to edit, if multiple uploads, what then?
+        */
+
+
+        return redirect()->route('attachment_edit', [$attachment->id]);
     }
 
     /**
@@ -115,7 +121,13 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment)
     {
-        // image data?
+
+       // echo storage_path('app/public'); exit();
+
+        $attachment['imageData'] = getimagesize(storage_path('app/public') .'/'. $attachment['name']);
+        $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/public') .'/'. $attachment['name']));
+
+
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
 
@@ -166,5 +178,11 @@ class AttachmentController extends Controller
             }
         }
         return $v;
+    }
+
+    protected function human_filesize($bytes, $decimals = 2) {
+        $factor = floor((strlen($bytes) - 1) / 3);
+        if ($factor > 0) $sz = 'KMGT';
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
     }
 }
