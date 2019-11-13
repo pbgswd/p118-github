@@ -2,6 +2,7 @@ bak-laravel
 laravel/node_modules
 laravel/public/hot
 laravel/public/storage
+laravel/public/users
 laravel/storage/*.key
 laravel/storage/framework/cache/*
 laravel/vendor
