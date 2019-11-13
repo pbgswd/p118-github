@@ -14,7 +14,8 @@ class UpdateAttachmentsTable extends Migration
     public function up()
     {
         Schema::table('attachments', function (Blueprint $table) {
-            $table->string('file_type')->after('name');
+            $table->string('extension')->after('name');
+            $table->dropColumn('slug');
         });
     }
 
@@ -26,7 +27,8 @@ class UpdateAttachmentsTable extends Migration
     public function down()
     {
         Schema::table('attachments', function (Blueprint $table) {
-            $table->dropColumn('file_type');
+            $table->dropColumn('extension');
+            $table->string('slug')->after('file_name');
         });
     }
 }

@@ -114,6 +114,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file"></span>
+                                    spatie/laravel-medialibrary
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('pages_list')}}">
                                     <span data-feather="file"></span>
                                     Pages

@@ -1,6 +1,5 @@
 <?php
 $attachments = $data['attachments'];
-dd($attachments);
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> List Attachements and Images'])
 @section('content')
@@ -9,14 +8,13 @@ dd($attachments);
            <span class="badge badge-primary badge-pill">
                {!! count($attachments)  !!}
            </span>
-           Attachments. | <a href="{{ route('attachment_create') }}">Add new attachment <i class="far fa-arrow-alt-circle-right"></i> </a>
+           Files. | <a href="{{ route('attachment_create') }}">Add new file <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
     </div>
 @if (count($attachments) > 0)
-    <form name="delete" method="POST" action="{{route('venue_destroy')}}">
+    <form name="delete" method="POST" action="{{route('attachment_destroy')}}">
         {!! csrf_field() !!}
         {!! method_field('DELETE') !!}
-
         <div class="form-group">
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
@@ -47,13 +45,11 @@ dd($attachments);
                                 </h4>
                             </td>
                             <td>
-                                <h4>
-                                    <a title="{{ $a->slug }}" href="{{ route('attachment_edit', $a->slug) }}">{{ $a->slug }}</a>
-                                </h4>
+                                {{$a->id}}
                             </td>
-                            <td> {{ $a->user_id }} </td>
+                            <td> {{ $a->users->name }} </td>
                             <td>
-                                <a href="{{ route('venue_edit', $a->slug) }}" title="Edit {{ $a->name }} ">
+                                <a href="{{ route('attachment_edit', $a->id) }}" title="Edit {{ $a->name }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
@@ -68,7 +64,6 @@ dd($attachments);
                 </table>
             </div>
         </div>
-
         <div class="row">
             <div class="col">
                 <i class="far fa-trash-alt fa-2x"></i>
@@ -77,17 +72,21 @@ dd($attachments);
             <div class="col-6">
                 <div class="list-group">
                     <ul class="pagination">
-                        pagination
+                        {!! $attachments->links() !!}
                     </ul>
                 </div>
             </div>
             <div class="col"></div>
         </div>
-
-
-
         <div class="row" style="margin-top:6em;"></div>
     </form>
 @endif
-    <div class="row" style="margin-top:30px;"> &nbsp;</div>
+
+@if (!empty($images))
+    <h3>Files not in db </h3>
+    @foreach ($images as $img)
+       <a href="/storage/{{$img}}">{{$img}}</a> <br />
+    @endforeach
+@endif
+    <div class="row" style="margin-top:30px;"></div>
 @endsection

@@ -19,6 +19,9 @@ class SearchController extends Controller
         $data = [];
         $data['search'] = $request->search;
         /*
+         * https://laraveldaily.com/new-package-laravel-searchable-easily-search-in-multiple-models/
+         * https://packagist.org/packages/spatie/laravel-searchable
+         * https://medium.com/justlaravel/search-functionality-in-laravel-a2527282150b
          * General site search, topics, posts and pages.
          * also, whatever else is public.
          * sub committees

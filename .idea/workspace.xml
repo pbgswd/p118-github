@@ -3,14 +3,27 @@
   <component name="AnalysisUIOptions">
     <option name="SCOPE_TYPE" value="3" />
   </component>
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/laravel/resources/views/admin/roles.blade.php" line="13" mnemonic="1" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_11_13_090953_update_users_info_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/project118.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project118.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AttachmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AttachmentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Requests/User/StoreUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Requests/User/StoreUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Attachment.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Attachment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/UserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/UserInfo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/contact.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/database/migrations/2019_11_06_011237_update_attachments_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_11_06_011237_update_attachments_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/attachment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/attachment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listattachments.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listattachments.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,114 +37,8 @@
       <executable />
     </execution>
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="355" />
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>tion upd</find>
-      <find>scopeA</find>
-      <find>peter</find>
-      <find>uploaded</find>
-      <find>log</find>
-      <find>topics</find>
-      <find>route</find>
-      <find>slug</find>
-      <find>admin dash</find>
-      <find>/admin</find>
-      <find>app</find>
-      <find>Topic</find>
-      <find>$topic</find>
-      <find>topic</find>
-      <find>datepicker</find>
-      <find>date</find>
-      <find>getFormOptions</find>
-      <find>prov</find>
-      <find>unit</find>
-      <find>permission</find>
-      <find>cache-reset</find>
-      <find>form</find>
-      <find>&lt;form</find>
-      <find>address</find>
-      <find>user_id</find>
-      <find>image if exists</find>
-      <find>$request-&gt;id</find>
-      <find>foreach</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>users</replace>
-      <replace>id</replace>
-      <replace>page</replace>
-      <replace>Page</replace>
-      <replace>$data</replace>
-      <replace>user</replace>
-      <replace>-&gt;fill</replace>
-      <replace>membership</replace>
-      <replace>$id</replace>
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/laravel/app/Console/Commands/AttachPermissionRole.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/admin/listusers.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/routes/web.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/pages.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/page.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/topic.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/topics.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/Page.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/User.php" />
-        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_06_03_021943_add_user_to_pages.php" />
-        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_06_03_072153_add_user_to_topics.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/Topic.php" />
-        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_06_04_205659_alter_users_info.php" />
-        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_06_04_211232_alter_memberships.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/admin/topic.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/admin/page.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Requests/User_Info/UserInfo.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/admin/admin.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/PhoneNumber.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/Address.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/Membership.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/UserInfo.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Requests/User_Info/UpdateUserInfo.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Requests/Page/DestroyPage.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Requests/User/UpdateUser.php" />
-        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_05_22_085522_user_info.php" />
-        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_05_22_090722_users_address.php" />
-        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_05_22_090736_users_phone.php" />
-        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_05_22_092813_users_membership.php" />
-        <option value="$PROJECT_DIR$/laravel/database/seeds/PageSeeder.php" />
-        <option value="$PROJECT_DIR$/laravel/database/seeds/UserSeeder.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/Attachment.php" />
-        <option value="$PROJECT_DIR$/laravel/database/migrations/2019_06_06_204333_create_attachments_table.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Requests/User/StoreUser.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Policies/PagePolicy.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Providers/AuthServiceProvider.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Models/Options.php" />
-        <option value="$PROJECT_DIR$/laravel/webpack.mix.js" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/ContactController.php" />
-        <option value="$PROJECT_DIR$/laravel/.env.testing" />
-        <option value="$PROJECT_DIR$/laravel/.env.example" />
-        <option value="$PROJECT_DIR$/laravel/.env.testing.orig" />
-        <option value="$PROJECT_DIR$/laravel/.env.dusk.local" />
-        <option value="$PROJECT_DIR$/laravel/.env.dusk.local.example" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/hello.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/.env" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/contact.blade.php" />
-      </list>
-    </option>
-  </component>
-  <component name="PhpServers">
-    <servers />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -224,31 +131,39 @@
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/laravel/vendor/league/glide" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/laravel/vendor/facade/ignition" />
+      <path value="$PROJECT_DIR$/laravel/vendor/facade/ignition-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/facade/flare-client-php" />
+      <path value="$PROJECT_DIR$/laravel/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/laravel/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/laravel/vendor/spatie/image" />
+      <path value="$PROJECT_DIR$/laravel/vendor/spatie/image-optimizer" />
+      <path value="$PROJECT_DIR$/laravel/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/laravel/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/laravel/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/laravel/vendor/spatie/temporary-directory" />
+      <path value="$PROJECT_DIR$/laravel/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/laravel/vendor/scrivo/highlight.php" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="68" />
-    <option name="y" value="61" />
-    <option name="width" value="1502" />
-    <option name="height" value="942" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
-    </panes>
-  </component>
+  <component name="ProjectId" id="1TVC1YRE3STwg2T57CALNIHZul5" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/laravel/resources/views/admin" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -315,6 +230,7 @@
       <workItem from="1559763305659" duration="31827000" />
       <workItem from="1560132745324" duration="5416000" />
       <workItem from="1560238244560" duration="3367000" />
+      <workItem from="1573535665406" duration="31310000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -326,9 +242,6 @@
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="423557000" />
-  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -338,56 +251,19 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1680" height="1023" extended-state="6" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23133415" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32946634" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32946634" />
-      <window_info anchor="bottom" id="Docker" order="7" />
-      <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32946634" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32946634" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" />
-      <window_info anchor="right" id="Database" order="4" />
-    </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20930232" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32946634" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" />
-      <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32946634" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" />
-      <window_info anchor="right" id="Database" order="4" />
-    </layout-to-restore>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added methods for content access level and membership level, just a concept at this point." />
@@ -433,329 +309,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_04_01_065401_update_topic_column_scope.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_04_10_234053_create_permission_tables.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_04_16_014351_create_pages_table.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_05_22_085522_user_info.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_05_22_090722_users_address.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_05_22_090736_users_phone.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" column="69" lean-forward="true" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_06_03_021943_add_user_to_pages.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="7" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="87" />
-          <folding>
-            <element signature="e#7#45#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_06_03_072153_add_user_to_topics.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" selection-start-line="19" selection-end-line="20" selection-end-column="70" />
-          <folding>
-            <element signature="e#7#45#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_06_04_205659_alter_users_info.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#7#45#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_05_22_092813_users_membership.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Requests/User/StoreUser.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" column="72" lean-forward="true" selection-start-line="46" selection-start-column="72" selection-end-line="46" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Requests/User/UpdateUser.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="50" selection-start-line="31" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/seeds/UserSeeder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-82">
-          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
-          <folding>
-            <element signature="e#7#27#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/config/auth.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Requests/User/DestroyUser.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/factories/UserFactory.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="44" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
-          <folding>
-            <element signature="e#7#27#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/public/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="1975" column="7" selection-start-line="1975" selection-start-column="7" selection-end-line="1975" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/database/migrations/2019_06_06_204333_create_attachments_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Providers/AuthServiceProvider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="27" column="41" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
-          <folding>
-            <element signature="e#33#53#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/HomeController.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/HelloController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-393" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/AttachmentController.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/AdminController.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/RoleController.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="157" column="8" selection-start-line="157" selection-start-column="8" selection-end-line="157" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2505">
-          <caret line="167" column="67" selection-start-line="167" selection-start-column="67" selection-end-line="167" selection-end-column="67" />
-          <folding>
-            <element signature="e#40#79#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="113" column="13" selection-start-line="113" selection-start-column="13" selection-end-line="113" selection-end-column="13" />
-          <folding>
-            <element signature="e#40#79#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Policies/PagePolicy.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-          <folding>
-            <element signature="e#32#52#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/Address.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/Admin.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/Attachment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" selection-start-line="22" selection-end-line="23" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/Contact.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/Hello.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/Membership.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/Options.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/Page.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-498" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/PhoneNumber.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Models/Topic.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/webpack.mix.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="56" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/.env.testing">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" selection-start-line="26" selection-end-line="37" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/.env.example">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="15" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/.env.testing.orig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="15" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/.env.dusk.local">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="18" lean-forward="true" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/.env.dusk.local.example">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="20" lean-forward="true" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/hello.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-          <folding>
-            <element signature="e#122#177#0#HTML" expanded="true" />
-            <element signature="e#199#240#0#HTML" expanded="true" />
-            <element signature="e#975#982#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/home.blade.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Requests/Contact/SubmitContact.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/ContactController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-          <folding>
-            <element signature="e#40#84#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/contact.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="58" selection-start-line="3" selection-start-column="58" selection-end-line="3" selection-end-column="58" />
-          <folding>
-            <element signature="e#96#129#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>

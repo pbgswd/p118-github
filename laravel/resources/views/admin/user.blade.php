@@ -80,8 +80,8 @@ $user_roles = $data['user_roles'];
                             <i class="far fa-images"></i>
                             Image preview
                         </h4>
-                        <h5>Currently: {{ $user_info['image'] }}</h5>
-                        <img src="{{ asset('storage/' . $user_info['image']) }}" height="100px" />
+                        <h5>Currently: {{ $user_info['file_name'] }}</h5>
+                        <img src="{{ asset('users/'. $user_info['image']) }}" width="150px" />
                         <input type="hidden"  name="user_info[image]" value="{{$user_info['image']}}" />
                         <label>
                             <input name="user_info[delete_image]" type="checkbox" value="1" /> <h5>Check to delete image</h5>

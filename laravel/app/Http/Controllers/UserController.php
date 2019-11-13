@@ -91,6 +91,8 @@ class UserController extends Controller
 
         $user_info = new UserInfo($request->input('user_info'));
         $user_info->image = $this->uploadImage($request);
+        $user_info['file_name'] = $request->image->getClientOriginalName();
+
         $user->user_info()->save($user_info);
 
         $address = new Address($request->input('user_address'));
@@ -116,7 +118,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-
+//dd(storage_path('app/users'));
         $phone = $user->phone_number;
         $user_info = $user->user_info;
         $address = $user->address;
@@ -165,13 +167,18 @@ class UserController extends Controller
 
         if ($user->user_info instanceof UserInfo) {
             $user_info = $userRequest['user_info'];
-            if (isset( $userRequest['user_info']['delete_image'])) {
-                Storage::disk('public')->delete( $userRequest['image'] );
-                Session::flash('info', "You have deleted " . $userRequest['image']);
+
+            if (isset( $user_info['delete_image'])) {
+                Storage::disk('users')->delete($user_info['image']);
+
+                Session::flash('info', "You have deleted " . $user_info['image']);
                 $user_info['image'] = null;
+                $user_info['file_name'] = null;
             } else {
                 $user_info['image'] = $this->uploadImage($userRequest);
+                $user_info['file_name'] = $userRequest->image->getClientOriginalName();
             }
+
             $user->user_info->fill($user_info);
             $user->user_info->save();
         } else {
@@ -218,7 +225,7 @@ class UserController extends Controller
             $user->syncRoles();
             $user_info = UserInfo::where('user_id', $user->id)->first();
             if ($user_info['image']) {
-                Storage::disk('public')->delete($user_info['image']);
+                Storage::disk('users')->delete($user_info['image']);
             }
             UserInfo::destroy($user_info['id']);
         }
@@ -231,18 +238,23 @@ class UserController extends Controller
 
     protected function uploadImage(FormRequest $request)
     {
-        if (!$request->image) {
-            return $request->input('user_info.image');
-        }
+        $path = $request->file('image')->store('','users');
+        return $path;
 
-        $imageName = $request->image->getClientOriginalName();
+        /*
+               if (!$request->image) {
+                   return $request->input('user_info.image');
+               }
 
-        if (!$request->image->storeAs('public', $imageName)) {
-            Session::flash('warning', "Did not store " . $imageName);
+              $imageName = $request->image->getClientOriginalName();
 
-            return null;
-        }
+               if (!$request->image->storeAs('users', $imageName)) {
+                   Session::flash('warning', "Did not store " . $imageName);
 
-        return $imageName;
+                   return null;
+               }
+
+               return $imageName;
+        */
     }
 }

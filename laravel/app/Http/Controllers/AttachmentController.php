@@ -11,6 +11,7 @@ use DB;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Storage;
 use Validator;
@@ -25,9 +26,27 @@ class AttachmentController extends Controller
     public function index(\App\Models\Attachment $attachment)
     {
         $data = [];
-        $data['attachments'] = Attachment::orderBy('id', 'ASC')->paginate(20);
+        $data['attachments'] = Attachment::with('users')->orderBy('id', 'ASC')->paginate(20);
 
-        return view('admin.listattachments', ['data' => $data]);
+        $storedFiles = [];
+        $allAttachments = Attachment::all();
+        foreach ($allAttachments as $storedFile)
+        {
+            $storedFiles[] = $storedFile['name'];
+        }
+
+        $files = File::allFiles('storage');
+
+        $uploadedImgs = [];
+        foreach ($files as $file)
+        {
+            $uploadedImgs[] = $file->getBasename();
+        }
+
+        $imgs = [];
+        $imgs = array_diff($uploadedImgs, $storedFiles);
+
+        return view('admin.listattachments', ['data' => $data, 'images' => $imgs]);
     }
 
     /**
@@ -50,8 +69,6 @@ class AttachmentController extends Controller
      */
     public function store(StoreAttachment $request)
     {
-        //dd($request->all());
-        //$request->images->storeAs()
 
         /** @var UploadedFile $image */
         foreach ($request->images as $image)
@@ -65,7 +82,6 @@ class AttachmentController extends Controller
 
             $attachment = new Attachment($request->input('attachment'));
             $attachment['name'] = $imageName;
-            $attachment['file_type'] = $image->getClientOriginalExtension();
             $attachment['extension'] = $image->getClientOriginalExtension();
             $attachment['user_id'] = Auth::id();
 
@@ -97,6 +113,10 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment)
     {
+
+      // dd($attachment);
+
+
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
 

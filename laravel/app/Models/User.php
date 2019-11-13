@@ -83,4 +83,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Membership::class);
     }
+
+    public function attachments()
+    {
+        return $this->belongsToMany(Attachment::class);
+    }
 }

@@ -31,6 +31,7 @@ class StoreUser extends FormRequest
             'user_phone.primary' => 'boolean',
             'user_info.share_email'=> 'boolean',
             'user_info.share_phone'=> 'boolean',
+            'user_info.file_name' => 'string|nullable',
             'user_info.image'=> 'string|nullable',
             'user_info.about'=> 'string|nullable|max:2000',
             'user_address.unit' => 'max:255|nullable',
@@ -42,7 +43,7 @@ class StoreUser extends FormRequest
             'user_roles' => 'required',
             'user_membership.membership_date' => 'date',
             'user_membership.membership_expires' => 'date',
-            'user_membership.seniority_number' => 'required|integer|unique:memberships,seniority_number,' . $this->route('user')->id . ',user_id',
+            'user_membership.seniority_number' => 'required|integer|unique:memberships,seniority_number',
             'user_membership.status' => 'string|required|max:255',
             'user_membership.admin_notes' => 'string|nullable|max:2000',
 

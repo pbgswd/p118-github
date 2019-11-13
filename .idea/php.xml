@@ -91,9 +91,28 @@
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/laravel/vendor/league/glide" />
+      <path value="$PROJECT_DIR$/laravel/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/laravel/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/laravel/vendor/facade/ignition" />
+      <path value="$PROJECT_DIR$/laravel/vendor/facade/ignition-contracts" />
+      <path value="$PROJECT_DIR$/laravel/vendor/facade/flare-client-php" />
+      <path value="$PROJECT_DIR$/laravel/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/laravel/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/laravel/vendor/spatie/image" />
+      <path value="$PROJECT_DIR$/laravel/vendor/spatie/image-optimizer" />
+      <path value="$PROJECT_DIR$/laravel/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/laravel/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/laravel/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/laravel/vendor/spatie/temporary-directory" />
+      <path value="$PROJECT_DIR$/laravel/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/laravel/vendor/scrivo/highlight.php" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings load_method="CUSTOM_LOADER" custom_loader_path="$PROJECT_DIR$/laravel/vendor/autoload.php" />

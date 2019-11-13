@@ -20,6 +20,7 @@ class UserInfo extends Model
     protected $fillable = [
         'share_email',
         'share_phone',
+        'file_name',
         'image',
         'about',
     ];
