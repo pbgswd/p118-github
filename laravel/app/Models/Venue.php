@@ -14,7 +14,6 @@ class Venue extends Model
         public $sortable = [
         'id',
         'name',
-        'image',
         'access_level',
         'live',
         'sort_order',
@@ -45,6 +44,7 @@ class Venue extends Model
         'id',
         'name',
         'description',
+        'url',
         'image',
         'access_level',
         'live',

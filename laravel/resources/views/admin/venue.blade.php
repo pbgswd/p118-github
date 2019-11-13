@@ -51,7 +51,16 @@ $venue = $data['venue'];
                 </div>
             </div>
         </div>
+
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-8"><h4>Venue Website Link</h4></div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control"  placeholder="Website Address - http://...." name="venue[url]" value="{{ old('venue.url', $venue->url)}}" size="80" />
+                </div>
+            </div>
+        </div>
         <div class="row" style="border-width:6px; !important;">
             @if( $venue->image )
                 <div class="col-md-6">
