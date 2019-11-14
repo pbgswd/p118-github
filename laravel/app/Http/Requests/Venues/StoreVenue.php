@@ -24,7 +24,14 @@ class StoreVenue extends FormRequest
     public function rules()
     {
         return [
-            //
+            'venue.user_id' => 'required|numeric',
+            'venue.name' => 'required|unique:venues,name|max:255',
+            'venue.description' => 'required|string',
+            'venue.url' => 'string',
+            'venue.access_level' => 'required|string|max:255',
+            'venue.sort_order' =>  'required|numeric',
+            'venue.in_menu' => 'boolean',
+            'venue.live' => 'boolean',
         ];
     }
 }

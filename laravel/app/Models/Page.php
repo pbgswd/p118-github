@@ -21,7 +21,6 @@ class Page extends Model
     public $sortable = [
         'id',
         'title',
-        'image',
         'access_level',
         'live',
         'sort_order',
@@ -55,7 +54,6 @@ class Page extends Model
             'title',
             'description',
             'content',
-            'image',
             'access_level',
             'sort_order',
             'live',

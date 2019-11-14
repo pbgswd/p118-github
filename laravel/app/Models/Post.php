@@ -20,7 +20,6 @@ class Post extends Model
     public $sortable = [
         'id',
         'title',
-        'image',
         'access_level',
         'live',
         'sort_order',
@@ -53,7 +52,6 @@ class Post extends Model
             'title',
             'description',
             'content',
-            'image',
             'access_level',
             'sort_order',
             'live',

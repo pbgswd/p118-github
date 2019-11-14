@@ -1,5 +1,6 @@
 <?php
 $venues = $data['data'];
+//dd($data);
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Venues'])
 @section('content')
@@ -30,7 +31,6 @@ $venues = $data['data'];
                         <th> @sortablelink('live', 'Is Live?') </th>
                         <th> @sortablelink('sort_order', 'Sort Order') </th>
                         <th> @sortablelink('in_menu', 'In Menu?') </th>
-                        <th> @sortablelink('allow_comments', 'Allow Comments?') </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -42,7 +42,7 @@ $venues = $data['data'];
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="id[]" value="" />
+                                        <input type="checkbox" name="id[]" value="{{$v->id}}" />
                                     </label>
                                 </div>
                             </td>
@@ -55,7 +55,6 @@ $venues = $data['data'];
                             <td> {!! $v->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
                             <td> {{ $v->sort_order }} </td>
                             <td> {!! $v->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
-                            <td>  <i class='fas fa-check'></i><i class="far fa-times-circle"></i></td>
                             <td>
                                 <a href="{{ route('venue_edit', $v->slug) }}" title="Edit {{ $v->name }} ">
                                     <i class="fas fa-edit"></i>
@@ -81,7 +80,7 @@ $venues = $data['data'];
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                   pagination
+                     venues->links()
                 </ul>
             </div>
         </div>

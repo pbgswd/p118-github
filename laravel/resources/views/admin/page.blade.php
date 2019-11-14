@@ -61,41 +61,6 @@ $topics = $data['topics'];
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row" style="border-width:6px; !important;">
-            @if( $page->image )
-                <div class="col-md-6">
-                    <div class="col">
-                        <h4>
-                            <i class="far fa-images"></i>
-                            Image preview
-                        </h4>
-
-                        <h5>Currently: {{ $page->image }}</h5>
-                        <img src="{{ asset('storage/'.$page->image) }}" />
-                    </div>
-                    <div class="col" style="margin-top: 3em;">
-                        <input type="hidden"  name="page[image]" value="{{$page->image}}" />
-                        <label>
-                            <input name="page[delete_image]" type="checkbox" value="1" /> Check to delete image
-                        </label>
-                    </div>
-                </div>
-            @else
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputFile">
-                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                            File input
-                        </label>
-                        <input type="file" id="inputFile" name="image" />
-                        <p class="help-block">
-                            Upload image for page.
-                        </p>
-                    </div>
-                </div>
-            @endif
-        </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
 
         <div class="row">
             <div class="col-md-6">
