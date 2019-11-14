@@ -125,10 +125,16 @@ class VenueController extends Controller
      * @param  \App\Models\Venue  $venue
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DestroyVenue $venue)
+    public function destroy(DestroyVenue $request)
     {
-        //
-        echo __METHOD__; exit();
+        $venues = Venue::find($request->id);
+        foreach($venues as $v)
+        {
+            Venue::destroy($v->id);
+        }
+        Session::flash('success', Str::plural(count($request->id) .' Venue', count($request->id)) . ' deleted.');
+
+        return redirect()->route('venues_list');
     }
 
     protected function uploadImage(FormRequest $request)

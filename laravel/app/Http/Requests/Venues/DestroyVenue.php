@@ -24,7 +24,7 @@ class DestroyVenue extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => 'required|exists:venues',
         ];
     }
 }
