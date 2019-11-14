@@ -3,7 +3,6 @@ $attachment = $data['attachment'];
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> ' . $data['action'] . ' File'])
 @section('content')
-<div class="container">
     <form method="post" name="attachment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="attachment[id]" value="{{ $attachment['id'] }}">
         {!! csrf_field() !!}
@@ -25,7 +24,7 @@ $attachment = $data['attachment'];
                 <div class="col-md-6">
                     <img src="{{ asset('storage/' . $attachment['name']) }}" {{$attachment['imageData'][3]}} />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4" style="margin-left:2em;">
                     <h3>Image Info</h3>
                     <ul>
                         <li>Location: {{env('APP_URL')}}/storage/{{$attachment['name']}}</li>
@@ -35,10 +34,11 @@ $attachment = $data['attachment'];
                         <li>Mime Type: {{$attachment['imageData']['mime']}}</li>
                     </ul>
                     <h4>Insert into content with:</h4>
-                    <textarea><img src="{{env('APP_URL')}}/storage/{{$attachment['name']}}" /></textarea>
+                    <xmp><img src="{{env('APP_URL')}}/storage/{{$attachment['name']}}" /></xmp>
                 </div>
             </div>
         @endif
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="col-md-6">
                 <i class="fas fa-edit fa-2x"></i>

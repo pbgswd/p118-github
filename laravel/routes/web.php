@@ -32,6 +32,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/posts', 'PostController@list')->name('posts');
     Route::get('/post/{post}', 'PostController@show')->name('post_show');
 
+    Route::get('/venues', 'VenueController@list')->name('venues');
+    Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
+
     Route::post('/search', 'SearchController@index')->name('search');
 
 });

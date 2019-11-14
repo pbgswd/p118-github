@@ -24,7 +24,6 @@ class VenueController extends Controller
         $data = [];
         $data['venues'] = Venue::sortable()->paginate(20);
 
-
         return view('admin.listvenues', ['data'=>array('data'=>$data)]);
     }
     /**
@@ -34,8 +33,10 @@ class VenueController extends Controller
      */
     public function list()
     {
-        echo __METHOD__; exit();
-        //public  list
+        $data = [];
+        $data['venues'] = Venue::paginate(20);
+
+        return view('venues', ['data'=>array('data'=>$data)]);
     }
     /**
      * Show the form for creating a new resource.
@@ -80,8 +81,7 @@ class VenueController extends Controller
      */
     public function show(Venue $venue)
     {
-        echo __METHOD__; exit();
-        //
+        return view('venue', ['data' => ['venue' => $venue]]);
     }
 
     /**
