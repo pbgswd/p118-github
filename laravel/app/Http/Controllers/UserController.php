@@ -118,7 +118,6 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-//dd(storage_path('app/users'));
         $phone = $user->phone_number;
         $user_info = $user->user_info;
         $address = $user->address;
@@ -240,21 +239,5 @@ class UserController extends Controller
     {
         $path = $request->file('image')->store('','users');
         return $path;
-
-        /*
-               if (!$request->image) {
-                   return $request->input('user_info.image');
-               }
-
-              $imageName = $request->image->getClientOriginalName();
-
-               if (!$request->image->storeAs('users', $imageName)) {
-                   Session::flash('warning', "Did not store " . $imageName);
-
-                   return null;
-               }
-
-               return $imageName;
-        */
     }
 }

@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/laravel/resources/views/listusers.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/laravel/resources/views/member.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/VenueController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/VenueController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Requests/Venues/StoreVenue.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Requests/Venues/StoreVenue.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Requests/Venues/UpdateVenue.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Requests/Venues/UpdateVenue.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Page.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Page.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listvenues.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listvenues.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/page.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/post.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/venue.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/venue.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/errors/minimal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/errors/minimal.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -222,7 +219,7 @@
       <workItem from="1560132745324" duration="5416000" />
       <workItem from="1560238244560" duration="3367000" />
       <workItem from="1573535665406" duration="33952000" />
-      <workItem from="1573673404447" duration="17622000" />
+      <workItem from="1573673404447" duration="22483000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>

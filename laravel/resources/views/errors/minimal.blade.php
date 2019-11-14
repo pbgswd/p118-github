@@ -57,30 +57,18 @@
         </style>
     </head>
     <body>
-    <div class="container">
-        <div class="flex-center position-ref full-height">
-            <div class="row">
-                <div class="code">
-                    @yield('code')
+        <div class="container">
+            <div class="flex-center position-ref full-height">
+                <div class="row">
+                    <div class="code">
+                        @yield('code')
+                    </div>
+                    <div class="message" style="padding: 10px;">
+                        @yield('message')
+                    </div>
                 </div>
-                <div class="message" style="padding: 10px;">
-                    @yield('message')
-                </div>
+                <br clear="all" />
             </div>
-<br clear="all" />
-            <div class="row">
-                <i class="far fa-arrow-alt-circle-left fa-3x"></i>
-                <button class="btn btn-primary btn-lg" onclick="goBack()">Go Back</button>
-                <script>
-                    function goBack() {
-                        window.history.back();
-                    }
-                </script>
-            </div>
-
         </div>
-    </div>
-
-
     </body>
 </html>

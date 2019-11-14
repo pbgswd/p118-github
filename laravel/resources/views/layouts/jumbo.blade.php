@@ -92,7 +92,7 @@
                             <a class="nav-link" href="#">Resources</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">People</a>
+                            <a class="nav-link" href="{{route('members')}}">Members</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/site" title="Members"><i class="fas fa-industry"></i></a>

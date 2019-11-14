@@ -35,14 +35,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/venues', 'VenueController@list')->name('venues');
     Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
 
+    Route::get('/members', 'MemberController@index')->name('members');
+    Route::get('/member/{member}', 'MemberController@show')->name('member');
+// edit and update my profile
+
     Route::post('/search', 'SearchController@index')->name('search');
 
 });
 
 Route::group(['middleware' =>  ['web', 'auth',]], function () {
-
     //Route::get('/site', 'SiteController@index')->name('site');
-
     Route::get('/site', function () {
         return view('site');
     });
