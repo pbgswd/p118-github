@@ -11,8 +11,8 @@
         </h3>
 </div>
 
-    <div class="table-responsive border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
-        <table class="table table-striped table-sm">
+    <div class="table-responsive-md border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;  max-width:768px;">
+        <table class="table table-dark table-sm">
             <thead>
                 <tr>
                       <th> @sortablelink('name', 'Name') </th>
