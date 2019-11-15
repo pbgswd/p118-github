@@ -29,7 +29,6 @@ class UserController extends Controller
 {
     use HasRoles;
 
-
     /**
      * Display a listing of the resource.
      *

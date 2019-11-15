@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
@@ -31,7 +32,7 @@ class MemberController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::with('roles')->sortable()->paginate(10);
+        $users = Member::sortable()->orderBy('name')->paginate(20);
         return view('listusers', ['data'=>array('users'=>$users )]);
     }
 
@@ -62,23 +63,24 @@ class MemberController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Member $member)
     {
-        $phone = $user->phone_number;
-        dd($phone);
-        $user_info = $user->user_info;
-        $address = $user->address;
-        $membership = $user->membership;
+
+        $phone = $member->phone_number;
+
+        $member_info = $member->user_info;
+        $address = $member->address;
+        $membership = $member->membership;
         //$currentUser = Auth::user(); // the logged in user, perms to edit?
         //$regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
-        $user_roles = $user->getRoleNames()->toArray();
-        $user_roles = array_combine($user_roles, $user_roles);
+        $member_roles = $member->getRoleNames()->toArray();
+        $member_roles = array_combine($member_roles, $member_roles);
 
         $data = [
-            'user' => $user,
-            'user_roles' => $user_roles,
-            'user_info' => $user_info,
+            'user' => $member,
+            'user_roles' => $member_roles,
+            'user_info' => $member_info,
             'user_phone' => $phone,
             'user_address' => $address,
             'user_membership' => $membership,
@@ -88,15 +90,13 @@ class MemberController extends Controller
             //'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
 
-        dd($data);
-
         return view('member', ['data'=> $data]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $member
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)

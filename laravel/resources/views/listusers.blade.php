@@ -7,7 +7,7 @@
            <span class="badge badge-primary badge-pill">
                {!! $data['users']->total()  !!}
            </span>
-            Members. | <a href="#">View my profile <i class="far fa-arrow-alt-circle-right"></i> </a>
+            Members. | <a href="{{route('member', Auth::user()->id)}}">View my profile <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 
