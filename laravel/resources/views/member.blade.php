@@ -1,7 +1,5 @@
 <?php
 $user = $data['user'];
-
-dd($user);
 ?>
 @extends('layouts.jumbo')
 @section('content')

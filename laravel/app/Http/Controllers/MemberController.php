@@ -124,8 +124,8 @@ class MemberController extends Controller
             'countries' =>  $regions['countries'],
             'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
-
-        return view('member_edit', ['data'=> $data]);
+        dd($data);
+        //return view('member_edit', ['data'=> $data]);
     }
 
     /**
