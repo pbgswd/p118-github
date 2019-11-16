@@ -11,6 +11,8 @@
         <title>{{ config('app.name') }}</title>
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}"></script>
+        <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k"></script>
+        <script src="/js/tinymce.js"></script>
         <link rel="canonical" href="http://project118/hello/">
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">

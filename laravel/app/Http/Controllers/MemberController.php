@@ -101,10 +101,10 @@ class MemberController extends Controller
      */
     public function edit(Member $member)
     {
-        $phone = $member->phone_number;
-        $user_info = $member->user_info;
-        $address = $member->address;
-        $membership = $member->membership;
+        $member->phone_number;
+        $member->user_info;
+        $member->address;
+        $member->membership;
         $currentUser = Auth::user(); // the logged in user, perms to edit?
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
@@ -114,18 +114,14 @@ class MemberController extends Controller
         $data = [
             'user' => $member,
             'user_roles' => $user_roles,
-            'user_info' => $user_info,
-            'user_phone' => $phone,
-            'user_address' => $address,
-            'user_membership' => $membership,
             'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,
             'countries' =>  $regions['countries'],
             'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
-        dd($data);
-        //return view('member_edit', ['data'=> $data]);
+
+        return view('member_edit', ['data'=> $data]);
     }
 
     /**
