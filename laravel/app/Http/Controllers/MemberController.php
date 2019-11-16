@@ -32,7 +32,7 @@ class MemberController extends Controller
      */
     public function index(Request $request)
     {
-        $users = Member::sortable()->orderBy('name')->paginate(20);
+        $users = Member::with('user_info')->sortable()->orderBy('name')->paginate(20);
         return view('listusers', ['data'=>array('users'=>$users )]);
     }
 
@@ -65,7 +65,7 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
-
+// hide show profile? Hide show email? Hide show picture?
         $phone = $member->phone_number;
 
         $member_info = $member->user_info;

@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddPreferenceColumnsToUsersInfoTable extends Migration
+{
+    /**
+     * Run the migration.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('users_info', function (Blueprint $table) {
+            $table->boolean('show_profile')->default(false)->after('user_id');
+            $table->boolean('show_picture')->default(false)->after('show_profile');
+        });
+    }
+
+    /**
+     * Reverse the migration.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('users_info', function (Blueprint $table) {
+            $table->dropColumn('show_profile');
+            $table->dropColumn('show_picture');
+        });
+    }
+}

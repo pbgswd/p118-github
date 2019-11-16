@@ -31,14 +31,12 @@ $user_roles = $data['user_roles'];
     </script>
 
 <div class="container">
-
-    <h3>  <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>  </h3>
-
-
+    <h3>
+        <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>
+    </h3>
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="user[id]" value="{{ $user['id'] }}">
         {!! csrf_field() !!}
-
         <div class="row border border-primary rounded-lg border-3" style="margin-top:30px; padding:1em;">
             <div class="col-lg-12">
                 <h3>Primary Contact Information</h3>
@@ -51,7 +49,6 @@ $user_roles = $data['user_roles'];
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="form-group">
                     <div class="col-lg-2"><h4>Email</h4></div>
@@ -60,7 +57,6 @@ $user_roles = $data['user_roles'];
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="form-group">
                     <div class="col-lg-2"><h4>Phone</h4></div>
@@ -70,36 +66,53 @@ $user_roles = $data['user_roles'];
                 </div>
             </div>
         </div>
-
         <div class="border border-primary rounded-lg border-3" style="margin-top:1em; padding:1.5em;">
             <div class="row" style="margin-bottom: 1em;">
-                <div class="col-12"><h4>Member Info and Preferences</h4></div>
-                @if( $user_info['image'] )
-                    <div class="col-12">
-                        <h4>
-                            <i class="far fa-images"></i>
-                            Image preview
-                        </h4>
-                        <h5>Currently: {{ $user_info['file_name'] }}</h5>
-                        <img src="{{ asset('users/'. $user_info['image']) }}" width="150px" />
-                        <input type="hidden"  name="user_info[image]" value="{{$user_info['image']}}" />
-                        <label>
-                            <input name="user_info[delete_image]" type="checkbox" value="1" /> <h5>Check to delete image</h5>
-                        </label>
-                    </div>
-                @else
-                    <div class="form-group">
-                        <label for="exampleInputFile">
-                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                            File input
-                        </label>
-                        <input type="file" id="inputFile" name="image" />
-                        <p class="help-block">
-                            Upload image for your profile if you wish.
-                        </p>
-                    </div>
-                @endif
+                <div class="col-12">
+                    <h4>Member Info and Preferences</h4>
+                </div>
             </div>
+        <div class="row">
+            <div class="col-12">
+                <label>
+                    <input name="user_info[show_profile]" type="hidden" value="0" />
+                    <input name="user_info[show_profile]" type="checkbox" value="1" {{ checked(old('user_info.show_profile', $user_info['show_profile'])) }} />
+                    <h5>Check to share profile with other members.</h5>
+                </label>
+            </div>
+            @if( $user_info['image'] )
+                <div class="col-12">
+                    <h4>
+                        <i class="far fa-images"></i>
+                        Image preview
+                    </h4>
+                    <h5>Currently: {{ $user_info['file_name'] }}</h5>
+                    <img src="{{ asset('users/'. $user_info['image']) }}" width="150px" />
+                    <input type="hidden"  name="user_info[image]" value="{{$user_info['image']}}" />
+                    <label>
+                        <input name="user_info[delete_image]" type="checkbox" value="1" /> <h5>Check to delete image</h5>
+                    </label>
+                </div>
+            @else
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        File input
+                    </label>
+                    <input type="file" id="inputFile" name="image" />
+                    <p class="help-block">
+                        Upload image for your profile if you wish.
+                    </p>
+                </div>
+            @endif
+            <div class="col-12">
+                <label>
+                    <input name="user_info[show_picture]" type="hidden" value="0" />
+                    <input name="user_info[show_picture]" type="checkbox" value="1" {{ checked(old('user_info.show_picture', $user_info['show_picture'])) }} />
+                    <h5>Check to show picture in your profile.</h5>
+                </label>
+            </div>
+        </div>
             <div class="row">
                 <div class="col">
                     <div class="form-group">
@@ -112,7 +125,6 @@ $user_roles = $data['user_roles'];
                         </div>
                     </div>
                 </div>
-
                 <div class="col">
                     <div class="form-group">
                         <div class="col-6"><h5>Share phone in contact information?</h5></div>
@@ -132,13 +144,10 @@ $user_roles = $data['user_roles'];
                 </div>
             </div>
         </div>
-
         <div class="border border-primary rounded-lg border-3" style="margin-top:1em; padding:1em;">
-
             <div class="row">
                 <div class="col-6"><h3>Primary Mailing Address</h3></div>
             </div>
-
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -146,7 +155,6 @@ $user_roles = $data['user_roles'];
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -154,7 +162,6 @@ $user_roles = $data['user_roles'];
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -162,7 +169,6 @@ $user_roles = $data['user_roles'];
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -170,7 +176,6 @@ $user_roles = $data['user_roles'];
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -178,7 +183,6 @@ $user_roles = $data['user_roles'];
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -186,9 +190,7 @@ $user_roles = $data['user_roles'];
                     </div>
                 </div>
             </div>
-
         </div>
-
         <div class="row col-12">&nbsp;
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
                 <h4>User website roles </h4>
@@ -207,7 +209,6 @@ $user_roles = $data['user_roles'];
                 @endforeach
             </span>
         </div>
-
         <div class="row">
             <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
                 <div class="col-lg-10">
@@ -216,26 +217,23 @@ $user_roles = $data['user_roles'];
                 <div class="col-lg-10">
                   Seniority Number  <input type="text" class="form-control"  placeholder="number" name="user_membership[seniority_number]" value="{{ old('user_membership.seniority_number', $user_membership['seniority_number'])}}" size="80" required/>
                 </div>
-
                 <div class="col-lg-10">
                     Member Status <input type="text" class="form-control"  placeholder="status" name="user_membership[status]" value="{{ old('user_membership.status', $user_membership['status'])}}" size="80" required/>
                 </div>
-
                 <div class="col-lg-10">
                     Member Since  <input type="text" class="form-control"  placeholder="date" name="user_membership[membership_date]" value="{{ old('user_membership.membership_date', $user_membership['membership_date'])}}" size="40" required/>
                 </div>
-
                 <div class="col-lg-10">
                     Member Dues Status <input type="text" class="form-control"  placeholder="dues status, paid until..." name="user_membership[membership_expires]" value="{{ old('user_membership.membership_expires', $user_membership['membership_expires'])}}" size="40" required/>
                 </div>
-
-            <div class="col-lg-10" style="margin-top: 1em;"><h4>Admin notes (admin only)</h4></div>
-            <div class="col-lg-10">
-                <textarea name="user_membership[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control">{{old('user_membership.admin_notes', $user_membership['admin_notes'])}}</textarea>
-            </div>
+                <div class="col-lg-10" style="margin-top: 1em;">
+                    <h4>Admin notes (admin only)</h4>
+                </div>
+                <div class="col-lg-10">
+                    <textarea name="user_membership[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control">{{old('user_membership.admin_notes', $user_membership['admin_notes'])}}</textarea>
+                </div>
              </span>
         </div>
-
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="col-sm">
@@ -243,8 +241,7 @@ $user_roles = $data['user_roles'];
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-
-         <div class="col-sm"> &nbsp;</div>
+    <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
         @hasanyrole('super-admin|admin')
          <div class="col-sm" style="float:right">

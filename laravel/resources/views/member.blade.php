@@ -17,7 +17,7 @@ $user = $data['user'];
                     <img src="{{ asset('users/'.$user->user_info->image) }}" />
                 </div>
             @endif
-            <div class="col-6">
+            <div class="col-9">
                 <h1 class="display-3">{{$user->name}}</h1>
             </div>
         </div>
@@ -30,6 +30,11 @@ $user = $data['user'];
             @endif
             <p>{!! $user->user_info->about !!}</p>
         </div>
+        @if (Auth::user()->id == $user->id)
+            <div class="col-12" style="margin-top: 4em;">
+                <a href="#" title="Edit my profile"><button type="button" class="btn btn-primary">Edit My Profile</button></a>
+            </div>
+        @endif
   </div>
 <div class="row" style="margin-top:6em;"></div>
 @endsection
