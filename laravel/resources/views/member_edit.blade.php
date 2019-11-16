@@ -2,7 +2,6 @@
 $user = $data['user'];
 $roles = $data['roles'];
 $user_roles = $data['user_roles'];
-dd($user_roles);
 ?>
 @extends('layouts.jumbo')
 @section('content')
