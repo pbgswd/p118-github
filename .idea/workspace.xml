@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/laravel/app/Http/Requests/Member/UpdateMember.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/MemberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/MemberController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/RoleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/RoleController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/member_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/member_edit.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -217,7 +218,7 @@
       <workItem from="1560238244560" duration="3367000" />
       <workItem from="1573535665406" duration="33952000" />
       <workItem from="1573673404447" duration="23411000" />
-      <workItem from="1573753379345" duration="20215000" />
+      <workItem from="1573753379345" duration="23185000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>

@@ -2,21 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Requests\Member\UpdateMember;
 use App\Models\Member;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\User\DestroyUser;
-use App\Http\Requests\User\StoreUser;
-use App\Http\Requests\User\UpdateUser;
-use App\Models\Address;
-use App\Models\PhoneNumber;
-use App\Models\UserInfo;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -109,6 +100,7 @@ class MemberController extends Controller
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
         $user_roles = $member->getRoleNames()->toArray();
+        //dd($member->getRoleNames());
         $user_roles = array_combine($user_roles, $user_roles);
 
         $data = [
@@ -131,9 +123,12 @@ class MemberController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateMember $request, Member $member)
     {
-        //
+       //dd($request->all());
+        Session::flash('success', "You have edited your profile");
+
+        return redirect()->route('member_edit', [$member->id]);
     }
 
     /**
