@@ -65,7 +65,7 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
-// hide show profile? Hide show email? Hide show picture?
+
         $phone = $member->phone_number;
 
         $member_info = $member->user_info;
@@ -99,9 +99,33 @@ class MemberController extends Controller
      * @param  \App\Models\User  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Member $member)
     {
-        //
+        $phone = $member->phone_number;
+        $user_info = $member->user_info;
+        $address = $member->address;
+        $membership = $member->membership;
+        $currentUser = Auth::user(); // the logged in user, perms to edit?
+        $regions = $this->getFormOptions(['countries', 'statesprovs']);
+        $roles = Role::get();
+        $user_roles = $member->getRoleNames()->toArray();
+        $user_roles = array_combine($user_roles, $user_roles);
+
+        $data = [
+            'user' => $member,
+            'user_roles' => $user_roles,
+            'user_info' => $user_info,
+            'user_phone' => $phone,
+            'user_address' => $address,
+            'user_membership' => $membership,
+            'roles' => $roles,
+            'action' => 'Edit',
+            'currentUserPermissions' => $currentUser->permissions,
+            'countries' =>  $regions['countries'],
+            'provinces' =>   $regions['statesprovs']['Provinces'],
+        ];
+
+        return view('member_edit', ['data'=> $data]);
     }
 
     /**

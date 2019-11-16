@@ -1,16 +1,14 @@
 <?php
 $user = $data['user'];
 
-//dd($data['user_phone']->phone_number);
+dd($user);
 ?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
-
         <a href="{{ route('hello') }}">Home/</a>
         <a href="{{route('members')}}">members/</a> {{$user->name}}
-
         <div class="row">
             @if( $user->user_info->image )
                 <div class="col-1">
@@ -30,9 +28,9 @@ $user = $data['user'];
             @endif
             <p>{!! $user->user_info->about !!}</p>
         </div>
-        @if (Auth::user()->id == $user->id)
+        @if ( Auth::user()->id == $user->id)
             <div class="col-12" style="margin-top: 4em;">
-                <a href="#" title="Edit my profile"><button type="button" class="btn btn-primary">Edit My Profile</button></a>
+                <a href="{{route('member_edit', Auth::user()->id )}}" title="Edit my profile"><button type="button" class="btn btn-primary">Edit My Profile</button></a>
             </div>
         @endif
   </div>

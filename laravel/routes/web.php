@@ -37,8 +37,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/members', 'MemberController@index')->name('members');
     Route::get('/member/{member}', 'MemberController@show')->name('member');
-
-// edit and update my profile
+    Route::get('/member/edit/{member}', 'MemberController@edit')->name('member_edit');
+    Route::post('/member/edit/{member}', 'MemberController@update');
 
     Route::post('/search', 'SearchController@index')->name('search');
 
