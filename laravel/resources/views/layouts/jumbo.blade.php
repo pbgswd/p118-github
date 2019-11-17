@@ -139,7 +139,7 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a id="" class="nav-link" href="#">
+                                <a id="" class="nav-link" href="{{route('member', Auth::user()->id)}}">
                                     <i class="fas fa-user"></i> {{ Auth::user()->name }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
