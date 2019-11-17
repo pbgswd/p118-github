@@ -127,7 +127,6 @@ class AttachmentController extends Controller
         $attachment['imageData'] = getimagesize(storage_path('app/public') .'/'. $attachment['name']);
         $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/public') .'/'. $attachment['name']));
 
-
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
 

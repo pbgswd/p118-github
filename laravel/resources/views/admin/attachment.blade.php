@@ -21,21 +21,43 @@ $attachment = $data['attachment'];
         </div>
         @else
             <div class="row">
+                @if($attachment['extension'] == 'pdf')
+                    <div class="col-md-4" style="margin-left:2em;">
+                        <i class="far fa-file-pdf fa-10x"></i>
+                    </div>
+                    <div class="col-4 text-wrap">
+                        <ul>
+                            <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['name']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['name']}}</a></li>
+                            <li>File Size: {{$attachment['filesize']}}</li>
+                            <li>File Type: {{$attachment['extension']}}</li>
+                            <li>Last Updated: {{$attachment['updated_at']}}</li>
+                        </ul>
+                        <h4>Insert into content with:</h4>
+<xmp>
+    <i class="far fa-file-pdf fa-2x"></i>
+    <a href="{{env('APP_URL')}}/storage/{{$attachment['name']}} target="_blank" />
+        {{env('APP_URL')}}/storage/{{$attachment['name']}}
+    </a>
+</xmp>
+                    </div>
+                @else
                 <div class="col-md-6">
                     <img src="{{ asset('storage/' . $attachment['name']) }}" {{$attachment['imageData'][3]}} />
                 </div>
                 <div class="col-md-4" style="margin-left:2em;">
                     <h3>Image Info</h3>
                     <ul>
-                        <li>Location: {{env('APP_URL')}}/storage/{{$attachment['name']}}</li>
+                        <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['name']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['name']}}</a></li>
                         <li>File Size: {{$attachment['filesize']}}</li>
                         <li>Width: {{$attachment['imageData'][0]}} px</li>
                         <li>Height: {{$attachment['imageData'][1]}} px</li>
                         <li>Mime Type: {{$attachment['imageData']['mime']}}</li>
+                        <li>Last Updated: {{$attachment['updated_at']}}</li>
                     </ul>
                     <h4>Insert into content with:</h4>
                     <xmp><img src="{{env('APP_URL')}}/storage/{{$attachment['name']}}" /></xmp>
                 </div>
+                @endif
             </div>
         @endif
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
