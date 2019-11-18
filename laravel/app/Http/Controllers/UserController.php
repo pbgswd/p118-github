@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Traits\HasRoles;
 
 
 /**
@@ -27,14 +26,12 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class UserController extends Controller
 {
-    use HasRoles;
-
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function admin_index(Request $request)
     {
         $users = User::with('roles')->sortable()->paginate(10);
         return view('admin.listusers', ['data'=>array('users'=>$users )]);
@@ -43,7 +40,7 @@ class UserController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function admin_create()
     {
         $user = new User;
         $phone = new PhoneNumber;
@@ -79,7 +76,7 @@ class UserController extends Controller
      * @param StoreUser $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreUser $request)
+    public function admin_store(StoreUser $request)
     {
 
         $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]) );
@@ -115,7 +112,7 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
-    public function edit(User $user)
+    public function admin_edit(User $user)
     {
         $phone = $user->phone_number;
         $user_info = $user->user_info;
@@ -149,7 +146,7 @@ class UserController extends Controller
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateUser $userRequest, User $user)
+    public function admin_update(UpdateUser $userRequest, User $user)
     {
 
         $user->fill($userRequest['user']);
@@ -212,7 +209,7 @@ class UserController extends Controller
      * @param DestroyUser $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(DestroyUser $request)
+    public function admin_destroy(DestroyUser $request)
     {
         $users = User::find($request->id);
 

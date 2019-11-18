@@ -67,13 +67,13 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/topic/{topic}', 'TopicController@update');
     Route::delete('/topic/delete', 'TopicController@destroy')->name('topic_destroy');
 
-    Route::get('/users', 'UserController@index')->name('users_list');
-    Route::get('/user', 'UserController@create')->name('user_create');
+    Route::get('/users', 'UserController@admin_index')->name('users_list');
+    Route::get('/user', 'UserController@admin_create')->name('user_create');
 
-    Route::post('/user', 'UserController@store');
-    Route::get('/user/{user}', 'UserController@edit')->name('user_edit');
-    Route::post('/user/{user}', 'UserController@update');
-    Route::delete('/user/delete', 'UserController@destroy')->name('user_destroy');
+    Route::post('/user', 'UserController@admin_store');
+    Route::get('/user/{user}', 'UserController@admin_edit')->name('user_edit');
+    Route::post('/user/{user}', 'UserController@admin_update');
+    Route::delete('/user/delete', 'UserController@admin_destroy')->name('user_destroy');
 
     Route::get('/pages', 'PageController@index')->name('pages_list');
     Route::get('/page', 'PageController@create')->name('page_create');
