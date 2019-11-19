@@ -35,10 +35,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/venues', 'VenueController@list')->name('venues');
     Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
 
-    Route::get('/members', 'MemberController@index')->name('members');
-    Route::get('/member/{member}', 'MemberController@show')->name('member');
-    Route::get('/member/edit/{member}', 'MemberController@edit')->name('member_edit');
-    Route::post('/member/edit/{member}', 'MemberController@update');
+    Route::get('/members', 'UserController@index')->name('members');
+    Route::get('/member/{user}', 'UserController@show')->name('member');
+    Route::get('/member/edit/{user}', 'UserController@edit')->name('member_edit');
+    Route::post('/member/edit/{user}', 'UserController@update');
 
     Route::post('/search', 'SearchController@index')->name('search');
 
@@ -67,13 +67,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/topic/{topic}', 'TopicController@update');
     Route::delete('/topic/delete', 'TopicController@destroy')->name('topic_destroy');
 
-    Route::get('/users', 'UserController@admin_index')->name('users_list');
-    Route::get('/user', 'UserController@admin_create')->name('user_create');
-
-    Route::post('/user', 'UserController@admin_store');
-    Route::get('/user/{user}', 'UserController@admin_edit')->name('user_edit');
-    Route::post('/user/{user}', 'UserController@admin_update');
-    Route::delete('/user/delete', 'UserController@admin_destroy')->name('user_destroy');
+    Route::get('/users', 'AdminUserController@index')->name('users_list');
+    Route::get('/user', 'AdminUserController@create')->name('user_create');
+    Route::post('/user', 'AdminUserController@store');
+    Route::get('/user/{user}', 'AdminUserController@edit')->name('user_edit');
+    Route::post('/user/{user}', 'AdminUserController@update');
+    Route::delete('/user/delete', 'AdminUserController@destroy')->name('user_destroy');
 
     Route::get('/pages', 'PageController@index')->name('pages_list');
     Route::get('/page', 'PageController@create')->name('page_create');

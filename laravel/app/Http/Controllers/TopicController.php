@@ -159,6 +159,9 @@ class TopicController extends Controller
 
         Topic::destroy($request->id);
 
+        // delete from post_topic where topic_id = $request->id // when it is a post
+        // delete from page_topic where topic_id = $request->id // when it is a page
+
         Session::flash('success', Str::plural('Topic', count($request->id)) . ' deleted.');
 
         return redirect()->route('topics_list');

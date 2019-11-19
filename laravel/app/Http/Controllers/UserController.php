@@ -26,98 +26,65 @@ use Spatie\Permission\Models\Role;
  */
 class UserController extends Controller
 {
-    /**
+
+     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
-    public function admin_index(Request $request)
+    public function index(Request $request)
     {
-        $users = User::with('roles')->sortable()->paginate(10);
-        return view('admin.listusers', ['data'=>array('users'=>$users )]);
+        $users = User::with('user_info')->sortable()->orderBy('name')->paginate(20);
+        return view('listusers', ['data'=>array('users'=>$users )]);
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
-    public function admin_create()
+    public function show(User $user)
     {
-        $user = new User;
-        $phone = new PhoneNumber;
-        $user_info = new UserInfo;
-        $address = new Address;
-        $membership = new Membership;
-
-        $regions = $this->getFormOptions(['countries', 'statesprovs']);
-        $currentUser = Auth::user();
-
+        $phone = $user->phone_number;
+        $member_info = $user->user_info;
+        $address = $user->address;
+        $membership = $user->membership;
+        //$currentUser = Auth::user(); // the logged in user, perms to edit?
+        //$regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
-        $user_roles = $user->getRoleNames()->toArray();
-        $user_roles = array_combine($user_roles, $user_roles);
+        $member_roles = $user->getRoleNames()->toArray();
+        $member_roles = array_combine($member_roles, $member_roles);
 
         $data = [
             'user' => $user,
-            'user_roles' => $user_roles,
-            'roles' => $roles,
-            'action' => 'Create',
-            'currentUserPermissions' => $currentUser->permissions,
-            'user_info' => $user_info,
+            'user_roles' => $member_roles,
+            'user_info' => $member_info,
             'user_phone' => $phone,
             'user_address' => $address,
             'user_membership' => $membership,
-            'countries' =>  $regions['countries'],
-            'provinces' =>   $regions['statesprovs']['Provinces'],
+            'roles' => $roles,
+            //'currentUserPermissions' => $currentUser->permissions,
+            //'countries' =>  $regions['countries'],
+            //'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
 
-        return view('admin.user', ['data'=> $data]);
+        return view('member', ['data'=> $data]);
     }
 
-    /**
-     * @param StoreUser $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function admin_store(StoreUser $request)
-    {
-
-        $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]) );
-        $user->save();
-
-        $phone = new PhoneNumber($request->input('user_phone'));
-        $user->phone_number()->save($phone);
-
-        $user_info = new UserInfo($request->input('user_info'));
-        $user_info->image = $this->uploadImage($request);
-        $user_info['file_name'] = $request->image->getClientOriginalName();
-
-        $user->user_info()->save($user_info);
-
-        $address = new Address($request->input('user_address'));
-        $user->address()->save($address);
-
-        $membership = new Membership($request->input('user_membership'));
-        $user->membership()->save($membership);
-
-        $user_roles = new Role($request->input('user_roles'));
-        $user_roles->save();
-
-        // send new user an email with login instructions.
-
-        Session::flash('success', "You have saved a new member");
-
-        return redirect()->route('user_edit', [$user->id]);
-    }
 
     /**
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\User  $member
+     * @return \Illuminate\Http\Response
      */
-
-    public function admin_edit(User $user)
+    public function edit(User $user)
     {
-        $phone = $user->phone_number;
-        $user_info = $user->user_info;
-        $address = $user->address;
-        $membership = $user->membership;
+        $user->phone_number;
+        $user->user_info;
+        $user->address;
+        $user->membership;
         $currentUser = Auth::user(); // the logged in user, perms to edit?
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
@@ -127,10 +94,6 @@ class UserController extends Controller
         $data = [
             'user' => $user,
             'user_roles' => $user_roles,
-            'user_info' => $user_info,
-            'user_phone' => $phone,
-            'user_address' => $address,
-            'user_membership' => $membership,
             'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,
@@ -138,97 +101,22 @@ class UserController extends Controller
             'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
 
-        return view('admin.user', ['data'=> $data]);
+        return view('member_edit', ['data'=> $data]);
     }
 
-    /**
-     * @param UpdateUser $userRequest
-     * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function admin_update(UpdateUser $userRequest, User $user)
-    {
-
-        $user->fill($userRequest['user']);
-        $user->save();
-
-        if ($user->phone_number instanceof PhoneNumber) {
-            $user->phone_number->fill($userRequest['user_phone']);
-            $user->phone_number->save();
-        } else {
-            $phone = new PhoneNumber($userRequest['user_phone']);
-            $user->phone_number()->save($phone);
-        }
-
-        if ($user->user_info instanceof UserInfo) {
-            $user_info = $userRequest['user_info'];
-
-            if (isset( $user_info['delete_image'])) {
-                Storage::disk('users')->delete($user_info['image']);
-
-                Session::flash('info', "You have deleted " . $user_info['image']);
-                $user_info['image'] = null;
-                $user_info['file_name'] = null;
-            } else {
-                $user_info['image'] = $this->uploadImage($userRequest);
-                $user_info['file_name'] = $userRequest->image->getClientOriginalName();
-            }
-
-            $user->user_info->fill($user_info);
-            $user->user_info->save();
-        } else {
-            $user_info = new UserInfo($userRequest->input('user_info'));
-            $user_info->image = $this->uploadImage($userRequest);
-            $user->user_info()->save($user_info);
-        }
-
-        if ($user->address instanceof Address) {
-            $user->address->fill($userRequest['user_address']);
-            $user->address->save();
-        } else {
-            $address = new Address($userRequest['user_address']);
-            $user->address()->save($address);
-        }
-
-        $user->syncRoles($userRequest['user_roles']);
-
-        if ($user->membership instanceof Membership) {
-            $user->membership->fill($userRequest['user_membership']);
-            $user->membership->save();
-        } else {
-            $membership = new Membership($userRequest['user_membership']);
-            $user->membership()->save($membership);
-        }
-
-        Session::flash('success', "You have edited a member profile");
-
-        return redirect()->route('user_edit', [$user->id]);
-    }
 
     /**
-     * @param DestroyUser $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
-    public function admin_destroy(DestroyUser $request)
+    public function update(UpdateMember $request, User $user)
     {
-        $users = User::find($request->id);
+        Session::flash('success', "You have edited your profile");
 
-        foreach ($users as $user) {
-            PhoneNumber::where('user_id', $user->id)->delete();
-            Address::where('user_id', $user->id)->delete();
-            Membership::where('user_id', $user->id)->delete();
-            $user->syncRoles();
-            $user_info = UserInfo::where('user_id', $user->id)->first();
-            if ($user_info['image']) {
-                Storage::disk('users')->delete($user_info['image']);
-            }
-            UserInfo::destroy($user_info['id']);
-        }
-        User::destroy($request->id);
-
-        Session::flash('success', Str::plural('Member', count($request->id)) . ' deleted.');
-
-        return redirect()->route('users_list');
+        return redirect()->route('member_edit', [$user->id]);
     }
 
     protected function uploadImage(FormRequest $request)
