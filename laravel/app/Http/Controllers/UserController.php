@@ -2,21 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\DestroyUser;
-use App\Http\Requests\User\StoreUser;
-use App\Http\Requests\User\UpdateUser;
-use App\Models\Address;
-use App\Models\Membership;
-use App\Models\PhoneNumber;
+use App\Http\Requests\Member\UpdateMember;
 use App\Models\User;
-use App\Models\UserInfo;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 
