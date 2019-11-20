@@ -19,7 +19,7 @@ class UserInfo extends Model
      */
     protected $fillable = [
         'show_profile',
-        'show_photo',
+        'show_picture',
         'share_email',
         'share_phone',
         'file_name',
@@ -35,7 +35,7 @@ class UserInfo extends Model
      */
     protected $casts = [
         'show_profile' => 'boolean',
-        'show_photo' => 'boolean',
+        'show_picture' => 'boolean',
         'share_email' => 'boolean',
         'share_phone' => 'boolean',
     ];

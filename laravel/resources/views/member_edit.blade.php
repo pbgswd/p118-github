@@ -14,7 +14,7 @@ $user_roles = $data['user_roles'];
             <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>
         </h3>
         <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-        <input type="hidden" name="user[id]" value="{{ $user['id'] }}">
+        <input type="hidden" name="user[id]" value="{{ $user->id }}">
             {!! csrf_field() !!}
             <div class="row border border-primary rounded-lg border-3" style="margin-top:30px; padding:1em;">
                 <div class="col-lg-12">
@@ -66,7 +66,7 @@ $user_roles = $data['user_roles'];
                                 Image preview
                             </h4>
                             <h5>Currently: {{ $user->user_info->file_name }}</h5>
-                            <img src="{{ asset('users/'. $user->user_info->image) }}" width="150px" />
+                            <img src="{{ asset('users/'. $user->user_info->image) }}" />
                             <input type="hidden"  name="user_info[image]" value="{{$user->user_info->image}}" />
                             <label>
                                 <input name="user_info[delete_image]" type="checkbox" value="1" /> <h5>Check to delete image</h5>
@@ -175,15 +175,14 @@ $user_roles = $data['user_roles'];
                         <h4>User website roles </h4>
                         @foreach ($roles as $role)
                             <div class="col-12">
-                                <label>
-                                    <input name="user_roles[]" type="checkbox" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_roles))  }} >
-                                    {{$role->name}}
-                                    (
-                                     @foreach ($role->permissions as $p)
+                                @if(array_key_exists($role->name, $user_roles))
+                                    {{$role->name}} (
+                                    @foreach ($role->permissions as $p)
                                         {{ $p->name }}
                                     @endforeach
                                     )
-                                </label>
+                                @endif
+
                             </div>
                         @endforeach
                     </span>

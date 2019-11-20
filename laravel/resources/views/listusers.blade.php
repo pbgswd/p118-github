@@ -21,9 +21,6 @@
             </thead>
             <tbody>
             @foreach ( $data['users'] as $i )
-                <?php
-                //dd($i->user_info->show_profile);
-                ?>
                 <tr>
                     <td>
                         <h4>

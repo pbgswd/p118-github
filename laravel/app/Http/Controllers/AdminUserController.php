@@ -172,7 +172,6 @@ class AdminUserController extends Controller
                 $user_info['image'] = null;
                 $user_info['file_name'] = null;
             } else {
-               // dd($userRequest->all());
                 if(!is_null($userRequest->file('image'))) {
                     $user_info['image'] = $this->uploadImage($userRequest);
                     $user_info['file_name'] = $userRequest->image->getClientOriginalName();

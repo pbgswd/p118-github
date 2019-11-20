@@ -8,9 +8,9 @@ $user = $data['user'];
         <a href="{{ route('hello') }}">Home/</a>
         <a href="{{route('members')}}">members/</a> {{$user->name}}
         <div class="row">
-            @if( $user->user_info->image )
+            @if( $user->user_info->image && $user->user_info->show_picture == 1 )
                 <div class="col-1">
-                    <img src="{{ asset('users/'.$user->user_info->image) }}" />
+                    <img src="{{ asset('users/' . $user->user_info->image) }}" />
                 </div>
             @endif
             <div class="col-9">
@@ -18,11 +18,11 @@ $user = $data['user'];
             </div>
         </div>
         <div class="col-12">
-            @if ($data['user_info']->share_email == 1)
+            @if ($user->user_info->share_email == 1)
                 <h3><i class="fas fa-envelope"></i> <a href="mailto:{{$user->email}}">{{$user->email}}</a></h3>
             @endif
-            @if ($data['user_info']->share_phone == 1)
-                <h3> <i class="fas fa-phone-square"></i> <a href="tel:{{$data['user_phone']->phone_number}}">{{$data['user_phone']->phone_number}}</a></h3>
+            @if ($user->user_info->share_phone == 1)
+                <h3> <i class="fas fa-phone-square"></i> <a href="tel:{{$user->phone_number->phone_number}}">{{$user->phone_number->phone_number}}</a></h3>
             @endif
             <p>{!! $user->user_info->about !!}</p>
         </div>

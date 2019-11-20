@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Member\UpdateMember;
+use App\Models\Address;
+use App\Models\PhoneNumber;
 use App\Models\User;
+use App\Models\UserInfo;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -103,8 +106,62 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateMember $request, User $user)
+    public function update(UpdateMember $userRequest, User $user)
     {
+
+        $user->fill($userRequest['user']);
+        $user->save();
+
+        if ($user->phone_number instanceof PhoneNumber) {
+            $user->phone_number->fill($userRequest['user_phone']);
+            $user->phone_number->save();
+        } else {
+            $phone = new PhoneNumber($userRequest['user_phone']);
+            $user->phone_number()->save($phone);
+        }
+
+        if ($user->user_info instanceof UserInfo) {
+            $user_info = $userRequest['user_info'];
+
+            if (isset( $user_info['delete_image'])) {
+                Storage::disk('users')->delete($user_info['image']);
+
+                Session::flash('info', "You have deleted " . $user_info['image']);
+                $user_info['image'] = null;
+                $user_info['file_name'] = null;
+            } else {
+                if (!is_null($userRequest->file('image'))) {
+                    $user_info['image'] = $this->uploadImage($userRequest);
+                    $user_info['file_name'] = $userRequest->image->getClientOriginalName();
+                }
+            }
+            //dd($user_info);
+            $user->user_info->fill($user_info);
+            $user->user_info->save();
+        } else {
+            $user_info = new UserInfo($userRequest->input('user_info'));
+            $user_info->image = $this->uploadImage($userRequest);
+            $user->user_info()->save($user_info);
+        }
+
+        if ($user->address instanceof Address) {
+            $user->address->fill($userRequest['user_address']);
+            $user->address->save();
+        } else {
+            $address = new Address($userRequest['user_address']);
+            $user->address()->save($address);
+        }
+
+/*        $user->syncRoles($userRequest['user_roles']);
+
+        if ($user->membership instanceof Membership) {
+            $user->membership->fill($userRequest['user_membership']);
+            $user->membership->save();
+        } else {
+            $membership = new Membership($userRequest['user_membership']);
+            $user->membership()->save($membership);
+        }*/
+
         Session::flash('success', "You have edited your profile");
 
         return redirect()->route('member_edit', [$user->id]);

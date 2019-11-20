@@ -8,6 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/UserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/UserInfo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/listusers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/listusers.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/member.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/member.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/member_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/member_edit.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -217,7 +221,8 @@
       <workItem from="1573535665406" duration="33952000" />
       <workItem from="1573673404447" duration="23411000" />
       <workItem from="1573753379345" duration="24026000" />
-      <workItem from="1574021170951" duration="24865000" />
+      <workItem from="1574021170951" duration="25486000" />
+      <workItem from="1574221856144" duration="4722000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -295,6 +300,11 @@
           <url>file://$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php</url>
           <line>4</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/laravel/resources/views/member_edit.blade.php</url>
+          <line>179</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
