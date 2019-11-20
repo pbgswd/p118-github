@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Committee;
 use Illuminate\Http\Request;
 
-class CommitteeController extends Controller
+class AdminCommitteeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,8 @@ class CommitteeController extends Controller
      */
     public function index()
     {
-        //
+        $c = Committee::sortable()->paginate(10);
+        return view('admin.listcommittees', ['data'=>array('committees'=>$c)]);
     }
 
     /**

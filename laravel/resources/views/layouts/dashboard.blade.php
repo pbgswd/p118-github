@@ -96,9 +96,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('topic_edit', 'subcommittees')}}">
+                                <a class="nav-link" href="{{route('committees_list')}}">
                                     <span data-feather="file"></span>
-                                    Subcommittees
+                                    Committees
                                 </a>
                             </li>
                             <li class="nav-item">
