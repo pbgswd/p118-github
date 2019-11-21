@@ -75,7 +75,7 @@ class Committee extends Model
 
     public function creator()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'id');
     }
 
     public function committee_members()

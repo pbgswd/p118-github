@@ -1,18 +1,16 @@
 <?php
 $committees = $data['committees'];
-//dd($committees);
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Committees'])
 @section('content')
-<div class="container">
-        <h3>
-           <span class="badge badge-primary badge-pill">
-               {!! count($committees)  !!}
-           </span>
-            Committees. | <a href="{{ route('committee_create') }}">Create new Committee <i class="far fa-arrow-alt-circle-right"></i> </a>
-        </h3>
-</div>
-
+    <div class="container">
+            <h3>
+               <span class="badge badge-primary badge-pill">
+                   {!! count($committees)  !!}
+               </span>
+                Committees. | <a href="{{ route('committee_create') }}">Create new Committee <i class="far fa-arrow-alt-circle-right"></i> </a>
+            </h3>
+    </div>
     @if(count($committees) < 1)
         No committees yet.
     @else
@@ -30,6 +28,7 @@ $committees = $data['committees'];
                                 <th> @sortablelink('live', 'Is Live?') </th>
                                 <th> @sortablelink('sort_order', 'Sort Order') </th>
                                 <th> @sortablelink('in_menu', 'In Menu?') </th>
+                                <th> Created By </th>
                                 <th> Edit </th>
                                 <th> @sortablelink('created_at', 'Created At') </th>
                                 <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -47,13 +46,14 @@ $committees = $data['committees'];
                                     </td>
                                     <td>
                                         <h4>
-                                            <a title="{{ $c->name }}" href="{{ route('committee_edit', $c->slug) }}">{{ $c->name }}</a>
+                                            <a title="{{ $c->name }}" href="{{ route('committee_show', $c->slug) }}">{{ $c->name }}</a>
                                         </h4>
                                     </td>
                                     <td> {{ $c->access_level }} </td>
                                     <td> {!! $c->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
                                     <td> {{ $c->sort_order }} </td>
                                     <td> {!! $c->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
+                                    <td>{{ $c->creator->name }}</td>
                                     <td>
                                         <a href="{{ route('venue_edit', $c->slug) }}" title="Edit {{ $c->name }} ">
                                             <i class="fas fa-edit"></i>
@@ -70,7 +70,6 @@ $committees = $data['committees'];
                     </table>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col">
                     <i class="far fa-trash-alt fa-2x"></i>
@@ -85,9 +84,6 @@ $committees = $data['committees'];
                 </div>
                 <div class="col"></div>
             </div>
-
-
-
             <div class="row" style="margin-top:6em;"></div>
         </form>
     @endif

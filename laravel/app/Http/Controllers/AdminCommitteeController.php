@@ -18,7 +18,7 @@ class AdminCommitteeController extends Controller
      */
     public function index()
     {
-        $c = Committee::sortable()->paginate(10);
+        $c = Committee::with('creator')->sortable()->paginate(10);
         return view('admin.listcommittees', ['data'=>array('committees'=>$c)]);
     }
 
@@ -45,14 +45,12 @@ class AdminCommitteeController extends Controller
      */
     public function store(StoreCommittee $request)
     {
-
         $committee = new Committee($request->input('committee'));
-
         $committee->save();
 
         Session::flash('success', "You have saved a new committee");
 
-        return redirect()->route('committee_edit', [$committee->slug]);
+        return redirect()->route('admin.committee_edit', [$committee->slug]);
     }
 
     /**
@@ -63,8 +61,11 @@ class AdminCommitteeController extends Controller
      */
     public function show(Committee $committee)
     {
-        //
+        $committee->creator;
+
+        return view('admin.show_committee', ['data' => ['committee' => $committee, 'action' => 'View']]);
     }
+
 
     /**
      * Show the form for editing the specified resource.

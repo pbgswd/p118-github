@@ -61,14 +61,9 @@ class VenueController extends Controller
      */
     public function store(StoreVenue $request)
     {
-       //todo migration to handle default user value in db table
-
         $venue = new Venue($request->input('venue'));
-
         $venue->image = $this->uploadImage($request);
-
         $venue->save();
-
         Session::flash('success', "You have saved a new venue");
 
         return redirect()->route('venue_edit', [$venue->slug]);

@@ -91,9 +91,8 @@ class PageController extends Controller
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function show(Page $page, Request $request)
+    public function show(Page $page)
     {
-
         $page->user;
         $page->topics;
         $page->posts;

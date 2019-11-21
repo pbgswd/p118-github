@@ -95,11 +95,6 @@ class PostController extends Controller
         $post->topics;
         $post->page;
 
-        // did it come from a page or a topic? what if it came from a post?
-        //
-
-        // $posts
-
         $data = ['post' => $post];
 
         return view('post', ['data' => $data]);

@@ -1,0 +1,64 @@
+<?php
+$committee = $data['committee'];
+?>
+@extends('layouts.dashboard', ['title' => ' <i class="fas fa-users"></i> View Committee \'' . $committee->name .'\''])
+@section('content')
+<div class="container">
+    <h3><a href="{{ route('committees_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of committees</a></h3>
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row">
+            <div class="col-lg-2"><h4>Name</h4></div>
+            <div class="col-lg-10">
+               <h4>{{$committee->name }}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <h4>Description</h4>
+            </div>
+            <div class="col-lg-10">
+            {!! $committee->description !!}
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-lg-2"><h4>Created By</h4></div>
+        <div class="col-lg-10">
+            <h4>{{$committee->creator->name }}</h4>
+        </div>
+    </div>
+        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
+                    <div class="col-6 col-sm-3">
+                        {{ $committee->access_level }}
+                    </div>
+                    <div class="col-6 col-sm-3"></div>
+                    <div class="col-6 col-sm-3"></div>
+                    <!-- Force next columns to break to new line -->
+                    <div class="w-100"></div>
+                    <div class="col-12">&nbsp;</div>
+                    <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
+                    <div class="col-6 col-sm-3">
+                      {{ $committee->sort_order }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-lg-2"><h4>Status</h4></div>
+                <div class="col-sm">
+                    {{ $committee->in_menu }}  In Menu
+                </div>
+                <div class="col-sm">
+                    {{ $committee->allow_comments }} Allow Comments?
+                </div>
+                <div class="col-sm">
+                    {{$committee->live}} Check now to make Live
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:30px;"> Members of this committee (Chairperson, Secretary, Members)</div>
+        <div class="row" style="margin-top:100px;"> posts published for this committee&nbsp;</div>
+</div>
+@endsection
