@@ -13,7 +13,7 @@ class StoreCommittee extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class StoreCommittee extends FormRequest
     public function rules()
     {
         return [
-            //
+
+            'committee.name' => 'required|unique:committees,name|max:255',
+            'committee.description' => 'required',
+            'committee.access_level' => 'required|string|max:255',
+            'committee.sort_order' =>  'required|numeric',
+            'committee.in_menu' => 'boolean',
+            'committee.allow_comments' => 'boolean',
+            'committee.live' => 'boolean',
         ];
     }
 }

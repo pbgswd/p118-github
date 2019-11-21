@@ -1,6 +1,6 @@
 <?php
 $committee = $data['data']['committee'];
-
+//dd($data['data']['user_id']);
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' committee ' . ($data["action"] == 'Edit' ? $committee->name : '') ])
 @section('content')
@@ -27,7 +27,7 @@ $committee = $data['data']['committee'];
     <h3>  <a href="{{ route('committees_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of committees</a>  </h3>
     <form method="post" name="committee" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="committee[id]" value="{{ $committee['id'] }}">
-        <input type="hidden" name="committee[user_id]" value="{{ $committee['user_id'] }}">
+        <input type="hidden" name="committee[user_id]" value="{{ $data['data']['user_id'] }}">
 
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
@@ -85,6 +85,15 @@ $committee = $data['data']['committee'];
                         <input name="committee[in_menu]" type="checkbox" value="1" {{ checked(old('committee.in_menu',$committee->in_menu)) }} /> In Menu
                     </label>
                 </div>
+                <div class="col-sm">
+                    <label>
+                        <input name="committee[allow_comments]" type="hidden" value="0" />
+                        <input name="committee[allow_comments]" type="checkbox" value="1" {{ checked(old('committee.allow_comments',$committee->allow_comments)) }} /> Allow Comments?
+                    </label>
+                </div>
+
+
+
                 <div class="col-sm">
                     <label>
                          <input name="committee[live]" type="hidden" value="0" />

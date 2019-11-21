@@ -17,9 +17,9 @@ class CreateCommitteesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('title')->unique();
+            $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('access_level')->nullable();
             $table->boolean('live');
             $table->integer('sort_order')->unsigned()->nullable();

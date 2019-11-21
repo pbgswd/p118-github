@@ -49,6 +49,7 @@ class Committee extends Model
      */
     protected $fillable = [
         'id',
+        'user_id',
         'name',
         'description',
         'access_level',
@@ -79,7 +80,7 @@ class Committee extends Model
 
     public function committee_members()
     {
-        return $this->hasMany(User::class);  
+        return $this->hasMany(User::class);
     }
 
 }

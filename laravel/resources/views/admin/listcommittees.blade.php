@@ -1,5 +1,6 @@
 <?php
 $committees = $data['committees'];
+//dd($committees);
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Committees'])
 @section('content')
@@ -35,7 +36,7 @@ $committees = $data['committees'];
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $committees['committee'] as $c )
+                            @foreach ( $committees as $c )
                                 <tr>
                                     <td>
                                         <div class="checkbox">

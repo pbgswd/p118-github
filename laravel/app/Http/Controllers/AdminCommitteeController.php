@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Committees\StoreCommittee;
 use App\Models\Committee;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AdminCommitteeController extends Controller
 {
@@ -26,14 +29,12 @@ class AdminCommitteeController extends Controller
      */
     public function create()
     {
-        $user = new User;
         $committee = new Committee;
         $data = [
-            'user' => $user,
+            'user_id' => Auth::id(),
             'committee' => $committee,
             ];
         return view('admin.committee', ['data' => ['data' => $data, 'action' => 'Create']]);
-
     }
 
     /**
@@ -42,9 +43,16 @@ class AdminCommitteeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCommittee $request)
     {
-        //
+
+        $committee = new Committee($request->input('committee'));
+
+        $committee->save();
+
+        Session::flash('success', "You have saved a new committee");
+
+        return redirect()->route('committee_edit', [$committee->slug]);
     }
 
     /**
