@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\CommitteePolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -15,6 +16,10 @@ class Committee extends Model
     use HasRoles;
 
     protected $guard_name = 'web';  //????
+
+    protected $policies = [
+        //Committee::class=>CommitteePolicy::class,
+    ];
 
     public $sortable = [
         'id',
@@ -50,6 +55,7 @@ class Committee extends Model
         'live',
         'sort_order',
         'in_menu',
+        'allow_comments',
     ];
 
     /**
@@ -66,9 +72,14 @@ class Committee extends Model
         return $this->attributes['name'] = $value;
     }
 
-    public function users()
+    public function creator()
     {
-        return $this->hasOne(User::class);  // many users associated with many groups???
+        return $this->hasOne(User::class);
+    }
+
+    public function committee_members()
+    {
+        return $this->hasMany(User::class);  
     }
 
 }

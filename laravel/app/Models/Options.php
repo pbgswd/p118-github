@@ -19,6 +19,12 @@ class Options
         return array_combine($membership, $membership);
     }
 
+    public static function committee_level()
+    {
+        $membership = array();
+        $membership = ['head', 'secretary', 'member', 'prior'];
+        return array_combine($membership, $membership);
+    }
     public static function phone_label()
     {
         $phone_labels = array();

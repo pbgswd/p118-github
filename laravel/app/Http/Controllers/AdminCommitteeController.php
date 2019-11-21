@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Committee;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminCommitteeController extends Controller
@@ -25,7 +26,14 @@ class AdminCommitteeController extends Controller
      */
     public function create()
     {
-        //
+        $user = new User;
+        $committee = new Committee;
+        $data = [
+            'user' => $user,
+            'committee' => $committee,
+            ];
+        return view('admin.committee', ['data' => ['data' => $data, 'action' => 'Create']]);
+
     }
 
     /**
