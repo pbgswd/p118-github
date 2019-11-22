@@ -85,7 +85,7 @@
                             <a class="nav-link" href="{{route('topic_show', 'collective-agreements')}}">Collective Agreements</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('topic_show', 'subcommittees')}}">Sub Committees</a>
+                            <a class="nav-link" href="{{route('committees')}}">Committees</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('topic_show', 'departments')}}">Departments</a>

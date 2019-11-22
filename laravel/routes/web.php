@@ -40,6 +40,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/member/edit/{user}', 'UserController@edit')->name('member_edit');
     Route::post('/member/edit/{user}', 'UserController@update');
 
+    Route::get('committees', 'CommitteeController@index')->name('committees');
+    Route::get('committee/{committee}', 'CommitteeController@show')->name('committee');
+
+
     Route::post('/search', 'SearchController@index')->name('search');
 
 });
