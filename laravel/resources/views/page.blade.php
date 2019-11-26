@@ -1,7 +1,7 @@
 <?php
 $page = $data['page'];
+//dd($page);
 $tags = join(', ', $page->tagNames());
-$pages = $data['pages'];
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -9,11 +9,9 @@ $pages = $data['pages'];
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding: 2em">
         <div class="row">
             @foreach ($page->topics as $topic)
-                <a href="{{ route('hello') }}">Home/</a> &nbsp;
-                <a href="{{route('topics')}}">Topics/</a> &nbsp;
-                <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}}/</a>&nbsp;
-                {{$page->title}}
+                <a href="{{ route('hello') }}/{{route('topics')}}">Topics/</a><a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}}/</a> |&nbsp;
             @endforeach
+                {{$page->title}}
         </div>
         <div  class="col-12">
             <h1 class="display-3">{{$page->title}}</h1>
@@ -36,26 +34,16 @@ $pages = $data['pages'];
                 Tags: {{$tags}}
             </div>
         @endif
-        <div class="row">Page added by {{$page->user->name}}</div>
         <div class="row">
             @foreach ($page->topics as $topic)
-                <a href="{{ route('hello') }}">Home/</a> &nbsp;
-                <a href="{{route('topics')}}">Topics/</a> &nbsp;
-                <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}}/</a> &nbsp;
-                {{$page->title}}
+                <a href="{{route('topics')}}">Topics/</a><a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}}/</a> &nbsp;|
             @endforeach
+                {{$page->title}}
+        </div>
+        <div class="row">
+            <h6>Page added by {{$page->user->name}}</h6>
         </div>
     </div>
-    @if (count($pages) > 0)
-        <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em; margin-top:1em;" >
-            <div class="col-12" style="margin: 2px;">
-                <h4>Related Pages</h4>
-                @foreach($pages as $page)
-                    <a href="{{ route('page_show', $page->slug) }}">{{$page['title']}}</a> <br />
-                @endforeach
-            </div>
-        </div>
-    @endif
 <div class="row" style="margin-top:6em;"></div>
 </div>
 @endsection

@@ -157,10 +157,10 @@ class TopicController extends Controller
 
         $topic->untag();
 
-        Topic::destroy($request->id);
+        $topic->pages()->detach();
+        $topic->posts()->detach();
 
-        // delete from post_topic where topic_id = $request->id // when it is a post
-        // delete from page_topic where topic_id = $request->id // when it is a page
+        Topic::destroy($request->id);
 
         Session::flash('success', Str::plural('Topic', count($request->id)) . ' deleted.');
 
