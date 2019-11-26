@@ -78,7 +78,7 @@ $committees = $data['committees'];
                 <div class="col-6">
                     <div class="list-group">
                         <ul class="pagination">
-                             committees->links()
+                             {{$committees->links()}}
                         </ul>
                     </div>
                 </div>

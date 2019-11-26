@@ -27,7 +27,7 @@ class AttachmentController extends Controller
     public function index(\App\Models\Attachment $attachment)
     {
         $data = [];
-        $data['attachments'] = Attachment::with('users')->orderBy('id', 'ASC')->paginate(20);
+        $data['attachments'] = Attachment::with('users')->orderBy('id', 'ASC')->paginate(10);
 
         $storedFiles = [];
         $allAttachments = Attachment::all();

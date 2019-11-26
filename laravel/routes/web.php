@@ -108,7 +108,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/venue/{venue}', 'VenueController@update');
     Route::delete('/venue/delete', 'VenueController@destroy')->name('venue_destroy');
 
-    Route::get('committeees', 'AdminCommitteeController@index')->name('committees_list');
+    Route::get('committees', 'AdminCommitteeController@index')->name('committees_list');
     Route::get('committee/', 'AdminCommitteeController@create')->name('committee_create');
     Route::post('committee/', 'AdminCommitteeController@store');
     Route::get('committee/show/{committee}', 'AdminCommitteeController@show')->name('committee_show');

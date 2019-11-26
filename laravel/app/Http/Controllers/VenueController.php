@@ -23,7 +23,7 @@ class VenueController extends Controller
     public function index()
     {
         $data = [];
-        $data['venues'] = Venue::sortable()->paginate(20);
+        $data['venues'] = Venue::sortable()->orderBy('name')->paginate(10);
 
         return view('admin.listvenues', ['data'=>array('data'=>$data)]);
     }

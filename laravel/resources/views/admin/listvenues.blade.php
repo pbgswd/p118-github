@@ -1,6 +1,5 @@
 <?php
 $venues = $data['data'];
-//dd($data);
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Venues'])
 @section('content')
@@ -80,7 +79,7 @@ $venues = $data['data'];
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                     venues->links()
+                     {{ $venues['venues']->links() }}
                 </ul>
             </div>
         </div>

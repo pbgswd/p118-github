@@ -102,7 +102,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('topic_edit', 'collective-agreements')}}">
+                                <a class="nav-link" href="#">
                                     <span data-feather="file"></span>
                                     Agreements
                                 </a>
