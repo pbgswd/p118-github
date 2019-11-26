@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Committees\DestroyCommittee;
 use App\Http\Requests\Committees\StoreCommittee;
+use App\Http\Requests\Committees\UpdateCommittee;
 use App\Models\Committee;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class AdminCommitteeController extends Controller
 {
@@ -19,6 +20,7 @@ class AdminCommitteeController extends Controller
     public function index()
     {
         $c = Committee::with('creator')->sortable()->paginate(10);
+
         return view('admin.listcommittees', ['data'=>array('committees'=>$c)]);
     }
 
@@ -45,12 +47,14 @@ class AdminCommitteeController extends Controller
      */
     public function store(StoreCommittee $request)
     {
-        $committee = new Committee($request->input('committee'));
+        $data = $request->input('committee');
+        $data['user_id'] = Auth::id();
+        $committee = new Committee($data);
         $committee->save();
 
-        Session::flash('success', "You have saved a new committee");
+        Session::flash('success', "You have saved a new committee, " . $committee->name);
 
-        return redirect()->route('admin.committee_edit', [$committee->slug]);
+        return redirect()->route('committee_show', $committee->slug);
     }
 
     /**
@@ -61,11 +65,11 @@ class AdminCommitteeController extends Controller
      */
     public function show(Committee $committee)
     {
-        $committee->creator;
+       $committee->creator;
+       $committee['committee_levels'] = $this->getFormOptions(['committee_levels']);
 
-        return view('admin.show_committee', ['data' => ['committee' => $committee, 'action' => 'View']]);
+       return view('admin.show_committee', ['data' => ['committee' => $committee, 'action' => 'View']]);
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -75,8 +79,11 @@ class AdminCommitteeController extends Controller
      */
     public function edit(Committee $committee)
     {
-        //
-    }
+        $committee->creator;
+        $data = ['committee' => $committee];
+
+        return view('admin.committee', ['data' => ['data' => $data, 'action' => 'Edit']]);
+      }
 
     /**
      * Update the specified resource in storage.
@@ -85,9 +92,14 @@ class AdminCommitteeController extends Controller
      * @param  \App\Models\Committee  $committee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Committee $committee)
+    public function update(UpdateCommittee $request, Committee $committee)
     {
-        //
+       $committee->fill($request->committee);
+       $committee->save();
+
+       Session::flash('success', "You have updated committee " . $committee->name);
+
+       return redirect()->route('committee_edit', $committee->slug);
     }
 
     /**
@@ -96,8 +108,16 @@ class AdminCommitteeController extends Controller
      * @param  \App\Models\Committee  $committee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Committee $committee)
+    public function destroy(DestroyCommittee $request)
     {
-        //
+        // set to... archive?
+        // destroy committee relation?
+        // destroy committee posts?
+
+        Committee::destroy($request->id);
+
+        Session::flash('success', Str::plural('Committee', count($request->id)) . ' deleted.');
+
+        return redirect()->route('committees_list');
     }
 }

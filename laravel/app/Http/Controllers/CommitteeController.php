@@ -19,27 +19,6 @@ class CommitteeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Committee  $committee
@@ -60,7 +39,7 @@ class CommitteeController extends Controller
      */
     public function edit(Committee $committee)
     {
-        //
+        // allow chair, cochair, and secretary to edit
     }
 
     /**
@@ -72,7 +51,7 @@ class CommitteeController extends Controller
      */
     public function update(Request $request, Committee $committee)
     {
-        //
+        //// allow chair, cochair, and secretary to update
     }
 
     /**
@@ -83,6 +62,6 @@ class CommitteeController extends Controller
      */
     public function destroy(Committee $committee)
     {
-        //
+        //     //// allow chair, cochair, and secretary to destroy? Or set to archive.
     }
 }

@@ -24,9 +24,9 @@ class StoreCommittee extends FormRequest
     public function rules()
     {
         return [
-
             'committee.name' => 'required|unique:committees,name|max:255',
             'committee.description' => 'required',
+            'committee.email' => 'string|max:255',
             'committee.access_level' => 'required|string|max:255',
             'committee.sort_order' =>  'required|numeric',
             'committee.in_menu' => 'boolean',

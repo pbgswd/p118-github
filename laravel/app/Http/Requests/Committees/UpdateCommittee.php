@@ -13,7 +13,7 @@ class UpdateCommittee extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class UpdateCommittee extends FormRequest
     public function rules()
     {
         return [
-            //
+            'committee.name' => 'required|max:255|unique:committees,name,' . $this->route('committee')->slug . ',slug',
+            'committee.description' => 'required',
+            'committee.email' => 'string|max:255',
+            'committee.access_level' => 'required|string|max:255',
+            'committee.sort_order' =>  'required|numeric',
+            'committee.in_menu' => 'boolean',
+            'committee.allow_comments' => 'boolean',
+            'committee.live' => 'boolean',
         ];
     }
 }

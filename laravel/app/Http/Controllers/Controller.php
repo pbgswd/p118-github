@@ -31,6 +31,23 @@ class Controller extends BaseController
                 case 'statesprovs':
                     $data['statesprovs'] = Options::state_prov();
                     break;
+
+                case 'access_level':
+                    $data['access_level'] = Options::access_level();
+                    break;
+
+                case 'membership_level':
+                    $data['access_level'] = Options::membership_level();
+                    break;
+
+                case 'committee_levels':
+                    $data['committee_level'] = Options::committee_levels();
+                    break;
+
+                case 'phone_label':
+                    $data['phone_label'] = Options::phone_label();
+                    break;
+
 /*
                 case 'pay_methods':
                     $data['pay_methods'] = Options::fetchOptionTypes('App\Models\PayMethodType');

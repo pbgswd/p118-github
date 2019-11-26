@@ -55,7 +55,7 @@ $committees = $data['committees'];
                                     <td> {!! $c->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
                                     <td>{{ $c->creator->name }}</td>
                                     <td>
-                                        <a href="{{ route('venue_edit', $c->slug) }}" title="Edit {{ $c->name }} ">
+                                        <a href="{{ route('committee_edit', $c->slug) }}" title="Edit {{ $c->name }} ">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>

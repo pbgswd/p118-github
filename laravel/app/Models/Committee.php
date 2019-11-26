@@ -52,6 +52,7 @@ class Committee extends Model
         'user_id',
         'name',
         'description',
+        'email',
         'access_level',
         'live',
         'sort_order',
@@ -75,7 +76,7 @@ class Committee extends Model
 
     public function creator()
     {
-        return $this->hasOne(User::class, 'id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function committee_members()

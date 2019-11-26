@@ -4,7 +4,7 @@ $committee = $data['committee'];
 @extends('layouts.dashboard', ['title' => ' <i class="fas fa-users"></i> View Committee \'' . $committee->name .'\''])
 @section('content')
 <div class="container">
-    <h3><a href="{{ route('committees_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of committees</a></h3>
+    <h3><a href="{{ route('committees_list') }}" title="return to list of committees"> <i class="far fa-arrow-alt-circle-left"></i> List of committees</a></h3>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="col-lg-2"><h4>Name</h4></div>
@@ -17,7 +17,7 @@ $committee = $data['committee'];
                 <h4>Description</h4>
             </div>
             <div class="col-lg-10">
-            {!! $committee->description !!}
+                {!! $committee->description !!}
             </div>
         </div>
     <div class="row">
@@ -57,8 +57,32 @@ $committee = $data['committee'];
                     {{$committee->live}} Check now to make Live
                 </div>
             </div>
+            <div class="col-sm">
+                <h4>
+                    <a href="{{ route('committee', $committee->slug) }}" title="View {{$committee->name }} on {{env('APP_NAME')}}" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        View {{$committee->name }} on {{env('APP_NAME')}}.
+                    </a>
+                </h4>
+                <br />
+                <h4>
+                    <a href="{{ route('committee_edit', $committee->slug) }}" title="Edit {{ $committee->name }}">
+                    <i class="fas fa-edit"></i> Edit {{ $committee->name }}
+                    </a>
+                </h4>
+            </div>
         </div>
-        <div class="row" style="margin-top:30px;"> Members of this committee (Chairperson, Secretary, Members)</div>
-        <div class="row" style="margin-top:100px;"> posts published for this committee&nbsp;</div>
+    <div class="row" style="margin-top:2em;">
+        <div class="col-md">
+            <h4>Committee Membership in {{ $committee->name }} </h4>
+            <br clear="all"/>
+            <p>
+                @foreach ($committee->committee_levels['committee_level'] as  $cl)
+                    {{$cl}} <br />
+                @endforeach
+            </p>
+        </div>
+    </div>
+        <div class="row" style="margin-top:100px;"><h5>posts in {{ $committee->name }} </h5></div>
 </div>
 @endsection

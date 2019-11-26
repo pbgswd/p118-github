@@ -22,13 +22,15 @@ $committee = $data['data']['committee'];
             ]
         });
     </script>
-
 <div class="container">
-    <h3>  <a href="{{ route('committees_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of committees</a>  </h3>
+    <h3>  <a href="{{ route('committees_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of committees</a>    </h3>
+    @if ($data['action'] == 'Edit')
+    <h4>
+        <a title="{{ $committee->name }}" href="{{ route('committee_show', $committee->slug) }}">{{ $committee->name }}</a>
+    </h4>
+    @endif
     <form method="post" name="committee" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="committee[id]" value="{{ $committee['id'] }}">
-        <input type="hidden" name="committee[user_id]" value="{{ $data['data']['user_id'] }}">
-
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
@@ -50,6 +52,15 @@ $committee = $data['data']['committee'];
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-2"><h4>Email</h4></div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control"  placeholder="Email" name="committee[email]" value="{{ old('committee.email', $committee->email)}}" size="80" required/>
+                </div>
+            </div>
+        </div>
+
 
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
 

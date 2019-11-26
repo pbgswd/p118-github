@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Support\Facades\DB;
 
 class Options
 {
@@ -12,19 +11,20 @@ class Options
         return array_combine($access, $access);
     }
 
-    public static function membership_level()
+    public static function membership_levels()
     {
         $membership = array();
-        $membership = ['non-member', 'permittee', 'member', 'office', 'executive', 'suspended', 'retired'];
+        $membership = ['Non-member', 'Permittee', 'Member', 'Office', 'Executive', 'Suspended', 'Retired'];
         return array_combine($membership, $membership);
     }
 
-    public static function committee_level()
+    public static function committee_levels()
     {
         $membership = array();
-        $membership = ['head', 'secretary', 'member', 'prior'];
+        $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Past-Member'];
         return array_combine($membership, $membership);
     }
+
     public static function phone_label()
     {
         $phone_labels = array();
