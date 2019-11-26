@@ -69,8 +69,9 @@ $committee = $data['data']['committee'];
                 <div class="row">
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="committee[access_level]" value="{{ old('committee.access_level', $committee->access_level)}}" size="30" required/>
-                        <p>Access Level: public, members, executive</p>
+                        <div class="form-group">
+                            {{ select_options($data['access_levels'], old('committee.access_level', $committee->access_level), ['name' => 'committee[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                        </div>
                     </div>
                     <div class="col-6 col-sm-3"></div>
                     <div class="col-6 col-sm-3"></div>

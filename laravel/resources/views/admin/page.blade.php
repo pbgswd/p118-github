@@ -1,6 +1,7 @@
 <?php
 $page = $data['page'];
 $topics = $data['topics'];
+
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Page ' . ($data["action"] == 'Edit' ? $page->name : '') ])
 @section('content')
@@ -31,7 +32,6 @@ $topics = $data['topics'];
             </div>
         </div>
         <div class="row" style="margin-top:3em;"> <h4>Select topics for this content</h4>&nbsp;</div>
-
         <div class="row" style="margin-top:1em;"> &nbsp;
             <div class="form-group">
             @foreach ($topics as $topic)
@@ -45,11 +45,9 @@ $topics = $data['topics'];
                         {{$topic->name}}
                     </label>
                 </div>
-
             @endforeach
             </div>
         </div>
-
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -61,14 +59,16 @@ $topics = $data['topics'];
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="page[access_level]" value="{{ old('page.access_level', $page->access_level)}}" size="30" required/>
-                        <p>Access Level: public, members, executive</p>
+                        <p>Access Level for content:</p>
+                        <div class="form-group">
+                            {{ select_options($data['access_levels'], old('page.access_level', $page->access_level), ['name' => 'page[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                        </div>
+                    </div>
                     </div>
                     <div class="col-6 col-sm-3"></div>
                     <div class="col-6 col-sm-3"></div>

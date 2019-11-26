@@ -53,8 +53,9 @@ class PostController extends Controller
         $post['user_id'] = Auth::id();
         $post->topics;
         $topics = Topic::all();
+        $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.post', ['data' => ['post' => $post,  'assignedTopics' => [], 'topics' => $topics,  'action' => 'Create']]);
+        return view('admin.post', ['data' => ['post' => $post,  'assignedTopics' => [], 'topics' => $topics, 'access_levels' => $access_levels,  'action' => 'Create']]);
     }
 
     /**
@@ -117,8 +118,9 @@ class PostController extends Controller
         }
 
         $topics = Topic::all();
+        $access_levels = $this->getFormOptions(['access_levels']);
 
-        $data = ['post' => $post, 'topics' => $topics, 'assignedTopics' => $assignedTopics, 'action' => 'Edit'];
+        $data = ['post' => $post, 'topics' => $topics, 'assignedTopics' => $assignedTopics, 'access_levels' => $access_levels, 'action' => 'Edit'];
 
         return view('admin.post', ['data' => $data]);
     }

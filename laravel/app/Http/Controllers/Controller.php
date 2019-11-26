@@ -32,8 +32,8 @@ class Controller extends BaseController
                     $data['statesprovs'] = Options::state_prov();
                     break;
 
-                case 'access_level':
-                    $data['access_level'] = Options::access_level();
+                case 'access_levels':
+                    $data['access_levels'] = Options::access_levels();
                     break;
 
                 case 'membership_level':

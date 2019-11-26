@@ -21,15 +21,11 @@ $venue = $data['venue'];
             ]
         });
     </script>
-
 <div class="container">
     <h3>  <a href="{{ route('venues_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of venues</a>  </h3>
     <form method="post" name="venue" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="venue[id]" value="{{ $venue['id'] }}">
-
-            <input type="hidden" name="venue[user_id]" value="{{ $venue['user_id'] }}">
-
-
+        <input type="hidden" name="venue[user_id]" value="{{ $venue['user_id'] }}">
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
@@ -40,7 +36,6 @@ $venue = $data['venue'];
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -51,7 +46,6 @@ $venue = $data['venue'];
                 </div>
             </div>
         </div>
-
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
@@ -61,16 +55,16 @@ $venue = $data['venue'];
                 </div>
             </div>
         </div>
-
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="venue[access_level]" value="{{ old('venue.access_level', $venue->access_level)}}" size="30" required/>
-                        <p>Access Level: public, members, executive</p>
+                       <p>Access Level for content:</p>
+                        <div class="form-group">
+                            {{ select_options($data['access_levels'], old('venue.access_level', $venue->access_level), ['name' => 'venue[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                        </div>
                     </div>
                     <div class="col-6 col-sm-3"></div>
                     <div class="col-6 col-sm-3"></div>

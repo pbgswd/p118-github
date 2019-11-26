@@ -88,10 +88,11 @@ $topic = $data['topic'];
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
+                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level for content</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  placeholder="Access Level: public, members, executive" name="topic[access_level]" value="{{ old('topic.access_level', $topic->access_level)}}" size="30" required/>
-                        <p>Access Level: public, members, executive</p>
+                        <div class="form-group">
+                            {{ select_options($data['access_levels'], old('topic.access_level', $topic->access_level), ['name' => 'topic[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                        </div>
                     </div>
                     <div class="col-6 col-sm-3"></div>
                     <div class="col-6 col-sm-3"></div>

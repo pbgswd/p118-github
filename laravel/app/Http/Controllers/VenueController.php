@@ -48,8 +48,9 @@ class VenueController extends Controller
     {
         $venue = new Venue;
         $venue['user_id'] = Auth::id();
+        $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.venue', ['data' => ['venue' => $venue, 'action' => 'Create']]);
+        return view('admin.venue', ['data' => ['venue' => $venue, 'access_levels' => $access_levels, 'action' => 'Create']]);
 
     }
 
@@ -88,7 +89,10 @@ class VenueController extends Controller
      */
     public function edit(Venue $venue)
     {
-        return view('admin.venue', ['data' => ['venue' => $venue, 'action' => 'Edit']]);
+
+        $access_levels = $this->getFormOptions(['access_levels']);
+
+        return view('admin.venue', ['data' => ['venue' => $venue, 'access_levels' => $access_levels, 'action' => 'Edit']]);
     }
 
     /**

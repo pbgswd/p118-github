@@ -65,8 +65,9 @@ class TopicController extends Controller
     {
         $topic = new Topic;
         $topic['user_id'] = Auth::id();
+        $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.topic', ['data' => ['topic' => $topic, 'action' => 'Create']]);
+        return view('admin.topic', ['data' => ['topic' => $topic, 'access_levels' => $access_levels, 'action' => 'Create']]);
     }
 
     /**
@@ -99,7 +100,8 @@ class TopicController extends Controller
      */
     public function edit(Topic $topic)
     {
-        $data = ['topic'=>$topic, 'action'=>'Edit'];
+        $access_levels = $this->getFormOptions(['access_levels']);
+        $data = ['topic'=>$topic, 'access_levels' => $access_levels, 'action'=>'Edit'];
 
         return view('admin.topic', ['data'=> $data]);
     }

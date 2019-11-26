@@ -32,11 +32,12 @@ class AdminCommitteeController extends Controller
     public function create()
     {
         $committee = new Committee;
+        $access_levels = $this->getFormOptions(['access_levels']);
         $data = [
             'user_id' => Auth::id(),
             'committee' => $committee,
             ];
-        return view('admin.committee', ['data' => ['data' => $data, 'action' => 'Create']]);
+        return view('admin.committee', ['data' => ['data' => $data, 'access_levels' => $access_levels, 'action' => 'Create']]);
     }
 
     /**
@@ -80,9 +81,11 @@ class AdminCommitteeController extends Controller
     public function edit(Committee $committee)
     {
         $committee->creator;
-        $data = ['committee' => $committee];
 
-        return view('admin.committee', ['data' => ['data' => $data, 'action' => 'Edit']]);
+        $data = ['committee' => $committee];
+        $access_levels = $this->getFormOptions(['access_levels']);
+
+        return view('admin.committee', ['data' => ['data' => $data, 'access_levels' => $access_levels, 'action' => 'Edit']]);
       }
 
     /**

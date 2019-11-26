@@ -4,10 +4,10 @@ namespace App\Models;
 
 class Options
 {
-    public static function access_level()
+    public static function access_levels()
     {
         $access = array();
-        $access = ['draft', 'review', 'public'];
+        $access = ['public', 'members'];
         return array_combine($access, $access);
     }
 

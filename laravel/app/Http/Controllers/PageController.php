@@ -55,8 +55,9 @@ class PageController extends Controller
         $page['user_id'] = Auth::id();
         $page->topics;
         $topics = Topic::all();
+        $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.page', ['data' => ['page' => $page,  'assignedTopics' => [], 'topics' => $topics,  'action' => 'Create']]);
+        return view('admin.page', ['data' => ['page' => $page,  'assignedTopics' => [], 'access_levels' => $access_levels, 'topics' => $topics,  'action' => 'Create']]);
     }
 
     /**
@@ -119,7 +120,9 @@ class PageController extends Controller
 
         $topics = Topic::all();
 
-        $data = ['page' => $page, 'topics' => $topics, 'assignedTopics' => $assignedTopics, 'action' => 'Edit'];
+        $access_levels = $this->getFormOptions(['access_levels']);
+
+        $data = ['page' => $page, 'topics' => $topics, 'assignedTopics' => $assignedTopics, 'access_levels' => $access_levels, 'action' => 'Edit'];
 
         return view('admin.page', ['data' => $data]);
     }
