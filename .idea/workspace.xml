@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeMemberController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/laravel/resources/views/admin/committeebulkaddusers.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/VenueController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/VenueController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Options.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Options.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/committee.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/committee.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/page.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/post.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/topic.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/topic.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/venue.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/venue.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/show_committee.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/show_committee.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -151,7 +143,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/laravel/resources/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/laravel/resources/views/admin" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -164,16 +156,16 @@
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/laravel/resources/views" />
-      <recent name="$PROJECT_DIR$/laravel/resources/views/admin" />
-      <recent name="$PROJECT_DIR$/laravel/app/Http/Controllers" />
-      <recent name="$PROJECT_DIR$/laravel" />
-      <recent name="$PROJECT_DIR$/laravel/tests/Feature" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/laravel/app/Models" />
       <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/laravel/resources/views/admin" />
+      <recent name="$PROJECT_DIR$/laravel/resources/views" />
+      <recent name="$PROJECT_DIR$/laravel/app/Http/Controllers" />
+      <recent name="$PROJECT_DIR$/laravel" />
+      <recent name="$PROJECT_DIR$/laravel/tests/Feature" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -234,7 +226,7 @@
       <workItem from="1574398095343" duration="6064000" />
       <workItem from="1574456128854" duration="840000" />
       <workItem from="1574479530896" duration="4851000" />
-      <workItem from="1574651140521" duration="28107000" />
+      <workItem from="1574651140521" duration="37830000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>

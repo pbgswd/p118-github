@@ -116,4 +116,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('committee/{committee}', 'AdminCommitteeController@update');
     Route::delete('committee/delete', 'AdminCommitteeController@destroy')->name('committee_destroy');
 
+    Route::get('committee/{committee}/list-bulk-add', 'AdminCommitteeMemberController@index')->name('list-bulk-add');
+    Route::post('committee/{committee}/list-bulk-add', 'AdminCommitteeMemberController@store');
+
 });

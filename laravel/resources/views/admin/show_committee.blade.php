@@ -20,6 +20,14 @@ $committee = $data['committee'];
                 {!! $committee->description !!}
             </div>
         </div>
+
+    <div class="row">
+        <div class="col-lg-2"><h4>Email</h4></div>
+        <div class="col-lg-10">
+            <h4><a href="mailto:{{$committee->email }}">{{$committee->email }}</a></h4>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-2"><h4>Created By</h4></div>
         <div class="col-lg-10">
@@ -32,7 +40,7 @@ $committee = $data['committee'];
                 <div class="row">
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
                     <div class="col-6 col-sm-3">
-                        {{ $committee->access_level }}
+                       Visible by: {{ $committee->access_level }}
                     </div>
                     <div class="col-6 col-sm-3"></div>
                     <div class="col-6 col-sm-3"></div>
@@ -46,15 +54,27 @@ $committee = $data['committee'];
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="col-lg-2"><h4>Status</h4></div>
+                <div class="col-lg-6"><h4>Status <i class="fas fa-toggle-on"></i></h4></div>
                 <div class="col-sm">
-                    {{ $committee->in_menu }}  In Menu
+                    @if($committee->in_menu == 1)
+                        In Menu
+                    @else
+                        Not seen in menu
+                    @endif
                 </div>
                 <div class="col-sm">
-                    {{ $committee->allow_comments }} Allow Comments?
+                    @if($committee->allow_comments == 1)
+                        Comments allowed
+                    @else
+                        Comments not allowed
+                    @endif
                 </div>
                 <div class="col-sm">
-                    {{$committee->live}} Check now to make Live
+                    @if($committee->live == 1)
+                        This committee is live
+                    @else
+                        Not enabled live.
+                    @endif
                 </div>
             </div>
             <div class="col-sm">
@@ -74,8 +94,25 @@ $committee = $data['committee'];
         </div>
     <div class="row" style="margin-top:2em;">
         <div class="col-md">
-            <h4>Committee Membership in {{ $committee->name }} </h4>
-            <br clear="all"/>
+            <h4><i class="fas fa-users"></i> Committee Membership in {{ $committee->name }} </h4>
+            <h4>
+                <a href="{{route('list-bulk-add', $committee->slug)}}">Bulk add committee members</a>
+            </h4>
+        </div>
+        @hasanyrole('super-admin|admin')
+            <div class="col-md">
+                (if admin)
+                <form name="list-bulk-add" method="POST" action="{{route('list-bulk-add', $committee->id)}}">
+                    {!! csrf_field() !!}
+                    <i class="fas fa-users fa-2x"></i>
+                    <input type="hidden" name="id" value="{{ $committee->id }}">
+                    <input class="btn btn-outline-secondary" type="submit" value="Bulk add members">
+                </form>
+            </div>
+        @endhasanyrole
+        <div class="col-md">
+            <h4>Committee Membership Levels</h4>
+
             <p>
                 @foreach ($committee->committee_levels['committee_level'] as  $cl)
                     {{$cl}} <br />
@@ -83,6 +120,8 @@ $committee = $data['committee'];
             </p>
         </div>
     </div>
-        <div class="row" style="margin-top:100px;"><h5>posts in {{ $committee->name }} </h5></div>
+        <div class="row" style="margin-top:100px;"><h5><i class="far fa-folder-open"></i> posts in {{ $committee->name }} </h5></div>
+    <br />
+    <div class="row" style="margin-bottom:5em;"></div>
 </div>
 @endsection
