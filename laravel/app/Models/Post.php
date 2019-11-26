@@ -85,10 +85,4 @@ class Post extends Model
     {
         return $this->belongsToMany(Topic::class);
     }
-
-    public function page()
-    {
-        return $this->belongsToMany(Page::class);
-    }
-
 }

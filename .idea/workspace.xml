@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AttachmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AttachmentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/VenueController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/VenueController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listcommittees.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listcommittees.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listvenues.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listvenues.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Page.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Page.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/page.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -228,7 +226,7 @@
       <workItem from="1574398095343" duration="6064000" />
       <workItem from="1574456128854" duration="840000" />
       <workItem from="1574479530896" duration="4851000" />
-      <workItem from="1574651140521" duration="19718000" />
+      <workItem from="1574651140521" duration="20446000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>

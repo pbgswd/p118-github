@@ -76,8 +76,6 @@ class Page extends Model
         return $this->attributes['title'] = $value;
     }
 
-    // relationship to users table
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -86,10 +84,5 @@ class Page extends Model
     public function topics()
     {
         return $this->belongsToMany(Topic::class);
-    }
-
-    public function posts()
-    {
-        return $this->belongsToMany(Post::class);
     }
 }

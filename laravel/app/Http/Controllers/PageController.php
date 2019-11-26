@@ -95,7 +95,6 @@ class PageController extends Controller
     {
         $page->user;
         $page->topics;
-        $page->posts;
         $pages = Page::all(); // gets all, I want only the pages under the topic passed in.
 
         // see https://laravel.com/docs/6.x/eloquent#advanced-subqueries

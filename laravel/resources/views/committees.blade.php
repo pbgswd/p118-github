@@ -29,7 +29,7 @@
         <div class="col">
             <div class="list-group">
                 <ul class="pagination">
-                    data['committee']->links()
+                    {{$data['committees']->links()}}
                 </ul>
             </div>
         </div>
