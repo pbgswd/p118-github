@@ -6,12 +6,12 @@
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:2em;">
         <div class="col-12">
-            <h1 class="display-3">Topics</h1>
+            <h1 class="display-3">Committees</h1>
         </div>
         <div class="col-12">
             <a href="{{ route('hello') }}">Home/</a>
-            <a href="{{route('committees')}}">Topics/</a>
-            <h2>Information grouped by topic</h2>
+            <a href="{{route('committees')}}">Committees/</a>
+            <h2>Groups within the Local</h2>
         </div>
         <div class="row">
             @foreach ( $data['committees'] as $c )

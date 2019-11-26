@@ -93,13 +93,22 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
+
         $page->user;
         $page->topics;
-        $pages = Page::all(); // gets all, I want only the pages under the topic passed in.
+
+        $pages = [];
+
+        /*
+         * Need a list of other recent pages under same topic. Filter by topic, latest 10, sticky?
+         */
+        //$pages = Page::with('topics'); // gets all, I want only the pages under the topic passed in.
+       // $topics = Topic::sortable()->with('tagged')->paginate(10);
+        //dd($topics);
 
         // see https://laravel.com/docs/6.x/eloquent#advanced-subqueries
 
-        $topic_id  = $page->topics[0]->id;
+        //$topic_id = $page->topics[0]->id;
 
         $data = ['page' => $page, 'pages' => $pages];
 
