@@ -88,4 +88,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Attachment::class);
     }
+
+    public function committee()
+    {
+        return $this->belongsToMany(Committee::class, 'users_committees_pivot');
+    }
 }

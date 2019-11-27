@@ -16,9 +16,22 @@ $c = $data['committee'];
         <div class="col-12">
             <h4>Created by <a title="{{ $c->creator->name }}" href="{{ route('member', $c->creator->id) }}">{{$c->creator->name }}</a></h4>
             <div class="row">leader, secretary, members count</div>
-            <div class="row">join / leave</div>
+            <div class="row">
+                join / leave
+                <form method="post" name="committee-join" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="committee[slug]" value="{{$data['committee']->slug}}" />
+                    <div class="col">
+                        <input class="btn btn-success" type="submit" value="Join {{$c->name}} Committee">
+                    </div>
+                </form>
+            </div>
             <div class="row">subscribe</div>
-            <div class="row">contact</div>
+            <div class="row">
+                <div class="col-12">
+                    Contact:  <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee">{{$data['committee']->email}}</a>
+                </div>
+            </div>
             <div class="row">posts</div>
         </div>
     </div>

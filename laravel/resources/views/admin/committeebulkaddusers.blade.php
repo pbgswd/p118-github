@@ -29,7 +29,7 @@
                         <td>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="member[member][id][]" value="{{ $i->id }}" />
+                                    <input type="checkbox" name="members[{{ $i->id }}][id]" value="{{ $i->id }}" />
                                 </label>
                             </div>
                         </td>
@@ -41,7 +41,7 @@
                         <td> {{ $i->email }} </td>
                         <td>
                             <div class="form-group">
-                                {{ select_options($data['committee_levels'], old('member.role', 'member'), ['name' => 'member[role]', 'class' => 'form-control', 'placeholder' => 'Role']) }}
+                                {{ select_options($data['committee_levels'], old('member.role', 'member'), ['name' => 'members['. $i->id .'][role]', 'class' => 'form-control', 'placeholder' => 'Role'], $selected = 'Member') }}
                             </div>
                         </td>
                     </tr>

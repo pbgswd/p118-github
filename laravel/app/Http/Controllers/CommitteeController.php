@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class CommitteeController extends Controller
 {
@@ -16,6 +19,29 @@ class CommitteeController extends Controller
     {
         $c = Committee::with('creator')->sortable()->paginate(10);
         return view('committees', ['data'=>array('committees'=>$c)]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, Committee $committee)
+    {
+        $data = [];
+        $data['committee_id'] = $committee->id;
+        $data['user_id'] = Auth::id();
+        $data['role'] = 'Member';
+
+       // dd($data);
+// store in users_committees_pivot
+
+        $committee->committee_members()->attach($data);
+
+        Session::flash('success', 'You have joined '. $committee->name);
+
+        return redirect()->route('committee', $committee->slug);
     }
 
     /**
