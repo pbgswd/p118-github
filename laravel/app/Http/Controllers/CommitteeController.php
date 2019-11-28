@@ -29,15 +29,7 @@ class CommitteeController extends Controller
      */
     public function store(Request $request, Committee $committee)
     {
-        $data = [];
-        $data['committee_id'] = $committee->id;
-        $data['user_id'] = Auth::id();
-        $data['role'] = 'Member';
-
-       // dd($data);
-// store in users_committees_pivot
-
-        $committee->committee_members()->attach($data);
+        $committee->committee_members()->attach(Auth::id(), ['role' => 'Member']);
 
         Session::flash('success', 'You have joined '. $committee->name);
 

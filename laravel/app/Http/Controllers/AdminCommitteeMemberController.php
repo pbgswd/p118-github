@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Committee;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 
@@ -18,11 +17,13 @@ class AdminCommitteeMemberController extends Controller
      */
     public function index(Request $request,Committee $committee)
     {
-        $users = User::sortable()->paginate(20);
-        // determine if user is already in group or a subscriber
-        // member role option menu
-        $committee_levels = $this->getFormOptions(['committee_levels']);
+        $users = User::sortable()->with('committee_membership')->paginate(20);
 
+        /*
+         * I want to know only if this member is in the given committee I am looking for not all the committees he is in
+         */
+
+        $committee_levels = $this->getFormOptions(['committee_levels']);
         return view('admin.committeebulkaddusers', ['data'=>array('users'=>$users, 'committee' => $committee, 'committee_levels' => $committee_levels )]);
     }
 
@@ -45,21 +46,12 @@ class AdminCommitteeMemberController extends Controller
     public function store(Request $request, Committee $committee)
     {
 
-        dd($request->all());
-        // users_committee_pivot table
-        // committee_id, user_id, role?
+        foreach($request->members as $member)
+        {
+            $committee->committee_members()->attach($member['id'], ['role' => 'Member']);
+        }
 
-        /*
-         *
-         * if(!empty($request->input('id'))) {
-            $committee->committee_members()->sync($request->input('committee_id', 'id', 'role'));
-           }
-         */
-
-        // determine which users have been added,
-        // and set a flag for them so they may be tagged in css
-
-        Session::flash('success', "You have added n members to committee " . $committee->name);
+        Session::flash('success', "You have added " . count($request->members) . " members to committee " . $committee->name);
         return redirect()->route('list-bulk-add', $request->committee['slug']);
     }
 

@@ -35,7 +35,7 @@
                         </td>
                         <td>
                             <h4>
-                                <a title="{{ $i->name }}" href="#">{{ $i->name }}</a>
+                                <a title="{{ $i->name }}" href="{{ route('user_edit', $i->id) }}">{{ $i->name }}</a>
                             </h4>
                         </td>
                         <td> {{ $i->email }} </td>
