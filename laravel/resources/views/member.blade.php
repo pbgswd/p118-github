@@ -16,6 +16,13 @@ $user = $data['user'];
             <div class="col-9">
                 <h1 class="display-3">{{$user->name}}</h1>
             </div>
+                <div class="col-3">
+                    @if ( Auth::user()->id == $user->id)
+                        <div class="col-12" style="margin-top: 4em;">
+                            <a href="{{route('member_edit', Auth::user()->id )}}" title="Edit my profile"><button type="button" class="btn btn-primary">Edit My Profile</button></a>
+                        </div>
+                    @endif
+                </div>
         </div>
         <div class="col-12">
             @if ($user->user_info->share_email == 1)
@@ -26,13 +33,11 @@ $user = $data['user'];
             @endif
             <p>{!! $user->user_info->about !!}</p>
         </div>
-        @if ( Auth::user()->id == $user->id)
-            <div class="col-12" style="margin-top: 4em;">
-                <a href="{{route('member_edit', Auth::user()->id )}}" title="Edit my profile"><button type="button" class="btn btn-primary">Edit My Profile</button></a>
-            </div>
-        @endif
         <div class="col-12">
         <h3>Membership in committees</h3>
+            @foreach($user->committee_membership as $m)
+                <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">{{$m->name}}</a> <br />
+            @endforeach
         </div>
 
 
