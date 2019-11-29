@@ -40,12 +40,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->committee_membership;
-        $user->phone_number;
-        $user->user_info;
-        $user->address;
-        $user->membership;
-
+        $user->load('committee_membership', 'phone_number', 'user_info', 'address', 'membership');
         //$currentUser = Auth::user(); // the logged in user, perms to edit?
         //$regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
@@ -73,10 +68,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $user->phone_number;
-        $user->user_info;
-        $user->address;
-        $user->membership;
+        $user->load('phone_number', 'user_info', 'address', 'membership');
         $currentUser = Auth::user(); // the logged in user, perms to edit?
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
