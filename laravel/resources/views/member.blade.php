@@ -39,8 +39,6 @@ $user = $data['user'];
                 <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">{{$m->name}}</a> <br />
             @endforeach
         </div>
-
-
   </div>
 <div class="row" style="margin-top:6em;"></div>
 @endsection

@@ -91,10 +91,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post->user;
-        $post->topics;
-        $post->page;
-
+        $post->load('user', 'topic', 'page');
         $data = ['post' => $post];
 
         return view('post', ['data' => $data]);

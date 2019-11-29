@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/HelloController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/HelloController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PostController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/member.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/member.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,7 +286,7 @@
       <workItem from="1574651140521" duration="38027000" />
       <workItem from="1574822594651" duration="8835000" />
       <workItem from="1574918763958" duration="7012000" />
-      <workItem from="1574981470844" duration="17226000" />
+      <workItem from="1574981470844" duration="17901000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>

@@ -94,9 +94,7 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
-        $page->user;
-        $page->topics;
-
+        $page->load('topics', 'user');
         $data = ['page' => $page];
 
         return view('page', ['data' => $data]);
