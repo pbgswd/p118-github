@@ -14,7 +14,6 @@ $user_roles = $data['user_roles'];
             <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>
         </h3>
         <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-        <input type="hidden" name="user[id]" value="{{ $user->id }}">
             {!! csrf_field() !!}
             <div class="row border border-primary rounded-lg border-3" style="margin-top:30px; padding:1em;">
                 <div class="col-lg-12">

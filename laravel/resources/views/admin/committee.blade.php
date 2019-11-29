@@ -30,7 +30,6 @@ $committee = $data['data']['committee'];
     </h4>
     @endif
     <form method="post" name="committee" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-        <input type="hidden" name="committee[id]" value="{{ $committee['id'] }}">
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">

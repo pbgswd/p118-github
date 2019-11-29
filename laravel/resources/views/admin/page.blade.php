@@ -1,7 +1,6 @@
 <?php
 $page = $data['page'];
 $topics = $data['topics'];
-
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Page ' . ($data["action"] == 'Edit' ? $page->name : '') ])
 @section('content')
