@@ -31,6 +31,11 @@ $user = $data['user'];
                 <a href="{{route('member_edit', Auth::user()->id )}}" title="Edit my profile"><button type="button" class="btn btn-primary">Edit My Profile</button></a>
             </div>
         @endif
+        <div class="col-12">
+        <h3>Membership in committees</h3>
+        </div>
+
+
   </div>
 <div class="row" style="margin-top:6em;"></div>
 @endsection

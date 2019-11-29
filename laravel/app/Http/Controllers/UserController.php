@@ -108,7 +108,6 @@ class UserController extends Controller
      */
     public function update(UpdateMember $userRequest, User $user)
     {
-
         $user->fill($userRequest['user']);
         $user->save();
 
@@ -135,7 +134,6 @@ class UserController extends Controller
                     $user_info['file_name'] = $userRequest->image->getClientOriginalName();
                 }
             }
-            //dd($user_info);
             $user->user_info->fill($user_info);
             $user->user_info->save();
         } else {
@@ -143,7 +141,6 @@ class UserController extends Controller
             $user_info->image = $this->uploadImage($userRequest);
             $user->user_info()->save($user_info);
         }
-
         if ($user->address instanceof Address) {
             $user->address->fill($userRequest['user_address']);
             $user->address->save();
