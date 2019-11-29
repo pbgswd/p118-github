@@ -116,10 +116,11 @@ class AdminUserController extends Controller
 
     public function edit(User $user)
     {
-        $phone = $user->phone_number;
-        $user_info = $user->user_info;
-        $address = $user->address;
-        $membership = $user->membership;
+        $user->phone_number;
+        $user->user_info;
+        $user->address;
+        $user->membership;
+
         $currentUser = Auth::user(); // the logged in user, perms to edit?
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
@@ -129,10 +130,6 @@ class AdminUserController extends Controller
         $data = [
             'user' => $user,
             'user_roles' => $user_roles,
-            'user_info' => $user_info,
-            'user_phone' => $phone,
-            'user_address' => $address,
-            'user_membership' => $membership,
             'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,
