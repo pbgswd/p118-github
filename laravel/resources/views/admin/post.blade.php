@@ -26,8 +26,6 @@ $topics = $data['topics'];
 <div class="container">
     <h3>  <a href="{{ route('posts_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>  </h3>
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-        <input type="hidden" name="post[id]" value="{{ $post['id'] }}">
-        <input type="hidden" name="post[user_id]" value="{{ $post['user_id'] }}">
         {!! csrf_field() !!}
         <div class="row">
             <div class="form-group">

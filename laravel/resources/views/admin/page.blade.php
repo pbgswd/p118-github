@@ -9,8 +9,6 @@ $topics = $data['topics'];
 <div class="container">
     <h3>  <a href="{{ route('pages_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of pages</a>  </h3>
     <form method="post" name="page" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-        <input type="hidden" name="page[id]" value="{{ $page['id'] }}">
-        <input type="hidden" name="page[user_id]" value="{{ $page['user_id'] }}">
         {!! csrf_field() !!}
         <div class="row">
             <div class="form-group">

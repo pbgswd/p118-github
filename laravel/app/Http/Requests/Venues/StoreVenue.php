@@ -24,7 +24,6 @@ class StoreVenue extends FormRequest
     public function rules()
     {
         return [
-            'venue.user_id' => 'required|numeric',
             'venue.name' => 'required|unique:venues,name|max:255',
             'venue.description' => 'required|string',
             'venue.url' => 'string',

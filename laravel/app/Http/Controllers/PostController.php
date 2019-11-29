@@ -50,7 +50,6 @@ class PostController extends Controller
     public function create()
     {
         $post = new post;
-        $post['user_id'] = Auth::id();
         $post->topics;
         $topics = Topic::all();
         $access_levels = $this->getFormOptions(['access_levels']);

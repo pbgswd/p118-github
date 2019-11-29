@@ -24,8 +24,6 @@ $venue = $data['venue'];
 <div class="container">
     <h3>  <a href="{{ route('venues_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of venues</a>  </h3>
     <form method="post" name="venue" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-        <input type="hidden" name="venue[id]" value="{{ $venue['id'] }}">
-        <input type="hidden" name="venue[user_id]" value="{{ $venue['user_id'] }}">
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">

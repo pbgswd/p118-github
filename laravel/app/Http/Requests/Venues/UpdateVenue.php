@@ -24,7 +24,6 @@ class UpdateVenue extends FormRequest
     public function rules()
     {
         return [
-            'venue.user_id' => 'required|numeric',
             'venue.name' => 'required|max:255',
             'venue.description' => 'required|string',
             'venue.url' => 'string',
