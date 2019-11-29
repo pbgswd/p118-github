@@ -18,6 +18,16 @@ class CommitteeController extends Controller
     public function index()
     {
         $c = Committee::with('creator')->sortable()->paginate(10);
+
+        /*
+         * names and profile links to who are Chair, cochair, Secretary
+         * logged in user is a member or not?
+         * count of members
+         * link to members list of this committee
+         * list of posts, news
+         * subscribe status, or unsubscribe
+         */
+
         return view('committees', ['data'=>array('committees'=>$c)]);
     }
 
@@ -29,6 +39,9 @@ class CommitteeController extends Controller
      */
     public function store(Request $request, Committee $committee)
     {
+        // if you are already a member, dont allow
+        // if you are  a past member, set to member
+
         $committee->committee_members()->attach(Auth::id(), ['role' => 'Member']);
 
         Session::flash('success', 'You have joined '. $committee->name);
@@ -57,7 +70,7 @@ class CommitteeController extends Controller
      */
     public function edit(Committee $committee)
     {
-        // allow chair, cochair, and secretary to edit
+        // allow chair, cochair, and secretary to edit?
     }
 
     /**
@@ -69,7 +82,7 @@ class CommitteeController extends Controller
      */
     public function update(Request $request, Committee $committee)
     {
-        //// allow chair, cochair, and secretary to update
+        // allow chair, cochair, and secretary to update
     }
 
     /**
