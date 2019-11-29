@@ -25,13 +25,12 @@ $user_roles = $data['user_roles'];
             ]
         });
     </script>
-
 <div class="container">
     <h3>
         <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>
     </h3>
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-         {!! csrf_field() !!}
+        {!! csrf_field() !!}
         <div class="row border border-primary rounded-lg border-3" style="margin-top:30px; padding:1em;">
             <div class="col-lg-12">
                 <h3>Primary Contact Information</h3>

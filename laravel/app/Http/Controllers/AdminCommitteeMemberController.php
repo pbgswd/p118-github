@@ -19,12 +19,19 @@ class AdminCommitteeMemberController extends Controller
     {
         $users = User::sortable()->with('committee_membership')->paginate(20);
 
-        /*
-         * I want to know only if this member is in the given committee I am looking for not all the committees he is in
-         */
+        $data = [];
+        $data['users'] = $users->map(function ($user) use ($committee) {
+            $info = $user->toArray();
+            $info['isMember'] = $user->committee_membership->contains(function (Committee $membership) use ($committee) {
+                return $membership->slug == $committee->slug;
+            });
+            return $info;
+        });
 
-        $committee_levels = $this->getFormOptions(['committee_levels']);
-        return view('admin.committeebulkaddusers', ['data'=>array('users'=>$users, 'committee' => $committee, 'committee_levels' => $committee_levels )]);
+        $data['committee'] = $committee;
+        $data['committee_levels'] = $this->getFormOptions(['committee_levels']);
+
+        return view('admin.committeebulkaddusers', ['data' => $data, 'users' => $users]);
     }
 
     /**

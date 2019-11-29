@@ -92,6 +92,6 @@ class User extends Authenticatable
     public function committee_membership()
     {
         return $this->belongsToMany(Committee::class, 'users_committees_pivot');
-        //return $this->belongsToMany(User::class, 'users_committees_pivot')->withPivot('role');
     }
+
 }
