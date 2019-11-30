@@ -68,6 +68,21 @@ class CommitteeController extends Controller
         return view('committee', ['data' => ['committee' => $committee]]);
     }
 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Committee  $committee
+     * @return \Illuminate\Http\Response
+     */
+    public function show_members(Committee $committee)
+    {
+        $committee->load('committee_members')->sortable()->paginate(2);
+
+        return view('committee_list_members', ['data' => ['committee' => $committee]]);
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *

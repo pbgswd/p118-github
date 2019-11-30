@@ -35,6 +35,7 @@ $c = $data['committee'];
                 </div>
                 <div class="col-6">
                     <h4>{{count($c->committee_members)}} Members</h4>
+                    <h4><a href="{{route('committee_list_members', $data['committee']->slug)}}">Full list of Members</a></h4>
                     @foreach( $c->committee_members as $member)
                         <a href="{{route('member', $member->id)}}">{{ $member->name  }}</a> <br />
                     @endforeach

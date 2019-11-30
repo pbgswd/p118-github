@@ -43,10 +43,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('committees', 'CommitteeController@index')->name('committees');
     Route::get('committee/{committee}', 'CommitteeController@show')->name('committee');
     Route::post('committee/{committee}', 'CommitteeController@store');
-
+    Route::get('committee/{committee}/show-members', 'CommitteeController@show_members')->name('committee_list_members');
 
     Route::post('/search', 'SearchController@index')->name('search');
-
 });
 
 Route::group(['middleware' =>  ['web', 'auth',]], function () {
