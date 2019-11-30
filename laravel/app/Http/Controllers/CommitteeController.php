@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Committee;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -58,14 +59,13 @@ class CommitteeController extends Controller
     public function show(Committee $committee)
     {
         $committee->load('creator', 'committee_members');
-//dd($committee);
-//        $filtered = $committee->committee_members->filter(function ($value, $key) use($committee) {
-//            return Auth::id() == $this->$committee->committee_members->id;
-//        });
-//
-//        dd($filtered->all());
+        $data = ['committee' => $committee];
 
-        return view('committee', ['data' => ['committee' => $committee]]);
+        $data['isMember'] = $committee->committee_members->contains(function (User $member) {
+            return Auth::id() == $member->id;
+        });
+
+        return view('committee', ['data' => $data]);
     }
 
 
@@ -77,6 +77,18 @@ class CommitteeController extends Controller
      */
     public function show_members(Committee $committee)
     {
+
+        /** get members for this committee
+         *  get sortable thing
+         *  get paginate thing
+         *
+         * do we use visibility preferenences for users profile?
+         * do we say if you are a member you have to show your email
+         * do we say if you are a member you have to show your profile?
+         * show member status? Chair, Co-chair, Secretary, Member
+         */
+
+
         $committee->load('committee_members')->sortable()->paginate(2);
 
         return view('committee_list_members', ['data' => ['committee' => $committee]]);

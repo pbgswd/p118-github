@@ -7,7 +7,17 @@ use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
 
-
+/**
+ * Class User
+ *
+ * @property int id
+ * @property string name
+ * @property string email
+ * @property \DateTime created_at
+ * @property \DateTime updated_at
+ *
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use Notifiable;

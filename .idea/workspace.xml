@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/committee.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/committee.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +218,7 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:MySQL - p118@172.19.0.2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@17cd5a44" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@3759aad5" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -275,6 +277,7 @@
       <workItem from="1574822594651" duration="8835000" />
       <workItem from="1574918763958" duration="7012000" />
       <workItem from="1574981470844" duration="31890000" />
+      <workItem from="1575101563328" duration="4234000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
