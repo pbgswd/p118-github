@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/page.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +177,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/laravel/resources/views/admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/laravel/resources/views" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -190,16 +190,16 @@
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/laravel/app/Models" />
-      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/laravel/resources/views/admin" />
       <recent name="$PROJECT_DIR$/laravel/resources/views" />
+      <recent name="$PROJECT_DIR$/laravel/resources/views/admin" />
       <recent name="$PROJECT_DIR$/laravel/app/Http/Controllers" />
       <recent name="$PROJECT_DIR$/laravel" />
       <recent name="$PROJECT_DIR$/laravel/tests/Feature" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/laravel/app/Models" />
+      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -216,17 +216,7 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:MySQL - p118@172.19.0.2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@5b24d125" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:MySQL - p118@172.19.0.2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
                 <item name="com.intellij.database.console.session.MessageBusSession@17cd5a44" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:MySQL - p118@172.19.0.2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@59c4198b" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -284,7 +274,7 @@
       <workItem from="1574651140521" duration="38027000" />
       <workItem from="1574822594651" duration="8835000" />
       <workItem from="1574918763958" duration="7012000" />
-      <workItem from="1574981470844" duration="19769000" />
+      <workItem from="1574981470844" duration="31890000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -346,6 +336,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state width="1254" height="224" key="GridCell.Tab.0.right/0.27.1680.1023@0.27.1680.1023" timestamp="1575016841802" />
+    <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1575080188306">
+      <screen x="0" y="27" width="1680" height="1023" />
+    </state>
+    <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1680.1023@0.27.1680.1023" timestamp="1575080188306" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -387,7 +381,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/laravel/resources/views/member_edit.blade.php</url>
-          <line>183</line>
+          <line>182</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
