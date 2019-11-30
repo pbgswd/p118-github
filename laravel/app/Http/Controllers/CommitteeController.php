@@ -57,7 +57,13 @@ class CommitteeController extends Controller
      */
     public function show(Committee $committee)
     {
-        $committee->creator;
+        $committee->load('creator', 'committee_members');
+//dd($committee);
+//        $filtered = $committee->committee_members->filter(function ($value, $key) use($committee) {
+//            return Auth::id() == $this->$committee->committee_members->id;
+//        });
+//
+//        dd($filtered->all());
 
         return view('committee', ['data' => ['committee' => $committee]]);
     }
