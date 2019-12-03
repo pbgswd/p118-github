@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/project118.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project118.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/committee.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/committee.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,6 +167,7 @@
       <path value="$PROJECT_DIR$/laravel/vendor/spatie/temporary-directory" />
       <path value="$PROJECT_DIR$/laravel/vendor/laravel/ui" />
       <path value="$PROJECT_DIR$/laravel/vendor/scrivo/highlight.php" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/error-handler" />
     </include_path>
   </component>
   <component name="ProjectId" id="1TVC1YRE3STwg2T57CALNIHZul5" />
@@ -218,7 +222,7 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:MySQL - p118@172.19.0.2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@3759aad5" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@4959f412" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -277,7 +281,8 @@
       <workItem from="1574822594651" duration="8835000" />
       <workItem from="1574918763958" duration="7012000" />
       <workItem from="1574981470844" duration="31890000" />
-      <workItem from="1575101563328" duration="4234000" />
+      <workItem from="1575101563328" duration="4938000" />
+      <workItem from="1575319493562" duration="5813000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>

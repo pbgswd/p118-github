@@ -110,12 +110,13 @@
       <path value="$PROJECT_DIR$/laravel/vendor/spatie/temporary-directory" />
       <path value="$PROJECT_DIR$/laravel/vendor/laravel/ui" />
       <path value="$PROJECT_DIR$/laravel/vendor/scrivo/highlight.php" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/error-handler" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
   <component name="PhpUnit">
     <phpunit_settings>
-      <PhpUnitSettings load_method="CUSTOM_LOADER" custom_loader_path="$PROJECT_DIR$/laravel/vendor/autoload.php" />
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/laravel/vendor/autoload.php" />
     </phpunit_settings>
   </component>
 </project>

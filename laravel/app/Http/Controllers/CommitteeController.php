@@ -38,17 +38,40 @@ class CommitteeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Committee $committee)
+    public function join(Request $request, Committee $committee)
     {
         // if you are already a member, dont allow
         // if you are  a past member, set to member
-
+        // check if this person is a member before adding them
+        dd(__METHOD__);
         $committee->committee_members()->attach(Auth::id(), ['role' => 'Member']);
 
         Session::flash('success', 'You have joined '. $committee->name);
 
         return redirect()->route('committee', $committee->slug);
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function leave(Request $request, Committee $committee)
+    {
+dd(__METHOD__);
+        // if you are already a member, dont allow
+        // if you are  a past member, set to member
+
+        $committee->committee_members()->updateExistingPivot(Auth::id(), ['role' => 'Past-Member']);
+
+        Session::flash('success', 'You have left'. $committee->name);
+
+        return redirect()->route('committee', $committee->slug);
+    }
+
+
+
 
     /**
      * Display the specified resource.
@@ -64,6 +87,8 @@ class CommitteeController extends Controller
         $data['isMember'] = $committee->committee_members->contains(function (User $member) {
             return Auth::id() == $member->id;
         });
+
+        //dd($data);
 
         return view('committee', ['data' => $data]);
     }

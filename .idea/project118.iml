@@ -92,6 +92,7 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/contracts" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/css-selector" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/debug" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/error-handler" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/event-dispatcher-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/finder" />
