@@ -80,8 +80,6 @@ class TopicController extends Controller
     {
         $topic = new Topic($request->input('topic'), $request->input('tags'));
 
-        $topic->image = $this->uploadImage($request);
-
         $topic->save();
 
         if (!empty($request->tags)) {
@@ -117,15 +115,6 @@ class TopicController extends Controller
     {
         $data = $request['topic'];
 
-        $data['image'] = $this->uploadImage($request);
-
-        if (isset( $request['topic']['delete_image']))
-        {
-            Storage::disk('public')->delete( $request->topic['image'] );
-            Session::flash('info', "You have deleted " . $data['image']);
-            $data['image'] = NULL;
-        }
-
         $topic->fill($data);
         $topic->save();
 
@@ -153,9 +142,6 @@ class TopicController extends Controller
     {
         $topic = Topic::find($request->id)->first();
 
-        if ($topic->image) {
-            Storage::disk('public')->delete($topic->image);
-        }
 
         $topic->untag();
 
@@ -168,22 +154,4 @@ class TopicController extends Controller
 
         return redirect()->route('topics_list');
     }
-
-    protected function uploadImage(FormRequest $request)
-    {
-        if (!$request->image) {
-            return null;
-        }
-
-        $imageName = $request->image->getClientOriginalName();
-
-        if (!$request->image->storeAs('public', $imageName)) {
-            Session::flash('warning', "Did not store " . $imageName);
-
-            return null;
-        }
-
-        return $imageName;
-    }
-
 }

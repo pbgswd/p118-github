@@ -63,7 +63,7 @@ class VenueController extends Controller
     public function store(StoreVenue $request)
     {
         $venue = new Venue($request->input('venue'));
-        $venue->image = $this->uploadImage($request);
+
         $venue->save();
         Session::flash('success', "You have saved a new venue");
 
@@ -105,13 +105,7 @@ class VenueController extends Controller
     public function update(UpdateVenue $request, Venue $venue)
     {
         $data = $request['venue'];
-        $data['image'] = $this->uploadImage($request);
-        if (isset( $request['venue']['delete_image']))
-        {
-            Storage::disk('public')->delete( $request->venue['image'] );
-            Session::flash('info', "You have deleted " . $data['image']);
-            $data['image'] = NULL;
-        }
+
         $venue->fill($data);
         $venue->save();
         Session::flash('success', "You have edited the venue");
@@ -137,20 +131,4 @@ class VenueController extends Controller
         return redirect()->route('venues_list');
     }
 
-    protected function uploadImage(FormRequest $request)
-    {
-        if (!$request->image) {
-            return null;
-        }
-
-        $imageName = $request->image->getClientOriginalName();
-
-        if (!$request->image->storeAs('public', $imageName)) {
-            Session::flash('warning', "Did not store " . $imageName);
-
-            return null;
-        }
-
-        return $imageName;
-    }
 }

@@ -21,9 +21,8 @@ $topic = $data['topic'];
             ]
         });
     </script>
-
 <div class="container">
-    <h3>  <a href="{{ route('topics_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of topics</a>  </h3>
+    <h3><a href="{{ route('topics_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of topics</a></h3>
     <form method="post" name="topic" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
@@ -35,7 +34,6 @@ $topic = $data['topic'];
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -47,42 +45,6 @@ $topic = $data['topic'];
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row" style="border-width:6px; !important;">
-            @if( $topic->image )
-                <div class="col-md-6">
-                    <div class="col">
-                        <h4>
-                            <i class="far fa-images"></i>
-                            Image preview
-                        </h4>
-
-                        <h5>Currently: {{ $topic->image }}</h5>
-                        <img src="{{ asset('storage/'.$topic->image) }}" />
-                    </div>
-                    <div class="col" style="margin-top: 3em;">
-                        <input type="hidden"  name="topic[image]" value="{{$topic->image}}" />
-                        <label>
-                            <input name="topic[delete_image]" type="checkbox" value="1" /> Check to delete image
-                        </label>
-                    </div>
-                </div>
-            @else
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputFile">
-                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                            File input
-                        </label>
-                        <input type="file" id="inputFile" name="image" />
-                        <p class="help-block">
-                            Upload image for topic.
-                        </p>
-                    </div>
-                </div>
-            @endif
-        </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
@@ -107,7 +69,6 @@ $topic = $data['topic'];
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="col-lg-2"><h4>Status</h4></div>
                 <div class="col-sm">
@@ -117,14 +78,12 @@ $topic = $data['topic'];
                     </label>
                 </div>
                 <div class="col-sm">
-
                     <label>
                         <input name="topic[allow_comments]" type="hidden" value="0" />
                         <input name="topic[allow_comments]" type="checkbox" value="1" {{ checked(old('topic.allow_comments', $topic->allow_comments)) }} /> Allow Comments
                     </label>
                 </div>
                 <div class="col-sm">
-
                     <label>
                          <input name="topic[live]" type="hidden" value="0" />
                          <input name="topic[live]" type="checkbox" value="1" {{ checked( old('topic.live', $topic->live)) }} /> Check now to make Live
@@ -134,27 +93,27 @@ $topic = $data['topic'];
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2"><h4>Tags</h4></div>
+                <div class="col-lg-2">
+                    <h4>Tags</h4>
+                </div>
                 <div class="col-lg-10">
-                    <label><input type="text" name="tags" value="<?php echo htmlentities(old('tags', join(', ', $topic->tagNames()))); ?>"size="40" />
-                        <br />Add tags related to topic, comma separated.</label>
+                    <label>
+                        <input type="text" name="tags" value="<?php echo htmlentities(old('tags', join(', ', $topic->tagNames()))); ?>"size="40" />
+                        <br />Add tags related to topic, comma separated.
+                    </label>
                 </div>
             </div>
         </div>
-
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
         <div class="row">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-
-         <div class="col-sm"> &nbsp;</div>
+    <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
              <form name="delete" method="POST" action="{{route('topic_destroy')}}">

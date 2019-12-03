@@ -17,7 +17,6 @@ class Topic extends Model
     public $sortable = [
         'id',
         'name',
-        'image',
         'access_level',
         'live',
         'sort_order',
@@ -51,7 +50,6 @@ class Topic extends Model
             'name',
             'description',
             'content',
-            'image',
             'access_level',
             'sort_order',
             'live',

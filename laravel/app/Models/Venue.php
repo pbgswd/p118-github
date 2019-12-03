@@ -45,7 +45,6 @@ class Venue extends Model
         'name',
         'description',
         'url',
-        'image',
         'access_level',
         'live',
         'sort_order',

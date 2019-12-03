@@ -59,12 +59,12 @@ class CommitteeController extends Controller
      */
     public function leave(Request $request, Committee $committee)
     {
-dd(__METHOD__);
+//dd(__METHOD__);
         // if you are already a member, dont allow
         // if you are  a past member, set to member
 
         $committee->committee_members()->updateExistingPivot(Auth::id(), ['role' => 'Past-Member']);
-
+dd($committee->committee_members());
         Session::flash('success', 'You have left'. $committee->name);
 
         return redirect()->route('committee', $committee->slug);

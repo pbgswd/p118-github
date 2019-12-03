@@ -79,7 +79,6 @@ $venue = $data['venue'];
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="col-lg-2"><h4>Status</h4></div>
                 <div class="col-sm">
@@ -97,17 +96,14 @@ $venue = $data['venue'];
                 </div>
             </div>
         </div>
-
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
         <div class="row">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-
-         <div class="col-sm"> &nbsp;</div>
+    <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
              <form name="delete" method="POST" action="{{route('venue_destroy')}}">

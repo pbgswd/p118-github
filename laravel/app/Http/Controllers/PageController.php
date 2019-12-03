@@ -210,20 +210,4 @@ class PageController extends Controller
         return redirect()->route('pages_list');
     }
 
-    protected function uploadImage(FormRequest $request)
-    {
-        if (!$request->image) {
-            return null;
-        }
-
-        $imageName = $request->image->getClientOriginalName();
-
-        if (!$request->image->storeAs('public', $imageName)) {
-            Session::flash('warning', "Did not store " . $imageName);
-
-            return null;
-        }
-
-        return $imageName;
-    }
 }

@@ -66,7 +66,6 @@ class PostController extends Controller
     public function store(StorePost $request)
     {
         $post = new Post($request->input('post'), $request->input('tags'));
-        $post->image = $this->uploadImage($request);
 
         $post->save();
 
@@ -138,14 +137,6 @@ class PostController extends Controller
 
         $data = $request['post'];
 
-        $data['image'] = $this->uploadImage($request);
-
-        if (isset( $request['post']['delete_image'])) {
-            Storage::disk('public')->delete( $request->post['image'] );
-            Session::flash('info', "You have deleted " . $data['image']);
-            $data['image'] = NULL;
-        }
-
         $post->fill($data);
         $post->save();
 
@@ -183,10 +174,6 @@ class PostController extends Controller
     {
         $post = Post::find($request->id)->first();
 
-        if ($post->image) {
-            Storage::disk('public')->delete($post->image);
-        }
-
         $post->untag();
 
         $assignedTopics = [];
@@ -203,20 +190,4 @@ class PostController extends Controller
         return redirect()->route('posts_list');
     }
 
-    protected function uploadImage(FormRequest $request)
-    {
-        if (!$request->image) {
-            return null;
-        }
-
-        $imageName = $request->image->getClientOriginalName();
-
-        if (!$request->image->storeAs('public', $imageName)) {
-            Session::flash('warning', "Did not store " . $imageName);
-
-            return null;
-        }
-
-        return $imageName;
-    }
 }
