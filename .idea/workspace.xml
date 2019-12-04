@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/laravel/app/Models/CommitteePost.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/database/migrations/2019_12_04_002933_create_committee_posts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_12_04_002933_create_committee_posts_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/database/migrations/2019_12_04_003434_create_committe_posts_comments_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_12_04_003434_create_committe_posts_comments_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -280,7 +280,7 @@
       <workItem from="1575101563328" duration="4938000" />
       <workItem from="1575319493562" duration="6932000" />
       <workItem from="1575406679477" duration="246000" />
-      <workItem from="1575406947512" duration="8611000" />
+      <workItem from="1575406947512" duration="9869000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -330,6 +330,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="523" y="266" width="624" height="551" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1575406922454" />
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1575450049064">
+      <screen x="0" y="27" width="1680" height="1023" />
+    </state>
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1575450049063" />
     <state width="1254" height="224" key="GridCell.Tab.0.bottom" timestamp="1575016841802">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
