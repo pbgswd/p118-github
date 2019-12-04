@@ -120,4 +120,6 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('committee/{committee}/list-bulk-add', 'AdminCommitteeMemberController@index')->name('list-bulk-add');
     Route::post('committee/{committee}/list-bulk-add', 'AdminCommitteeMemberController@store');
 
+
+    Route::get('agreements', 'AgreementController@index')->name('agreements_list');
 });

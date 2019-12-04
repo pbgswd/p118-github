@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Agreements\DestroyAgreement;
-use App\Http\Requests\Agreements\StoreAgreement;
-use App\Http\Requests\Agreements\UpdateAgreement;
-use App\Models\Agreement;
+use App\Models\HireUs;
 use Illuminate\Http\Request;
 
-class AgreementController extends Controller
+class HireUsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +14,7 @@ class AgreementController extends Controller
      */
     public function index()
     {
-        dd(__METHOD__);
+        //
     }
 
     /**
@@ -27,7 +24,7 @@ class AgreementController extends Controller
      */
     public function create()
     {
-        dd(__METHOD__); //
+        //
     }
 
     /**
@@ -36,53 +33,53 @@ class AgreementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAgreement $request)
+    public function store(Request $request)
     {
-        dd(__METHOD__); //
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Agreement  $agreement
+     * @param  \App\Models\HireUs  $hireUs
      * @return \Illuminate\Http\Response
      */
-    public function show(Agreement $agreement)
+    public function show(HireUs $hireUs)
     {
-        dd(__METHOD__);//
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Agreement  $agreement
+     * @param  \App\Models\HireUs  $hireUs
      * @return \Illuminate\Http\Response
      */
-    public function edit(UpdateAgreement $agreement)
+    public function edit(HireUs $hireUs)
     {
-        dd(__METHOD__); //
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Agreement  $agreement
+     * @param  \App\Models\HireUs  $hireUs
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UpdateAgreement $agreement)
+    public function update(Request $request, HireUs $hireUs)
     {
-        dd(__METHOD__);  //
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Agreement  $agreement
+     * @param  \App\Models\HireUs  $hireUs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DestroyAgreement $agreement)
+    public function destroy(HireUs $hireUs)
     {
-        dd(__METHOD__); //
+        //
     }
 }

@@ -56,7 +56,7 @@ $attachment = $data['attachment'];
                     </ul>
                     <h4>Insert into content with:</h4>
 <xmp>
-<img src="{{env('APP_URL')}}/storage/{{$attachment['name']}}" />
+<img src="{{env('APP_URL')}}/storage/{{$attachment['name']}}" style="padding:1em;" />
 </xmp>
                 </div>
                 @endif
