@@ -13,13 +13,22 @@ class CreateCommittePostsCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('committe_posts_comments', function (Blueprint $table) {
+        Schema::create('committee_posts_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->unsignedBigInteger('committee_id');
             $table->foreign('committee_id')->references('id')->on('committees');
+
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('committee_posts');
+
+            $table->unsignedBigInteger('parent_id')->nullable();
+
             $table->string('content');
-            $table->boolean('live');
+            $table->boolean('live')->default(1);
             $table->timestamps();
         });
     }
@@ -31,6 +40,6 @@ class CreateCommittePostsCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('committe_posts_comments');
+        Schema::dropIfExists('committee_posts_comments');
     }
 }
