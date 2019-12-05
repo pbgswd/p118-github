@@ -1,7 +1,8 @@
 <?php
 $post = $data['post'];
+$committee = $data['post']['committee'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' . ($data["action"] == 'Edit' ? $post->title : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' . ($data["action"] == 'Edit' ? $post->title : ' in ' . $committee->name) ])
 @section('content')
     <script>
         tinymce.init({
@@ -22,7 +23,15 @@ $post = $data['post'];
         });
     </script>
 <div class="container">
-    <h3>  <a href="{{ route('committee_posts_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>  </h3>
+    <h3>
+        <a href="{{route('committee_show', $committee->slug)}}">
+            <i class="far fa-arrow-alt-circle-left"></i>
+            {{$committee->name}} Committee Page
+        </a> |
+        <a href="{{ route('committee_posts_list', $committee->slug) }}">
+            <i class="far fa-arrow-alt-circle-left"></i> List of posts
+        </a>
+    </h3>
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row">
@@ -68,21 +77,29 @@ $post = $data['post'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row" style="margin-top:30px;">
+            <div class="col-sm">
+                <i class="fas fa-edit fa-2x"></i>
+                <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
+            </div>
+        </div>
     </form>
-    <div class="row">
+
         @if ($data['action'] == 'Edit')
-             <div class="col-sm" style="float:right">
-                 <form name="delete" method="POST" action="{{route('committee_post_destroy')}}">
-                     {!! csrf_field() !!}
-                     {!! method_field('DELETE') !!}
-                    <i class="far fa-trash-alt fa-2x"></i>
-                    <input type="hidden" name="id[]" value="{{ $post->id }}">
-                    <input class="btn btn-outline-danger" type="submit" value="Delete">
-                </form>
-             </div>
+            <div class="row">
+                 <div class="col-sm" style="float:right">
+                     <form name="delete" method="POST" action="{{route('committee_post_destroy')}}">
+                         {!! csrf_field() !!}
+                         {!! method_field('DELETE') !!}
+                        <i class="far fa-trash-alt fa-2x"></i>
+                        <input type="hidden" name="id[]" value="{{ $post->id }}">
+                        <input class="btn btn-outline-danger" type="submit" value="Delete">
+                    </form>
+                 </div>
+            </div>
+            <div class="row" style="margin-top:3em; margin-bottom: 3em;">
+                post added by {{$post->user->name}}
+            </div>
         @endif
     </div>
-    <div class="row" style="margin-top:3em; margin-bottom: 3em;"> &nbsp;post added by {{$post->user->name}}</div>
-</div>
 @endsection

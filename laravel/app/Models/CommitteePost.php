@@ -14,7 +14,6 @@ class CommitteePost extends Model
     use Sortable;
     use HasRoles;
 
-
     protected $guard_name = 'web';  //????
 
     protected $policies = [
@@ -47,11 +46,10 @@ class CommitteePost extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
-        'committee_id',
-        'user_id',
+       // 'id',
+       // 'committee_id',
+       // 'user_id',
         'title',
-        'slug',
         'content',
         'live',
         'sticky',
@@ -59,7 +57,7 @@ class CommitteePost extends Model
     ];
 
     /**
-     * in urls, what field value is used to identify a Topic record?
+     * in urls, what field value is used to identify a CommitteePost record?
      */
     public function getRouteKeyName()
     {
@@ -69,7 +67,7 @@ class CommitteePost extends Model
     public function setNameAttribute($value)
     {
         $this->attributes['slug'] = Str::slug($value, '-');
-        return $this->attributes['name'] = $value;
+        return $this->attributes['title'] = $value;
     }
 
     public function creator()

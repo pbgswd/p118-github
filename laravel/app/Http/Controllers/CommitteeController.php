@@ -71,8 +71,6 @@ dd($committee->committee_members());
     }
 
 
-
-
     /**
      * Display the specified resource.
      *

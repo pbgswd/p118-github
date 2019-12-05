@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CommitteePostController extends Controller
 {
@@ -28,12 +30,11 @@ class CommitteePostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Committee $committee)
     {
         $post = new CommitteePost;
-        $post['user_id'] = Auth::id();
-        $post['committee'] = $post->committee();
-dd($post);
+        $post['committee'] = $committee;
+
         return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create']]);
     }
 
@@ -43,9 +44,20 @@ dd($post);
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Committee $committee, User $user)
     {
-        //
+       // dd($request->input('post'));
+        $post = new CommitteePost($request->input('post'));
+        $post->committee_id = $committee->id;
+        $post->user_id = Auth::id();
+
+        $post->slug = 'xxxx';
+//dd($post);
+        $post->save();
+
+        Session::flash('success', "You have saved a new post in " . $committee->name);
+
+        return redirect()->route('committee_post_edit', [$committee->slug, $post->slug]);
     }
 
     /**
@@ -67,7 +79,12 @@ dd($post);
      */
     public function edit(CommitteePost $committeePost)
     {
-        //
+        $data = $committeePost;
+        $data->committee();
+        dd($data);
+
+        return view('admin.committee_post', ['data' => $data, 'action' => 'Edit']);
+
     }
 
     /**
@@ -79,7 +96,7 @@ dd($post);
      */
     public function update(Request $request, CommitteePost $committeePost)
     {
-        //
+        dd(__METHOD__); //
     }
 
     /**

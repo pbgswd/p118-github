@@ -194,7 +194,6 @@ class PageController extends Controller
 
         $page->untag();
 
-
         $assignedTopics = [];
         foreach($page->topics as $topic)
         {
@@ -209,5 +208,4 @@ class PageController extends Controller
 
         return redirect()->route('pages_list');
     }
-
 }
