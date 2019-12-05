@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class CommitteePostController extends Controller
 {
@@ -46,13 +47,13 @@ class CommitteePostController extends Controller
      */
     public function store(Request $request, Committee $committee, User $user)
     {
-       // dd($request->input('post'));
+
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
         $post->user_id = Auth::id();
 
-        $post->slug = 'xxxx';
-//dd($post);
+        $post->slug = Str::slug($post->title, '-');
+
         $post->save();
 
         Session::flash('success', "You have saved a new post in " . $committee->name);

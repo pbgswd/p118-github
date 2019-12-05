@@ -21,7 +21,7 @@ class CreateCommitteePostsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('title')->unique();
             $table->string('slug')->unique();
-            $table->string('content');
+            $table->text('content');
             $table->boolean('live')->default(1);
             $table->boolean('sticky')->default(0);
             $table->boolean('allow_comments')->default(1);

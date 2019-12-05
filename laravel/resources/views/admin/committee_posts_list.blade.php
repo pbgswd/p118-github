@@ -9,7 +9,7 @@ $committee = $data['data']['committee'];
                <span class="badge badge-primary badge-pill">
                    {!! count($posts['posts'])  !!}
                </span>
-               Posts.
+               Posts.  <a href="{{route('committee_post', $committee->slug)}}">Add New Post in  {{$committee->name}}</a>
             </h3>
     </div>
     @if(count($posts['posts']) < 1)
