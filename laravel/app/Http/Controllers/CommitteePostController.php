@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Committee;
 use App\Models\CommitteePost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommitteePostController extends Controller
 {
@@ -12,9 +14,13 @@ class CommitteePostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Committee $committee)
     {
-        dd(__METHOD__);
+        $data = [];
+        $data['committee'] = $committee;
+        $data['posts'] = CommitteePost::sortable()->orderBy('created_at')->paginate(10);
+
+        return view('admin.committee_posts_list', ['data'=>array('data'=>$data)]);
     }
 
     /**
@@ -24,7 +30,11 @@ class CommitteePostController extends Controller
      */
     public function create()
     {
-        //
+        $post = new CommitteePost;
+        $post['user_id'] = Auth::id();
+        $post['committee'] = $post->committee();
+dd($post);
+        return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create']]);
     }
 
     /**

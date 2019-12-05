@@ -112,7 +112,6 @@ $committee = $data['committee'];
         @endhasanyrole
         <div class="col-md">
             <h4>Committee Membership Levels</h4>
-
             <p>
                 @foreach ($committee->committee_levels['committee_level'] as  $cl)
                     {{$cl}} <br />
@@ -120,7 +119,13 @@ $committee = $data['committee'];
             </p>
         </div>
     </div>
-        <div class="row" style="margin-top:100px;"><h5><i class="far fa-folder-open"></i> posts in {{ $committee->name }} </h5></div>
+        <div class="row" style="margin-top:100px;">
+            <h5>
+                <a href="{{route('committee_posts_list', $committee->slug)}}">
+                <i class="far fa-folder-open"></i>
+                    posts in {{ $committee->name }} </a> |
+                <a href="{{route('committee_post', $committee->slug)}}">Add New Post</a>
+            </h5></div>
     <br />
     <div class="row" style="margin-bottom:5em;"></div>
 </div>
