@@ -4,6 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $phone_numer
+ * @property string $label
+ * @property boolean $primary
+ * @property \DateTime created_at
+ * @property \DateTime updated_at
+ */
+
 class PhoneNumber extends Model
 {
 

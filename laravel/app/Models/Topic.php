@@ -8,11 +8,45 @@ use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property string $content
+ * @property string $access_level
+ * @property boolean $live
+ * @property int $sort_order
+ * @property boolean $in_menu
+ * @property boolean $allow_comments
+ * @property User $users
+ * @property Page $pages
+ * @property Post $posts
+ * @property \DateTime created_at
+ * @property \DateTime updated_at
+ */
+
 class Topic extends Model
 {
 
     use Sortable;
     use Taggable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable =
+        [
+            'name',
+            'description',
+            'content',
+            'access_level',
+            'sort_order',
+            'live',
+            'in_menu',
+            'allow_comments',
+        ];
 
     public $sortable = [
         'id',
@@ -39,23 +73,6 @@ class Topic extends Model
             'live'              => 'boolean',
         ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable =
-        [
-            'user_id',
-            'name',
-            'description',
-            'content',
-            'access_level',
-            'sort_order',
-            'live',
-            'in_menu',
-            'allow_comments',
-        ];
 
 
     /**

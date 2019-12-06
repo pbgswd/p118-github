@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 class Options
 {
     public static function access_levels()

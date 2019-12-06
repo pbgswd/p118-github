@@ -4,6 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $file_name
+ * @property string $image
+ * @property string $about
+ * @property boolean $show_profile
+ * @property boolean $show_picture
+ * @property boolean $share_email
+ * @property boolean $share_phone
+ */
+
 class UserInfo extends Model
 {
 

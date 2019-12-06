@@ -9,6 +9,19 @@ use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property string $email
+ * @property User $creator
+ * @property Committee $committee_members
+ * @property boolean $in_menu
+ * @property boolean $live
+ * @property boolean $allow_comments
+ * @property \DateTime created_at
+ * @property \DateTime updated_at
+ */
 class Committee extends Model
 {
     use Notifiable;
@@ -48,8 +61,6 @@ class Committee extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
-        'user_id',
         'name',
         'description',
         'email',

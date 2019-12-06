@@ -8,6 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 
+
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $access_level
+ * @property boolean $live
+ * @property int $sort_order
+ * @property boolean $in_menu
+ * @property boolean $allow_comments
+ * @property User $user
+ * @property Topic $topics
+ * @property \DateTime created_at
+ * @property \DateTime updated_at
+ *
+ */
+
 class Post extends Model
 {
     use Sortable;
@@ -18,7 +34,6 @@ class Post extends Model
     ];
 
     public $sortable = [
-        'id',
         'title',
         'access_level',
         'live',

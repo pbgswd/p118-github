@@ -13,10 +13,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int id
  * @property string name
  * @property string email
+ * @property string $password
  * @property \DateTime created_at
  * @property \DateTime updated_at
+ * @property PhoneNumber $phone_number
+ * @property UserInfo $user_info
+ * @property Address $address
+ * @property Membership $membership
+ * @property Attachment $attachments
+ * @property Committee $committee_membership
  *
- * @package App\Models
  */
 class User extends Authenticatable
 {

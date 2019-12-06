@@ -18,6 +18,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property boolean $sticky
  * @property boolean $live
  * @property boolean $allow_comments
+ * @property \DateTime created_at
+ * @property \DateTime updated_at
  */
 
 class CommitteePost extends Model

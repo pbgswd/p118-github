@@ -6,10 +6,38 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property string $url
+ * @property string $access_level
+ * @property boolean $live
+ * @property int $sort_order
+ * @property boolean $in_menu
+ * @property User $users
+ * @property \DateTime created_at
+ * @property \DateTime updated_at
+ */
 
 class Venue extends Model
 {
         use Sortable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'url',
+        'access_level',
+        'live',
+        'sort_order',
+        'in_menu',
+    ];
 
         public $sortable = [
         'id',
@@ -33,22 +61,6 @@ class Venue extends Model
         'in_menu'           => 'boolean',
         'allow_comments'    => 'boolean',
         'live'              => 'boolean',
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'id',
-        'name',
-        'description',
-        'url',
-        'access_level',
-        'live',
-        'sort_order',
-        'in_menu',
     ];
 
     /**

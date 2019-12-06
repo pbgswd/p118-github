@@ -9,10 +9,43 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 
+/**
+ * @property int $id
+ * @property User $user
+ * @property string $description
+ * @property string $content
+ * @property string $access_level
+ * @property int $sort_order
+ * @property boolean $live
+ * @property boolean $in_menu
+ * @property boolean $allow_comments
+ * @property Topic $topics
+ * @property \DateTime created_at
+ * @property \DateTime updated_at
+ */
+
 class Page extends Model
 {
     use Sortable;
     use Taggable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+
+    protected $fillable =
+        [
+            'title',
+            'description',
+            'content',
+            'access_level',
+            'sort_order',
+            'live',
+            'in_menu',
+            'allow_comments',
+        ];
 
     protected $policies = [
         Page::class => PagePolicy::class,
@@ -43,23 +76,7 @@ class Page extends Model
             'live'              => 'boolean',
         ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable =
-        [
-            'user_id',
-            'title',
-            'description',
-            'content',
-            'access_level',
-            'sort_order',
-            'live',
-            'in_menu',
-            'allow_comments',
-        ];
+
 
     /**
      * in urls, what field value is used to identify a Topic record?
