@@ -7,8 +7,8 @@ $venue = $data['venue'];
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
 
-        <a href="{{ route('hello') }}">Home/</a>
-        <a href="{{route('venues')}}">venues/</a> {{$venue->name}}
+        <a href="{{ route('hello') }}">Home /</a>
+        <a href="{{route('venues')}}">venues /</a> {{$venue->name}}
 
         <div class="col-12">
             <h1 class="display-3">{{$venue->name}}</h1>

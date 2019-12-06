@@ -8,9 +8,9 @@ $tags = join(', ', $post->tagNames());
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding: 2em">
         <div class="row">
             @foreach ($post->topics as $topic)
-                <a href="{{ route('hello') }}">Home/</a> &nbsp;
-                <a href="{{route('topics')}}">Topics/</a> &nbsp;
-                <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}}/</a>&nbsp;
+                <a href="{{ route('hello') }}">Home /</a>
+                <a href="{{route('topics')}}">Topics /</a>
+                <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}} /</a>
                 {{$post->title}}
             @endforeach
         </div>
@@ -21,13 +21,6 @@ $tags = join(', ', $post->tagNames());
             <h2>{!! $post->description !!}</h2>
         </div>
         <div class="col-12">
-            @if( $post->image )
-                <div class="col-md-6">
-                    <div class="col">
-                        <img src="{{ asset('storage/'.$post->image) }}" />
-                    </div>
-                </div>
-            @endif
             {!! $post->content !!}
          </div>
         @if ($tags != '')
@@ -38,9 +31,9 @@ $tags = join(', ', $post->tagNames());
         <div class="row">post added by {{$post->user->name}}</div>
         <div class="row">
             @foreach ($post->topics as $topic)
-                <a href="{{ route('hello') }}">Home/</a> &nbsp;
-                <a href="{{route('topics')}}">Topics/</a> &nbsp;
-                <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}}/</a> &nbsp;
+                <a href="{{ route('hello') }}">Home /</a> &nbsp;
+                <a href="{{route('topics')}}">Topics /</a> &nbsp;
+                <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}} /</a> &nbsp;
                 {{$post->title}}
             @endforeach
         </div>

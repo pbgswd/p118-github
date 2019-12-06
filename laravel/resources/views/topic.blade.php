@@ -8,8 +8,8 @@ $posts = $topic->posts;
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
-        <a href="{{ route('hello') }}">Home/</a>
-        <a href="{{route('topics')}}">Topics/</a> {{$topic->name}}
+        <a href="{{ route('hello') }}">Home /</a>
+        <a href="{{route('topics')}}">Topics /</a> {{$topic->name}}
         <div class="col-12">
             <h1 class="display-3">{{$topic->name}}</h1>
         </div>

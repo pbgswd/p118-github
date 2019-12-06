@@ -1,6 +1,3 @@
-<?php
-
-?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
@@ -9,8 +6,8 @@
             <h1 class="display-3">Committees</h1>
         </div>
         <div class="col-12">
-            <a href="{{ route('hello') }}">Home/</a>
-            <a href="{{route('committees')}}">Committees/</a>
+            <a href="{{ route('hello') }}">Home /</a>
+            <a href="{{route('committees')}}">Committees /</a>
             <h2>Groups within the Local</h2>
         </div>
         <div class="row">

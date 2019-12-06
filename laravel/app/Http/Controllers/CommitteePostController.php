@@ -64,9 +64,14 @@ class CommitteePostController extends Controller
      * @param  \App\Models\CommitteePost  $committeePost
      * @return \Illuminate\Http\Response
      */
-    public function show(CommitteePost $committeePost)
+    public function show(Committee $committee, CommitteePost $committeePost)
     {
-        //
+         $committeePost->creator;
+         $committeePost->committee;
+
+        //$data = ['topic'=>$topic];
+
+        return view('committee_post', ['data'=> $committeePost]);
     }
 
     /**

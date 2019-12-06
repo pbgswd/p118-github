@@ -10,8 +10,8 @@ $data['venues'] = $data['data']['venues'];
             <h1 class="display-3">Venues</h1>
         </div>
         <div class="col-12">
-            <a href="{{ route('hello') }}">Home/</a>
-            <a href="{{route('venues')}}">Venues/</a>
+            <a href="{{ route('hello') }}">Home /</a>
+            <a href="{{route('venues')}}">Venues /</a>
             <h2>Where we work</h2>
         </div>
         <!-- Example row of columns -->

@@ -8,8 +8,8 @@ $c = $data['committee'];
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
         <div class="row">
-            <a href="{{ route('hello') }}">Home/</a>
-            <a href="{{route('committees')}}">Committees/</a> {{$c->name}}
+            <a href="{{ route('hello') }}">Home /</a>
+            <a href="{{route('committees')}}">Committees /</a> {{$c->name}}
         </div>
         <div class="row">
             <div class="col-md-6">
