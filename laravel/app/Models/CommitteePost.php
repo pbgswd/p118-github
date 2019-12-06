@@ -15,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $content
  * @property User $creator
  * @property Committee $committee
+ * @property Committee $committee_posts
  * @property boolean $sticky
  * @property boolean $live
  * @property boolean $allow_comments
@@ -89,5 +90,10 @@ class CommitteePost extends Model
     public function committee()
     {
         return $this->hasOne(Committee::class, 'id', 'committee_id');
+    }
+
+    public function committee_posts()
+    {
+        return $this->belongsToMany(Committee::class, 'committees', 'id', 'committee_id');
     }
 }

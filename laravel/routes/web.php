@@ -45,7 +45,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('committee/{committee}/join', 'CommitteeController@join');
     Route::post('committee/{committee}/leave', 'CommitteeController@leave');
     Route::get('committee/{committee}/show-members', 'CommitteeController@show_members')->name('committee_list_members');
-
+    Route::get('committee/{committee}/post/{committeePost}', 'CommitteePost@show')->name('committee_post_show');
     Route::post('/search', 'SearchController@index')->name('search');
 });
 

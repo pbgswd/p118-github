@@ -16,12 +16,14 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property User $creator
  * @property Committee $committee_members
+ * @property CommitteePost $posts
  * @property boolean $in_menu
  * @property boolean $live
  * @property boolean $allow_comments
  * @property \DateTime created_at
  * @property \DateTime updated_at
  */
+
 class Committee extends Model
 {
     use Notifiable;
@@ -93,6 +95,10 @@ class Committee extends Model
     public function committee_members()
     {
         return $this->belongsToMany(User::class)->withPivot('role')->withTimestamps();
+    }
+    public function posts()
+    {
+        return $this->hasMany(CommitteePost::class);
     }
 
 }

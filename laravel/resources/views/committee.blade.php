@@ -1,6 +1,7 @@
 <?php
 //dd($data);
 $c = $data['committee'];
+//dd($c->posts);
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -50,15 +51,20 @@ $c = $data['committee'];
                 </div>
             </div>
             <div class="row">
-xxxxxxxxxxxxxxx
-            </div>
-            <div class="row">subscribe</div>
-            <div class="row">
                 <div class="col-12">
                     <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee"><i class="far fa-envelope"></i> {{$data['committee']->email}}</a>
                 </div>
             </div>
-            <div class="row">posts</div>
+            <div class="row">
+                <h4>{{count($c->posts)}} Posts</h4>
+                @foreach($c->posts as $p)
+                    <div class="col-12">
+                        <h5>
+                            <a href="{{route('committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a>
+                        </h5>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 </div>

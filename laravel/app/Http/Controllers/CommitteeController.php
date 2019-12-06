@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Committee;
+use App\Models\CommitteePost;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,16 +78,14 @@ dd($committee->committee_members());
      * @param  \App\Models\Committee  $committee
      * @return \Illuminate\Http\Response
      */
-    public function show(Committee $committee)
+    public function show(Committee $committee, CommitteePost $committeePost)
     {
-        $committee->load('creator', 'committee_members');
+        $committee->load('creator', 'committee_members', 'posts');
         $data = ['committee' => $committee];
 
         $data['isMember'] = $committee->committee_members->contains(function (User $member) {
             return Auth::id() == $member->id;
         });
-
-        //dd($data);
 
         return view('committee', ['data' => $data]);
     }
