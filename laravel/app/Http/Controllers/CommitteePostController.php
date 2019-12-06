@@ -47,12 +47,9 @@ class CommitteePostController extends Controller
      */
     public function store(Request $request, Committee $committee, User $user)
     {
-
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
         $post->user_id = Auth::id();
-
-        $post->slug = Str::slug($post->title, '-');
 
         $post->save();
 
@@ -78,13 +75,13 @@ class CommitteePostController extends Controller
      * @param  \App\Models\CommitteePost  $committeePost
      * @return \Illuminate\Http\Response
      */
-    public function edit(CommitteePost $committeePost)
+    public function edit(Committee $committee, CommitteePost $committeePost)
     {
-        $data = $committeePost;
-        $data->committee();
-        dd($data);
+        $committeePost->creator;
+        $data['post'] = $committeePost;
+        $data['action'] = 'Edit';
 
-        return view('admin.committee_post', ['data' => $data, 'action' => 'Edit']);
+        return view('admin.committee_post', ['data' => $data]);
 
     }
 
@@ -97,7 +94,7 @@ class CommitteePostController extends Controller
      */
     public function update(Request $request, CommitteePost $committeePost)
     {
-        dd(__METHOD__); //
+        dd(__METHOD__);
     }
 
     /**
@@ -108,6 +105,6 @@ class CommitteePostController extends Controller
      */
     public function destroy(CommitteePost $committeePost)
     {
-        //
+        dd(__METHOD__);
     }
 }

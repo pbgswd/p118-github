@@ -7,8 +7,10 @@
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/database/migrations/2019_12_04_002933_create_committee_posts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_12_04_002933_create_committee_posts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/CommitteePost.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/CommitteePost.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/committee_post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/committee_post.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/committee_posts_list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/committee_posts_list.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,12 +213,7 @@
         <serviceView>
           <option name="contentProportion" value="0.21806854" />
           <treeState>
-            <expand>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:MySQL - p118@172.19.0.2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </treeState>
         </serviceView>
@@ -276,7 +273,8 @@
       <workItem from="1575101563328" duration="4938000" />
       <workItem from="1575319493562" duration="6932000" />
       <workItem from="1575406679477" duration="246000" />
-      <workItem from="1575406947512" duration="25620000" />
+      <workItem from="1575406947512" duration="25851000" />
+      <workItem from="1575582244095" duration="7919000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>

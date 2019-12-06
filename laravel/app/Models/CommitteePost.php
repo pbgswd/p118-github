@@ -8,6 +8,18 @@ use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string $content
+ * @property User $creator
+ * @property Committee $committee
+ * @property boolean $sticky
+ * @property boolean $live
+ * @property boolean $allow_comments
+ */
+
 class CommitteePost extends Model
 {
     use Notifiable;
@@ -46,9 +58,6 @@ class CommitteePost extends Model
      * @var array
      */
     protected $fillable = [
-       // 'id',
-       // 'committee_id',
-       // 'user_id',
         'title',
         'content',
         'live',
@@ -64,7 +73,7 @@ class CommitteePost extends Model
         return 'slug';
     }
 
-    public function setNameAttribute($value)
+    public function setTitleAttribute($value)
     {
         $this->attributes['slug'] = Str::slug($value, '-');
         return $this->attributes['title'] = $value;

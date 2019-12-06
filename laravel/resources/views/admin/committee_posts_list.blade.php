@@ -6,14 +6,24 @@ $committee = $data['data']['committee'];
 @section('content')
     <div class="container">
             <h3>
+                <a href="{{ route('committee_show', $committee->slug) }}" title="Back to admin {{$committee->name}} view">
+                    <i class="fas fa-arrow-circle-left"></i> Back
+                </a> &nbsp;
                <span class="badge badge-primary badge-pill">
                    {!! count($posts['posts'])  !!}
                </span>
-               Posts.  <a href="{{route('committee_post', $committee->slug)}}">Add New Post in  {{$committee->name}}</a>
+               Posts.
+                <a href="{{route('committee_post', $committee->slug)}}">
+                    <i class="fas fa-pen-square"></i>
+                    Add New Post in  {{$committee->name}}
+                </a>
             </h3>
     </div>
     @if(count($posts['posts']) < 1)
-        No posts yet.   <a href="{{route('committee_post', $committee->slug)}}">Add New Post</a>
+        No posts yet.   <a href="{{route('committee_post', $committee->slug)}}">
+            <i class="fas fa-pen-square"></i>
+            Add New Post
+            </a>
     @else
         <form name="delete" method="POST" action="{{route('committee_post_destroy', $committee->slug)}}">
             {!! csrf_field() !!}

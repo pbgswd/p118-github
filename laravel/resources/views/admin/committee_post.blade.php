@@ -1,6 +1,7 @@
 <?php
 $post = $data['post'];
 $committee = $data['post']['committee'];
+//dd($post);
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' . ($data["action"] == 'Edit' ? $post->title : ' in ' . $committee->name) ])
 @section('content')
@@ -82,13 +83,13 @@ $committee = $data['post']['committee'];
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
-        </div>
+
     </form>
 
         @if ($data['action'] == 'Edit')
-            <div class="row">
+
                  <div class="col-sm" style="float:right">
-                     <form name="delete" method="POST" action="{{route('committee_post_destroy')}}">
+                     <form name="delete" method="POST" action="{{route('committee_post_destroy', $committee->slug  )}}">
                          {!! csrf_field() !!}
                          {!! method_field('DELETE') !!}
                         <i class="far fa-trash-alt fa-2x"></i>
@@ -98,7 +99,7 @@ $committee = $data['post']['committee'];
                  </div>
             </div>
             <div class="row" style="margin-top:3em; margin-bottom: 3em;">
-                post added by {{$post->user->name}}
+                post added by {{$post->creator->name}}
             </div>
         @endif
     </div>
