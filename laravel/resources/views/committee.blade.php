@@ -8,14 +8,15 @@ $c = $data['committee'];
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
         <div class="row">
-            <a href="{{ route('hello') }}">Home /</a>
-            <a href="{{route('committees')}}">Committees /</a> {{$c->name}}
+            <div class="col-12">
+                <a href="{{ route('hello') }}">Home / </a>&nbsp;
+                <a href="{{route('committees')}}">Committees / </a>&nbsp; {{$c->name}}
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <h1 class="display-3">{{$c->name}}</h1>
             </div>
-
             <div class="col-md-6">
                 @if($data['isMember'] != 1)
                     You are not a member
@@ -60,7 +61,7 @@ $c = $data['committee'];
                 @foreach($c->posts as $p)
                     <div class="col-12">
                         <h5>
-                            <a href="{{route('committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a>
+                            <a href="{{route('committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a> {{$p->updated_at}}
                         </h5>
                     </div>
                 @endforeach
