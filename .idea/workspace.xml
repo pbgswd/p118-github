@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
-      <change afterPath="$PROJECT_DIR$/laravel/resources/views/committee_post.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/committees.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/committees.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/flash-messages.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/flash-messages.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/page.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/post.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/topic.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/topic.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/topics.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/topics.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/venue.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/venue.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/venues.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/venues.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/storage/app/public/.gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,17 +36,6 @@
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="MySQL - p118@172.19.0.2" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="MySQL - p118@172.19.0.2" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="MySQL - p118@172.19.0.2" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="p118: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
     </expand>
     <select />
@@ -185,8 +166,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/laravel/resources/views" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -281,6 +268,9 @@
       <workItem from="1575406679477" duration="246000" />
       <workItem from="1575406947512" duration="25851000" />
       <workItem from="1575582244095" duration="17929000" />
+      <workItem from="1575842920701" duration="205000" />
+      <workItem from="1575933572300" duration="274000" />
+      <workItem from="1575933872319" duration="2663000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -326,9 +316,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="629" y="129" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1575007313107" />
-    <state x="523" y="266" width="624" height="551" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575406922454">
-      <screen x="0" y="27" width="1680" height="1023" />
+    <state x="425" y="170" width="640" height="545" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575933843246">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="425" y="170" width="640" height="545" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1575933843246" />
     <state x="523" y="266" width="624" height="551" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1575406922454" />
     <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1575535442017">
       <screen x="0" y="27" width="1680" height="1023" />
@@ -350,10 +341,19 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state width="1254" height="224" key="GridCell.Tab.0.right/0.27.1680.1023@0.27.1680.1023" timestamp="1575016841802" />
+    <state x="379" y="196" key="com.intellij.ide.util.TipDialog" timestamp="1575933873480">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="379" y="196" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1575933873480" />
+    <state x="379" y="207" key="com.intellij.ide.util.TipDialog/0.0.1366.768@0.0.1366.768" timestamp="1575842922530" />
     <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1575080188306">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1680.1023@0.27.1680.1023" timestamp="1575080188306" />
+    <state x="339" y="162" key="run.anything.popup" timestamp="1575935814172">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1575935814172" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

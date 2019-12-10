@@ -4,14 +4,13 @@ http://iatse118.com rebuild
 
 A good use case for Laravel.
 
-
 Project Title: Local 118 Rebuild
 
 Background
 
 IATSE Local 118 in Vancouver has a website which has served its needs well in the past. With more recent influences such as innovation in how to present content on the web, greater adoption of the site and growth in the local, a new instance of the website that makes use of current software will better serve the local. It will allow for management of more timely information, addition of online services and the reorganization of current ones to best suit the needs of both member users and public visitors of the website. 
 
-Peter Gordon is a member in good standing with IATSE 118, with approximately two years experience with the Local. Peter has over 18 years experience in Web application development, and has approached other members about the possibility of rebuilding the website. Peter offers to redevelop the current site on behalf of the Local as a pro bono project as he has interest in doing it as a portfolio piece. 
+Peter Gordon is a member in good standing with IATSE 118, with approximately two years experience with the Local. Peter has over 18 years experience in Web application development, and has approached other members about the possibility of rebuilding the website.
 
 High-Level Project Proposal
 
@@ -32,7 +31,8 @@ Other features as needed.
 
 Development Schedule 
 
-Peter Gordon will perform the development work for this project on a casual basis, time permitting. Delivery and presentation of the first phase will be in summer 2019. 
+Peter Gordon will perform the development work for this project on a casual basis, time permitting. 
+Delivery and presentation of the first phase will be in summer 2019. 
 
 
 Resources 
@@ -64,7 +64,7 @@ Key Stakeholders
 
 President Corin Gutteridge.
 Brother Andrew McLean Youth Committee.
-Brother Don Underhill (previous developer).
+Brother Don Underhill (previous webmaster).
 IATSE 118 Executive Board.
 Peter Gordon, IATSE 118 Member, Web Application Developer.
 Remick Tadesse-Lee, Technical Advisor and Mentor to Peter.
