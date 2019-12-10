@@ -71,7 +71,7 @@
                         <a class="nav-link" href="{{route('pages')}}">Pages</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Hire Us</a>
+                        <a class="nav-link" href="{{route('hireus')}}">Hire Us</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('contact')}}">Contact Us</a>

@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/laravel/resources/views/hireus.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/storage/app/public/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/HireUsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/HireUsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/page.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,12 +34,7 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="MySQL - p118@172.19.0.2" type="feb32156:DbDataSourceImpl" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="Git.Settings">
@@ -165,10 +162,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ChangesTree.GroupingKeys" value="" />
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
@@ -185,19 +183,19 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/laravel/app/Models" />
+      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Documents\websites\project118\laravel\resources\views" />
       <recent name="$PROJECT_DIR$/laravel/resources/views" />
       <recent name="$PROJECT_DIR$/laravel/resources/views/admin" />
       <recent name="$PROJECT_DIR$/laravel/app/Http/Controllers" />
       <recent name="$PROJECT_DIR$/laravel" />
-      <recent name="$PROJECT_DIR$/laravel/tests/Feature" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/laravel/app/Models" />
-      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -270,7 +268,7 @@
       <workItem from="1575582244095" duration="17929000" />
       <workItem from="1575842920701" duration="205000" />
       <workItem from="1575933572300" duration="274000" />
-      <workItem from="1575933872319" duration="2663000" />
+      <workItem from="1575933872319" duration="7570000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -325,6 +323,14 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1575535442017" />
+    <state x="181" y="0" key="CommitChangelistDialog2" timestamp="1575950936278">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="181" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1575950936278" />
+    <state width="254" height="195" key="DatabaseViewActions_Filter" timestamp="1575948194812">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="254" height="195" key="DatabaseViewActions_Filter/0.0.1366.728@0.0.1366.728" timestamp="1575948194812" />
     <state width="1254" height="224" key="GridCell.Tab.0.bottom" timestamp="1575016841802">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
@@ -341,6 +347,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state width="1254" height="224" key="GridCell.Tab.0.right/0.27.1680.1023@0.27.1680.1023" timestamp="1575016841802" />
+    <state x="184" y="6" key="SettingsEditor" timestamp="1575950442006">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1575950442006" />
     <state x="379" y="196" key="com.intellij.ide.util.TipDialog" timestamp="1575933873480">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -350,10 +360,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1680.1023@0.27.1680.1023" timestamp="1575080188306" />
-    <state x="339" y="162" key="run.anything.popup" timestamp="1575935814172">
+    <state x="339" y="162" key="run.anything.popup" timestamp="1575948942329">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1575935814172" />
+    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1575948942329" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

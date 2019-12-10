@@ -46,7 +46,8 @@ class HireUsController extends Controller
      */
     public function show(HireUs $hireUs)
     {
-        //
+        $data = [];
+        return view('hireus', ['data'=>$data]);
     }
 
     /**
