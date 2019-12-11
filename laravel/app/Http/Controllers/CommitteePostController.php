@@ -74,9 +74,7 @@ class CommitteePostController extends Controller
     {
         $committeePost->creator;
         $committeePost->committee;
-        $committeePost->post_comments;
-
-        dd($committeePost);
+       // $committeePost->post_comments;
 
         $data['committeepost'] = $committeePost;
         $data['action'] = 'Add';

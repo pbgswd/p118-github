@@ -139,7 +139,6 @@ class TopicController extends Controller
     {
         $topic = Topic::find($request->id)->first();
 
-
         $topic->untag();
 
         $topic->pages()->detach();

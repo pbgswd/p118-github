@@ -182,10 +182,6 @@ class PageController extends Controller
     {
         $page = Page::find($request->id)->first();
 
-        if ($page->image) {
-            Storage::disk('public')->delete($page->image);
-        }
-
         $page->untag();
 
         $assignedTopics = [];
