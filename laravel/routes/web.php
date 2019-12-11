@@ -49,6 +49,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('committee/{committee}/show-members', 'CommitteeController@show_members')->name('committee_list_members');
     Route::get('committee/{committee}/post/{committeePost}', 'CommitteePostController@show')->name('committee_post_show');
     Route::post('committee/{committee}/post/{committeePost}', 'CommitteePostController@store');
+
+    Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('committee_post_comment');
+
+
+
     Route::post('/search', 'SearchController@index')->name('search');
 });
 

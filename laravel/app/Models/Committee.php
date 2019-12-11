@@ -96,6 +96,7 @@ class Committee extends Model
     {
         return $this->belongsToMany(User::class)->withPivot('role')->withTimestamps();
     }
+
     public function posts()
     {
         return $this->hasMany(CommitteePost::class);

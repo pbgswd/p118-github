@@ -2,6 +2,7 @@
 //dd($data);
 $post = $data['committeepost'];
 $c = $data['committeepost']->committee;
+
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -23,16 +24,28 @@ $c = $data['committeepost']->committee;
             {!! $post->content !!}
         </div>
         <div class="row" style="margin-top:3em;">
-            <h5>Comments for {{$post->title}}</h5>
+            <div class="col-12">
+                <h5><i class="far fa-comments"></i> {{count($data['committeepost']->committee_post_comments)}} Comments for {{$post->title}}</h5>
+                <a href="#comment" title="Go to add my comment"><i class="far fa-comment"></i> Add my comment to {{$post->title}}</a>
+            </div>
         </div>
-        <div class="row" style="margin-top:3em;">
 
-            <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post">
+        <div class="row" style="margin-top:3em;">
+            <div class="col-12">
+                 comments would go in here
+            </div>
+        </div>
+
+
+
+        <div class="row" style="margin-top:3em;">
+            <a name="comment"></a>
+            <form class="form-horizontal" role="form" action="{{ route('committee_post_comment', [$c->slug, $post->slug]) }}" method="post">
                 {!! csrf_field() !!}
                 <div class="form-group">
-                    <label for="content"  class="col-4 control-label">Add your comment</label>
+                    <label for="content"  class="col-4 control-label"><i class="far fa-comment"></i> Add my comment</label>
                     <div class="col-8">
-                        <textarea name="content" form-control input-lg" rows="3" cols="100">test content</textarea>
+                        <textarea name="comment[content]" form-control input-lg" rows="3" cols="100">test content</textarea>
                     </div>
                 </div>
                 <div class="row">

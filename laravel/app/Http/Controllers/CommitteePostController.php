@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\CommitteePostComments;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,7 @@ class CommitteePostController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Committee $committee
      * @return \Illuminate\Http\Response
      */
     public function index(Committee $committee)
@@ -42,7 +44,9 @@ class CommitteePostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @param Committee $committee
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Committee $committee, User $user)
@@ -61,13 +65,16 @@ class CommitteePostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CommitteePost  $committeePost
+     * @param Committee $committee
+     * @param \App\Models\CommitteePost $committeePost
+     * @param CommitteePostComments $committeePostComments
      * @return \Illuminate\Http\Response
      */
-    public function show(Committee $committee, CommitteePost $committeePost)
+    public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComments $committeePostComments)
     {
-         $committeePost->creator;
-         $committeePost->committee;
+        $committeePost->creator;
+        $committeePost->committee;
+        $committeePost->committee_post_comments;
 
         $data['committeepost'] = $committeePost;
         $data['action'] = 'Add';
@@ -78,7 +85,8 @@ class CommitteePostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CommitteePost  $committeePost
+     * @param Committee $committee
+     * @param \App\Models\CommitteePost $committeePost
      * @return \Illuminate\Http\Response
      */
     public function edit(Committee $committee, CommitteePost $committeePost)
@@ -88,19 +96,28 @@ class CommitteePostController extends Controller
         $data['action'] = 'Edit';
 
         return view('admin.committee_post', ['data' => $data]);
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CommitteePost  $committeePost
+     * @param \Illuminate\Http\Request $request
+     * @param $post blank parameter to handle order of arguments in url
+     * @param \App\Models\CommitteePost $committeePost
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CommitteePost $committeePost)
+    public function update(Request $request, $post, CommitteePost $committeePost)
     {
-        dd(__METHOD__);
+        $data = $request['post'];
+
+        $committeePost->fill($data);
+        $committeePost->save();
+
+        Session::flash('success', "You have edited the post");
+
+        $committeePost->committee;
+
+        return redirect()->route('committee_post_edit', [$committeePost->committee->slug, $committeePost->slug]);
     }
 
     /**
@@ -112,5 +129,8 @@ class CommitteePostController extends Controller
     public function destroy(CommitteePost $committeePost)
     {
         dd(__METHOD__);
+        // delete comments associated with it
+        // delete the post
+
     }
 }

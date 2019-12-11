@@ -13,14 +13,15 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $title
  * @property string $slug
  * @property string $content
- * @property User $creator
- * @property Committee $committee
- * @property Committee $committee_posts
  * @property boolean $sticky
  * @property boolean $live
  * @property boolean $allow_comments
  * @property \DateTime created_at
  * @property \DateTime updated_at
+ * @property User $creator
+ * @property Committee $committee
+ * @property CommitteePost $committee_posts
+ * @property CommitteePostComments $committee_post_comments
  */
 
 class CommitteePost extends Model
@@ -95,5 +96,10 @@ class CommitteePost extends Model
     public function committee_posts()
     {
         return $this->belongsToMany(Committee::class, 'committees', 'id', 'committee_id');
+    }
+
+    public function committee_post_comments()
+    {
+        return $this->hasMany(CommitteePostComments::class, 'id', 'post_id');
     }
 }
