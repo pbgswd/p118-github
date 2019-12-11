@@ -1,6 +1,7 @@
 <?php
-$post = $data;
-$c = $data->committee;
+//dd($data);
+$post = $data['committeepost'];
+$c = $data['committeepost']->committee;
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -26,23 +27,17 @@ $c = $data->committee;
         </div>
         <div class="row" style="margin-top:3em;">
 
-            <form class="form-horizontal" role="form" action="" method="post">
+            <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post">
                 {!! csrf_field() !!}
                 <div class="form-group">
-                    <label for="mail_body"  class="col-sm-2 control-label">Message</label>
-                    <div class="col-sm-10">
-                        <textarea name="mail_body" form-control input-lg" rows="3" cols="100">{{old('mail_body')}}</textarea>
+                    <label for="content"  class="col-4 control-label">Add your comment</label>
+                    <div class="col-8">
+                        <textarea name="content" form-control input-lg" rows="3" cols="100">test content</textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <button
-                            class="btn btn-primary g-recaptcha"
-                            data-sitekey="6LcxikAUAAAAAAvZhKMlu3bH9dndScyhJk5d4NoF"
-                            data-callback=""
-                            name="submit">
-                            Send
-                        </button>
+                        <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
                     </div>
                     <div class="col-6">
                         <button type="reset"

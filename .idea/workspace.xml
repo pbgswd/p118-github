@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/laravel/app/Models/CommitteePostComments.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/committee_post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/committee_post.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,7 +268,8 @@
       <workItem from="1575842920701" duration="205000" />
       <workItem from="1575933572300" duration="274000" />
       <workItem from="1575933872319" duration="8913000" />
-      <workItem from="1575968213389" duration="1434000" />
+      <workItem from="1575968213389" duration="1505000" />
+      <workItem from="1576030758146" duration="3330000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -318,10 +320,10 @@
     </state>
     <state x="425" y="170" width="640" height="545" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1575933843246" />
     <state x="523" y="266" width="624" height="551" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1575406922454" />
-    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1575535442017">
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1576045591058">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
-    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1575535442017" />
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1576045591058" />
     <state x="181" y="0" key="CommitChangelistDialog2" timestamp="1575950936278">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -359,6 +361,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1680.1023@0.27.1680.1023" timestamp="1575080188306" />
+    <state x="485" y="274" width="709" height="528" key="find.popup" timestamp="1576031812475">
+      <screen x="0" y="27" width="1680" height="1023" />
+    </state>
+    <state x="485" y="274" width="709" height="528" key="find.popup/0.27.1680.1023@0.27.1680.1023" timestamp="1576031812475" />
     <state x="339" y="162" key="run.anything.popup" timestamp="1575948942329">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

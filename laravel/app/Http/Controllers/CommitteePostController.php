@@ -69,9 +69,10 @@ class CommitteePostController extends Controller
          $committeePost->creator;
          $committeePost->committee;
 
-        //$data = ['topic'=>$topic];
+        $data['committeepost'] = $committeePost;
+        $data['action'] = 'Add';
 
-        return view('committee_post', ['data'=> $committeePost]);
+        return view('committee_post', ['data'=> $data]);
     }
 
     /**
