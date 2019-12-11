@@ -25,7 +25,7 @@ $c = $data['committeepost']->committee;
         </div>
         <div class="row" style="margin-top:3em;">
             <div class="col-12">
-                <h5><i class="far fa-comments"></i> {{count($data['committeepost']->committee_post_comments)}} Comments for {{$post->title}}</h5>
+                <h5><i class="far fa-comments"></i> count() Comments for {{$post->title}}</h5>
                 <a href="#comment" title="Go to add my comment"><i class="far fa-comment"></i> Add my comment to {{$post->title}}</a>
             </div>
         </div>

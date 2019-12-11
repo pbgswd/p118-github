@@ -26,8 +26,6 @@ class CommitteePostComments extends Model
     use Sortable;
     use HasRoles;
 
-    protected $table = 'committee_post_comments';
-
     protected $guard_name = 'web';  //????
 
     protected $policies = [
