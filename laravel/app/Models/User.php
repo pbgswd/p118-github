@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
@@ -14,8 +15,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string name
  * @property string email
  * @property string $password
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  * @property PhoneNumber $phone_number
  * @property UserInfo $user_info
  * @property Address $address

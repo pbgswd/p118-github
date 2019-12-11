@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
@@ -15,10 +16,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $parent_id
  * @property string $content
  * @property boolean $live
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ * @property CommitteePost $committee_post
  */
-
 class CommitteePostComments extends Model
 {
     use Notifiable;
@@ -33,12 +34,13 @@ class CommitteePostComments extends Model
         //Committee::class=>CommitteePolicy::class,
     ];
 
-    public $sortable = [
-        'id',
-        'content',
-        'created_at',
-        'updated_at',
-    ];
+    public $sortable =
+        [
+            'id',
+            'content',
+            'created_at',
+            'updated_at',
+        ];
 
     protected $dates =
         [
@@ -56,14 +58,20 @@ class CommitteePostComments extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'content',
-        'live',
-    ];
+    protected $fillable =
+        [
+            'content',
+            'live',
+        ];
 
     public function commentAuthor()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function committee_post()
+    {
+        return $this->belongsToMany(CommitteePost::class, 'committee_posts', 'id', 'post_id');
     }
 
 }

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\HireUs;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class HireUsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -20,7 +21,7 @@ class HireUsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -30,8 +31,8 @@ class HireUsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -41,20 +42,20 @@ class HireUsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\HireUs  $hireUs
-     * @return \Illuminate\Http\Response
+     * @param HireUs $hireUs
+     * @return Response
      */
     public function show(HireUs $hireUs)
     {
         $data = [];
-        return view('hireus', ['data'=>$data]);
+        return view('hireus', ['data' => $data]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\HireUs  $hireUs
-     * @return \Illuminate\Http\Response
+     * @param HireUs $hireUs
+     * @return Response
      */
     public function edit(HireUs $hireUs)
     {
@@ -64,9 +65,9 @@ class HireUsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\HireUs  $hireUs
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param HireUs $hireUs
+     * @return Response
      */
     public function update(Request $request, HireUs $hireUs)
     {
@@ -76,8 +77,8 @@ class HireUsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\HireUs  $hireUs
-     * @return \Illuminate\Http\Response
+     * @param HireUs $hireUs
+     * @return Response
      */
     public function destroy(HireUs $hireUs)
     {

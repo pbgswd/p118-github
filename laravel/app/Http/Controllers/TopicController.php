@@ -6,14 +6,14 @@ use App\Http\Requests\Topic\DestroyRequest;
 use App\Http\Requests\Topic\StoreRequest;
 use App\Http\Requests\Topic\UpdateRequest;
 use App\Models\Topic;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 
 class TopicController extends Controller
@@ -27,32 +27,32 @@ class TopicController extends Controller
     {
         $topics = Topic::sortable()->with('tagged')->paginate(20);
 
-        return view('admin.listtopics', ['data'=>array('topics'=>$topics )]);
+        return view('admin.listtopics', ['data' => array('topics' => $topics)]);
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function list()
     {
         $topics = Topic::sortable()->with('tagged')->paginate(10);
 
-        return view('topics', ['data'=>array('topics'=>$topics )]);
+        return view('topics', ['data' => array('topics' => $topics)]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Topic  $topic
+     * @param \App\Topic $topic
      * @return Response
      */
     public function show(Topic $topic)
     {
         $topic->pages;
         $topic->posts;
-        $data = ['topic'=>$topic];
+        $data = ['topic' => $topic];
 
-        return view('topic', ['data'=> $data]);
+        return view('topic', ['data' => $data]);
     }
 
 
@@ -93,15 +93,15 @@ class TopicController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Topic  $topic
+     * @param \App\Topic $topic
      * @return Response
      */
     public function edit(Topic $topic)
     {
         $access_levels = $this->getFormOptions(['access_levels']);
-        $data = ['topic'=>$topic, 'access_levels' => $access_levels, 'action'=>'Edit'];
+        $data = ['topic' => $topic, 'access_levels' => $access_levels, 'action' => 'Edit'];
 
-        return view('admin.topic', ['data'=> $data]);
+        return view('admin.topic', ['data' => $data]);
     }
 
     /**
@@ -118,13 +118,10 @@ class TopicController extends Controller
         $topic->fill($data);
         $topic->save();
 
-        if (empty($request->tags))
-        {
+        if (empty($request->tags)) {
             $topic->untag();
-        }
-        else
-        {
-             $topic->retag(trim($request->tags, ','));
+        } else {
+            $topic->retag(trim($request->tags, ','));
         }
 
         Session::flash('success', "You have edited the topic");

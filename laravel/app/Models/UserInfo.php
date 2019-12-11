@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $share_email
  * @property boolean $share_phone
  */
-
 class UserInfo extends Model
 {
 

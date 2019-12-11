@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Policies\PagePolicy;
 use Conner\Tagging\Taggable;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -20,10 +20,9 @@ use Kyslik\ColumnSortable\Sortable;
  * @property boolean $in_menu
  * @property boolean $allow_comments
  * @property Topic $topics
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  */
-
 class Page extends Model
 {
     use Sortable;
@@ -71,11 +70,10 @@ class Page extends Model
 
     protected $casts =
         [
-            'in_menu'           => 'boolean',
-            'allow_comments'    => 'boolean',
-            'live'              => 'boolean',
+            'in_menu' => 'boolean',
+            'allow_comments' => 'boolean',
+            'live' => 'boolean',
         ];
-
 
 
     /**

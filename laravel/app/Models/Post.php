@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Policies\PostPolicy;
 use Conner\Tagging\Taggable;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -19,18 +19,17 @@ use Kyslik\ColumnSortable\Sortable;
  * @property boolean $allow_comments
  * @property User $user
  * @property Topic $topics
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  *
  */
-
 class Post extends Model
 {
     use Sortable;
     use Taggable;
 
     protected $policies = [
-      // Post::class => PostPolicy::class,
+        // Post::class => PostPolicy::class,
     ];
 
     public $sortable = [
@@ -52,9 +51,9 @@ class Post extends Model
 
     protected $casts =
         [
-            'in_menu'           => 'boolean',
-            'allow_comments'    => 'boolean',
-            'live'              => 'boolean',
+            'in_menu' => 'boolean',
+            'allow_comments' => 'boolean',
+            'live' => 'boolean',
         ];
     /**
      * The attributes that are mass assignable.

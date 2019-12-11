@@ -7,12 +7,10 @@ use App\Http\Requests\Posts\StorePost;
 use App\Http\Requests\Posts\UpdatePost;
 use App\Models\Post;
 use App\Models\Topic;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -20,32 +18,32 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Request $request)
     {
         $posts = Post::sortable()->with('tagged')->paginate(20);
 
-        return view('admin.listposts', ['data' => array('posts' => $posts )]);
+        return view('admin.listposts', ['data' => array('posts' => $posts)]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function list(Request $request)
     {
         $posts = Post::sortable()->with('tagged')->paginate(10);
 
-        return view('posts', ['data'=>array('posts'=>$posts )]);
+        return view('posts', ['data' => array('posts' => $posts)]);
     }
 
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -54,14 +52,14 @@ class PostController extends Controller
         $topics = Topic::all();
         $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.post', ['data' => ['post' => $post,  'assignedTopics' => [], 'topics' => $topics, 'access_levels' => $access_levels,  'action' => 'Create']]);
+        return view('admin.post', ['data' => ['post' => $post, 'assignedTopics' => [], 'topics' => $topics, 'access_levels' => $access_levels, 'action' => 'Create']]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param StorePost $post
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StorePost $request)
     {
@@ -69,7 +67,7 @@ class PostController extends Controller
 
         $post->save();
 
-        if(!empty($request->input('post.topic_id'))) {
+        if (!empty($request->input('post.topic_id'))) {
             $post->topics()->sync($request->input('post.topic_id'));
         }
 
@@ -85,8 +83,8 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @return Response
      */
     public function show(Post $post)
     {
@@ -99,16 +97,15 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @return Response
      */
     public function edit(Post $post)
     {
         $post->user;
 
         $assignedTopics = [];
-        foreach($post->topics as $topic)
-        {
+        foreach ($post->topics as $topic) {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
 
@@ -123,9 +120,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Post $post
+     * @return Response
      */
     public function update(UpdatePost $request, Post $post)
     {
@@ -140,16 +137,13 @@ class PostController extends Controller
         $post->fill($data);
         $post->save();
 
-        if(empty($data['topic_id'])){
+        if (empty($data['topic_id'])) {
             $assignedTopics = [];
-            foreach($post->topics as $topic)
-            {
+            foreach ($post->topics as $topic) {
                 $assignedTopics[] = $topic->pivot->topic_id;
             }
             $post->topics()->detach($assignedTopics);
-        }
-        else
-        {
+        } else {
             $post->topics()->sync($data['topic_id']);
         }
 
@@ -167,8 +161,8 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @return Response
      */
     public function destroy(DestroyPost $request)
     {
@@ -177,8 +171,7 @@ class PostController extends Controller
         $post->untag();
 
         $assignedTopics = [];
-        foreach($post->topics as $topic)
-        {
+        foreach ($post->topics as $topic) {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
         $post->topics()->detach($assignedTopics);

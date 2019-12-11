@@ -7,9 +7,9 @@ use App\Models\CommitteePost;
 use App\Models\CommitteePostComments;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 
 class CommitteePostController extends Controller
 {
@@ -17,7 +17,7 @@ class CommitteePostController extends Controller
      * Display a listing of the resource.
      *
      * @param Committee $committee
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Committee $committee)
     {
@@ -25,13 +25,13 @@ class CommitteePostController extends Controller
         $data['committee'] = $committee;
         $data['posts'] = CommitteePost::sortable()->orderBy('created_at')->paginate(10);
 
-        return view('admin.committee_posts_list', ['data'=>array('data'=>$data)]);
+        return view('admin.committee_posts_list', ['data' => array('data' => $data)]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create(Committee $committee)
     {
@@ -44,10 +44,10 @@ class CommitteePostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param Committee $committee
      * @param User $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request, Committee $committee, User $user)
     {
@@ -66,28 +66,30 @@ class CommitteePostController extends Controller
      * Display the specified resource.
      *
      * @param Committee $committee
-     * @param \App\Models\CommitteePost $committeePost
+     * @param CommitteePost $committeePost
      * @param CommitteePostComments $committeePostComments
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComments $committeePostComments)
     {
         $committeePost->creator;
         $committeePost->committee;
-        $committeePost->committee_post_comments;
+        $committeePost->post_comments;
+
+        dd($committeePost);
 
         $data['committeepost'] = $committeePost;
         $data['action'] = 'Add';
 
-        return view('committee_post', ['data'=> $data]);
+        return view('committee_post', ['data' => $data]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param Committee $committee
-     * @param \App\Models\CommitteePost $committeePost
-     * @return \Illuminate\Http\Response
+     * @param CommitteePost $committeePost
+     * @return Response
      */
     public function edit(Committee $committee, CommitteePost $committeePost)
     {
@@ -101,10 +103,10 @@ class CommitteePostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param $post blank parameter to handle order of arguments in url
-     * @param \App\Models\CommitteePost $committeePost
-     * @return \Illuminate\Http\Response
+     * @param CommitteePost $committeePost
+     * @return Response
      */
     public function update(Request $request, $post, CommitteePost $committeePost)
     {
@@ -123,8 +125,8 @@ class CommitteePostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CommitteePost  $committeePost
-     * @return \Illuminate\Http\Response
+     * @param CommitteePost $committeePost
+     * @return Response
      */
     public function destroy(CommitteePost $committeePost)
     {

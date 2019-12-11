@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Conner\Tagging\Taggable;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -21,10 +22,9 @@ use Kyslik\ColumnSortable\Sortable;
  * @property User $users
  * @property Page $pages
  * @property Post $posts
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  */
-
 class Topic extends Model
 {
 
@@ -48,17 +48,18 @@ class Topic extends Model
             'allow_comments',
         ];
 
-    public $sortable = [
-        'id',
-        'name',
-        'access_level',
-        'live',
-        'sort_order',
-        'in_menu',
-        'allow_comments',
-        'created_at',
-        'updated_at',
-    ];
+    public $sortable =
+        [
+            'id',
+            'name',
+            'access_level',
+            'live',
+            'sort_order',
+            'in_menu',
+            'allow_comments',
+            'created_at',
+            'updated_at',
+        ];
 
     protected $dates =
         [
@@ -68,11 +69,10 @@ class Topic extends Model
 
     protected $casts =
         [
-            'in_menu'           => 'boolean',
-            'allow_comments'    => 'boolean',
-            'live'              => 'boolean',
+            'in_menu' => 'boolean',
+            'allow_comments' => 'boolean',
+            'live' => 'boolean',
         ];
-
 
 
     /**

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserInfo;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
@@ -21,22 +22,22 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
 
-     /**
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Request $request)
     {
         $users = User::with('user_info')->sortable()->orderBy('name')->paginate(20);
-        return view('listusers', ['data'=>array('users'=>$users )]);
+        return view('listusers', ['data' => array('users' => $users)]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
     public function show(User $user)
     {
@@ -56,15 +57,15 @@ class UserController extends Controller
             //'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
 
-        return view('member', ['data'=> $data]);
+        return view('member', ['data' => $data]);
     }
 
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $member
-     * @return \Illuminate\Http\Response
+     * @param User $member
+     * @return Response
      */
     public function edit(User $user)
     {
@@ -81,20 +82,20 @@ class UserController extends Controller
             'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,
-            'countries' =>  $regions['countries'],
-            'provinces' =>   $regions['statesprovs']['Provinces'],
+            'countries' => $regions['countries'],
+            'provinces' => $regions['statesprovs']['Provinces'],
         ];
 
-        return view('member_edit', ['data'=> $data]);
+        return view('member_edit', ['data' => $data]);
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function update(UpdateMember $userRequest, User $user)
     {
@@ -112,7 +113,7 @@ class UserController extends Controller
         if ($user->user_info instanceof UserInfo) {
             $user_info = $userRequest['user_info'];
 
-            if (isset( $user_info['delete_image'])) {
+            if (isset($user_info['delete_image'])) {
                 Storage::disk('users')->delete($user_info['image']);
 
                 Session::flash('info', "You have deleted " . $user_info['image']);
@@ -139,15 +140,15 @@ class UserController extends Controller
             $user->address()->save($address);
         }
 
-/*        $user->syncRoles($userRequest['user_roles']);
+        /*        $user->syncRoles($userRequest['user_roles']);
 
-        if ($user->membership instanceof Membership) {
-            $user->membership->fill($userRequest['user_membership']);
-            $user->membership->save();
-        } else {
-            $membership = new Membership($userRequest['user_membership']);
-            $user->membership()->save($membership);
-        }*/
+                if ($user->membership instanceof Membership) {
+                    $user->membership->fill($userRequest['user_membership']);
+                    $user->membership->save();
+                } else {
+                    $membership = new Membership($userRequest['user_membership']);
+                    $user->membership()->save($membership);
+                }*/
 
         Session::flash('success', "You have edited your profile");
 
@@ -156,7 +157,7 @@ class UserController extends Controller
 
     protected function uploadImage(FormRequest $request)
     {
-        $path = $request->file('image')->store('','users');
+        $path = $request->file('image')->store('', 'users');
         return $path;
     }
 }

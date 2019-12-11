@@ -7,47 +7,45 @@ use App\Http\Requests\Page\StorePage;
 use App\Http\Requests\Page\UpdatePage;
 use App\Models\Page;
 use App\Models\Topic;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-//use App\Models\User;
 
 class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Request $request)
     {
         $pages = Page::sortable()->with('tagged')->paginate(20);
 
-        return view('admin.listpages', ['data'=>array('pages'=>$pages )]);
+        return view('admin.listpages', ['data' => array('pages' => $pages)]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function list(Request $request)
     {
         $pages = Page::sortable()->with('tagged')->paginate(10);
 
-        return view('pages', ['data'=>array('pages'=>$pages )]);
+        return view('pages', ['data' => array('pages' => $pages)]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -57,14 +55,14 @@ class PageController extends Controller
         $topics = Topic::all();
         $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.page', ['data' => ['page' => $page,  'assignedTopics' => [], 'access_levels' => $access_levels, 'topics' => $topics,  'action' => 'Create']]);
+        return view('admin.page', ['data' => ['page' => $page, 'assignedTopics' => [], 'access_levels' => $access_levels, 'topics' => $topics, 'action' => 'Create']]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(StorePage $request)
     {
@@ -73,7 +71,7 @@ class PageController extends Controller
 
         $page->save();
 
-        if(!empty($request->input('page.topic_id'))) {
+        if (!empty($request->input('page.topic_id'))) {
             $page->topics()->sync($request->input('page.topic_id'));
         }
 
@@ -89,8 +87,8 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Page  $page
-     * @return \Illuminate\Http\Response
+     * @param Page $page
+     * @return Response
      */
     public function show(Page $page)
     {
@@ -103,16 +101,15 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Page  $page
-     * @return \Illuminate\Http\Response
+     * @param Page $page
+     * @return Response
      */
     public function edit(Page $page)
     {
         $page->user;
 
         $assignedTopics = [];
-        foreach($page->topics as $topic)
-        {
+        foreach ($page->topics as $topic) {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
 
@@ -128,14 +125,14 @@ class PageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Page  $page
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Page $page
+     * @return Response
      */
     public function update(UpdatePage $request, Page $page)
     {
         if ($gate = Gate::allows('edit articles', $page)) {
-           // echo 'Allowed';
+            // echo 'Allowed';
         } else {
             abort(403);
         }
@@ -144,8 +141,8 @@ class PageController extends Controller
 
         $data['image'] = $this->uploadImage($request);
 
-        if (isset( $request['page']['delete_image'])) {
-            Storage::disk('public')->delete( $request->page['image'] );
+        if (isset($request['page']['delete_image'])) {
+            Storage::disk('public')->delete($request->page['image']);
             Session::flash('info', "You have deleted " . $data['image']);
             $data['image'] = NULL;
         }
@@ -153,16 +150,13 @@ class PageController extends Controller
         $page->fill($data);
         $page->save();
 
-        if(empty($data['topic_id'])){
+        if (empty($data['topic_id'])) {
             $assignedTopics = [];
-            foreach($page->topics as $topic)
-            {
+            foreach ($page->topics as $topic) {
                 $assignedTopics[] = $topic->pivot->topic_id;
             }
             $page->topics()->detach($assignedTopics);
-        }
-        else
-        {
+        } else {
             $page->topics()->sync($data['topic_id']);
         }
 
@@ -181,8 +175,8 @@ class PageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Page  $page
-     * @return \Illuminate\Http\Response
+     * @param Page $page
+     * @return Response
      */
     public function destroy(DestroyPage $request)
     {
@@ -195,8 +189,7 @@ class PageController extends Controller
         $page->untag();
 
         $assignedTopics = [];
-        foreach($page->topics as $topic)
-        {
+        foreach ($page->topics as $topic) {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
         $page->topics()->detach($assignedTopics);

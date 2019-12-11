@@ -6,16 +6,16 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 
 class CommitteeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -30,14 +30,14 @@ class CommitteeController extends Controller
          * subscribe status, or unsubscribe
          */
 
-        return view('committees', ['data'=>array('committees'=>$c)]);
+        return view('committees', ['data' => array('committees' => $c)]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function join(Request $request, Committee $committee)
     {
@@ -47,7 +47,7 @@ class CommitteeController extends Controller
         dd(__METHOD__);
         $committee->committee_members()->attach(Auth::id(), ['role' => 'Member']);
 
-        Session::flash('success', 'You have joined '. $committee->name);
+        Session::flash('success', 'You have joined ' . $committee->name);
 
         return redirect()->route('committee', $committee->slug);
     }
@@ -55,8 +55,8 @@ class CommitteeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function leave(Request $request, Committee $committee)
     {
@@ -64,9 +64,9 @@ class CommitteeController extends Controller
         // if you are already a member, dont allow
         // if you are  a past member, set to member
 
-        $committee->committee_members()->updateExistingPivot(Auth::id(), ['role' => 'Past-Member']);
-dd($committee->committee_members());
-        Session::flash('success', 'You have left'. $committee->name);
+        $committee->committee_members->updateExistingPivot(Auth::id(), ['role' => 'Past-Member']);
+        dd($committee->committee_members);
+        Session::flash('success', 'You have left' . $committee->name);
 
         return redirect()->route('committee', $committee->slug);
     }
@@ -75,8 +75,8 @@ dd($committee->committee_members());
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Committee  $committee
-     * @return \Illuminate\Http\Response
+     * @param Committee $committee
+     * @return Response
      */
     public function show(Committee $committee, CommitteePost $committeePost)
     {
@@ -94,12 +94,11 @@ dd($committee->committee_members());
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Committee  $committee
-     * @return \Illuminate\Http\Response
+     * @param Committee $committee
+     * @return Response
      */
     public function show_members(Committee $committee)
     {
-
         /** get members for this committee
          *  get sortable thing
          *  get paginate thing
@@ -110,7 +109,6 @@ dd($committee->committee_members());
          * show member status? Chair, Co-chair, Secretary, Member
          */
 
-
         $committee->load('committee_members')->sortable()->paginate(2);
 
         return view('committee_list_members', ['data' => ['committee' => $committee]]);
@@ -120,8 +118,8 @@ dd($committee->committee_members());
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Committee  $committee
-     * @return \Illuminate\Http\Response
+     * @param Committee $committee
+     * @return Response
      */
     public function edit(Committee $committee)
     {
@@ -131,9 +129,9 @@ dd($committee->committee_members());
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Committee  $committee
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Committee $committee
+     * @return Response
      */
     public function update(Request $request, Committee $committee)
     {
@@ -143,8 +141,8 @@ dd($committee->committee_members());
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Committee  $committee
-     * @return \Illuminate\Http\Response
+     * @param Committee $committee
+     * @return Response
      */
     public function destroy(Committee $committee)
     {

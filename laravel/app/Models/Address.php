@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,15 +13,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $province
  * @property string $postal_code
  * @property string $country
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  */
-
 class Address extends Model
 {
-     protected $guard_name = 'web';
+    protected $guard_name = 'web';
 
-     protected $dates =
+    protected $dates =
         [
             'created_at',
             'updated_at'

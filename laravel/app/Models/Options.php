@@ -438,8 +438,7 @@ class Options
     {
         $sorted = $class::orderBy('sort_order')->get();
         $data = [];
-        $sorted->map(function ($item, $key) use (&$data)
-        {
+        $sorted->map(function ($item, $key) use (&$data) {
             $data[$item->code] = $item->display_text;
         });
         return $data;

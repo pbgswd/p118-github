@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Policies\CommitteePolicy;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -20,10 +20,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property boolean $in_menu
  * @property boolean $live
  * @property boolean $allow_comments
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  */
-
 class Committee extends Model
 {
     use Notifiable;
@@ -52,9 +51,9 @@ class Committee extends Model
 
     protected $casts =
         [
-            'in_menu'           => 'boolean',
-            'allow_comments'    => 'boolean',
-            'live'              => 'boolean',
+            'in_menu' => 'boolean',
+            'allow_comments' => 'boolean',
+            'live' => 'boolean',
         ];
 
     /**

@@ -2,22 +2,17 @@
 
 namespace App\Models;
 
-use App\Policies\PagePolicy;
-use Conner\Tagging\Taggable;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
-use Kyslik\ColumnSortable\Sortable;
 
 /**
  * @property int $id
  * @property string $name
  * @property string $extension
  * @property User $users
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  */
-
 class Attachment extends Model
 {
     protected $guard_name = 'web';
@@ -33,9 +28,9 @@ class Attachment extends Model
     ];
 
     protected $dates = [
-            'created_at',
-            'updated_at'
-        ];
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * relationships

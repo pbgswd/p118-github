@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
- * @property \DateTime $membership_date
- * @property \DateTime $membership_expires
+ * @property DateTime $membership_date
+ * @property DateTime $membership_expires
  * @property int $seniority_number
  * @property string $status
  * @property string $admin_notes
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  */
-
 class Membership extends Model
 {
     protected $guard_name = 'web';
@@ -44,7 +44,7 @@ class Membership extends Model
      * @var array
      */
     protected $casts = [
-        'membership_date'=> 'datetime',
+        'membership_date' => 'datetime',
         'membership_expires' => 'datetime',
     ];
 }

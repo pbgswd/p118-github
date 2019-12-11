@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -16,14 +17,13 @@ use Spatie\Permission\Traits\HasRoles;
  * @property boolean $sticky
  * @property boolean $live
  * @property boolean $allow_comments
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  * @property User $creator
  * @property Committee $committee
  * @property CommitteePost $committee_posts
- * @property CommitteePostComments $committee_post_comments
+ * @property CommitteePostComments $post_comments
  */
-
 class CommitteePost extends Model
 {
     use Notifiable;
@@ -51,9 +51,9 @@ class CommitteePost extends Model
 
     protected $casts =
         [
-            'sticky'           => 'boolean',
-            'allow_comments'    => 'boolean',
-            'live'              => 'boolean',
+            'sticky' => 'boolean',
+            'allow_comments' => 'boolean',
+            'live' => 'boolean',
         ];
 
     /**
@@ -98,8 +98,8 @@ class CommitteePost extends Model
         return $this->belongsToMany(Committee::class, 'committees', 'id', 'committee_id');
     }
 
-    public function committee_post_comments()
+    public function post_comments()
     {
-        return $this->hasMany(CommitteePostComments::class, 'id', 'post_id');
+        return $this->belongsToMany(CommitteePostComments::class, 'committee_post_comments', 'id', 'post_id');
     }
 }

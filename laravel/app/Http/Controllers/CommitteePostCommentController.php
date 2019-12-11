@@ -15,7 +15,7 @@ class CommitteePostCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param Committee $committee
      * @param CommitteePost $committeePost
      * @param User $user

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -16,13 +17,12 @@ use Kyslik\ColumnSortable\Sortable;
  * @property int $sort_order
  * @property boolean $in_menu
  * @property User $users
- * @property \DateTime created_at
- * @property \DateTime updated_at
+ * @property DateTime created_at
+ * @property DateTime updated_at
  */
-
 class Venue extends Model
 {
-        use Sortable;
+    use Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -39,7 +39,7 @@ class Venue extends Model
         'in_menu',
     ];
 
-        public $sortable = [
+    public $sortable = [
         'id',
         'name',
         'access_level',
@@ -51,17 +51,17 @@ class Venue extends Model
     ];
 
     protected $dates =
-    [
-        'created_at',
-        'updated_at'
-    ];
+        [
+            'created_at',
+            'updated_at'
+        ];
 
     protected $casts =
-    [
-        'in_menu'           => 'boolean',
-        'allow_comments'    => 'boolean',
-        'live'              => 'boolean',
-    ];
+        [
+            'in_menu' => 'boolean',
+            'allow_comments' => 'boolean',
+            'live' => 'boolean',
+        ];
 
     /**
      * in urls, what field value is used to identify a Topic record?

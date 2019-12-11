@@ -10,13 +10,16 @@ use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
 
@@ -35,12 +38,12 @@ class AdminUserController extends Controller
     public function index(Request $request)
     {
         $users = User::with('roles')->sortable()->paginate(10);
-        return view('admin.listusers', ['data'=>array('users'=>$users )]);
+        return view('admin.listusers', ['data' => array('users' => $users)]);
     }
 
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -67,21 +70,21 @@ class AdminUserController extends Controller
             'user_phone' => $phone,
             'user_address' => $address,
             'user_membership' => $membership,
-            'countries' =>  $regions['countries'],
-            'provinces' =>   $regions['statesprovs']['Provinces'],
+            'countries' => $regions['countries'],
+            'provinces' => $regions['statesprovs']['Provinces'],
         ];
 
-        return view('admin.user', ['data'=> $data]);
+        return view('admin.user', ['data' => $data]);
     }
 
     /**
      * @param StoreUser $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(StoreUser $request)
     {
 
-        $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]) );
+        $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]));
         $user->save();
 
         $phone = new PhoneNumber($request->input('user_phone'));
@@ -111,7 +114,7 @@ class AdminUserController extends Controller
 
     /**
      * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
 
     public function edit(User $user)
@@ -130,17 +133,17 @@ class AdminUserController extends Controller
             'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,
-            'countries' =>  $regions['countries'],
-            'provinces' =>   $regions['statesprovs']['Provinces'],
+            'countries' => $regions['countries'],
+            'provinces' => $regions['statesprovs']['Provinces'],
         ];
 
-        return view('admin.user', ['data'=> $data]);
+        return view('admin.user', ['data' => $data]);
     }
 
     /**
      * @param UpdateUser $userRequest
      * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(UpdateUser $userRequest, User $user)
     {
@@ -159,14 +162,14 @@ class AdminUserController extends Controller
         if ($user->user_info instanceof UserInfo) {
             $user_info = $userRequest['user_info'];
 
-            if (isset( $user_info['delete_image'])) {
+            if (isset($user_info['delete_image'])) {
                 Storage::disk('users')->delete($user_info['image']);
 
                 Session::flash('info', "You have deleted " . $user_info['image']);
                 $user_info['image'] = null;
                 $user_info['file_name'] = null;
             } else {
-                if(!is_null($userRequest->file('image'))) {
+                if (!is_null($userRequest->file('image'))) {
                     $user_info['image'] = $this->uploadImage($userRequest);
                     $user_info['file_name'] = $userRequest->image->getClientOriginalName();
                 }
@@ -204,7 +207,7 @@ class AdminUserController extends Controller
 
     /**
      * @param DestroyUser $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function destroy(DestroyUser $request)
     {

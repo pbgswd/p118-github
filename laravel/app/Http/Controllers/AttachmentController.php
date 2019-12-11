@@ -9,6 +9,7 @@ use App\Http\Requests\Request;
 use App\Models\Attachment;
 use DB;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -22,25 +23,23 @@ class AttachmentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index(\App\Models\Attachment $attachment)
+    public function index(Attachment $attachment)
     {
         $data = [];
         $data['attachments'] = Attachment::with('users')->orderBy('id', 'ASC')->paginate(10);
 
         $storedFiles = [];
         $allAttachments = Attachment::all();
-        foreach ($allAttachments as $storedFile)
-        {
+        foreach ($allAttachments as $storedFile) {
             $storedFiles[] = $storedFile['name'];
         }
 
         $files = File::allFiles('storage');
 
         $uploadedImgs = [];
-        foreach ($files as $file)
-        {
+        foreach ($files as $file) {
             $uploadedImgs[] = $file->getBasename();
         }
 
@@ -53,7 +52,7 @@ class AttachmentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -65,19 +64,18 @@ class AttachmentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return Response
      */
     public function store(StoreAttachment $request)
     {
 
         /** @var UploadedFile $image */
-        foreach ($request->images as $image)
-        {
+        foreach ($request->images as $image) {
             $imageName = $image->getClientOriginalName();
 
             if (!$image->storeAs('public', $imageName)) {
-                Session::flash('warning', "Did not store " .imageName);
+                Session::flash('warning', "Did not store " . imageName);
                 return null;
             }
 
@@ -89,9 +87,9 @@ class AttachmentController extends Controller
             $attachment->save();
         }
 
-/*
-        // get the date, month, year, make folder if not exist for storing stuff.
-*/
+        /*
+                // get the date, month, year, make folder if not exist for storing stuff.
+        */
         Session::flash('success', Str::plural(count($request->images) . ' Attachment', count($request->images)) . ' uploaded.');
 
         /*
@@ -105,8 +103,8 @@ class AttachmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Attachment  $attachment
-     * @return \Illuminate\Http\Response
+     * @param \App\Attachment $attachment
+     * @return Response
      */
     public function show(Attachment $attachment)
     {
@@ -116,16 +114,16 @@ class AttachmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Attachment  $attachment
-     * @return \Illuminate\Http\Response
+     * @param \App\Attachment $attachment
+     * @return Response
      */
     public function edit(Attachment $attachment)
     {
 
-       // echo storage_path('app/public'); exit();
+        // echo storage_path('app/public'); exit();
 
-        $attachment['imageData'] = getimagesize(storage_path('app/public') .'/'. $attachment['name']);
-        $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/public') .'/'. $attachment['name']));
+        $attachment['imageData'] = getimagesize(storage_path('app/public') . '/' . $attachment['name']);
+        $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/public') . '/' . $attachment['name']));
 
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
@@ -133,9 +131,9 @@ class AttachmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Attachment  $attachment
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Attachment $attachment
+     * @return Response
      */
     public function update(UpdateAttachment $request, Attachment $attachment)
     {
@@ -145,18 +143,17 @@ class AttachmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Attachment  $attachment
-     * @return \Illuminate\Http\Response
+     * @param \App\Attachment $attachment
+     * @return Response
      */
     public function destroy(DestroyAttachment $request)
     {
         $attachments = Attachment::find($request->id);
-        foreach($attachments as $a)
-        {
+        foreach ($attachments as $a) {
             Storage::disk('public')->delete($a['name']);
             Attachment::destroy($a->id);
         }
-        Session::flash('success', Str::plural(count($request->id) .' Attachment', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural(count($request->id) . ' Attachment', count($request->id)) . ' deleted.');
 
         return redirect()->route('attachments_list');
     }
@@ -169,7 +166,7 @@ class AttachmentController extends Controller
 
         foreach ($request->images as $k => $v) {
 
-           // $imageName = $request->images[$k]->getClientOriginalName();
+            // $imageName = $request->images[$k]->getClientOriginalName();
 
             if (!$request->images[$k]->storeAs('public', $request->images[$k])) {
                 Session::flash('warning', "Did not store " . $v);
@@ -179,7 +176,8 @@ class AttachmentController extends Controller
         return $v;
     }
 
-    protected function human_filesize($bytes, $decimals = 2) {
+    protected function human_filesize($bytes, $decimals = 2)
+    {
         $factor = floor((strlen($bytes) - 1) / 3);
         if ($factor > 0) $sz = 'KMGT';
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
