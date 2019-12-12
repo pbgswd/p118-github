@@ -10,7 +10,12 @@ $c = $data['committee'];
         <div class="row">
             <div class="col-12">
                 <a href="{{ route('hello') }}">Home / </a>&nbsp;
-                <a href="{{route('committees')}}">Committees / </a>&nbsp; {{$c->name}}
+                <a href="{{route('committees')}}">Committees / </a>&nbsp; {{$c->name}} ->
+                @if($data['isMember'] != 1)
+                    Join this group
+                @else
+                    You are a member
+                @endif
             </div>
         </div>
         <div class="row">
@@ -19,7 +24,6 @@ $c = $data['committee'];
             </div>
             <div class="col-md-6">
                 @if($data['isMember'] != 1)
-                    You are not a member
                     <form method="post" name="committee-join" action="{{ url()->current() }}/join" enctype="multipart/form-data" class="needs-validation" novalidate>
                         {!! csrf_field() !!}
                         <div class="col">
@@ -27,7 +31,6 @@ $c = $data['committee'];
                         </div>
                     </form>
                 @else
-                    You are a member
                     <form method="post" name="committee-leave" action="{{ url()->current() }}/leave"  enctype="multipart/form-data" class="needs-validation" novalidate>
                         {!! csrf_field() !!}
                         <div class="col">
@@ -36,16 +39,22 @@ $c = $data['committee'];
                     </form>
                 @endif
             </div>
-
         </div>
-        <div class="col-12">
+        <div class="row">
+            <div class="col-12">
                 <h2>{!! $c->description !!}</h2>
+            </div>
         </div>
-        <div class="col-12">
-            <h4>Created by <a title="{{ $c->creator->name }}" href="{{ route('member', $c->creator->id) }}">{{$c->creator->name }}</a></h4>
+        <div class="row small">
+            <div class="col-12">
+                Created by  <a title="{{ $c->creator->name }}" href="{{ route('member', $c->creator->id) }}">{{$c->creator->name }}</a>
+            </div>
+        </div>
             <div class="row">
                 <div class="col-6">
-                        leader, secretary
+                        Chair:
+                    Co-chair:
+                    Secretary:
                 </div>
                 <div class="col-6">
                     <h4>{{count($c->committee_members)}} Members. <a href="{{route('committee_list_members', $data['committee']->slug)}}">View full list</a></h4>
@@ -57,12 +66,17 @@ $c = $data['committee'];
                 </div>
             </div>
             <div class="row">
-                <h4>{{count($c->posts)}} Posts</h4>
+                <div class="col-12">
+                    <h4>{{count($c->posts)}} Posts</h4>
+                </div>
+            </div>
+            <div class="row">
                 @foreach($c->posts as $p)
-                    <div class="col-12">
-                        <h5>
-                            <a href="{{route('committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a> {{$p->updated_at}}
-                        </h5>
+                    <div class="col-3 border border-dark rounded-lg mt-3 mr-3" style="margin: 1em;">
+                        <h3>
+                            <a href="{{route('committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a>
+                        </h3>
+                        {{$p->updated_at}}
                     </div>
                 @endforeach
             </div>

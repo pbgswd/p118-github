@@ -36,7 +36,11 @@ $user = $data['user'];
         <div class="col-12">
         <h3>Membership in committees</h3>
             @foreach($user->committee_membership as $m)
-                <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">{{$m->name}}</a> <br />
+                <div class="col-3 border border-dark rounded-lg mt-3 mr-3" style="margin: 1em;">
+                    <h3>
+                        <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">{{$m->name}}</a>
+                    </h3>
+                </div>
             @endforeach
         </div>
   </div>

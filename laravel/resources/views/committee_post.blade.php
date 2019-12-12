@@ -1,5 +1,4 @@
 <?php
-//dd($data);
 $post = $data['committeepost'];
 $c = $data['committeepost']->committee;
 ?>
@@ -17,7 +16,10 @@ $c = $data['committeepost']->committee;
         </div>
         <div class="col-12 border border-dark rounded">
             <h1 class="display-4">{{$post->title}}</h1>
-            <h5>By {{$post->creator->name}}, {{$post->updated_at}}</h5>
+            <h5>
+                By {{$post->creator->name}},
+                {{ \Carbon\Carbon::parse($post->updated_at)->format(' F j, Y') }}
+            </h5>
             {!! $post->content !!}
         </div>
         <div class="row" style="margin-top:3em;">
@@ -41,7 +43,7 @@ $c = $data['committeepost']->committee;
                     {{$comment->commentAuthor->name}}
                 </a> {{$comment->created_at}} <br />
                      {!! $comment->content !!}
-                    <a href="#" title="">
+                    <a href="#" title="{{$post->slug}}/comment/{{$comment->id}}">
                         <i class="far fa-comment"></i> Add my comment to {{$comment->commentAuthor->name}}
                     </a>
                 </div>
@@ -61,12 +63,14 @@ $c = $data['committeepost']->committee;
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
-                    <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
+                <div class="col-2">
                 </div>
-                <div class="col-6">
+                <div class="col-4">
+                    <input class="btn btn-primary" type="submit" value="{{ $data['action'] }}" />
+                </div>
+                <div class="col-4">
                     <button type="reset"
-                            class="btn btn-info btn-reset"
+                            class="btn btn-outline-primary btn-reset"
                             name="Reset">
                         Reset
                     </button>

@@ -18,6 +18,7 @@ $committee = $data['committee'];
             <tr>
                 <th> @sortablelink('name', 'Name') </th>
                 <th> @sortablelink('email', 'Email') </th>
+                <th> @sortablelink('created_at', 'Joined') </th>
             </tr>
         </thead>
         <tbody>
@@ -33,10 +34,13 @@ $committee = $data['committee'];
                 <td>
                     <a href="mailto:{{ $c->email }}">{{ $c->email }}</a>
                 </td>
+                <td>
+                    {{ $c->created_at }}
+                </td>
             </tr>
         @endforeach
             <tr>
-                <td colspan="2">&nbsp;</td>
+                <td colspan="3">&nbsp;</td>
             </tr>
         </tbody>
     </table>

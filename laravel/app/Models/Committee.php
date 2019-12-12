@@ -16,6 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property User $creator
  * @property Committee $committee_members
+ * @property Committee $membership
  * @property CommitteePost $posts
  * @property boolean $in_menu
  * @property boolean $live

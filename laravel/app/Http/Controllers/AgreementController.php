@@ -18,7 +18,10 @@ class AgreementController extends Controller
      */
     public function index()
     {
-        dd(__METHOD__);
+        $data = [];
+        $data['agreements'] = [];
+
+        return view('admin.agreements_list', ['data' => ['data' => $data]]);
     }
 
     /**
@@ -28,7 +31,11 @@ class AgreementController extends Controller
      */
     public function create()
     {
-        dd(__METHOD__); //
+        $data = [];
+        $data['agreement'] = new Agreement;
+        $access_levels = $this->getFormOptions(['access_levels']);
+
+        return view('admin.agreement', ['data' => ['data' => $data, 'access_levels' => $access_levels, 'action' => 'Create']]);
     }
 
     /**
