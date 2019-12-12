@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use App\Models\CommitteePost;
-use App\Models\CommitteePostComments;
+use App\Models\CommitteePostComment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -67,14 +67,13 @@ class CommitteePostController extends Controller
      *
      * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @param CommitteePostComments $committeePostComments
+     * @param CommitteePostComment $committeePostComments
      * @return Response
      */
-    public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComments $committeePostComments)
+    public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComment $committeePostComments)
     {
-        $committeePost->creator;
-        $committeePost->committee;
-       // $committeePost->post_comments;
+        $committeePost->load('creator', 'committee', 'post_comments.commentAuthor');
+
 
         $data['committeepost'] = $committeePost;
         $data['action'] = 'Add';

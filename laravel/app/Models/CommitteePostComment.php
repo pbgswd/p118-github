@@ -19,8 +19,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property DateTime $created_at
  * @property DateTime $updated_at
  * @property CommitteePost $committee_post
+ * @property CommitteePostComment $commentAuthor
  */
-class CommitteePostComments extends Model
+class CommitteePostComment extends Model
 {
     use Notifiable;
     use Sortable;
@@ -65,11 +66,6 @@ class CommitteePostComments extends Model
     public function commentAuthor()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
-    }
-
-    public function committee_post()
-    {
-        return $this->belongsToMany(CommitteePost::class, 'committee_posts', 'id', 'post_id');
     }
 
 }

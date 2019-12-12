@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/CommitteePostComments.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/CommitteePostComments.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostCommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostCommentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteePostController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/CommitteePost.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/CommitteePost.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/CommitteePostComments.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/CommitteePostComment.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/committee_post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/committee_post.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,9 +203,19 @@
     <option name="viewStates">
       <list>
         <serviceView>
-          <option name="contentProportion" value="0.21806854" />
+          <option name="contentProportion" value="0.14641744" />
           <treeState>
-            <expand />
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:MySQL - p118@172.19.0.2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:MySQL - p118@172.19.0.2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@4c4d8fd1" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+            </expand>
             <select />
           </treeState>
         </serviceView>
@@ -269,6 +282,7 @@
       <workItem from="1575933872319" duration="8913000" />
       <workItem from="1575968213389" duration="1505000" />
       <workItem from="1576030758146" duration="15987000" />
+      <workItem from="1576123831793" duration="8811000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -319,6 +333,10 @@
     </state>
     <state x="425" y="170" width="640" height="545" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1575933843246" />
     <state x="523" y="266" width="624" height="551" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1575406922454" />
+    <state x="950" y="27" width="720" height="1023" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1576138011413">
+      <screen x="0" y="27" width="1680" height="1023" />
+    </state>
+    <state x="950" y="27" width="720" height="1023" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1576138011413" />
     <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1576053488316">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
@@ -327,26 +345,27 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="181" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1575950936278" />
-    <state width="254" height="195" key="DatabaseViewActions_Filter" timestamp="1575948194812">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="313" height="275" key="DatabaseViewActions_Filter" timestamp="1576132742009">
+      <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state width="254" height="195" key="DatabaseViewActions_Filter/0.0.1366.728@0.0.1366.728" timestamp="1575948194812" />
-    <state width="1254" height="224" key="GridCell.Tab.0.bottom" timestamp="1575016841802">
+    <state width="313" height="275" key="DatabaseViewActions_Filter/0.27.1680.1023@0.27.1680.1023" timestamp="1576132742009" />
+    <state width="1254" height="517" key="GridCell.Tab.0.bottom" timestamp="1576129118391">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
-    <state width="1254" height="224" key="GridCell.Tab.0.bottom/0.27.1680.1023@0.27.1680.1023" timestamp="1575016841802" />
-    <state width="1254" height="224" key="GridCell.Tab.0.center" timestamp="1575016841801">
+    <state width="1254" height="517" key="GridCell.Tab.0.bottom/0.27.1680.1023@0.27.1680.1023" timestamp="1576129118391" />
+    <state width="1254" height="517" key="GridCell.Tab.0.center" timestamp="1576129118390">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
-    <state width="1254" height="224" key="GridCell.Tab.0.center/0.27.1680.1023@0.27.1680.1023" timestamp="1575016841801" />
-    <state width="1254" height="224" key="GridCell.Tab.0.left" timestamp="1575016841800">
+    <state width="1254" height="517" key="GridCell.Tab.0.center/0.27.1680.1023@0.27.1680.1023" timestamp="1576129118390" />
+    <state width="1254" height="517" key="GridCell.Tab.0.left" timestamp="1576129118389">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
-    <state width="1254" height="224" key="GridCell.Tab.0.left/0.27.1680.1023@0.27.1680.1023" timestamp="1575016841800" />
-    <state width="1254" height="224" key="GridCell.Tab.0.right" timestamp="1575016841802">
+    <state width="1254" height="517" key="GridCell.Tab.0.left/0.27.1680.1023@0.27.1680.1023" timestamp="1576129118389" />
+    <state width="1254" height="517" key="GridCell.Tab.0.right" timestamp="1576129118390">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
-    <state width="1254" height="224" key="GridCell.Tab.0.right/0.27.1680.1023@0.27.1680.1023" timestamp="1575016841802" />
+    <state width="1254" height="517" key="GridCell.Tab.0.right/0.27.1680.1023@0.27.1680.1023" timestamp="1576129118390" />
     <state x="184" y="6" key="SettingsEditor" timestamp="1575950442006">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

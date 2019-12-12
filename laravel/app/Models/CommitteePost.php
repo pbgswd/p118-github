@@ -22,7 +22,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property User $creator
  * @property Committee $committee
  * @property CommitteePost $committee_posts
- * @property CommitteePostComments $post_comments
+ * @property CommitteePostComment $post_comments
  */
 class CommitteePost extends Model
 {
@@ -100,6 +100,6 @@ class CommitteePost extends Model
 
     public function post_comments()
     {
-        return $this->belongsToMany(CommitteePostComments::class, 'committee_post_comments', 'id', 'post_id');
+        return $this->hasMany(CommitteePostComment::class, 'post_id', 'id');
     }
 }

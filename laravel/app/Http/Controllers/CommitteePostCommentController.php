@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use App\Models\CommitteePost;
-use App\Models\CommitteePostComments;
+use App\Models\CommitteePostComment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +23,7 @@ class CommitteePostCommentController extends Controller
      */
     public function store(Request $request, Committee $committee, CommitteePost $committeePost)
     {
-        $postComment = new CommitteePostComments($request->input('comment'));
+        $postComment = new CommitteePostComment($request->input('comment'));
         $postComment->committee_id = $committee->id;
         $postComment->user_id = Auth::id();
         $postComment->post_id = $committeePost->id;
