@@ -5,24 +5,24 @@ $organizations = $data['data']['organizations'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' agreement ' . ($data["action"] == 'Edit' ? $agreement->name : '') ])
 @section('content')
-    <script>
-        tinymce.init({
-            selector: 'textarea#agreement-description',
-            height: 200,
-            width:800,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor textcolor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tiny.cloud/css/codepen.min.css'
-            ]
-        });
-    </script>
+<script>
+    tinymce.init({
+        selector: 'textarea#agreement-description',
+        height: 200,
+        width:800,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor textcolor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+        content_css: [
+            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+            '//www.tiny.cloud/css/codepen.min.css'
+        ]
+    });
+</script>
 <div class="container">
     <h3>  <a href="{{ route('agreements_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of agreements</a>  </h3>
     <form method="post" name="agreement" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
@@ -49,14 +49,13 @@ $organizations = $data['data']['organizations'];
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row" style="margin-top:30px;">file upload</div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
         <div class="row" style="margin-top:30px;"> Associate with which venue or organization?</div>
         <div class="row" style="margin-top:30px;">
-            <div class="col-6" style="margin-top:30px;">
-
+            <div class="col-6" style="margin-top:3em;">
                 <div class="form-group">
                    <label for="venues"><h3>Venues</h3></label>
                    <select name="venues" multiple="multiple" class="form-control" id="venues">
+                       <option value="">Select</option>
                        @foreach($venues as $venue)
                            <option value="{{$venue->id}}">{{$venue->name}}</option>
                        @endforeach
@@ -67,6 +66,7 @@ $organizations = $data['data']['organizations'];
                 <div class="form-group">
                     <label for="organizations"><h3>Organizations</h3></label>
                     <select name="venues" multiple="multiple" class="form-control" id="venues">
+                        <option value="">Select</option>
                         @foreach($organizations as $org)
                             <option value="{{$org->id}}">{{$org->name}}</option>
                         @endforeach
@@ -74,7 +74,7 @@ $organizations = $data['data']['organizations'];
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:30px;">
             <div class="form-group">
                 <div class="col-lg-8"><h4>agreement Website Link</h4></div>
                 <div class="col-lg-10">
