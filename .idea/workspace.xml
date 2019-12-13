@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
-      <change afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/OrganizationController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/laravel/app/Models/Organization.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/laravel/database/migrations/2019_12_13_005615_create_table_organizations.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listorganizations.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/laravel/resources/views/admin/organization.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AgreementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AgreementController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/agreement.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/agreement.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/OrganizationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/OrganizationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/VenueController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/VenueController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listorganizations.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listorganizations.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/organization.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/organization.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -278,7 +273,7 @@
       <workItem from="1575968213389" duration="1505000" />
       <workItem from="1576030758146" duration="15987000" />
       <workItem from="1576123831793" duration="14934000" />
-      <workItem from="1576182081890" duration="3926000" />
+      <workItem from="1576182081890" duration="6579000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -333,10 +328,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="950" y="27" width="720" height="1023" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1576138011413" />
-    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1576199480027">
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1576204147264">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
-    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1576199480027" />
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1576204147264" />
     <state x="181" y="0" key="CommitChangelistDialog2" timestamp="1575950936278">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

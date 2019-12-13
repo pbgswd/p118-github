@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class OrganizationController extends Controller
 {
@@ -44,7 +46,13 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        dd(__METHOD__);
+        $org = new Organization($request->input('organization'));
+        $org->user_id = Auth::id();
+        $org->save();
+
+        Session::flash('success', "You have saved a new venue");
+
+        return redirect()->route('organization_edit', [$org->slug]);
     }
 
     /**
@@ -66,7 +74,10 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
-        dd(__METHOD__);
+        $access_levels = $this->getFormOptions(['access_levels']);
+
+        return view('admin.organization', ['data' => ['organization' => $organization, 'access_levels' => $access_levels, 'action' => 'Edit']]);
+
     }
 
     /**
@@ -78,7 +89,12 @@ class OrganizationController extends Controller
      */
     public function update(Request $request, Organization $organization)
     {
-        dd(__METHOD__);
+        $organization->fill($request['organization']);
+        $organization->save();
+
+        Session::flash('success', "You have edited the organization");
+
+        return redirect()->route('organization_edit', [$organization->slug]);
     }
 
     /**
@@ -87,8 +103,24 @@ class OrganizationController extends Controller
      * @param  \App\Models\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Organization $organization)
+    public function destroy(Organization $request)
     {
-        dd(__METHOD__);
+
+        $org = Organization::find($request->id);
+
+        dd($org);
+
+        /*       // dd($request->all());
+                foreach($request as $r => $k)
+                {
+                    //dd($r[0]);
+                    ->first();
+                    dd($org);
+                    Organization::destroy($org->id);
+                }*/
+
+        Session::flash('success', Str::plural(count($request) . ' Organization', count($request)) . ' NOT deleted.');
+
+        return redirect()->route('organizations_list');
     }
 }

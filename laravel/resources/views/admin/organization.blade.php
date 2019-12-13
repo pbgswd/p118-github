@@ -83,12 +83,6 @@ $organization = $data['organization'];
                 <div class="col-lg-2"><h4>Status</h4></div>
                 <div class="col-sm">
                     <label>
-                        <input name="organization[in_menu]" type="hidden" value="0" />
-                        <input name="organization[in_menu]" type="checkbox" value="1" {{ checked(old('organization.in_menu',$organization->in_menu)) }} /> In Menu
-                    </label>
-                </div>
-                <div class="col-sm">
-                    <label>
                          <input name="organization[live]" type="hidden" value="0" />
                          <input name="organization[live]" type="checkbox" value="1" {{ checked( old('organization.live', $organization->live)) }} /> Check now to make Live
                     </label>

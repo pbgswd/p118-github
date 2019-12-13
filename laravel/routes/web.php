@@ -144,6 +144,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('organizations', 'OrganizationController@index')->name('organizations_list');
     Route::get('organization/', 'OrganizationController@create')->name('organization_create');
     Route::post('organization/', 'OrganizationController@store');
+    Route::post('/organization/{organization}', 'OrganizationController@update');
     Route::delete('/organization/delete', 'OrganizationController@destroy')->name('organization_destroy');
     Route::get('/organization/{organization}', 'OrganizationController@edit')->name('organization_edit');
 

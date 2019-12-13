@@ -36,31 +36,31 @@ $organizations = $data['data'];
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $organizations['organizations'] as $v )
+                    @foreach ( $organizations['organizations'] as $org )
                         <tr>
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="id[]" value="{{$v->id}}" />
+                                        <input type="checkbox" name="id[]" value="{{$org->id}}" />
                                     </label>
                                 </div>
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $v->name }}" href="{{ route('organization_edit', $v->slug) }}">{{ $v->name }}</a>
+                                    <a title="{{ $org->name }}" href="{{ route('organization_edit', $org->slug) }}">{{ $org->name }}</a>
                                 </h4>
                             </td>
-                            <td> {{ $v->access_level }} </td>
-                            <td> {!! $v->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
-                            <td> {{ $v->sort_order }} </td>
-                            <td> {!! $v->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
+                            <td> {{ $org->access_level }} </td>
+                            <td> {!! $org->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                            <td> {{ $org->sort_order }} </td>
+                            <td> {!! $org->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
                             <td>
-                                <a href="{{ route('organization_edit', $v->slug) }}" title="Edit {{ $v->name }} ">
+                                <a href="{{ route('organization_edit', $org->slug) }}" title="Edit {{ $org->name }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $v->created_at }} </td>
-                            <td> {{ $v->updated_at }} </td>
+                            <td> {{ $org->created_at }} </td>
+                            <td> {{ $org->updated_at }} </td>
                         </tr>
                     @endforeach
                     <tr>

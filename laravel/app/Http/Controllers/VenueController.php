@@ -106,9 +106,7 @@ class VenueController extends Controller
      */
     public function update(UpdateVenue $request, Venue $venue)
     {
-        $data = $request['venue'];
-
-        $venue->fill($data);
+        $venue->fill($request['venue']);
         $venue->save();
         Session::flash('success', "You have edited the venue");
 
