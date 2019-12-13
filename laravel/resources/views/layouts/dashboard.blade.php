@@ -96,6 +96,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{route('organizations_list')}}">
+                                    <span data-feather="file"></span>
+                                    Organizations
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('committees_list')}}">
                                     <span data-feather="file"></span>
                                     Committees

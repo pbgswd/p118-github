@@ -140,4 +140,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('agreement/', 'AgreementController@store');
     Route::delete('/agreement/delete', 'AgreementController@destroy')->name('agreement_destroy');
     Route::get('/agreement/{agreement}', 'AgreementController@edit')->name('agreement_edit');
+
+    Route::get('organizations', 'OrganizationController@index')->name('organizations_list');
+    Route::get('organization/', 'OrganizationController@create')->name('organization_create');
+    Route::post('organization/', 'OrganizationController@store');
+    Route::delete('/organization/delete', 'OrganizationController@destroy')->name('organization_destroy');
+    Route::get('/organization/{organization}', 'OrganizationController@edit')->name('organization_edit');
+
 });

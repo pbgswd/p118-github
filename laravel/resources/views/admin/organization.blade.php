@@ -1,13 +1,11 @@
 <?php
-$venues = $data['data']['venues'];
-$agreement = $data['data']['agreement'];
-
+$organization = $data['organization'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' agreement ' . ($data["action"] == 'Edit' ? $agreement->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' organization ' . ($data["action"] == 'Edit' ? $organization->name : '') ])
 @section('content')
     <script>
         tinymce.init({
-            selector: 'textarea#agreement-description',
+            selector: 'textarea#organization-description',
             height: 200,
             width:800,
             menubar: false,
@@ -24,15 +22,15 @@ $agreement = $data['data']['agreement'];
         });
     </script>
 <div class="container">
-    <h3>  <a href="{{ route('agreements_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of agreements</a>  </h3>
-    <form method="post" name="agreement" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <h3>  <a href="{{ route('organizations_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of organizations</a>  </h3>
+    <form method="post" name="organization" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Name" name="agreement[name]" value="{{ old('agreement.name', $agreement->name)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Name" name="organization[name]" value="{{ old('organization.name', $organization->name)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -42,32 +40,16 @@ $agreement = $data['data']['agreement'];
                     <h4>Description</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="agreement[description]" id="agreement-description" placeholder="Summary content" class="form-control">{{old('agreement.description', $agreement->description)}}</textarea>
+                    <textarea name="organization[description]" id="organization-description" placeholder="Summary content" class="form-control">{{old('organization.description', $organization->description)}}</textarea>
                 </div>
             </div>
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row" style="margin-top:30px;">file upload</div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row" style="margin-top:30px;"> Associate with which venue or organization?</div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row" style="margin-top:30px;"> &nbsp;Venues</div>
-        <div class="row" style="margin-top:30px;">
-            <ul>
-                @foreach ($venues as $venue)
-                    <li>{{$venue->name}}</li>
-                @endforeach
-
-            </ul>
-        </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row" style="margin-top:30px;"> Organizations</div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-8"><h4>agreement Website Link</h4></div>
+                <div class="col-lg-8"><h4>organization Website Link</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Website Address - http://...." name="agreement[url]" value="{{ old('agreement.url', $agreement->url)}}" size="80" />
+                    <input type="text" class="form-control"  placeholder="Website Address - http://...." name="organization[url]" value="{{ old('organization.url', $organization->url)}}" size="80" />
                 </div>
             </div>
         </div>
@@ -79,7 +61,7 @@ $agreement = $data['data']['agreement'];
                     <div class="col-6 col-sm-3">
                        <p>Access Level for content:</p>
                         <div class="form-group">
-                            {{ select_options($data['access_levels'], old('agreement.access_level', $agreement->access_level), ['name' => 'agreement[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                            {{ select_options($data['access_levels'], old('organization.access_level', $organization->access_level), ['name' => 'organization[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
                         </div>
                     </div>
                     <div class="col-6 col-sm-3"></div>
@@ -89,11 +71,11 @@ $agreement = $data['data']['agreement'];
                     <div class="col-12">&nbsp;</div>
                     <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="agreement[sort_order]" value="{{old('agreement.sort_order',$agreement->sort_order)}}" size="30" required/>
+                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="organization[sort_order]" value="{{old('organization.sort_order',$organization->sort_order)}}" size="30" required/>
                         <p>e.g.: 1000, 2000</p>
                     </div>
                     <div class="invalid-feedback">
-                        Please add a numeric sort order {{ @$errors->get('agreement.sort_order')[0] }}
+                        Please add a numeric sort order {{ @$errors->get('organization.sort_order')[0] }}
                     </div>
                 </div>
             </div>
@@ -101,8 +83,14 @@ $agreement = $data['data']['agreement'];
                 <div class="col-lg-2"><h4>Status</h4></div>
                 <div class="col-sm">
                     <label>
-                         <input name="agreement[live]" type="hidden" value="0" />
-                         <input name="agreement[live]" type="checkbox" value="1" {{ checked( old('agreement.live', $agreement->live)) }} /> Check now to make Live
+                        <input name="organization[in_menu]" type="hidden" value="0" />
+                        <input name="organization[in_menu]" type="checkbox" value="1" {{ checked(old('organization.in_menu',$organization->in_menu)) }} /> In Menu
+                    </label>
+                </div>
+                <div class="col-sm">
+                    <label>
+                         <input name="organization[live]" type="hidden" value="0" />
+                         <input name="organization[live]" type="checkbox" value="1" {{ checked( old('organization.live', $organization->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>
@@ -118,11 +106,11 @@ $agreement = $data['data']['agreement'];
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
-             <form name="delete" method="POST" action="{{route('agreement_destroy')}}">
+             <form name="delete" method="POST" action="{{route('organization_destroy')}}">
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $agreement->id }}">
+                <input type="hidden" name="id[]" value="{{ $organization->id }}">
                 <input class="btn btn-outline-danger" type="submit" value="Delete">
             </form>
          </div>

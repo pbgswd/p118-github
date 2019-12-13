@@ -39,6 +39,7 @@ class AdminCommitteeController extends Controller
             'user_id' => Auth::id(),
             'committee' => $committee,
         ];
+
         return view('admin.committee', ['data' => ['data' => $data, 'access_levels' => $access_levels, 'action' => 'Create']]);
     }
 
@@ -118,6 +119,7 @@ class AdminCommitteeController extends Controller
         // set to... archive?
         // destroy committee relation?
         // destroy committee posts?
+        // delete members?
 
         Committee::destroy($request->id);
 
