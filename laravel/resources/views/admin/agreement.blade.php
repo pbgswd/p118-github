@@ -1,7 +1,7 @@
 <?php
 $venues = $data['data']['venues'];
 $agreement = $data['data']['agreement'];
-
+$organizations = $data['data']['organizations'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' agreement ' . ($data["action"] == 'Edit' ? $agreement->name : '') ])
 @section('content')
@@ -62,7 +62,14 @@ $agreement = $data['data']['agreement'];
         </div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row" style="margin-top:30px;"> Organizations</div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row" style="margin-top:30px;">
+            <ul>
+                @foreach ($organizations as $org)
+                    <li>{{$org->name}}</li>
+                @endforeach
+
+            </ul>
+        </div>
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-8"><h4>agreement Website Link</h4></div>

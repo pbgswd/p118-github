@@ -6,6 +6,7 @@ use App\Http\Requests\Agreements\DestroyAgreement;
 use App\Http\Requests\Agreements\StoreAgreement;
 use App\Http\Requests\Agreements\UpdateAgreement;
 use App\Models\Agreement;
+use App\Models\Organization;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -36,6 +37,7 @@ class AgreementController extends Controller
         $data['agreement'] = new Agreement;
         $access_levels = $this->getFormOptions(['access_levels']);
         $data['venues'] = Venue::all();
+        $data['organizations'] = Organization::all();
 
         return view('admin.agreement', ['data' => ['data' => $data, 'access_levels' => $access_levels, 'action' => 'Create']]);
     }
@@ -70,6 +72,9 @@ class AgreementController extends Controller
      */
     public function edit(UpdateAgreement $agreement)
     {
+
+        $data['venues'] = Venue::all();
+        $data['organizations'] = Organization::all();
         dd(__METHOD__); //
     }
 
