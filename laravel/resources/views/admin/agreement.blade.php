@@ -49,26 +49,30 @@ $organizations = $data['data']['organizations'];
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row" style="margin-top:30px;">file upload</div>
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
+
         <div class="row" style="margin-top:30px;"> Associate with which venue or organization?</div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row" style="margin-top:30px;"> &nbsp;Venues</div>
         <div class="row" style="margin-top:30px;">
-            <ul>
-                @foreach ($venues as $venue)
-                    <li>{{$venue->name}}</li>
-                @endforeach
+            <div class="col-6" style="margin-top:30px;">
 
-            </ul>
-        </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row" style="margin-top:30px;"> Organizations</div>
-        <div class="row" style="margin-top:30px;">
-            <ul>
-                @foreach ($organizations as $org)
-                    <li>{{$org->name}}</li>
-                @endforeach
-
-            </ul>
+                <div class="form-group">
+                   <label for="venues"><h3>Venues</h3></label>
+                   <select name="venues" multiple="multiple" class="form-control" id="venues">
+                       @foreach($venues as $venue)
+                           <option value="{{$venue->id}}">{{$venue->name}}</option>
+                       @endforeach
+                   </select>
+                </div>
+            </div>
+            <div class="col-6" style="margin-top:30px;">
+                <div class="form-group">
+                    <label for="organizations"><h3>Organizations</h3></label>
+                    <select name="venues" multiple="multiple" class="form-control" id="venues">
+                        @foreach($organizations as $org)
+                            <option value="{{$org->id}}">{{$org->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="form-group">
