@@ -23,26 +23,28 @@ $posts = $topic->posts;
             Tags: {{$tags}}
         </div>
     </div>
-    @if (count($pages) > 0)
-        <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em; margin-top:1em;" >
-            <div class="col-12" style="margin: 2px;">
-                <h4>Related Pages</h4>
-                @foreach($pages as $page)
-                    <a href="{{ route('page_show', $page->slug) }}">{{$page['title']}}</a> <br />
-                @endforeach
-            </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-1"></div>
+            @if (count($pages) > 0)
+                <div class="col-4 border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em; margin-top:1em;">
+                    <h4>Related Pages</h4>
+                    @foreach($pages as $page)
+                        <a href="{{ route('page_show', $page->slug) }}">{{$page['title']}}</a> <br />
+                    @endforeach
+                </div>
+            @endif
+            <div class="col-2"></div>
+            @if (count($posts) > 0)
+                <div class="col-4 border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em; margin-top:1em;">
+                    <h4>Related Posts</h4>
+                    @foreach($posts as $post)
+                        <a href="{{ route('post_show', $post->slug) }}">{{$post['title']}}</a> <br />
+                    @endforeach
+                </div>
+            @endif
         </div>
-    @endif
-    @if (count($posts) > 0)
-        <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em; margin-top:1em;" >
-            <div class="col-12" style="margin: 2px;">
-                <h4>Related Posts</h4>
-                @foreach($posts as $post)
-                    <a href="{{ route('post_show', $post->slug) }}">{{$post['title']}}</a> <br />
-                @endforeach
-            </div>
-        </div>
-    @endif
+    </div>
 </div>
 <div class="row" style="margin-top:6em;"></div>
 @endsection

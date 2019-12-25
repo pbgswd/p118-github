@@ -9,9 +9,9 @@ $tags = join(', ', $post->tagNames());
         <div class="row">
             @foreach ($post->topics as $topic)
                 <a href="{{ route('hello') }}">Home /</a>
-                <a href="{{route('topics')}}">Topics /</a>
-                <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}} /</a>
-                {{$post->title}}
+                &nbsp;<a href="{{route('topics')}}">Topics /</a>
+                &nbsp;<a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}} /</a>
+                &nbsp; {{$post->title}}
             @endforeach
         </div>
         <div  class="col-12">
@@ -28,7 +28,7 @@ $tags = join(', ', $post->tagNames());
                 Tags: {{$tags}}
             </div>
         @endif
-        <div class="row">post added by {{$post->user->name}}</div>
+        <div class="row">Added by &nbsp;<a title="{{$post->user->name}}" href="{{route('member', $post->user->id)}}">{{$post->user->name}}</div>
         <div class="row">
             @foreach ($post->topics as $topic)
                 <a href="{{ route('hello') }}">Home /</a> &nbsp;

@@ -8,7 +8,7 @@ $tags = join(', ', $page->tagNames());
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding: 2em">
         <div class="row">
             @foreach ($page->topics as $topic)
-                <a href="{{ route('hello') }} / {{route('topics')}}">Topics / </a>&nbsp;<a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}} / </a>&nbsp;
+                <a href="{{route('topics')}}">Topics / </a>&nbsp;<a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}} / </a>&nbsp;
             @endforeach
                 {{$page->title}}
         </div>
@@ -33,7 +33,7 @@ $tags = join(', ', $page->tagNames());
             {{$page->title}}
         </div>
         <div class="row">
-            <h6>Page added by {{$page->user->name}}</h6>
+            <h6>Added by &nbsp;<a title="{{$page->user->name}}" href="{{route('member', $page->user->id)}}">{{$page->user->name}}</h6>
         </div>
     </div>
 <div class="row" style="margin-top:6em;"></div>
