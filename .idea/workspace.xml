@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeMemberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeMemberController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/CommitteeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Options.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Options.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/committeebulkaddusers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/committeebulkaddusers.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/show_committee.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/show_committee.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/committee.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/committee.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -302,7 +296,7 @@
       <workItem from="1576479896324" duration="1199000" />
       <workItem from="1577177013481" duration="18763000" />
       <workItem from="1577432604237" duration="3945000" />
-      <workItem from="1577436841997" duration="7626000" />
+      <workItem from="1577436841997" duration="8143000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -441,6 +435,11 @@
           <url>file://$PROJECT_DIR$/laravel/resources/views/member_edit.blade.php</url>
           <line>182</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php</url>
+          <line>79</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/laravel/app/Models/Options.php</url>

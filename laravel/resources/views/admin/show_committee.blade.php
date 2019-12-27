@@ -104,11 +104,9 @@ $committee = $data['committee'];
         @endhasanyrole
         <div class="col-md">
             <h4>Committee Membership Roles</h4>
-
-                @foreach ($committee['executives'] as $exec)
-                <p>  {{$exec->pivot->role}}: {{$exec->name}} </p>
-                @endforeach
-
+            @foreach ($committee['executives'] as $exec)
+            <p>  {{$exec->pivot->role}}: <a href="{{route('user_edit', $exec->id)}}">{{$exec->name}}</a> </p>
+            @endforeach
         </div>
     </div>
         <div class="row" style="margin-top:2em;">
