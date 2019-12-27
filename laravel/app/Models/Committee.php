@@ -16,6 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property User $creator
  * @property Committee $committee_members
+ * @property Committee $committee_posts
  * @property Committee $membership
  * @property CommitteePost $posts
  * @property boolean $in_menu
@@ -72,6 +73,7 @@ class Committee extends Model
         'in_menu',
         'allow_comments',
     ];
+
 
     /**
      * in urls, what field value is used to identify a Topic record?

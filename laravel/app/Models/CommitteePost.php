@@ -93,11 +93,6 @@ class CommitteePost extends Model
         return $this->hasOne(Committee::class, 'id', 'committee_id');
     }
 
-    public function committee_posts()
-    {
-        return $this->belongsToMany(Committee::class, 'committees', 'id', 'committee_id');
-    }
-
     public function post_comments()
     {
         return $this->hasMany(CommitteePostComment::class, 'post_id', 'id');

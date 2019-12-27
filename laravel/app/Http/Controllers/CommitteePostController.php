@@ -17,13 +17,17 @@ class CommitteePostController extends Controller
      * Display a listing of the resource.
      *
      * @param Committee $committee
+     * @param CommitteePost $committeePost
      * @return Response
      */
-    public function index(Committee $committee)
+    public function index(CommitteePost $committeePost, Committee $committee)
     {
         $data = [];
         $data['committee'] = $committee;
-        $data['posts'] = CommitteePost::sortable()->orderBy('created_at')->paginate(10);
+        $data['posts'] = CommitteePost::sortable()
+            ->where('committee_id', '=', $committee->id)
+            ->orderBy('created_at')
+            ->paginate(10);
 
         return view('admin.committee_posts_list', ['data' => array('data' => $data)]);
     }

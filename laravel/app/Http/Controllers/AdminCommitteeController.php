@@ -70,7 +70,9 @@ class AdminCommitteeController extends Controller
     public function show(Committee $committee)
     {
         $committee->creator;
+        $committee['member_count'] = count($committee->committee_members);
         $committee['committee_levels'] = $this->getFormOptions(['committee_levels']);
+        $committee['post_count'] = count($committee->posts);
 
         return view('admin.show_committee', ['data' => ['committee' => $committee, 'action' => 'View']]);
     }
@@ -84,9 +86,11 @@ class AdminCommitteeController extends Controller
     public function edit(Committee $committee)
     {
         $committee->creator;
-
+        $committee->committee_members;
+        $committee['member_count'] = count($committee->committee_members);
         $data = ['committee' => $committee];
         $access_levels = $this->getFormOptions(['access_levels']);
+
 
         return view('admin.committee', ['data' => ['data' => $data, 'access_levels' => $access_levels, 'action' => 'Edit']]);
     }

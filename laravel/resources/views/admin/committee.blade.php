@@ -4,30 +4,58 @@ $committee = $data['data']['committee'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' committee ' . ($data["action"] == 'Edit' ? $committee->name : '') ])
 @section('content')
-    <script>
-        tinymce.init({
-            selector: 'textarea#committee-description',
-            height: 200,
-            width:800,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor textcolor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tiny.cloud/css/codepen.min.css'
-            ]
-        });
-    </script>
+<script>
+    tinymce.init({
+        selector: 'textarea#committee-description',
+        height: 200,
+        width:800,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor textcolor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+        content_css: [
+            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+            '//www.tiny.cloud/css/codepen.min.css'
+        ]
+    });
+</script>
 <div class="container">
-    <h3>  <a href="{{ route('committees_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of committees</a>    </h3>
+    <h3><a href="{{ route('committees_list') }}">
+            <i class="far fa-arrow-alt-circle-left"></i>
+            List of committees
+        </a>
+    </h3>
     @if ($data['action'] == 'Edit')
-    <h4>
-        <a title="{{ $committee->name }}" href="{{ route('committee_show', $committee->slug) }}">{{ $committee->name }}</a>
-    </h4>
+        <div class="row">
+            <div class="col-md border border-dark rounded-lg mt-3 mr-3">
+                <h4>
+                    View <a title="{{ $committee->name }}" href="{{ route('committee_show', $committee->slug) }}">
+                        {{ $committee->name }}
+                    </a>
+                </h4>
+            </div>
+            <div class="col-md border border-dark rounded-lg mt-3 mr-3">
+                <h4>
+                    <i class="fas fa-users"></i> Committee Membership in {{ $committee->name }}
+                </h4>
+                <h4>
+                    <a href="{{route('list-bulk-add', $committee->slug)}}">
+                        Bulk add committee members
+                    </a>
+                </h4>
+            </div>
+            <div class="col-md border border-dark rounded-lg mt-3 mr-3">
+                <h5>
+                    <a href="{{route('committee_posts_list', $committee->slug)}}">
+                        <i class="far fa-folder-open"></i>
+                        posts in {{ $committee->name }}</a> |
+                    <a href="{{route('committee_post', $committee->slug)}}">Add New Post</a>
+                </h5>
+            </div>
+        </div>
     @endif
     <form method="post" name="committee" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
