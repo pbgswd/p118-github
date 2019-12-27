@@ -45,7 +45,7 @@
                                 <td> {{ $i['email'] }} </td>
                                 <td>
                                     <div class="form-group">
-                                        {{ select_options($data['committee_levels'], old('member.role', 'member'), ['name' => 'members['. $i['id'] .'][role]', 'class' => 'form-control', 'placeholder' => 'Role'], $selected = 'Member') }}
+                                        {{ select_options($data['committee_roles'], old('member.role', 'Member'), ['name' => 'members['. $i['id'] .'][role]', 'class' => 'form-control', 'placeholder' => 'Role'], $selected = 'Member') }}
                                     </div>
                                 </td>
                             </tr>

@@ -2,33 +2,48 @@
 
 namespace App\Models;
 
+/**
+ * @property Options $access_levels
+ * @property Options $membership_levels
+ * @property Options $committee_roles
+ * @property Options $committee_executive_roles
+ * @property Options $phone_label
+ * @property Options $state_prov
+ * @property Options $countries
+ * @property Options $years
+ * @property Options $months
+ * @property Options $days
+ * @property Options $fetchOptionTypes
+ */
 
 class Options
 {
     public static function access_levels()
     {
-        $access = array();
         $access = ['public', 'members'];
         return array_combine($access, $access);
     }
 
     public static function membership_levels()
     {
-        $membership = array();
         $membership = ['Non-member', 'Permittee', 'Member', 'Office', 'Executive', 'Suspended', 'Retired'];
         return array_combine($membership, $membership);
     }
 
-    public static function committee_levels()
+    public static function committee_roles()
     {
-        $membership = array();
         $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Past-Member'];
         return array_combine($membership, $membership);
     }
 
+    public static function committee_executive_roles()
+    {
+        $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary'];
+        return array_combine($committee_executive_roles, $committee_executive_roles);
+    }
+
     public static function phone_label()
     {
-        $phone_labels = array();
         $phone_labels = ['cel', 'home', 'work', 'other'];
         return array_combine($phone_labels, $phone_labels);
     }
@@ -400,12 +415,14 @@ class Options
         return array_combine($countries, $countries);
     }
 
+
     public static function years()
     {
         $currentYear = date('Y');
         $years = range(($currentYear - 2), ($currentYear + 10));
         return array_combine($years, $years);
     }
+
 
     public static function months()
     {

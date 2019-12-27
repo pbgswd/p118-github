@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\Options;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -80,12 +81,17 @@ class CommitteeController extends Controller
      */
     public function show(Committee $committee, CommitteePost $committeePost)
     {
+        $committee_roles = Options::committee_roles();
+
+
         $committee->load('creator', 'committee_members', 'posts');
         $data = ['committee' => $committee];
 
         $data['isMember'] = $committee->committee_members->contains(function (User $member) {
             return Auth::id() == $member->id;
         });
+        //$data['executive'] = //dd($data);
+
 
         return view('committee', ['data' => $data]);
     }

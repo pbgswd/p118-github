@@ -8,6 +8,10 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+/**
+ * @property Controller $getFormOptions
+ */
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -38,8 +42,8 @@ class Controller extends BaseController
                     $data['access_level'] = Options::membership_level();
                     break;
 
-                case 'committee_levels':
-                    $data['committee_level'] = Options::committee_levels();
+                case 'committee_roles':
+                    $data['committee_roles'] = Options::committee_roles();
                     break;
 
                 case 'phone_label':

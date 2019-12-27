@@ -108,7 +108,8 @@ class User extends Authenticatable
 
     public function committee_membership()
     {
-        return $this->belongsToMany(Committee::class);
+        return $this->belongsToMany(Committee::class)->withPivot('role');
+            //TODO pluralize method name
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 $committee = $data['committee'];
+
 ?>
 @extends('layouts.dashboard', ['title' => ' <i class="fas fa-users"></i> View Committee \'' . $committee->name .'\''])
 @section('content')
@@ -99,17 +100,15 @@ $committee = $data['committee'];
         </div>
         @hasanyrole('super-admin|admin')
             <div class="col-md">
-
-
             </div>
         @endhasanyrole
         <div class="col-md">
-            <h4>Committee Membership Levels</h4>
-            <p>
-                @foreach ($committee->committee_levels['committee_level'] as  $cl)
-                    {{$cl}} <br />
+            <h4>Committee Membership Roles</h4>
+
+                @foreach ($committee['executives'] as $exec)
+                <p>  {{$exec->pivot->role}}: {{$exec->name}} </p>
                 @endforeach
-            </p>
+
         </div>
     </div>
         <div class="row" style="margin-top:2em;">

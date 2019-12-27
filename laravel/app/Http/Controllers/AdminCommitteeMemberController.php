@@ -30,7 +30,7 @@ class AdminCommitteeMemberController extends Controller
         });
 
         $data['committee'] = $committee;
-        $data['committee_levels'] = $this->getFormOptions(['committee_levels']);
+        $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
 
         return view('admin.committeebulkaddusers', ['data' => $data, 'users' => $users]);
     }
@@ -53,9 +53,8 @@ class AdminCommitteeMemberController extends Controller
      */
     public function store(Request $request, Committee $committee)
     {
-
         foreach ($request->members as $member) {
-            $committee->committee_members()->attach($member['id'], ['role' => 'Member']);
+           $committee->committee_members()->attach($member['id'], ['role' => $member['role']]);
         }
 
         Session::flash('success', "You have added " . count($request->members) . " members to committee " . $committee->name);

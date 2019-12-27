@@ -6,6 +6,9 @@ use App\Http\Requests\Committees\DestroyCommittee;
 use App\Http\Requests\Committees\StoreCommittee;
 use App\Http\Requests\Committees\UpdateCommittee;
 use App\Models\Committee;
+use App\Models\Options;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -67,12 +70,22 @@ class AdminCommitteeController extends Controller
      * @param Committee $committee
      * @return Response
      */
-    public function show(Committee $committee)
+    public function show(Committee $committee, User $users)
     {
-        $committee->creator;
+        $committee->load('creator', 'committee_members');
+
         $committee['member_count'] = count($committee->committee_members);
-        $committee['committee_levels'] = $this->getFormOptions(['committee_levels']);
         $committee['post_count'] = count($committee->posts);
+
+        $committee['committee_roles'] = Options::committee_roles();
+        $committee_executive_roles = Options::committee_executive_roles();
+
+        $committee['executives'] = $committee->committee_members->filter( function (User $user) use ($committee_executive_roles) {
+            return in_array($user->pivot->role, $committee_executive_roles);
+        })
+        ->sortBy( function (User $user) use ($committee_executive_roles) {
+            return array_search($user->pivot->role, $committee_executive_roles);
+        });
 
         return view('admin.show_committee', ['data' => ['committee' => $committee, 'action' => 'View']]);
     }
