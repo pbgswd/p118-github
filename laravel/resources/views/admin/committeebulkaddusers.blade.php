@@ -3,7 +3,7 @@
 <div class="container">
     <h3>
        <span class="badge badge-primary badge-pill">
-           {!! count($data['users']) !!}
+           {!! count($data['users']) !!}***
        </span>
         Members. <a href="{{route('committee_show', $data['committee']['slug'])}}">Return to {{$data['committee']['name']}} page</a>
     </h3>
@@ -38,15 +38,19 @@
                                     <h4>
                                         <a title="{{ $i['name'] }}" href="{{ route('user_edit', $i['id']) }}">{{ $i['name'] }}</a>
                                         @if($i['isMember'] == 'true')
-                                            is already a member
+                                            {{$i['committee_membership'][0]['pivot']['role']}}
                                         @endif
                                     </h4>
                                 </td>
                                 <td> {{ $i['email'] }} </td>
                                 <td>
-                                    <div class="form-group">
-                                        {{ select_options($data['committee_roles'], old('member.role', 'Member'), ['name' => 'members['. $i['id'] .'][role]', 'class' => 'form-control', 'placeholder' => 'Role'], $selected = 'Member') }}
-                                    </div>
+                                    @if($i['isMember'] == 'true')
+                                        {{$i['committee_membership'][0]['pivot']['role']}}
+                                    @else
+                                        <div class="form-group">
+                                            {{ select_options($data['committee_roles'], old('member.role', 'Member'), ['name' => 'members['. $i['id'] .'][role]', 'class' => 'form-control', 'placeholder' => 'Role'], $selected = '') }}
+                                        </div>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

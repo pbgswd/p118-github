@@ -81,8 +81,6 @@ class CommitteeController extends Controller
      */
     public function show(Committee $committee, CommitteePost $committeePost)
     {
-        $committee_roles = Options::committee_roles();
-
         $committee->load('creator', 'committee_members', 'posts');
 
         $committee['committee_roles'] = Options::committee_roles();
@@ -91,18 +89,15 @@ class CommitteeController extends Controller
         $committee['executives'] = $committee->committee_members->filter( function (User $user) use ($committee_executive_roles) {
             return in_array($user->pivot->role, $committee_executive_roles);
         })
-            ->sortBy( function (User $user) use ($committee_executive_roles) {
-                return array_search($user->pivot->role, $committee_executive_roles);
-            });
+        ->sortBy( function (User $user) use ($committee_executive_roles) {
+            return array_search($user->pivot->role, $committee_executive_roles);
+        });
 
         $data = ['committee' => $committee];
 
         $data['isMember'] = $committee->committee_members->contains(function (User $member) {
             return Auth::id() == $member->id;
         });
-
-
-
 
 
         return view('committee', ['data' => $data]);

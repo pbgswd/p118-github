@@ -53,7 +53,10 @@ class AdminCommitteeMemberController extends Controller
      */
     public function store(Request $request, Committee $committee)
     {
+        //dd($request->all());
+
         foreach ($request->members as $member) {
+            dd(array_keys($member));
            $committee->committee_members()->attach($member['id'], ['role' => $member['role']]);
         }
 
