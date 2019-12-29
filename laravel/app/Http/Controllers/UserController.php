@@ -149,7 +149,7 @@ class UserController extends Controller
                     $membership = new Membership($userRequest['user_membership']);
                     $user->membership()->save($membership);
                 }*/
-
+//TODO notify office by email when user has updated contact information.
         Session::flash('success', "You have edited your profile");
 
         return redirect()->route('member_edit', [$user->id]);
