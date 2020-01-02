@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         require app_path('Http/view_helpers.php');
 
         if($this->app->environment('production')) {
-            URL::forceSchema('https');
+            \URL::forceScheme('https');
         }
 
     }
