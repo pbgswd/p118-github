@@ -33,12 +33,14 @@ $attachment = $data['attachment'];
                             <li>Last Updated: {{$attachment['updated_at']}}</li>
                         </ul>
                         <h4>Insert into content with:</h4>
-<xmp>
-<i class="far fa-file-pdf fa-2x"></i>
-<a href="{{env('APP_URL')}}/storage/{{$attachment['name']}} target="_blank" />
+<pre>
+    <code>
+&lt;i class="far fa-file-pdf fa-2x"&gt;&lt;/i&gt;
+&lt;a href="{{env('APP_URL')}}/storage/{{$attachment['name']}} target="_blank" /&gt;
     {{env('APP_URL')}}/storage/{{$attachment['name']}}
-</a>
-</xmp>
+&lt;/a&gt;
+    </code>
+</pre>
                     </div>
                 @else
                 <div class="col-md-6">
@@ -55,9 +57,11 @@ $attachment = $data['attachment'];
                         <li>Last Updated: {{$attachment['updated_at']}}</li>
                     </ul>
                     <h4>Insert into content with:</h4>
-<xmp>
-<img src="{{env('APP_URL')}}/storage/{{$attachment['name']}}" style="padding:1em;" />
-</xmp>
+<pre>
+    <code>
+&lt;img src="{{env('APP_URL')}}/storage/{{$attachment['name']}}" style="padding:1em;" /&gt;
+    </code>
+</pre>
                 </div>
                 @endif
             </div>

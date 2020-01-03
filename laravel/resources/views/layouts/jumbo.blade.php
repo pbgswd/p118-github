@@ -62,7 +62,7 @@
                                 class="fas fa-home"></i><span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/page/about-us">About Us</a>
+                        <a class="nav-link" href="/page/about-us">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('topics')}}">Topics</a>
@@ -77,7 +77,7 @@
                         <a class="nav-link" href="{{route('hireus')}}">Hire Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
+                        <a class="nav-link" href="{{route('contact')}}">Contact</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('venues')}}">Venues</a>
@@ -85,13 +85,10 @@
                     @guest
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('topic_show', 'collective-agreements')}}">Collective Agreements</a>
+                            <a class="nav-link" href="{{route('topic_show', 'collective-agreements')}}">Agreements</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('committees')}}">Committees</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('topic_show', 'departments')}}">Departments</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Resources</a>
