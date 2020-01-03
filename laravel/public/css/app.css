@@ -590,6 +590,7 @@ pre code {
 @media (min-width: 576px) {
   .container {
     max-width: 540px;
+
   }
 }
 
@@ -709,8 +710,8 @@ pre code {
 .col-1 {
   position: relative;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+ # padding-right: 15px;
+ # padding-left: 15px;
 }
 
 .col {

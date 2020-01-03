@@ -67,8 +67,6 @@ class PageController extends Controller
     public function store(StorePage $request)
     {
         $page = new Page($request->input('page'), $request->input('tags'));
-        $page->image = $this->uploadImage($request);
-
         $page->save();
 
         if (!empty($request->input('page.topic_id'))) {
@@ -139,14 +137,6 @@ class PageController extends Controller
 
         $data = $request['page'];
 
-        $data['image'] = $this->uploadImage($request);
-
-        if (isset($request['page']['delete_image'])) {
-            Storage::disk('public')->delete($request->page['image']);
-            Session::flash('info', "You have deleted " . $data['image']);
-            $data['image'] = NULL;
-        }
-
         $page->fill($data);
         $page->save();
 
@@ -189,7 +179,6 @@ class PageController extends Controller
             $assignedTopics[] = $topic->pivot->topic_id;
         }
         $page->topics()->detach($assignedTopics);
-
 
         Page::destroy($request->id);
 

@@ -43,6 +43,28 @@
                     font-size: 3.5rem;
                 }
             }
+            @media (min-width: 577px) {
+                .container {
+                    padding:1.5rem;
+                }
+            }
+
+            @media (max-width: 576px) {
+                h1.display-3 {
+                  font-size: 16px;
+                    font-weight: bold;
+                }
+                h2 {
+                    font-size: 14px;
+                }
+                img {
+                    max-width: 100px;
+                }
+                .container {
+                    padding:0.5em;
+                }
+            }
+
         </style>
         <!-- Custom styles for this template -->
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">

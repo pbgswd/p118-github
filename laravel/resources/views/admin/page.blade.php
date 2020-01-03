@@ -142,6 +142,6 @@ $topics = $data['topics'];
          </div>
     @endif
 </div>
-    <div class="row" style="margin-top:3em; margin-bottom: 3em;"> &nbsp;Page added by {{$page->user->name}}</div>
+    <div class="row" style="margin-top:3em; margin-bottom: 3em;"> &nbsp;Page added by &nbsp; <a href="{{route('user_edit', $page->user->id)}}">{{$page->user->name}}</a></div>
 </div>
 @endsection
