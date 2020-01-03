@@ -4,7 +4,6 @@ $attachment = $data['attachment'];
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> ' . $data['action'] . ' File'])
 @section('content')
     <form method="post" name="attachment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-        <input type="hidden" name="attachment[id]" value="{{ $attachment['id'] }}">
         {!! csrf_field() !!}
         @if ($data['action'] == 'Add')
         <div class="col-md-12">
@@ -15,17 +14,18 @@ $attachment = $data['attachment'];
                 </label>
                 <input type="file" id="inputFile" name="images[]" multiple />
                 <p class="help-block">
-                    Upload file to server & database. Insert or attach to content after. You may add many images at once.
+                    Upload file to server & database. Insert or attach to content after.
+                    You may add many images at once.
                 </p>
             </div>
         </div>
         @else
-            <div class="row">
-                @if($attachment['extension'] == 'pdf')
-                    <div class="col-md-4" style="margin-left:2em;">
+            @if($attachment['extension'] == 'pdf')
+                <div class="row">
+                    <div class="col-md-2">
                         <i class="far fa-file-pdf fa-10x"></i>
                     </div>
-                    <div class="col-4 text-wrap">
+                    <div class="col-md-8 text-wrap">
                         <ul>
                             <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['name']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['name']}}</a></li>
                             <li>File Size: {{$attachment['filesize']}}</li>
@@ -42,32 +42,36 @@ $attachment = $data['attachment'];
     </code>
 </pre>
                     </div>
-                @else
-                <div class="col-md-6">
-                    <img src="{{ asset('storage/' . $attachment['name']) }}" {{$attachment['imageData'][3]}} />
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-4" style="margin-left:2em;">
-                    <h3>Image Info</h3>
-                    <ul>
-                        <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['name']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['name']}}</a></li>
-                        <li>File Size: {{$attachment['filesize']}}</li>
-                        <li>Width: {{$attachment['imageData'][0]}} px</li>
-                        <li>Height: {{$attachment['imageData'][1]}} px</li>
-                        <li>Mime Type: {{$attachment['imageData']['mime']}}</li>
-                        <li>Last Updated: {{$attachment['updated_at']}}</li>
-                    </ul>
-                    <h4>Insert into content with:</h4>
+            @else
+                <div class="row">
+                    <div class="col-md-6" style="margin-bottom: 1em;">
+                        <img src="{{ asset('storage/' . $attachment['name']) }}" {{$attachment['imageData'][3]}} />
+                    </div>
+
+
+                    <div class="col-md-6" style="margin-left:2em;">
+                        <h3>Image Info</h3>
+                        <ul>
+                            <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['name']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['name']}}</a></li>
+                            <li>File Size: {{$attachment['filesize']}}</li>
+                            <li>Width: {{$attachment['imageData'][0]}} px</li>
+                            <li>Height: {{$attachment['imageData'][1]}} px</li>
+                            <li>Mime Type: {{$attachment['imageData']['mime']}}</li>
+                            <li>Last Updated: {{$attachment['updated_at']}}</li>
+                        </ul>
+                        <h4>Insert into content with:</h4>
 <pre>
     <code>
 &lt;img src="{{env('APP_URL')}}/storage/{{$attachment['name']}}" style="padding:1em;" /&gt;
     </code>
 </pre>
+                    </div>
                 </div>
                 @endif
-            </div>
         @endif
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row" style="margin-top:1em;">
             <div class="col-md-6">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
@@ -84,8 +88,6 @@ $attachment = $data['attachment'];
                 </form>
             </div>
         @endif
-    </div>
-</div>
-<div class="row" style="margin-top:30px;"> &nbsp;</div>
-<div class="row" style="margin-top:30px;"> &nbsp;</div>
+
+<div class="row" style="margin-top:3em;"> &nbsp;</div>
 @endsection

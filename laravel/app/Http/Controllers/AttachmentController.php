@@ -38,6 +38,8 @@ class AttachmentController extends Controller
 
         $files = File::allFiles('storage');
 
+        $data['filecount'] = count($files);
+
         $uploadedImgs = [];
         foreach ($files as $file) {
             $uploadedImgs[] = $file->getBasename();
@@ -119,8 +121,12 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment)
     {
-
-        // echo storage_path('app/public'); exit();
+        if(!file_exists(storage_path('app/public') .'/'. $attachment->name))
+        {
+            Session::flash('error',  $attachment->name . " was not found on the server");
+            return redirect()->route('attachments_list');
+            exit();
+        }
 
         $attachment['imageData'] = getimagesize(storage_path('app/public') . '/' . $attachment['name']);
         $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/public') . '/' . $attachment['name']));

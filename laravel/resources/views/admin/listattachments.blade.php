@@ -6,7 +6,7 @@ $attachments = $data['attachments'];
     <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! count($attachments)  !!}
+               {{$data['filecount']}}
            </span>
            Files. | <a href="{{ route('attachment_create') }}">Add new file <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
