@@ -708,10 +708,10 @@ pre code {
 .col-3,
 .col-2,
 .col-1 {
-  position: relative;
-  width: 100%;
- # padding-right: 15px;
- # padding-left: 15px;
+    position: relative;
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
 }
 
 .col {
