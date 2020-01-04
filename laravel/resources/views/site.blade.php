@@ -4,6 +4,10 @@
     <div class="container">
         <h1 class="display-3">{{config('app.name')}}</h1>
 
+        <div class="row">
+            @include('content_feature')
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
