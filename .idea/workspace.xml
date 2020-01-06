@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/laravel/database/seeds/MinutesSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch/minutes_array.php" beforeDir="false" afterPath="$PROJECT_DIR$/scratch/minutes_array.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +176,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/scratch" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scratch/minutes_array.php" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -188,11 +190,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Documents\websites\project118\scratch" />
       <recent name="C:\Users\user\Documents\websites\scratch" />
       <recent name="$PROJECT_DIR$/laravel/resources/views/admin" />
       <recent name="C:\Users\user\Documents\websites\project118\laravel\resources\views" />
       <recent name="$PROJECT_DIR$/laravel/resources/views" />
-      <recent name="$PROJECT_DIR$/laravel/app/Http/Controllers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/laravel/app/Models" />
@@ -284,7 +286,7 @@
       <workItem from="1577993054450" duration="1198000" />
       <workItem from="1578009582693" duration="2336000" />
       <workItem from="1578110549064" duration="5369000" />
-      <workItem from="1578285718409" duration="6275000" />
+      <workItem from="1578285718409" duration="9511000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -343,10 +345,10 @@
     </state>
     <state width="254" height="195" key="DatabaseViewActions_Filter/0.0.1366.728@0.0.1366.728" timestamp="1575948194812" />
     <state width="313" height="275" key="DatabaseViewActions_Filter/0.27.1680.1023@0.27.1680.1023" timestamp="1576132742009" />
-    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1578292319243">
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1578292552275">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1578292319243" />
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1578292552275" />
     <state width="1254" height="496" key="GridCell.Tab.0.bottom" timestamp="1577443239421">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>

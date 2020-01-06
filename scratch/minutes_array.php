@@ -4,8 +4,7 @@ $files = [];
 $files[] = ['path' => "minutes/MinutesGM_112519.pdf",
             'file' => "MinutesGM_112519.pdf",
             'title' => "Membership Meeting - November 25, 2019",
-            'date' => "November 25, 2019"];
-*/
+            'date' => "November 25, 2019"]; */
 //echo date_format(new DateTime($files[0]['date']), 'Y-m-d H:i:s');
 
 $files[] = ['path' => "minutes/MinutesGM_10212019.pdf", 'title' => "General Membership Meeting - October 21, 2019"];
