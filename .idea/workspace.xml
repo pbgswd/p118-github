@@ -174,7 +174,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/laravel/resources/views/admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scratch" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -187,16 +187,16 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/laravel/app/Models" />
-      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Documents\websites\scratch" />
       <recent name="$PROJECT_DIR$/laravel/resources/views/admin" />
       <recent name="C:\Users\user\Documents\websites\project118\laravel\resources\views" />
       <recent name="$PROJECT_DIR$/laravel/resources/views" />
       <recent name="$PROJECT_DIR$/laravel/app/Http/Controllers" />
-      <recent name="$PROJECT_DIR$/laravel" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/laravel/app/Models" />
+      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -283,6 +283,8 @@
       <workItem from="1577493174198" duration="689000" />
       <workItem from="1577993054450" duration="1198000" />
       <workItem from="1578009582693" duration="2336000" />
+      <workItem from="1578110549064" duration="5369000" />
+      <workItem from="1578285718409" duration="6275000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -341,6 +343,10 @@
     </state>
     <state width="254" height="195" key="DatabaseViewActions_Filter/0.0.1366.728@0.0.1366.728" timestamp="1575948194812" />
     <state width="313" height="275" key="DatabaseViewActions_Filter/0.27.1680.1023@0.27.1680.1023" timestamp="1576132742009" />
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1578292319243">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1578292319243" />
     <state width="1254" height="496" key="GridCell.Tab.0.bottom" timestamp="1577443239421">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
@@ -370,14 +376,19 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1680.1023@0.27.1680.1023" timestamp="1575080188306" />
-    <state x="485" y="274" width="709" height="538" key="find.popup" timestamp="1577936709410">
-      <screen x="0" y="27" width="1680" height="1023" />
-    </state>
-    <state x="485" y="274" width="709" height="538" key="find.popup/0.27.1680.1023@0.27.1680.1023" timestamp="1577936709410" />
-    <state x="339" y="162" key="run.anything.popup" timestamp="1575948942329">
+    <state x="394" y="176" width="757" height="526" key="find.popup" timestamp="1578111029525">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1575948942329" />
+    <state x="394" y="176" width="757" height="526" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1578111029525" />
+    <state x="485" y="274" width="709" height="538" key="find.popup/0.27.1680.1023@0.27.1680.1023" timestamp="1577936709410" />
+    <state x="339" y="162" key="run.anything.popup" timestamp="1578110882523">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1578110882523" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1578110902490">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1578110902490" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
