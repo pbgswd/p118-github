@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 /**
  * Class AppServiceProvider
@@ -33,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
     {
         require app_path('Http/view_helpers.php');
 
-        view()->composer('content_feature', 'App\Http\View\Composers\ViewComposers@contentFeature');
+        View::composer('content_feature', 'App\Http\View\Composers\ContentFeature');
 
         /*
         view()->composer('page_parts.topics', 'App\Http\View\Composers\ViewComposers@topics');

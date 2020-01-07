@@ -7,6 +7,7 @@ namespace App\Models;
  * @property Options $membership_levels
  * @property Options $committee_roles
  * @property Options $committee_executive_roles
+ * @property Options $executive
  * @property Options $phone_label
  * @property Options $state_prov
  * @property Options $countries
@@ -28,6 +29,12 @@ class Options
     {
         $membership = ['Non-member', 'Permittee', 'Member', 'Office', 'Executive', 'Suspended', 'Retired'];
         return array_combine($membership, $membership);
+    }
+
+    public static function executive()
+    {
+        $executive = ['President', 'Vice-President', 'Business Agent', 'Member at Large', 'Secretary', 'Health and Welfare'];
+        return array_combine($executive, $executive);
     }
 
     public static function committee_roles()

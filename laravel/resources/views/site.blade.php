@@ -5,7 +5,7 @@
         <h1 class="display-3">{{config('app.name')}}</h1>
 
         <div class="row">
-            @include('content_feature')
+
         </div>
 
         <div class="row justify-content-center">
@@ -23,7 +23,9 @@
                         You are redirected to this page when you are logged in.
                     </div>
                 </div>
+                @include('content_feature')
             </div>
+
         </div>
 
     </div>
