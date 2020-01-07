@@ -33,7 +33,7 @@ class Options
 
     public static function executive()
     {
-        $executive = ['President', 'Vice-President', 'Business Agent', 'Member at Large', 'Secretary', 'Health and Welfare'];
+        $executive = ['President', 'Vice-President', 'Business Agent', 'Member at Large', 'Recording Secretary', 'Financial Secretary-Treasurer'];
         return array_combine($executive, $executive);
     }
 

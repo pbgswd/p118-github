@@ -10,6 +10,8 @@ use Illuminate\View\View;
 /**
  * Class ContentFeature
  * @property $compose
+ * @property View
+ * @param View $view
  */
 class ContentFeature
 {
@@ -18,19 +20,18 @@ class ContentFeature
 
     }
 
-    /**
-     * get the main feature article, latest post.
-     */
     public function compose(View $view)
     {
         $topicFilter = function ($query) {
             $query->where('slug', 'news');
         };
+
         $post = Post::orderBy('id', 'desc')
             ->first();
+
         $post->short_body = substr($post->content, 0, 60) . '...';
             // dangerous! body is in html -- truncation could split a tag
-//dd($post);
+
         $view->with('post', $post);
     }
 
