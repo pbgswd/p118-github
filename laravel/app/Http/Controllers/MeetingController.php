@@ -31,6 +31,7 @@ class MeetingController extends Controller
     public function create()
     {
         $meeting = new Meeting();
+        $meeting->live = 1;
 
         return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Create']]);
 
@@ -44,6 +45,7 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
+       // dd($request->all());
         $meeting = new Meeting($request->input('meeting'));
         $meeting->user_id = Auth::id();
         $meeting->save();
