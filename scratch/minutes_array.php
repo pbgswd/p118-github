@@ -1,11 +1,5 @@
 <?php
-$files = [];
-/*
-$files[] = ['path' => "minutes/MinutesGM_112519.pdf",
-            'file' => "MinutesGM_112519.pdf",
-            'title' => "Membership Meeting - November 25, 2019",
-            'date' => "November 25, 2019"]; */
-//echo date_format(new DateTime($files[0]['date']), 'Y-m-d H:i:s');
+echo "********* Process minutes array file  to import into db *********** \n \n";
 
 $files[] = ['path' => "minutes/MinutesGM_10212019.pdf", 'title' => "General Membership Meeting - October 21, 2019"];
 $files[] = ['path' => "minutes/MinutesEXEC_101519.pdf", 'title' => "Executive Board Meeting - October 15, 2019"];
@@ -26,6 +20,7 @@ $files[] = ['path' => "minutes/MinutesGM_031419.pdf", 'title' => "General Member
 $files[] = ['path' => "minutes/MinutesEXEC_022019.pdf", 'title' => "Executive Board Meeting - February 20, 2019"];
 $files[] = ['path' => "minutes/MinutesGM_013019.pdf", 'title' => "General Membership  Meeting - January 30, 2019"];
 $files[] = ['path' => "minutes/MinutesEXEC_011219.pdf", 'title' => "Executive Board Meeting - January 12, 2019"];
+
 $files[] = ['path' => "minutes/MinutesGM_12272018.pdf", 'title' => "General Membership  Meeting - December 27, 2018"];
 $files[] = ['path' => "minutes/MinutesEXEC_121118.pdf", 'title' => "Executive Board Meeting - December 11, 2018"];
 $files[] = ['path' => "minutes/MinutesGM_112618.pdf", 'title' => "General Membership  Meeting - November 26, 2018"];
@@ -41,14 +36,15 @@ $files[] = ['path' => "minutes/MinutesEXEC_07172018.pdf", 'title' => "Executive 
 $files[] = ['path' => "minutes/MinutesEXEC_06212018.pdf", 'title' => "Executive Board Meeting - June 26, 2018"];
 $files[] = ['path' => "minutes/MinutesGM_06132018.pdf", 'title' => "General Membership Meeting - June 13, 2018"];
 $files[] = ['path' => "minutes/MinutesEXEC_05222018.pdf", 'title' => "Executive Board Meeting - May 22, 2018"];
-$files[] = ['path' => "minutes/MinutesGM_04302018.pdf", 'title' => "General Memebership Meeting - April 30, 2018"];
+$files[] = ['path' => "minutes/MinutesGM_04302018.pdf", 'title' => "General Membership Meeting - April 30, 2018"];
 $files[] = ['path' => "minutes/MinutesEXEC_041618.pdf", 'title' => "Executive Board Meeting - April 16, 2018"];
 $files[] = ['path' => "minutes/MinutesEXEC_031618.pdf", 'title' => "Executive Board Meeting - March 16, 2018"];
-$files[] = ['path' => "minutes/MinutesGM_022518.pdf", 'title' => "General Memebership Meeting - February 25, 2018"];
+$files[] = ['path' => "minutes/MinutesGM_022518.pdf", 'title' => "General Membership Meeting - February 25, 2018"];
 $files[] = ['path' => "minutes/MinutesEXEC_02022018.pdf", 'title' => "Executive Board Meeting - February 2, 2018"];
 $files[] = ['path' => "minutes/MinutesEXEC_01262018.pdf", 'title' => "Executive Board Meeting - January 26, 2018"];
 $files[] = ['path' => "minutes/MinutesEXEC_01252018.pdf", 'title' => "Executive Board Meeting - January 25, 2018"];
 $files[] = ['path' => "minutes/MinutesEXEC_01082018.pdf", 'title' => "Executive Board Meeting - January 8, 2018"];
+
 $files[] = ['path' => "minutes/MinutesGM_12182018.pdf", 'title' => "General Membership Meeting - December 18, 2017"];
 $files[] = ['path' => "minutes/MinutesEXEC_11202017.pdf", 'title' => "Executive Board Meeting - November 20, 2017"];
 $files[] = ['path' => "minutes/MinutesGM_10292017.pdf", 'title' => "General Membership Meeting - October 29, 2017"];
@@ -69,6 +65,7 @@ $files[] = ['path' => "minutes/MinutesEXEC_02052017.pdf", 'title' => "Executive 
 $files[] = ['path' => "minutes/MinutesGM_01222017.pdf", 'title' => "General Membership Meeting - January 22, 2017"];
 $files[] = ['path' => "minutes/MinutesEXEC_011517.pdf", 'title' => "Executive Board Meeting - January 15, 2017"];
 $files[] = ['path' => "minutes/MinutesEXEC_010717.pdf", 'title' => "Executive Board Meeting - January 7, 2017"];
+
 $files[] = ['path' => "minutes/MinutesGM_12292016.pdf", 'title' => "Executive Board Meeting - December 29, 2016"];
 $files[] = ['path' => "minutes/MinutesEXEC_12082016.pdf", 'title' => "Executive Board Meeting - December 8, 2016"];
 $files[] = ['path' => "minutes/MinutesGM_11292016.pdf", 'title' => "General Membership Meeting - November 29, 2016"];
