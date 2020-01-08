@@ -19,7 +19,8 @@ class CreateMeetingsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
             $table->string('description')->nullable();
-            $table->boolean('live');
+            $table->boolean('live')->default(1);
+            $table->timestamp('date');
             $table->timestamps();
         });
     }

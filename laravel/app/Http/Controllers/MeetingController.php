@@ -48,6 +48,7 @@ class MeetingController extends Controller
        // dd($request->all());
         $meeting = new Meeting($request->input('meeting'));
         $meeting->user_id = Auth::id();
+        $meeting->date = new \DateTime();
         $meeting->save();
 
         Session::flash('success', "You have saved a new meeting");

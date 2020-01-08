@@ -11,6 +11,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string $description
  * @property boolean $live
  * @property User $users
+ * @property \DateTime $date
  * @property \DateTime created_at
  * @property \DateTime updated_at
  */
@@ -26,18 +27,21 @@ class Meeting extends Model
     protected $fillable = [
         'title',
         'description',
+        'date',
     ];
 
     public $sortable = [
         'id',
         'title',
         'live',
+        'date',
         'created_at',
         'updated_at',
     ];
 
     protected $dates =
         [
+            'date',
             'created_at',
             'updated_at'
         ];
