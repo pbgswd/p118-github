@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
-      <change afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listmeetings.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/laravel/resources/views/admin/meeting.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,16 +190,16 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/laravel/app/Models" />
-      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\user\Documents\websites\project118\laravel\resources\views\admin" />
       <recent name="C:\Users\user\Documents\websites\project118\scratch" />
       <recent name="C:\Users\user\Documents\websites\scratch" />
       <recent name="$PROJECT_DIR$/laravel/resources/views/admin" />
       <recent name="C:\Users\user\Documents\websites\project118\laravel\resources\views" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/laravel/app/Models" />
+      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -292,7 +290,7 @@
       <workItem from="1578285718409" duration="10159000" />
       <workItem from="1578298578463" duration="600000" />
       <workItem from="1578465783219" duration="1847000" />
-      <workItem from="1578468747250" duration="2009000" />
+      <workItem from="1578468747250" duration="4579000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -338,10 +336,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="950" y="27" width="720" height="1023" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1576138011413" />
-    <state x="466" y="191" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578467199369">
+    <state x="466" y="191" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578473529944">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="466" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1578467199369" />
+    <state x="466" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1578473529944" />
     <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1577435477411" />
     <state x="181" y="0" key="CommitChangelistDialog2" timestamp="1575950936278">
       <screen x="0" y="0" width="1366" height="728" />
@@ -390,10 +388,10 @@
     </state>
     <state x="394" y="176" width="757" height="526" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1578111029525" />
     <state x="485" y="274" width="709" height="538" key="find.popup/0.27.1680.1023@0.27.1680.1023" timestamp="1577936709410" />
-    <state x="339" y="162" key="run.anything.popup" timestamp="1578110882523">
+    <state x="339" y="162" key="run.anything.popup" timestamp="1578472835841">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1578110882523" />
+    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1578472835841" />
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1578110902490">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

@@ -17,4 +17,39 @@ use Kyslik\ColumnSortable\Sortable;
 class Meeting extends Model
 {
     use Sortable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'description',
+    ];
+
+    public $sortable = [
+        'id',
+        'title',
+        'live',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $dates =
+        [
+            'created_at',
+            'updated_at'
+        ];
+
+    protected $casts =
+        [
+            'live' => 'boolean',
+        ];
+
+    public function users()
+    {
+        return $this->hasOne(User::class);
+    }
+
 }

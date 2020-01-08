@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Meeting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MeetingController extends Controller
 {
@@ -27,7 +28,10 @@ class MeetingController extends Controller
      */
     public function create()
     {
-        //
+        $meeting = new Meeting();
+
+        return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Create']]);
+
     }
 
     /**
@@ -38,7 +42,13 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $meeting = new Meeting($request->input('meeting'));
+        $meeting->user_id = Auth::id();
+        $meeting->save();
+
+        Session::flash('success', "You have saved a new meeting");
+
+        return redirect()->route('meeting_edit', [$meeting->id]);
     }
 
     /**
