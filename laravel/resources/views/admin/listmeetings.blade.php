@@ -23,7 +23,7 @@ $meetings = $data['meetings'];
                         <th> @sortablelink('id','#') </th>
                         <th> @sortablelink('title', 'Title') </th>
                         <th> @sortablelink('id', 'Id') </th>
-                        <th> @sortablelink('user_id', 'Uploaded By') </th>
+                        <th> @sortablelink('user_id', 'Added By') </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -47,7 +47,7 @@ $meetings = $data['meetings'];
                             <td>
                                 {{$a->id}}
                             </td>
-                            <td> {{ $a->users->title }} </td>
+                            <td> {{$a->user->name}} </td>
                             <td>
                                 <a href="{{ route('meeting_edit', $a->id) }}" title="Edit {{ $a->title }} ">
                                     <i class="fas fa-edit"></i>

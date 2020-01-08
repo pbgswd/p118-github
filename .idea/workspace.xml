@@ -8,7 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/database/migrations/2020_01_08_045020_create_meetings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/database/migrations/2020_01_08_045020_create_meetings_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listmeetings.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listmeetings.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,6 +291,7 @@
       <workItem from="1578298578463" duration="600000" />
       <workItem from="1578465783219" duration="1847000" />
       <workItem from="1578468747250" duration="7105000" />
+      <workItem from="1578478831651" duration="682000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>

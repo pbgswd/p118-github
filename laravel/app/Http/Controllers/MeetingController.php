@@ -18,7 +18,7 @@ class MeetingController extends Controller
     public function index()
     {
         $data = [];
-        $data['meetings'] = Meeting::sortable()->orderBy('date')->paginate(10);
+        $data['meetings'] = Meeting::sortable()->with('user')->orderBy('date')->paginate(10);
 
         return view('admin.listmeetings', ['data' => $data]);
     }
@@ -32,16 +32,15 @@ class MeetingController extends Controller
     {
         $meeting = new Meeting();
         $meeting->live = 1;
+        //TODO date form field in page file associate
 
         return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Create']]);
 
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Store a newly created resource in storage
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -76,7 +75,6 @@ class MeetingController extends Controller
     public function edit(Meeting $meeting)
     {
         return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Edit']]);
-
     }
 
     /**
