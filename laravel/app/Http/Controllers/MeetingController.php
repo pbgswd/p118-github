@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Meeting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class MeetingController extends Controller
 {
@@ -70,7 +72,8 @@ class MeetingController extends Controller
      */
     public function edit(Meeting $meeting)
     {
-        //
+        return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Edit']]);
+
     }
 
     /**
@@ -82,7 +85,12 @@ class MeetingController extends Controller
      */
     public function update(Request $request, Meeting $meeting)
     {
-        //
+        $meeting->fill($request['meeting']);
+        $meeting->save();
+
+        Session::flash('success', "You have edited the meeting information");
+
+        return redirect()->route('meeting_edit', [$meeting->id]);
     }
 
     /**
@@ -93,6 +101,17 @@ class MeetingController extends Controller
      */
     public function destroy(Meeting $meeting)
     {
-        //
+        $meeting = Meeting::find($request->id);
+        dd($meeting);
+        /*       // dd($request->all());
+                foreach($request as $r => $k)
+                {
+                    //dd($r[0]);
+                    ->first();
+                    dd($meeting);
+                    Meeting::destroy($meeting->id);
+                }*/
+        Session::flash('success', Str::plural(count($request) . ' Meeting', count($request)) . ' NOT deleted.');
+        return redirect()->route('meetings_list');
     }
 }
