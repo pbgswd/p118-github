@@ -90,6 +90,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{route('meetings_list')}}">
+                                    <span data-feather="file"></span>
+                                    Meetings & Minutes
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('venues_list')}}">
                                     <span data-feather="file"></span>
                                     Venues

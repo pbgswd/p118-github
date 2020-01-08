@@ -148,4 +148,10 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::delete('/organization/delete', 'OrganizationController@destroy')->name('organization_destroy');
     Route::get('/organization/{organization}', 'OrganizationController@edit')->name('organization_edit');
 
+    Route::get('meetings', 'MeetingController@index')->name('meetings_list');
+    Route::get('meeting/', 'MeetingController@create')->name('meeting_create');
+    Route::post('meeting/', 'MeetingController@store');
+    Route::post('/meeting/{meeting}', 'MeetingController@update');
+    Route::delete('/meeting/delete', 'MeetingController@destroy')->name('meeting_destroy');
+    Route::get('/meeting/{meeting}', 'MeetingController@edit')->name('meeting_edit');
 });

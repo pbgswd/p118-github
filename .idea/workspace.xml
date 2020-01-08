@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
-      <change afterPath="$PROJECT_DIR$/laravel/database/seeds/MinutesSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listmeetings.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scratch/minutes_array.php" beforeDir="false" afterPath="$PROJECT_DIR$/scratch/minutes_array.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +179,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/scratch/minutes_array.php" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/laravel/resources/views/admin" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -189,16 +192,16 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/laravel/app/Models" />
+      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Documents\websites\project118\laravel\resources\views\admin" />
       <recent name="C:\Users\user\Documents\websites\project118\scratch" />
       <recent name="C:\Users\user\Documents\websites\scratch" />
       <recent name="$PROJECT_DIR$/laravel/resources/views/admin" />
       <recent name="C:\Users\user\Documents\websites\project118\laravel\resources\views" />
-      <recent name="$PROJECT_DIR$/laravel/resources/views" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/laravel/app/Models" />
-      <recent name="$APPLICATION_CONFIG_DIR$/scratches/helperscare-scratch" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -286,7 +289,10 @@
       <workItem from="1577993054450" duration="1198000" />
       <workItem from="1578009582693" duration="2336000" />
       <workItem from="1578110549064" duration="5369000" />
-      <workItem from="1578285718409" duration="9511000" />
+      <workItem from="1578285718409" duration="10159000" />
+      <workItem from="1578298578463" duration="600000" />
+      <workItem from="1578465783219" duration="1847000" />
+      <workItem from="1578468747250" duration="2009000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -323,18 +329,19 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="629" y="129" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1577440695088" />
-    <state x="523" y="266" width="640" height="545" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1577436817333">
-      <screen x="0" y="27" width="1680" height="1023" />
+    <state x="425" y="170" width="640" height="545" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1578298494368">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="425" y="170" width="640" height="545" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1575933843246" />
+    <state x="425" y="170" width="640" height="545" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1578298494367" />
     <state x="523" y="266" width="624" height="551" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1577436817333" />
     <state x="950" y="27" width="720" height="1023" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1576138011413">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="950" y="27" width="720" height="1023" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1576138011413" />
-    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1577435477411">
-      <screen x="0" y="27" width="1680" height="1023" />
+    <state x="466" y="191" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578467199369">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="466" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1578467199369" />
     <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1577435477411" />
     <state x="181" y="0" key="CommitChangelistDialog2" timestamp="1575950936278">
       <screen x="0" y="0" width="1366" height="728" />
@@ -442,7 +449,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/laravel/app/Models/Options.php</url>
-          <line>53</line>
+          <line>60</line>
           <properties>
             <option name="className" value="\App\Models\Options" />
             <option name="methodName" value="committee_executive_roles" />
