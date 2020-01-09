@@ -1,5 +1,6 @@
 <?php
 $meeting = $data['meeting'];
+//dd($meeting->attachments);
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Meeting ' . ($data["action"] == 'Edit' ? $meeting->name : '') ])
 @section('content')
@@ -54,7 +55,7 @@ $meeting = $data['meeting'];
         </div>
         <div class="row" style="margin-top:2em;"> &nbsp;</div>
 
-        @if ($data['action'] == 'Add')
+
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="exampleInputFile">
@@ -67,13 +68,50 @@ $meeting = $data['meeting'];
                     </p>
                 </div>
             </div>
-        @else
+        @if ($data['action'] == 'Edit')
             <div class="col-md-12">
-                <h2>{{$data['action']}}</h2>
-                <p>list form with checkboxes, descriptions, names of uploaded files, delete, upload others.</p>
+                <h2>Files</h2>
+
+                @if(count($meeting->attachments) > 0)
+                    <table class="table table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th> # </th>
+                                    <th> File </th>
+                                    <th> Description </th>
+                                    <th> Created At </th>
+                                    <th> Updated At </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($meeting->attachments as $file)
+                                <tr>
+                                    <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="id[]" value="{{$file->id}}" />
+                                        </label>
+                                    </div>
+                                    </td>
+                                    <td>
+                                        <a href="#">{{$file->file}}</a>
+                                    </td>
+                                    <td>
+                                        {{$file->description}}
+                                    </td>
+                                    <td>
+                                        {{$file->created_at}}
+                                    </td>
+                                    <td>
+                                        {{$file->updated_at}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
             </div>
         @endif
-
         <div class="row" style="margin-top:2em;"> &nbsp;</div>
         <div class="row">
             <div class="col-md-4">

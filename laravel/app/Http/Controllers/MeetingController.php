@@ -51,11 +51,9 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
-
         $meeting = new Meeting($request->input('meeting'));
         $meeting->user_id = Auth::id();
         $meeting->save();
-
 
         foreach ($request->file('files') as $file) {
 
@@ -65,6 +63,7 @@ class MeetingController extends Controller
                 Session::flash('warning', "Did not store " . $fileName);
                 return null;
             }
+
             $meeting_attachment = new MeetingAttachment();
             $meeting_attachment['file'] = $fileName;
             $meeting_attachment['extension'] = $file->getClientOriginalExtension();
@@ -97,6 +96,8 @@ class MeetingController extends Controller
      */
     public function edit(Meeting $meeting)
     {
+        $meeting->load('user', 'attachments');
+
         return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Edit']]);
     }
 

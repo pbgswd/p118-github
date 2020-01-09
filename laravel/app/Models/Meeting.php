@@ -14,6 +14,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property \DateTime $date
  * @property \DateTime created_at
  * @property \DateTime updated_at
+ * @property MeetingAttachment $attachments
  */
 class Meeting extends Model
 {
@@ -56,4 +57,8 @@ class Meeting extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function attachments()
+    {
+        return $this->hasMany(MeetingAttachment::class, 'meeting_id', 'id');
+    }
 }
