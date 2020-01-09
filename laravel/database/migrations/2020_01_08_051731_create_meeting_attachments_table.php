@@ -18,7 +18,8 @@ class CreateMeetingAttachmentsTable extends Migration
             $table->unsignedBigInteger('meeting_id');
             $table->foreign('meeting_id')->references('id')->on('meetings');
             $table->string('file');
-            $table->string('description');
+            $table->string('extension');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
+use App\Models\MeetingAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
+
+
+
 
 class MeetingController extends Controller
 {
@@ -32,23 +39,39 @@ class MeetingController extends Controller
     {
         $meeting = new Meeting();
         $meeting->live = 1;
-        //TODO date form field in page file associate
 
-        return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Create']]);
+        return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Add']]);
 
     }
 
     /**
      * Store a newly created resource in storage
      * @param  \Illuminate\Http\Request  $request
+     * @return Response
      */
     public function store(Request $request)
     {
-       // dd($request->all());
+
         $meeting = new Meeting($request->input('meeting'));
         $meeting->user_id = Auth::id();
-        $meeting->date = new \DateTime();
         $meeting->save();
+
+
+        foreach ($request->file('files') as $file) {
+
+            $fileName = $file->getClientOriginalName();
+
+            if (!$file->storeAs('meetings', $fileName)) {
+                Session::flash('warning', "Did not store " . $fileName);
+                return null;
+            }
+            $meeting_attachment = new MeetingAttachment();
+            $meeting_attachment['file'] = $fileName;
+            $meeting_attachment['extension'] = $file->getClientOriginalExtension();
+            $meeting_attachment['meeting_id'] = $meeting->id;
+            $meeting_attachment->save();
+
+        }
 
         Session::flash('success', "You have saved a new meeting");
 

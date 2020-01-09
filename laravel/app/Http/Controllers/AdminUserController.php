@@ -83,6 +83,9 @@ class AdminUserController extends Controller
      */
     public function store(StoreUser $request)
     {
+//todo is password here just encrypting the word 'secret'?
+//todo create default password for new user based on name and other data
+//todo do not allow user to keep first password on signup.
 
         $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]));
         $user->save();
@@ -147,7 +150,6 @@ class AdminUserController extends Controller
      */
     public function update(UpdateUser $userRequest, User $user)
     {
-
         $user->fill($userRequest['user']);
         $user->save();
 

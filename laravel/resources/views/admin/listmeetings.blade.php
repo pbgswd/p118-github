@@ -1,12 +1,12 @@
  <?php
 $meetings = $data['meetings'];
 ?>
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> List Meetings and Minutes'])
+@extends('layouts.dashboard',  ['title' => '<i class="far fa-folder-open"></i> List Meetings and Minutes'])
 @section('content')
     <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-              count of meetings
+              {{count($meetings)}}
            </span>
            Meetings. | <a href="{{ route('meeting_create') }}">Add new meeting <i class="far fa-arrow-alt-circle-right"></i></a>
         </h3>
@@ -25,6 +25,7 @@ $meetings = $data['meetings'];
                         <th> @sortablelink('id', 'Id') </th>
                         <th> @sortablelink('user_id', 'Added By') </th>
                         <th> Edit </th>
+                        <th> @sortablelink('date', 'Date') </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
                     </tr>
@@ -53,6 +54,7 @@ $meetings = $data['meetings'];
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
+                            <td> {{ $a->date->format('F j Y H:i:s') }} </td>
                             <td> {{ $a->created_at }} </td>
                             <td> {{ $a->updated_at }} </td>
                         </tr>

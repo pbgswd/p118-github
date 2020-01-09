@@ -36,6 +36,14 @@ $meeting = $data['meeting'];
         </div>
         <div class="row">
             <div class="form-group">
+                <div class="col-lg-2"><h4><i class="fas fa-calendar-alt"></i> Date</h4></div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="meeting[date]" value="{{ old('meeting.date', $meeting->date)}}" size="80" required/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
                 <div class="col-lg-2">
                     <h4>Description</h4>
                 </div>
@@ -44,7 +52,29 @@ $meeting = $data['meeting'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row" style="margin-top:2em;"> &nbsp;</div>
+
+        @if ($data['action'] == 'Add')
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To Meeting
+                    </label>
+                    <input type="file" id="inputFile" name="files[]" multiple />
+                    <p class="help-block">
+                        Upload file(s) to server & database.
+                    </p>
+                </div>
+            </div>
+        @else
+            <div class="col-md-12">
+                <h2>{{$data['action']}}</h2>
+                <p>list form with checkboxes, descriptions, names of uploaded files, delete, upload others.</p>
+            </div>
+        @endif
+
+        <div class="row" style="margin-top:2em;"> &nbsp;</div>
         <div class="row">
             <div class="col-md-4">
                 <div class="col-lg-2"><h4>Status</h4></div>
@@ -66,6 +96,7 @@ $meeting = $data['meeting'];
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
+
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">

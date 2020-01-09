@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/laravel/app/Models/MeetingAttachment.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/database/migrations/2020_01_08_051731_create_meeting_attachments_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/database/migrations/2020_01_08_051731_create_meeting_attachments_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listmeetings.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listmeetings.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/meeting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/meeting.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,7 +296,7 @@
       <workItem from="1578298578463" duration="600000" />
       <workItem from="1578465783219" duration="1847000" />
       <workItem from="1578468747250" duration="7105000" />
-      <workItem from="1578478831651" duration="682000" />
+      <workItem from="1578478831651" duration="17273000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -337,11 +342,11 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="950" y="27" width="720" height="1023" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1576138011413" />
-    <state x="466" y="191" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578474413417">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578546081657">
+      <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="466" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1578474413417" />
-    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1577435477411" />
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1578546081657" />
     <state x="181" y="0" key="CommitChangelistDialog2" timestamp="1575950936278">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -393,10 +398,11 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1578472835841" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1578110902490">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="426" y="96" width="827" height="953" key="search.everywhere.popup" timestamp="1578556230270">
+      <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1578110902490" />
+    <state x="426" y="96" width="827" height="953" key="search.everywhere.popup/0.27.1680.1023@0.27.1680.1023" timestamp="1578556230270" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -445,6 +451,11 @@
           <url>file://$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php</url>
           <line>94</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/laravel/app/Http/Controllers/AttachmentController.php</url>
+          <line>38</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/laravel/app/Models/Options.php</url>

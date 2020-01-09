@@ -1,5 +1,6 @@
 /node_modules
 /public/hot
+public/meetings
 public/storage
 public/css/skeleton.css
 public/css/normalize.css
