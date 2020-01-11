@@ -154,4 +154,6 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/meeting/{meeting}', 'MeetingController@update');
     Route::delete('/meeting/delete', 'MeetingController@destroy')->name('meeting_destroy');
     Route::get('/meeting/{meeting}', 'MeetingController@edit')->name('meeting_edit');
+
+    Route::get('/meetingattachment/{meetingattachment}', 'MeetingAttachmentController@download')->name('meeting_attachment_download');
 });

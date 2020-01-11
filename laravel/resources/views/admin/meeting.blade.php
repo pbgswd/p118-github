@@ -83,31 +83,32 @@ $meeting = $data['meeting'];
                                     <th> Updated At </th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            @foreach ($meeting->attachments as $file)
-                                <tr>
-                                    <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="id[]" value="{{$file->id}}" />
-                                        </label>
-                                    </div>
-                                    </td>
-                                    <td>
-                                        <a href="#">{{$file->file}}</a>
-                                    </td>
-                                    <td>
-                                        {{$file->description}}
-                                    </td>
-                                    <td>
-                                        {{$file->created_at}}
-                                    </td>
-                                    <td>
-                                        {{$file->updated_at}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+<tbody>
+@foreach ($meeting->attachments as $file)
+    <tr>
+        <td>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="file[id][]" value="{{$file->id}}" />
+            </label>
+        </div>
+        </td>
+        <td>
+            <a href="{{route('meeting_attachment_download', $file->id)}}" title="Download {{$file->file}}">{{$file->file}}</a>
+        </td>
+        <td>
+            {{$file->description}}
+            <input type="text" class="form-control"  placeholder="Add a description for this file" name="file[{{$file->id}}][description]" value="{{ old('file.description', $file->description)}}" size="40" required/>
+        </td>
+        <td>
+            {{$file->created_at}}
+        </td>
+        <td>
+            {{$file->updated_at}}
+        </td>
+    </tr>
+@endforeach
+</tbody>
                     </table>
                 @endif
             </div>

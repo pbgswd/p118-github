@@ -108,10 +108,18 @@ class MeetingController extends Controller
      * @param  \App\Models\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Meeting $meeting)
+    public function update(Request $request, Meeting $meeting, MeetingAttachment $meetingAttachment)
     {
+
+        dd($request->all());
+
         $meeting->fill($request['meeting']);
         $meeting->save();
+
+        //todo update meeting attachements files and description -- any to save, any to delete?
+
+
+
 
         Session::flash('success', "You have edited the meeting information");
 
