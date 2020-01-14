@@ -30,6 +30,7 @@ class MeetingAttachment extends Model
      */
 
     protected $fillable = [
+        'meeting_id',
         'file',
         'description',
     ];

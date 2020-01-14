@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MeetingAttachment;
-use App\ModelsMeetingAttachment;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MeetingAttachmentController extends Controller
 {
@@ -14,8 +13,7 @@ class MeetingAttachmentController extends Controller
      */
     public function download(MeetingAttachment $meetingAttachment)
     {
-        dd($meetingAttachment);
-        $pathToFile = MeetingAttachment::getStoragePath();
+        $pathToFile = Storage::disk('meetings')->getDriver()->getAdapter()->getPathPrefix();
         return response()->download($pathToFile.$meetingAttachment['file']);
     }
 }

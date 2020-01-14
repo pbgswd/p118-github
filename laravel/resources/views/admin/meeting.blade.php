@@ -1,6 +1,5 @@
 <?php
 $meeting = $data['meeting'];
-//dd($meeting->attachments);
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Meeting ' . ($data["action"] == 'Edit' ? $meeting->name : '') ])
 @section('content')
@@ -53,89 +52,82 @@ $meeting = $data['meeting'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:2em;"> &nbsp;</div>
-
-
-            <div class="col-md-12">
+        <div class="row" style="margin-top:2em;">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
                         Add File(s) To Meeting
                     </label>
-                    <input type="file" id="inputFile" name="files[]" multiple />
-                    <p class="help-block">
-                        Upload file(s) to server & database.
-                    </p>
+                    <input type="file" id="inputFile" name="meeting_attachments[]" multiple />
                 </div>
             </div>
-        @if ($data['action'] == 'Edit')
-            <div class="col-md-12">
-                <h2>Files</h2>
-
-                @if(count($meeting->attachments) > 0)
-                    <table class="table table-striped table-sm">
-                            <thead>
-                                <tr>
-                                    <th> # </th>
-                                    <th> File </th>
-                                    <th> Description </th>
-                                    <th> Created At </th>
-                                    <th> Updated At </th>
-                                </tr>
-                            </thead>
-<tbody>
-@foreach ($meeting->attachments as $file)
-    <tr>
-        <td>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="file[id][]" value="{{$file->id}}" />
-            </label>
-        </div>
-        </td>
-        <td>
-            <a href="{{route('meeting_attachment_download', $file->id)}}" title="Download {{$file->file}}">{{$file->file}}</a>
-        </td>
-        <td>
-            {{$file->description}}
-            <input type="text" class="form-control"  placeholder="Add a description for this file" name="file[{{$file->id}}][description]" value="{{ old('file.description', $file->description)}}" size="40" required/>
-        </td>
-        <td>
-            {{$file->created_at}}
-        </td>
-        <td>
-            {{$file->updated_at}}
-        </td>
-    </tr>
-@endforeach
-</tbody>
-                    </table>
-                @endif
-            </div>
-        @endif
-        <div class="row" style="margin-top:2em;"> &nbsp;</div>
-        <div class="row">
             <div class="col-md-4">
-                <div class="col-lg-2"><h4>Status</h4></div>
-
+                <div class="col-2"><h4>Status</h4></div>
                 <div class="col-sm">
                     <label>
-                         <input name="meeting[live]" type="hidden" value="0" />
-                         <input name="meeting[live]" type="checkbox" value="1" {{ checked( old('meeting.live', $meeting->live)) }} /> Check now to make Live
+                        <input name="meeting[live]" type="hidden" value="0" />
+                        <input name="meeting[live]" type="checkbox" value="1" {{ checked( old('meeting.live', $meeting->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>
             </div>
         </div>
+        @if ($data['action'] == 'Edit')
+            <div class="col-md-12">
+                <h2>Files</h2>
+                @if(count($meeting->attachments) > 0)
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> File </th>
+                                <th> Description </th>
+                                <th> Created At </th>
+                                <th> Updated At </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($meeting->attachments as $ma)
+                                <tr>
+                                    <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="meeting_attachment[{{$ma->id}}][id]" value="{{$ma->id}}" />
+                                        </label>
+                                    </div>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('meeting_attachment_download', $ma->id)}}" title="Download {{$ma->file}}">{{$ma->file}}</a>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="meeting_attachment[{{$ma->id}}][description]" value="{{ old('meeting_attachment.description', $ma->description)}}" size="40"/>
+                                    </td>
+                                    <td>
+                                        {{$ma->created_at}}
+                                    </td>
+                                    <td>
+                                        {{$ma->updated_at}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="5">
+                                    <i class="far fa-trash-alt"></i> Select checkbox to delete a file
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                @endif
+            </div>
+        @endif
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
         <div class="row">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">

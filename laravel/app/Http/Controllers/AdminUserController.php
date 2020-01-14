@@ -150,6 +150,8 @@ class AdminUserController extends Controller
      */
     public function update(UpdateUser $userRequest, User $user)
     {
+        //TODO send email to office when user updates contact information
+
         $user->fill($userRequest['user']);
         $user->save();
 

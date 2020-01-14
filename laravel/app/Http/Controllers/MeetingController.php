@@ -7,6 +7,7 @@ use App\Models\MeetingAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
@@ -51,27 +52,31 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
+
         $meeting = new Meeting($request->input('meeting'));
         $meeting->user_id = Auth::id();
         $meeting->save();
 
-        foreach ($request->file('files') as $file) {
 
-            $fileName = $file->getClientOriginalName();
 
-            if (!$file->storeAs('meetings', $fileName)) {
-                Session::flash('warning', "Did not store " . $fileName);
-                return null;
+        if (null !== ($request->file('meeting_attachments'))) {
+            foreach ($request->file('meeting_attachments') as $file) {
+
+                $fileName = $file->getClientOriginalName();
+
+                if (!$file->storeAs('meetings', $fileName)) {
+                    Session::flash('warning', "Did not store " . $fileName);
+                    return null;
+                }
+
+                $meeting_attachment = new MeetingAttachment();
+                $meeting_attachment['file'] = $fileName;
+                $meeting_attachment['extension'] = $file->getClientOriginalExtension();
+                $meeting_attachment['meeting_id'] = $meeting->id;
+                $meeting_attachment->save();
+                Session::flash('success', "You have saved " . $fileName);
             }
-
-            $meeting_attachment = new MeetingAttachment();
-            $meeting_attachment['file'] = $fileName;
-            $meeting_attachment['extension'] = $file->getClientOriginalExtension();
-            $meeting_attachment['meeting_id'] = $meeting->id;
-            $meeting_attachment->save();
-
         }
-
         Session::flash('success', "You have saved a new meeting");
 
         return redirect()->route('meeting_edit', [$meeting->id]);
@@ -111,15 +116,49 @@ class MeetingController extends Controller
     public function update(Request $request, Meeting $meeting, MeetingAttachment $meetingAttachment)
     {
 
-        dd($request->all());
-
         $meeting->fill($request['meeting']);
         $meeting->save();
+        $meeting->attachments;
 
-        //todo update meeting attachements files and description -- any to save, any to delete?
+        if (null !== ($request->file('meeting_attachments'))) {
+            foreach ($request->file('meeting_attachments') as $file) {
 
+                $fileName = $file->getClientOriginalName();
 
+                if (!$file->storeAs('meetings', $fileName)) {
+                    Session::flash('warning', "Did not store " . $fileName);
+                    return null;
+                }
 
+                $meeting_attachment = new MeetingAttachment();
+                $meeting_attachment['file'] = $fileName;
+                $meeting_attachment['extension'] = $file->getClientOriginalExtension();
+                $meeting_attachment['meeting_id'] = $meeting->id;
+                $meeting_attachment->save();
+
+                Session::flash('success', "You have uploaded " . $fileName);
+            }
+        }
+
+        if(isset($request->meeting_attachment)){
+            foreach($request->meeting_attachment as $k => $ma) {
+                if (isset($ma['id'])) {
+                    $row = MeetingAttachment::where('id', $ma['id'])->get();
+                    Storage::disk('meetings')->delete($row[0]['file']);
+                    MeetingAttachment::destroy($row[0]->id);
+
+                    Session::flash('success', "You have deleted " . $row[0]['file']);
+                }
+                else
+                {
+                    $row = MeetingAttachment::where('id', $k)->first();
+                    $row->description = trim($ma['description']);
+                    $row->save();
+
+                    Session::flash('success', "You have updated an attachment");
+                }
+            }
+        }
 
         Session::flash('success', "You have edited the meeting information");
 
@@ -132,19 +171,23 @@ class MeetingController extends Controller
      * @param  \App\Models\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Meeting $meeting)
+    public function destroy(Request $request)
     {
-        $meeting = Meeting::find($request->id);
-        dd($meeting);
-        /*       // dd($request->all());
-                foreach($request as $r => $k)
-                {
-                    //dd($r[0]);
-                    ->first();
-                    dd($meeting);
-                    Meeting::destroy($meeting->id);
-                }*/
-        Session::flash('success', Str::plural(count($request) . ' Meeting', count($request)) . ' NOT deleted.');
+        $meetings = Meeting::find($request->id);
+
+        foreach($meetings as $meeting)
+        {
+            $meeting->attachments;
+            foreach ( $meeting->attachments as $row){
+                Storage::disk('meetings')->delete($row['file']);
+                MeetingAttachment::destroy($row->id);
+            }
+
+            Meeting::destroy($meeting->id);
+        }
+
+        Session::flash('success', Str::plural(count($request->id) . ' Meeting', count($request->id)) . ' and any related files deleted.');
+
         return redirect()->route('meetings_list');
     }
 }
