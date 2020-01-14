@@ -29,6 +29,7 @@ class Meeting extends Model
         'title',
         'description',
         'date',
+        'live',
     ];
 
     public $sortable = [
@@ -60,6 +61,5 @@ class Meeting extends Model
     public function attachments()
     {
         return $this->hasMany(MeetingAttachment::class, 'meeting_id', 'id');
-        //return $this->belongsToMany(MeetingAttachment::class);
     }
 }

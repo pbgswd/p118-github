@@ -53,6 +53,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('committee_post_comment');
 
 
+    Route::get('meetings', 'MeetingController@index')->name('pub_meetings_list');
+    Route::get('meeting/', 'MeetingController@create')->name('meeting_create');
+    Route::post('meeting/', 'MeetingController@store');
+    Route::post('/meeting/{meeting}', 'MeetingController@update');
+    Route::delete('/meeting/delete', 'MeetingController@destroy')->name('meeting_destroy');
+    Route::get('/meeting/{meeting}', 'MeetingController@edit')->name('meeting_edit');
+
+    Route::get('/meetingattachment/{meetingAttachment}', 'MeetingAttachmentController@download')->name('meeting_attachment_download');
 
     Route::post('/search', 'SearchController@index')->name('search');
 });
@@ -148,12 +156,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::delete('/organization/delete', 'OrganizationController@destroy')->name('organization_destroy');
     Route::get('/organization/{organization}', 'OrganizationController@edit')->name('organization_edit');
 
-    Route::get('meetings', 'MeetingController@index')->name('meetings_list');
-    Route::get('meeting/', 'MeetingController@create')->name('meeting_create');
-    Route::post('meeting/', 'MeetingController@store');
-    Route::post('/meeting/{meeting}', 'MeetingController@update');
-    Route::delete('/meeting/delete', 'MeetingController@destroy')->name('meeting_destroy');
-    Route::get('/meeting/{meeting}', 'MeetingController@edit')->name('meeting_edit');
+    Route::get('meetings', 'AdminMeetingController@index')->name('meetings_list');
+    Route::get('meeting/', 'AdminMeetingController@create')->name('meeting_create');
+    Route::post('meeting/', 'AdminMeetingController@store');
+    Route::post('/meeting/{meeting}', 'AdminMeetingController@update');
+    Route::delete('/meeting/delete', 'AdminMeetingController@destroy')->name('meeting_destroy');
+    Route::get('/meeting/{meeting}', 'AdminMeetingController@edit')->name('meeting_edit');
 
     Route::get('/meetingattachment/{meetingAttachment}', 'MeetingAttachmentController@download')->name('meeting_attachment_download');
 });

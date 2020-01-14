@@ -1,4 +1,4 @@
- <?php
+<?php
 $meetings = $data['meetings'];
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="far fa-folder-open"></i> List Meetings and Minutes'])
@@ -22,8 +22,6 @@ $meetings = $data['meetings'];
                     <tr>
                         <th> @sortablelink('id','#') </th>
                         <th> @sortablelink('title', 'Title') </th>
-                        <th> @sortablelink('id', 'Id') </th>
-                        <th> @sortablelink('user_id', 'Added By') </th>
                         <th> Edit </th>
                         <th> @sortablelink('date', 'Date') </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
@@ -46,10 +44,6 @@ $meetings = $data['meetings'];
                                 </h4>
                             </td>
                             <td>
-                                {{$a->id}}
-                            </td>
-                            <td> {{$a->user->name}} </td>
-                            <td>
                                 <a href="{{ route('meeting_edit', $a->id) }}" title="Edit {{ $a->title }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -60,7 +54,7 @@ $meetings = $data['meetings'];
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="7">&nbsp;</td>
+                        <td colspan="6">&nbsp;</td>
                     </tr>
                     </tbody>
                 </table>

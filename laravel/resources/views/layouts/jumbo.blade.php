@@ -113,7 +113,7 @@
                             <a class="nav-link" href="{{route('committees')}}">Committees</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Resources</a>
+                            <a class="nav-link" href="{{route('pub_meetings_list')}}">Meetings & Minutes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('members')}}">Members</a>
