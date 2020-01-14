@@ -8,7 +8,7 @@ $files[] = ['path' => "minutes/MinutesEXEC091819.pdf", 'title' => "Executive Boa
 $files[] = ['path' => "minutes/MinutesEXEC_081219.pdf", 'title' => "Executive Board Meeting - August 12, 2019"];
 $files[] = ['path' => "minutes/MinutesGM_072919.pdf", 'title' => "General Membership Meeting - July 29, 2019"];
 $files[] = ['path' => "minutes/MinutesEXEC_07152019.pdf", 'title' => "Executive Board Meeting - July 15, 2019"];
-$files[] = ['path' => "minutes/MinutesGM_052919", 'title' => "General Membership Meeting - May 29, 2019"];
+$files[] = ['path' => "minutes/MinutesGM_052919.pdf", 'title' => "General Membership Meeting - May 29, 2019"];
 $files[] = ['path' => "minutes/MinutesGM_Special_062619.pdf", 'title' => "Special General Membership Meeting - June 26, 2019"];
 $files[] = ['path' => "minutes/MinutesGM_062619.pdf", 'title' => "General Membership Meeting - June 26, 2019"];
 $files[] = ['path' => "minutes/MinutesEXEC_061119.pdf", 'title' => "Executive Board Meeting - June 11, 2019"];
@@ -90,15 +90,13 @@ $files[] = ['path' => "minutes/MinutesEXEC_02032016.pdf", 'title' => "Executive 
 $files[] = ['path' => "minutes/MinutesGM_01142016.pdf", 'title' => "General Membership Meeting - January 14, 2016"];
 $files[] = ['path' => "minutes/MinutesEXEC_01092016.pdf", 'title' => "Executive Board Meeting - January 9, 2016"];
 
-$data = [];
-
 foreach ($files as $file)
 {
     $doc = explode('/', $file['path']);
     $result = explode('-', $file['title']);
-    $title = trim($result[0]);
-    $date = date_format(new DateTime(trim($result[1])),  'Y-m-d H:i:s');
-    $data[] = ['path' => $file['path'], 'file' => $doc[1], 'title' => $title, 'date' => $date];
-}
+   // print_r($result);
+    $description =  trim($result[1]) ." Minutes of " . trim($result[0]);
 
-print_r($data);
+    $date = date_format(new DateTime(trim($result[1])),  'Y-m-d H:i:s');
+    $minutes_array[] = ['path' => $file['path'], 'file' => $doc[1], 'title' => $description, 'date' => $date];
+}

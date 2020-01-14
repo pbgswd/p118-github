@@ -18,7 +18,7 @@ class CreateMeetingsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('live')->default(1);
             $table->timestamp('date');
             $table->timestamps();

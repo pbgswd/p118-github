@@ -34,6 +34,18 @@ $meeting = $data['meeting'];
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-2"><h4><i class="fas fa-calendar-alt"></i>test Date</h4></div>
+                <div class="col-lg-10">
+                    <input type='text' class="form-control" id='datepicker' style='width: 300px;' > <br>
+
+                </div>
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4><i class="fas fa-calendar-alt"></i> Date</h4></div>
@@ -136,7 +148,7 @@ $meeting = $data['meeting'];
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
                 <input type="hidden" name="id[]" value="{{ $meeting->id }}">
-                <input class="btn btn-outline-danger" type="submit" value="Delete">
+                <input class="btn btn-outline-danger" type="submit" value="Delete Meeting">
             </form>
          </div>
     @endif

@@ -5,8 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="{{ config('app.name') }}">
         <meta name="author" content="Peter Gordon">
-        <meta name="generator" content="Jekyll v3.8.5">
-
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -18,6 +16,10 @@
         <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k"></script>
         <script src="/js/tinymce.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+        <!-- Datepicker -->
+        <link href='bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' rel='stylesheet' type='text/css'>
+        <script src='bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' type='text/javascript'></script>
 
         <!-- Styles -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -177,17 +179,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
         <script src="{{ mix('/js/dashboard.js') }}"></script>
-        <script>
-            $(function()
-            {
-                // set up date pickers
-                $( '.datepicker' ).datepicker(
-                    {
-                        'dateFormat': 'yy-mm-dd',
-                        'minDate':  '-1',
-                        'maxDate':  '+24m'
-                    });
+
+
+        <!-- Script -->
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#datepicker').datepicker();
             });
         </script>
+
+
+
+
+
+
     </body>
 </html>

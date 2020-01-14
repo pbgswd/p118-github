@@ -6,9 +6,9 @@ $meetings = $data['meetings'];
     <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-              {{count($meetings)}}
+              {{$data['count']}}
            </span>
-           Meetings. | <a href="{{ route('meeting_create') }}">Add new meeting <i class="far fa-arrow-alt-circle-right"></i></a>
+           Meetings and Minutes. | <a href="{{ route('meeting_create') }}">Add new entry <i class="far fa-arrow-alt-circle-right"></i></a>
         </h3>
     </div>
 @if (count($meetings) > 0)

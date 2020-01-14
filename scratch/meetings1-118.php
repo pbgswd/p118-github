@@ -35,30 +35,21 @@ $files[] = ['path' => "meetings/2017/NOM January 2017.pdf", 'title' => "January 
 $files[] = ['path' => "meetings/2016/NOM Dec 2016.pdf", 'title' => "December 2016 Notice of General Meeting"];
 $files[] = ['path' => "meetings/2016/NOM November 2016.pdf", 'title' => "November 2016 Notice of General Meeting"];
 $files[] = ['path' => "meetings/2016/NOM October 2016.pdf", 'title' => "October 2016 Notice of General Meeting"];
-$files[] = ['path' => "docs/CB Committee Report October 12 2016.pdf", 'title' => "October 2016 Special Meeting - C&B Committee Report"];
+//$files[] = ['path' => "docs/CB Committee Report October 12 2016.pdf", 'title' => "October 2016 Special Meeting - C&B Committee Report"];
 $files[] = ['path' => "meetings/2016/NOM September 2016.pdf", 'title' => "September 2016 Notice of General Meeting"];
-
 
 foreach ($files as $file)
 {
-    
-    $document = '';
-    $date = '';
-    
     $document = explode('/', $file['path']);
-    
     $date = explode(" ", $file['title']);
-    
-    $date = $date[0] . " " . $date[1];
-    
-    $date = date_format(new DateTime(trim($date)),  'Y-m-d H:i:s');
+    $date_string = trim($date[0]) . " " . trim($date[1]);
+
+    $date = date_format(new DateTime($date_string),  'Y-m-d H:i:s');
     
     $result[] = ['path' => $file['path'],
                  'file' => $document[2],
                  'title' => trim($file['title']),
                  'date' => $date];
+    unset($date);
+    unset($document);
 }
-
-print_r($result);
-
-exit();

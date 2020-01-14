@@ -5,13 +5,190 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
+      <change afterPath="$PROJECT_DIR$/files/meetings/Addendum Feb 2018 NOM.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/December 2015 Notice of General Meeting.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/January 14, 2016 NOM.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/July 2016 NOM.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/June 2016 NOM.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC091819.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_010717.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_01082018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_01092016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_011219.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_011517.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_01252018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_01262018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_02022018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_02032016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_02052017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_022019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_02262016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_03082016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_031618.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_03182017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_032519.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_04112016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_041219.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_041618.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_04272017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_04302016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_051419.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_05162016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_05172017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_05222018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_06102016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_061119.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_06212018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_07142016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_07152019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_07172018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_08022018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_081219.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_08162018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_08182017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_082916.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_09012018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_09092017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_10052018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_10112016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_101519.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_10172017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_10252016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_10302018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_11072016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_11202017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_12082016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesEXEC_121118.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_01142016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_01222017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_013019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_022518.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_02262016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_02262017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_031419.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_03262017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_03302016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_042919" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_04302018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_05162016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_05182017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_052919.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_06132018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_06252017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_062619.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_06272016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_07182018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_07192017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_072919.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_09172018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_09242017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_092519.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_09292016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_10192018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_10212019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_10292017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_112618.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_11292016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_12182018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_12272018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_12292016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesGM_Special_062619.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesSPECEX_09162017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/MinutesSPEC_02222016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM April 2018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM Dec 2016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM December 2018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM December 2019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM February 2016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM February 2017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM February 2018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM January 2017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM January 2019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM July 2017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM July 2018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM July 2019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM June 2017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM June 2018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM June 2019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM March 2016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM March 2017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM March 2018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM March 2019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM May 18, 2017 GM.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM May 2016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM May 2019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM November 2016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM November 2018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM November 2019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM October 2016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM October 2017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM October 2018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM October 2019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM September 2016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM September 2017.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM September 2018.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/NOM September 2019.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/Notice of meetings Oct 2012.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/November 2015 Notice of General Meeting.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/Supplemental NOM May 2016.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice06jan11.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice07nov11.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice12jul13.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice12nov10.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice13jul12.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice14dec10.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice15nov12.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice17jan13.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice17oct10.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice18mar13.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice19aug10.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice20dec12.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice21feb13.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice21jul15.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice22feb11.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice24apr01may2012.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice24aug15.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice24jan15.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice24oct14.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice25jan11.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice26apr14.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice26oct15.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice27apr15.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice27jun12.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice27mar12.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice27mar15.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice27may13.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice27sep10.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice27sep13.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice27sep14.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice28feb14.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice28feb15.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice28nov14.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice29jan14and salaries.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice29jun10.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice29mar11.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice29mar14.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice29may15.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice29nov13.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice29sep11.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice30dec13.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice30dec14.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice30feb10.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice30mar10.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice30nov11.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice30oct13.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice31jan12.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/meetings/notice31may14.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingAttachmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingAttachmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/MeetingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Meeting.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Models/MeetingAttachment.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/MeetingAttachment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/database/migrations/2020_01_08_045020_create_meetings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/database/migrations/2020_01_08_045020_create_meetings_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/database/seeds/MinutesSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/database/seeds/MinutesSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/listmeetings.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/listmeetings.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/meeting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/meeting.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch/archivemeetingsLocal118.php" beforeDir="false" afterPath="$PROJECT_DIR$/scratch/archivemeetingsLocal118.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch/meetings1-118.php" beforeDir="false" afterPath="$PROJECT_DIR$/scratch/meetings1-118.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch/minutes_array.php" beforeDir="false" afterPath="$PROJECT_DIR$/scratch/minutes_array.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,7 +474,7 @@
       <workItem from="1578478831651" duration="23769000" />
       <workItem from="1578686906058" duration="2664000" />
       <workItem from="1578774615908" duration="1281000" />
-      <workItem from="1578885033890" duration="25725000" />
+      <workItem from="1578885033890" duration="50112000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -343,11 +520,11 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="950" y="27" width="720" height="1023" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1576138011413" />
-    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578948703598">
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578980615489">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="466" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1578474413417" />
-    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1578948703598" />
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1578980615489" />
     <state x="181" y="0" key="CommitChangelistDialog2" timestamp="1575950936278">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -387,6 +564,10 @@
     </state>
     <state x="379" y="196" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1575933873480" />
     <state x="379" y="207" key="com.intellij.ide.util.TipDialog/0.0.1366.768@0.0.1366.768" timestamp="1575842922530" />
+    <state x="493" y="156" width="683" height="771" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1578989554574">
+      <screen x="0" y="27" width="1680" height="1023" />
+    </state>
+    <state x="493" y="156" width="683" height="771" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1680.1023@0.27.1680.1023" timestamp="1578989554574" />
     <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1575080188306">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>

@@ -14,8 +14,6 @@ use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 
 
-
-
 class MeetingController extends Controller
 {
     /**
@@ -26,7 +24,8 @@ class MeetingController extends Controller
     public function index()
     {
         $data = [];
-        $data['meetings'] = Meeting::sortable()->with('user')->orderBy('date')->paginate(10);
+        $data['meetings'] = Meeting::sortable()->with('user')->orderBy('date', 'desc')->paginate(20);
+        $data['count'] = count(Meeting::all());
 
         return view('admin.listmeetings', ['data' => $data]);
     }
@@ -57,8 +56,6 @@ class MeetingController extends Controller
         $meeting->user_id = Auth::id();
         $meeting->save();
 
-
-
         if (null !== ($request->file('meeting_attachments'))) {
             foreach ($request->file('meeting_attachments') as $file) {
 
@@ -71,7 +68,7 @@ class MeetingController extends Controller
 
                 $meeting_attachment = new MeetingAttachment();
                 $meeting_attachment['file'] = $fileName;
-                $meeting_attachment['extension'] = $file->getClientOriginalExtension();
+                $meeting_attachment['extension'] =     $file->getClientOriginalExtension();
                 $meeting_attachment['meeting_id'] = $meeting->id;
                 $meeting_attachment->save();
                 Session::flash('success', "You have saved " . $fileName);
@@ -115,7 +112,6 @@ class MeetingController extends Controller
      */
     public function update(Request $request, Meeting $meeting, MeetingAttachment $meetingAttachment)
     {
-
         $meeting->fill($request['meeting']);
         $meeting->save();
         $meeting->attachments;
@@ -135,8 +131,6 @@ class MeetingController extends Controller
                 $meeting_attachment['extension'] = $file->getClientOriginalExtension();
                 $meeting_attachment['meeting_id'] = $meeting->id;
                 $meeting_attachment->save();
-
-                Session::flash('success', "You have uploaded " . $fileName);
             }
         }
 
@@ -146,16 +140,12 @@ class MeetingController extends Controller
                     $row = MeetingAttachment::where('id', $ma['id'])->get();
                     Storage::disk('meetings')->delete($row[0]['file']);
                     MeetingAttachment::destroy($row[0]->id);
-
-                    Session::flash('success', "You have deleted " . $row[0]['file']);
                 }
                 else
                 {
                     $row = MeetingAttachment::where('id', $k)->first();
                     $row->description = trim($ma['description']);
                     $row->save();
-
-                    Session::flash('success', "You have updated an attachment");
                 }
             }
         }
