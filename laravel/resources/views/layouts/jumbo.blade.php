@@ -107,13 +107,10 @@
                     @guest
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('topic_show', 'collective-agreements')}}">Agreements</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{{route('committees')}}">Committees</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('pub_meetings_list')}}">Meetings & Minutes</a>
+                            <a class="nav-link" href="{{route('list_meetings')}}">Meetings & Minutes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('members')}}">Members</a>

@@ -4,12 +4,11 @@ $meetings = $data['meetings'];
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Members'])
 @section('content')
 <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); max-width:768px;">
-<h1 class="display-3"></h1>
+<h1 class="display-3">Meetings & Minutes</h1>
     <h3>
        <span class="badge badge-primary badge-pill">
-           {!! count($data['meetings'])  !!} meetings
+           {{ $data['count'] }} meetings & minutes
        </span>
-
     </h3>
 </div>
 <div class="table-responsive-md border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;  max-width:768px; margin-left:auto; margin-right:auto;">
@@ -24,11 +23,11 @@ $meetings = $data['meetings'];
         @foreach ( $meetings as $a )
             <tr>
                 <td>
-                    <h4>
-                        <a title="{{ $a->title }}" href="#">{{ $a->title }}</a>
-                    </h4>
+                    <h5>
+                        <a title="{{ $a->title }}" href="{{route('meeting', $a->id)}}"> {{ $a->title }}</a>
+                    </h5>
                 </td>
-                <td> {{ $a->date->format('F j Y H:i:s') }} </td>
+                <td> {{ $a->date->format('F j Y') }} </td>
             </tr>
         @endforeach
         <tr>
@@ -42,7 +41,7 @@ $meetings = $data['meetings'];
     <div class="col-3">
         <div class="list-group">
             <ul class="pagination">
-                meeting->links()
+                {{$meetings->links()}}
             </ul>
         </div>
     </div>

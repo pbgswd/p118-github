@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Meeting;
 use Illuminate\Http\Request;
 
+//use Illuminate\Support\Facades\Auth;
+
+
+
 class MeetingController extends Controller
 {
     /**
@@ -14,7 +18,10 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        //
+        $data['meetings'] = Meeting::sortable()->with('user')->orderBy('date', 'desc')->paginate(20);
+        $data['count'] = count(Meeting::all());
+
+        return view('list_meetings_minutes', ['data' => $data]);
     }
 
     /**
@@ -46,7 +53,9 @@ class MeetingController extends Controller
      */
     public function show(Meeting $meeting)
     {
-        //
+        $meeting->load('user', 'attachments');
+
+        return view('meeting', ['data' => ['meeting' => $meeting]]);
     }
 
     /**
