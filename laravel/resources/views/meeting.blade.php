@@ -22,7 +22,7 @@ $meeting = $data['meeting'];
                         <h4>
                             <a href="{{route('meeting_attachment_download', $att->id)}}" title="{{$att->description}}" target="_blank">
                             {{$att->file}}
-                            </a> 
+                            </a>
                             {{$att->description}}
                         </h4>
                     </li>

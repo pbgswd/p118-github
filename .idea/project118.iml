@@ -17,7 +17,6 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/dragonmantank/cron-expression" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/egulias/email-validator" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/erusev/parsedown" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/facade/flare-client-php" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/facade/ignition" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/facade/ignition-contracts" />
@@ -38,6 +37,8 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/laravel/telescope" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/laravel/tinker" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/laravel/ui" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/commonmark" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/commonmark-ext-table" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/glide" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/mockery/mockery" />
