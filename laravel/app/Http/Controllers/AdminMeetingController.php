@@ -11,11 +11,20 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
+use App\Services\AttachmentService;
 
 
 
 class AdminMeetingController extends Controller
 {
+    /** @var AttachmentService*/
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -57,6 +66,10 @@ class AdminMeetingController extends Controller
         $meeting->save();
 
         if (null !== ($request->file('meeting_attachments'))) {
+//todo laravel service line 71, what arguments are passed?
+
+            $this->attachmentService->createAttachment(FormRequest);
+
             foreach ($request->file('meeting_attachments') as $file) {
 
                 $fileName = $file->getClientOriginalName();

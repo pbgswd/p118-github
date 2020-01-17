@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Meeting;
 use Illuminate\Http\Request;
-
-//use Illuminate\Support\Facades\Auth;
-
+use App\Services\AttachmentService;
 
 
 class MeetingController extends Controller
 {
+    /** @var AttachmentService*/
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+         $this->attachmentService = $attachmentService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +37,8 @@ class MeetingController extends Controller
      */
     public function create()
     {
-        //
+        $meeting = new Meeting;
+        return view('meeting', ['data' => ['meeting' => $meeting, 'action' => 'Add']]);
     }
 
     /**
@@ -42,7 +49,8 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+dd($request->all());
+
     }
 
     /**

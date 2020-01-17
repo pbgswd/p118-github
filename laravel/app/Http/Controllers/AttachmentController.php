@@ -71,9 +71,9 @@ class AttachmentController extends Controller
      */
     public function store(StoreAttachment $request)
     {
-
         /** @var UploadedFile $image */
-        foreach ($request->images as $image) {
+
+        foreach ($request->file('images') as $image) {
             $imageName = $image->getClientOriginalName();
 
             if (!$image->storeAs('public', $imageName)) {
@@ -81,7 +81,7 @@ class AttachmentController extends Controller
                 return null;
             }
 
-            $attachment = new Attachment($request->input('attachment'));
+            $attachment = new Attachment();
             $attachment['name'] = $imageName;
             $attachment['extension'] = $image->getClientOriginalExtension();
             $attachment['user_id'] = Auth::id();
@@ -89,17 +89,17 @@ class AttachmentController extends Controller
             $attachment->save();
         }
 
-        /*
-                // get the date, month, year, make folder if not exist for storing stuff.
-        */
+//todo get the date, month, year, make folder if not exist for storing stuff.
+
         Session::flash('success', Str::plural(count($request->images) . ' Attachment', count($request->images)) . ' uploaded.');
 
-        /*
-        if one file, go to edit, if multiple uploads, what then?
-        */
-
-
-        return redirect()->route('attachment_edit', [$attachment->id]);
+        if(count($request->file('images')) == 1 ) {
+            return redirect()->route('attachment_edit', [$attachment->id]);
+        }
+        else
+        {
+            return redirect()->route('admin.listattachments');
+        }
     }
 
     /**
@@ -110,7 +110,7 @@ class AttachmentController extends Controller
      */
     public function show(Attachment $attachment)
     {
-
+//todo delete show method if not needed
     }
 
     /**
@@ -143,6 +143,7 @@ class AttachmentController extends Controller
      */
     public function update(UpdateAttachment $request, Attachment $attachment)
     {
+        //todo no actions programmatically really.
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
 
@@ -171,9 +172,7 @@ class AttachmentController extends Controller
         }
 
         foreach ($request->images as $k => $v) {
-
             // $imageName = $request->images[$k]->getClientOriginalName();
-
             if (!$request->images[$k]->storeAs('public', $request->images[$k])) {
                 Session::flash('warning', "Did not store " . $v);
                 return null;

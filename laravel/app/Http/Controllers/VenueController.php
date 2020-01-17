@@ -49,7 +49,7 @@ class VenueController extends Controller
     public function create()
     {
         $venue = new Venue;
-        $venue['user_id'] = Auth::id();
+
         $access_levels = $this->getFormOptions(['access_levels']);
 
         return view('admin.venue', ['data' => ['venue' => $venue, 'access_levels' => $access_levels, 'action' => 'Create']]);

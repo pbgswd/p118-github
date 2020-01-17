@@ -20,10 +20,14 @@ $attachment = $data['attachment'];
             </div>
         </div>
         @else
-            @if($attachment['extension'] == 'pdf')
+            @if(!in_array($attachment['extension'], ['jpg', 'jpeg', 'png', 'gif']))
                 <div class="row">
                     <div class="col-md-2">
-                        <i class="far fa-file-pdf fa-10x"></i>
+                        @if($attachment['extension'] == 'pdf')
+                        <i class="far fa-file-pdf fa-8x"></i>
+                        @else
+                            <i class="far fa-file fa-8x"></i>
+                        @endif
                     </div>
                     <div class="col-md-8 text-wrap">
                         <ul>
@@ -34,12 +38,16 @@ $attachment = $data['attachment'];
                         </ul>
                         <h4>Insert into content with:</h4>
 <pre>
-    <code>
-&lt;i class="far fa-file-pdf fa-2x"&gt;&lt;/i&gt;
+<code>
+@if($attachment['extension'] == 'pdf')
+&lt;i class="far fa-file-pdf fa-8x"&gt;&lt;/i&gt;
+@else
+&lt;i class="far fa-file fa-8x"&gt;&lt;/i&gt;
+@endif
 &lt;a href="{{env('APP_URL')}}/storage/{{$attachment['name']}} target="_blank" /&gt;
     {{env('APP_URL')}}/storage/{{$attachment['name']}}
 &lt;/a&gt;
-    </code>
+</code>
 </pre>
                     </div>
                     <div class="col-md-2"></div>
