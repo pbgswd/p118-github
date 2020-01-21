@@ -25,14 +25,15 @@ class ContentFeature
         $topicFilter = function ($query) {
             $query->where('slug', 'news');
         };
+//todo expand filter for home page view
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
 
-        $post = Post::orderBy('id', 'desc')
-            ->first();
 
-        $post->short_body = substr($post->content, 0, 60) . '...';
+
+       // $posts->short_body = substr($posts->content, 0, 60) . '...';
             // dangerous! body is in html -- truncation could split a tag
 
-        $view->with('post', $post);
+        $view->with('posts', $posts);
     }
 
 }
