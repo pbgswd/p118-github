@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Meeting;
 use App\Models\MeetingAttachment;
+use App\Services\AttachmentService;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
-use App\Services\AttachmentService;
-
 
 
 class AdminMeetingController extends Controller
@@ -50,7 +49,6 @@ class AdminMeetingController extends Controller
         $meeting->live = 1;
 
         return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Add']]);
-
     }
 
     /**
@@ -65,29 +63,20 @@ class AdminMeetingController extends Controller
         $meeting->user_id = Auth::id();
         $meeting->save();
 
-        if (null !== ($request->file('meeting_attachments'))) {
-//todo laravel service line 71, what arguments are passed?
+        if (null !== ($request->file('attachments'))) {
+//todo laravel service line 69, what arguments are passed?
 
-            $this->attachmentService->createAttachment(FormRequest);
-
-            foreach ($request->file('meeting_attachments') as $file) {
-
-                $fileName = $file->getClientOriginalName();
-
-                if (!$file->storeAs('meetings', $fileName)) {
-                    Session::flash('warning', "Did not store " . $fileName);
-                    return null;
-                }
-
-                $meeting_attachment = new MeetingAttachment();
-                $meeting_attachment['file'] = $fileName;
-                $meeting_attachment['extension'] =     $file->getClientOriginalExtension();
-                $meeting_attachment['meeting_id'] = $meeting->id;
-                $meeting_attachment->save();
-                Session::flash('success', "You have saved " . $fileName);
+            $result = $this->attachmentService->createAttachment($request, $meeting);
+// todo count of files uploaded
+            if($result){
+                Session::flash('success', "files");
+                return redirect()->route('meeting_edit', [$meeting->id]);
             }
+
         }
-        Session::flash('success', "You have saved a new meeting");
+        echo __LINE__ ;
+        dd($request->all());
+        Session::flash('error', "You have an upload problem");
 
         return redirect()->route('meeting_edit', [$meeting->id]);
     }
@@ -125,6 +114,7 @@ class AdminMeetingController extends Controller
      */
     public function update(Request $request, Meeting $meeting, MeetingAttachment $meetingAttachment)
     {
+
         $meeting->fill($request['meeting']);
         $meeting->save();
         $meeting->attachments;

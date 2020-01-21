@@ -165,6 +165,14 @@ class AttachmentController extends Controller
         return redirect()->route('attachments_list');
     }
 
+    public function download(Attachment $attachment)
+    {
+        //todo download to work with service, interface, pivot etc
+        // todo how to pass in argument for attachment to determine which disk I load from.
+        $pathToFile = Storage::disk('meetings')->getDriver()->getAdapter()->getPathPrefix();
+        return response()->download($pathToFile.$attachment['file']);
+    }
+
     protected function uploadImages(FormRequest $request)
     {
         if (!$request->images) {

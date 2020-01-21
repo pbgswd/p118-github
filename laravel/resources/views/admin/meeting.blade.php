@@ -34,18 +34,6 @@ $meeting = $data['meeting'];
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-2"><h4><i class="fas fa-calendar-alt"></i>test Date</h4></div>
-                <div class="col-lg-10">
-                    <input type='text' class="form-control" id='datepicker' style='width: 300px;' > <br>
-
-                </div>
-            </div>
-        </div>
-
-
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4><i class="fas fa-calendar-alt"></i> Date</h4></div>
@@ -71,7 +59,7 @@ $meeting = $data['meeting'];
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
                         Add File(s) To Meeting
                     </label>
-                    <input type="file" id="inputFile" name="meeting_attachments[]" multiple />
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
             <div class="col-md-4">
@@ -86,9 +74,9 @@ $meeting = $data['meeting'];
             </div>
         </div>
         @if ($data['action'] == 'Edit')
-            <div class="col-md-12">
-                <h2>Files</h2>
-                @if(count($meeting->attachments) > 0)
+            @if(count($meeting->attachments) > 0)
+                <div class="col-md-12">
+                    <h2>Files</h2>
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>
@@ -105,12 +93,12 @@ $meeting = $data['meeting'];
                                     <td>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="meeting_attachment[{{$ma->id}}][id]" value="{{$ma->id}}" />
+                                            <input type="checkbox" name="attachment[{{$ma->id}}][id]" value="{{$ma->id}}" />
                                         </label>
                                     </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('meeting_attachment_download', $ma->id)}}" title="Download {{$ma->file}}">{{$ma->file}}</a>
+                                        <a href="{{route('attachment_download', $ma->id)}}" title="Download {{$ma->file}}">{{$ma->file}}</a>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control"  placeholder="Add a description for this file" name="meeting_attachment[{{$ma->id}}][description]" value="{{ old('meeting_attachment.description', $ma->description)}}" size="40"/>
@@ -130,8 +118,8 @@ $meeting = $data['meeting'];
                             </tr>
                         </tbody>
                     </table>
-                @endif
-            </div>
+                </div>
+            @endif
         @endif
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\HasAttachment;
 use DateTime;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -25,7 +26,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Committee $committee_membership
  *
  */
-class User extends Authenticatable
+class User extends Authenticatable implements HasAttachment
 {
     use Notifiable;
     use Sortable;
@@ -110,6 +111,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Committee::class)->withPivot('role');
             //TODO pluralize method name
+    }
+
+    public function getAttachmentFolder(): string
+    {
+        return 'users';
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\HasAttachment;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -16,7 +17,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property \DateTime updated_at
  * @property MeetingAttachment $attachments
  */
-class Meeting extends Model
+class Meeting extends Model implements HasAttachment
 {
     use Sortable;
 
@@ -61,5 +62,10 @@ class Meeting extends Model
     public function attachments()
     {
         return $this->hasMany(MeetingAttachment::class, 'meeting_id', 'id');
+    }
+
+    public function getAttachmentFolder(): string
+    {
+        return 'meetings';
     }
 }
