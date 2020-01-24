@@ -56,6 +56,7 @@ class UserController extends Controller
             //'countries' =>  $regions['countries'],
             //'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
+        //todo users roles, provinces, countries
 
         return view('member', ['data' => $data]);
     }
@@ -140,7 +141,8 @@ class UserController extends Controller
             $user->address()->save($address);
         }
 
-        /*        $user->syncRoles($userRequest['user_roles']);
+        /*
+                $user->syncRoles($userRequest['user_roles']);
 
                 if ($user->membership instanceof Membership) {
                     $user->membership->fill($userRequest['user_membership']);
@@ -148,7 +150,8 @@ class UserController extends Controller
                 } else {
                     $membership = new Membership($userRequest['user_membership']);
                     $user->membership()->save($membership);
-                }*/
+                }
+        */
 //TODO notify office by email when user has updated contact information.
         Session::flash('success', "You have edited your profile");
 
