@@ -19,6 +19,14 @@ class AddFileColumnToAttachmentsTable extends Migration
              * add file column
              * drop extension?
              */
+            $table->renameColumn('name', 'file_name');
+        });
+
+
+        Schema::table('attachments', function (Blueprint $table) {
+            /** renameColumn state isnt ready by the time that this next line runs, causing an error */
+            $table->string('file')->after('file_name');
+            $table->dropColumn('extension');
         });
     }
 
@@ -35,7 +43,12 @@ class AddFileColumnToAttachmentsTable extends Migration
              * change file_name to file
              * drop file column
              * add extension????
+             * extenstion permanently lost
              */
+
+            $table->renameColumn('file_name', 'name');
+            $table->dropColumn('file');
+
         });
     }
 }
