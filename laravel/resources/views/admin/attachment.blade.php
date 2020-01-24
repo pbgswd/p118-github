@@ -30,9 +30,12 @@ $attachment = $data['attachment'];
                         @endif
                     </div>
                     <div class="col-md-8 text-wrap">
+                        <h3><i class="far fa-file"></i> File Info</h3>
                         <ul>
-                            <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['name']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['name']}}</a></li>
+                            <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['file']}}</a></li>
                             <li>File Size: {{$attachment['filesize']}}</li>
+                            <li>Original File Name: {{$attachment['file_name']}}</li>
+                            <li>Uploaded File Name: {{$attachment['file']}}</li>
                             <li>File Type: {{$attachment['extension']}}</li>
                             <li>Last Updated: {{$attachment['updated_at']}}</li>
                         </ul>
@@ -44,8 +47,8 @@ $attachment = $data['attachment'];
 @else
 &lt;i class="far fa-file fa-8x"&gt;&lt;/i&gt;
 @endif
-&lt;a href="{{env('APP_URL')}}/storage/{{$attachment['name']}} target="_blank" /&gt;
-    {{env('APP_URL')}}/storage/{{$attachment['name']}}
+&lt;a href="{{env('APP_URL')}}/storage/{{$attachment['file']}} target="_blank" /&gt;
+    {{env('APP_URL')}}/storage/{{$attachment['file_name']}}
 &lt;/a&gt;
 </code>
 </pre>
@@ -55,15 +58,18 @@ $attachment = $data['attachment'];
             @else
                 <div class="row">
                     <div class="col-md-6" style="margin-bottom: 1em;">
-                        <img src="{{ asset('storage/' . $attachment['name']) }}" {{$attachment['imageData'][3]}} />
+                        <img src="{{ asset('storage/' . $attachment['file']) }}" {{$attachment['imageData'][3]}} />
                     </div>
 
-
-                    <div class="col-md-6" style="margin-left:2em;">
-                        <h3>Image Info</h3>
+                    <div class="col-md-12" style="margin-left:2em;">
+                        <h3><i class="far fa-file-image"></i> Image Info</h3>
                         <ul>
-                            <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['name']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['name']}}</a></li>
+                            <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['file']}}</a></li>
                             <li>File Size: {{$attachment['filesize']}}</li>
+                            <li>Original File Name: {{$attachment['file_name']}}</li>
+                            <li>Uploaded File Name: {{$attachment['file']}}</li>
+                            <li>File Type: {{$attachment['extension']}}</li>
+
                             <li>Width: {{$attachment['imageData'][0]}} px</li>
                             <li>Height: {{$attachment['imageData'][1]}} px</li>
                             <li>Mime Type: {{$attachment['imageData']['mime']}}</li>
@@ -72,7 +78,7 @@ $attachment = $data['attachment'];
                         <h4>Insert into content with:</h4>
 <pre>
     <code>
-&lt;img src="{{env('APP_URL')}}/storage/{{$attachment['name']}}" style="padding:1em;" /&gt;
+&lt;img src="{{env('APP_URL')}}/storage/{{$attachment['file']}}" style="padding:1em;" /&gt;
     </code>
 </pre>
                     </div>

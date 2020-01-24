@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
- * @property string $name
- * @property string $extension
+ * @property string $file
+ * @property string $file_name
  * @property User $users
  * @property DateTime created_at
  * @property DateTime updated_at
@@ -23,13 +23,13 @@ class Attachment extends Model
      *
      */
     protected $fillable = [
-        'name',
-        'extension',
+        'file',
+        'file_name',
     ];
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
@@ -41,14 +41,5 @@ class Attachment extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
-
-    // page
-
-    // post
-
-    // topic
-
-    // member
 
 }

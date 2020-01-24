@@ -21,7 +21,7 @@ $attachments = $data['attachments'];
                     <thead>
                     <tr>
                         <th> @sortablelink('id','#') </th>
-                        <th> @sortablelink('name', 'Name') </th>
+                        <th> @sortablelink('file_name', 'File Name') </th>
                         <th> @sortablelink('id', 'Id') </th>
                         <th> @sortablelink('user_id', 'Uploaded By') </th>
                         <th> Edit </th>
@@ -41,7 +41,7 @@ $attachments = $data['attachments'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $a->name }}" href="{{ route('attachment_edit', $a->id) }}">{{ $a->name }}</a>
+                                    <a title="{{ $a->name }}" href="{{ route('attachment_edit', $a->id) }}">{{ $a->file_name }}</a>
                                 </h4>
                             </td>
                             <td>
@@ -49,7 +49,7 @@ $attachments = $data['attachments'];
                             </td>
                             <td> {{ $a->users->name }} </td>
                             <td>
-                                <a href="{{ route('attachment_edit', $a->id) }}" title="Edit {{ $a->name }} ">
+                                <a href="{{ route('attachment_edit', $a->id) }}" title="Edit {{ $a->file_name }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>

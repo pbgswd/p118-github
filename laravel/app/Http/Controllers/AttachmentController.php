@@ -73,23 +73,18 @@ class AttachmentController extends Controller
     {
         /** @var UploadedFile $image */
 
-        foreach ($request->file('images') as $image) {
+        foreach ($request->file('images') as $image)
+        {
+            //todo analyse attachment file size, resize, create thumb when it is an image -- A SERVICE
+            $file = '';
+            $file = $image->store('', 'public');
             $imageName = $image->getClientOriginalName();
-
-            if (!$image->storeAs('public', $imageName)) {
-                Session::flash('warning', "Did not store " . imageName);
-                return null;
-            }
-
             $attachment = new Attachment();
-            $attachment['name'] = $imageName;
-            $attachment['extension'] = $image->getClientOriginalExtension();
+            $attachment['file_name'] = $imageName;
+            $attachment['file'] = $file;
             $attachment['user_id'] = Auth::id();
-
             $attachment->save();
         }
-
-//todo get the date, month, year, make folder if not exist for storing stuff.
 
         Session::flash('success', Str::plural(count($request->images) . ' Attachment', count($request->images)) . ' uploaded.');
 
@@ -98,7 +93,7 @@ class AttachmentController extends Controller
         }
         else
         {
-            return redirect()->route('admin.listattachments');
+            return redirect()->route('attachments_list');
         }
     }
 
@@ -121,15 +116,18 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment)
     {
-        if(!file_exists(storage_path('app/public') .'/'. $attachment->name))
+        if(!file_exists(storage_path('app/public') .'/'. $attachment->file))
         {
-            Session::flash('error',  $attachment->name . " was not found on the server");
+            Session::flash('error',  $attachment->file_name . " was not found on the server");
             return redirect()->route('attachments_list');
             exit();
         }
 
-        $attachment['imageData'] = getimagesize(storage_path('app/public') . '/' . $attachment['name']);
-        $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/public') . '/' . $attachment['name']));
+        $path_info = pathinfo(storage_path('app/public') . '/' . $attachment['file']);
+        $attachment['extension'] = $path_info['extension'];
+
+        $attachment['imageData'] = getimagesize(storage_path('app/public') . '/' . $attachment['file']);
+        $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/public') . '/' . $attachment['file']));
 
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
@@ -157,7 +155,7 @@ class AttachmentController extends Controller
     {
         $attachments = Attachment::find($request->id);
         foreach ($attachments as $a) {
-            Storage::disk('public')->delete($a['name']);
+            Storage::disk('public')->delete($a['file']);
             Attachment::destroy($a->id);
         }
         Session::flash('success', Str::plural(count($request->id) . ' Attachment', count($request->id)) . ' deleted.');
@@ -171,22 +169,6 @@ class AttachmentController extends Controller
         // todo how to pass in argument for attachment to determine which disk I load from.
         $pathToFile = Storage::disk('meetings')->getDriver()->getAdapter()->getPathPrefix();
         return response()->download($pathToFile.$attachment['file']);
-    }
-
-    protected function uploadImages(FormRequest $request)
-    {
-        if (!$request->images) {
-            return null;
-        }
-
-        foreach ($request->images as $k => $v) {
-            // $imageName = $request->images[$k]->getClientOriginalName();
-            if (!$request->images[$k]->storeAs('public', $request->images[$k])) {
-                Session::flash('warning', "Did not store " . $v);
-                return null;
-            }
-        }
-        return $v;
     }
 
     protected function human_filesize($bytes, $decimals = 2)
