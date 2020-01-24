@@ -32,11 +32,6 @@
         <link href='/css/bootstrap-datepicker.min.css' rel='stylesheet' type='text/css'>
         <script src='/js/bootstrap-datepicker.min.js' type='text/javascript'></script>
 
-
-
-
-
-
         <!-- Styles -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
