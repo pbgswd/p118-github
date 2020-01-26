@@ -168,7 +168,7 @@ class AttachmentController extends Controller
         //todo download to work with service, interface, pivot etc
         // todo how to pass in argument for attachment to determine which disk I load from.
         $pathToFile = Storage::disk('meetings')->getDriver()->getAdapter()->getPathPrefix();
-        return response()->download($pathToFile.$attachment['file']);
+        return response()->download($pathToFile.$attachment['file'], $attachment['file_name'] );
     }
 
     protected function human_filesize($bytes, $decimals = 2)

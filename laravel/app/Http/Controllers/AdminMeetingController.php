@@ -58,25 +58,23 @@ class AdminMeetingController extends Controller
      */
     public function store(Request $request)
     {
-
         $meeting = new Meeting($request->input('meeting'));
         $meeting->user_id = Auth::id();
         $meeting->save();
+             Session::flash('success', "Meeting saved");
 
         if (null !== ($request->file('attachments'))) {
-//todo laravel service line 69, what arguments are passed?
 
             $result = $this->attachmentService->createAttachment($request, $meeting);
-// todo count of files uploaded
-            if($result){
-                Session::flash('success', "files");
-                return redirect()->route('meeting_edit', [$meeting->id]);
-            }
 
+            if($result){
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
         }
-        echo __LINE__ ;
-        dd($request->all());
-        Session::flash('error', "You have an upload problem");
 
         return redirect()->route('meeting_edit', [$meeting->id]);
     }

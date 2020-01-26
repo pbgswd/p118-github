@@ -112,6 +112,8 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/attachment/{attachment}', 'AttachmentController@update');
     Route::delete('/attachment/delete', 'AttachmentController@destroy')->name('attachment_destroy');
 
+    Route::get('/attachment/{attachment}', 'AttachmentController@download')->name('attachment_download');
+
     Route::get('/roles', 'RoleController@index')->name('roles_list');
 
     Route::get('/venues', 'VenueController@index')->name('venues_list');
@@ -159,5 +161,5 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::delete('/adminmeeting/delete', 'AdminMeetingController@destroy')->name('meeting_destroy');
     Route::get('/adminmeeting/{meeting}', 'AdminMeetingController@edit')->name('meeting_edit');
 
-    Route::get('/meetingattachment/{meetingAttachment}', 'MeetingAttachmentController@download')->name('attachment_download');
+
 });

@@ -89,6 +89,7 @@ $meeting = $data['meeting'];
                         </thead>
                         <tbody>
                             @foreach ($meeting->attachments as $ma)
+                                <?php //dd($ma); ?>
                                 <tr>
                                     <td>
                                     <div class="checkbox">
@@ -98,7 +99,7 @@ $meeting = $data['meeting'];
                                     </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', $ma->id)}}" title="Download {{$ma->file}}">{{$ma->file}}</a>
+                                        <a href="{{route('attachment_download', $ma->id)}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control"  placeholder="Add a description for this file" name="meeting_attachment[{{$ma->id}}][description]" value="{{ old('meeting_attachment.description', $ma->description)}}" size="40"/>

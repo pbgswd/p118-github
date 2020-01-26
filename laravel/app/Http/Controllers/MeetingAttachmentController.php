@@ -13,6 +13,7 @@ class MeetingAttachmentController extends Controller
      */
     public function download(MeetingAttachment $meetingAttachment)
     {
+        dd($meetingAttachment);
         $pathToFile = Storage::disk('meetings')->getDriver()->getAdapter()->getPathPrefix();
         return response()->download($pathToFile.$meetingAttachment['file']);
     }

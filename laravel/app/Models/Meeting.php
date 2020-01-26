@@ -61,7 +61,7 @@ class Meeting extends Model implements HasAttachment
 
     public function attachments()
     {
-        return $this->hasMany(MeetingAttachment::class, 'meeting_id', 'id');
+        return $this->belongsToMany(Attachment::class, 'attachments_meeting');
     }
 
     public function getAttachmentFolder(): string
