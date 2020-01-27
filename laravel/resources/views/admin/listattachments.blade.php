@@ -85,7 +85,7 @@ $attachments = $data['attachments'];
 @if (!empty($images))
     <h3>Files not in db </h3>
     @foreach ($images as $img)
-       <a href="/storage/{{$img}}">{{$img}}</a> <br />
+
     @endforeach
 @endif
     <div class="row" style="margin-top:30px;"></div>

@@ -26,21 +26,23 @@ class Meeting extends Model implements HasAttachment
      *
      * @var array
      */
-    protected $fillable = [
-        'title',
-        'description',
-        'date',
-        'live',
-    ];
+    protected $fillable =
+        [
+            'title',
+            'description',
+            'date',
+            'live',
+        ];
 
-    public $sortable = [
-        'id',
-        'title',
-        'live',
-        'date',
-        'created_at',
-        'updated_at',
-    ];
+    public $sortable =
+        [
+            'id',
+            'title',
+            'live',
+            'date',
+            'created_at',
+            'updated_at',
+        ];
 
     protected $dates =
         [
@@ -61,7 +63,7 @@ class Meeting extends Model implements HasAttachment
 
     public function attachments()
     {
-        return $this->belongsToMany(Attachment::class, 'attachments_meeting');
+        return $this->belongsToMany(Attachment::class, 'attachment_meeting');
     }
 
     public function getAttachmentFolder(): string

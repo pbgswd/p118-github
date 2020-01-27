@@ -13,7 +13,7 @@ class CreateAttachmentMeetingTable extends Migration
      */
     public function up()
     {
-        Schema::create('attachments_meeting', function (Blueprint $table) {
+        Schema::create('attachment_meeting', function (Blueprint $table) {
             $table->unsignedBigInteger('attachment_id')->index();
             $table->foreign('attachment_id')->references('id')->on('attachments')->onDelete('cascade');
             $table->unsignedBigInteger('meeting_id')->index();
@@ -28,6 +28,6 @@ class CreateAttachmentMeetingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attachments_meeting');
+        Schema::dropIfExists('attachment_meeting');
     }
 }

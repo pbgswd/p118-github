@@ -6,6 +6,7 @@ use App\Models\Attachment;
 use App\Models\Interfaces\HasAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AttachmentService
 {
@@ -25,4 +26,36 @@ class AttachmentService
         }
         return true;
     }
+
+    /**
+     * @param Attachment $attachment
+     * @param string $folder
+     * @return mixed
+     */
+    public function downloadAttachment(Attachment $attachment, string $folder)
+    {
+        return Storage::download( $folder . '/' . $attachment['file'], $attachment['file_name'] );
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

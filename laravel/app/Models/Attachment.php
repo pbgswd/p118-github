@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $file
  * @property string $file_name
  * @property User $users
+ * @property Meeting $meetings
  * @property DateTime created_at
  * @property DateTime updated_at
  */
@@ -41,5 +42,8 @@ class Attachment extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+
+
 
 }

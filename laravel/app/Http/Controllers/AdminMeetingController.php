@@ -51,6 +51,7 @@ class AdminMeetingController extends Controller
         return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Add']]);
     }
 
+
     /**
      * Store a newly created resource in storage
      * @param  \Illuminate\Http\Request  $request

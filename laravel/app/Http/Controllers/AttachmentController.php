@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Attachments\DestroyAttachment;
 use App\Http\Requests\Attachments\StoreAttachment;
 use App\Http\Requests\Attachments\UpdateAttachment;
-use App\Http\Requests\Request;
+use App\Services\AttachmentService;
+use Illuminate\Http\Request;
 use App\Models\Attachment;
+use App\Models\Meeting;
 use DB;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
@@ -20,6 +22,21 @@ use Validator;
 
 class AttachmentController extends Controller
 {
+    /** @var AttachmentService*/
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
+
+    public function download(string $folder, Attachment $attachment)
+    {
+        return $this->attachmentService->downloadAttachment($attachment, $folder);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -116,6 +133,8 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment)
     {
+        //todo page should find attachment on various paths besides public
+
         if(!file_exists(storage_path('app/public') .'/'. $attachment->file))
         {
             Session::flash('error',  $attachment->file_name . " was not found on the server");
@@ -163,13 +182,6 @@ class AttachmentController extends Controller
         return redirect()->route('attachments_list');
     }
 
-    public function download(Attachment $attachment)
-    {
-        //todo download to work with service, interface, pivot etc
-        // todo how to pass in argument for attachment to determine which disk I load from.
-        $pathToFile = Storage::disk('meetings')->getDriver()->getAdapter()->getPathPrefix();
-        return response()->download($pathToFile.$attachment['file'], $attachment['file_name'] );
-    }
 
     protected function human_filesize($bytes, $decimals = 2)
     {
