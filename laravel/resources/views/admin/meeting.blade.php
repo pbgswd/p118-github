@@ -89,20 +89,19 @@ $meeting = $data['meeting'];
                         </thead>
                         <tbody>
                             @foreach ($meeting->attachments as $ma)
-
                                 <tr>
                                     <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="attachment[{{$ma->id}}][id]" value="{{$ma->id}}" />
-                                        </label>
-                                    </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="attachment[{{$ma->id}}][id]" value="{{$ma->id}}" />
+                                            </label>
+                                        </div>
                                     </td>
                                     <td>
                                         <a href="{{route('attachment_download', [$meeting->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="meeting_attachment[{{$ma->id}}][description]" value="{{ old('meeting_attachment.description', $ma->description)}}" size="40"/>
+                                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$ma->id}}][description]" value="{{ old('attachments.description', $ma->description)}}" size="40"/>
                                     </td>
                                     <td>
                                         {{$ma->created_at}}

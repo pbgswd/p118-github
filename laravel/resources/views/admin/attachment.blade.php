@@ -36,9 +36,14 @@ $attachment = $data['attachment'];
                             <li>File Size: {{$attachment['filesize']}}</li>
                             <li>Original File Name: {{$attachment['file_name']}}</li>
                             <li>Uploaded File Name: {{$attachment['file']}}</li>
+                            <li><a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])}}" title="Download {{$attachment->file_name}}"><i class="fas fa-file-download"></i> Download {{$attachment['file_name']}}</a></li>
                             <li>File Type: {{$attachment['extension']}}</li>
                             <li>Last Updated: {{$attachment['updated_at']}}</li>
+                            <li>Description: {{$attachment['description']}}</li>
                         </ul>
+
+
+
                         <h4>Insert into content with:</h4>
 <pre>
 <code>
@@ -67,9 +72,9 @@ $attachment = $data['attachment'];
                             <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['file']}}</a></li>
                             <li>File Size: {{$attachment['filesize']}}</li>
                             <li>Original File Name: {{$attachment['file_name']}}</li>
+                            <li><a href="">Download <i class="fas fa-file-download"></i></a></li>
                             <li>Uploaded File Name: {{$attachment['file']}}</li>
                             <li>File Type: {{$attachment['extension']}}</li>
-
                             <li>Width: {{$attachment['imageData'][0]}} px</li>
                             <li>Height: {{$attachment['imageData'][1]}} px</li>
                             <li>Mime Type: {{$attachment['imageData']['mime']}}</li>

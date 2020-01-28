@@ -62,10 +62,11 @@ class AdminMeetingController extends Controller
         $meeting = new Meeting($request->input('meeting'));
         $meeting->user_id = Auth::id();
         $meeting->save();
-             Session::flash('success', "Meeting saved");
 
-        if (null !== ($request->file('attachments'))) {
+        Session::flash('success', "Meeting saved");
 
+        if (null !== ($request->file('attachments')))
+        {
             $result = $this->attachmentService->createAttachment($request, $meeting);
 
             if($result){
@@ -88,7 +89,7 @@ class AdminMeetingController extends Controller
      */
     public function show(Meeting $meeting)
     {
-        //
+        //todo delete show method for admin meeting controller
     }
 
     /**
@@ -111,44 +112,24 @@ class AdminMeetingController extends Controller
      * @param  \App\Models\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Meeting $meeting, MeetingAttachment $meetingAttachment)
+    public function update(Request $request, Meeting $meeting)
     {
 
         $meeting->fill($request['meeting']);
         $meeting->save();
-        $meeting->attachments;
 
-        if (null !== ($request->file('meeting_attachments'))) {
-            foreach ($request->file('meeting_attachments') as $file) {
+        $result = $this->attachmentService->updateAttachment($request, $meeting);
 
-                $fileName = $file->getClientOriginalName();
+        if (null !== ($request->file('attachments')))
+        {
+            $result = $this->attachmentService->createAttachment($request, $meeting);
 
-                if (!$file->storeAs('meetings', $fileName)) {
-                    Session::flash('warning', "Did not store " . $fileName);
-                    return null;
-                }
-
-                $meeting_attachment = new MeetingAttachment();
-                $meeting_attachment['file'] = $fileName;
-                $meeting_attachment['extension'] = $file->getClientOriginalExtension();
-                $meeting_attachment['meeting_id'] = $meeting->id;
-                $meeting_attachment->save();
+            if($result){
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
             }
-        }
-
-        if(isset($request->meeting_attachment)){
-            foreach($request->meeting_attachment as $k => $ma) {
-                if (isset($ma['id'])) {
-                    $row = MeetingAttachment::where('id', $ma['id'])->get();
-                    Storage::disk('meetings')->delete($row[0]['file']);
-                    MeetingAttachment::destroy($row[0]->id);
-                }
-                else
-                {
-                    $row = MeetingAttachment::where('id', $k)->first();
-                    $row->description = trim($ma['description']);
-                    $row->save();
-                }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
             }
         }
 
@@ -169,11 +150,7 @@ class AdminMeetingController extends Controller
 
         foreach($meetings as $meeting)
         {
-            $meeting->attachments;
-            foreach ( $meeting->attachments as $row){
-                Storage::disk('meetings')->delete($row['file']);
-                MeetingAttachment::destroy($row->id);
-            }
+            $result = $this->attachmentService->destroyAttachment($meeting);
 
             Meeting::destroy($meeting->id);
         }

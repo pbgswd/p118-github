@@ -26,6 +26,8 @@ class Attachment extends Model
     protected $fillable = [
         'file',
         'file_name',
+        'subfolder',
+        'description',
     ];
 
     protected $dates = [
@@ -42,8 +44,4 @@ class Attachment extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
-
-
-
 }

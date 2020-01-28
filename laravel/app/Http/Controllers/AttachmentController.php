@@ -133,20 +133,18 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment)
     {
-        //todo page should find attachment on various paths besides public
-
-        if(!file_exists(storage_path('app/public') .'/'. $attachment->file))
+        if(!file_exists(storage_path('app/' . $attachment->subfolder) . '/' . $attachment->file))
         {
             Session::flash('error',  $attachment->file_name . " was not found on the server");
             return redirect()->route('attachments_list');
             exit();
         }
 
-        $path_info = pathinfo(storage_path('app/public') . '/' . $attachment['file']);
+        $path_info = pathinfo(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']);
         $attachment['extension'] = $path_info['extension'];
 
-        $attachment['imageData'] = getimagesize(storage_path('app/public') . '/' . $attachment['file']);
-        $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/public') . '/' . $attachment['file']));
+        $attachment['imageData'] = getimagesize(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']);
+        $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']));
 
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
