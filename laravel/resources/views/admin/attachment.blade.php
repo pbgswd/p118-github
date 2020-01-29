@@ -32,7 +32,7 @@ $attachment = $data['attachment'];
                     <div class="col-md-8 text-wrap">
                         <h3><i class="far fa-file"></i> File Info</h3>
                         <ul>
-                            <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment['file']}}</a></li>
+                            <li>Location: <a href="{{env('APP_URL')}}/{{$attachment->subfolder}}/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/{{$attachment->subfolder}}/{{$attachment['file']}}</a></li>
                             <li>File Size: {{$attachment['filesize']}}</li>
                             <li>Original File Name: {{$attachment['file_name']}}</li>
                             <li>Uploaded File Name: {{$attachment['file']}}</li>
@@ -41,9 +41,6 @@ $attachment = $data['attachment'];
                             <li>Last Updated: {{$attachment['updated_at']}}</li>
                             <li>Description: {{$attachment['description']}}</li>
                         </ul>
-
-
-
                         <h4>Insert into content with:</h4>
 <pre>
 <code>
@@ -52,8 +49,8 @@ $attachment = $data['attachment'];
 @else
 &lt;i class="far fa-file fa-8x"&gt;&lt;/i&gt;
 @endif
-&lt;a href="{{env('APP_URL')}}/storage/{{$attachment['file']}} target="_blank" /&gt;
-    {{env('APP_URL')}}/storage/{{$attachment['file_name']}}
+&lt;a href="{{env('APP_URL')}}/{{$attachment->subfolder}}/{{$attachment['file']}} target="_blank" /&gt;
+    {{env('APP_URL')}}/{{$attachment->subfolder}}/{{$attachment['file_name']}}
 &lt;/a&gt;
 </code>
 </pre>

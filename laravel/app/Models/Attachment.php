@@ -38,6 +38,12 @@ class Attachment extends Model
     /**
      * relationships
      */
+    public function meetings()
+    {
+        return $this->belongsToMany(Meeting::class, 'attachment_meeting');
+    }
+
+
     // relationship to users table
 
     public function users()

@@ -53,7 +53,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('committee_post_comment');
 
 
-    Route::get('meetingsminutes', 'MeetingController@index')->name('list_meetings');
+    Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
 
 

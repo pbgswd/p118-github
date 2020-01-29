@@ -32,7 +32,7 @@ class AdminMeetingController extends Controller
     public function index()
     {
         $data = [];
-        $data['meetings'] = Meeting::sortable()->with('user')->orderBy('date', 'desc')->paginate(20);
+        $data['meetings'] = Meeting::sortable()->with('user', 'attachments')->orderBy('date', 'desc')->paginate(20);
         $data['count'] = count(Meeting::all());
 
         return view('admin.listmeetings', ['data' => $data]);

@@ -21,7 +21,8 @@ $meetings = $data['meetings'];
                     <thead>
                     <tr>
                         <th> @sortablelink('id','#') </th>
-                        <th> @sortablelink('title', 'Title') </th>
+                        <th> @sortablelink('title', 'Title')
+                        <th>file</th>
                         <th> Edit </th>
                         <th> @sortablelink('date', 'Date') </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
@@ -44,6 +45,14 @@ $meetings = $data['meetings'];
                                 </h4>
                             </td>
                             <td>
+
+                                @if(null !== ($a->attachments))
+                                    @foreach($a->attachments as $att)
+                                        <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->file_name}}"><i class="fas fa-file-download fa-2x"></i></a>
+                                    @endforeach
+                                @endif
+                            </td>
+                            <td>
                                 <a href="{{ route('meeting_edit', $a->id) }}" title="Edit {{ $a->title }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -54,7 +63,7 @@ $meetings = $data['meetings'];
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="6">&nbsp;</td>
+                        <td colspan="7">&nbsp;</td>
                     </tr>
                     </tbody>
                 </table>

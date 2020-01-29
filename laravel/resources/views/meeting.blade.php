@@ -6,7 +6,7 @@ $meeting = $data['meeting'];
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
         <div class="col-12">
-            <h4><a href="{{route('list_meetings')}}"><i class="far fa-arrow-alt-circle-left"></i>  Meetings & Minutes</a></h4>
+            <h4><a href="{{url()->previous()}}"><i class="far fa-arrow-alt-circle-left"></i>  Meetings & Minutes</a></h4>
         </div>
         <div  class="col-12">
             <h1 class="display-4">{{$meeting->title}}</h1>
@@ -20,9 +20,10 @@ $meeting = $data['meeting'];
                 @foreach($meeting->attachments as $att)
                     <li>
                         <h4>
-                            <a href="{{route('meeting_attachment_download', $att->id)}}" title="{{$att->description}}" target="_blank">
+                            <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->description}}" target="_blank">
+                                <i class="fas fa-file-download fa-1x"></i>
                             {{$att->file}}
-                            </a>
+                            </a> &nbsp;
                             {{$att->description}}
                         </h4>
                     </li>
