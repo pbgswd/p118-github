@@ -164,6 +164,12 @@
                                     Blank Page
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('employment_list')}}">
+                                    <span data-feather="file"></span>
+                                    Employment
+                                </a>
+                            </li>
                         </ul>
                         <hr />
                     </div>

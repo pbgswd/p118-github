@@ -113,13 +113,15 @@ foreach ($files as $f)
 
     $state = $f['status'] == "Closed" ? 0 : 1;
 
+    $datetime = date_format(new \DateTime($f["expiry"]),  'Y-m-d H:i:s');
+
     $data[] = ["path" => $path,
             "url" => $url,
             "type" => $f['type'],
             "title" => trim($f["title"]),
             "live" => 1,
             "status" => $state,
-            "deadline" => trim($f['expiry']),
+            "deadline" => $datetime,
             ];
 
 }

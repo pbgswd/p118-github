@@ -15,18 +15,14 @@ class CreateEmploymentTable extends Migration
     {
         Schema::create('employment', function (Blueprint $table) {
             $table->bigIncrements('id');
-            /**
-             * id
-             * title
-             * user_id
-             * Description
-             * url
-             * status open closed bool
-             * live on site
-             * deadline
-             * timestamps
-             *
-             */
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('url')->nullable();
+            $table->boolean('status')->default(0);
+            $table->boolean('live')->default(1);
+            $table->timestamp('deadline');
             $table->timestamps();
         });
     }

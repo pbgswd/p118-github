@@ -161,5 +161,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::delete('/meeting/delete', 'AdminMeetingController@destroy')->name('meeting_destroy');
     Route::get('/meeting/{meeting}', 'AdminMeetingController@edit')->name('meeting_edit');
 
+    Route::get('employment-list', 'EmploymentController@index')->name('employment_list');
+    Route::get('employment/', 'EmploymentController@create')->name('employment_create');
+    Route::post('employment/', 'EmploymentController@store');
+    Route::delete('/employment/delete', 'EmploymentController@destroy')->name('employment_destroy');
+    Route::get('/employment/{employment}', 'EmploymentController@edit')->name('employment_edit');
+
 
 });
