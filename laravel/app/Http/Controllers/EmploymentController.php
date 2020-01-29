@@ -40,7 +40,27 @@ class EmploymentController extends Controller
      */
     public function store(Request $request)
     {
-        echo __METHOD__;
+        $employment = new Employment($request->input('employment'));
+        $employment->user_id = Auth::id();
+        $employment->save();
+
+        Session::flash('success', "employment saved");
+
+        if (null !== ($request->file('attachments')))
+        {
+            $result = $this->attachmentService->createAttachment($request, $employment);
+
+            if($result){
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+
+        return redirect()->route('employment_edit', [$employment->id]);
+
     }
 
     /**

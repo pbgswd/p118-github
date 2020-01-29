@@ -49,15 +49,13 @@ class Employment extends Model
         'deadline',
         ];
 
-    protected $dates =
-        [
+    protected $dates = [
             'deadline',
             'created_at',
             'updated_at'
         ];
 
-    protected $casts =
-        [
+    protected $casts = [
             'live' => 'boolean',
             'status' => 'boolean',
         ];
