@@ -87,7 +87,7 @@ $employment = $data['employment'];
                 <div class="col-sm">
                     <label>
                         <input name="employment[status]" type="hidden" value="0" />
-                        <input name="employment[status]" type="checkbox" value="1" {{ checked( old('employment.status', $employment->status)) }} /> Check now to make Live
+                        <input name="employment[status]" type="checkbox" value="1" {{ checked( old('employment.status', $employment->status)) }} /> Check now to Change status manually
                     </label>
                     <p>ie.: Checked means status is open.</p>
                 </div>

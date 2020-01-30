@@ -16,7 +16,9 @@ class EmploymentSeeder extends Seeder
         // php artisan db:seed --class=EmploymentSeeder
         set_time_limit(0);
         require_once '../scratch/employmentSeedData.php';
-        
+
+        $data = []; //TODO data emptied to prevent multi run without looking
+
         foreach ($data as $d) {
 
             $path = trim($d['path']);
