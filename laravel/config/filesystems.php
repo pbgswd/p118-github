@@ -69,6 +69,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'employment' => [
+            'driver' => 'local',
+            'root' => storage_path('app/employment'),
+            'url' => env('APP_URL').'/employment',
+            'visibility' => 'public',
+        ],
 
 
         's3' => [

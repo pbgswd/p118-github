@@ -56,7 +56,7 @@ $employment = $data['employment'];
             <div class="form-group">
                 <div class="col-lg-2"><h4>Url</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="http://....." name="employment[url]" value="{{ old('employment.url', $employment->url)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="http://....." name="employment[url]" value="{{ old('employment.url', $employment->url)}}" size="80" />
                 </div>
             </div>
         </div>
@@ -158,7 +158,7 @@ $employment = $data['employment'];
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
                 <input type="hidden" name="id[]" value="{{ $employment->id }}">
-                <input class="btn btn-outline-danger" type="submit" value="Delete Meeting">
+                <input class="btn btn-outline-danger" type="submit" value="Delete Employment Posting">
             </form>
          </div>
     @endif

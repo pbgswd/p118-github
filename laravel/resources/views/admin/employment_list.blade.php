@@ -36,7 +36,7 @@ $employment = $data['employment'];
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $employment['employment'] as $e )
+                    @foreach ( $employment as $e )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -47,13 +47,13 @@ $employment = $data['employment'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $e->title }}" href="{{ route('employment_edit', $e->id) }}">{{ $e->title }}</a>
+                                    <a title="{{ $e->title }}" href="{{route('employment_edit', $e->id)}}">{{ $e->title }}</a>
                                 </h4>
                             </td>
                             <td> {!! $e->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
                             <td> {!! $e->status ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
                             <td>
-                                <a href="{{ route('employment_edit', $e->slug) }}" title="Edit {{ $e->name }} ">
+                                <a href="{{ route('employment_edit', $e->id) }}" title="Edit {{ $e->title }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
@@ -78,7 +78,7 @@ $employment = $data['employment'];
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                     {{ $employment['employment']->links() }}
+                     {{ $employment->links() }}
                 </ul>
             </div>
         </div>

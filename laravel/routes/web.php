@@ -164,6 +164,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('employment-list', 'EmploymentController@index')->name('employment_list');
     Route::get('employment/', 'EmploymentController@create')->name('employment_create');
     Route::post('employment/', 'EmploymentController@store');
+    Route::post('employment/{employment}', 'EmploymentController@update');
     Route::delete('/employment/delete', 'EmploymentController@destroy')->name('employment_destroy');
     Route::get('/employment/{employment}', 'EmploymentController@edit')->name('employment_edit');
 

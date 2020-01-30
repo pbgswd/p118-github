@@ -20,7 +20,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string $getAttachmentFolder
  */
 
-class Employment extends Model
+class Employment extends Model implements HasAttachment
 {
     use Sortable;
 

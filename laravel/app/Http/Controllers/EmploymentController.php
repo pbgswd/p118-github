@@ -3,10 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employment;
+use App\Services\AttachmentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 
 class EmploymentController extends Controller
 {
+    /** @var AttachmentService*/
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +29,7 @@ class EmploymentController extends Controller
     public function index()
     {
         $data = [];
-        $data['employment'] = Employment::sortable()->orderBy('expiry', 'desc')->paginate(20);
+        $data['employment'] = Employment::sortable()->orderBy('deadline', 'desc')->paginate(20);
         $data['count'] = count(Employment::all());
 
         return view('admin.employment_list', ['data' => $data]);
@@ -44,7 +58,7 @@ class EmploymentController extends Controller
         $employment->user_id = Auth::id();
         $employment->save();
 
-        Session::flash('success', "employment saved");
+        Session::flash('success', "employment posting saved");
 
         if (null !== ($request->file('attachments')))
         {
@@ -71,6 +85,7 @@ class EmploymentController extends Controller
      */
     public function show(Employment $employment)
     {
+        //todo delete show method if not needed
         echo __METHOD__;
     }
 
@@ -82,7 +97,9 @@ class EmploymentController extends Controller
      */
     public function edit(Employment $employment)
     {
-        echo __METHOD__;
+        $employment->load('user', 'attachments');
+
+        return view('admin.employment', ['data' => ['employment' => $employment, 'action' => 'Edit']]);
     }
 
     /**
@@ -94,7 +111,27 @@ class EmploymentController extends Controller
      */
     public function update(Request $request, Employment $employment)
     {
-        echo __METHOD__;
+        $employment->fill($request['employment']);
+        $employment->save();
+
+        $result = $this->attachmentService->updateAttachment($request, $employment);
+
+        if (null !== ($request->file('attachments')))
+        {
+            $result = $this->attachmentService->createAttachment($request, $employment);
+
+            if($result){
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+
+        Session::flash('success', "You have edited the employment information");
+
+        return redirect()->route('employment_edit', [$employment->id]);
     }
 
     /**
@@ -103,8 +140,19 @@ class EmploymentController extends Controller
      * @param  \App\Models\Employment  $employment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employment $employment)
+    public function destroy(Request $request)
     {
-        echo __METHOD__;
+        $employments = Employment::find($request->id);
+
+        foreach($employments as $employment)
+        {
+            $result = $this->attachmentService->destroyAttachment($employment);
+
+            Employment::destroy($employment->id);
+        }
+
+        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) . ' and any related files deleted.');
+
+        return redirect()->route('employment_list');
     }
 }
