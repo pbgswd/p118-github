@@ -1,11 +1,7 @@
 <?php
 
 /**
- * some are files
- * some are urls
- * some need dates
- * not all have files
- *
+ * some are files,  * some are urls,  * some need dates ,  * not all have files
  */
 
 /**
@@ -17,6 +13,7 @@
 //<a target="_blank" href="docs/Dispatch_job_posting_v02.pdf">ONGOING: IATSE Local 118 Dispatcher Job Posting</a>
 //$files[] = ["path" => "http://iatse118.com/members/docs/uswork07.pdf", "type" => "pdf", "title" => "Working in the U.S.A."];
 **/
+
 
 $files[] = ["path" => "http://iatse118.com/members/docs/ACTC Job Posting - Stagehand.pdf", "type" => "pdf", "title" => "Job Posting - Arts Club - Stagehand - Open Until Filled", 'status' => "Open", "expiry" => "Dec 31 2020"];
 $files[] = ["path" => "http://iatse118.com/members/docs/Dispatch_job_posting_v02.pdf", "type" => "pdf", "title" => "ONGOING: IATSE Local 118 Dispatcher Job Posting", 'status' => "Open", "expiry" => "Dec 31 2020"];
@@ -71,9 +68,7 @@ $files[] = ["path" => "http://iatse118.com/members/docs/RGT Job Posting - Tech C
 $files[] = ["path" => "http://iatse118.com/members/docs/VECC Production Electrician Job Posting 2016-17 Season.pdf", "type" => "pdf", "title" => "VECC Production Electrician Job Posting 2016-17 Season",  "status" => "Closed", "expiry" => "June 17 2016"];
 $files[] = ["path" => "http://iatse118.com/members/docs/2015 GT House Tech IATSE Jan14-2016.pdf", "type" => "pdf", "title" => "Gateway Theatre House Tech Job Posting",  "status" => "Closed", "expiry" => "Jan 29 2016"];
 $files[] = ["path" => "http://iatse118.com/members/docs/ACT Head Dresser Job Posting 2016.pdf", "type" => "pdf", "title" => "Arts Club Theatre - Head Dresser Job Posting",  "status" => "Closed", "expiry" => "Feb 7 2016"];
-
 $files[] = ["path" => "https://www.allianceforarts.com/job-board/2018/12/20/associate-technician", "type" => "url", "title" => "Associate Technician - Granville Island Theatre District",  "status" => "Closed", "expiry" => "January 20 2019"];
-$files[] = ["path" => "https://thecultch.com/wp-content/uploads/2019/11/The-Cultch-is-hiring-Box-Office-Attendant-casual-November-2019.pdf", "type" => "pdf", "title" => "The Cultch - Box Office Attendant", 'status' => "Closed", "expiry" => "November 27 2019"];
 $files[] = ["path" => "https://www.allianceforarts.com/job-board/2018/12/17/production-managertechnical-director?rq=roundhouse", "type" => "url", "title" => "Production Manager/Technical Director - Roundhouse Community Arts &amp; Recreation Centre",  "status" => "Closed", "expiry" => "January 11 2019"];
 $files[] = ["path" => "https://www.douglascollegecareers.ca/postings/2792", "type" => "url", "title" => "NEW: Job Posting - Douglas College - Contract Faculty - Live Sound (Music)",  "status" => "Closed", "expiry" => "August 13 2018"];
 $files[] = ["path" => "https://www.gatewaytheatre.com/about-us/careers", "type" => "url", "title" => "NEW: Job Posting - The Gateway Theatre - Technical Director",  "status" => "Closed", "expiry" => "August 1 2018"];
@@ -84,28 +79,23 @@ $files[] = ["path" => "https://tru.hua.hrsmart.com/hr/ats/Posting/view/8571", "t
 $files[] = ["path" => "https://tru.hua.hrsmart.com/hr/ats/Posting/view/8570", "type" => "url", "title" => "Job Posting - Theatre Instructor - Thompson Rivers University",  "status" => "Closed", "expiry" => "June 19 2017"];
 $files[] = ["path" => "http://www.hr.ubc.ca/jobs/staff.php?job_id=26626 ", "type" => "url", "title" => "Job Posting - Chan Centre - Head Audio Technician",  "status" => "Closed", "expiry" => "June 15 2017"];
 
-$files[] = ["path" => "http://gatewaytheatre.com/sites/default/files/Technical Director.pdf?_ga=2.267947534.1487680479.1560456993-328533990.1560456993", "type" => "pdf", "title" => "Richmond Gateway Theatre - Technical Director",  "status" => "Closed", "expiry" => "July 28 2019"];
 
-/**
- * id
- * title
- * user_id
- * Description
- * url
- * status open closed bool
- * live on site
- * deadline
- * timestamps
- *
- */
+// pull these 2 separately they dont need curl credentials
+//$files[] = ["path" => "https://thecultch.com/wp-content/uploads/2019/11/The-Cultch-is-hiring-Box-Office-Attendant-casual-November-2019.pdf", "type" => "pdf", "title" => "The Cultch - Box Office Attendant", 'status' => "Closed", "expiry" => "November 27 2019"];
+//$files[] = ["path" => "http://gatewaytheatre.com/sites/default/files/Technical Director.pdf?_ga=2.267947534.1487680479.1560456993-328533990.1560456993", "type" => "pdf", "title" => "Richmond Gateway Theatre - Technical Director",  "status" => "Closed", "expiry" => "July 28 2019"];
+
+echo count($files) . "Employment postings \n";
 
 foreach ($files as $f)
 {
     $path = '';
     $url = '';
+    $doc = '';
 
     if($f['type'] == 'pdf'){
         $path = $f['path'];
+        $doc = explode('/', $f['path']);
+        $doc = $doc[5];
     }
     else {
         $url = $f['path'];
@@ -116,17 +106,15 @@ foreach ($files as $f)
     $datetime = date_format(new \DateTime($f["expiry"]),  'Y-m-d H:i:s');
 
     $data[] = ["path" => $path,
+            "file" => $doc,
             "url" => $url,
             "type" => $f['type'],
             "title" => trim($f["title"]),
+            "description" => trim($f["title"]),
             "live" => 1,
             "status" => $state,
             "deadline" => $datetime,
             ];
-
 }
 
-print_r($data);
-
-
-?>
+echo count($data) ." data elements \n";

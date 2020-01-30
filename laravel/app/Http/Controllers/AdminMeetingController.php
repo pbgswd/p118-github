@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
-use App\Models\MeetingAttachment;
 use App\Services\AttachmentService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;

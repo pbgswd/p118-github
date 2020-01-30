@@ -2,6 +2,7 @@
 /public/hot
 public/meetings
 public/storage
+public/employment
 public/css/skeleton.css
 public/css/normalize.css
 /storage/*.key
