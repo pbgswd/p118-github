@@ -56,6 +56,15 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
 
+    Route::get('jobs', 'EmploymentController@index')->name('jobs_list');
+    Route::get('job/{employment}', 'EmploymentController@show')->name('job_view');
+
+    //Route::post('employment/', 'EmploymentController@store');
+    //Route::post('employment/{employment}', 'EmploymentController@update');
+    //Route::delete('/employment/delete', 'EmploymentController@destroy')->name('employment_destroy');
+    //Route::get('/employment/{employment}', 'EmploymentController@edit')->name('employment_edit');
+
+    Route::get('/{folder}/attachment/{attachment}', 'AttachmentController@download')->name('attachment_download');
 
     Route::post('/search', 'SearchController@index')->name('search');
 });
@@ -161,12 +170,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::delete('/meeting/delete', 'AdminMeetingController@destroy')->name('meeting_destroy');
     Route::get('/meeting/{meeting}', 'AdminMeetingController@edit')->name('meeting_edit');
 
-    Route::get('employment-list', 'EmploymentController@index')->name('employment_list');
-    Route::get('employment/', 'EmploymentController@create')->name('employment_create');
-    Route::post('employment/', 'EmploymentController@store');
-    Route::post('employment/{employment}', 'EmploymentController@update');
-    Route::delete('/employment/delete', 'EmploymentController@destroy')->name('employment_destroy');
-    Route::get('/employment/{employment}', 'EmploymentController@edit')->name('employment_edit');
+    Route::get('employment-list/', 'AdminEmploymentController@index')->name('admin_employment_list');
+    Route::get('employment/', 'AdminEmploymentController@create')->name('admin_employment_create');
+    Route::post('employment/', 'AdminEmploymentController@store');
+    Route::post('employment/{employment}', 'AdminEmploymentController@update');
+    Route::delete('/employment/delete', 'AdminEmploymentController@destroy')->name('admin_employment_destroy');
+    Route::get('/employment/{employment}', 'AdminEmploymentController@edit')->name('admin_employment_edit');
 
 
 });

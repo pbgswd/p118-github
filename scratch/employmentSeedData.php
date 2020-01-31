@@ -12,7 +12,7 @@
 //Members interested in work in the Okanagan may contact the Okanagan Dispatcher Gord Osland at 250-809-0741 or <a href= "mailto:ogord@hotmail.com"> ogord@hotmail.com</a>
 //<a target="_blank" href="docs/Dispatch_job_posting_v02.pdf">ONGOING: IATSE Local 118 Dispatcher Job Posting</a>
 //$files[] = ["path" => "http://iatse118.com/members/docs/uswork07.pdf", "type" => "pdf", "title" => "Working in the U.S.A."];
-**/
+ **/
 
 
 $files[] = ["path" => "http://iatse118.com/members/docs/ACTC Job Posting - Stagehand.pdf", "type" => "pdf", "title" => "Job Posting - Arts Club - Stagehand - Open Until Filled", 'status' => "Open", "expiry" => "Dec 31 2020"];

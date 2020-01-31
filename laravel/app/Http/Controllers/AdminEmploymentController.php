@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
-class EmploymentController extends Controller
+class AdminEmploymentController extends Controller
 {
     /** @var AttachmentService*/
     private $attachmentService;
@@ -32,7 +32,7 @@ class EmploymentController extends Controller
         $data['employment'] = Employment::sortable()->with('attachments')->orderBy('deadline', 'desc')->paginate(20);
         $data['count'] = count(Employment::all());
 
-        return view('employment_list', ['data' => $data]);
+        return view('admin.employment_list', ['data' => $data]);
     }
 
     /**
@@ -43,7 +43,7 @@ class EmploymentController extends Controller
     public function create()
     {
         $e = new Employment;
-        return view('employment', ['data' => ['employment' => $e, 'action' => 'Add']]);
+        return view('admin.employment', ['data' => ['employment' => $e, 'action' => 'Add']]);
     }
 
     /**
@@ -85,9 +85,8 @@ class EmploymentController extends Controller
      */
     public function show(Employment $employment)
     {
-        $employment->load('user', 'attachments');
-
-        return view('employment', ['data' => ['employment' => $employment]]);
+        //todo delete show method if not needed
+        echo __METHOD__;
     }
 
     /**
@@ -100,7 +99,7 @@ class EmploymentController extends Controller
     {
         $employment->load('user', 'attachments');
 
-        return view('employment', ['data' => ['employment' => $employment, 'action' => 'Edit']]);
+        return view('admin.employment', ['data' => ['employment' => $employment, 'action' => 'Edit']]);
     }
 
     /**
@@ -132,7 +131,7 @@ class EmploymentController extends Controller
 
         Session::flash('success', "You have edited the employment information");
 
-        return redirect()->route('employment_edit', [$employment->id]);
+        return redirect()->route('admin_employment_edit', [$employment->id]);
     }
 
     /**

@@ -165,7 +165,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('employment_list')}}">
+                                <a class="nav-link" href="{{route('admin_employment_list')}}">
                                     <span data-feather="file"></span>
                                     Employment
                                 </a>

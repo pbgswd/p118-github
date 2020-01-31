@@ -22,7 +22,7 @@ $employment = $data['employment'];
         });
     </script>
 <div class="container">
-    <h3><a href="{{ route('employment_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of employment postings</a></h3>
+    <h3><a href="{{ route('admin_employment_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of employment postings</a></h3>
     <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row" style="margin-top:30px;"> &nbsp;</div>
@@ -56,7 +56,7 @@ $employment = $data['employment'];
             <div class="form-group">
                 <div class="col-lg-2"><h4>Url</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="http://....." name="employment[url]" value="{{ old('employment.url', $employment->url)}}" size="80" />
+                    <input type="text" class="form-control"  placeholder="https://....." name="employment[url]" value="{{ old('employment.url', $employment->url)}}" size="80" />
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@ $employment = $data['employment'];
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
-             <form name="delete" method="POST" action="{{route('employment_destroy')}}">
+             <form name="delete" method="POST" action="{{route('admin_employment_destroy')}}">
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>

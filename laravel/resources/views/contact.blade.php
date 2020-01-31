@@ -3,8 +3,19 @@
 <div class="container">
 
     <div class="row border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:2em;">
-        <div class="col-md-12 content">
-            <h1 class="display-3">Contact Us</h1>
+        <div class="col-12">
+            <h1 class="display-3">Contact IATSE Local 118</h1>
+        </div>
+        <div class="col-md-6 content">
+
+                <h3><i class="far fa-building"></i> IATSE Local 118 <br />
+                    #206 - 2940 Main Street<br />
+                    Vancouver, BC, V5T 3G3</h3>
+        </div>
+        <div class="col-md-6 content">
+                <h3><a href="https://goo.gl/maps/h1ftiTc6NoBXj5D1A" target="_blank" title="IATSE Local 118 Office"><i class="fas fa-map-marked-alt"></i> Maps</a></h3>
+                <h3><a href="tel:604-685-9553"><i class="fas fa-phone-square"></i> 604-685-9553</a></h3>
+            <h3><a href="mailto:office@iatse118.com"><i class="fas fa-envelope"></i> office@iatse118.com</a></h3>
         </div>
         <div class="col-md-12 content">
             <form class="form-horizontal" role="form" action="{{route('contact')}}" method="post">
