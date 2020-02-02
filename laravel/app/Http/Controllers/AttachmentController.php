@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Attachments\DestroyAttachment;
 use App\Http\Requests\Attachments\StoreAttachment;
 use App\Http\Requests\Attachments\UpdateAttachment;
-use App\Services\AttachmentService;
-use Illuminate\Http\Request;
 use App\Models\Attachment;
-use App\Models\Meeting;
+use App\Services\AttachmentService;
 use DB;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -131,6 +130,11 @@ class AttachmentController extends Controller
      * @param \App\Attachment $attachment
      * @return Response
      */
+    public function monkey(Attachment $attachment)
+    {
+        dd($attachment);
+    }
+
     public function edit(Attachment $attachment)
     {
         if(!file_exists(storage_path('app/' . $attachment->subfolder) . '/' . $attachment->file))

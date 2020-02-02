@@ -64,7 +64,7 @@ Route::group(['middleware' => 'web'], function () {
     //Route::delete('/employment/delete', 'EmploymentController@destroy')->name('employment_destroy');
     //Route::get('/employment/{employment}', 'EmploymentController@edit')->name('employment_edit');
 
-    Route::get('/{folder}/attachment/{attachment}', 'AttachmentController@download')->name('attachment_download');
+    Route::get('/{folder}/download/{attachment}', 'AttachmentController@download')->name('attachment_download');
 
     Route::post('/search', 'SearchController@index')->name('search');
 });
@@ -75,7 +75,6 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
         return view('site');
     });
 });
-
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function () {
 
@@ -117,7 +116,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('/attachment', 'AttachmentController@create')->name('attachment_create');
     Route::get('/attachments', 'AttachmentController@index')->name('attachments_list');
     Route::post('/attachment', 'AttachmentController@store');
-    Route::get('/attachment/{attachment}', 'AttachmentController@edit')->name('attachment_edit');
+    Route::get('/attachment/{attachment}', 'AttachmentController@edit')->name('admin_attachment_edit');
     Route::post('/attachment/{attachment}', 'AttachmentController@update');
     Route::delete('/attachment/delete', 'AttachmentController@destroy')->name('attachment_destroy');
 

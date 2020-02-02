@@ -170,6 +170,7 @@
             <div style="margin-bottom: 1em;">
                 <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
                     {!! csrf_field() !!}
+                    <i class="fas fa-search"></i> &nbsp;
                     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">
                     <button type="submit" name="Submit" value="Submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
                 </form>

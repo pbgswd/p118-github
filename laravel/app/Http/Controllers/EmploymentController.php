@@ -29,7 +29,7 @@ class EmploymentController extends Controller
     public function index()
     {
         $data = [];
-        $data['employment'] = Employment::sortable()->with('attachments')->orderBy('deadline', 'desc')->paginate(20);
+        $data['employment'] = Employment::sortable()->where('live', '=', 1)->with('attachments')->orderBy('deadline', 'desc')->paginate(20);
         $data['count'] = count(Employment::all());
 
         return view('employment_list', ['data' => $data]);

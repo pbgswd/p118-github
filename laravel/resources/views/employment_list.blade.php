@@ -11,22 +11,28 @@ $employment = $data['employment'];
        </span>
     </h3>
     <div class="row">
-        <div class="col-12">
-
+        <div class="col-6">
             <a target="_blank" href="http://www.citt.org/cgi/page.cgi/citt_news.html/Job_Board" title=""CITT Website Job Postings">
-                  Visit the CITT website to view a large selection of job postings both locally and across Canada</a>
-
-            <p>Members interested in work in the Okanagan may contact the Okanagan Dispatcher Gord Osland at <a href="tel:250-809-0741">250-809-0741</a> or
-                <a href="mailto:ogord@hotmail.com?Subject=work in Okanagan"> ogord@hotmail.com</a></p>
-
+            <i class="fas fa-external-link-alt"></i> Visit the CITT website to view a large selection of job postings both locally and across Canada</a>
+        </div>
+        <div class="col-6">
+            <p><i class="fas fa-route"></i> Members interested in work in the Okanagan may contact the Okanagan Dispatcher
+                Gord Osland: <br />
+                <i class="fas fa-phone-square"></i> <a href="tel:250-809-0741">250-809-0741</a> <br />
+                <i class="fas fa-envelope"></i> <a href="mailto:ogord@hotmail.com?Subject=work in Okanagan"> ogord@hotmail.com</a></p>
+        </div>
+            <div class="col-6">
             <p><a target="_blank" href="/employment/attachment/270"> <i class="far fa-file-pdf fa-2x"></i> ONGOING: IATSE Local 118 Dispatcher Job Posting</a></p>
+            </div>
+        <div class="col-6">
             <p>
-                <a href="/storage/uswork07.pdf" title="Working in the U.S.A." target="_blank"> <i class="far fa-file-pdf fa-2x"></i> Working in the U.S.A.</a>
+                <a href="/storage/public/uswork07.pdf" title="Working in the U.S.A." target="_blank">
+                    <i class="far fa-file-pdf fa-2x"></i>
+                    <i class="fas fa-flag-usa fa-2x"></i>
+                    Working in the U.S.A.</a>
             </p>
-
         </div>
     </div>
-
 </div>
 <div class="table-responsive-md border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;  max-width:768px; margin-left:auto; margin-right:auto;">
     <table class="table table-dark table-sm" style="margin-left:auto; margin-right:auto;">

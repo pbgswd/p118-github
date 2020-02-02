@@ -73,7 +73,7 @@ class AdminEmploymentController extends Controller
             }
         }
 
-        return redirect()->route('employment_edit', [$employment->id]);
+        return redirect()->route('admin_employment_edit', [$employment->id]);
 
     }
 

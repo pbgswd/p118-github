@@ -10,7 +10,7 @@ $user = $data['user'];
         <div class="row">
             @if( $user->user_info->image && $user->user_info->show_picture == 1 )
                 <div class="col-1">
-                    <img src="{{ asset('users/' . $user->user_info->image) }}" />
+                    <img src="{{ asset('storage/users/' . $user->user_info->image) }}" />
                 </div>
             @endif
             <div class="col-9">

@@ -22,7 +22,7 @@ $meeting = $data['meeting'];
                         <h4>
                             <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->description}}" target="_blank">
                                 <i class="fas fa-file-download fa-1x"></i>
-                            {{$att->file}}
+                            {{$att->file_name}}
                             </a> &nbsp;
                             {{$att->description}}
                         </h4>

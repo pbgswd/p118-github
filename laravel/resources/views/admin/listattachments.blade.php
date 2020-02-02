@@ -41,7 +41,7 @@ $attachments = $data['attachments'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $a->name }}" href="{{ route('attachment_edit', $a->id) }}">{{ $a->file_name }}</a>
+                                    <a title="{{ $a->name }}" href="{{ route('admin_attachment_edit', $a->id) }}">{{ $a->file_name }}</a>
                                 </h4>
                             </td>
                             <td>
@@ -49,7 +49,7 @@ $attachments = $data['attachments'];
                             </td>
                             <td> {{ $a->users->name }} </td>
                             <td>
-                                <a href="{{ route('attachment_edit', $a->id) }}" title="Edit {{ $a->file_name }} ">
+                                <a href="{{ route('admin_attachment_edit', $a->id) }}" title="Edit {{ $a->file_name }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
