@@ -7,6 +7,7 @@ use App\Http\Requests\Page\StorePage;
 use App\Http\Requests\Page\UpdatePage;
 use App\Models\Page;
 use App\Models\Topic;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -129,12 +130,22 @@ class PageController extends Controller
      */
     public function update(UpdatePage $request, Page $page)
     {
+        $user = Auth::user();
+        $user->roles;
+
+        $this->authorize('update', $page);
+
+        if ($user->can('update', $page)) {
+            echo "can update";
+        }
+
         if ($gate = Gate::allows('edit articles', $page)) {
-            // echo 'Allowed';
+            //dd($gate);
+             //echo 'Allowed';
         } else {
             abort(403);
         }
-
+        dd(__METHOD__);
         $data = $request['page'];
 
         $page->fill($data);
