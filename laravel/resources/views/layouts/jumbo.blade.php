@@ -121,6 +121,7 @@
                                 <a class="dropdown-item" href="{{route('committees')}}">&nbsp; <i class="fas fa-users"></i>Committees</a>
                                 <a class="dropdown-item" href="{{route('list_meetings')}}">&nbsp; <i class="far fa-folder"></i> Meetings & Minutes</a>
                                 <a class="dropdown-item" href="{{route('members')}}">&nbsp; <i class="fas fa-user-friends"></i>Members</a>
+                                <a class="dropdown-item" href="{{route('jobs_list')}}">&nbsp; <i class="fas fa-user-friends"></i>Jobs</a>
                                 <a class="dropdown-item" href="/site">&nbsp; <i class="fas fa-industry"></i>Landing Page</a>
                             </div>
                         </li>
