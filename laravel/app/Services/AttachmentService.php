@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AttachmentService
 {
+
     /**
      * @param Request $request
      * @param HasAttachment $model
@@ -86,7 +87,7 @@ class AttachmentService
      */
     public function downloadAttachment(Attachment $attachment, string $folder)
     {
-        return Storage::download( $folder . '/' . $attachment['file'], $attachment['file_name'] );
+        return Storage::download( $folder . '/' . $attachment['file'], $attachment['file_name'], [], null );
     }
 
 }
