@@ -55,7 +55,7 @@ if (! function_exists('select_options')) {
             $result = '';
             $closeTag = "\n";
         } else {
-            $result = '<select ';
+            $result = '<select class="form-control" ';
             $closeTag = "</select>\n";
             if (is_array($attributes)) {
                 foreach ($attributes as $name => $value) {
@@ -65,7 +65,7 @@ if (! function_exists('select_options')) {
                     }
                 }
             } elseif ($attributes !== true) {
-                // todoRTL: pull 'placeholder' text from $attributes string
+                //todo RTL: pull 'placeholder' text from $attributes string
                 $result .= strval($attributes);
             }
             $result .= ">\n";
