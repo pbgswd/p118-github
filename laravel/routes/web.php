@@ -21,8 +21,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('contact', 'ContactController@show')->name('contact');
     Route::post('contact', 'ContactController@submit');
 
-    Route::get('/home', 'HomeController@index')->name('home');
-
     Route::get('/hire-us', 'HireUsController@show')->name('hireus');
 
     Route::get('/pages', 'PageController@list')->name('pages');
@@ -45,6 +43,8 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('/site', function () {
         return view('site');
     });
+
+    Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('jobs', 'EmploymentController@index')->name('jobs_list');
     Route::get('job/{employment}', 'EmploymentController@show')->name('job_view');
