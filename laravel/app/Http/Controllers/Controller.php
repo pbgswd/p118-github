@@ -49,57 +49,6 @@ class Controller extends BaseController
                 case 'phone_label':
                     $data['phone_label'] = Options::phone_label();
                     break;
-
-                /*
-                                case 'pay_methods':
-                                    $data['pay_methods'] = Options::fetchOptionTypes('App\Models\PayMethodType');
-                                    break;
-
-                                case 'newsletter_formats':
-                                    $data['newsletter_formats'] = Options::fetchOptionTypes('App\Models\NewsletterFormatType');
-                                    break;
-
-                                case 'newsletter_file_types_descriptions':
-                                    $types = Options::fetchOptionTypes('App\Models\NewsletterFormatType');
-
-                                    $cleanTypes = [];
-
-                                    foreach($types as $k => $v)
-                                    {
-                                        $cleanTypes[$k] = [
-                                            'type' => $k,
-                                            'file_type' => strtolower($k) . '_file',
-                                            'description' => $v
-                                        ];
-                                    }
-
-                                    $data['newsletter_file_types_descriptions'] = $cleanTypes;
-
-                                    break;
-
-                                case 'newsletter_file_types':
-                                    $types = Options::fetchOptionTypes('App\Models\NewsletterFormatType');
-                                    $types = Options::fetchOptionTypes('App\Models\NewsletterFormatType');
-
-                                    $data['newsletter_file_types'] =  array_map(
-                                        function($val) {
-                                            return strtolower($val.'_file');
-                                        },
-                                        array_keys($types)
-                                    );
-                                    break;
-
-                                case 'newsletter_issue_types':
-                                    $data['newsletter_issue_types'] = Options::fetchOptionTypes('App\Models\NewsletterIssueType');
-                                    break;
-
-                                case 'subscription_types':
-                                    $data['subscription_types'] = Options::fetchOptionTypes('App\Models\SubscriptionType');
-                                    break;
-
-                                case 'newsletter_statuses':
-                                    $data['newsletter_statuses'] = Options::fetchOptionTypes('App\Models\NewsletterStatus');
-                                    break;*/
             }
         }
         return $data;
