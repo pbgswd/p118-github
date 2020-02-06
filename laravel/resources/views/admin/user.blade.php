@@ -74,17 +74,17 @@ $user_roles = $data['user_roles'];
         </div>
         <div class="row border border-primary rounded-lg border-3" style="margin-top:1em; padding:1.5em;">
             <div class="row">
-                <div class="col-12">
+                <div class="col-4">
                     <h4>Member Info</h4>
                 </div>
-                <div class="input-group mb-6 col-12 border border-primary">
+                <div class="input-group mb-6 col-6">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <input name="user_info[show_profile]" type="hidden" value="0" />
                             <input name="user_info[show_profile]" type="checkbox" value="1" {{ checked(old('user_info.show_profile', $user->user_info->show_profile)) }} />
                         </div>
                     </div>
-                    <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to share profile with other members." size="40" readonly>
+                    <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to share profile with other members." size="80" readonly>
                 </div>
 
             </div>
@@ -106,7 +106,7 @@ $user_roles = $data['user_roles'];
                         <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to delete image." size="40" readonly>
                     </div>
 
-                    <div class="input-group mb-6 col-12">
+                    <div class="input-group mb-6 col-12" style="margin-top: 1em;">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input name="user_info[show_picture]" type="hidden" value="0" />
@@ -116,6 +116,7 @@ $user_roles = $data['user_roles'];
                         <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to show picture in your profile." size="40" readonly>
                     </div>
                 @else
+                    <div class="row">
                     <div class="col-12">
                         <div class="form-group">
                             <label for="exampleInputFile">
@@ -128,11 +129,12 @@ $user_roles = $data['user_roles'];
                             </p>
                         </div>
                     </div>
+                    </div>
                 @endif
             </div>
 
-            <div class="row" style="margin-top: 1em;">
-                <div class="col-lg-10"><h4>About Me</h4></div>
+            <div class="row" style="margin-top: 2em;">
+                <div class="col-lg-10"><h4>Member personal profile info</h4></div>
                 <div class="col-lg-10">
                     <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user->user_info->about) }} </textarea>
                 </div>
