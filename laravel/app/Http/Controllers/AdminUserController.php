@@ -37,7 +37,7 @@ class AdminUserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::with('roles')->sortable()->paginate(10);
+        $users = User::with('roles')->sortable()->paginate(20);
         return view('admin.listusers', ['data' => array('users' => $users)]);
     }
 
