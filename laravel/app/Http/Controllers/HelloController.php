@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hello;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 
 class HelloController extends Controller
 {
@@ -23,6 +24,8 @@ class HelloController extends Controller
             $data['birthday'] = "Happy Birthday IATSE Local 118! You are " . $data['years'] . " years young today!";
         }
 // add time zone management to Laravel
+        Session::flash('warning', "FYI: This website is in development. Anything you do or add could be wiped out.");
+
         return view('hello', ['data' => $data]);
     }
 
