@@ -15,7 +15,7 @@
 Route::group(['middleware' => 'web'], function () {
 
     Auth::routes();
-    //Auth::routes(['register' => false, 'reset' => false]); // turn off register route
+    //Auth::routes(['register' => false, 'reset' => false]); // turn off register route for production, web.
     Route::get('/', 'HelloController@index')->name('hello');
 
     Route::get('contact', 'ContactController@show')->name('contact');
@@ -34,8 +34,22 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/posts', 'PostController@list')->name('posts');
     Route::get('/post/{post}', 'PostController@show')->name('post_show');
 
-    Route::get('/venues', 'VenueController@list')->name('venues');
-    Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
+
+});
+
+
+Route::group(['middleware' =>  ['web', 'auth',]], function () {
+
+    //Route::get('/site', 'SiteController@index')->name('site');
+
+    Route::get('/site', function () {
+        return view('site');
+    });
+
+    Route::get('jobs', 'EmploymentController@index')->name('jobs_list');
+    Route::get('job/{employment}', 'EmploymentController@show')->name('job_view');
+
+    Route::get('/{folder}/download/{attachment}', 'AttachmentController@download')->name('attachment_download');
 
     Route::get('/members', 'UserController@index')->name('members');
     Route::get('/member/{user}', 'UserController@show')->name('member');
@@ -52,28 +66,14 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('committee_post_comment');
 
-
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
 
-    Route::get('jobs', 'EmploymentController@index')->name('jobs_list');
-    Route::get('job/{employment}', 'EmploymentController@show')->name('job_view');
-
-    //Route::post('employment/', 'EmploymentController@store');
-    //Route::post('employment/{employment}', 'EmploymentController@update');
-    //Route::delete('/employment/delete', 'EmploymentController@destroy')->name('employment_destroy');
-    //Route::get('/employment/{employment}', 'EmploymentController@edit')->name('employment_edit');
-
-    Route::get('/{folder}/download/{attachment}', 'AttachmentController@download')->name('attachment_download');
+    Route::get('/venues', 'VenueController@list')->name('venues');
+    Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
 
     Route::post('/search', 'SearchController@index')->name('search');
-});
 
-Route::group(['middleware' =>  ['web', 'auth',]], function () {
-    //Route::get('/site', 'SiteController@index')->name('site');
-    Route::get('/site', function () {
-        return view('site');
-    });
 });
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function () {
