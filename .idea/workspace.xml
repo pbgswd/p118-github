@@ -6,15 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/HelloController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/HelloController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/view_helpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/view_helpers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Services/AttachmentService.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Services/AttachmentService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/pages.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/pages.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/posts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/posts.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/topics.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/topics.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -304,7 +306,7 @@
       <workItem from="1578774615908" duration="1281000" />
       <workItem from="1578885033890" duration="50376000" />
       <workItem from="1579031301707" duration="19070000" />
-      <workItem from="1580939306714" duration="13682000" />
+      <workItem from="1580939306714" duration="26333000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -389,6 +391,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1575950442006" />
+    <state width="658" height="446" key="SwitcherDM" timestamp="1580962632480">
+      <screen x="0" y="27" width="1680" height="1023" />
+    </state>
+    <state width="658" height="446" key="SwitcherDM/0.27.1680.1023@0.27.1680.1023" timestamp="1580962632480" />
     <state x="379" y="196" key="com.intellij.ide.util.TipDialog" timestamp="1575933873480">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -457,13 +463,8 @@
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/laravel/resources/views/member_edit.blade.php</url>
-          <line>182</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php</url>
-          <line>94</line>
+          <line>102</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -474,6 +475,11 @@
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/laravel/resources/views/admin/listmeetings.blade.php</url>
           <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/laravel/resources/views/topics.blade.php</url>
+          <line>5</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/laravel/app/Models/Options.php</url>
