@@ -1,5 +1,6 @@
 <?php
 $user = $data['user'];
+
 $currentUserPermissions = $data['currentUserPermissions'];
 $roles = $data['roles'];
 $user_roles = $data['user_roles'];
@@ -44,14 +45,14 @@ $user_roles = $data['user_roles'];
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
-                <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email)}}" size="80" required/>
+                <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email ?? '')}}" size="80" required/>
                 </div>
             </div>
             <div class="col-12 input-group mb-6">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[share_email]" type="hidden" value="0" />
-                        <input name="user_info[share_email]" type="checkbox" value="1" {{ checked(old('user_info.share_email', $user->user_info->share_email)) }} />
+                        <input name="user_info[share_email]" type="checkbox" value="1" {{ checked(old('user_info.share_email', $user->user_info->share_email ?? '')) }} />
                     </div>
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox" value="Share email in profile?" size="40" readonly>
@@ -59,14 +60,14 @@ $user_roles = $data['user_roles'];
             <div class="col-12 input-group mb-3" style="margin-top: 1em;">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
-                   <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]" value="{{ old('user_phone.phone_number', $user->phone_number->phone_number)}}" size="80" required/>
+                   <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]" value="{{ old('user_phone.phone_number', $user->phone_number->phone_number ?? '')}}" size="80" required/>
                 </div>
             </div>
             <div class="input-group mb-6 col-12">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[share_phone]" type="hidden" value="0" />
-                        <input name="user_info[share_phone]" type="checkbox" value="1" {{ checked(old('user_info.share_phone', $user->user_info->share_phone)) }} />
+                        <input name="user_info[share_phone]" type="checkbox" value="1" {{ checked(old('user_info.share_phone', $user->user_info->share_phone ?? '')) }} />
                     </div>
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox" value="Share phone number in profile?" size="40" readonly>
@@ -81,7 +82,7 @@ $user_roles = $data['user_roles'];
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <input name="user_info[show_profile]" type="hidden" value="0" />
-                            <input name="user_info[show_profile]" type="checkbox" value="1" {{ checked(old('user_info.show_profile', $user->user_info->show_profile)) }} />
+                            <input name="user_info[show_profile]" type="checkbox" value="1" {{ checked(old('user_info.show_profile', $user->user_info->show_profile ?? '')) }} />
                         </div>
                     </div>
                     <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to share profile with other members." size="80" readonly>
@@ -89,7 +90,7 @@ $user_roles = $data['user_roles'];
 
             </div>
             <div class="row" style="margin-top: 1em;">
-                @if( $user->user_info->image )
+                @if( isset($user->user_info->image) )
                     <div class="col-4" style="margin: 1em;">
                         <h4><i class="far fa-images"></i> Profile Image</h4>
                         <h5>Currently: {{ $user->user_info->file_name }}</h5>
@@ -110,7 +111,7 @@ $user_roles = $data['user_roles'];
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input name="user_info[show_picture]" type="hidden" value="0" />
-                                <input name="user_info[show_picture]" type="checkbox" value="1" {{ checked(old('user_info.show_picture', $user->user_info->show_picture)) }} />
+                                <input name="user_info[show_picture]" type="checkbox" value="1" {{ checked(old('user_info.show_picture', $user->user_info->show_picture ?? '')) }} />
                             </div>
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to show picture in your profile." size="40" readonly>
@@ -136,7 +137,7 @@ $user_roles = $data['user_roles'];
             <div class="row" style="margin-top: 2em;">
                 <div class="col-lg-10"><h4>Member personal profile info</h4></div>
                 <div class="col-lg-10">
-                    <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user->user_info->about) }} </textarea>
+                    <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user->user_info->about ?? '') }} </textarea>
                 </div>
             </div>
         </div>
@@ -147,37 +148,37 @@ $user_roles = $data['user_roles'];
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Apt#</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Apt #" name="user_address[unit]" value="{{ old('user_address.unit', $user->address->unit) }}" size="60" />
+                <input type="text" class="form-control" placeholder="Apt #" name="user_address[unit]" value="{{ old('user_address.unit', $user->address->unit ?? '') }}" size="60" />
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Street</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Street" name="user_address[street]" value="{{ old('user_address.street', $user->address->street) }}" size="60" required/>
+                <input type="text" class="form-control" placeholder="Street" name="user_address[street]" value="{{ old('user_address.street', $user->address->street ?? '') }}" size="60" required/>
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">City</span>
                 </div>
-                <input type="text" class="form-control" placeholder="City" name="user_address[city]" value="{{ old('user_address.city', $user->address->city)}}" size="40" required/>
+                <input type="text" class="form-control" placeholder="City" name="user_address[city]" value="{{ old('user_address.city', $user->address->city ?? '')}}" size="40" required/>
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Province</span>
                 </div>
-            {{ select_options($data['provinces'], old('user_address.province', $user->address->province), ['name' => 'user_address[province]', 'class' => 'form-control', 'placeholder' => 'Province']) }}
+            {{ select_options($data['provinces'], old('user_address.province', $user->address->province ?? ''), ['name' => 'user_address[province]', 'class' => 'form-control', 'placeholder' => 'Province']) }}
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default"> Postal Code</span>
                 </div>
-                    <input type="text" class="form-control"  placeholder="Postal Code" name="user_address[postal_code]" value="{{ old('user_address.postal_code', $user->address->postal_code)}}" size="60" required/>
+                    <input type="text" class="form-control"  placeholder="Postal Code" name="user_address[postal_code]" value="{{ old('user_address.postal_code', $user->address->postal_code ?? '')}}" size="60" required/>
                 </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
                 </div>
-                 {{ select_options($data['countries'], old('user_address.country', $user->address->country), ['name' => 'user_address[country]', 'class' => 'form-control', 'placeholder' => 'Country']) }}
+                 {{ select_options($data['countries'], old('user_address.country', $user->address->country ?? ''), ['name' => 'user_address[country]', 'class' => 'form-control', 'placeholder' => 'Country']) }}
             </div>
         </div>
         <div class="row">
@@ -187,7 +188,7 @@ $user_roles = $data['user_roles'];
                     <div class="input-group mb-6 col-12">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input name="user_roles[]" type="checkbox" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_roles)) }} />
+                                <input name="user_role" type="radio" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_roles)) }} />
                             </div>
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{$role->name}} ( @foreach ($role->permissions as $p){{ $p->name }},  @endforeach)" size="40" readonly />
@@ -206,32 +207,32 @@ $user_roles = $data['user_roles'];
                     <div class="col-10">
                         <div class="form-group form-inline">
                             Seniority Number
-                            <input type="text" class="form-control"  placeholder="number" name="user_membership[seniority_number]" value="{{ old('user_membership.seniority_number', $user->membership->seniority_number)}}" size="20" required/>
+                            <input type="text" class="form-control"  placeholder="number" name="user_membership[seniority_number]" value="{{ old('user_membership.seniority_number', $user->membership->seniority_number ?? '')}}" size="20" required/>
                         </div>
                     </div>
                     <div class="col-lg-10">
                         <div class="form-group form-inline">
                             Member Status
-                            <input type="text" class="form-control"  placeholder="status" name="user_membership[status]" value="{{ old('user_membership.status', $user->membership->status)}}" size="20" required/>
+                            <input type="text" class="form-control"  placeholder="status" name="user_membership[status]" value="{{ old('user_membership.status', $user->membership->status ?? '')}}" size="20" required/>
                         </div>
                     </div>
                     <div class="col-lg-10">
                         <div class="form-group form-inline">
                             Member Since
-                            <input type="text" class="form-control"  placeholder="date" name="user_membership[membership_date]" value="{{ old('user_membership.membership_date', $user->membership->membership_date)}}" size="20" required/>
+                            <input type="text" class="form-control"  placeholder="date" name="user_membership[membership_date]" value="{{ old('user_membership.membership_date', $user->membership->membership_date ?? '')}}" size="20" required/>
                         </div>
                     </div>
                     <div class="col-lg-10">
                         <div class="form-group form-inline">
                             Member Dues Status
-                            <input type="text" class="form-control"  placeholder="dues status, paid until..." name="user_membership[membership_expires]" value="{{ old('user_membership.membership_expires', $user->membership->membership_expires)}}" size="20" required/>
+                            <input type="text" class="form-control"  placeholder="dues status, paid until..." name="user_membership[membership_expires]" value="{{ old('user_membership.membership_expires', $user->membership->membership_expires ?? '')}}" size="20" required/>
                         </div>
                     </div>
                     <div class="col-lg-10" style="margin-top: 1em;">
                         <h4>Admin notes (admin only)</h4>
                     </div>
                     <div class="col-lg-10">
-                        <textarea name="user_membership[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control" disabled>{{old('user_membership.admin_notes', $user->membership->admin_notes)}}</textarea>
+                        <textarea name="user_membership[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control" disabled>{{old('user_membership.admin_notes', $user->membership->admin_notes ?? '')}}</textarea>
                     </div>
                  </span>
             </div>

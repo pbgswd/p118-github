@@ -132,6 +132,7 @@ class AdminUserController extends Controller
 
         $data = [
             'user' => $user,
+            //'user_info' => $user->user_info,
             'user_roles' => $user_roles,
             'roles' => $roles,
             'action' => 'Edit',
@@ -139,6 +140,8 @@ class AdminUserController extends Controller
             'countries' => $regions['countries'],
             'provinces' => $regions['statesprovs']['Provinces'],
         ];
+
+       // dd($data);
 
         return view('admin.user', ['data' => $data]);
     }
