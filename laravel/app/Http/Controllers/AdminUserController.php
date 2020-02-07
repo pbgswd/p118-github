@@ -57,8 +57,8 @@ class AdminUserController extends Controller
         $currentUser = Auth::user();
 
         $roles = Role::get();
-        $user_roles = $user->getRoleNames()->toArray();
-        $user_roles = array_combine($user_roles, $user_roles);
+
+        $user_roles = ['member' => 'member'];
 
         $data = [
             'user' => $user,
@@ -130,9 +130,9 @@ class AdminUserController extends Controller
         $user_roles = $user->getRoleNames()->toArray();
         $user_roles = array_combine($user_roles, $user_roles);
 
+
         $data = [
             'user' => $user,
-            //'user_info' => $user->user_info,
             'user_roles' => $user_roles,
             'roles' => $roles,
             'action' => 'Edit',
@@ -140,8 +140,6 @@ class AdminUserController extends Controller
             'countries' => $regions['countries'],
             'provinces' => $regions['statesprovs']['Provinces'],
         ];
-
-       // dd($data);
 
         return view('admin.user', ['data' => $data]);
     }
@@ -220,11 +218,22 @@ class AdminUserController extends Controller
     {
         $users = User::find($request->id);
 
+        //todo cannot delete user when user has a post, or is a member of a committee. Deal with this
+
         foreach ($users as $user) {
+
+            $user_roles = $user->getRoleNames()->toArray();
+            $user_roles = array_combine($user_roles, $user_roles);
+
+            foreach($user_roles as $r)
+            {
+                $user->removeRole($r);
+            }
+
             PhoneNumber::where('user_id', $user->id)->delete();
             Address::where('user_id', $user->id)->delete();
             Membership::where('user_id', $user->id)->delete();
-            $user->syncRoles();
+
             $user_info = UserInfo::where('user_id', $user->id)->first();
             if ($user_info['image']) {
                 Storage::disk('users')->delete($user_info['image']);
