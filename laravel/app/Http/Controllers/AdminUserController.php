@@ -222,6 +222,8 @@ class AdminUserController extends Controller
 
         foreach ($users as $user) {
 
+            User::destroy($user->id);
+
             $user_roles = $user->getRoleNames()->toArray();
             $user_roles = array_combine($user_roles, $user_roles);
 
@@ -240,7 +242,7 @@ class AdminUserController extends Controller
             }
             UserInfo::destroy($user_info['id']);
         }
-        User::destroy($request->id);
+
 
         Session::flash('success', Str::plural('Member', count($request->id)) . ' deleted.');
 
