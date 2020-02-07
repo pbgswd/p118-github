@@ -83,9 +83,12 @@ class AdminUserController extends Controller
      */
     public function store(StoreUser $request)
     {
+        
 //todo is password here just encrypting the word 'secret'?
 //todo create default password for new user based on name and other data
 //todo do not allow user to keep first password on signup.
+
+        //todo a fake password, then leverage password reset to send out login access
 
         $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]));
         $user->save();
@@ -109,6 +112,8 @@ class AdminUserController extends Controller
         $user_roles->save();
 
         // send new user an email with login instructions.
+
+        //todo something like password reset to send out login information
 
         Session::flash('success', "You have saved a new member");
 
