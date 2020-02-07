@@ -6,18 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/Controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/TopicController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PostController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Services/AttachmentService.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Services/AttachmentService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/layouts/jumbo.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/pages.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/pages.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/posts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/posts.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/topics.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/topics.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,7 +301,7 @@
       <workItem from="1578774615908" duration="1281000" />
       <workItem from="1578885033890" duration="50376000" />
       <workItem from="1579031301707" duration="19070000" />
-      <workItem from="1580939306714" duration="26333000" />
+      <workItem from="1580939306714" duration="44459000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -387,6 +382,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state width="1254" height="496" key="GridCell.Tab.0.right/0.27.1680.1023@0.27.1680.1023" timestamp="1577443239421" />
+    <state x="492" y="251" width="686" height="581" key="RollbackChangesDialog" timestamp="1581041100995">
+      <screen x="0" y="27" width="1680" height="1023" />
+    </state>
+    <state x="492" y="251" width="686" height="581" key="RollbackChangesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1581041100995" />
     <state x="184" y="6" key="SettingsEditor" timestamp="1575950442006">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -404,10 +403,10 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="493" y="156" width="683" height="771" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1680.1023@0.27.1680.1023" timestamp="1578989554574" />
-    <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1575080188306">
+    <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581051386836">
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
-    <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1680.1023@0.27.1680.1023" timestamp="1575080188306" />
+    <state x="608" y="458" width="464" height="167" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1680.1023@0.27.1680.1023" timestamp="1581051386836" />
     <state x="394" y="176" width="757" height="526" key="find.popup" timestamp="1578111029525">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -464,7 +463,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/laravel/app/Http/Controllers/AdminCommitteeController.php</url>
-          <line>102</line>
+          <line>94</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
