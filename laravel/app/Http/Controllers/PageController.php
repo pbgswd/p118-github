@@ -26,7 +26,7 @@ class PageController extends Controller
      */
     public function index(Request $request)
     {
-        $pages = Page::sortable()->with('tagged')->paginate(20);
+        $pages = Page::sortable()->with('tagged', 'user')->paginate(20);
 
         return view('admin.listpages', ['data' => array('pages' => $pages)]);
     }
@@ -38,7 +38,12 @@ class PageController extends Controller
      */
     public function list(Request $request)
     {
-        $pages = Page::sortable()->with('tagged')->paginate(10);
+        if (Auth::check()) {
+            $pages = Page::sortable()->with('tagged')->paginate(10);
+        }
+        else {
+            $pages = Page::sortable()->where('access_level', '=', 'public')->with('tagged')->paginate(10);
+        }
 
         return view('pages', ['data' => array('pages' => $pages)]);
     }
@@ -91,7 +96,12 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
+        //Todo service to check if user may view content
         $page->load('topics', 'user');
+
+        //todo handle 2 criteria live, and access_level
+
+
         $data = ['page' => $page];
 
         return view('page', ['data' => $data]);
