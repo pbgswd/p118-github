@@ -13,6 +13,7 @@
                     <div class="col-md-3 border border-dark rounded-lg mt-3 mr-3">
                         <h2>{{ $i->title }}</h2>
                         <p>{!! $i->description !!} </p>
+                        <p>{{$i->access_level}}</p>
                         <p>
                             <a class="btn btn-secondary" href="{{ route('page_show', $i->slug) }}" role="button">View details &raquo;</a>
                         </p>
