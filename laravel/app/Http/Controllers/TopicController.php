@@ -25,7 +25,7 @@ class TopicController extends Controller
      */
     public function index(Request $request)
     {
-        $topics = Topic::sortable()->with('tagged')->paginate(20);
+        $topics = Topic::sortable()->with('tagged', 'user')->paginate(20);
 
         return view('admin.listtopics', ['data' => array('topics' => $topics)]);
     }
@@ -35,7 +35,12 @@ class TopicController extends Controller
      */
     public function list()
     {
-        $topics = Topic::sortable()->with('tagged')->paginate(10);
+        if (Auth::check()) {
+            $topics = Topic::sortable()->with('tagged')->paginate(10);
+        }
+        else {
+            $topics = Topic::sortable()->where('access_level', '=', 'public')->with('tagged')->paginate(10);
+        }
 
         return view('topics', ['data' => array('topics' => $topics)]);
     }
@@ -48,6 +53,8 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
+        //todo check for access to topic by loading it.
+
         $topic->pages;
         $topic->posts;
         $data = ['topic' => $topic];
@@ -98,6 +105,8 @@ class TopicController extends Controller
      */
     public function edit(Topic $topic)
     {
+        $topic->user;
+
         $access_levels = $this->getFormOptions(['access_levels']);
         $data = ['topic' => $topic, 'access_levels' => $access_levels, 'action' => 'Edit'];
 

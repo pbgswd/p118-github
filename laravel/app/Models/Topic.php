@@ -89,9 +89,9 @@ class Topic extends Model
         return $this->attributes['name'] = $value;
     }
 
-    public function users()
+    public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function pages()

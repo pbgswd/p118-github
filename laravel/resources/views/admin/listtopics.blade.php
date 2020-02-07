@@ -51,6 +51,7 @@
                                 @endforeach
                                 )
                             @endif
+                            Added by: <a href="{{route('member', $i->user->id)}}" target="_blank">{{$i->user->name}}</a>
                         </td>
                         <td> {{ $i->access_level }} </td>
                         <td> {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>

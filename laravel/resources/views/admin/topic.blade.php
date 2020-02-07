@@ -106,7 +106,11 @@ $topic = $data['topic'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row mt-3 mb-3">
+            @if ($data['action'] == 'Edit')
+                Added by: &nbsp;<a href="{{route('member', $topic->user->id)}}" target="_blank">{{$topic->user->name }}</a>
+            @endif
+        </div>
         <div class="row">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
