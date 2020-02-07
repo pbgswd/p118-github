@@ -218,7 +218,7 @@ class AdminUserController extends Controller
     {
         $users = User::find($request->id);
 
-        //todo cannot delete user when user has a post, or is a member of a committee. Deal with this
+        //todo cannot delete user when user has a post, page, topic, or is a member of a committee. Deal with this
 
         foreach ($users as $user) {
 
