@@ -34,7 +34,7 @@ class PostController extends Controller
      */
     public function list(Request $request)
     {
-        $posts = Post::sortable()->with('tagged')->paginate(10);
+        $posts = Post::sortable()->with('tagged', 'users')->paginate(10);
 
         return view('posts', ['data' => array('posts' => $posts)]);
     }
