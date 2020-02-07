@@ -2,8 +2,8 @@
 @section('content')
 <div class="container">
 
-    <div class="row border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:2em;">
-        <div class="col-12">
+    <div class="row border border-dark rounded-lg p-lg-5" style="background: rgba(220,220,220,0.6);">
+        <div class="col-12 mb-4">
             <h1 class="display-3">Contact IATSE Local 118</h1>
         </div>
         <div class="col-md-6 content">
@@ -17,37 +17,39 @@
                 <h3><a href="tel:604-685-9553"><i class="fas fa-phone-square"></i> 604-685-9553</a></h3>
             <h3><a href="mailto:office@iatse118.com"><i class="fas fa-envelope"></i> office@iatse118.com</a></h3>
         </div>
-        <div class="col-md-12 content">
+        <div class="col-md-12 mt-5 content">
             <form class="form-horizontal" role="form" action="{{route('contact')}}" method="post">
                 {!! csrf_field() !!}
-                <div class="form-group ">
-                    <label for="inputName3" class="col-sm-2 control-label input-lg">Name</label>
-                    <div class="col-sm-10">
-                        <input name="name" type="text" maxlength="60" class="form-control input-lg" id="inputName3" placeholder="Name" value="{{old('name')}}">
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                        <input type="text" class="form-control"  placeholder="Name" name="name" value="{{ old('name')}}" size="80" required/>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                    <div class="col-sm-10">
-                        <input name="email" type="email" class="form-control input-lg" maxlength="60" id="inputEmail3" placeholder="Email" value="{{old('email')}}">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                        <input type="text" class="form-control"  placeholder="you@email.com" name="email" value="{{ old('email')}}" size="80" required/>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="inputSubject3" class="col-sm-2 control-label">Subject</label>
-                    <div class="col-sm-10">
-                        <input name="mail_subject" type="text" class="form-control input-lg" maxlength="60" id="inputSubject3" placeholder="Subject" value="{{old('mail_subject')}}">
+                <div class=" input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Subject</span>
+                        <input type="text" class="form-control"  placeholder="Subject" name="mail_subject" value="{{ old('mail_subject')}}" size="80" required/>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="mail_body"  class="col-sm-2 control-label">Message</label>
-                    <div class="col-sm-10">
+                <div class="form-group mt-4">
+                    <label for="mail_body"  class="col-sm-2 control-label"><h3>Message</h3></label>
+
                         <textarea name="mail_body" placeholder="Message" form-control input-lg" rows="3" cols="100">{{old('mail_body')}}</textarea>
-                    </div>
+
                 </div>
-                <div class="row">
+                <div class="row mt-lg-2">
                     <div class="col-6">
                         <button
                                 class="btn btn-primary g-recaptcha"
