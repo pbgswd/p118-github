@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
- * @property string $phone_numer
+ * @property string $phone_number
  * @property string $label
  * @property boolean $primary
  * @property DateTime created_at
