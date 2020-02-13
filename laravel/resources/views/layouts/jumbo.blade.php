@@ -124,6 +124,21 @@
                                 <a class="dropdown-item" href="/site"><i class="fas fa-industry"></i> Landing Page</a>
                             </div>
                         </li>
+
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="true">Health</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown">
+                                <a class="dropdown-item" href="##" title="#">&nbsp<i class="fas fa-user"></i> ## </a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-industry"></i> ##</a>
+                            </div>
+                        </li>
+
+
+
+
                     @endguest
                 </ul>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
