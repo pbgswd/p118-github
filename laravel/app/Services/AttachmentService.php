@@ -87,7 +87,7 @@ class AttachmentService
      */
     public function downloadAttachment(Attachment $attachment, string $folder)
     {
-        return Storage::download( $folder . '/' . $attachment['file'], $attachment['file_name'], [], null );
+        return Storage::download( $folder . '/' . $attachment['file'], $attachment['file_name'], [], 'inline' );
     }
 
 }

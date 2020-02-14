@@ -173,6 +173,9 @@
         <main role="main">
             <!-- Main jumbotron for a primary marketing message or call to action -->
             <div class="jumbotron">
+                    @can('create articles')
+                    can create articles
+                    @endcan
                 @include('flash-messages')
                 @yield('content')
             </div>
@@ -193,7 +196,7 @@
             <div>
                 <a href="/page/terms-of-use">Terms of Use</a> | <a href="/page/privacy-policy">Privacy Policy</a> | <a
                     href="/page/disclaimer">Disclaimer</a> | <a href="/page/links">Links</a> | <a href="/page/apply-for-work">Apply
-                    for work</a>
+                    for work</a> | <a href="login">Login</a>
             </div>
             <div class="text-left" style="margin-top: 2em;">
                 <i class="far fa-copyright"></i> {{ config('app.name')}} <?php echo date('Y'); ?>
