@@ -30,3 +30,4 @@ laralvel/.env.testing~
 .gitignore~
 *.md~
 .idea/*
+.idea/workspace.xml
