@@ -48,6 +48,9 @@ class PagePolicy
      */
     public function update(User $user, Page $page)
     {
+        //dd($user->roles[0]->name); 'super-admin'
+        //dd($user->can('edit articles')); // true
+        //dd($user->getPermissionsViaRoles());
         return $user->id === $page->user_id;
     }
 

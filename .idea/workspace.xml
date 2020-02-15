@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/AdminUserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Requests/User/UpdateUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Requests/User/UpdateUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/admin/user.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Policies/PagePolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Policies/PagePolicy.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -299,7 +298,7 @@
       <workItem from="1579031301707" duration="19070000" />
       <workItem from="1580939306714" duration="45148000" />
       <workItem from="1581563947912" duration="2818000" />
-      <workItem from="1581623500610" duration="13166000" />
+      <workItem from="1581623500610" duration="15851000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>

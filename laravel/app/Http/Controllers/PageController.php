@@ -140,6 +140,7 @@ class PageController extends Controller
      */
     public function update(UpdatePage $request, Page $page)
     {
+        //todo, page controller needs proper update PagePolicy
         $user = Auth::user();
         $user->roles;
 
