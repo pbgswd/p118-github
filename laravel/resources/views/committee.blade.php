@@ -9,13 +9,14 @@ $c = $data['committee'];
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
         <div class="row">
             <div class="col-12">
-                <a href="{{ route('hello') }}">Home / </a>&nbsp;
-                <a href="{{route('committees')}}">Committees / </a>&nbsp; {{$c->name}} ->
-                @if($data['isMember'] != 1)
-                    Join this group
-                @else
-                    You are a member
-                @endif
+                <h2>
+                    <a href="{{route('committees')}}">Committees /</a>&nbsp;{{$c->name}} ->
+                    @if($data['isMember'] != 1)
+                        Join this group
+                    @else
+                        You are a member
+                    @endif
+                </h2>
             </div>
         </div>
         <div class="row">

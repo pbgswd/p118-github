@@ -10,7 +10,7 @@ $user_roles = $data['user_roles'];
     <h1>
         <a href="{{route('members')}}">
             <i class="far fa-arrow-alt-circle-left"></i>
-            members/</a>  <a href="{{route('member', Auth::user()->id)}}">{{$user->name}}</a>
+            Members /</a>  <a href="{{route('member', Auth::user()->id)}}">{{$user->name}}</a>
     </h1>
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
