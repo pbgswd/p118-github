@@ -83,7 +83,7 @@ class AdminUserController extends Controller
      */
     public function store(StoreUser $request)
     {
-        
+
 //todo is password here just encrypting the word 'secret'?
 //todo create default password for new user based on name and other data
 //todo do not allow user to keep first password on signup.
@@ -188,7 +188,10 @@ class AdminUserController extends Controller
             $user->user_info->save();
         } else {
             $user_info = new UserInfo($userRequest->input('user_info'));
-            $user_info->image = $this->uploadImage($userRequest);
+            //dd($userRequest->file);
+            if(null !== $userRequest->file) {
+                $user_info->image = $this->uploadImage($userRequest);
+            }
             $user->user_info()->save($user_info);
         }
 
@@ -200,7 +203,7 @@ class AdminUserController extends Controller
             $user->address()->save($address);
         }
 
-        $user->syncRoles($userRequest['user_roles']);
+        $user->syncRoles($userRequest['user_role']);
 
         if ($user->membership instanceof Membership) {
             $user->membership->fill($userRequest['user_membership']);
@@ -256,6 +259,7 @@ class AdminUserController extends Controller
 
     protected function uploadImage(FormRequest $request)
     {
+
         $path = $request->file('image')->store('', 'users');
         return $path;
     }

@@ -173,7 +173,7 @@ $user_roles = $data['user_roles'];
                     <span class="input-group-text" id="inputGroup-sizing-default"> Postal Code</span>
                 </div>
                     <input type="text" class="form-control"  placeholder="Postal Code" name="user_address[postal_code]" value="{{ old('user_address.postal_code', $user->address->postal_code ?? '')}}" size="60" required/>
-                </div>
+            </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
@@ -197,41 +197,46 @@ $user_roles = $data['user_roles'];
             </div>
         </div>
 
-        <fieldset disabled>
-            <div class="row invisible">
-                <span class="border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
+        <fieldset>
+            <div class="row">
+                <span class="border border-primary rounded-lg border-3 mt-lg-2 p-2">
                     <div class="col-lg-12">
                         <h3>Membership</h3>
                     </div>
 
-                    <div class="col-10">
-                        <div class="form-group form-inline">
-                            Seniority Number
-                            <input type="text" class="form-control"  placeholder="number" name="user_membership[seniority_number]" value="{{ old('user_membership.seniority_number', $user->membership->seniority_number ?? '')}}" size="20" required/>
+                    <div class="col-12 input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"> Seniority Number</span>
                         </div>
+                            <input type="text" class="form-control"  placeholder="Number" name="user_membership[seniority_number]" value="{{ old('user_membership.seniority_number', $user->membership->seniority_number ?? '')}}" size="60" required/>
                     </div>
-                    <div class="col-lg-10">
-                        <div class="form-group form-inline">
-                            Member Status
-                            <input type="text" class="form-control"  placeholder="status" name="user_membership[status]" value="{{ old('user_membership.status', $user->membership->status ?? '')}}" size="20" required/>
+
+
+                    <div class="col-12 input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"> Member Status</span>
                         </div>
+                            <input type="text" class="form-control"  placeholder="Status" name="user_membership[status]" value="{{ old('user_membership.status', $user->membership->status ?? '')}}" size="60" required/>
                     </div>
-                    <div class="col-lg-10">
-                        <div class="form-group form-inline">
-                            Member Since
-                            <input type="text" class="form-control"  placeholder="date" name="user_membership[membership_date]" value="{{ old('user_membership.membership_date', $user->membership->membership_date ?? '')}}" size="20" required/>
+
+                    <div class="col-12 input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"> Member Since</span>
                         </div>
+                            <input type="text" class="form-control"  placeholder="yyyy-mm-dd" name="user_membership[membership_date]" value="{{ old('user_membership.membership_date', $user->membership->membership_date ?? '')}}" size="60" required/>
                     </div>
-                    <div class="col-lg-10">
-                        <div class="form-group form-inline">
-                            Member Dues Status
-                            <input type="text" class="form-control"  placeholder="dues status, paid until..." name="user_membership[membership_expires]" value="{{ old('user_membership.membership_expires', $user->membership->membership_expires ?? '')}}" size="20" required/>
+
+                     <div class="col-12 input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"> Member Dues Status</span>
                         </div>
+                            <input type="text" class="form-control"  placeholder="dues status, paid until date" name="user_membership[membership_expires]" value="{{ old('user_membership.membership_expires', $user->membership->membership_expires ?? '')}}" size="60" required/>
                     </div>
-                    <div class="col-lg-10" style="margin-top: 1em;">
+
+                    <div class="col-lg-12" style="margin-top: 1em;">
                         <h4>Admin notes (admin only)</h4>
                     </div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-12">
                         <textarea name="user_membership[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control" disabled>{{old('user_membership.admin_notes', $user->membership->admin_notes ?? '')}}</textarea>
                     </div>
                  </span>
@@ -248,7 +253,6 @@ $user_roles = $data['user_roles'];
     @if ($data['action'] == 'Edit')
         @hasanyrole('super-admin|admin')
          <div class="col-sm" style="float:right">
-             (if admin)
              <form name="delete" method="POST" action="{{route('user_destroy')}}">
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
