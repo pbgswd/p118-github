@@ -39,7 +39,6 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/laravel/tinker" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/laravel/ui" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/commonmark" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/commonmark-ext-table" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/glide" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/mockery/mockery" />

@@ -106,11 +106,12 @@
                     </li>
                     @guest
                     @else
-                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin')}}" title="Admin"><i
-                                    class="fas fa-tachometer-alt"></i></a>
-                        </li>
-
+                        @role('super-admin')
+                             <li class="nav-item">
+                                <a class="nav-link" href="{{route('admin')}}" title="Admin"><i
+                                        class="fas fa-tachometer-alt"></i></a>
+                            </li>
+                        @endrole
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="true">Menu</a>
@@ -125,8 +126,6 @@
                             </div>
                         </li>
 
-
-
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="true">Health</a>
@@ -135,9 +134,6 @@
                                 <a class="dropdown-item" href="#"><i class="fas fa-industry"></i> ##</a>
                             </div>
                         </li>
-
-
-
 
                     @endguest
                 </ul>
@@ -185,26 +181,49 @@
             </div> <!-- /container -->
         </main>
         <footer class="container">
-            <div style="margin-bottom: 1em;">
-                <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
-                    {!! csrf_field() !!}
-                    <i class="fas fa-search"></i> &nbsp;
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">
-                    <button type="submit" name="Submit" value="Submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
-                </form>
+            @guest
+            @else
+            <div class="row">
+                <div class="col-12 mb-5">
+                    <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
+                        {!! csrf_field() !!}
+                        <i class="fas fa-search"></i> &nbsp;
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">
+                        <button type="submit" name="Submit" value="Submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                    </form>
+                </div>
             </div>
-            <div>
-                <a href="/page/terms-of-use">Terms of Use</a> | <a href="/page/privacy-policy">Privacy Policy</a> | <a
-                    href="/page/disclaimer">Disclaimer</a> | <a href="/page/links">Links</a> | <a href="/page/apply-for-work">Apply
-                    for work</a> | <a href="login">Login</a>
+            @endguest
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <a href="/page/terms-of-use">Terms of Use</a> | <a href="/page/privacy-policy">Privacy Policy</a> | <a
+                        href="/page/disclaimer">Disclaimer</a> | <a href="/page/links">Links</a> | <a href="/page/apply-for-work">Apply
+                        for work</a>
+                    @guest
+                        | <a href="login">Login</a>
+                    @else
+                        @role('super-admin')
+                        | <a href="{{route('admin')}}" title="Admin"><i
+                                class="fas fa-tachometer-alt"></i></a>
+                        @endrole
+                        <div class="col-12 mt-3">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">Logout
+                                </button>
+                            </form>
+                        </div>
+                    @endguest
+                </div>
             </div>
-            <div class="text-left" style="margin-top: 2em;">
-                <i class="far fa-copyright"></i> {{ config('app.name')}} <?php echo date('Y'); ?>
+            <div class="row mt-2 mb-lg-2">
+                <div class="col-4 text-left">
+                    <i class="far fa-copyright"></i> {{ config('app.name')}} <?php echo date('Y'); ?>
+                </div>
+                <div class="col-8 text-right">
+                    <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
+                </div>
             </div>
-            <div class="text-right">
-                <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
-            </div>
-            <div style="height: 2em;"></div>
         </footer>
         <script src="/js/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

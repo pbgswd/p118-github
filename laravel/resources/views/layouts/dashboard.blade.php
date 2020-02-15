@@ -62,9 +62,14 @@
 
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="/logout">Sign out</a>
+                    <a class="nav-link" href="/logout"></a>
                 </li>
             </ul>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">Logout
+                </button>
+            </form>
         </nav>
 
         <div class="container-fluid">
