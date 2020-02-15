@@ -20,3 +20,4 @@ storage/framework/cache/data/
 .env.dusk.local
 .env.dusk.local~
 .env.dusk.local.example~
+../.idea/workspace.xml

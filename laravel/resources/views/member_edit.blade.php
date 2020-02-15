@@ -165,7 +165,7 @@ $user_roles = $data['user_roles'];
     <h3>
         <a href="{{route('members')}}">
             <i class="far fa-arrow-alt-circle-left"></i>
-            members/</a>  <a href="{{route('member', Auth::user()->id)}}">{{$user->name}}</a>
+            members /</a>  <a href="{{route('member', Auth::user()->id)}}">{{$user->name}}</a>
     </h3>
 </div>
 <div class="row mt-5"></div>
