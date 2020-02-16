@@ -153,11 +153,14 @@ $user_roles = $data['user_roles'];
                 </div>
                 {{ select_options($data['countries'], old('user_address.country', $user->address->country ?? ''), ['name' => 'user_address[country]', 'class' => 'form-control', 'placeholder' => 'Country']) }}
             </div>
-            @if(Auth::user()->id == $user->id)
-                <div class="col-12 mt-lg-5">
+
+            <div class="col-12 mt-lg-5">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-primary" type="submit" value="{{ $data['action'] }} My Profile" />
-                </div>
+            </div>
+
+            @if(Auth::user()->id == $user->id)
+
             @endif
         </div>
     </form>

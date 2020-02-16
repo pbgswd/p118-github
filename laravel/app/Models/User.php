@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
+use App\Policies\UserPolicy;
 use DateTime;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -33,6 +34,10 @@ class User extends Authenticatable implements HasAttachment
     use HasRoles;
 
     protected $guard_name = 'web';
+
+    protected $policies = [
+        User::class => UserPolicy::class,
+    ];
 
     public $sortable = [
         'id',
