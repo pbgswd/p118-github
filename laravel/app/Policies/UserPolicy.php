@@ -2,8 +2,10 @@
 
 namespace App\Policies;
 
+use Auth;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+
 
 
 class UserPolicy
@@ -28,7 +30,7 @@ class UserPolicy
      * @param  \User  $user
      * @return mixed
      */
-    public function view(User $user, User $user)
+    public function view(User $user, User $userRequest)
     {
         //
     }
@@ -51,10 +53,10 @@ class UserPolicy
      * @param  \User  $user
      * @return mixed
      */
-    public function update(User $user, User $userRequest)
+    public function update(User $user)
     {
-        //Auth::user()->id;
-        return $user->id === $userRequest->id;
+        return true;
+       // return $user->id === $userRequest->id;
     }
 
     /**
@@ -64,7 +66,7 @@ class UserPolicy
      * @param  \User  $user
      * @return mixed
      */
-    public function delete(User $user, User $user)
+    public function delete(User $user, User $userRequest)
     {
         //
     }
@@ -76,7 +78,7 @@ class UserPolicy
      * @param  \User  $user
      * @return mixed
      */
-    public function restore(User $user, User $user)
+    public function restore(User $user, User $userRequest)
     {
         //
     }
@@ -88,7 +90,7 @@ class UserPolicy
      * @param  \User  $user
      * @return mixed
      */
-    public function forceDelete(User $user, User $user)
+    public function forceDelete(User $user, User $userRequest)
     {
         //
     }

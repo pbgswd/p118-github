@@ -24,7 +24,7 @@ class UpdateMember extends FormRequest
     public function rules()
     {
         return [
-            //
+            //todo updateMember - validation rules for form submission
         ];
     }
 }

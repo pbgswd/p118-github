@@ -107,6 +107,8 @@ class UserController extends Controller
      */
     public function update(UpdateMember $userRequest, User $user)
     {
+        $this->authorize('update', $userRequest);
+
         $user->fill($userRequest['user']);
         $user->save();
 
