@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\TopicPolicy;
 use Conner\Tagging\Taggable;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -47,6 +48,10 @@ class Topic extends Model
             'in_menu',
             'allow_comments',
         ];
+
+    protected $policies = [
+        Topic::class => TopicPolicy::class,
+    ];
 
     public $sortable =
         [

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use Auth;
 use App\Models\User;
+use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 

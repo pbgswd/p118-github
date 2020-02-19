@@ -92,11 +92,10 @@ class UserController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
+     * @param UpdateMember $userRequest
      * @param User $user
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateMember $userRequest, User $user)
     {

@@ -19,12 +19,14 @@ use Illuminate\View\View;
 class TopicController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param Request $request
+     * @return Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Auth::user());
+
         $topics = Topic::sortable()->with('tagged', 'user')->paginate(20);
 
         return view('admin.listtopics', ['data' => array('topics' => $topics)]);

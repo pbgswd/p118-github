@@ -8,8 +8,6 @@ use App\Http\Requests\Attachments\UpdateAttachment;
 use App\Models\Attachment;
 use App\Services\AttachmentService;
 use DB;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;

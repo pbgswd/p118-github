@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Posts\DestroyPost;
 use App\Http\Requests\Posts\StorePost;
 use App\Http\Requests\Posts\UpdatePost;
@@ -10,7 +9,7 @@ use App\Models\Post;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 

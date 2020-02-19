@@ -8,7 +8,6 @@ use App\Http\Requests\Committees\UpdateCommittee;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;

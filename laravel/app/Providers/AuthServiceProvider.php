@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\Topic;
 use App\Models\User;
 use App\Policies\PagePolicy;
 use App\Policies\PostPolicy;
+use App\Policies\TopicPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -22,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         Post::class => PostPolicy::class,
         Page::class => PagePolicy::class,
         User::class => UserPolicy::class,
+        Topic::class => TopicPolicy::class,
     ];
 
     /**
