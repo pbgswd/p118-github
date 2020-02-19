@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\PostPolicy;
 use Conner\Tagging\Taggable;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +30,7 @@ class Post extends Model
     use Taggable;
 
     protected $policies = [
-        // Post::class => PostPolicy::class,
+        Post::class => PostPolicy::class,
     ];
 
     public $sortable = [

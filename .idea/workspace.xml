@@ -7,9 +7,9 @@
     <list default="true" id="17a22980-9f2d-47e4-b4ef-cd39502989f9" name="Default Changelist" comment="added methods for content access level and membership level, just a concept at this point.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Requests/Member/UpdateMember.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Requests/Member/UpdateMember.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/app/Policies/UserPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Policies/UserPolicy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/PostController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Models/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Models/Post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Policies/PostPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Policies/PostPolicy.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -304,6 +304,8 @@
       <workItem from="1581884560158" duration="89000" />
       <workItem from="1581884764591" duration="2600000" />
       <workItem from="1581901479994" duration="2450000" />
+      <workItem from="1581918704289" duration="777000" />
+      <workItem from="1581984371816" duration="24377000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
@@ -349,11 +351,11 @@
       <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="950" y="27" width="720" height="1023" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1579036039113" />
-    <state x="466" y="191" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1581885232722">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1582106304883">
+      <screen x="0" y="27" width="1680" height="1023" />
     </state>
     <state x="466" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1581885232722" />
-    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1578980615489" />
+    <state x="573" y="296" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.27.1680.1023@0.27.1680.1023" timestamp="1582106304883" />
     <state x="181" y="0" key="CommitChangelistDialog2" timestamp="1575950936278">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -483,18 +485,13 @@
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/laravel/app/Policies/PostPolicy.php</url>
-          <line>4</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/laravel/app/Models/User.php</url>
           <line>4</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/laravel/app/Http/Controllers/PostController.php</url>
-          <line>4</line>
+          <line>5</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">

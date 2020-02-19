@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Posts\DestroyPost;
 use App\Http\Requests\Posts\StorePost;
 use App\Http\Requests\Posts\UpdatePost;
@@ -16,12 +17,14 @@ use Illuminate\Support\Str;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request)
     {
+        //admin
+        $this->authorize('viewAny', Auth::user());
         $posts = Post::sortable()->with('tagged')->paginate(20);
 
         return view('admin.listposts', ['data' => array('posts' => $posts)]);
@@ -34,19 +37,21 @@ class PostController extends Controller
      */
     public function list(Request $request)
     {
-        $posts = Post::sortable()->with('tagged', 'users')->paginate(10);
+        //public
+        //todo post control public & members content
+        $posts = Post::sortable()->with('tagged')->paginate(10);
 
         return view('posts', ['data' => array('posts' => $posts)]);
     }
 
-
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', Auth::user());
+
         $post = new post;
         $post->topics;
         $topics = Topic::all();
@@ -56,13 +61,14 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param StorePost $post
-     * @return Response
+     * @param StorePost $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StorePost $request)
     {
+        $this->authorize('create', Auth::user());
+
         $post = new Post($request->input('post'), $request->input('tags'));
 
         $post->save();
@@ -88,6 +94,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        // public
+        //todo control display of info, public or members
         $post->load('user', 'topics');
         $data = ['post' => $post];
 
@@ -95,13 +103,14 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Post $post
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Post $post)
     {
+        $this->authorize('update', Auth::user());
+
         $post->user;
 
         $assignedTopics = [];
@@ -118,19 +127,14 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
+     * @param UpdatePost $request
      * @param Post $post
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdatePost $request, Post $post)
     {
-        if ($gate = Gate::allows('edit articles', $post)) {
-            // echo 'Allowed';
-        } else {
-            abort(403);
-        }
+        $this->authorize('update', Auth::user());
 
         $data = $request['post'];
 
@@ -159,13 +163,14 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param Post $post
-     * @return Response
+     * @param DestroyPost $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(DestroyPost $request)
     {
+        $this->authorize('delete', Auth::user());
+
         $post = Post::find($request->id)->first();
 
         $post->untag();

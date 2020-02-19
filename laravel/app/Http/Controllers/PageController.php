@@ -154,17 +154,6 @@ class PageController extends Controller
 //todo, page controller needs proper update PagePolicy
         $this->authorize('update', $page);
 
-        if ($user->can('update', $page)) {
-            echo "can update";
-        }
-
-        if ($gate = Gate::allows('edit articles', $page)) {
-            //dd($gate);
-             //echo 'Allowed';
-        } else {
-            abort(403);
-        }
-
         $data = $request['page'];
 
         $page->fill($data);
