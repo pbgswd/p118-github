@@ -1,4 +1,3 @@
-bak-laravel
 laravel/public/js
 laravel/node_modules
 laravel/public/hot
@@ -15,8 +14,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-
-
 laralvel/.env
 laralvel/.env~
 laralvel/.env.testing
@@ -29,5 +26,6 @@ laralvel/.env.testing~
 *.scss~
 .gitignore~
 *.md~
+.idea
 .idea/*
 .idea/workspace.xml
