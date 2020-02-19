@@ -20,12 +20,14 @@ use Illuminate\Support\Str;
 class PageController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request)
     {
+        //admin
+        $this->authorize('viewAny', Auth::user());
         $pages = Page::sortable()->with('tagged', 'user')->paginate(20);
 
         return view('admin.listpages', ['data' => array('pages' => $pages)]);
@@ -38,8 +40,10 @@ class PageController extends Controller
      */
     public function list(Request $request)
     {
+        // public
         if (Auth::check()) {
             $pages = Page::sortable()->with('tagged')->paginate(10);
+            //todo group of private pages, public pages
         }
         else {
             $pages = Page::sortable()->where('access_level', '=', 'public')->with('tagged')->paginate(10);
@@ -49,12 +53,13 @@ class PageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', Auth::user());
+
         $page = new Page;
         $page['user_id'] = Auth::id();
         $page->topics;
@@ -65,13 +70,14 @@ class PageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
+     * @param StorePage $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StorePage $request)
     {
+        $this->authorize('create', Auth::user());
+
         $page = new Page($request->input('page'), $request->input('tags'));
         $page->save();
 
@@ -96,6 +102,7 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
+        // public
         //Todo service to check if user may view content
         $page->load('topics', 'user');
 
@@ -108,13 +115,14 @@ class PageController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Page $page
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Page $page)
     {
+        $this->authorize('update', Auth::user());
+
         $page->user;
 
         $assignedTopics = [];
@@ -132,14 +140,15 @@ class PageController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
+     * @param UpdatePage $request
      * @param Page $page
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdatePage $request, Page $page)
     {
+        $this->authorize('update', Auth::user());
+
         $user = Auth::user();
         $user->roles;
 //todo, page controller needs proper update PagePolicy
@@ -155,7 +164,7 @@ class PageController extends Controller
         } else {
             abort(403);
         }
-        dd(__METHOD__);
+
         $data = $request['page'];
 
         $page->fill($data);
@@ -184,13 +193,14 @@ class PageController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param Page $page
-     * @return Response
+     * @param DestroyPage $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(DestroyPage $request)
     {
+        $this->authorize('delete', Auth::user());
+
         $page = Page::find($request->id)->first();
 
         $page->untag();

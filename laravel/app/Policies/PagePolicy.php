@@ -11,10 +11,21 @@ class PagePolicy
 {
     use HandlesAuthorization;
 
-    /*
-     * methods in PageController:
-     *  index list create store show edit update destroy
+    /**
+     * @param User $user
+     * @return bool
+     * @throws \Exception
      */
+    public function viewAny(User $user)
+    {
+        if ($user->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
+            return true;
+        }
+    }
 
     /**
      * Determine whether the user can view the page.
@@ -25,45 +36,63 @@ class PagePolicy
      */
     public function view(User $user, Page $page)
     {
-        //
+        // no policy, public
     }
 
     /**
-     * Determine whether the user can create pages.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
+     * @param User $user
+     * @return bool
+     * @throws \Exception
      */
     public function create(User $user)
     {
-        //
+        // admin policy
+        if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles'])) {
+            return true;
+        }
     }
 
     /**
-     * Determine whether the user can update the page.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Page  $page
-     * @return mixed
+     * @param User $user
+     * @param Page $page
+     * @return bool
+     * @throws \Exception
      */
     public function update(User $user, Page $page)
     {
-        //dd($user->roles[0]->name); 'super-admin'
-        //dd($user->can('edit articles')); // true
-        //dd($user->getPermissionsViaRoles());
+        if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
+            return true;
+        }
+
         return $user->id === $page->user_id;
     }
 
     /**
-     * Determine whether the user can delete the page.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Page  $page
-     * @return mixed
+     * @param User $user
+     * @param Page $page
+     * @return bool
+     * @throws \Exception
      */
     public function delete(User $user, Page $page)
     {
-        //
+        // admin moderator
+        if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
+            return true;
+        }
+
+        return $user->id === $page->user_id;
     }
 
     /**
@@ -75,7 +104,16 @@ class PagePolicy
      */
     public function restore(User $user, Page $page)
     {
-        //
+        //admin
+        if ($user->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->can('delete articles')) {
+            return true;
+        }
+
+        return $user->id === $page->user_id;
     }
 
     /**
@@ -87,6 +125,15 @@ class PagePolicy
      */
     public function forceDelete(User $user, Page $page)
     {
-        //
+        // admin
+        if ($user->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->can('delete articles')) {
+            return true;
+        }
+
+        return $user->id === $page->user_id;
     }
 }
