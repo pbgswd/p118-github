@@ -31,22 +31,26 @@ class AdminUserController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param Request $request
+     * @return Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Auth::user());
+
         $users = User::with('roles')->sortable()->paginate(20);
         return view('admin.listusers', ['data' => array('users' => $users)]);
     }
 
-
     /**
      * @return Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', Auth::user());
+
         $user = new User;
         $phone = new PhoneNumber;
         $user_info = new UserInfo;
@@ -80,9 +84,11 @@ class AdminUserController extends Controller
     /**
      * @param StoreUser $request
      * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreUser $request)
     {
+        $this->authorize('create', Auth::user());
 
 //todo is password here just encrypting the word 'secret'?
 //todo create default password for new user based on name and other data
@@ -123,10 +129,13 @@ class AdminUserController extends Controller
     /**
      * @param User $user
      * @return Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
 
     public function edit(User $user)
     {
+        $this->authorize('admin_update', Auth::user());
+
         $user->load('phone_number', 'user_info', 'address', 'membership');
 
         $currentUser = Auth::user(); // the logged in user, perms to edit?
@@ -134,7 +143,6 @@ class AdminUserController extends Controller
         $roles = Role::get();
         $user_roles = $user->getRoleNames()->toArray();
         $user_roles = array_combine($user_roles, $user_roles);
-
 
         $data = [
             'user' => $user,
@@ -153,9 +161,11 @@ class AdminUserController extends Controller
      * @param UpdateUser $userRequest
      * @param User $user
      * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateUser $userRequest, User $user)
     {
+        $this->authorize('admin_update', $user);
         //TODO send email to office when user updates contact information
 
         $user->fill($userRequest['user']);
@@ -221,13 +231,16 @@ class AdminUserController extends Controller
     /**
      * @param DestroyUser $request
      * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(DestroyUser $request)
     {
+        $this->authorize('delete', Auth::user());
+
         $users = User::find($request->id);
 
         //todo cannot delete user when user has a post, page, topic, or is a member of a committee. Deal with this
-
+//todo user soft delete
         foreach ($users as $user) {
 
             $user_roles = $user->getRoleNames()->toArray();
@@ -259,7 +272,6 @@ class AdminUserController extends Controller
 
     protected function uploadImage(FormRequest $request)
     {
-
         $path = $request->file('image')->store('', 'users');
         return $path;
     }
