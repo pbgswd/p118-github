@@ -25,6 +25,7 @@ class TopicController extends Controller
      */
     public function index(Request $request)
     {
+        //admin
         $this->authorize('viewAny', Auth::user());
 
         $topics = Topic::sortable()->with('tagged', 'user')->paginate(20);
@@ -37,6 +38,7 @@ class TopicController extends Controller
      */
     public function list()
     {
+        // public
         if (Auth::check()) {
             $topics = Topic::sortable()->with('tagged')->paginate(10);
         }
@@ -55,7 +57,10 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        //todo check for access to topic by loading it.
+        if (false === Auth::check() && $topic->access_level != 'public'){
+            Session::flash('warning', "Login to view " . $topic->name);
+            return redirect()->route('topics');
+        }
 
         $topic->pages;
         $topic->posts;
@@ -66,12 +71,13 @@ class TopicController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', Auth::user());
+
         $topic = new Topic;
         $topic['user_id'] = Auth::id();
         $access_levels = $this->getFormOptions(['access_levels']);
@@ -80,13 +86,14 @@ class TopicController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
+     * @param StoreRequest $request
+     * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreRequest $request)
     {
+        $this->authorize('create', Auth::user());
+
         $topic = new Topic($request->input('topic'), $request->input('tags'));
 
         $topic->save();
@@ -100,13 +107,14 @@ class TopicController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Topic $topic
-     * @return Response
+     * @param Topic $topic
+     * @return Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Topic $topic)
     {
+        $this->authorize('update', Auth::user());
+
         $topic->user;
 
         $access_levels = $this->getFormOptions(['access_levels']);
@@ -116,14 +124,15 @@ class TopicController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param UpdateRequest $request
      * @param Topic $topic
      * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateRequest $request, Topic $topic)
     {
+        $this->authorize('update', Auth::user());
+
         $data = $request['topic'];
 
         $topic->fill($data);
@@ -141,13 +150,13 @@ class TopicController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param DestroyRequest $request
      * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(DestroyRequest $request)
     {
+        $this->authorize('delete', Auth::user());
         $topic = Topic::find($request->id)->first();
 
         $topic->untag();

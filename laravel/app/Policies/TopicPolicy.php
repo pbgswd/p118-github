@@ -11,15 +11,20 @@ class TopicPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any topics.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
+     * @param User $user
+     * @return bool
+     * @throws \Exception
      */
     public function viewAny(User $user)
     {
-        return false;
         //admin
+        if ($user->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
+            return true;
+        }
     }
 
     /**
@@ -35,61 +40,92 @@ class TopicPolicy
     }
 
     /**
-     * Determine whether the user can create topics.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
+     * @param User $user
+     * @return bool
+     * @throws \Exception
      */
     public function create(User $user)
     {
         //admin
+
+        if ($user->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
+            return true;
+        }
     }
 
     /**
-     * Determine whether the user can update the topics.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Topics  $topics
-     * @return mixed
+     * @param User $user
+     * @param Topics $topics
+     * @return bool
+     * @throws \Exception
      */
     public function update(User $user, Topics $topics)
     {
         //admin
+        if ($user->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
+            return true;
+        }
     }
 
     /**
-     * Determine whether the user can delete the topics.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Topics  $topics
-     * @return mixed
+     * @param User $user
+     * @param Topics $topics
+     * @return bool
+     * @throws \Exception
      */
     public function delete(User $user, Topics $topics)
     {
         //admin
+        if ($user->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
+            return true;
+        }
     }
 
     /**
-     * Determine whether the user can restore the topics.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Topics  $topics
-     * @return mixed
+     * @param User $user
+     * @param Topics $topics
+     * @return bool
+     * @throws \Exception
      */
     public function restore(User $user, Topics $topics)
     {
         //admin
+        if ($user->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
+            return true;
+        }
     }
 
     /**
-     * Determine whether the user can permanently delete the topics.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Topics  $topics
-     * @return mixed
+     * @param User $user
+     * @param Topics $topics
+     * @return bool
+     * @throws \Exception
      */
     public function forceDelete(User $user, Topics $topics)
     {
         //admin
+        if ($user->hasRole('super-admin')) {
+            return true;
+        }
+
+        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
+            return true;
+        }
     }
 }
