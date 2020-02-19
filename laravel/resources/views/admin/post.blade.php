@@ -143,8 +143,9 @@ $topics = $data['topics'];
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-</div>
+
          <div class="col-sm"> &nbsp;</div>
+
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
              <form name="delete" method="POST" action="{{route('post_destroy')}}">
