@@ -302,7 +302,8 @@
       <workItem from="1581884764591" duration="2600000" />
       <workItem from="1581901479994" duration="2450000" />
       <workItem from="1581918704289" duration="777000" />
-      <workItem from="1581984371816" duration="26584000" />
+      <workItem from="1581984371816" duration="27189000" />
+      <workItem from="1582141525252" duration="1987000" />
     </task>
     <task id="LOCAL-00001" summary="added methods for content access level and membership level, just a concept at this point.">
       <created>1559685752628</created>
