@@ -35,7 +35,6 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -46,9 +45,8 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:3em;"> <h4>Select topics for this content</h4>&nbsp;</div>
-
-        <div class="row" style="margin-top:1em;"> &nbsp;
+        <div class="row mt-lg-3"> <h4>Select topics for this content</h4>&nbsp;</div>
+        <div class="row mt-lg-1"> &nbsp;
             <div class="form-group">
             @foreach ($topics as $topic)
                 <div class="form-check">
@@ -61,11 +59,9 @@ $topics = $data['topics'];
                         {{$topic->name}}
                     </label>
                 </div>
-
             @endforeach
             </div>
         </div>
-
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -76,8 +72,7 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
+        <div class="row mt-lg-3"> &nbsp;</div>
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
@@ -86,8 +81,6 @@ $topics = $data['topics'];
                         <div class="form-group">
                             {{ select_options($data['access_levels'], old('post.access_level', $post->access_level), ['name' => 'post[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
                         </div>
-
-
                     </div>
                     <div class="col-6 col-sm-3"></div>
                     <div class="col-6 col-sm-3"></div>
@@ -130,7 +123,7 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row mt-lg-3"> &nbsp;</div>
 
         <div class="row">
             <div class="form-group">
@@ -142,15 +135,15 @@ $topics = $data['topics'];
             </div>
         </div>
 
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row mt-lg-3"> &nbsp;</div>
 
-        <div class="row">
+        <div class="row mb-lg-5">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-
+</div>
          <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
@@ -164,6 +157,7 @@ $topics = $data['topics'];
          </div>
     @endif
 </div>
-    <div class="row" style="margin-top:3em; margin-bottom: 3em;"> &nbsp;post added by {{$post->user->name}}</div>
-</div>
+    @if ( $data['action'] == 'Edit')
+        <div class="row mt-lg-3 mb-lg-3"> &nbsp;post added by {{$post->user->name}}</div>
+    @endif
 @endsection
