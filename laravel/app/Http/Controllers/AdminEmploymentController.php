@@ -80,18 +80,6 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Employment  $employment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Employment $employment)
-    {
-        //todo delete show method if not needed
-        echo __METHOD__;
-    }
-
-    /**
      * @param Employment $employment
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException

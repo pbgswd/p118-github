@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
+use App\Policies\MeetingPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -20,6 +21,10 @@ use Kyslik\ColumnSortable\Sortable;
 class Meeting extends Model implements HasAttachment
 {
     use Sortable;
+
+    protected $policies = [
+        Meeting::class => MeetingPolicy::class,
+        ];
 
     /**
      * The attributes that are mass assignable.
