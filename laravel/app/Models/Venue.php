@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\VenuePolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -23,6 +24,10 @@ use Kyslik\ColumnSortable\Sortable;
 class Venue extends Model
 {
     use Sortable;
+
+    protected $policies = [
+        Venue::class => VenuePolicy::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

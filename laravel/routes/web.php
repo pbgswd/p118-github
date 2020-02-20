@@ -78,12 +78,8 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function () {
 
-    Route::get('/member', function () {
-        return view('admin.member');
-    });
-
     Route::get('/', 'AdminController@index')->name('admin');
-    Route::get('/blank', 'AdminController@show')->name('blank');
+    Route::get('/blank', 'AdminController@blank')->name('blank');
 
     Route::get('/topics', 'TopicController@index')->name('topics_list');
     Route::get('/topic', 'TopicController@create')->name('topic_create');

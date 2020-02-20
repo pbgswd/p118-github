@@ -15,30 +15,11 @@ class AdminController extends Controller
      */
     public function index()
     {
+        //Land on the home page of admin. Could have data later.
         $data = [];
         return view('admin.admin', ['data' => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -46,42 +27,10 @@ class AdminController extends Controller
      * @param \App\Admin $admin
      * @return Response
      */
-    public function show(Admin $admin)
+    public function blank(Admin $admin)
     {
+        // a page for doing css/js/html experiments
         return view('admin.admin-blank');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Admin $admin
-     * @return Response
-     */
-    public function edit(Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param \App\Admin $admin
-     * @return Response
-     */
-    public function update(Request $request, Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Admin $admin
-     * @return Response
-     */
-    public function destroy(Admin $admin)
-    {
-        //
-    }
 }

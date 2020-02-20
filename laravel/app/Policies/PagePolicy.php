@@ -73,6 +73,7 @@ class PagePolicy
         }
 
         return $user->id === $page->user_id;
+
     }
 
     /**

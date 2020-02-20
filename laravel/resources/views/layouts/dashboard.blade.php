@@ -7,34 +7,23 @@
         <meta name="author" content="Peter Gordon">
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <title>{{ config('app.name') }}</title>
-
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
-
         <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k"></script>
         <script src="/js/tinymce.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-
-
         <script src="/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
         <script src="/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-
         <script src="{{ mix('/js/dashboard.js') }}"></script>
-
         <!-- Datepicker -->
         <link href='/css/bootstrap-datepicker.min.css' rel='stylesheet' type='text/css'>
         <script src='/js/bootstrap-datepicker.min.js' type='text/javascript'></script>
-
         <!-- Styles -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
         <style>
             .bd-placeholder-img {
                 font-size: 1.125rem;
@@ -44,7 +33,6 @@
                 -ms-user-select: none;
                 user-select: none;
             }
-
             @media (min-width: 768px) {
                 .bd-placeholder-img-lg {
                     font-size: 3.5rem;
@@ -59,7 +47,6 @@
             <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{ config('app.name') }}</a>
             <span style="color: #999999; padding-left: 1em; font-weight: bolder;">{{ Auth::user()->name }}</span>
             <input class="form-control form-control-dark w-60" type="text" placeholder="Search" aria-label="Search">
-
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
                     <a class="nav-link" href="/logout"></a>
@@ -71,7 +58,6 @@
                 </button>
             </form>
         </nav>
-
         <div class="container-fluid">
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -87,12 +73,6 @@
                                 <a class="nav-link active" href="{{ route('admin')}}">
                                     <span data-feather="home"></span>
                                     Admin Dashboard <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="/admin/member">
-                                    <span data-feather="home"></span>
-                                    Member Dashboard <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -113,7 +93,6 @@
                                     Meetings & Minutes
                                 </a>
                             </li>
-
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('venues_list')}}">
                                     <span data-feather="file"></span>
@@ -126,7 +105,6 @@
                                     Organizations
                                 </a>
                             </li>
-
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('committees_list')}}">
                                     <span data-feather="file"></span>
@@ -179,7 +157,6 @@
                         <hr />
                     </div>
                 </nav>
-
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">{!! $title ?? '' !!}</h1>
@@ -199,11 +176,5 @@
                 </main>
             </div>
         </div>
-
-
-
-
-
-
     </body>
 </html>

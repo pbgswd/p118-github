@@ -6,6 +6,7 @@ use App\Http\Requests\Venues\DestroyVenue;
 use App\Http\Requests\Venues\StoreVenue;
 use App\Http\Requests\Venues\UpdateVenue;
 use App\Models\Venue;
+use App\Models\Admin;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,12 +17,13 @@ use Illuminate\Support\Str;
 class VenueController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('viewAny', Auth::user());
+
         $data = [];
         $data['venues'] = Venue::sortable()->orderBy('name')->paginate(10);
 
