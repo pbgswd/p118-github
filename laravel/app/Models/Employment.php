@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
+use App\Policies\EmploymentPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -25,6 +26,10 @@ class Employment extends Model implements HasAttachment
     use Sortable;
 
     protected $table = 'employment';
+
+    protected $policies = [
+        Employment::class => EmploymentPolicy::class,
+    ];
 
     /**
      * @var array

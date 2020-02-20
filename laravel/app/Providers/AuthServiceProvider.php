@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Committee;
+use App\Models\Employment;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Topic;
@@ -31,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
         Topic::class => TopicPolicy::class,
         Venue::class => VenuePolicy::class,
         Committee::class => CommitteePolicy::class,
+        Employment::class => Employment::class,
     ];
 
     /**

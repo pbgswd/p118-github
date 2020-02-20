@@ -12,7 +12,9 @@ use Illuminate\Support\Str;
 
 class AdminEmploymentController extends Controller
 {
-    /** @var AttachmentService*/
+    /**
+     * @var AttachmentService
+     */
     private $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
@@ -21,12 +23,13 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('viewAny', Auth::user());
+
         $data = [];
         $data['employment'] = Employment::sortable()->with('attachments')->orderBy('deadline', 'desc')->paginate(20);
         $data['count'] = count(Employment::all());
@@ -35,24 +38,24 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', Auth::user());
         $e = new Employment;
         return view('admin.employment', ['data' => ['employment' => $e, 'action' => 'Add']]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Auth::user());
         $employment = new Employment($request->input('employment'));
         $employment->user_id = Auth::id();
         $employment->save();
@@ -89,27 +92,27 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Employment  $employment
-     * @return \Illuminate\Http\Response
+     * @param Employment $employment
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Employment $employment)
     {
+        $this->authorize('update', Auth::user());
         $employment->load('user', 'attachments');
 
         return view('admin.employment', ['data' => ['employment' => $employment, 'action' => 'Edit']]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Employment  $employment
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Employment $employment
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Employment $employment)
     {
+        $this->authorize('update', Auth::user());
         $employment->fill($request['employment']);
         $employment->save();
 
@@ -134,13 +137,13 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Employment  $employment
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Request $request)
     {
+        $this->authorize('delete', Auth::user());
         $employments = Employment::find($request->id);
 
         foreach($employments as $employment)
