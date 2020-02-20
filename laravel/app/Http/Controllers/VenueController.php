@@ -37,6 +37,8 @@ class VenueController extends Controller
      */
     public function list()
     {
+        // public
+
         $data = [];
         $data['venues'] = Venue::paginate(20);
 
@@ -44,28 +46,28 @@ class VenueController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', Auth::user());
         $venue = new Venue;
 
         $access_levels = $this->getFormOptions(['access_levels']);
 
         return view('admin.venue', ['data' => ['venue' => $venue, 'access_levels' => $access_levels, 'action' => 'Create']]);
-
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
+     * @param StoreVenue $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreVenue $request)
     {
+        $this->authorize('create', Auth::user());
+
         $venue = new Venue($request->input('venue'));
 
         $venue->save();
@@ -75,24 +77,26 @@ class VenueController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Venue $venue
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Venue $venue)
     {
+        //todo public / member view
+        $this->authorize('view', Auth::user());
+
         return view('venue', ['data' => ['venue' => $venue]]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Venue $venue
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Venue $venue)
     {
+        $this->authorize('update', Auth::user());
 
         $access_levels = $this->getFormOptions(['access_levels']);
 
@@ -100,14 +104,14 @@ class VenueController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
+     * @param UpdateVenue $request
      * @param Venue $venue
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateVenue $request, Venue $venue)
     {
+        $this->authorize('update', Auth::user());
         $venue->fill($request['venue']);
         $venue->save();
         Session::flash('success', "You have edited the venue");
@@ -116,13 +120,13 @@ class VenueController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param Venue $venue
-     * @return Response
+     * @param DestroyVenue $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(DestroyVenue $request)
     {
+        $this->authorize('delete', Auth::user());
         $venues = Venue::find($request->id);
         foreach ($venues as $v) {
             Venue::destroy($v->id);

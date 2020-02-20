@@ -17,24 +17,25 @@ use Illuminate\Support\Str;
 class AdminCommitteeController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('viewAny', Auth::user());
         $c = Committee::with('creator')->sortable()->paginate(10);
 
         return view('admin.listcommittees', ['data' => array('committees' => $c)]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', Auth::user());
+
         $committee = new Committee;
         $access_levels = $this->getFormOptions(['access_levels']);
         $data = [
@@ -46,13 +47,14 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
+     * @param StoreCommittee $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreCommittee $request)
     {
+        $this->authorize('create', Auth::user());
+
         $data = $request->input('committee');
         $data['user_id'] = Auth::id();
         $committee = new Committee($data);
@@ -64,13 +66,15 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Committee $committee
-     * @return Response
+     * @param User $users
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Committee $committee, User $users)
     {
+        $this->authorize('create', Auth::user());
+
         $committee->load('creator', 'committee_members');
 
         $committee['member_count'] = count($committee->committee_members);
@@ -90,32 +94,32 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Committee $committee
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Committee $committee)
     {
+        $this->authorize('create', Auth::user());
+
         $committee->creator;
         $committee->committee_members;
         $committee['member_count'] = count($committee->committee_members);
         $data = ['committee' => $committee];
         $access_levels = $this->getFormOptions(['access_levels']);
 
-
         return view('admin.committee', ['data' => ['data' => $data, 'access_levels' => $access_levels, 'action' => 'Edit']]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
+     * @param UpdateCommittee $request
      * @param Committee $committee
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateCommittee $request, Committee $committee)
     {
+        $this->authorize('update', Auth::user());
         $committee->fill($request->committee);
         $committee->save();
 
@@ -125,13 +129,13 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param Committee $committee
-     * @return Response
+     * @param DestroyCommittee $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(DestroyCommittee $request)
     {
+        $this->authorize('delete', Auth::user());
         // set to... archive?
         // destroy committee relation?
         // destroy committee posts?

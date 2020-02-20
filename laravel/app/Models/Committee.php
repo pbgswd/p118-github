@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\CommitteePolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -31,10 +32,10 @@ class Committee extends Model
     use Sortable;
     use HasRoles;
 
-    protected $guard_name = 'web';  //????
+    protected $guard_name = 'web';
 
     protected $policies = [
-        //Committee::class=>CommitteePolicy::class,
+        Committee::class=>CommitteePolicy::class,
     ];
 
     public $sortable = [
@@ -43,7 +44,6 @@ class Committee extends Model
         'created_at',
         'updated_at',
     ];
-
 
     protected $dates =
         [

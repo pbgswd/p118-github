@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Committee;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
+use App\Policies\CommitteePolicy;
 use App\Policies\PagePolicy;
 use App\Policies\PostPolicy;
 use App\Policies\TopicPolicy;
@@ -28,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Topic::class => TopicPolicy::class,
         Venue::class => VenuePolicy::class,
+        Committee::class => CommitteePolicy::class,
     ];
 
     /**

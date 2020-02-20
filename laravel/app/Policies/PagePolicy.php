@@ -18,6 +18,7 @@ class PagePolicy
      */
     public function viewAny(User $user)
     {
+        //todo https://laravel.com/docs/6.x/authorization#policy-responses
         if ($user->hasRole('super-admin')) {
             return true;
         }
