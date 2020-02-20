@@ -169,9 +169,6 @@
         <main role="main">
             <!-- Main jumbotron for a primary marketing message or call to action -->
             <div class="jumbotron">
-                    @can('create articles')
-                    can create articles
-                    @endcan
                 @include('flash-messages')
                 @yield('content')
             </div>
