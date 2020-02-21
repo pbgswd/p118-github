@@ -25,7 +25,7 @@ $c = $data['committee'];
             <div class="col-12 mb-4">
                 <h4><i class="far fa-newspaper"></i> {{count($c->posts)}} {{Str::plural('Post',count($c->posts) ) }}
                     @if($data['isMember'] == 1)
-                        | <i class="far fa-edit"></i><a href="{{route('committee_add_post', $c)}}">Add New Post</a>
+                        | <i class="far fa-edit"></i><a href="{{route('committee_add_public_post', $c)}}">Add New Post</a>
                     @endif
                 </h4>
             </div>
