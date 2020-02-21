@@ -99,9 +99,30 @@ class CommitteeController extends Controller
             return Auth::id() == $member->id;
         });
 
-
         return view('committee', ['data' => $data]);
     }
+
+    public function create_post(Committee $committee)
+    {
+
+        // $this->authorize('create', Auth::user());
+        $post = new CommitteePost;
+        $post['committee'] = $committee;
+
+        return view('committee_post_form', ['data' => ['post' => $post, 'action' => 'Create']]);
+    }
+
+    public function store_post(Committee $committee)
+    {}
+
+    public function edit_post(Committee $committee)
+    {}
+
+    public function update_post(Committee $committee)
+    {}
+
+    public function delete_post(Committee $committee)
+    {}
 
 
     /**
