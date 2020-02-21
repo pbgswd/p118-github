@@ -41,6 +41,7 @@ class EmploymentController extends Controller
      */
     public function create()
     {
+        // $this->authorize('create', Auth::user());
         $e = new Employment;
         return view('employment', ['data' => ['employment' => $e, 'action' => 'Add']]);
     }
@@ -53,6 +54,7 @@ class EmploymentController extends Controller
      */
     public function store(Request $request)
     {
+        // $this->authorize('create', Auth::user());
         $employment = new Employment($request->input('employment'));
         $employment->user_id = Auth::id();
         $employment->save();
@@ -97,6 +99,7 @@ class EmploymentController extends Controller
      */
     public function edit(Employment $employment)
     {
+        // $this->authorize('update', Auth::user());
         $employment->load('user', 'attachments');
 
         return view('employment', ['data' => ['employment' => $employment, 'action' => 'Edit']]);
@@ -111,6 +114,7 @@ class EmploymentController extends Controller
      */
     public function update(Request $request, Employment $employment)
     {
+        // $this->authorize('update', Auth::user());
         $employment->fill($request['employment']);
         $employment->save();
 
@@ -142,6 +146,7 @@ class EmploymentController extends Controller
      */
     public function destroy(Request $request)
     {
+        // $this->authorize('delete', Auth::user());
         $employments = Employment::find($request->id);
 
         foreach($employments as $employment)

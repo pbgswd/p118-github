@@ -22,6 +22,7 @@ class CommitteePostController extends Controller
      */
     public function index(CommitteePost $committeePost, Committee $committee)
     {
+        // $this->authorize('list', Auth::user());
         $data = [];
         $data['committee'] = $committee;
         $data['posts'] = CommitteePost::sortable()
@@ -39,6 +40,7 @@ class CommitteePostController extends Controller
      */
     public function create(Committee $committee)
     {
+        // $this->authorize('create', Auth::user());
         $post = new CommitteePost;
         $post['committee'] = $committee;
 
@@ -55,6 +57,7 @@ class CommitteePostController extends Controller
      */
     public function store(Request $request, Committee $committee, User $user)
     {
+        //$this->authorize('create', Auth::user());
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
         $post->user_id = Auth::id();
@@ -76,8 +79,8 @@ class CommitteePostController extends Controller
      */
     public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComment $committeePostComments)
     {
+        // $this->authorize('create', Auth::user());
         $committeePost->load('creator', 'committee', 'post_comments.commentAuthor');
-
 
         $data['committeepost'] = $committeePost;
         $data['action'] = 'Add';
@@ -94,6 +97,7 @@ class CommitteePostController extends Controller
      */
     public function edit(Committee $committee, CommitteePost $committeePost)
     {
+        // $this->authorize('update', Auth::user());
         $committeePost->creator;
         $data['post'] = $committeePost;
         $data['action'] = 'Edit';
@@ -111,6 +115,7 @@ class CommitteePostController extends Controller
      */
     public function update(Request $request, $post, CommitteePost $committeePost)
     {
+        // $this->authorize('update', Auth::user());
         $data = $request['post'];
 
         $committeePost->fill($data);
@@ -131,6 +136,7 @@ class CommitteePostController extends Controller
      */
     public function destroy(CommitteePost $committeePost)
     {
+        // $this->authorize('delete', Auth::user());
         dd(__METHOD__);
         // delete comments associated with it
         // delete the post

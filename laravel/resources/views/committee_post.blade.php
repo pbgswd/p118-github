@@ -5,7 +5,7 @@ $c = $data['committeepost']->committee;
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding: 2em">
+    <div class="container border border-dark rounded-lg p-lg-2" style="background: rgba(220,220,220,0.6);">
         <div class="row">
                <h3>
                    <a href="{{ route('hello') }}">Home /</a>

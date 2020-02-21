@@ -23,6 +23,7 @@ class CommitteePostCommentController extends Controller
      */
     public function store(Request $request, Committee $committee, CommitteePost $committeePost)
     {
+        //// $this->authorize('create', Auth::user());
         $postComment = new CommitteePostComment($request->input('comment'));
         $postComment->committee_id = $committee->id;
         $postComment->user_id = Auth::id();

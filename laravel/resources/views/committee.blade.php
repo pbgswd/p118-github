@@ -51,24 +51,33 @@ $c = $data['committee'];
                 Created by  <a title="{{ $c->creator->name }}" href="{{ route('member', $c->creator->id) }}">{{$c->creator->name }}</a>
             </div>
         </div>
-            <div class="row">
-                <div class="col-6">
-                    @foreach ($c['executives'] as $exec)
-                        <p>  {{$exec->pivot->role}}: <a href="{{route('member', $exec->id)}}">{{$exec->name}}</a> </p>
-                    @endforeach
-                </div>
-                <div class="col-6">
-                    <h4>{{count($c->committee_members)}} Members. <a href="{{route('committee_list_members', $data['committee']->slug)}}">View full list</a></h4>
-                </div>
+
+        <div class="row">
+            <div class="col-4 m-2 border border-dark rounded-lg">
+                @foreach ($c['executives'] as $exec)
+                    <p><i class="fas fa-user-tie"></i> {{$exec->pivot->role}}: <a href="{{route('member', $exec->id)}}">{{$exec->name}}</a> </p>
+                @endforeach
+                    <p>
+                        <i class="far fa-envelope"></i> Email: <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee"> {{$data['committee']->email}}</a>
+                    </p>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee"><i class="far fa-envelope"></i> {{$data['committee']->email}}</a>
-                </div>
+
+            <div class="col-4 m-2 border border-dark rounded-lg">
+                <h4>{{count($c->committee_members)}} {{Str::plural('Member', count($c->committee_members))}}.
+                    @if(count($c->committee_members) > 0)
+                    <a href="{{route('committee_list_members', $data['committee']->slug)}}">View full list</a></h4>
+                    @endif
+
             </div>
-            <div class="row">
+        </div>
+
+            <div class="row mt-lg-4">
                 <div class="col-12">
-                    <h4>{{count($c->posts)}} Posts</h4>
+                    <h4><i class="far fa-newspaper"></i> {{count($c->posts)}} {{Str::plural('Post',count($c->posts) ) }}
+                        @if($data['isMember'] == 1)
+                            | <i class="far fa-edit"></i><a href="#">Add New Post</a>
+                        @endif
+                    </h4>
                 </div>
             </div>
             <div class="row">
