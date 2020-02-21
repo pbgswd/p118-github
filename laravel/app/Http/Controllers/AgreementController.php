@@ -10,6 +10,7 @@ use App\Models\Organization;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AgreementController extends Controller
 {
