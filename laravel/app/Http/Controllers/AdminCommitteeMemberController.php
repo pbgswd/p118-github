@@ -6,18 +6,21 @@ use App\Models\Committee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 
 class AdminCommitteeMemberController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param Request $request
+     * @param Committee $committee
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request, Committee $committee)
     {
+        $this->authorize('viewAny', Auth::user());
         $users = User::sortable()->with('committee_membership')->paginate(20);
 
         $data = [];
@@ -36,25 +39,23 @@ class AdminCommitteeMemberController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
-        //
+        $this->authorize('create', Auth::user());
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param Request $request
-     * @return Response
+     * @param Committee $committee
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request, Committee $committee)
     {
         //dd($request->all());
-
+        $this->authorize('create', Auth::user());
         foreach ($request->members as $member) {
             dd(array_keys($member));
            $committee->committee_members()->attach($member['id'], ['role' => $member['role']]);
@@ -76,37 +77,31 @@ class AdminCommitteeMemberController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param User $user
-     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(User $user)
     {
-        //
+        $this->authorize('update', Auth::user());
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param Request $request
      * @param User $user
-     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->authorize('update', Auth::user());
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param User $user
-     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(User $user)
     {
-        //
+        $this->authorize('delete', Auth::user());
     }
 
 }
