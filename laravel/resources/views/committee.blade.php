@@ -6,25 +6,57 @@ $c = $data['committee'];
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;">
+    <div class="container border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.6);">
         <div class="row">
             <div class="col-12">
                 <h2>
-                    <a href="{{route('committees')}}">Committees /</a>&nbsp;{{$c->name}} ->
-                    @if($data['isMember'] != 1)
-                        Join this group
-                    @else
-                        You are a member
-                    @endif
+                    <a href="{{route('committees')}}">Committees /</a>&nbsp;{{$c->name}}
                 </h2>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h1 class="display-3">{{$c->name}}</h1>
+            <div class="col-12">
+                <h1 class="display-4">{{$c->name}}</h1>
             </div>
-            <div class="col-md-6">
+            <div class="col-12">
+                <h2>{!! $c->description !!}</h2>
+            </div>
+            <div class="col-12 small">
+                Created by  <a title="{{ $c->creator->name }}" href="{{ route('member', $c->creator->id) }}">{{$c->creator->name }}</a>
+            </div>
+            <div class="col-12 mb-4">
+                <h4><i class="far fa-newspaper"></i> {{count($c->posts)}} {{Str::plural('Post',count($c->posts) ) }}
+                    @if($data['isMember'] == 1)
+                        | <i class="far fa-edit"></i><a href="#">Add New Post</a>
+                    @endif
+                </h4>
+            </div>
+            @foreach($c->posts as $p)
+                <div class="col-12 border border-dark rounded-lg m-1">
+                    <h3>
+                        <a href="{{route('committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a>
+                    </h3>
+                    {{$p->updated_at}}
+                </div>
+            @endforeach
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 mr-2 border border-dark rounded-lg">
+                <h5>{{$c->name}} Executive</h5>
+                <p>
+                    @foreach ($c['executives'] as $exec)
+                        <i class="fas fa-user-tie"></i> {{$exec->pivot->role}}: <a href="{{route('member', $exec->id)}}">{{$exec->name}}</a> <br />
+                    @endforeach
+                </p>
+                <p>
+                    <i class="far fa-envelope"></i> Email: <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee"> {{$data['committee']->email}}</a>
+                </p>
+            </div>
+            <div class="col-12 p-lg-2 mt-lg-3 border border-dark rounded-lg">
+                <h4>{{count($c->committee_members)}} {{Str::plural('Member', count($c->committee_members))}}.
+                @if(count($c->committee_members) > 0)
+                    <a href="{{route('committee_list_members', $data['committee']->slug)}}">View membership</a></h4>
+                @endif
                 @if($data['isMember'] != 1)
+                    <h5>Join {{$c->name}}</h5>
                     <form method="post" name="committee-join" action="{{ url()->current() }}/join" enctype="multipart/form-data" class="needs-validation" novalidate>
                         {!! csrf_field() !!}
                         <div class="col">
@@ -32,6 +64,7 @@ $c = $data['committee'];
                         </div>
                     </form>
                 @else
+                    <h5>You are a member of {{$c->name}}</h5>
                     <form method="post" name="committee-leave" action="{{ url()->current() }}/leave"  enctype="multipart/form-data" class="needs-validation" novalidate>
                         {!! csrf_field() !!}
                         <div class="col">
@@ -39,56 +72,6 @@ $c = $data['committee'];
                         </div>
                     </form>
                 @endif
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <h2>{!! $c->description !!}</h2>
-            </div>
-        </div>
-        <div class="row small">
-            <div class="col-12">
-                Created by  <a title="{{ $c->creator->name }}" href="{{ route('member', $c->creator->id) }}">{{$c->creator->name }}</a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-4 m-2 border border-dark rounded-lg">
-                @foreach ($c['executives'] as $exec)
-                    <p><i class="fas fa-user-tie"></i> {{$exec->pivot->role}}: <a href="{{route('member', $exec->id)}}">{{$exec->name}}</a> </p>
-                @endforeach
-                    <p>
-                        <i class="far fa-envelope"></i> Email: <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee"> {{$data['committee']->email}}</a>
-                    </p>
-            </div>
-
-            <div class="col-4 m-2 border border-dark rounded-lg">
-                <h4>{{count($c->committee_members)}} {{Str::plural('Member', count($c->committee_members))}}.
-                    @if(count($c->committee_members) > 0)
-                    <a href="{{route('committee_list_members', $data['committee']->slug)}}">View full list</a></h4>
-                    @endif
-
-            </div>
-        </div>
-
-            <div class="row mt-lg-4">
-                <div class="col-12">
-                    <h4><i class="far fa-newspaper"></i> {{count($c->posts)}} {{Str::plural('Post',count($c->posts) ) }}
-                        @if($data['isMember'] == 1)
-                            | <i class="far fa-edit"></i><a href="#">Add New Post</a>
-                        @endif
-                    </h4>
-                </div>
-            </div>
-            <div class="row">
-                @foreach($c->posts as $p)
-                    <div class="col-3 border border-dark rounded-lg mt-3 mr-3" style="margin: 1em;">
-                        <h3>
-                            <a href="{{route('committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a>
-                        </h3>
-                        {{$p->updated_at}}
-                    </div>
-                @endforeach
             </div>
         </div>
     </div>
