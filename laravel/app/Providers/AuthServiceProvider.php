@@ -7,6 +7,7 @@ use App\Models\Attachment;
 use App\Models\Committee;
 use App\Models\Employment;
 use App\Models\Meeting;
+use App\Models\Organization;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Topic;
@@ -17,6 +18,7 @@ use App\Policies\AttachmentPolicy;
 use App\Policies\CommitteePolicy;
 use App\Policies\EmploymentPolicy;
 use App\Policies\MeetingPolicy;
+use App\Policies\OrganizationPolicy;
 use App\Policies\PagePolicy;
 use App\Policies\PostPolicy;
 use App\Policies\TopicPolicy;
@@ -43,6 +45,7 @@ class AuthServiceProvider extends ServiceProvider
         Meeting::class => MeetingPolicy::class,
         Agreement::class => AgreementPolicy::class,
         Attachment::class => AttachmentPolicy::class,
+        Organization::class => OrganizationPolicy::class,
     ];
 
     /**

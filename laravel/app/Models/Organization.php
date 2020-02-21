@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\OrganizationPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -21,6 +22,10 @@ use Kyslik\ColumnSortable\Sortable;
 class Organization extends Model
 {
     use Sortable;
+
+    protected $policies = [
+        Organization::class => OrganizationPolicy::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

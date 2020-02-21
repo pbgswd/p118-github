@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
+    //todo does the site need HomeController any more?
     /**
      * Create a new controller instance.
      *
