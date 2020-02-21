@@ -20,6 +20,8 @@ class AgreementController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Auth::user());
+
         $data = [];
         $data['agreements'] = [];
 
@@ -33,6 +35,7 @@ class AgreementController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Auth::user());
         $data = [];
         $data['agreement'] = new Agreement;
         $access_levels = $this->getFormOptions(['access_levels']);
@@ -43,13 +46,12 @@ class AgreementController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
+     * @param StoreAgreement $request
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreAgreement $request)
     {
+        $this->authorize('create', Auth::user());
         dd(__METHOD__); //
     }
 
@@ -65,39 +67,35 @@ class AgreementController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Agreement $agreement
-     * @return Response
+     * @param UpdateAgreement $agreement
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(UpdateAgreement $agreement)
     {
-
+        $this->authorize('update', Auth::user());
         $data['venues'] = Venue::all();
         $data['organizations'] = Organization::all();
         dd(__METHOD__); //
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param Request $request
-     * @param Agreement $agreement
-     * @return Response
+     * @param UpdateAgreement $agreement
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, UpdateAgreement $agreement)
     {
+        $this->authorize('update', Auth::user());
         dd(__METHOD__);  //
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param Agreement $agreement
-     * @return Response
+     * @param DestroyAgreement $agreement
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(DestroyAgreement $agreement)
     {
+        $this->authorize('delete', Auth::user());
         dd(__METHOD__); //
     }
 }

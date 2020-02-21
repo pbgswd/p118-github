@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\AgreementPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -21,6 +22,13 @@ use Kyslik\ColumnSortable\Sortable;
 class Agreement extends Model
 {
     use Sortable;
+
+    /**
+     * @var array
+     */
+    protected $policies = [
+        Agreement::class => AgreementPolicy::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

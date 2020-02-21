@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Agreement;
 use App\Models\Committee;
 use App\Models\Employment;
 use App\Models\Meeting;
@@ -10,6 +11,7 @@ use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
+use App\Policies\AgreementPolicy;
 use App\Policies\CommitteePolicy;
 use App\Policies\EmploymentPolicy;
 use App\Policies\MeetingPolicy;
@@ -37,6 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         Committee::class => CommitteePolicy::class,
         Employment::class => EmploymentPolicy::class,
         Meeting::class => MeetingPolicy::class,
+        Agreement::class => AgreementPolicy::class,
     ];
 
     /**
