@@ -30,17 +30,19 @@ class AttachmentController extends Controller
 
     public function download(string $folder, Attachment $attachment)
     {
+//todo policy, security for download attachment method?
         return $this->attachmentService->downloadAttachment($attachment, $folder);
     }
 
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param Attachment $attachment
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Attachment $attachment)
     {
+        $this->authorize('viewAny', Auth::user());
+
         $data = [];
         $data['attachments'] = Attachment::with('users')->orderBy('id', 'ASC')->paginate(10);
 
@@ -66,25 +68,27 @@ class AttachmentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', Auth::user());
+
         $attachment = new Attachment;
 
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Add']]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return Response
+     * @param StoreAttachment $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreAttachment $request)
     {
+        $this->authorize('create', Auth::user());
+
         /** @var UploadedFile $image */
 
         foreach ($request->file('images') as $image)
@@ -123,18 +127,14 @@ class AttachmentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Attachment $attachment
-     * @return Response
+     * @param Attachment $attachment
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function monkey(Attachment $attachment)
-    {
-        dd($attachment);
-    }
-
     public function edit(Attachment $attachment)
     {
+        $this->authorize('update', Auth::user());
+
         if(!file_exists(storage_path('app/' . $attachment->subfolder) . '/' . $attachment->file))
         {
             Session::flash('error',  $attachment->file_name . " was not found on the server");
@@ -152,26 +152,27 @@ class AttachmentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Attachment $attachment
-     * @return Response
+     * @param UpdateAttachment $request
+     * @param Attachment $attachment
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateAttachment $request, Attachment $attachment)
     {
+        $this->authorize('update', Auth::user());
         //todo no actions programmatically really.
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Attachment $attachment
-     * @return Response
+     * @param DestroyAttachment $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(DestroyAttachment $request)
     {
+        $this->authorize('delete', Auth::user());
+
         $attachments = Attachment::find($request->id);
         foreach ($attachments as $a) {
             Storage::disk('public')->delete($a['file']);

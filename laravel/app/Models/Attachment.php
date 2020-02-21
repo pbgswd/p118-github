@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\AttachmentPolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,13 @@ use Illuminate\Database\Eloquent\Model;
 class Attachment extends Model
 {
     protected $guard_name = 'web';
+
+    /**
+     * @var array
+     */
+    protected $policies = [
+        Attachment::class => AttachmentPolicy::class,
+    ];
 
     /**
      * The attributes that are mass assignable.
