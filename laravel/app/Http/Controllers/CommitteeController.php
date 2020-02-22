@@ -104,7 +104,7 @@ class CommitteeController extends Controller
 
     public function create_post(Committee $committee)
     {
-
+//dd($committee->name);
         // $this->authorize('create', Auth::user());
         $post = new CommitteePost;
         $post['committee'] = $committee;

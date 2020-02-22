@@ -1,8 +1,7 @@
 <?php
 $post = $data['post'];
-
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' . ($data["action"] == 'Edit' ? $post->name : '') ])
+@extends('layouts.jumbo',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' . ($data["action"] == 'Edit' ? $post->name : '') ])
 @section('content')
     <script>
         tinymce.init({
@@ -23,8 +22,9 @@ $post = $data['post'];
         });
     </script>
 
-<div class="container">
-    <h3>  <a href="{{ route('posts_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>  </h3>
+<div class="container  border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.6);">
+    <h3> <a href="{{ route('committee', $post['committee']->name) }}">{{$post['committee']->name}}</a>
+        <a href="{{ route('posts_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>  </h3>
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row">
@@ -51,7 +51,7 @@ $post = $data['post'];
         <div class="row mb-lg-5">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
-                <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
+                <input class="btn btn-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
 

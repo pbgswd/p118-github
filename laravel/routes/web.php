@@ -63,7 +63,6 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('committee/{committee}/post/{committeePost}', 'CommitteePostController@show')->name('committee_post_show');
     Route::post('committee/{committee}/post/{committeePost}', 'CommitteePostController@store');
 
-
     Route::get('committee/{committee}/post', 'CommitteeController@create_post')->name('committee_add_public_post');
 
     Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('committee_post_comment');
