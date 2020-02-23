@@ -81,6 +81,7 @@ class CommitteeController extends Controller
      */
     public function show(Committee $committee, CommitteePost $committeePost)
     {
+        //todo order posts returned by date, latest first, pagination
         $committee->load('creator', 'committee_members', 'posts');
 
         $committee['committee_roles'] = Options::committee_roles();
@@ -112,17 +113,37 @@ class CommitteeController extends Controller
         return view('committee_post_form', ['data' => ['post' => $post, 'action' => 'Create']]);
     }
 
-    public function store_post(Committee $committee)
-    {}
+    public function store_post(Request $request, Committee $committee,  CommitteePost $committeePost, User $user)
+    {
+      //  dd($request->all());
 
-    public function edit_post(Committee $committee)
-    {}
+        //$this->authorize('create', Auth::user());
+        $post = new CommitteePost($request->input('post'));
+       // dd($post);
+        $post->committee_id = $committee->id;
+        $post->user_id = Auth::id();
 
-    public function update_post(Committee $committee)
-    {}
+        $post->save();
 
-    public function delete_post(Committee $committee)
-    {}
+        Session::flash('success', "You have saved a new post in " . $committee->name);
+//todo committee and slug
+        return redirect()->route('committee_edit_public_post', [$committee->slug, $post->id], ['data' => [$post->slug, 'action' => 'Edit']]);
+    }
+
+    public function edit_post(Request $request, Committee $committee)
+    {
+        dd($request->all());
+    }
+
+    public function update_post(Request $request, Committee $committee)
+    {
+        dd($request->all());
+    }
+
+    public function delete_post(Request $request, Committee $committee)
+    {
+        dd($request->all());
+    }
 
 
     /**
