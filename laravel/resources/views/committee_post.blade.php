@@ -6,27 +6,27 @@ $c = $data['committeepost']->committee;
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg p-lg-2" style="background: rgba(220,220,220,0.6);">
-        <div class="row">
+        <div class="row p-4">
+            <div class="col-12">
                <h3>
-                   <a href="{{ route('hello') }}">Home /</a>
                    <a href="{{route('committees')}}">Committees /</a>
-                   <a href="{{ route('committee', $c->slug) }}">{{$c->name}} /</a>
-                    {{$post->title}}
+                   <a href="{{ route('committee', $c->slug) }}">{{$c->name}} </a> /  Posts
                </h3>
+            </div>
+            <div class="col-12 border border-dark rounded">
+                <h1 class="display-4">{{$post->title}}</h1>
+                <h5>
+                    By {{$post->creator->name}},
+                    {{ \Carbon\Carbon::parse($post->updated_at)->format(' F j, Y') }}
+                </h5>
+                {!! $post->content !!}
+            </div>
         </div>
-        <div class="col-12 border border-dark rounded">
-            <h1 class="display-4">{{$post->title}}</h1>
-            <h5>
-                By {{$post->creator->name}},
-                {{ \Carbon\Carbon::parse($post->updated_at)->format(' F j, Y') }}
-            </h5>
-            {!! $post->content !!}
-        </div>
-        <div class="row" style="margin-top:3em;">
+        <div class="row mt-3 p-2">
             <div class="col-6">
                 <h5>
                     <i class="far fa-comments"></i>
-                    {{count($data['committeepost']->post_comments)}} Comments for {{$post->title}}
+                    {{count($data['committeepost']->post_comments)}} {{Str::plural('Comment', count($data['committeepost']->post_comments))}} for {{$post->title}}
                 </h5>
                 <a href="#comment" title="Go to add my comment">
                     <i class="far fa-comment"></i> Add my comment to {{$post->title}}
@@ -36,15 +36,15 @@ $c = $data['committeepost']->committee;
                 sort by latest first / first first.
             </div>
         </div>
-        <div class="row" style="margin-top:3em; padding-top: 1em;">
+        <div class="row  mt-3 p-4">
             @foreach($data['committeepost']->post_comments as $comment)
-                <div class="col-12 border border-dark rounded" style="margin-bottom: 1rem;">
+                <div class="col-12 border border-dark rounded mb-2">
                 <a title="{{$comment->commentAuthor->name}}" href="{{route('member', $comment->user_id)}}">
                     {{$comment->commentAuthor->name}}
                 </a> {{$comment->created_at}} <br />
                      {!! $comment->content !!}
                     <a href="#" title="{{$post->slug}}/comment/{{$comment->id}}">
-                        <i class="far fa-comment"></i> Add my comment to {{$comment->commentAuthor->name}}
+                        <i class="far fa-comment"></i> Add my comment to {{$post->title}}
                     </a>
                 </div>
             @endforeach
@@ -52,11 +52,11 @@ $c = $data['committeepost']->committee;
         <a name="comment"></a>
         <form class="form-horizontal" role="form" action="{{ route('committee_post_comment', [$c->slug, $post->slug]) }}" method="post">
             {!! csrf_field() !!}
-            <div class="row" style="margin-top:3em;">
-                <div class="col-12" style="padding-bottom: 3rem;">
+            <div class="row mt-lg-3 p-2">
+                <div class="col-12 pb-lg-3">
                     <div class="form-group">
                         <label for="content" class="control-label">
-                            <i class="far fa-comment"></i> Add my comment
+                            <h3><i class="far fa-comment"></i> Add my comment</h3>
                         </label>
                         <textarea name="comment[content]" class="form-control input-lg" rows="3" cols="100" placeholder="Your comments"></textarea>
                     </div>
@@ -80,7 +80,3 @@ $c = $data['committeepost']->committee;
     </div>
 </div>
 @endsection
-
-
-
-

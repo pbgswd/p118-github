@@ -127,12 +127,14 @@ class CommitteeController extends Controller
 
         Session::flash('success', "You have saved a new post in " . $committee->name);
 //todo committee and slug
-        return redirect()->route('committee_edit_public_post', [$committee->slug, $post->id], ['data' => [$post->slug, 'action' => 'Edit']]);
+        return redirect()->route('committee_post_edit_form', [$committee->slug, $post->id]);
     }
 
-    public function edit_post(Request $request, Committee $committee)
+    public function edit_post(Committee $committee, CommitteePost $committeePost)
     {
-        dd($request->all());
+        $committeePost->creator;
+        //dd($committeePost);
+        return view('committee_post_form', [$committee->slug, $committeePost->slug], ['data' => ['post' => $committeePost, 'action' => 'Edit']]);
     }
 
     public function update_post(Request $request, Committee $committee)

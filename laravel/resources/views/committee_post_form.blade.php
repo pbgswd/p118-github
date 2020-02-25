@@ -27,7 +27,7 @@ $post = $data['post'];
      / {{$data['action']}} Post
 
 
-        <a href="{{ route('posts_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>  </h3>
+        <a href="{{ route('committee', $post['committee']->slug) }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>  </h3>
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-4">
@@ -75,6 +75,6 @@ $post = $data['post'];
     @endif
 </div>
     @if ( $data['action'] == 'Edit')
-        <div class="row mt-lg-3 mb-lg-3"> &nbsp;post added by {{$post->user->name}}</div>
+        <div class="row mt-lg-3 mb-lg-3"> &nbsp;post added by {{$post->creator->name}}</div>
     @endif
 @endsection
