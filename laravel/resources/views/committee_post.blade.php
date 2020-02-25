@@ -45,15 +45,18 @@ $c = $data['committeepost']->committee;
         <div class="row  mt-3 p-4">
             @foreach($data['committeepost']->post_comments as $comment)
                 <div class="col-12 border border-dark rounded mb-4">
-                <a title="{{$comment->commentAuthor->name}}" href="{{route('member', $comment->user_id)}}">
-                    {{$comment->commentAuthor->name}}
-                </a>
-                    {{ \Carbon\Carbon::parse($comment->created_at)->format(' F j, Y') }}
-                    <br />
+                    <div class="col-12 mb-2 mt-1">
+                        <a title="{{$comment->commentAuthor->name}}" href="{{route('member', $comment->user_id)}}">
+                            {{$comment->commentAuthor->name}}
+                        </a>
+                        {{ \Carbon\Carbon::parse($comment->created_at)->format(' F j, Y') }}
+                    </div>
                      {!! $comment->content !!}
-                    <a href="#" title="{{$post->slug}}/comment/{{$comment->id}}">
-                        <i class="far fa-comment"></i> Add my comment to {{$post->title}}
-                    </a>
+                    <div class="col-12 mb-2 mt-1">
+                        <a href="#" title="{{$post->slug}}/comment/{{$comment->id}}">
+                            <i class="far fa-comment"></i> Add my comment to {{$post->title}}
+                        </a>
+                    </div>
                 </div>
             @endforeach
         </div>
