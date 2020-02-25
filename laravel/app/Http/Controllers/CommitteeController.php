@@ -137,9 +137,15 @@ class CommitteeController extends Controller
         return view('committee_post_form', [$committee->slug, $committeePost->slug], ['data' => ['post' => $committeePost, 'action' => 'Edit']]);
     }
 
-    public function update_post(Request $request, Committee $committee)
+    public function update_post(Request $request, Committee $committee, CommitteePost $committeePost)
     {
-        dd($request->all());
+
+        $data = $request['post'];
+
+        $committeePost->fill($data);
+        $committeePost->save();
+        $committeePost->creator;
+        return view('committee_post_form', [$committee->slug, $committeePost->slug], ['data' => ['post' => $committeePost, 'action' => 'Edit']]);
     }
 
     public function delete_post(Request $request, Committee $committee)

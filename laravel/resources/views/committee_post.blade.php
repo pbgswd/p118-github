@@ -20,6 +20,12 @@ $c = $data['committeepost']->committee;
                     {{ \Carbon\Carbon::parse($post->updated_at)->format(' F j, Y') }}
                 </h5>
                 {!! $post->content !!}
+                <br clear="all" />
+
+                @hasanyrole('super-admin|admin')
+                <h5><a href="{{route('committee_post_edit_form', [$c->slug, $post->slug])}}"><i class="far fa-edit"></i> Edit Post</a></h5>
+                @endhasanyrole
+
             </div>
         </div>
         <div class="row mt-3 p-2">
@@ -38,10 +44,12 @@ $c = $data['committeepost']->committee;
         </div>
         <div class="row  mt-3 p-4">
             @foreach($data['committeepost']->post_comments as $comment)
-                <div class="col-12 border border-dark rounded mb-2">
+                <div class="col-12 border border-dark rounded mb-4">
                 <a title="{{$comment->commentAuthor->name}}" href="{{route('member', $comment->user_id)}}">
                     {{$comment->commentAuthor->name}}
-                </a> {{$comment->created_at}} <br />
+                </a>
+                    {{ \Carbon\Carbon::parse($comment->created_at)->format(' F j, Y') }}
+                    <br />
                      {!! $comment->content !!}
                     <a href="#" title="{{$post->slug}}/comment/{{$comment->id}}">
                         <i class="far fa-comment"></i> Add my comment to {{$post->title}}

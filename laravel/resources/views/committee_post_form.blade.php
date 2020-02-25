@@ -24,10 +24,9 @@ $post = $data['post'];
 
 <div class="container  border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.6);">
     <h3> <a href="{{ route('committee', $post['committee']->slug) }}">{{$post['committee']->name}}</a>
-     / {{$data['action']}} Post
-
-
-        <a href="{{ route('committee', $post['committee']->slug) }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>  </h3>
+     / {{$data['action']}} Post <a href="{{route('committee_post_show', [$post['committee']->slug, $post->slug])}}">{{$post->title}}</a>
+        <a href="{{ route('committee', $post['committee']->slug) }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>
+    </h3>
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-4">
