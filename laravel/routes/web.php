@@ -56,7 +56,7 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::post('/member/edit/{user}', 'UserController@update');
 
     Route::get('/invited/{user}/{hash}', 'InviteUserController@process')->name('process_user');
-    
+
     Route::get('committees', 'CommitteeController@index')->name('committees');
     Route::get('committee/{committee}', 'CommitteeController@show')->name('committee');
     Route::post('committee/{committee}/join', 'CommitteeController@join');
@@ -102,8 +102,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::delete('/user/delete', 'AdminUserController@destroy')->name('user_destroy');
 
     Route::get('/invite_user', 'InviteUserController@invite')->name('invite_user');
+    Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');
+    Route::post('/invite_user', 'InviteUserController@store');
     Route::post('/invite_user', 'InviteUserController@send');
-    Route::get('/invited_users', 'InviteUserController@list')->name('list_invite_user');
+    Route::get('/invited_users', 'InviteUserController@index')->name('list_invited_users');
+    Route::get('/invited_user/{user}', 'InviteUserController@show')->name('show_invited_user');
     Route::post('/invited_user/{user}', 'InviteUserController@update');
     Route::delete('/invited_user/delete', 'InviteUserController@destroy')->name('invited_user_destroy');
 

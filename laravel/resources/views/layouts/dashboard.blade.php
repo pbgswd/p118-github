@@ -88,6 +88,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{route('invite_new_user')}}">
+                                    <span data-feather="file"></span>
+                                    Invite Members
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('meetings_list')}}">
                                     <span data-feather="file"></span>
                                     Meetings & Minutes
