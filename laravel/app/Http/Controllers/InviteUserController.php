@@ -33,34 +33,13 @@ class InviteUserController extends Controller
     {
         //invite new user
         $invited = new InviteUser;
-        $user = new User;
-        $phone = new PhoneNumber;
-        $user_info = new UserInfo;
-        $address = new Address;
-        $membership = new Membership;
+        $invited->role = 'member';
 
-        $regions = $this->getFormOptions(['countries', 'statesprovs']);
-        $currentUser = Auth::user();
-
-        $roles = Role::get();
-        $user_roles = ['member' => 'member'];
-
-        $data = [
-            'user' => $user,
-            'user_roles' => $user_roles,
-            'roles' => $roles,
-            'action' => 'Create',
-            'currentUserPermissions' => $currentUser->permissions,
-            'user_info' => $user_info,
-            'user_phone' => $phone,
-            'user_address' => $address,
-            'user_membership' => $membership,
-            'countries' => $regions['countries'],
-            'provinces' => $regions['statesprovs']['Provinces'],
+        $roles = [
+            'roles' => Role::get(),
         ];
 
-
-        return view('admin.invite_user');
+        return view('admin.invite_user', ['data' => ['invite' => $invited, 'roles' => $roles, 'action' => 'Invite']]);
     }
 
     public function invite()
