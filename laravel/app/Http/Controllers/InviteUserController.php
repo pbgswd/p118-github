@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\InviteUser;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
@@ -31,6 +32,7 @@ class InviteUserController extends Controller
     public function create()
     {
         //invite new user
+        $invited = new InviteUser;
         $user = new User;
         $phone = new PhoneNumber;
         $user_info = new UserInfo;
