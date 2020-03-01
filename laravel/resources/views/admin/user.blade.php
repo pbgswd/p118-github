@@ -242,7 +242,7 @@ $user_roles = $data['user_roles'];
                  </span>
             </div>
         </fieldset>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row mt-lg-4"> &nbsp;</div>
         <div class="row">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
@@ -263,6 +263,6 @@ $user_roles = $data['user_roles'];
          </div>
         @endhasanyrole
     @endif
-    <div class="row" style="margin-top:100px;"> &nbsp;</div>
+    <div class="row mt-lg-5"> &nbsp;</div>
 </div>
 @endsection

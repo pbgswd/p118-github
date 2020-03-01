@@ -18,6 +18,8 @@ class CreateInviteUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('role')->default('member');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

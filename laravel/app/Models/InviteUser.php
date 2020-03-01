@@ -11,10 +11,12 @@ use Spatie\Permission\Traits\HasRoles;
  * Class InviteUser
  * @package App\Models
  * @property int id
+ * @property int user_id
  * @property string name
  * @property string email
  * @property string $password
  * @property string $role
+ *
  */
 class InviteUser extends Model
 {
