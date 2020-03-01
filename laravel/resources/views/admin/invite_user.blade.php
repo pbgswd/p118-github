@@ -1,7 +1,7 @@
 <?php
 $invite = $data['invite'];
 $roles = $data['roles'];
-//dd($data['invite']);
+//dd($invite->role);
 ?>
 @extends('layouts.dashboard')
 @section('content')
@@ -44,7 +44,7 @@ $roles = $data['roles'];
                         <div class="input-group mb-6 col-12">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input name="user_role" type="radio" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_role)) }} />
+                                    <input name="user_role" type="radio" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $invite->role)) }} />
                                 </div>
                             </div>
                             <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{$role->name}} ( @foreach ($role->permissions as $p){{ $p->name }},  @endforeach)" size="40" readonly />

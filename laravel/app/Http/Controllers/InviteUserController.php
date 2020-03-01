@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Address;
 use App\Models\InviteUser;
-use App\Models\Membership;
-use App\Models\PhoneNumber;
 use App\Models\User;
-use App\Models\UserInfo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class InviteUserController extends Controller
@@ -32,14 +27,11 @@ class InviteUserController extends Controller
     public function create()
     {
         //invite new user
+        //todo create invite user policy
         $invited = new InviteUser;
-        $invited->role = 'member';
+        $invited->role = ['member' => 'member'];
 
-        $roles = [
-            'roles' => Role::get(),
-        ];
-
-        return view('admin.invite_user', ['data' => ['invite' => $invited, 'roles' => $roles, 'action' => 'Invite']]);
+        return view('admin.invite_user', ['data' => ['invite' => $invited, 'roles' => Role::get(), 'action' => 'Invite']]);
     }
 
     public function invite()
