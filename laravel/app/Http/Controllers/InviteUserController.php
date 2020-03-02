@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\InviteUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 class InviteUserController extends Controller
@@ -52,7 +57,24 @@ class InviteUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $invitation = new InviteUser($request->input('invite'));
+        $invitation->password = Hash::make(Str::random(8));
+        $invitation->user_id = Auth::user()->id;
+        $invitation->role = $request->user_role;
+        $invitation->save();
+
+        /****
+        Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request) {
+            $m->from($request['email'], $request['name']);
+            $m->to('superwebdeveloper@gmail.com', 'peter')->subject('Contact Page ' . $request['subject']);
+        });
+        ****/
+
+        return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
+
+      //  Session::flash('success', "Invitation for access sent to " . $invitation['name']);
+
+        //return redirect()->route('show_invited_user', [$invitation->id]);
     }
 
     /**
@@ -63,7 +85,9 @@ class InviteUserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        echo __METHOD__;
+        dd($user);
+
     }
 
     /**

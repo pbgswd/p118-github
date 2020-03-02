@@ -32,6 +32,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/posts', 'PostController@list')->name('posts');
     Route::get('/post/{post}', 'PostController@show')->name('post_show');
 
+    Route::get('/invitation/{user}/{password}', 'InviteUserController@show')->name('invite_user_signup');
+
 });
 
 
@@ -103,10 +105,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
 
     Route::get('/invite_user', 'InviteUserController@invite')->name('invite_user');
     Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');
-    Route::post('/invite_user', 'InviteUserController@store');
+    Route::post('/invite_new_user', 'InviteUserController@store');
     Route::post('/invite_user', 'InviteUserController@send');
     Route::get('/invited_users', 'InviteUserController@index')->name('list_invited_users');
     Route::get('/invited_user/{user}', 'InviteUserController@show')->name('show_invited_user');
+    //Route::get('/invitation-mailmsg','InviteUserController@mail')->name('mail_invited_user');
     Route::post('/invited_user/{user}', 'InviteUserController@update');
     Route::delete('/invited_user/delete', 'InviteUserController@destroy')->name('invited_user_destroy');
 
