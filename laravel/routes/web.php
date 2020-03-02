@@ -32,7 +32,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/posts', 'PostController@list')->name('posts');
     Route::get('/post/{post}', 'PostController@show')->name('post_show');
 
-    Route::get('/invitation/{user}/{password}', 'InviteUserController@show')->name('invite_user_signup');
+    Route::get('/site_invitation/{id}/{password}', 'InviteUserController@show')->name('invite_user_signup');
 
 });
 

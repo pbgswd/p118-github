@@ -58,18 +58,16 @@ class InviteUserController extends Controller
     public function store(Request $request)
     {
         $invitation = new InviteUser($request->input('invite'));
-        $invitation->password = Hash::make(Str::random(8));
+        $invitation->password = str_replace ('/', '', hash::make(Str::random(8)));
         $invitation->user_id = Auth::user()->id;
         $invitation->role = $request->user_role;
         $invitation->save();
-
-        /****
-        Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request) {
-            $m->from($request['email'], $request['name']);
-            $m->to('superwebdeveloper@gmail.com', 'peter')->subject('Contact Page ' . $request['subject']);
+/**
+        Mail::send('emails.mail_invited_user', ['data' => $invitation], function ($m) use ($invitation) {
+            $m->from('noreply@iatse118.com', 'IATSE 118 Website Signup');
+            $m->to($invitation['email'], $invitation['name'])->subject('IATSE Local 118 Website Signup Invitation');
         });
-        ****/
-
+**/
         return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
 
       //  Session::flash('success', "Invitation for access sent to " . $invitation['name']);
@@ -83,10 +81,10 @@ class InviteUserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request)
     {
         echo __METHOD__;
-        dd($user);
+        dd($request->all());
 
     }
 
