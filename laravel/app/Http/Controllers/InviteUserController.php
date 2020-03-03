@@ -86,11 +86,26 @@ class InviteUserController extends Controller
     public function show(InviteUser $inviteUser, $password)
     {
         if($inviteUser->password != $password) {
-            //echo "not the same"; exit();
+            Session::flash('error', "The invitation is not valid");
+            return redirect()->route('hello');
         }
 
-        dd($inviteUser, $password);
 
+
+        //TODO validate, not too old, request validator.
+
+        $regions = $this->getFormOptions(['countries', 'statesprovs']);
+
+        $data = [
+            'user' => $inviteUser,
+            'invitation' => $inviteUser,
+           // 'currentUserPermissions' => $currentUser->permissions,
+            'countries' => $regions['countries'],
+            'provinces' => $regions['statesprovs']['Provinces'],
+            'action' => 'Submit',
+            ];
+
+        return view('site_invitation', ['data' => $data]);
     }
 
     /**
