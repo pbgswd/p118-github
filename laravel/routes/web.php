@@ -32,7 +32,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/posts', 'PostController@list')->name('posts');
     Route::get('/post/{post}', 'PostController@show')->name('post_show');
 
-    Route::get('/site_invitation/{id}/{password}', 'InviteUserController@show')->name('invite_user_signup');
+    Route::get('/site_invitation/{inviteUser}/{password}', 'InviteUserController@show')->name('invite_user_signup');
 
 });
 
@@ -103,7 +103,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/user/{user}', 'AdminUserController@update');
     Route::delete('/user/delete', 'AdminUserController@destroy')->name('user_destroy');
 
-    Route::get('/invite_user', 'InviteUserController@invite')->name('invite_user');
+   // Route::get('/invite_user', 'InviteUserController@invite')->name('invite_user');
     Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');
     Route::post('/invite_new_user', 'InviteUserController@store');
     Route::post('/invite_user', 'InviteUserController@send');
