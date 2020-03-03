@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InviteUser;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +24,8 @@ class InviteUserController extends Controller
     {
         $data = [];
         $data['invitations'] = InviteUser::with('user')->sortable()->paginate(20);
+        //todo helper method for showing time since invitation
+        $inviteUser->since = $inviteUser->updated_at->diffForHumans(Carbon::now());
 
         $data['count'] = count(InviteUser::all());
 
@@ -85,12 +88,12 @@ class InviteUserController extends Controller
      */
     public function show(InviteUser $inviteUser, $password)
     {
+        $inviteUser->diff = $inviteUser->updated_at->diffForHumans(Carbon::now());
+
         if($inviteUser->password != $password) {
             Session::flash('error', "The invitation is not valid");
             return redirect()->route('hello');
         }
-
-       // dd($inviteUser->updated_at);
 
         if ( null !== User::where('email', $inviteUser->email)->first()) {
             Session::flash('error', "The invitation is no longer valid because you have been registered. Login to continue.");

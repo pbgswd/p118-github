@@ -27,6 +27,7 @@ $invitations = $data['invitations'];
                         <th> @sortablelink('id','#') </th>
                         <th> @sortablelink('name', 'Name') </th>
                         <th> Email </th>
+                        <th>Invited since</th>
                         <th> Role </th>
                         <th> Edit </th>
                         <th> Added by </th>
@@ -53,11 +54,16 @@ $invitations = $data['invitations'];
                                 {{$i->email}}
                             </td>
                             <td>
+                                {{$i->since}}
+                            </td>
+                            <td>
                                 {{$i->role}}
                             </td>
                            <td>
                                 <a href="{{ route('invited_user_edit', $i->id) }}" title="Edit {{ $i->name }} ">
                                     <i class="fas fa-edit"></i>
+                                    &nbsp;
+                                    <a href="{{route('invite_user_signup', ['inviteUser' => $i->id, 'password' => $i->password])}}"><i class="fas fa-envelope-open-text"></i></a>
                                 </a>
                             </td>
                             <td>
