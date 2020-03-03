@@ -90,6 +90,12 @@ class InviteUserController extends Controller
             return redirect()->route('hello');
         }
 
+       // dd($inviteUser->updated_at);
+
+        if ( null !== User::where('email', $inviteUser->email)->first()) {
+            Session::flash('error', "The invitation is no longer valid because you have been registered. Login to continue.");
+            return redirect()->route('hello');
+        }
 
 
         //TODO validate, not too old, request validator.
