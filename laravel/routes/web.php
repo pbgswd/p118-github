@@ -103,14 +103,15 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/user/{user}', 'AdminUserController@update');
     Route::delete('/user/delete', 'AdminUserController@destroy')->name('user_destroy');
 
-   // Route::get('/invite_user', 'InviteUserController@invite')->name('invite_user');
+
     Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');
     Route::post('/invite_new_user', 'InviteUserController@store');
     Route::post('/invite_user', 'InviteUserController@send');
     Route::get('/invited_users', 'InviteUserController@index')->name('list_invited_users');
-    Route::get('/invited_user/{user}', 'InviteUserController@show')->name('show_invited_user');
+    Route::get('/invited_user/{inviteUser}', 'InviteUserController@show')->name('show_invited_user');
+    Route::get('/invited_user/{inviteUser}', 'InviteUserController@edit')->name('invited_user_edit');
     //Route::get('/invitation-mailmsg','InviteUserController@mail')->name('mail_invited_user');
-    Route::post('/invited_user/{user}', 'InviteUserController@update');
+    Route::post('/invited_user/{inviteUser}', 'InviteUserController@update');
     Route::delete('/invited_user/delete', 'InviteUserController@destroy')->name('invited_user_destroy');
 
     Route::get('/pages', 'PageController@index')->name('pages_list');

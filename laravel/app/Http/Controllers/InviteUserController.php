@@ -21,7 +21,12 @@ class InviteUserController extends Controller
      */
     public function index()
     {
-        // list of outstanding invited
+        $data = [];
+        $data['invitations'] = InviteUser::with('user')->sortable()->paginate(20);
+
+        $data['count'] = count(InviteUser::all());
+
+        return view('admin.invitations_list', ['data' => $data]);
     }
 
     /**
@@ -76,15 +81,15 @@ class InviteUserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param InviteUser $inviteUser
      */
-    public function show(Request $request)
+    public function show(InviteUser $inviteUser, $password)
     {
-        echo __METHOD__;
-        dd($request->all());
+        if($inviteUser->password != $password) {
+            //echo "not the same"; exit();
+        }
+
+        dd($inviteUser, $password);
 
     }
 
