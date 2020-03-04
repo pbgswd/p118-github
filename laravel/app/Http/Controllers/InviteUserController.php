@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InviteUser\ProcessUserRequest;
 use App\Models\InviteUser;
 use App\Models\User;
 use Carbon\Carbon;
@@ -142,12 +143,12 @@ class InviteUserController extends Controller
      * @param InviteUser $inviteUser
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function process_user(Request $request, InviteUser $inviteUser)
+    public function process_user(ProcessUserRequest $request, InviteUser $inviteUser)
     {
         $data = [
             'name' => $inviteUser->name,
             'email' => $inviteUser->email,
-            'email_verified_at' => '',
+            'email_verified_at' => Carbon::now()->toDateTimeString(),
             'password' => bcrypt($request->user['new_password']),
         ];
 
@@ -156,17 +157,24 @@ class InviteUserController extends Controller
 
         $user->assignRole($inviteUser->role);
 
-        Session::flash('success', "Thank you! Your password has now been securely stored. You may now login with your email and password");
+        InviteUser::destroy($inviteUser->id);
+
+        Session::flash('success', "Thank you! Your password has now been securely stored.
+                                    You may now login with your email and password");
+
         return redirect()->route('login');
     }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(InviteUser $inviteUser)
     {
-        //
+        //$this->authorize('delete', Auth::user());
+        // InviteUser::destroy($inviteUser->id);
+        // return;
     }
 }

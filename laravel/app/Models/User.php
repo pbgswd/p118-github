@@ -62,6 +62,7 @@ class User extends Authenticatable implements HasAttachment
         'name',
         'email',
         'password',
+        'email_verified_at',
     ];
 
     /**
