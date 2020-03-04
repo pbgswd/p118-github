@@ -103,7 +103,10 @@ class AdminUserController extends Controller
 
         $user_info = new UserInfo($request->input('user_info'));
         $user_info->image = $this->uploadImage($request);
-        $user_info['file_name'] = $request->image->getClientOriginalName();
+
+        if(null !== $request->file) {
+            $user_info['file_name'] = $request->image->getClientOriginalName() ?? '';
+        }
 
         $user->user_info()->save($user_info);
 
@@ -197,7 +200,7 @@ class AdminUserController extends Controller
             $user->user_info->save();
         } else {
             $user_info = new UserInfo($userRequest->input('user_info'));
-            //dd($userRequest->file);
+
             if(null !== $userRequest->file) {
                 $user_info->image = $this->uploadImage($userRequest);
             }
@@ -271,7 +274,10 @@ class AdminUserController extends Controller
 
     protected function uploadImage(FormRequest $request)
     {
-        $path = $request->file('image')->store('', 'users');
-        return $path;
+        if (null !== $request->file('image')) {
+            $path = $request->file('image')->store('', 'users');
+            return $path;
+        }
+
     }
 }

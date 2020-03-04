@@ -63,7 +63,7 @@ $invitations = $data['invitations'];
                                 <a href="{{ route('invited_user_edit', $i->id) }}" title="Edit {{ $i->name }} ">
                                     <i class="fas fa-edit"></i>
                                     &nbsp;
-                                    <a href="{{route('invite_user_signup', ['inviteUser' => $i->id, 'password' => $i->password])}}"><i class="fas fa-envelope-open-text"></i></a>
+                                     <a href="{{route('invite_user_signup', ['inviteUser' => $i->id, 'password' => $i->password])}}" target="_blank"><i class="fas fa-envelope-open-text"></i></a>
                                 </a>
                             </td>
                             <td>

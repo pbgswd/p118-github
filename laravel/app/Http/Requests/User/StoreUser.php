@@ -40,7 +40,7 @@ class StoreUser extends FormRequest
             'user_address.province'=> 'string|required|max:255',
             'user_address.postal_code'=> 'string|required|max:255',
             'user_address.country'=> 'string|required|max:255',
-            'user_roles' => 'required',
+            'user_role' => 'required',
             'user_membership.membership_date' => 'date',
             'user_membership.membership_expires' => 'date',
             'user_membership.seniority_number' => 'required|integer|unique:memberships,seniority_number',

@@ -161,7 +161,9 @@ class UserController extends Controller
 
     protected function uploadImage(FormRequest $request)
     {
-        $path = $request->file('image')->store('', 'users');
-        return $path;
+        if(null !== $request->file('image')) {
+            $path = $request->file('image')->store('', 'users');
+            return $path;
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InviteUser;
 use App\Models\User;
 use Carbon\Carbon;
+use Carbon\Traits\Timestamp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -138,10 +139,25 @@ class InviteUserController extends Controller
 
     /**
      * @param Request $request
+     * @param InviteUser $inviteUser
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function process_user(Request $request)
+    public function process_user(Request $request, InviteUser $inviteUser)
     {
-dd($request->all());
+        $data = [
+            'name' => $inviteUser->name,
+            'email' => $inviteUser->email,
+            'email_verified_at' => '',
+            'password' => bcrypt($request->user['new_password']),
+        ];
+
+        $user = new User($data);
+        $user->save();
+
+        $user->assignRole($inviteUser->role);
+
+        Session::flash('success', "Thank you! Your password has now been securely stored. You may now login with your email and password");
+        return redirect()->route('login');
     }
     /**
      * Remove the specified resource from storage.
