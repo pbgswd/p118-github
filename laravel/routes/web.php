@@ -33,7 +33,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/post/{post}', 'PostController@show')->name('post_show');
 
     Route::get('/site_invitation/{inviteUser}/{password}', 'InviteUserController@show')->name('invite_user_signup');
-
+    Route::post('/site_invitation/{inviteUser}/{password}', 'InviteUserController@process_user');
 });
 
 
@@ -58,6 +58,7 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::post('/member/edit/{user}', 'UserController@update');
 
     Route::get('/invited/{user}/{hash}', 'InviteUserController@process')->name('process_user');
+
 
     Route::get('committees', 'CommitteeController@index')->name('committees');
     Route::get('committee/{committee}', 'CommitteeController@show')->name('committee');

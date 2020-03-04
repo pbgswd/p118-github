@@ -22,11 +22,11 @@ class InviteUserController extends Controller
      */
     public function index()
     {
-        $data = [];
-        $data['invitations'] = InviteUser::with('user')->sortable()->paginate(20);
-        //todo helper method for showing time since invitation
-        $inviteUser->since = $inviteUser->updated_at->diffForHumans(Carbon::now());
-
+        $invitations = InviteUser::with('user')->sortable()->paginate(20);
+        $invitations->each(function ($item, $key) {
+            $item->since = $item->updated_at->diffForHumans(Carbon::now());
+        });
+        $data['invitations'] = $invitations;
         $data['count'] = count(InviteUser::all());
 
         return view('admin.invitations_list', ['data' => $data]);
@@ -85,6 +85,8 @@ class InviteUserController extends Controller
 
     /**
      * @param InviteUser $inviteUser
+     * @param $password
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(InviteUser $inviteUser, $password)
     {
@@ -100,17 +102,11 @@ class InviteUserController extends Controller
             return redirect()->route('hello');
         }
 
-
         //TODO validate, not too old, request validator.
-
-        $regions = $this->getFormOptions(['countries', 'statesprovs']);
 
         $data = [
             'user' => $inviteUser,
             'invitation' => $inviteUser,
-           // 'currentUserPermissions' => $currentUser->permissions,
-            'countries' => $regions['countries'],
-            'provinces' => $regions['statesprovs']['Provinces'],
             'action' => 'Submit',
             ];
 
@@ -142,11 +138,10 @@ class InviteUserController extends Controller
 
     /**
      * @param Request $request
-     * @param User $user
      */
-    public function process_user(Request $request, User $user)
+    public function process_user(Request $request)
     {
-
+dd($request->all());
     }
     /**
      * Remove the specified resource from storage.
