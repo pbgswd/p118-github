@@ -24,10 +24,10 @@ class ProcessUserRequest extends FormRequest
     public function rules()
     {
         return  [
-            //'name' => 'required|max:255',
-            //'email' => 'required|email|max:255|unique:users',
-            'new_password' => 'required|min:6|confirmed',
+
+            'password' => 'required|min:6|confirmed',
         ];
         // dumbpwd|
+        //todo add in https://packagist.org/packages/unicodeveloper/laravel-password 
     }
 }

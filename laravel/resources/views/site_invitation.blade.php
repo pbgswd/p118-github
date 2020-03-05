@@ -16,13 +16,13 @@ $user = $data['invitation'];
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">Password</span>
                     </div>
-                    <input type="password" class="form-control" name="user[new_password]" value="{{ old('user.new_password', $user->new_password ?? '')}}" size="80" required/>
+                    <input type="password" class="form-control" name="password" value="{{ old('password', $password ?? '')}}" size="80" required/>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">Repeat Password</span>
                     </div>
-                    <input type="password" class="form-control" name="user[new_password2]" value="{{ old('user.new_password2', $user->new_password2 ?? '')}}" size="80" required/>
+                    <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation', $password_confirmation ?? '')}}" size="80" required/>
                 </div>
             </div>
             <div class="col-12 mt-lg-5">

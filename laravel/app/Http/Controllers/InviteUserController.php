@@ -24,10 +24,14 @@ class InviteUserController extends Controller
      */
     public function index()
     {
+
         $invitations = InviteUser::with('user')->sortable()->paginate(20);
         $invitations->each(function ($item, $key) {
             $item->since = $item->updated_at->diffForHumans(Carbon::now());
         });
+
+
+
         $data['invitations'] = $invitations;
         $data['count'] = count(InviteUser::all());
 
@@ -72,17 +76,17 @@ class InviteUserController extends Controller
         $invitation->user_id = Auth::user()->id;
         $invitation->role = $request->user_role;
         $invitation->save();
-/**
-        Mail::send('emails.mail_invited_user', ['data' => $invitation], function ($m) use ($invitation) {
+
+        Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]], function ($m) use ($invitation) {
             $m->from('noreply@iatse118.com', 'IATSE 118 Website Signup');
             $m->to($invitation['email'], $invitation['name'])->subject('IATSE Local 118 Website Signup Invitation');
         });
-**/
-        return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
 
-      //  Session::flash('success', "Invitation for access sent to " . $invitation['name']);
+       // return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
 
-        //return redirect()->route('show_invited_user', [$invitation->id]);
+      Session::flash('success', "Invitation for access sent to " . $invitation['name']);
+
+        return redirect()->route('list_invited_users');
     }
 
     /**
@@ -121,9 +125,9 @@ class InviteUserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(InviteUser $inviteUser)
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -149,7 +153,7 @@ class InviteUserController extends Controller
             'name' => $inviteUser->name,
             'email' => $inviteUser->email,
             'email_verified_at' => Carbon::now()->toDateTimeString(),
-            'password' => bcrypt($request->user['new_password']),
+            'password' => bcrypt($request->password),
         ];
 
         $user = new User($data);
@@ -158,6 +162,31 @@ class InviteUserController extends Controller
         $user->assignRole($inviteUser->role);
 
         InviteUser::destroy($inviteUser->id);
+
+        InviteUser::where('email', $inviteUser->email)->delete();
+
+
+        //todo helper method to clean out old invitations.
+        /**
+            $cleanOldInvitations = InviteUser::all();
+            foreach ($cleanOldInvitations as $c)
+            {
+                if($c->email == User::select('email')->where('email',$c->email)->get()) {
+                    InviteUser::destroy($c->id);
+                }
+            }
+
+            $cleanOldInvitations->each(function ($item, $key) {
+            //InviteUser::where('email', User::select('email')->where('email',$item->email)->get())->delete();
+            if($item->email == User::select('email')->where('email',$item->email)->get()) {
+            InviteUser::destroy($item->id);
+            }
+            });
+         */
+
+
+
+
 
         Session::flash('success', "Thank you! Your password has now been securely stored.
                                     You may now login with your email and password");

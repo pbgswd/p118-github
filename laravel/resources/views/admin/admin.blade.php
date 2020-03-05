@@ -111,6 +111,12 @@
                         Localhost DB
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:1080/" target="_blank">
+                        <span data-feather="file-text"></span>
+                        MailDev on Localhost
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
