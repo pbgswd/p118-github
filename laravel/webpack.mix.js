@@ -15,7 +15,8 @@ mix.js('resources/js/popper.min.js', 'public/js')
    .js('resources/js/app.js', 'public/js')
    .js('resources/js/dashboard.js', 'public/js')
    .js('resources/js/tinymce.js', 'public/js')
-   .sass(['resources/sass/app.scss', 'public/css',
+    .sass(['resources/sass/app.scss', 'public/css',
+	   'resources/sass/email.scss', 'public/css',	   
    'resources/sass/dashboard.scss', 'public/css',
    'resources/sass/jumbotron.scss', 'public/css',
    'resources/sass/skeleton.scss', 'public/css',
