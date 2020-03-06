@@ -47,7 +47,7 @@
 			    <p class="lead">Email: <a href="mailto:{{$data['email']}}">{{$data['email']}}</a></p>
                             <p class="lead">Subject: {{$data['mail_subject']}}</p>
                             <p>Message: <br />
-			    {{$data['mail_body']}}
+			    {!! $data['mail_body'] !!}
 			    </p>
                           </td>
                           <td class="expander"></td>

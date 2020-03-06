@@ -117,6 +117,14 @@
                         MailDev on Localhost
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://mailchimp.com/developer/" target="_blank">
+                        <span data-feather="file-text"></span>
+                        MailChimp Developers
+                    </a>
+                </li>
+
+
             </ul>
         </div>
     </div>
