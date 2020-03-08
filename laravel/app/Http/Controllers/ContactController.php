@@ -34,7 +34,7 @@ class ContactController extends Controller
 
         Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request) {
             $m->from($request['email'], $request['name']);
-            $m->to('superwebdeveloper@gmail.com', 'peter')->subject('Contact Page ' . $request['subject']);
+            $m->to(env('ADMIN_EMAIL'), env('ADMIN_EMAIL_NAME'))->subject('Contact Page ' . $request['subject']);
         });
 
         Session::flash('success', 'Your message was sent.');
