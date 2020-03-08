@@ -108,8 +108,16 @@ $user_roles = $data['user_roles'];
             </div>
             <div class="row mt-4">
                 <div class="col-lg-10"><h4>About Me</h4></div>
+                @if(null === $user->user_info->about)
+                    <div class="col-lg-10 m-lg-3">
+                        <p class="font-italic">Add something here about you such as your experience in
+                            stage and theatre, your skills. Do you have a side hustle?
+                            Got creative work? Tell us about it! Share your social media links if you like.
+                        </p>
+                    </div>
+                @endif
                 <div class="col-lg-10">
-                    <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user->user_info->about ?? '') }} </textarea>
+                    <textarea name="user_info[about]" id="about" class="form-control">{{ old('user_info.about', $user->user_info->about ?? '') }} </textarea>
                 </div>
             </div>
         </div>
