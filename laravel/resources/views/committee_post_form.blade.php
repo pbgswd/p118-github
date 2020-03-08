@@ -1,7 +1,8 @@
 <?php
 $post = $data['post'];
+//dd($post);
 ?>
-@extends('layouts.jumbo',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' . ($data["action"] == 'Edit' ? $post->name : '') ])
+@extends('layouts.jumbo',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . 'post' ])
 @section('content')
     <script>
         tinymce.init({
@@ -23,9 +24,13 @@ $post = $data['post'];
     </script>
 
 <div class="container  border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.6);">
-    <h3> <a href="{{ route('committee', $post['committee']->slug) }}">{{$post['committee']->name}}</a>
-     / {{$data['action']}} Post <a href="{{route('committee_post_show', [$post['committee']->slug, $post->slug])}}">{{$post->title}}</a>
-        <a href="{{ route('committee', $post['committee']->slug) }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>
+    <h3>
+        <a href="{{ route('committee', $post['committee']->slug) }}">{{$post['committee']->name}}</a>
+     / {{$data['action']}} Post
+        @if($data['action'] == "Edit")
+            <a href="{{route('committee_post_show', [$post['committee']->slug, $post->slug])}}">{{$post->title}}</a>
+            <a href="{{ route('committee', $post['committee']->slug) }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>
+        @endif
     </h3>
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
@@ -49,18 +54,14 @@ $post = $data['post'];
                 </div>
             </div>
         </div>
-
         <div class="row mt-lg-3"> &nbsp;</div>
-
         <div class="row mb-lg-5">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-
-         <div class="col-sm"> &nbsp;</div>
-
+    <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
              <form name="delete" method="POST" action="{{route('post_destroy')}}">
