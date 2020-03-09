@@ -24,6 +24,8 @@ class CreateAgreementsTable extends Migration
             $table->string('url')->nullable();
             $table->boolean('status')->default(0);
             $table->boolean('live')->default(1);
+            $table->date('from');
+            $table->date('until');
             $table->timestamps();
         });
     }

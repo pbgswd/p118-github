@@ -13,10 +13,11 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string $url
  * @property string $access_level
  * @property boolean $live
- * @property int $sort_order
  * @property User $users
  * @property \DateTime created_at
  * @property \DateTime updated_at
+ * @property \DateTime from
+ * @property \DateTime until
  */
 
 class Agreement extends Model
@@ -42,17 +43,20 @@ class Agreement extends Model
         'access_level',
         'live',
         'sort_order',
+        'from',
+        'until'
         ];
 
     protected $dates =
         [
+            'from',
+            'until',
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
 
     protected $casts =
         [
-            'allow_comments' => 'boolean',
             'live' => 'boolean',
         ];
 

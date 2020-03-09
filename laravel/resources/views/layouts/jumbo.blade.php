@@ -106,6 +106,10 @@
                     </li>
                     @guest
                     @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://login.callsteward.ca/" target="_blank" title="Link to CallSteward">
+                                <i class="fas fa-headset"></i> CS</a>
+                        </li>
                         @role('super-admin')
                              <li class="nav-item">
                                 <a class="nav-link" href="{{route('admin')}}" title="Admin"><i
