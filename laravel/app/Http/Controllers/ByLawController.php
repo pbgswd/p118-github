@@ -6,10 +6,9 @@ use App\Http\Requests\Bylaws\DestroyBylaw;
 use App\Http\Requests\Bylaws\StoreBylaw;
 use App\Http\Requests\Bylaws\UpdateBylaw;
 use App\Models\Bylaw;
-use Illuminate\Http\Request;
+use App\Services\AttachmentService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Services\AttachmentService;
 use Illuminate\Support\Str;
 
 class ByLawController extends Controller
@@ -38,11 +37,10 @@ class ByLawController extends Controller
 
     public function list()
     {
-        //$this->authorize('viewAny', Auth::uer());
+        $this->authorize('viewAny', Auth::uer());
 
         $data['bylaws'] = Bylaw::sortable()->where('live', '1')->with('attachments')->orderBy('date', 'desc')->paginate(20);
         $data['count'] = count(bylaw::all());
-//dd($data);
 
         return view('bylaws_list', ['data' => ['data' => $data]]);
     }
@@ -62,19 +60,17 @@ class ByLawController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreBylaw $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreBylaw $request)
     {
-       // $this->authorize('create', Auth::user());
+        $this->authorize('create', Auth::user());
 
         $bylaw = new Bylaw($request->input('bylaw'));
         $bylaw->user_id = Auth::id();
         $bylaw->access_level = 'members';
-
         $bylaw->save();
 
         Session::flash('success', "bylaw posting saved");
@@ -107,29 +103,27 @@ class ByLawController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Bylaw  $bylaw
-     * @return \Illuminate\Http\Response
+     * @param Bylaw $bylaw
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Bylaw $bylaw)
     {
-        //$this->authorize('update', Auth::user());
+        $this->authorize('update', Auth::user());
         $data['bylaw'] = $bylaw->load('user', 'attachments');
 
         return view('admin.bylaw', ['data' => ['data' => $data, 'action' => 'Edit']]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Bylaw  $bylaw
-     * @return \Illuminate\Http\Response
+     * @param UpdateBylaw $request
+     * @param Bylaw $bylaw
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateBylaw $request, Bylaw $bylaw)
     {
-        //$this->authorize('update', Auth::user());
+        $this->authorize('update', Auth::user());
 
         $bylaw->fill($request['bylaw']);
 
@@ -158,14 +152,13 @@ class ByLawController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Bylaw  $bylaw
-     * @return \Illuminate\Http\Response
+     * @param DestroyBylaw $bylaw
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(DestroyBylaw $bylaw)
     {
-        // $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Auth::user());
         $bylaws = Bylaw::find($bylaw->id);
 
         foreach($bylaws as $bylaw)
