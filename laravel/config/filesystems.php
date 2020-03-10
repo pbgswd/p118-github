@@ -76,6 +76,19 @@ return [
             'visibility' => 'public',
         ],
 
+        'agreements' => [
+            'driver' => 'local',
+            'root' => storage_path('app/agreements'),
+            'url' => env('APP_URL').'/agreements',
+            'visibility' => 'public',
+        ],
+
+        'bylaws' => [
+            'driver' => 'local',
+            'root' => storage_path('app/bylaws'),
+            'url' => env('APP_URL').'/bylaws',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

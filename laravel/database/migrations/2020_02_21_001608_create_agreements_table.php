@@ -21,8 +21,7 @@ class CreateAgreementsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('url')->nullable();
-            $table->boolean('status')->default(0);
+            $table->string('access_level')->default('members');
             $table->boolean('live')->default(1);
             $table->date('from');
             $table->date('until');

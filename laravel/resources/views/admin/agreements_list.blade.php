@@ -1,19 +1,18 @@
 <?php
 //dd($data);
-$agreements = $data['data'];
+$agreements = $data['data']['agreements'];
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List agreements'])
 @section('content')
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! count($agreements['agreements'])  !!}
+               {{$data['data']['count']}}
            </span>
             agreements. | <a href="{{ route('agreement_create') }}">Create new agreement <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
-
-    @if(count($agreements['agreements']) < 1)
+    @if($data['data']['count'] < 1)
     No agreements defined yet
     @else
 <form name="delete" method="POST" action="{{route('agreement_destroy')}}">
@@ -29,14 +28,15 @@ $agreements = $data['data'];
                         <th> @sortablelink('title', 'Title') </th>
                         <th> @sortablelink('access_level', 'Access Level') </th>
                         <th> @sortablelink('live', 'Is Live?') </th>
-                        <th> @sortablelink('sort_order', 'Sort Order') </th>
+                        <th> @sortablelink('from', 'From') </th>
+                        <th> @sortablelink('until', 'Until') </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $agreements['agreements'] as $a )
+                    @foreach ( $agreements as $a )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -47,14 +47,15 @@ $agreements = $data['data'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $a->name }}" href="{{ route('agreement_edit', $a->slug) }}">{{ $a->name }}</a>
+                                    <a title="{{ $a->title }}" href="{{ route('agreement_edit', $a->id) }}">{{ $a->title }}</a>
                                 </h4>
                             </td>
                             <td> {{ $a->access_level }} </td>
                             <td> {!! $a->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
-                            <td> {{ $a->sort_order }} </td>
+                            <td>{{$a->from->format('F j Y')}}</td>
+                            <td>{{$a->until->format('F j Y')}}</td>
                             <td>
-                                <a href="{{ route('agreement_edit', $a->slug) }}" title="Edit {{ $a->name }} ">
+                                <a href="{{ route('agreement_edit', $a->id) }}" title="Edit {{ $a->title }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
@@ -78,7 +79,7 @@ $agreements = $data['data'];
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                     {{ $agreements['agreements']->links() }}
+                     {{ $agreements->links() }}
                 </ul>
             </div>
         </div>

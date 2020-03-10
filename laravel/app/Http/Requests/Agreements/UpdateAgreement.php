@@ -24,7 +24,11 @@ class UpdateAgreement extends FormRequest
     public function rules()
     {
         return [
-            //
+            'agreement.title' => 'required|max:255',
+            'agreement.description' => 'string',
+            'agreement.from' => 'required|date',
+            'agreement.until' => 'required|date',
+            'agreement.live' => 'boolean',
         ];
     }
 }

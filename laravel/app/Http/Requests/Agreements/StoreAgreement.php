@@ -24,7 +24,11 @@ class StoreAgreement extends FormRequest
     public function rules()
     {
         return [
-            //
+            'agreement.title' => 'required|max:255',
+            'agreement.description' => 'string',
+            'agreement.from' => 'date',
+            'agreement.until' => 'date',
+            'agreement.live' => 'boolean',
         ];
     }
 }
