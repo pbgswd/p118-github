@@ -126,6 +126,7 @@
                                 <a class="dropdown-item" href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members</a>
                                 <a class="dropdown-item" href="{{route('jobs_list')}}"><i class="fas fa-hard-hat"></i> Jobs</a>
                                 <a class="dropdown-item" href="{{route('venues')}}"><i class="far fa-building"></i> Venues</a>
+                                <a class="dropdown-item" href="{{route('agreements_list_public')}}"><i class="far fa-handshake"></i> Agreements</a>
                                 <a class="dropdown-item" href="/site"><i class="fas fa-industry"></i> Landing Page</a>
                             </div>
                         </li>

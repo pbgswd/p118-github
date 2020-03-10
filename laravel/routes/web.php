@@ -59,6 +59,8 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     Route::get('/invited/{user}/{hash}', 'InviteUserController@process')->name('process_user');
 
+    Route::get('agreements', 'AgreementController@list')->name('agreements_list_public');
+    Route::get('/agreement/{agreement}', 'AgreementController@show')->name('agreement_show');
 
     Route::get('committees', 'CommitteeController@index')->name('committees');
     Route::get('committee/{committee}', 'CommitteeController@show')->name('committee');
@@ -103,7 +105,6 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('/user/{user}', 'AdminUserController@edit')->name('user_edit');
     Route::post('/user/{user}', 'AdminUserController@update');
     Route::delete('/user/delete', 'AdminUserController@destroy')->name('user_destroy');
-
 
     Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');
     Route::post('/invite_new_user', 'InviteUserController@store');

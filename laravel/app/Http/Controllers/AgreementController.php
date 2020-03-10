@@ -45,6 +45,23 @@ class AgreementController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
+    public function list()
+    {
+        //$this->authorize('viewAny', Auth::user());
+
+        $data['agreements'] = Agreement::sortable()->where('live', '1')->with('attachments')->orderBy('until', 'desc')->paginate(20);
+        $data['count'] = count(Agreement::all());
+//dd($data);
+
+        return view('agreements_list', ['data' => ['data' => $data]]);
+    }
+
+
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function create()
     {
         $this->authorize('create', Auth::user());
@@ -91,7 +108,9 @@ class AgreementController extends Controller
      */
     public function show(Agreement $agreement)
     {
-        dd(__METHOD__);//
+        $agreement->load('user', 'attachments');
+
+        return view('agreement_view', ['data' => ['agreement' => $agreement]]);
     }
 
     /**
@@ -108,8 +127,9 @@ class AgreementController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param UpdateAgreement $agreement
+     * @param UpdateAgreement $request
+     * @param Agreement $agreement
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateAgreement $request, Agreement $agreement)
