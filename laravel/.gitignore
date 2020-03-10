@@ -3,6 +3,8 @@
 public/meetings
 public/storage
 public/employment
+public/bylaws
+public/agreements
 public/css/skeleton.css
 public/css/normalize.css
 /storage/*.key

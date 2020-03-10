@@ -62,6 +62,9 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('agreements', 'AgreementController@list')->name('agreements_list_public');
     Route::get('/agreement/{agreement}', 'AgreementController@show')->name('agreement_show');
 
+    Route::get('bylaws', 'ByLawController@list')->name('bylaws_list_public');
+    Route::get('/bylaws/{bylaw}', 'ByLawController@show')->name('bylaw_show');
+
     Route::get('committees', 'CommitteeController@index')->name('committees');
     Route::get('committee/{committee}', 'CommitteeController@show')->name('committee');
     Route::post('committee/{committee}/join', 'CommitteeController@join');
@@ -194,5 +197,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::delete('/employment/delete', 'AdminEmploymentController@destroy')->name('admin_employment_destroy');
     Route::get('/employment/{employment}', 'AdminEmploymentController@edit')->name('admin_employment_edit');
 
+    Route::get('bylaws-list/', 'ByLawController@index')->name('admin_bylaws_list');
+    Route::get('bylaw/', 'ByLawController@create')->name('admin_bylaw_create');
+    Route::post('bylaw/', 'ByLawController@store');
+    Route::post('bylaw/{bylaw}', 'ByLawController@update');
+    Route::delete('/bylaw/delete', 'ByLawController@destroy')->name('admin_bylaw_destroy');
+    Route::get('/bylaw/{bylaw}', 'ByLawController@edit')->name('admin_bylaw_edit');
 
 });

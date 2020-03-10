@@ -61,7 +61,7 @@ $employment = $data['employment'];
             </div>
         </div>
 
-        <div class="row" style="margin-top:2em;">
+        <div class="row mt-lg-2">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputFile">
