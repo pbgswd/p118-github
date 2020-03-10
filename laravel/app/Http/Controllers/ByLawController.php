@@ -37,7 +37,7 @@ class ByLawController extends Controller
 
     public function list()
     {
-        $this->authorize('viewAny', Auth::uer());
+        $this->authorize('viewAny', Auth::user());
 
         $data['bylaws'] = Bylaw::sortable()->where('live', '1')->with('attachments')->orderBy('date', 'desc')->paginate(20);
         $data['count'] = count(bylaw::all());
