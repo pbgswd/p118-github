@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InviteUser\DestroyInviteUserRequest;
 use App\Http\Requests\InviteUser\ProcessUserRequest;
+use App\Http\Requests\InviteUser\StoreInviteUserRequest;
 use App\Models\InviteUser;
 use App\Models\User;
 use Carbon\Carbon;
-use Carbon\Traits\Timestamp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -24,13 +25,10 @@ class InviteUserController extends Controller
      */
     public function index()
     {
-
         $invitations = InviteUser::with('user')->sortable()->paginate(20);
         $invitations->each(function ($item, $key) {
             $item->since = $item->updated_at->diffForHumans(Carbon::now());
         });
-
-
 
         $data['invitations'] = $invitations;
         $data['count'] = count(InviteUser::all());
@@ -53,15 +51,6 @@ class InviteUserController extends Controller
         return view('admin.invite_user', ['data' => ['invite' => $invited, 'roles' => Role::get(), 'action' => 'Invite']]);
     }
 
-    public function invite()
-    {
-        //
-    }
-
-    public function send()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -69,7 +58,7 @@ class InviteUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreInviteUserRequest  $request)
     {
         $invitation = new InviteUser($request->input('invite'));
         $invitation->password = str_replace ('/', '', hash::make(Str::random(8)));
@@ -96,10 +85,16 @@ class InviteUserController extends Controller
      */
     public function show(InviteUser $inviteUser, $password)
     {
-        $inviteUser->diff = $inviteUser->updated_at->diffForHumans(Carbon::now());
-
         if($inviteUser->password != $password) {
             Session::flash('error', "The invitation is not valid");
+            return redirect()->route('hello');
+        }
+
+        $now = Carbon::now();
+        $allowedInvitationTime = 60 * 48; // 2 days
+        $interval = $now->diffInMinutes($inviteUser->updated_at);
+        if ($interval > $allowedInvitationTime) {
+            Session::flash('error', "The invitation has expired as it is older than 48 hours. Please contact the site to get a new invitation.");
             return redirect()->route('hello');
         }
 
@@ -108,8 +103,6 @@ class InviteUserController extends Controller
             return redirect()->route('hello');
         }
 
-        //TODO validate, not too old, request validator.
-
         $data = [
             'user' => $inviteUser,
             'invitation' => $inviteUser,
@@ -117,29 +110,6 @@ class InviteUserController extends Controller
             ];
 
         return view('site_invitation', ['data' => $data]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(InviteUser $inviteUser)
-    {
-        dd(__METHOD__);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
     }
 
     /**
@@ -165,7 +135,6 @@ class InviteUserController extends Controller
 
         InviteUser::where('email', $inviteUser->email)->delete();
 
-
         //todo helper method to clean out old invitations.
         /**
             $cleanOldInvitations = InviteUser::all();
@@ -184,10 +153,6 @@ class InviteUserController extends Controller
             });
          */
 
-
-
-
-
         Session::flash('success', "Thank you! Your password has now been securely stored.
                                     You may now login with your email and password");
 
@@ -195,15 +160,19 @@ class InviteUserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param DestroyInviteUserRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(InviteUser $inviteUser)
+    public function destroy(DestroyInviteUserRequest $request)
     {
-        //$this->authorize('delete', Auth::user());
-        // InviteUser::destroy($inviteUser->id);
-        // return;
+        $this->authorize('delete', Auth::user());
+        foreach ($request->id as $id)
+        {
+            InviteUser::destroy($id);
+        }
+
+        Session::flash('success',  Str::plural(count($request->id) . ' Invitation', count($request->id) . ' deleted.'));
+        return redirect()->route('list_invited_users');
     }
 }

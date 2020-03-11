@@ -4,13 +4,10 @@ $bylaws = $data['data']['bylaws'];
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> bylaw Postings'])
 @section('content')
 <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); max-width:768px;">
-<h1 class=""><i class="far fa-handshake"></i> Local 118 Constitution and By-Laws</h1>
+<h1 class=""><i class="fas fa-gavel"></i> Local 118 Constitution and By-Laws</h1>
     <h3>Please remember, we all pledged to keep confidential the work of this body and to do all in our
         power to discourage and prevent violation of this requirement by brother and sister members.
     </h3>
-
-
-
     <h3>
        <span class="badge badge-primary badge-pill">
            {{ $data['data']['count'] }} bylaw postings

@@ -1,31 +1,16 @@
 <?php
 $invite = $data['invite'];
 $roles = $data['roles'];
-//dd($invite->role);
 ?>
 @extends('layouts.dashboard')
 @section('content')
 <div class='container mt-lg-4'>
     <h1>Invite User</h1>
-
-    <div class="col-12">
-<pre>
-    - name
-- email
-        submission validation
-        message to person with id, hash passwd
-        - time limit
-        - acceptance process
-        - delete after accepted and processed
-        - msg to office that user has updated
-        - form for person who doesnt have access but wants it. process for verification
-        - role
-</pre>
-    </div>
+<h3>Note: there is a 48 hour expiry time on invitations.</h3>
         <form method="post" name="invite_user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
 
-            <div class="col-12 input-group mb-3">
+            <div class="col-12 input-group mt-lg-5 mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
                     <input type="text" class="form-control"  placeholder="Name" name="invite[name]" value="{{ old('invite.name', $invite->name ?? '')}}" size="80" required />
@@ -38,7 +23,7 @@ $roles = $data['roles'];
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 border border-primary rounded-lg border-3 mt-lg-2 p-2">
+                <div class="col-12 mt-lg-2 p-2">
                     <h4>User website roles </h4>
                     @foreach ($roles as $role)
                         <div class="input-group mb-6 col-12">
@@ -52,7 +37,7 @@ $roles = $data['roles'];
                     @endforeach
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-lg-5">
                 <div class="col-sm">
                     <i class="fas fa-edit fa-2x"></i>
                     <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
