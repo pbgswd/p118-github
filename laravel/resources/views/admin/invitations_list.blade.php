@@ -54,7 +54,12 @@ $invitations = $data['invitations'];
                                 {{$i->email}}
                             </td>
                             <td>
-                                {{$i->since}}
+                                @if($i->remaining < 0)
+                                    expired
+                                @else
+                                    {{$i->since}} <br />
+                                    ({{$i->remaining}} h left)
+                                @endif
                             </td>
                             <td>
                                 {{$i->role}}

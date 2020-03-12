@@ -28,6 +28,7 @@ class InviteUserController extends Controller
         $invitations = InviteUser::with('user')->sortable()->paginate(20);
         $invitations->each(function ($item, $key) {
             $item->since = $item->updated_at->diffForHumans(Carbon::now());
+            $item->remaining = 48 - $item->updated_at->diffInHours(Carbon::now());
         });
 
         $data['invitations'] = $invitations;
@@ -119,6 +120,8 @@ class InviteUserController extends Controller
      */
     public function process_user(ProcessUserRequest $request, InviteUser $inviteUser)
     {
+        //todo determine password strength
+
         $data = [
             'name' => $inviteUser->name,
             'email' => $inviteUser->email,
