@@ -9,6 +9,7 @@ $user = $data['invitation'];
         <h3>
                Add your password. Once you do that you may log in to the site.
         </h3>
+        <h4>Your password must be a minimum of 6 characters. Do not use an easily guessable password.</h4>
         <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
             {!! csrf_field() !!}
             <div class="row border border-primary rounded-lg border-3 p-4 mt-5">
