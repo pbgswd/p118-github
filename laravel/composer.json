@@ -13,14 +13,15 @@
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
         "kyslik/column-sortable": "^6.0",
-    "laravel/framework": "^7.0",
-    "laravel/tinker": "^2.0",
-    "laravel/ui": "^2.0",
+        "laravel/framework": "^7.0",
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^2.0",
         "league/flysystem": "^1.0.55",
         "nesbot/carbon": "^2.24",
         "rtconner/laravel-tagging": "^3.2.3",
         "spatie/image": "^1.7.4",
-        "spatie/laravel-permission": "^3.0"
+        "spatie/laravel-permission": "^3.0",
+        "unicodeveloper/laravel-password": "^1.0"
     },
     "require-dev": {
     "facade/ignition": "^2.0",

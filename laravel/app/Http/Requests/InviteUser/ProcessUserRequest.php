@@ -25,7 +25,7 @@ class ProcessUserRequest extends FormRequest
     {
         return  [
 
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:6|dumbpwd|confirmed',
         ];
         // dumbpwd|
         //todo add in https://packagist.org/packages/unicodeveloper/laravel-password
