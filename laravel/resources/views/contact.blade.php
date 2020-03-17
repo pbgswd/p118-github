@@ -73,11 +73,11 @@
                 <h4>Emails and phone numbers</h4>
                 <h3>Executive Board:</h3>
                 <ul>
-                    <li>President - <Derrall></Derrall> Dunlop - <a href="mailto:president@iatse118.com">president@iatse118.com</a></li>
+                    <li>President - Derrall Dunlop - <a href="mailto:president@iatse118.com">president@iatse118.com</a></li>
                     <li>Vice-President - Eric St. Laurent - <a href="mailto:vicepresident@iatse118.com">vicepresident@iatse118.com</a></li>
                     <li>Recording Secretary - Kate Rittenhouse - <a href="mailto:recsec@iatse118.com">recsec@iatse118.com</a></li>
-                    <li>Financial Secretary-Treasurer - Jordan Both - <a href="mailto:financialsecretary@iatse118.com">financialsecretary@iatse118.com</a></li>
-                    <li>Business Agent - Josef Chung - <a href="mailto:businessagent@iatse118.com">businessagent@iatse118.com</a></li>
+                    <li>Financial Secretary-Treasurer - Alex Liveland - <a href="mailto:financialsecretary@iatse118.com">financialsecretary@iatse118.com</a></li>
+                    <li>Business Agent - Jordan Both - <a href="mailto:businessagent@iatse118.com">businessagent@iatse118.com</a></li>
                     <li>Members-at-Large &ndash; Dave Wilson and Brian Heath &ndash; <a href="mailto:memberatlarge@iatse118.com">memberatlarge@iatse118.com</a> </li>
                 </ul>
                 <h3>Health &amp; Welfare:</h3>
