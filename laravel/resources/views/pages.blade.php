@@ -4,14 +4,13 @@
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
         <div class="col">
             <h1 class="display-3">Pages</h1>
-            <h2>...as in single pages</h2>
         </div>
-        <div class="container">
+
             <!-- Example row of columns -->
             <div class="row">
                 @foreach ( $data['pages'] as $i )
-                    <div class="col-md-3 border border-dark rounded-lg mt-3 mr-3">
-                        <h2>{{ $i->title }}</h2>
+                    <div class="col-md-4 border border-dark rounded-lg mt-3 mr-3 pt-2">
+                        <h4>{{ $i->title }}</h4>
                         <p>{!! $i->description !!} </p>
                         <p>{{$i->access_level}}</p>
                         <p>
@@ -20,7 +19,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+
         <div class="row">
             <div class="col"></div>
             <div class="col">
@@ -34,7 +33,7 @@
         </div>
     </div>
 </div>
-<div class="row" style="margin-top:6em;"></div>
+<div class="row mt-lg-5"></div>
 
 @endsection
 

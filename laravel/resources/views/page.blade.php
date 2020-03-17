@@ -6,11 +6,6 @@ $tags = join(', ', $page->tagNames());
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
-        <div class="row">
-            @foreach ($page->topics as $topic)
-                <a href="{{route('topics')}}">Topics / </a>&nbsp;<a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}} / </a>&nbsp;
-            @endforeach
-        </div>
         <div  class="col-12">
             <h1 class="display-3">{{$page->title}}</h1>
         </div>
@@ -26,16 +21,11 @@ $tags = join(', ', $page->tagNames());
             </div>
         @endif
         <div class="row">
-            @foreach ($page->topics as $topic)
-                <a href="{{route('topics')}}">Topics / </a>&nbsp; <a href="{{ route('topic_show', $topic->slug) }}">{{$topic->name}} / </a> &nbsp;
-            @endforeach
+            <a href="{{route('pages')}}">Pages / </a> &nbsp;
             {{$page->title}}
         </div>
-        <div class="row">
-            <h6>Added by &nbsp;<a title="{{$page->user->name}}" href="{{route('member', $page->user->id)}}">{{$page->user->name}}</h6>
-        </div>
     </div>
-<div class="row" style="margin-top:6em;"></div>
+<div class="row mt-lg-5"></div>
 </div>
 @endsection
 

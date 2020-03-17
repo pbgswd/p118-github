@@ -90,7 +90,7 @@ class InviteUserController extends Controller
             Session::flash('error', "The invitation is not valid");
             return redirect()->route('hello');
         }
-
+/***
         $now = Carbon::now();
         $allowedInvitationTime = 60 * 48; // 2 days
         $interval = $now->diffInMinutes($inviteUser->updated_at);
@@ -98,7 +98,7 @@ class InviteUserController extends Controller
             Session::flash('error', "The invitation has expired as it is older than 48 hours. Please contact the site to get a new invitation.");
             return redirect()->route('hello');
         }
-
+ ***/
         if ( null !== User::where('email', $inviteUser->email)->first()) {
             Session::flash('error', "The invitation is no longer valid because you have been registered. Login to continue.");
             return redirect()->route('hello');
