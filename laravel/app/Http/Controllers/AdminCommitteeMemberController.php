@@ -56,7 +56,8 @@ class AdminCommitteeMemberController extends Controller
     {
         //dd($request->all());
         $this->authorize('create', Auth::user());
-        foreach ($request->members as $member) {
+        foreach ($request->members as $member)
+        {
             dd(array_keys($member));
            $committee->committee_members()->attach($member['id'], ['role' => $member['role']]);
         }

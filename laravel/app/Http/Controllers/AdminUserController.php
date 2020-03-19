@@ -243,8 +243,8 @@ class AdminUserController extends Controller
 
         //todo cannot delete user when user has a post, page, topic, or is a member of a committee. Deal with this
 //todo user soft delete
-        foreach ($users as $user) {
-
+        foreach ($users as $user)
+        {
             $user_roles = $user->getRoleNames()->toArray();
             $user_roles = array_combine($user_roles, $user_roles);
 

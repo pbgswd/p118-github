@@ -18,7 +18,8 @@ class Controller extends BaseController
 
     protected function getFormOptions(array $options, $data = array())
     {
-        foreach ($options as $option) {
+        foreach ($options as $option)
+        {
             switch ($option) {
                 case 'date':
                     $data['years'] = Options::years();

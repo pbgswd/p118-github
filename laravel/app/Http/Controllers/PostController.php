@@ -116,7 +116,8 @@ class PostController extends Controller
         $post->user;
 
         $assignedTopics = [];
-        foreach ($post->topics as $topic) {
+        foreach ($post->topics as $topic)
+        {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
 
@@ -145,7 +146,8 @@ class PostController extends Controller
 
         if (empty($data['topic_id'])) {
             $assignedTopics = [];
-            foreach ($post->topics as $topic) {
+            foreach ($post->topics as $topic)
+            {
                 $assignedTopics[] = $topic->pivot->topic_id;
             }
             $post->topics()->detach($assignedTopics);
@@ -178,7 +180,8 @@ class PostController extends Controller
         $post->untag();
 
         $assignedTopics = [];
-        foreach ($post->topics as $topic) {
+        foreach ($post->topics as $topic)
+        {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
         $post->topics()->detach($assignedTopics);

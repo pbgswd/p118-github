@@ -128,7 +128,8 @@ class VenueController extends Controller
     {
         $this->authorize('delete', Auth::user());
         $venues = Venue::find($request->id);
-        foreach ($venues as $v) {
+        foreach ($venues as $v)
+        {
             Venue::destroy($v->id);
         }
         Session::flash('success', Str::plural(count($request->id) . ' Venue', count($request->id)) . ' deleted.');

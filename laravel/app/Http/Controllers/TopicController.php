@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Topic\DestroyRequest;
 use App\Http\Requests\Topic\StoreRequest;
 use App\Http\Requests\Topic\UpdateRequest;
+use App\Models\Post;
 use App\Models\Topic;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -40,7 +41,7 @@ class TopicController extends Controller
     {
         // public
         if (Auth::check()) {
-            $topics = Topic::sortable()->with('tagged')->paginate(10);
+            $topics = Topic::sortable()->with('tagged')->orderBy('sort_order', 'desc')->paginate(10);
         }
         else {
             $topics = Topic::sortable()->where('access_level', '=', 'public')->with('tagged')->paginate(10);
@@ -62,8 +63,10 @@ class TopicController extends Controller
             return redirect()->route('topics');
         }
 
-        $topic->pages;
-        $topic->posts;
+        $topic->pages = $topic->pages->sortByDesc('created_at');
+
+        $topic->posts = $topic->posts->sortByDesc('created_at');
+
         $data = ['topic' => $topic];
 
         return view('topic', ['data' => $data]);

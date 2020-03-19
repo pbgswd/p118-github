@@ -48,7 +48,8 @@ class AttachmentController extends Controller
 
         $storedFiles = [];
         $allAttachments = Attachment::all();
-        foreach ($allAttachments as $storedFile) {
+        foreach ($allAttachments as $storedFile)
+        {
             $storedFiles[] = $storedFile['name'];
         }
 
@@ -57,7 +58,8 @@ class AttachmentController extends Controller
         $data['filecount'] = count($files);
 
         $uploadedImgs = [];
-        foreach ($files as $file) {
+        foreach ($files as $file)
+        {
             $uploadedImgs[] = $file->getBasename();
         }
 
@@ -174,7 +176,8 @@ class AttachmentController extends Controller
         $this->authorize('delete', Auth::user());
 
         $attachments = Attachment::find($request->id);
-        foreach ($attachments as $a) {
+        foreach ($attachments as $a)
+        {
             Storage::disk('public')->delete($a['file']);
             Attachment::destroy($a->id);
         }

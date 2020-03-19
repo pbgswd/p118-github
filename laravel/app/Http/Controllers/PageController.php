@@ -124,7 +124,8 @@ class PageController extends Controller
         $page->user;
 
         $assignedTopics = [];
-        foreach ($page->topics as $topic) {
+        foreach ($page->topics as $topic)
+        {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
 
@@ -159,7 +160,8 @@ class PageController extends Controller
 
         if (empty($data['topic_id'])) {
             $assignedTopics = [];
-            foreach ($page->topics as $topic) {
+            foreach ($page->topics as $topic)
+            {
                 $assignedTopics[] = $topic->pivot->topic_id;
             }
             $page->topics()->detach($assignedTopics);
@@ -193,7 +195,8 @@ class PageController extends Controller
         $page->untag();
 
         $assignedTopics = [];
-        foreach ($page->topics as $topic) {
+        foreach ($page->topics as $topic)
+        {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
         $page->topics()->detach($assignedTopics);
