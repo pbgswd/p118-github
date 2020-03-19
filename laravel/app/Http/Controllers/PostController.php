@@ -67,10 +67,12 @@ class PostController extends Controller
      */
     public function store(StorePost $request)
     {
+
         $this->authorize('create', Auth::user());
 
         $post = new Post($request->input('post'), $request->input('tags'));
 
+        $post->user_id = Auth::id();
         $post->save();
 
         if (!empty($request->input('post.topic_id'))) {

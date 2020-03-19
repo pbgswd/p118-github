@@ -95,6 +95,7 @@ class TopicController extends Controller
         $this->authorize('create', Auth::user());
 
         $topic = new Topic($request->input('topic'), $request->input('tags'));
+        $topic->user_id = Auth::id();
 
         $topic->save();
 

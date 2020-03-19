@@ -76,6 +76,7 @@ class PageController extends Controller
         $this->authorize('create', Auth::user());
 
         $page = new Page($request->input('page'), $request->input('tags'));
+        $page->user_id = Auth::id();
         $page->save();
 
         if (!empty($request->input('page.topic_id'))) {
