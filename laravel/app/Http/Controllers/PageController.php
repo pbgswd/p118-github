@@ -7,6 +7,7 @@ use App\Http\Requests\Page\StorePage;
 use App\Http\Requests\Page\UpdatePage;
 use App\Models\Page;
 use App\Models\Topic;
+use App\Services\AttachmentService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,16 @@ use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
+    /**
+     * @var AttachmentService
+     */
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -102,7 +113,7 @@ class PageController extends Controller
     {
         // public
         //Todo service to check if user may view content
-        $page->load('topics', 'user');
+        $page->load('topics', 'user', 'attachments');
 
         //todo handle 2 criteria live, and access_level
 
@@ -121,7 +132,7 @@ class PageController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        $page->user;
+        $page->load('user', 'attachments', 'topics');
 
         $assignedTopics = [];
         foreach ($page->topics as $topic)
@@ -158,6 +169,20 @@ class PageController extends Controller
         $page->fill($data);
         $page->save();
 
+        $result = $this->attachmentService->updateAttachment($request, $page);
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $page    );
+
+            if($result) {
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+
         if (empty($data['topic_id'])) {
             $assignedTopics = [];
             foreach ($page->topics as $topic)
@@ -190,18 +215,23 @@ class PageController extends Controller
     {
         $this->authorize('delete', Auth::user());
 
-        $page = Page::find($request->id)->first();
+        $pages = Page::find($request->id);
 
-        $page->untag();
-
-        $assignedTopics = [];
-        foreach ($page->topics as $topic)
+        foreach($pages as $page)
         {
-            $assignedTopics[] = $topic->pivot->topic_id;
-        }
-        $page->topics()->detach($assignedTopics);
+            $page->untag();
 
-        Page::destroy($request->id);
+            $assignedTopics = [];
+            foreach ($page->topics as $topic)
+            {
+                $assignedTopics[] = $topic->pivot->topic_id;
+            }
+            $page->topics()->detach($assignedTopics);
+
+            $result = $this->attachmentService->destroyAttachment($page);
+
+            Page::destroy($page->id);
+        }
 
         Session::flash('success', Str::plural('Page', count($request->id)) . ' deleted.');
 

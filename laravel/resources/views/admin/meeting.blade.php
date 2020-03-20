@@ -52,7 +52,7 @@ $meeting = $data['meeting'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:2em;">
+        <div class="row mt-lg-2">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputFile">
@@ -121,7 +121,7 @@ $meeting = $data['meeting'];
                 </div>
             @endif
         @endif
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row mt-lg-3"> &nbsp;</div>
         <div class="row">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
@@ -140,6 +140,6 @@ $meeting = $data['meeting'];
             </form>
          </div>
     @endif
-    <div class="row" style="margin-top:100px;"> &nbsp;</div>
+    <div class="row mt-lg-5"> &nbsp;</div>
 </div>
 @endsection

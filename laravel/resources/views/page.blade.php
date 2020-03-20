@@ -15,6 +15,31 @@ $tags = join(', ', $page->tagNames());
         <div class="col-12">
             {!! $page->content !!}
          </div>
+        @if(count($page->attachments) > 0)
+            <div class="col-md-12">
+                <h4>Files</h4>
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th> File </th>
+                        <th> Description </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($page->attachments as $pa)
+                            <tr>
+                                <td>
+                                    <a href="{{route('attachment_download', [$page->getAttachmentFolder(), $pa->id])}}" title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
+                                </td>
+                                <td>
+                                    {{ $pa->description}}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
         @if ($tags != '')
             <div class="row">
                 Tags: {{$tags}}

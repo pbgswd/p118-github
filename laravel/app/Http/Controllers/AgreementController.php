@@ -72,7 +72,7 @@ class AgreementController extends Controller
     }
 
     /**
-     * @param StoreAgreement $request
+     * @param StoreMeeting $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -127,7 +127,7 @@ class AgreementController extends Controller
     }
 
     /**
-     * @param UpdateAgreement $request
+     * @param UpdateMeeting $request
      * @param Agreement $agreement
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException

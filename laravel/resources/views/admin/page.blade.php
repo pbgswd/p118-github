@@ -17,7 +17,6 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -28,8 +27,10 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:3em;"> <h4>Select topics for this content</h4>&nbsp;</div>
-        <div class="row" style="margin-top:1em;"> &nbsp;
+        <div class="row mt-lg-3">
+            <h4>Select topics for this content</h4>
+        </div>
+        <div class="row mt-lg-1"> &nbsp;
             <div class="form-group">
             @foreach ($topics as $topic)
                 <div class="form-check">
@@ -55,61 +56,69 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row mt-lg-3"></div>
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
+                    <div class="col-6 col-sm-3 align-middle">
+                        <h4>Access Level</h4>
+                    </div>
                     <div class="col-6 col-sm-3">
                         <p>Access Level for content:</p>
                         <div class="form-group">
                             {{ select_options($data['access_levels'], old('page.access_level', $page->access_level), ['name' => 'page[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
                         </div>
                     </div>
-                    </div>
-                    <div class="col-6 col-sm-3"></div>
-                    <div class="col-6 col-sm-3"></div>
-                    <!-- Force next columns to break to new line -->
-                    <div class="w-100"></div>
-                    <div class="col-12">&nbsp;</div>
-                    <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
-                    <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="page[sort_order]" value="{{old('page.sort_order',$page->sort_order)}}" size="30" required/>
-                        <p>e.g.: 1000, 2000</p>
-                    </div>
-                    <div class="invalid-feedback">
-                        Please add a numeric sort order {{ @$errors->get('page.sort_order')[0] }}
-                    </div>
                 </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="col-lg-2"><h4>Status</h4></div>
-                <div class="col-sm">
-                    <label>
-                        <input name="page[in_menu]" type="hidden" value="0" />
-                        <input name="page[in_menu]" type="checkbox" value="1" {{ checked(old('page.in_menu',$page->in_menu)) }} /> In Menu
-                    </label>
+                <div class="col-6 col-sm-3"></div>
+                <div class="col-6 col-sm-3"></div>
+                <!-- Force next columns to break to new line -->
+                <div class="w-100"></div>
+                <div class="col-12">&nbsp;</div>
+                <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
+                <div class="col-6 col-sm-3">
+                    <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="page[sort_order]" value="{{old('page.sort_order',$page->sort_order)}}" size="30" required/>
+                    <p>e.g.: 1000, 2000</p>
                 </div>
-                <div class="col-sm">
-
-                    <label>
-                        <input name="page[allow_comments]" type="hidden" value="0" />
-                        <input name="page[allow_comments]" type="checkbox" value="1" {{ checked(old('page.allow_comments', $page->allow_comments)) }} /> Allow Comments
-                    </label>
-                </div>
-                <div class="col-sm">
-
-                    <label>
-                         <input name="page[live]" type="hidden" value="0" />
-                         <input name="page[live]" type="checkbox" value="1" {{ checked( old('page.live', $page->live)) }} /> Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
+                <div class="invalid-feedback">
+                    Please add a numeric sort order {{ @$errors->get('page.sort_order')[0] }}
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
+        <div class="col-md-4">
+            <div class="col-lg-2"><h4>Status</h4></div>
+            <div class="col-sm">
+                <label>
+                    <input name="page[in_menu]" type="hidden" value="0" />
+                    <input name="page[in_menu]" type="checkbox" value="1" {{ checked(old('page.in_menu',$page->in_menu)) }} /> In Menu
+                </label>
+            </div>
+            <div class="col-sm">
+                <label>
+                    <input name="page[allow_comments]" type="hidden" value="0" />
+                    <input name="page[allow_comments]" type="checkbox" value="1" {{ checked(old('page.allow_comments', $page->allow_comments)) }} /> Allow Comments
+                </label>
+            </div>
+            <div class="col-sm">
+                <label>
+                     <input name="page[live]" type="hidden" value="0" />
+                     <input name="page[live]" type="checkbox" value="1" {{ checked( old('page.live', $page->live)) }} /> Check now to make Live
+                </label>
+                <p>ie.: Draft or Published.</p>
+            </div>
+        </div>
+        <div class="row mt-lg-3"> &nbsp;</div>
+        <div class="row mt-lg-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To Page
+                    </label>
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Tags</h4></div>
@@ -120,28 +129,79 @@ $topics = $data['topics'];
             </div>
         </div>
 
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
+        @if ($data['action'] == 'Edit')
+            @if(count($page->attachments) > 0)
+                <div class="col-md-12">
+                    <h2>Files</h2>
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> File </th>
+                            <th> Description </th>
+                            <th> Created At </th>
+                            <th> Updated At </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($page->attachments as $pa)
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="attachment[{{$pa->id}}][id]" value="{{$pa->id}}" />
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="{{route('attachment_download', [$page->getAttachmentFolder(), $pa->id])}}" title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$pa->id}}][description]" value="{{ old('attachments.description', $pa->description)}}" size="40"/>
+                                </td>
+                                <td>
+                                    {{$pa->created_at}}
+                                </td>
+                                <td>
+                                    {{$pa->updated_at}}
+                                </td>
+                            </tr>
+                        @endforeach
+                        <tr>
+                            <td colspan="5">
+                                <i class="far fa-trash-alt"></i> Select checkbox to delete a file
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+        @endif
+        <div class="row mt-lg-3"> &nbsp;</div>
         <div class="row">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
+    <div class="col-sm"> &nbsp;</div>
+        @if ($data['action'] == 'Edit')
+             <div class="col-sm" style="float:right">
+                 <form name="delete" method="POST" action="{{route('page_destroy')}}">
+                     {!! csrf_field() !!}
+                     {!! method_field('DELETE') !!}
+                    <i class="far fa-trash-alt fa-2x"></i>
+                    <input type="hidden" name="id[]" value="{{ $page->id }}">
+                    <input class="btn btn-outline-danger" type="submit" value="Delete">
+                </form>
+             </div>
+        @endif
+    </div>
 
-         <div class="col-sm"> &nbsp;</div>
-    @if ($data['action'] == 'Edit')
-         <div class="col-sm" style="float:right">
-             <form name="delete" method="POST" action="{{route('page_destroy')}}">
-                 {!! csrf_field() !!}
-                 {!! method_field('DELETE') !!}
-                <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $page->id }}">
-                <input class="btn btn-outline-danger" type="submit" value="Delete">
-            </form>
-         </div>
+    @if($data['action'] == 'Edit')
+        <div class="row mt-lg-3 mb-lg-5">
+            Page added by &nbsp; <a href="{{route('user_edit', $page->user->id)}}">{{$page->user->name}}</a>
+        </div>
     @endif
-</div>
-    <div class="row" style="margin-top:3em; margin-bottom: 3em;"> &nbsp;Page added by &nbsp; <a href="{{route('user_edit', $page->user->id)}}">{{$page->user->name}}</a></div>
-</div>
+
 @endsection

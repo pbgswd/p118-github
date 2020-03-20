@@ -6,7 +6,7 @@ if (!function_exists('store_datum')) {
     function store_datum($key, $value)
     {
         global $stored_data;
-        $stored_data[$key]=$value;
+        $stored_data[$key] = $value;
     }
 }
 
@@ -22,7 +22,7 @@ if (!function_exists('checked')) {
     function checked($a, $b = null)
     {
         $test = ((func_num_args() == 1) ? (!!$a) : ($a == $b));
-        echo ( $test ? ' checked="checked" ' : '' );
+        echo($test ? ' checked="checked" ' : '');
     }
 }
 
@@ -31,22 +31,22 @@ if (!function_exists('selected')) {
     function selected($a, $b = null)
     {
         $test = ((func_num_args() == 1) ? (!!$a) : ($a == $b));
-        echo ( $test ? ' selected="selected"' : '' );
+        echo($test ? ' selected="selected"' : '');
     }
 }
 
-if (! function_exists('select_options')) {
+if (!function_exists('select_options')) {
     /**
      * modified from Smarty's {{html_options}} - Smarty/plugins/function.html_options.php
      *
-     * @param array $data       Associative array of keys and display values for the dropdown options.
-     * @param mixed $selected   (array or string) Key value of selected option(s).
+     * @param array $data Associative array of keys and display values for the dropdown options.
+     * @param mixed $selected (array or string) Key value of selected option(s).
      * @param mixed $attributes (array or string) List of attributes for <select> tag.
      *                          (boolean) If TRUE, open and close <select> tag will be added with no attributes.
      *                          (boolean) If FALSE, open and close <select> tag will be omitted.
      *
      * @usage   {{ select_options($data['countries'], $user->country_code, ['name' => 'user[country_code]',
-    'class' => 'xs_selectbox']) }}
+     * 'class' => 'xs_selectbox']) }}
      */
     function select_options(array $data, $selected = null, $attributes = true)
     {
@@ -58,7 +58,8 @@ if (! function_exists('select_options')) {
             $result = '<select class="form-control" ';
             $closeTag = "</select>\n";
             if (is_array($attributes)) {
-                foreach ($attributes as $name => $value) {
+                foreach ($attributes as $name => $value)
+                {
                     $result .= ' ' . $name . '="' . htmlspecialchars($value) . '" ';
                     if ($name == 'placeholder') {
                         $placeholder = _select_opt_output(null, $value, array(), 'disabled hidden selected="selected"');
@@ -75,8 +76,9 @@ if (! function_exists('select_options')) {
             $result .= $placeholder;
         }
 
-        $selected = array_map('strval', array_values((array) $selected));
-        foreach ($data as $key => $val) {
+        $selected = array_map('strval', array_values((array)$selected));
+        foreach ($data as $key => $val)
+        {
             $result .= _select_opt_output(strval($key), $val, $selected);
         }
 
@@ -84,7 +86,13 @@ if (! function_exists('select_options')) {
         echo $result;
     }
 
-
+    /**
+     * @param $value
+     * @param $label
+     * @param $selected
+     * @param string $optAttributes
+     * @return string
+     */
     function _select_opt_output($value, $label, $selected, $optAttributes = '')
     {
         if (is_array($label)) {
@@ -104,11 +112,17 @@ if (! function_exists('select_options')) {
         return $html;
     }
 
-
+    /**
+     * @param $label
+     * @param array $subarray
+     * @param $selected
+     * @return string
+     */
     function _select_optgroup_output($label, array $subarray, $selected)
     {
         $optgroup_html = '<optgroup label="' . htmlspecialchars($label) . '">' . "\n";
-        foreach ($subarray as $value => $label) {
+        foreach ($subarray as $value => $label)
+        {
             $optgroup_html .= _select_opt_output(strval($value), $label, $selected);
         }
         $optgroup_html .= "</optgroup>\n";

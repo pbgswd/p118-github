@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Attachments;
+namespace App\Http\Requests\Meetings;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DestroyAttachment extends FormRequest
+class DestroyMeeting extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,8 @@ class DestroyAttachment extends FormRequest
      */
     public function rules()
     {
-        //todo destroy attachment form validation rules
         return [
-            //
+            'id' => 'required|exists:meetings',
         ];
     }
 }

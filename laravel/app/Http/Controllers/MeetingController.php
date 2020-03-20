@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Meetings\DestroyMeeting;
+use App\Http\Requests\Meetings\StoreMeeting;
+use App\Http\Requests\Meetings\UpdateMeeting;
 use App\Models\Meeting;
 use App\Services\AttachmentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class MeetingController extends Controller
 {
-    /** @var AttachmentService*/
+    /**
+     * @var AttachmentService
+     */
     private $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
@@ -42,14 +49,33 @@ class MeetingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(StoreMeeting $request)
     {
-dd($request->all());
+        $this->authorize('create', Auth::user());
+
+        $meeting = new meeting($request->input('meeting'));
+        $meeting->user_id = Auth::id();
+        $meeting->access_level = 'members';
+        $meeting->save();
+
+        Session::flash('success', "meeting post saved");
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $meeting);
+
+            if($result) {
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+        return redirect()->route('meeting_edit', [$meeting->id]);
 
     }
 
@@ -78,25 +104,39 @@ dd($request->all());
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Meeting  $meeting
-     * @return \Illuminate\Http\Response
+     * @param UpdateMeeting $request
+     * @param Meeting $meeting
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Meeting $meeting)
+    public function update(UpdateMeeting $request, Meeting $meeting)
     {
-        //
+        $this->authorize('update', Auth::user());
+
+
+        $result = $this->attachmentService->updateAttachment($request, $meeting);
+
+        if (null !== ($request->file('attachments')))
+        {
+            $result = $this->attachmentService->createAttachment($request, $meeting);
+
+            if($result){
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+
+
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Meeting  $meeting
-     * @return \Illuminate\Http\Response
+     * @param DestroyMeeting $meeting
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Meeting $meeting)
+    public function destroy(DestroyMeeting $meeting)
     {
-        //
+        $this->authorize('destroy', Auth::user());
     }
 }
