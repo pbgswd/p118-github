@@ -90,6 +90,18 @@ class PageController extends Controller
         $page->user_id = Auth::id();
         $page->save();
 
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $page);
+
+            if($result) {
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+
         if (!empty($request->input('page.topic_id'))) {
             $page->topics()->sync($request->input('page.topic_id'));
         }
@@ -105,7 +117,6 @@ class PageController extends Controller
 
     /**
      * Display the specified resource.
-     *
      * @param Page $page
      * @return Response
      */
@@ -172,7 +183,7 @@ class PageController extends Controller
         $result = $this->attachmentService->updateAttachment($request, $page);
 
         if (null !== ($request->file('attachments'))) {
-            $result = $this->attachmentService->createAttachment($request, $page    );
+            $result = $this->attachmentService->createAttachment($request, $page);
 
             if($result) {
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");

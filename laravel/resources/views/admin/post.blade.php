@@ -73,6 +73,17 @@ $topics = $data['topics'];
             </div>
         </div>
         <div class="row mt-lg-3"> &nbsp;</div>
+        <div class="row mt-lg-3 mb-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To Page
+                    </label>
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
@@ -134,6 +145,55 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
+
+        @if ($data['action'] == 'Edit')
+            @if(count($post->attachments) > 0)
+                <div class="col-md-12">
+                    <h2>Files</h2>
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> File </th>
+                            <th> Description </th>
+                            <th> Created At </th>
+                            <th> Updated At </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($post->attachments as $pa)
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="attachment[{{$pa->id}}][id]" value="{{$pa->id}}" />
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="{{route('attachment_download', [$post->getAttachmentFolder(), $pa->id])}}" title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$pa->id}}][description]" value="{{ old('attachments.description', $pa->description)}}" size="40"/>
+                                </td>
+                                <td>
+                                    {{$pa->created_at}}
+                                </td>
+                                <td>
+                                    {{$pa->updated_at}}
+                                </td>
+                            </tr>
+                        @endforeach
+                        <tr>
+                            <td colspan="5">
+                                <i class="far fa-trash-alt"></i> Select checkbox to delete a file
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+        @endif
 
         <div class="row mt-lg-3"> &nbsp;</div>
 

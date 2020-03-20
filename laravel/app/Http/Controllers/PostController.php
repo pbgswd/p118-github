@@ -86,6 +86,18 @@ class PostController extends Controller
         $post->user_id = Auth::id();
         $post->save();
 
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $post);
+
+            if($result) {
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+
         if (!empty($request->input('post.topic_id'))) {
             $post->topics()->sync($request->input('post.topic_id'));
         }
@@ -109,7 +121,7 @@ class PostController extends Controller
     {
         // public
         //todo control display of info, public or members
-        $post->load('user', 'topics');
+        $post->load('user', 'topics', 'attachments');
         $data = ['post' => $post];
 
         return view('post', ['data' => $data]);
@@ -124,7 +136,7 @@ class PostController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        $post->user;
+        $post->load('user', 'attachments', 'topics');
 
         $assignedTopics = [];
         foreach ($post->topics as $topic)
@@ -154,6 +166,21 @@ class PostController extends Controller
 
         $post->fill($data);
         $post->save();
+
+        $result = $this->attachmentService->updateAttachment($request, $post);
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $post);
+
+            if($result) {
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+
 
         if (empty($data['topic_id'])) {
             $assignedTopics = [];
@@ -186,22 +213,24 @@ class PostController extends Controller
     {
         $this->authorize('delete', Auth::user());
 
-        $post = Post::find($request->id)->first();
+        $posts = Post::find($request->id);
 
-        $post->untag();
-
-        $assignedTopics = [];
-        foreach ($post->topics as $topic)
+        foreach ($posts as $post)
         {
-            $assignedTopics[] = $topic->pivot->topic_id;
+            $post->untag();
+
+            $assignedTopics = [];
+            foreach ($post->topics as $topic)
+            {
+                $assignedTopics[] = $topic->pivot->topic_id;
+            }
+            $post->topics()->detach($assignedTopics);
+
+            $result = $this->attachmentService->destroyAttachment($post);
+            Post::destroy($post->id);
         }
-        $post->topics()->detach($assignedTopics);
-
-        post::destroy($request->id);
-
         Session::flash('success', Str::plural('post', count($request->id)) . ' deleted.');
 
         return redirect()->route('posts_list');
     }
-
 }

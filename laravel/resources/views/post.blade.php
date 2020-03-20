@@ -23,6 +23,32 @@ $tags = join(', ', $post->tagNames());
         <div class="col-12">
             {!! $post->content !!}
          </div>
+        @if(count($post->attachments) > 0)
+            <div class="col-md-12">
+                <h4>Files</h4>
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th> File </th>
+                        <th> Description </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($post->attachments as $pa)
+                        <tr>
+                            <td>
+                                <a href="{{route('attachment_download', [$post->getAttachmentFolder(), $pa->id])}}" title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
+                            </td>
+                            <td>
+                                {{ $pa->description}}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+
         @if ($tags != '')
             <div class="row">
                 Tags: {{$tags}}
