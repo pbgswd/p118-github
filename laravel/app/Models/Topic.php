@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\HasAttachment;
 use App\Policies\TopicPolicy;
 use Conner\Tagging\Taggable;
 use DateTime;
@@ -23,10 +24,11 @@ use Kyslik\ColumnSortable\Sortable;
  * @property User $users
  * @property Page $pages
  * @property Post $posts
+ * @property Attachment $attachments
  * @property DateTime created_at
  * @property DateTime updated_at
  */
-class Topic extends Model
+class Topic extends Model implements HasAttachment
 {
 
     use Sortable;
@@ -107,5 +109,15 @@ class Topic extends Model
     public function posts()
     {
         return $this->belongsToMany(Post::class);
+    }
+
+    public function attachments()
+    {
+        return $this->belongsToMany(Attachment::class, 'attachment_topic');
+    }
+
+    public function getAttachmentFolder(): string
+    {
+        return 'public';
     }
 }

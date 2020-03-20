@@ -7,6 +7,7 @@ use App\Http\Requests\Topic\StoreRequest;
 use App\Http\Requests\Topic\UpdateRequest;
 use App\Models\Post;
 use App\Models\Topic;
+use App\Services\AttachmentService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,6 +20,16 @@ use Illuminate\View\View;
 
 class TopicController extends Controller
 {
+    /**
+     * @var AttachmentService
+     */
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * @param Request $request
      * @return Factory|View
@@ -62,6 +73,7 @@ class TopicController extends Controller
             Session::flash('warning', "Login to view " . $topic->name);
             return redirect()->route('topics');
         }
+        $topic->attachments = $topic->attachments->sortByDesc('created_at');
 
         $topic->pages = $topic->pages->sortByDesc('created_at');
 
@@ -102,6 +114,18 @@ class TopicController extends Controller
 
         $topic->save();
 
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $topic);
+
+            if($result) {
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+
         if (!empty($request->tags)) {
             $topic->tag(trim($request->tags, ','));
         }
@@ -119,7 +143,7 @@ class TopicController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        $topic->user;
+        $topic->load('user','attachments');
 
         $access_levels = $this->getFormOptions(['access_levels']);
         $data = ['topic' => $topic, 'access_levels' => $access_levels, 'action' => 'Edit'];
@@ -142,6 +166,20 @@ class TopicController extends Controller
         $topic->fill($data);
         $topic->save();
 
+        $result = $this->attachmentService->updateAttachment($request, $topic);
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $topic);
+
+            if($result) {
+                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+            }
+            else
+            {
+                Session::flash('error', "You have an upload problem");
+            }
+        }
+
         if (empty($request->tags)) {
             $topic->untag();
         } else {
@@ -161,15 +199,19 @@ class TopicController extends Controller
     public function destroy(DestroyRequest $request)
     {
         $this->authorize('delete', Auth::user());
-        $topic = Topic::find($request->id)->first();
+        $topics = Topic::find($request->id);
 
-        $topic->untag();
+        foreach($topics as $topic)
+        {
+            $topic->untag();
 
-        $topic->pages()->detach();
-        $topic->posts()->detach();
+            $topic->pages()->detach();
+            $topic->posts()->detach();
 
-        Topic::destroy($request->id);
+            $result = $this->attachmentService->destroyAttachment($topic);
 
+            Topic::destroy($topic->id);
+        }
         Session::flash('success', Str::plural('Topic', count($request->id)) . ' deleted.');
 
         return redirect()->route('topics_list');

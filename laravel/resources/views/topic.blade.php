@@ -44,6 +44,32 @@ $posts = $topic->posts;
                 </div>
             @endif
         </div>
+
+        @if(count($topic->attachments) > 0)
+            <div class="col-md-12">
+                <h4>Files</h4>
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th> File </th>
+                        <th> Description </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($topic->attachments as $ta)
+                        <tr>
+                            <td>
+                                <a href="{{route('attachment_download', [$topic->getAttachmentFolder(), $ta->id])}}" title="Download {{$ta->file_name}}">{{$ta->file_name}}</a>
+                            </td>
+                            <td>
+                                {{ $ta->description}}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
     </div>
 </div>
 <div class="row mt-lg-5"></div>
