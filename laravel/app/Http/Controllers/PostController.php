@@ -7,6 +7,7 @@ use App\Http\Requests\Posts\StorePost;
 use App\Http\Requests\Posts\UpdatePost;
 use App\Models\Post;
 use App\Models\Topic;
+use App\Services\AttachmentService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,16 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    /**
+     * @var AttachmentService
+     */
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

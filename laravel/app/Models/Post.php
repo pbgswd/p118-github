@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\HasAttachment;
 use App\Policies\PostPolicy;
 use Conner\Tagging\Taggable;
 use DateTime;
@@ -24,7 +25,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property DateTime updated_at
  *
  */
-class Post extends Model
+class Post extends Model implements HasAttachment
 {
     use Sortable;
     use Taggable;
@@ -74,9 +75,6 @@ class Post extends Model
             'allow_comments',
         ];
 
-    /**
-     * in urls, what field value is used to identify a Topic record?
-     */
     public function getRouteKeyName()
     {
         return 'slug';
@@ -89,8 +87,6 @@ class Post extends Model
         return $this->attributes['title'] = $value;
     }
 
-    // relationship to users table
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -99,5 +95,15 @@ class Post extends Model
     public function topics()
     {
         return $this->belongsToMany(Topic::class);
+    }
+
+    public function attachments()
+    {
+        return $this->belongsToMany(Attachment::class, 'attachment_post');
+    }
+
+    public function getAttachmentFolder(): string
+    {
+        return 'public';
     }
 }
