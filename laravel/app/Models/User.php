@@ -84,10 +84,6 @@ class User extends Authenticatable implements HasAttachment
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Get model for phone data associated with the user.
-     */
-
     public function phone_number()
     {
         return $this->hasOne(PhoneNumber::class);

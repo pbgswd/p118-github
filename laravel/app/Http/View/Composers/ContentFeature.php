@@ -32,7 +32,6 @@ class ContentFeature
         $posts = Post::where('live', 1)->where('in_menu', 1)->orderBy('created_at', 'desc')->take(10)->get();
         $pages = Page::where('live', 1)->where('in_menu', 1)->orderBy('created_at', 'desc')->take(10)->get();
 
-
         $data = ['topics' => $topics, 'posts' => $posts, 'pages' => $pages];
 
        // $posts->short_body = substr($posts->content, 0, 60) . '...';

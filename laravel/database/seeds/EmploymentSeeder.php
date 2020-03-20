@@ -17,7 +17,7 @@ class EmploymentSeeder extends Seeder
         set_time_limit(0);
         require_once '../scratch/employmentSeedData.php';
 
-        $data = []; //TODO data emptied to prevent multi run without looking
+        $data = []; // data emptied to prevent multi run without looking
 
         foreach ($data as $d) {
 

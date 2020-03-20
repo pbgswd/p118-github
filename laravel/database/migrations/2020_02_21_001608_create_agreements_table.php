@@ -12,7 +12,6 @@ class CreateAgreementsTable extends Migration
      * @return void
      */
 
-    //todo agreement to attachments table
     public function up()
     {
         Schema::create('agreements', function (Blueprint $table) {

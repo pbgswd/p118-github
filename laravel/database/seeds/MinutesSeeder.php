@@ -23,6 +23,7 @@ class MinutesSeeder extends Seeder
         //require_once '../scratch/minutes_array.php';
         //$result = $minutes_array;
 
+        $result = [];
         $i = 1;
         $limit = 500000;
 
@@ -63,13 +64,8 @@ class MinutesSeeder extends Seeder
         }
 
         echo "---------------done \n";
-//TODO attach minutes
-
-
 
     }
-
-
 
        /* foreach ($files as $file)
         {
@@ -79,7 +75,5 @@ class MinutesSeeder extends Seeder
             $date = date_format(new DateTime(trim($result[1])),  'Y-m-d H:i:s');
             $data[] = ['path' => $file['path'], 'file' => $doc[1], 'title' => $title, 'date' => $date];
         }*/
-
-//TODO: db insert live data
 
 }
