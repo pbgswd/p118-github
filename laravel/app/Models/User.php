@@ -9,6 +9,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Searchable\SearchResult;
+use Spatie\Searchable\Searchable;
+
 
 /**
  * Class User
@@ -27,8 +30,19 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Committee $committee_membership
  *
  */
-class User extends Authenticatable implements HasAttachment
+class User extends Authenticatable implements HasAttachment, Searchable
 {
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('SearchController@index', $this->slug);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->title,
+            $url,
+        );
+    }
+
     use Notifiable;
     use Sortable;
     use HasRoles;

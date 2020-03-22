@@ -21,6 +21,7 @@
         "rtconner/laravel-tagging": "^3.2.3",
         "spatie/image": "^1.7.4",
         "spatie/laravel-permission": "^3.0",
+        "spatie/laravel-searchable": "^1.6",
         "unicodeveloper/laravel-password": "^1.0"
     },
     "require-dev": {
