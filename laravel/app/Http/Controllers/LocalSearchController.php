@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Search\LocalSearchResult;
 use App\Models\Agreement;
+use App\Models\Bylaw;
+use App\Models\Employment;
 use App\Models\LocalSearch;
+use App\Models\Meeting;
+use App\Models\Organization;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
+use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -31,6 +36,11 @@ class LocalSearchController extends Controller
             ->registerModel(Page::class, ['title', 'description', 'content'])
             ->registerModel(Topic::class, ['name', 'description'])
             ->registerModel(Agreement::class, ['title', 'description'])
+            ->registerModel(Bylaw::class, ['title', 'description'])
+            ->registerModel(Employment::class, ['title', 'description'])
+            ->registerModel(Meeting::class, ['title', 'description'])
+            ->registerModel(Organization::class, ['name', 'description'])
+            ->registerModel(Venue::class, ['name', 'description'])
             ->registerModel(User::class, 'name')
             ->search($request->search);
 
@@ -47,6 +57,7 @@ class LocalSearchController extends Controller
          * bylaws
          * jobs
          * minutes
+         *
          * tags
          * organizations
          *

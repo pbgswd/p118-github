@@ -7,6 +7,8 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
@@ -21,9 +23,23 @@ use Kyslik\ColumnSortable\Sortable;
  * @property DateTime created_at
  * @property DateTime updated_at
  */
-class Venue extends Model
+class Venue extends Model implements Searchable
 {
     use Sortable;
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('venue', $this->slug);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url,
+        );
+    }
 
     protected $policies = [
         Venue::class => VenuePolicy::class,

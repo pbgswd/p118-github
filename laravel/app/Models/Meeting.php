@@ -6,6 +6,8 @@ use App\Models\Interfaces\HasAttachment;
 use App\Policies\MeetingPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
@@ -18,9 +20,25 @@ use Kyslik\ColumnSortable\Sortable;
  * @property \DateTime updated_at
  * @property MeetingAttachment $attachments
  */
-class Meeting extends Model implements HasAttachment
+class Meeting extends Model implements HasAttachment, Searchable
 {
     use Sortable;
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('meeting', $this->id);
+
+        $this->name = $this->title;
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url,
+        );
+    }
 
     protected $policies = [
         Meeting::class => MeetingPolicy::class,

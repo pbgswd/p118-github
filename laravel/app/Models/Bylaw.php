@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Interfaces\HasAttachment;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
@@ -18,9 +20,20 @@ use Kyslik\ColumnSortable\Sortable;
  * @property \DateTime date
  */
 
-class Bylaw extends Model implements HasAttachment
+class Bylaw extends Model implements HasAttachment, Searchable
 {
     use Sortable;
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('bylaw_show', $this->id);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->title,
+            $url,
+        );
+    }
 
     /**
      * The attributes that are mass assignable.

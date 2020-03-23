@@ -6,6 +6,8 @@ use App\Models\Interfaces\HasAttachment;
 use App\Policies\EmploymentPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
@@ -21,7 +23,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string $getAttachmentFolder
  */
 
-class Employment extends Model implements HasAttachment
+class Employment extends Model implements HasAttachment, Searchable
 {
     use Sortable;
 
@@ -30,6 +32,22 @@ class Employment extends Model implements HasAttachment
     protected $policies = [
         Employment::class => EmploymentPolicy::class,
     ];
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('job_view', $this->id);
+
+        $this->name = $this->title;
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url,
+        );
+    }
 
     /**
      * @var array

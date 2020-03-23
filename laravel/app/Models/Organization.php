@@ -6,6 +6,8 @@ use App\Policies\OrganizationPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
@@ -19,9 +21,25 @@ use Kyslik\ColumnSortable\Sortable;
  * @property \DateTime created_at
  * @property \DateTime updated_at
  */
-class Organization extends Model
+class Organization extends Model implements Searchable
 {
     use Sortable;
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        //todo organization route for front end, needed for search
+        //$url = route('meeting', $this->id);
+        $url = '';
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url,
+        );
+    }
 
     protected $policies = [
         Organization::class => OrganizationPolicy::class,
