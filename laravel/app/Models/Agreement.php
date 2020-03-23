@@ -6,6 +6,8 @@ use App\Models\Interfaces\HasAttachment;
 use App\Policies\AgreementPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
@@ -20,9 +22,25 @@ use Kyslik\ColumnSortable\Sortable;
  * @property \DateTime until
  */
 
-class Agreement extends Model implements HasAttachment
+class Agreement extends Model implements HasAttachment, Searchable
 {
     use Sortable;
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('agreement_show', $this->id);
+
+        $this->name = $this->title;
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url,
+        );
+    }
 
     /**
      * @var array

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Search\LocalSearchResult;
+use App\Models\Agreement;
 use App\Models\LocalSearch;
 use App\Models\Page;
 use App\Models\Post;
@@ -29,6 +30,7 @@ class LocalSearchController extends Controller
             ->registerModel(Post::class, ['title', 'description', 'content'])
             ->registerModel(Page::class, ['title', 'description', 'content'])
             ->registerModel(Topic::class, ['name', 'description'])
+            ->registerModel(Agreement::class, ['title', 'description'])
             ->registerModel(User::class, 'name')
             ->search($request->search);
 
@@ -39,19 +41,16 @@ class LocalSearchController extends Controller
          * General site search, topics, posts and pages.
          * also, whatever else is public.
          *
-         * sub committees
+         * sub committees posts, post comments
          * venues
          * agreements
          * bylaws
          * jobs
          * minutes
          * tags
-         * 
-         * tags
-         * departments
-         * resources
-         * people - probably key names, but more when logged in.
-         * info
+         * organizations
+         *
+         * pages posts topics users
          * search with logged in or logged out state
          * consistently deliver results
          */
