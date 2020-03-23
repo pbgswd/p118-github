@@ -3,33 +3,29 @@
 namespace App\Models;
 
 use App\Policies\AttachmentPolicy;
-use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * @property int $id
- * @property string $file
- * @property string $file_name
- * @property User $users
- * @property Meeting $meetings
- * @property DateTime created_at
- * @property DateTime updated_at
+ * @property int       $id
+ * @property string    $file
+ * @property string    $file_name
+ * @property User[]    $users
+ * @property Meeting[] $meetings
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
  */
 class Attachment extends Model
 {
     protected $guard_name = 'web';
 
-    /**
-     * @var array
-     */
     protected $policies = [
         Attachment::class => AttachmentPolicy::class,
     ];
 
     /**
      * The attributes that are mass assignable.
-     * @var array
-     *
      */
     protected $fillable = [
         'file',
@@ -43,18 +39,19 @@ class Attachment extends Model
         'updated_at',
     ];
 
+
     /**
-     * relationships
+     * @return BelongsToMany
      */
-    public function meetings()
+    public function meetings(): BelongsToMany
     {
         return $this->belongsToMany(Meeting::class, 'attachment_meeting');
     }
 
-
-    // relationship to users table
-
-    public function users()
+    /**
+     * @return BelongsTo
+     */
+    public function users(): BelongsTo // ??? one-to-one or one-to-many
     {
         return $this->belongsTo(User::class, 'user_id');
     }

@@ -27,5 +27,6 @@ laralvel/.env.testing~
 .gitignore~
 *.md~
 .idea
-.idea/*
+.idea/
 .idea/workspace.xml
+laradock/
