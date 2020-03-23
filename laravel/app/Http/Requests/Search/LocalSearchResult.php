@@ -24,7 +24,7 @@ class LocalSearchResult extends FormRequest
     public function rules()
     {
         return [
-            'search' => 'required|max:64',
+            'search' => 'string|required|max:64|min:2',
         ];
     }
 }
