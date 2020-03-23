@@ -4,7 +4,8 @@ namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\UserPolicy;
-use DateTime;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
@@ -16,36 +17,24 @@ use Spatie\Searchable\Searchable;
 /**
  * Class User
  *
- * @property int id
- * @property string name
- * @property string email
- * @property string $password
- * @property DateTime created_at
- * @property DateTime updated_at
- * @property PhoneNumber $phone_number
- * @property UserInfo $user_info
- * @property Address $address
- * @property Membership $membership
- * @property Attachment $attachments
- * @property Committee $committee_membership
- *
+ * @property int           $id
+ * @property string        $name
+ * @property string        $email
+ * @property string        $password
+ * @property \DateTime     $created_at
+ * @property \DateTime     $updated_at
+ * @property PhoneNumber   $phone_number
+ * @property UserInfo      $user_info
+ * @property Address       $address
+ * @property Membership    $membership
+ * @property Attachment[]  $attachments
+ * @property Committee[]   $committee_membership
  */
 class User extends Authenticatable implements HasAttachment, Searchable
 {
     use Notifiable;
     use Sortable;
     use HasRoles;
-
-    public function getSearchResult(): SearchResult
-    {
-        $url = route('member', $this->id);
-
-        return new \Spatie\Searchable\SearchResult(
-            $this,
-            $this->name,
-            $url,
-        );
-    }
 
     protected $guard_name = 'web';
 
@@ -61,16 +50,13 @@ class User extends Authenticatable implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $dates =
-        [
-            'created_at',
-            'updated_at'
-        ];
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = [
         'name',
@@ -91,44 +77,76 @@ class User extends Authenticatable implements HasAttachment, Searchable
 
     /**
      * The attributes that should be cast to native types.
-     *
-     * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function phone_number()
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult(
+            $this,
+            $this->name,
+            \route('member', $this->id),
+        );
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function phone_number(): HasOne
     {
         return $this->hasOne(PhoneNumber::class);
     }
 
-    public function user_info()
+    /**
+     * @return HasOne
+     */
+    public function user_info(): HasOne
     {
         return $this->hasOne(UserInfo::class);
     }
 
-    public function address()
+    /**
+     * @return HasOne
+     */
+    public function address(): HasOne
     {
         return $this->hasOne(Address::class);
     }
 
-    public function membership()
+    /**
+     * @return HasOne
+     */
+    public function membership(): HasOne
     {
         return $this->hasOne(Membership::class);
     }
 
-    public function attachments()
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class);
     }
 
-    public function committee_membership()
+    /**
+     * @return BelongsToMany
+     */
+    public function committee_membership(): BelongsToMany
     {
+        //TODO: pluralize method name
         return $this->belongsToMany(Committee::class)->withPivot('role');
-            //TODO pluralize method name
     }
 
+    /**
+     * @return string
+     */
     public function getAttachmentFolder(): string
     {
         return 'users';

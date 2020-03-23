@@ -5,90 +5,91 @@ namespace App\Models;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\MeetingPolicy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int $id
- * @property string $title
- * @property string $description
- * @property boolean $live
- * @property User $users
- * @property \DateTime $date
- * @property \DateTime created_at
- * @property \DateTime updated_at
- * @property MeetingAttachment $attachments
+ * @property int          $id
+ * @property string       $title
+ * @property string       $description
+ * @property boolean      $live
+ * @property User         $user
+ * @property Attachment[] $attachments
+ * @property \DateTime    $date
+ * @property \DateTime    $created_at
+ * @property \DateTime    $updated_at
  */
 class Meeting extends Model implements HasAttachment, Searchable
 {
     use Sortable;
+
+    protected $policies = [
+        Meeting::class => MeetingPolicy::class,
+    ];
+
+    /**
+     * The attributes that are mass assignable.
+     */
+    protected $fillable = [
+        'title',
+        'description',
+        'date',
+        'live',
+    ];
+
+    public $sortable = [
+        'id',
+        'title',
+        'live',
+        'date',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $dates = [
+        'date',
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $casts = [
+        'live' => 'boolean',
+    ];
 
     /**
      * @return SearchResult
      */
     public function getSearchResult(): SearchResult
     {
-        $url = route('meeting', $this->id);
-
-        $this->name = $this->title;
-
-        return new \Spatie\Searchable\SearchResult(
+        return new SearchResult(
             $this,
-            $this->name,
-            $url,
+            $this->title,
+            \route('meeting', $this->id),
         );
     }
 
-    protected $policies = [
-        Meeting::class => MeetingPolicy::class,
-        ];
-
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * @return HasOne
      */
-    protected $fillable =
-        [
-            'title',
-            'description',
-            'date',
-            'live',
-        ];
-
-    public $sortable =
-        [
-            'id',
-            'title',
-            'live',
-            'date',
-            'created_at',
-            'updated_at',
-        ];
-
-    protected $dates =
-        [
-            'date',
-            'created_at',
-            'updated_at'
-        ];
-
-    protected $casts =
-        [
-            'live' => 'boolean',
-        ];
-
-    public function user()
+    public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function attachments()
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_meeting');
     }
 
+    /**
+     * @return string
+     */
     public function getAttachmentFolder(): string
     {
         return 'meetings';

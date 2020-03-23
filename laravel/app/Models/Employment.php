@@ -5,22 +5,23 @@ namespace App\Models;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\EmploymentPolicy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int $id
- * @property string $title
- * @property string $description
- * @property boolean $live
- * @property boolean $status
- * @property User $users
- * @property \DateTime $deadline
- * @property \DateTime created_at
- * @property \DateTime updated_at
- * @property Attachment $attachments
- * @property string $getAttachmentFolder
+ * @property int          $id
+ * @property string       $title
+ * @property string       $description
+ * @property boolean      $live
+ * @property boolean      $status
+ * @property User         $user
+ * @property Attachment[] $attachments
+ * @property \DateTime    $deadline
+ * @property \DateTime    $created_at
+ * @property \DateTime    $updated_at
  */
 
 class Employment extends Model implements HasAttachment, Searchable
@@ -33,25 +34,6 @@ class Employment extends Model implements HasAttachment, Searchable
         Employment::class => EmploymentPolicy::class,
     ];
 
-    /**
-     * @return SearchResult
-     */
-    public function getSearchResult(): SearchResult
-    {
-        $url = route('job_view', $this->id);
-
-        $this->name = $this->title;
-
-        return new \Spatie\Searchable\SearchResult(
-            $this,
-            $this->name,
-            $url,
-        );
-    }
-
-    /**
-     * @var array
-     */
     protected $fillable = [
         'title',
         'description',
@@ -59,40 +41,59 @@ class Employment extends Model implements HasAttachment, Searchable
         'status',
         'live',
         'deadline',
-        ];
+    ];
 
-    /**
-     * @var array
-     */
     public $sortable = [
         'title',
         'description',
         'status',
         'live',
         'deadline',
-        ];
+    ];
 
     protected $dates = [
-            'deadline',
-            'created_at',
-            'updated_at'
-        ];
+        'deadline',
+        'created_at',
+        'updated_at'
+    ];
 
     protected $casts = [
-            'live' => 'boolean',
-            'status' => 'boolean',
-        ];
+        'live' => 'boolean',
+        'status' => 'boolean',
+    ];
 
-    public function user()
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult(
+            $this,
+            $this->title,
+            \route('job_view', $this->id),
+        );
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function attachments()
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_employment');
     }
 
+    /**
+     * @return string
+     */
     public function getAttachmentFolder(): string
     {
         return 'employment';

@@ -5,8 +5,9 @@ namespace App\Models;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\TopicPolicy;
 use Conner\Tagging\Taggable;
-use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
@@ -15,6 +16,7 @@ use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
+ * @property string $slug
  * @property string $name
  * @property string $description
  * @property string $content
@@ -23,116 +25,127 @@ use Spatie\Searchable\SearchResult;
  * @property int $sort_order
  * @property boolean $in_menu
  * @property boolean $allow_comments
- * @property User $users
- * @property Page $pages
- * @property Post $posts
- * @property Attachment $attachments
- * @property DateTime created_at
- * @property DateTime updated_at
+ * @property User[] $users
+ * @property Page[] $pages
+ * @property Post[] $posts
+ * @property Attachment[] $attachments
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
  */
 class Topic extends Model implements HasAttachment, Searchable
 {
-
     use Sortable;
     use Taggable;
+
+
+    /**
+     * The attributes that are mass assignable.
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'content',
+        'access_level',
+        'sort_order',
+        'live',
+        'in_menu',
+        'allow_comments',
+    ];
+
+    protected $policies = [
+        Topic::class => TopicPolicy::class,
+    ];
+
+    public $sortable = [
+        'id',
+        'name',
+        'access_level',
+        'live',
+        'sort_order',
+        'in_menu',
+        'allow_comments',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $casts = [
+        'in_menu' => 'boolean',
+        'allow_comments' => 'boolean',
+        'live' => 'boolean',
+    ];
+
 
     /**
      * @return SearchResult
      */
     public function getSearchResult(): SearchResult
     {
-        $url = route('topic_show', $this->slug);
-
-        return new \Spatie\Searchable\SearchResult(
+        return new SearchResult(
             $this,
             $this->name,
-            $url,
+            \route('topic_show', $this->slug),
         );
     }
-
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable =
-        [
-            'name',
-            'description',
-            'content',
-            'access_level',
-            'sort_order',
-            'live',
-            'in_menu',
-            'allow_comments',
-        ];
-
-    protected $policies = [
-        Topic::class => TopicPolicy::class,
-    ];
-
-    public $sortable =
-        [
-            'id',
-            'name',
-            'access_level',
-            'live',
-            'sort_order',
-            'in_menu',
-            'allow_comments',
-            'created_at',
-            'updated_at',
-        ];
-
-    protected $dates =
-        [
-            'created_at',
-            'updated_at'
-        ];
-
-    protected $casts =
-        [
-            'in_menu' => 'boolean',
-            'allow_comments' => 'boolean',
-            'live' => 'boolean',
-        ];
-
 
     /**
      * in urls, what field value is used to identify a Topic record?
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public function setNameAttribute($value)
+    /**
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function setNameAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
         return $this->attributes['name'] = $value;
     }
 
-    public function user()
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function pages()
+    /**
+     * @return BelongsToMany
+     */
+    public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class);
     }
 
-    public function posts()
+    /**
+     * @return BelongsToMany
+     */
+    public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class);
     }
 
-    public function attachments()
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_topic');
     }
 
+    /**
+     * @return string
+     */
     public function getAttachmentFolder(): string
     {
         return 'public';

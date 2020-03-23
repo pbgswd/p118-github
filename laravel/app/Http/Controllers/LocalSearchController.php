@@ -29,20 +29,21 @@ class LocalSearchController extends Controller
     public function index(LocalSearchResult $request)
     {
 
-        $data['search'] = $request->search;
-
-        $data['results'] = (new Search())
-            ->registerModel(Post::class, ['title', 'description', 'content'])
-            ->registerModel(Page::class, ['title', 'description', 'content'])
-            ->registerModel(Topic::class, ['name', 'description'])
-            ->registerModel(Agreement::class, ['title', 'description'])
-            ->registerModel(Bylaw::class, ['title', 'description'])
-            ->registerModel(Employment::class, ['title', 'description'])
-            ->registerModel(Meeting::class, ['title', 'description'])
-            ->registerModel(Organization::class, ['name', 'description'])
-            ->registerModel(Venue::class, ['name', 'description'])
-            ->registerModel(User::class, 'name')
-            ->search($request->search);
+        $data = [
+            'search' => $request->search,
+            'results' => (new Search())
+                ->registerModel(Post::class, ['title', 'description', 'content'])
+                ->registerModel(Page::class, ['title', 'description', 'content'])
+                ->registerModel(Topic::class, ['name', 'description'])
+                ->registerModel(Agreement::class, ['title', 'description'])
+                ->registerModel(Bylaw::class, ['title', 'description'])
+                ->registerModel(Employment::class, ['title', 'description'])
+                ->registerModel(Meeting::class, ['title', 'description'])
+                ->registerModel(Organization::class, ['name', 'description'])
+                ->registerModel(Venue::class, ['name', 'description'])
+                ->registerModel(User::class, 'name')
+                ->search($request->search),
+        ];
 
         /*
          * https://laraveldaily.com/new-package-laravel-searchable-easily-search-in-multiple-models/
@@ -67,6 +68,7 @@ class LocalSearchController extends Controller
          */
 
         $data['plural'] = Str::plural('Result', $data['results']->count());
+
         return view('search', ['data' => $data]);
     }
 
