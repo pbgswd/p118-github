@@ -73,7 +73,7 @@ class Agreement extends Model implements HasAttachment, Searchable
     {
         return new SearchResult(
             $this,
-            $this->title, // ???
+            $this->title,
             \route('agreement_show', $this->id),
         );
     }

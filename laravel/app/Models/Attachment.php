@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int       $id
  * @property string    $file
  * @property string    $file_name
- * @property User[]    $users
+ * @property User      $user
  * @property Meeting[] $meetings
  * @property \DateTime $created_at
  * @property \DateTime $updated_at
@@ -51,7 +51,7 @@ class Attachment extends Model
     /**
      * @return BelongsTo
      */
-    public function users(): BelongsTo // ??? one-to-one or one-to-many
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }

@@ -15,8 +15,8 @@ use Spatie\Searchable\SearchResult;
 
 /**
  * @property int          $id
- * @property string       $slug   // ???
- * @property string       $title  // ???
+ * @property string       $slug
+ * @property string       $title
  * @property string       $description
  * @property string       $content
  * @property string       $access_level
@@ -85,8 +85,8 @@ class Page extends Model implements HasAttachment, Searchable
     {
         return new SearchResult(
             $this,
-            $this->title, // ???
-            \route('page_show', $this->slug) // ???
+            $this->title,
+            \route('page_show', $this->slug)
         );
     }
 

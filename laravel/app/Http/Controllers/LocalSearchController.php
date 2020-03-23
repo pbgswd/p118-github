@@ -13,8 +13,8 @@ use App\Models\Page;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
+use App\Models\UserInfo;
 use App\Models\Venue;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Search;
@@ -42,6 +42,7 @@ class LocalSearchController extends Controller
                 ->registerModel(Organization::class, ['name', 'description'])
                 ->registerModel(Venue::class, ['name', 'description'])
                 ->registerModel(User::class, 'name')
+                ->registerModel(UserInfo::class, 'about')
                 ->search($request->search),
         ];
 

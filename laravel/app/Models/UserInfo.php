@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
+ * @property int $user_id
  * @property string $file_name
  * @property string $image
  * @property string $about
@@ -13,19 +17,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $show_picture
  * @property boolean $share_email
  * @property boolean $share_phone
+ * @property User $user
  */
-class UserInfo extends Model
+class UserInfo extends Model implements Searchable
 {
-
     protected $guard_name = 'web';
 
     protected $table = 'users_info';
+
     public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = [
         'show_profile',
@@ -37,11 +40,8 @@ class UserInfo extends Model
         'about',
     ];
 
-
     /**
      * The attributes that should be cast to native types.
-     *
-     * @var array
      */
     protected $casts = [
         'show_profile' => 'boolean',
@@ -50,4 +50,23 @@ class UserInfo extends Model
         'share_phone' => 'boolean',
     ];
 
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult(
+            $this->user,
+            $this->user->name,
+            \route('member', $this->user_id),
+        );
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

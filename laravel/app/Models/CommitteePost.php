@@ -4,6 +4,8 @@ namespace App\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -43,23 +45,19 @@ class CommitteePost extends Model
         'updated_at',
     ];
 
-    protected $dates =
-        [
-            'created_at',
-            'updated_at'
-        ];
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
 
-    protected $casts =
-        [
-            'sticky' => 'boolean',
-            'allow_comments' => 'boolean',
-            'live' => 'boolean',
-        ];
+    protected $casts = [
+        'sticky' => 'boolean',
+        'allow_comments' => 'boolean',
+        'live' => 'boolean',
+    ];
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = [
         'title',
@@ -72,28 +70,42 @@ class CommitteePost extends Model
     /**
      * in urls, what field value is used to identify a CommitteePost record?
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public function setTitleAttribute($value)
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    public function setTitleAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
         return $this->attributes['title'] = $value;
     }
 
-    public function creator()
+    /**
+     * @return HasOne
+     */
+    public function creator(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function committee()
+    /**
+     * @return HasOne
+     */
+    public function committee(): HasOne
     {
         return $this->hasOne(Committee::class, 'id', 'committee_id');
     }
 
-    public function post_comments()
+    /**
+     * @return HasMany
+     */
+    public function post_comments(): HasMany
     {
         return $this->hasMany(CommitteePostComment::class, 'post_id', 'id');
     }
