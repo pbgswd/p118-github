@@ -9,6 +9,8 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
@@ -25,10 +27,21 @@ use Kyslik\ColumnSortable\Sortable;
  * @property DateTime updated_at
  * @property PageAttachmet $attachment
  */
-class Page extends Model implements HasAttachment
+class Page extends Model implements HasAttachment, Searchable
 {
     use Sortable;
     use Taggable;
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('page_show', $this->slug);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->title,
+            $url,
+        );
+    }
 
     /**
      * The attributes that are mass assignable.

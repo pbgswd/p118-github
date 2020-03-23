@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Search\LocalSearchResult;
 use App\Models\LocalSearch;
+use App\Models\Page;
+use App\Models\Post;
+use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
-use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
+use Spatie\Searchable\Search;
 
 class LocalSearchController extends Controller
 {
@@ -23,11 +25,12 @@ class LocalSearchController extends Controller
 
         $data['search'] = $request->search;
 
-        $searchResults = (new Search())
+        $data['results'] = (new Search())
+            ->registerModel(Post::class, ['title', 'description', 'content'])
+            ->registerModel(Page::class, ['title', 'description', 'content'])
+            ->registerModel(Topic::class, ['name', 'description'])
             ->registerModel(User::class, 'name')
             ->search($request->search);
-
-        dd($searchResults);
 
         /*
          * https://laraveldaily.com/new-package-laravel-searchable-easily-search-in-multiple-models/
@@ -35,8 +38,15 @@ class LocalSearchController extends Controller
          * https://medium.com/justlaravel/search-functionality-in-laravel-a2527282150b
          * General site search, topics, posts and pages.
          * also, whatever else is public.
+         *
          * sub committees
          * venues
+         * agreements
+         * bylaws
+         * jobs
+         * minutes
+         * tags
+         * 
          * tags
          * departments
          * resources
@@ -45,9 +55,8 @@ class LocalSearchController extends Controller
          * search with logged in or logged out state
          * consistently deliver results
          */
-        $data['results'] = range(1, 12);
 
-        $data['plural'] = Str::plural('Result', count($data['results']));
+        $data['plural'] = Str::plural('Result', $data['results']->count());
         return view('search', ['data' => $data]);
     }
 
@@ -60,7 +69,7 @@ class LocalSearchController extends Controller
      */
     public function show(LocalSearch $search)
     {
-        //
+        dd(__METHOD__);
     }
 
 

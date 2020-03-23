@@ -38,9 +38,7 @@ $c = $data['committeepost']->committee;
                     <i class="far fa-comment"></i> Add my comment to {{$post->title}}
                 </a>
             </div>
-            <div class="col-6">
-                sort by latest first / first first.
-            </div>
+
         </div>
         <div class="row  mt-3 p-4">
             @foreach($data['committeepost']->post_comments as $comment)

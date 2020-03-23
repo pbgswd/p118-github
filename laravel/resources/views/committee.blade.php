@@ -1,7 +1,7 @@
 <?php
 //dd($data);
 $c = $data['committee'];
-//dd($c->posts);
+//dd($c->posts->count());
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -23,7 +23,7 @@ $c = $data['committee'];
                 Created by  <a title="{{ $c->creator->name }}" href="{{ route('member', $c->creator->id) }}">{{$c->creator->name }}</a>
             </div>
             <div class="col-12 mb-4">
-                <h4><i class="far fa-newspaper"></i> {{count($c->posts)}} {{Str::plural('Post',count($c->posts) ) }}
+                <h4><i class="far fa-newspaper"></i> {{$c->postsCount}} {{Str::plural('Post', $c->postsCount ) }}
                     @if($data['isMember'] == 1)
                         | <i class="far fa-edit"></i><a href="{{route('committee_add_public_post', $c)}}">Add New Post</a>
                     @endif
@@ -37,9 +37,16 @@ $c = $data['committee'];
                     {{$p->updated_at}}
                 </div>
             @endforeach
+            @if($c->postsCount > 5)
+                <div class="row mt-lg-4">
+                    <div class="col-3 text-center">
+                        {!! $c->posts->links() !!}
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="row mt-3">
-            <div class="col-12 mr-2 border border-dark rounded-lg">
+            <div class="col-12 mr-2 pt-lg-2 border border-dark rounded-lg">
                 <h5>{{$c->name}} Executive</h5>
                 <p>
                     @foreach ($c['executives'] as $exec)

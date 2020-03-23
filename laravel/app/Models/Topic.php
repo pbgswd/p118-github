@@ -9,6 +9,8 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 
 /**
@@ -28,11 +30,26 @@ use Kyslik\ColumnSortable\Sortable;
  * @property DateTime created_at
  * @property DateTime updated_at
  */
-class Topic extends Model implements HasAttachment
+class Topic extends Model implements HasAttachment, Searchable
 {
 
     use Sortable;
     use Taggable;
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('topic_show', $this->slug);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url,
+        );
+    }
+
 
     /**
      * The attributes that are mass assignable.

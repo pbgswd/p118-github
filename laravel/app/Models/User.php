@@ -32,20 +32,20 @@ use Spatie\Searchable\Searchable;
  */
 class User extends Authenticatable implements HasAttachment, Searchable
 {
-    public function getSearchResult(): SearchResult
-    {
-        $url = route('SearchController@index', $this->slug);
-
-        return new \Spatie\Searchable\SearchResult(
-            $this,
-            $this->title,
-            $url,
-        );
-    }
-
     use Notifiable;
     use Sortable;
     use HasRoles;
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('member', $this->id);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url,
+        );
+    }
 
     protected $guard_name = 'web';
 

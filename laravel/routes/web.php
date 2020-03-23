@@ -88,6 +88,7 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
 
     Route::post('/search', 'LocalSearchController@index')->name('search');
+    Route::get('/search/{search}', 'LocalSearchController@show')->name('search_show');
 
 });
 

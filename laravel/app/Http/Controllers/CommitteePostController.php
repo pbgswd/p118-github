@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class CommitteePostController extends Controller
 {
+    //todo implement policies for Committee post controller
     /**
      * Display a listing of the resource.
      *
@@ -66,7 +67,7 @@ class CommitteePostController extends Controller
 
         Session::flash('success', "You have saved a new post in " . $committee->name);
 
-        return redirect()->route('committee_post_edit', [$committee->slug, $post->slug]);
+        return redirect()->route('committee_post', [$committee->slug, $post->slug]);
     }
 
     /**
@@ -84,6 +85,7 @@ class CommitteePostController extends Controller
 
         $data['committeepost'] = $committeePost;
         $data['action'] = 'Add';
+        $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
 
         return view('committee_post', ['data' => $data]);
     }

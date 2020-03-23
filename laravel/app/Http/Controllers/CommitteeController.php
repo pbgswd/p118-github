@@ -84,6 +84,11 @@ class CommitteeController extends Controller
         //todo order posts returned by date, latest first, pagination
         $committee->load('creator', 'committee_members', 'posts');
 
+        $committee->postsCount = CommitteePost::where('committee_id', $committee->id)->count();
+
+        $committee->posts = CommitteePost::where('committee_id', $committee->id)->orderByDesc('created_at')->paginate(5);
+        //$committee->post_entries = $committee->posts->sortByDesc('created_at');
+
         $committee['committee_roles'] = Options::committee_roles();
         $committee_executive_roles = Options::committee_executive_roles();
 

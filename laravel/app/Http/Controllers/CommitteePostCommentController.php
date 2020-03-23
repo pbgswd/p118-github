@@ -23,6 +23,8 @@ class CommitteePostCommentController extends Controller
      */
     public function store(Request $request, Committee $committee, CommitteePost $committeePost)
     {
+        //todo form validator for committee post comment controller store method
+
         //// $this->authorize('create', Auth::user());
         $postComment = new CommitteePostComment($request->input('comment'));
         $postComment->committee_id = $committee->id;

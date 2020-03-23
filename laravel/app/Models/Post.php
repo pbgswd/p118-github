@@ -9,6 +9,8 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 
 /**
@@ -25,10 +27,21 @@ use Kyslik\ColumnSortable\Sortable;
  * @property DateTime updated_at
  *
  */
-class Post extends Model implements HasAttachment
+class Post extends Model implements HasAttachment, Searchable
 {
     use Sortable;
     use Taggable;
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('post_show', $this->slug);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->title,
+            $url,
+        );
+    }
 
     protected $policies = [
         Post::class => PostPolicy::class,
