@@ -13,7 +13,7 @@ $attachments = $data['attachments'];
             </h3>
         </div>
         <div class="col-6">
-            <form id="search-form" action="{{route('admin_attachment_search')}}" method="POST">
+            <form id="search-form" action="{{route('list_attachments_search_result')}}" method="POST">
                 @csrf
                 <input class="form-control form-control-dark w-100" type="text" name="search" placeholder="Attachment Search" aria-label="Search">
             </form>

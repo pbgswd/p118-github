@@ -16,6 +16,7 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Models\Venue;
+use App\Services\AttachmentService;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Spatie\Searchable\ModelSearchAspect;
@@ -66,7 +67,7 @@ class LocalSearchController extends Controller
      */
     public function admin_search(LocalSearchResult $request)
     {
-     
+
         $data = [
             'search' => $request->search,
             'results' => (new Search())
@@ -81,7 +82,7 @@ class LocalSearchController extends Controller
                         ->addSearchableAttribute('content')
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(Topic::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
+                    $aspect->addSearchableAttribute('name')
                         ->addSearchableAttribute('description')
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(Agreement::class, static function (ModelSearchAspect $aspect) {
@@ -101,11 +102,11 @@ class LocalSearchController extends Controller
                         ->addSearchableAttribute('description')
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(Organization::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
+                    $aspect->addSearchableAttribute('name')
                         ->addSearchableAttribute('description')
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(Venue::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
+                    $aspect->addSearchableAttribute('name')
                         ->addSearchableAttribute('description')
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(User::class, static function (ModelSearchAspect $aspect) {
@@ -115,8 +116,9 @@ class LocalSearchController extends Controller
                     $aspect->addSearchableAttribute('about')
                         ->withoutGlobalScope(LiveScope::class);
                 })
+            ->search($request->search)
         ];
-dd($data);
+
         $data['plural'] = Str::plural('Result', count($data['results']));
 
         return view('admin.search_admin', ['data' => $data]);
@@ -131,18 +133,9 @@ dd($data);
                 ->search($request->search),
         ];
 
-        foreach($data['results'] as $d)
-        {
-            $d->searchable->path_info = pathinfo(storage_path('app/' . $d->searchable->subfolder) . '/' . $d->searchable->file);
-            $d->searchable->extension = $d->searchable->path_info['extension'];
-            $d->searchable->imagedata = getimagesize(storage_path('app/' . $d->searchable->subfolder) . '/' . $d->searchable->file);
-            $d->searchable->filesize =  $this->human_filesize(filesize(storage_path('app/' . $d->searchable->subfolder) . '/' . $d->searchable->file));
-            //dd($d->searchable);
-        }
-
         $data['plural'] = Str::plural('Result', $data['results']->count());
 
-        return view('admin.listattachments_search_result', ['data' => $data]);
+        return view('admin.list_attachments_search_result', ['data' => $data]);
     }
 
 
@@ -155,14 +148,6 @@ dd($data);
     public function show(LocalSearch $search)
     {
         dd(__METHOD__);
-    }
-
-
-    protected function human_filesize($bytes, $decimals = 2)
-    {
-        $factor = floor((strlen($bytes) - 1) / 3);
-        if ($factor > 0) $sz = 'KMGT';
-        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
     }
 
 }

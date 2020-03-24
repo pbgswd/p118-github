@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Policies\AttachmentPolicy;
+use App\Services\AttachmentService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,6 +14,7 @@ use Spatie\Searchable\SearchResult;
  * @property int       $id
  * @property string    $file
  * @property string    $file_name
+ * @property string    $subfolder
  * @property User      $user
  * @property Meeting[] $meetings
  * @property \DateTime $created_at
@@ -20,6 +22,18 @@ use Spatie\Searchable\SearchResult;
  */
 class Attachment extends Model implements Searchable
 {
+    /** @var string */
+    public $path_info;
+
+    /** @var string */
+    public $extension;
+
+    /** @var string */
+    public $imagedata;
+
+    /** @var string */
+    public $filesize;
+
     protected $guard_name = 'web';
 
     protected $policies = [
@@ -46,6 +60,11 @@ class Attachment extends Model implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        $this->path_info = pathinfo(storage_path('app/' . $this->subfolder) . '/' . $this->file);
+        $this->extension = $this->path_info['extension'];
+        $this->imagedata = getimagesize(storage_path('app/' . $this->subfolder) . '/' . $this->file);
+        $this->filesize =  AttachmentService::human_filesize(filesize(storage_path('app/' . $this->subfolder) . '/' . $this->file));
+
         return new SearchResult(
             $this,
             $this->file_name,

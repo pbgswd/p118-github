@@ -66,7 +66,7 @@ class AttachmentController extends Controller
         $imgs = [];
         $imgs = array_diff($uploadedImgs, $storedFiles);
 
-        return view('admin.listattachments', ['data' => $data, 'images' => $imgs]);
+        return view('admin.list_attachments', ['data' => $data, 'images' => $imgs]);
     }
 
     /**
@@ -143,12 +143,12 @@ class AttachmentController extends Controller
             return redirect()->route('attachments_list');
             exit();
         }
-
+//todo make helper method pathinfo gets extension 
         $path_info = pathinfo(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']);
         $attachment['extension'] = $path_info['extension'];
 
         $attachment['imageData'] = getimagesize(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']);
-        $attachment['filesize'] = $this->human_filesize(filesize(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']));
+        $attachment['filesize'] = AttachmentService::human_filesize(filesize(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']));
 
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
@@ -186,11 +186,4 @@ class AttachmentController extends Controller
         return redirect()->route('attachments_list');
     }
 
-
-    protected function human_filesize($bytes, $decimals = 2)
-    {
-        $factor = floor((strlen($bytes) - 1) / 3);
-        if ($factor > 0) $sz = 'KMGT';
-        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
-    }
 }

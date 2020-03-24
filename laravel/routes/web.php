@@ -99,7 +99,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
 
     Route::post('/search', 'LocalSearchController@admin_search')->name('admin_search');
     //Route::get('/search', 'LocalSearchController@admin_index')->name('admin_search_show');
-    Route::post('/attachment_search', 'LocalSearchController@admin_attachment_search')->name('admin_attachment_search');
+    Route::post('/attachment_search', 'LocalSearchController@admin_attachment_search')->name('list_attachments_search_result');
 
     Route::get('/topics', 'TopicController@index')->name('topics_list');
     Route::get('/topic', 'TopicController@create')->name('topic_create');
