@@ -44,14 +44,14 @@
     </head>
     <body>
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('admin')}}">{{ config('app.name') }}</a>
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ route('admin') }}">{{ config('app.name') }}</a>
             <span class="pl-lg-1 font-weight-bolder" style="color: #999999;">{{ Auth::user()->name }}</span>
             <span class="col-8">
-            <form id="search-form" action="{{route('admin_search')}}" method="POST">
-                @csrf
-                <input class="form-control form-control-dark w-100" type="text" name="search" placeholder="Search" aria-label="Search">
-            </form>
-                </span>
+                <form id="search-form" action="{{ route('admin_search') }}" method="POST">
+                    @csrf
+                    <input class="form-control form-control-dark w-100" type="text" name="search" placeholder="Search" aria-label="Search">
+                </form>
+            </span>
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
                     <a class="nav-link" href="/logout"></a>
@@ -59,7 +59,8 @@
             </ul>
             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">Logout
+                <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
+                    Logout
                 </button>
             </form>
         </nav>
@@ -69,103 +70,103 @@
                     <div class="sidebar-sticky">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('hello')}}">
+                                <a class="nav-link active" href="{{ route('hello') }}">
                                     <span data-feather="home"></span>
                                     Home Page
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('admin')}}">
+                                <a class="nav-link active" href="{{ route('admin') }}">
                                     <span data-feather="home"></span>
                                     Admin Dashboard <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('topics_list')}}">
+                                <a class="nav-link" href="{{ route('topics_list') }}">
                                     <span data-feather="file"></span>
                                     Topics
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('users_list')}}">
+                                <a class="nav-link" href="{{ route('users_list') }}">
                                     <span data-feather="file"></span>
                                     Members
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('list_invited_users')}}">
+                                <a class="nav-link" href="{{ route('list_invited_users') }}">
                                     <span data-feather="file"></span>
                                     Invite Members
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('meetings_list')}}">
+                                <a class="nav-link" href="{{ route('meetings_list') }}">
                                     <span data-feather="file"></span>
                                     Meetings & Minutes
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin_bylaws_list')}}">
+                                <a class="nav-link" href="{{ route('admin_bylaws_list') }}">
                                     <span data-feather="file"></span>
                                     Constitution & By-Laws
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('venues_list')}}">
+                                <a class="nav-link" href="{{ route('venues_list') }}">
                                     <span data-feather="file"></span>
                                     Venues
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('organizations_list')}}">
+                                <a class="nav-link" href="{{ route('organizations_list') }}">
                                     <span data-feather="file"></span>
                                     Organizations
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('committees_list')}}">
+                                <a class="nav-link" href="{{ route('committees_list') }}">
                                     <span data-feather="file"></span>
                                     Committees
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('agreements_list')}}">
+                                <a class="nav-link" href="{{ route('agreements_list') }}">
                                     <span data-feather="file"></span>
                                     Agreements
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('attachments_list')}}">
+                                <a class="nav-link" href="{{ route('attachments_list') }}">
                                     <span data-feather="file"></span>
                                     Images & Attachments
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('pages_list')}}">
+                                <a class="nav-link" href="{{ route('pages_list') }}">
                                     <span data-feather="file"></span>
                                     Pages
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('posts_list')}}">
+                                <a class="nav-link" href="{{ route('posts_list') }}">
                                     <span data-feather="file"></span>
                                     Posts
                                 </a>
                             </li>
                              <li class="nav-item">
-                                <a class="nav-link" href="{{route('roles_list')}}">
+                                <a class="nav-link" href="{{ route('roles_list') }}">
                                     <span data-feather="file"></span>
                                     Roles
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('blank')}}">
+                                <a class="nav-link" href="{{ route('blank') }}">
                                     <span data-feather="file"></span>
                                     Blank Page
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin_employment_list')}}">
+                                <a class="nav-link" href="{{ route('admin_employment_list') }}">
                                     <span data-feather="file"></span>
                                     Employment
                                 </a>

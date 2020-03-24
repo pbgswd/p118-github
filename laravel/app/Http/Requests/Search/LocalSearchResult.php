@@ -4,6 +4,11 @@ namespace App\Http\Requests\Search;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class LocalSearchResult
+ *
+ * @property string $search
+ */
 class LocalSearchResult extends FormRequest
 {
     /**

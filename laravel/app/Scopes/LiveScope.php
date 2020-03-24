@@ -11,7 +11,7 @@ class LiveScope implements Scope
 {
     public function apply(Builder $builder, Model $model): void
     {
-        Log::debug(get_class($model) .' filtered by LiveScope.');
+        Log::debug(get_class($model) . ' filtered by ' . __CLASS__);
         $builder->where('live', 1);
     }
 }

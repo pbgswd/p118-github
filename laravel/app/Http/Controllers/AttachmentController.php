@@ -137,18 +137,13 @@ class AttachmentController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        if(!file_exists(storage_path('app/' . $attachment->subfolder) . '/' . $attachment->file))
+        if (!\file_exists(\storage_path('app/' . $attachment->subfolder) . '/' . $attachment->file))
         {
             Session::flash('error',  $attachment->file_name . " was not found on the server");
-            return redirect()->route('attachments_list');
-            exit();
+            return \redirect()->route('attachments_list');
         }
-//todo make helper method pathinfo gets extension 
-        $path_info = pathinfo(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']);
-        $attachment['extension'] = $path_info['extension'];
 
-        $attachment['imageData'] = getimagesize(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']);
-        $attachment['filesize'] = AttachmentService::human_filesize(filesize(storage_path('app/' . $attachment->subfolder) . '/' . $attachment['file']));
+        $attachment->setCalculatedProperties();
 
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
     }
