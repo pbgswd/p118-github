@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\AgreementPolicy;
-use Illuminate\Database\Eloquent\Model;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
@@ -19,13 +19,13 @@ use Spatie\Searchable\SearchResult;
  * @property boolean       $live
  * @property User          $user
  * @property Attachment[]  $attachments
- * @property \DateTime     $created_at
- * @property \DateTime     $updated_at
- * @property \DateTime     $from
- * @property \DateTime     $until
+ * @property DateTime      $created_at
+ * @property DateTime      $updated_at
+ * @property DateTime      $from
+ * @property DateTime      $until
  */
 
-class Agreement extends Model implements HasAttachment, Searchable
+class Agreement extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
 
@@ -64,7 +64,6 @@ class Agreement extends Model implements HasAttachment, Searchable
     protected $casts = [
         'live' => 'boolean',
     ];
-
 
     /**
      * @return SearchResult

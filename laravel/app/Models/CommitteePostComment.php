@@ -3,25 +3,24 @@
 namespace App\Models;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * @property int $id
- * @property int $committee_id
- * @property int $user_id
- * @property int $post_id
- * @property int $parent_id
- * @property string $content
- * @property boolean $live
- * @property DateTime $created_at
- * @property DateTime $updated_at
- * @property CommitteePost $committee_post
- * @property CommitteePostComment $commentAuthor
+ * @property int       $id
+ * @property int       $committee_id
+ * @property int       $user_id
+ * @property int       $post_id
+ * @property int       $parent_id
+ * @property string    $content
+ * @property boolean   $live
+ * @property DateTime  $created_at
+ * @property DateTime  $updated_at
+ * @property User      $comment_author
  */
-class CommitteePostComment extends Model
+class CommitteePostComment extends LiveableModel
 {
     use Notifiable;
     use Sortable;
@@ -33,39 +32,35 @@ class CommitteePostComment extends Model
         //Committee::class=>CommitteePolicy::class,
     ];
 
-    public $sortable =
-        [
-            'id',
-            'content',
-            'created_at',
-            'updated_at',
-        ];
+    public $sortable = [
+        'id',
+        'content',
+        'created_at',
+        'updated_at',
+    ];
 
-    protected $dates =
-        [
-            'created_at',
-            'updated_at'
-        ];
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
 
-    protected $casts =
-        [
-            'live' => 'boolean',
-        ];
+    protected $casts = [
+        'live' => 'boolean',
+    ];
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
-    protected $fillable =
-        [
-            'content',
-            'live',
-        ];
+    protected $fillable = [
+        'content',
+        'live',
+    ];
 
-    public function commentAuthor()
+    /**
+     * @return HasOne
+     */
+    public function comment_author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
-
 }

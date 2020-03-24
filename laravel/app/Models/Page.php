@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\PagePolicy;
 use Conner\Tagging\Taggable;
-use Illuminate\Database\Eloquent\Model;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
@@ -27,14 +27,13 @@ use Spatie\Searchable\SearchResult;
  * @property User         $user
  * @property Topic[]      $topics
  * @property Attachment[] $attachments
- * @property \DateTime     $created_at
- * @property \DateTime     $updated_at
+ * @property DateTime     $created_at
+ * @property DateTime     $updated_at
  */
-class Page extends Model implements HasAttachment, Searchable
+class Page extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
     use Taggable;
-
 
     /**
      * The attributes that are mass assignable.
@@ -76,7 +75,6 @@ class Page extends Model implements HasAttachment, Searchable
         'allow_comments' => 'boolean',
         'live' => 'boolean',
     ];
-
 
     /**
      * @return SearchResult

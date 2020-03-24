@@ -82,7 +82,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
         'email_verified_at' => 'datetime',
     ];
 
-
     /**
      * @return SearchResult
      */

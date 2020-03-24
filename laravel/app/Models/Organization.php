@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Policies\OrganizationPolicy;
-use Illuminate\Database\Eloquent\Model;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -19,10 +19,10 @@ use Spatie\Searchable\SearchResult;
  * @property boolean    $live
  * @property int        $sort_order
  * @property User       $user
- * @property \DateTime  $created_at
- * @property \DateTime  $updated_at
+ * @property DateTime   $created_at
+ * @property DateTime   $updated_at
  */
-class Organization extends Model implements Searchable
+class Organization extends LiveableModel implements Searchable
 {
     use Sortable;
 
@@ -60,7 +60,6 @@ class Organization extends Model implements Searchable
     protected $casts = [
         'live' => 'boolean',
     ];
-
 
     /**
      * @return SearchResult

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
@@ -12,21 +11,20 @@ use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * @property int $id
- * @property string $title
- * @property string $slug
- * @property string $content
- * @property boolean $sticky
- * @property boolean $live
- * @property boolean $allow_comments
- * @property DateTime created_at
- * @property DateTime updated_at
- * @property User $creator
- * @property Committee $committee
- * @property CommitteePost $committee_posts
- * @property CommitteePostComment $post_comments
+ * @property int                     $id
+ * @property string                  $title
+ * @property string                  $slug
+ * @property string                  $content
+ * @property boolean                 $sticky
+ * @property boolean                 $live
+ * @property boolean                 $allow_comments
+ * @property DateTime                $created_at
+ * @property DateTime                $updated_at
+ * @property User                    $creator
+ * @property Committee               $committee
+ * @property CommitteePostComment[]  $post_comments
  */
-class CommitteePost extends Model
+class CommitteePost extends LiveableModel
 {
     use Notifiable;
     use Sortable;

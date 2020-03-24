@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\TopicPolicy;
 use Conner\Tagging\Taggable;
-use Illuminate\Database\Eloquent\Model;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
@@ -15,28 +15,27 @@ use Spatie\Searchable\SearchResult;
 
 
 /**
- * @property int $id
- * @property string $slug
- * @property string $name
- * @property string $description
- * @property string $content
- * @property string $access_level
- * @property boolean $live
- * @property int $sort_order
- * @property boolean $in_menu
- * @property boolean $allow_comments
- * @property User[] $users
- * @property Page[] $pages
- * @property Post[] $posts
- * @property Attachment[] $attachments
- * @property \DateTime $created_at
- * @property \DateTime $updated_at
+ * @property int           $id
+ * @property string        $slug
+ * @property string        $name
+ * @property string        $description
+ * @property string        $content
+ * @property string        $access_level
+ * @property boolean       $live
+ * @property int           $sort_order
+ * @property boolean       $in_menu
+ * @property boolean       $allow_comments
+ * @property DateTime      $created_at
+ * @property DateTime      $updated_at
+ * @property User          $user
+ * @property Page[]        $pages
+ * @property Post[]        $posts
+ * @property Attachment[]  $attachments
  */
-class Topic extends Model implements HasAttachment, Searchable
+class Topic extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
     use Taggable;
-
 
     /**
      * The attributes that are mass assignable.
@@ -78,7 +77,6 @@ class Topic extends Model implements HasAttachment, Searchable
         'allow_comments' => 'boolean',
         'live' => 'boolean',
     ];
-
 
     /**
      * @return SearchResult

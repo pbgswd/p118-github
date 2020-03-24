@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
-use Illuminate\Database\Eloquent\Model;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
@@ -18,15 +18,14 @@ use Spatie\Searchable\SearchResult;
  * @property boolean      $live
  * @property User         $user
  * @property Attachment[] $attachments
- * @property \DateTime    $created_at
- * @property \DateTime    $updated_at
- * @property \DateTime    $date
+ * @property DateTime     $created_at
+ * @property DateTime     $updated_at
+ * @property DateTime     $date
  */
 
-class Bylaw extends Model implements HasAttachment, Searchable
+class Bylaw extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
-
 
     /**
      * The attributes that are mass assignable.

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\MeetingPolicy;
-use Illuminate\Database\Eloquent\Model;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
@@ -18,11 +18,11 @@ use Spatie\Searchable\SearchResult;
  * @property boolean      $live
  * @property User         $user
  * @property Attachment[] $attachments
- * @property \DateTime    $date
- * @property \DateTime    $created_at
- * @property \DateTime    $updated_at
+ * @property DateTime     $date
+ * @property DateTime     $created_at
+ * @property DateTime     $updated_at
  */
-class Meeting extends Model implements HasAttachment, Searchable
+class Meeting extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
 

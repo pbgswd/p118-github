@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Policies\VenuePolicy;
-use Illuminate\Database\Eloquent\Model;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -21,10 +21,10 @@ use Spatie\Searchable\SearchResult;
  * @property int        $sort_order
  * @property boolean    $in_menu
  * @property User       $user
- * @property \DateTime  $created_at
- * @property \DateTime  $updated_at
+ * @property DateTime   $created_at
+ * @property DateTime   $updated_at
  */
-class Venue extends Model implements Searchable
+class Venue extends LiveableModel implements Searchable
 {
     use Sortable;
 
@@ -106,5 +106,4 @@ class Venue extends Model implements Searchable
     {
         return $this->hasOne(User::class);
     }
-
 }

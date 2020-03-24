@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\EmploymentPolicy;
-use Illuminate\Database\Eloquent\Model;
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
@@ -19,12 +19,12 @@ use Spatie\Searchable\SearchResult;
  * @property boolean      $status
  * @property User         $user
  * @property Attachment[] $attachments
- * @property \DateTime    $deadline
- * @property \DateTime    $created_at
- * @property \DateTime    $updated_at
+ * @property DateTime     $deadline
+ * @property DateTime     $created_at
+ * @property DateTime     $updated_at
  */
 
-class Employment extends Model implements HasAttachment, Searchable
+class Employment extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
 
@@ -61,7 +61,6 @@ class Employment extends Model implements HasAttachment, Searchable
         'live' => 'boolean',
         'status' => 'boolean',
     ];
-
 
     /**
      * @return SearchResult
