@@ -18,6 +18,7 @@ use App\Models\UserInfo;
 use App\Models\Venue;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
 
 class LocalSearchController extends Controller
@@ -65,25 +66,58 @@ class LocalSearchController extends Controller
      */
     public function admin_search(LocalSearchResult $request)
     {
-
+     
         $data = [
             'search' => $request->search,
             'results' => (new Search())
-                ->registerModel(Post::class, ['title', 'description', 'content'])
-                ->registerModel(Page::class, ['title', 'description', 'content'])
-                ->registerModel(Topic::class, ['name', 'description'])
-                ->registerModel(Agreement::class, ['title', 'description'])
-                ->registerModel(Bylaw::class, ['title', 'description'])
-                ->registerModel(Employment::class, ['title', 'description'])
-                ->registerModel(Meeting::class, ['title', 'description'])
-                ->registerModel(Organization::class, ['name', 'description'])
-                ->registerModel(Venue::class, ['name', 'description'])
-                ->registerModel(User::class, 'name')
-                ->registerModel(UserInfo::class, 'about')
-                ->search($request->search),
+                ->registerModel(Post::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('description')
+                        ->addSearchableAttribute('content')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Page::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('description')
+                        ->addSearchableAttribute('content')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Topic::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('description')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Agreement::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('description')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Bylaw::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('description')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Employment::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('description')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Meeting::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('description')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Organization::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('description')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Venue::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('description')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(User::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('name')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(UserInfo::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('about')
+                        ->withoutGlobalScope(LiveScope::class);
+                })
         ];
-
-        $data['plural'] = Str::plural('Result', $data['results']->count());
+dd($data);
+        $data['plural'] = Str::plural('Result', count($data['results']));
 
         return view('admin.search_admin', ['data' => $data]);
     }
