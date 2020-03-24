@@ -58,6 +58,36 @@ class LocalSearchController extends Controller
         return view('search', ['data' => $data]);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function admin_search(LocalSearchResult $request)
+    {
+
+        $data = [
+            'search' => $request->search,
+            'results' => (new Search())
+                ->registerModel(Post::class, ['title', 'description', 'content'])
+                ->registerModel(Page::class, ['title', 'description', 'content'])
+                ->registerModel(Topic::class, ['name', 'description'])
+                ->registerModel(Agreement::class, ['title', 'description'])
+                ->registerModel(Bylaw::class, ['title', 'description'])
+                ->registerModel(Employment::class, ['title', 'description'])
+                ->registerModel(Meeting::class, ['title', 'description'])
+                ->registerModel(Organization::class, ['name', 'description'])
+                ->registerModel(Venue::class, ['name', 'description'])
+                ->registerModel(User::class, 'name')
+                ->registerModel(UserInfo::class, 'about')
+                ->search($request->search),
+        ];
+
+        $data['plural'] = Str::plural('Result', $data['results']->count());
+
+        return view('admin.search_admin', ['data' => $data]);
+    }
+
     public function admin_attachment_search(LocalSearchResult $request)
     {
         $data = [
