@@ -8,7 +8,7 @@ $attachment = $data['attachment'];
     <form method="post" name="attachment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         @if ($data['action'] == 'Add')
-        <div class="col-md-8 border border-primary rounded" style="padding: 2em">
+        <div class="col-md-8 border border-primary rounded p-lg-2">
             <div class="form-group">
                 <label for="exampleInputFile">
                     <i class="fas fa-cloud-upload-alt fa-2x"></i>
@@ -32,17 +32,19 @@ $attachment = $data['attachment'];
                         @endif
                     </div>
                     <div class="col-md-8 text-wrap">
-                        <h3><i class="far fa-file"></i> File Info</h3>
-                        <ul>
+                        <h2><i class="far fa-file"></i> File Info</h2>
+                        <h4>
+                        <ul style="line-height: 1.6; list-style-type: none;">
                             <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}</a></li>
                             <li>File Size: {{$attachment['filesize']}}</li>
                             <li>Original File Name: {{$attachment['file_name']}}</li>
                             <li>Uploaded File Name: {{$attachment['file']}}</li>
-                            <li><a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])}}" title="Download {{$attachment->file_name}}"><i class="fas fa-file-download"></i> Download {{$attachment['file_name']}}</a></li>
+                            <li><a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])}}" title="Download {{$attachment->file_name}}"><i class="fas fa-file-download fa-4x"></i> Download {{$attachment['file_name']}}</a></li>
                             <li>File Type: {{$attachment['extension']}}</li>
                             <li>Last Updated: {{$attachment['updated_at']}}</li>
                             <li>Description: {{$attachment['description']}}</li>
                         </ul>
+                        </h4>
                         <h4>Insert into content with:</h4>
 <pre>
 <code>
@@ -61,15 +63,12 @@ $attachment = $data['attachment'];
                 </div>
             @else
                 <div class="row">
-                    <div class="col-md-6" style="margin-bottom: 1em;">
+                    <div class="col-md-6 mb-lg-1">
                         <img src="{{ asset('storage/' . $attachment->subfolder . "/" . $attachment['file']) }}" {{$attachment['imageData'][3]}} />
                     </div>
-
-                    <div class="col-md-12" style="margin-left:2em;">
+                    <div class="col-md-12 ml" style="margin-left:2em;">
                         <h3><i class="far fa-file-image"></i> Image Info</h3>
                         <ul>
-
-
                             <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}</a></li>
                             <li>File Size: {{$attachment['filesize']}}</li>
                             <li>Original File Name: {{$attachment['file_name']}}</li>
@@ -91,7 +90,7 @@ $attachment = $data['attachment'];
                 </div>
                 @endif
         @endif
-        <div class="row" style="margin-top:1em;">
+        <div class="row mt-1">
             <div class="col-md-6">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
@@ -108,6 +107,5 @@ $attachment = $data['attachment'];
                 </form>
             </div>
         @endif
-
-<div class="row" style="margin-top:3em;"> &nbsp;</div>
+<div class="row mt-lg-3"> &nbsp;</div>
 @endsection

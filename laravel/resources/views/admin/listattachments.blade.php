@@ -4,12 +4,20 @@ $attachments = $data['attachments'];
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> List Attachements and Images'])
 @section('content')
     <div class="container">
-        <h3>
-           <span class="badge badge-primary badge-pill">
-               {{$data['filecount']}}
-           </span>
-           Files. | <a href="{{ route('attachment_create') }}">Add new file <i class="far fa-arrow-alt-circle-right"></i> </a>
-        </h3>
+        <div class="col-4">
+            <h3>
+               <span class="badge badge-primary badge-pill">
+                   {{$data['filecount']}}
+               </span>
+               Files. | <a href="{{ route('attachment_create') }}">Add new file <i class="far fa-arrow-alt-circle-right"></i> </a>
+            </h3>
+        </div>
+        <div class="col-6">
+            <form id="search-form" action="{{route('admin_attachment_search')}}" method="POST">
+                @csrf
+                <input class="form-control form-control-dark w-100" type="text" name="search" placeholder="Attachment Search" aria-label="Search">
+            </form>
+        </div>
     </div>
 @if (count($attachments) > 0)
     <form name="delete" method="POST" action="{{route('attachment_destroy')}}">
@@ -47,7 +55,7 @@ $attachments = $data['attachments'];
                             <td>
                                 {{$a->id}}
                             </td>
-                            <td> {{ $a->users->name }} </td>
+                            <td> {{ $a->user->name }} </td>
                             <td>
                                 <a href="{{ route('admin_attachment_edit', $a->id) }}" title="Edit {{ $a->file_name }} ">
                                     <i class="fas fa-edit"></i>
@@ -78,7 +86,7 @@ $attachments = $data['attachments'];
             </div>
             <div class="col"></div>
         </div>
-        <div class="row" style="margin-top:6em;"></div>
+        <div class="row mt-lg-5"></div>
     </form>
 @endif
 
@@ -88,5 +96,5 @@ $attachments = $data['attachments'];
 
     @endforeach
 @endif
-    <div class="row" style="margin-top:30px;"></div>
+    <div class="row mt-lg-5"></div>
 @endsection

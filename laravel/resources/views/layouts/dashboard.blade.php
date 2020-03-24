@@ -44,9 +44,14 @@
     </head>
     <body>
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{ config('app.name') }}</a>
-            <span style="color: #999999; padding-left: 1em; font-weight: bolder;">{{ Auth::user()->name }}</span>
-            <input class="form-control form-control-dark w-60" type="text" placeholder="Search" aria-label="Search">
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('admin')}}">{{ config('app.name') }}</a>
+            <span class="pl-lg-1 font-weight-bolder" style="color: #999999;">{{ Auth::user()->name }}</span>
+            <span class="col-8">
+            <form id="search-form" action="{{route('admin_search')}}" method="POST">
+                @csrf
+                <input class="form-control form-control-dark w-100" type="text" name="search" placeholder="Search" aria-label="Search">
+            </form>
+                </span>
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
                     <a class="nav-link" href="/logout"></a>

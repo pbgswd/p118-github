@@ -44,7 +44,7 @@ class AttachmentController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $data = [];
-        $data['attachments'] = Attachment::with('users')->orderBy('id', 'ASC')->paginate(30);
+        $data['attachments'] = Attachment::with('user')->orderBy('id', 'ASC')->paginate(30);
 
         $storedFiles = [];
         $allAttachments = Attachment::all();

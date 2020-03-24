@@ -6,6 +6,8 @@ use App\Policies\AttachmentPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int       $id
@@ -16,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \DateTime $created_at
  * @property \DateTime $updated_at
  */
-class Attachment extends Model
+class Attachment extends Model implements Searchable
 {
     protected $guard_name = 'web';
 
@@ -39,6 +41,17 @@ class Attachment extends Model
         'updated_at',
     ];
 
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult(
+            $this,
+            $this->file_name,
+            \route('admin_attachment_edit', $this->id),
+        );
+    }
 
     /**
      * @return BelongsToMany

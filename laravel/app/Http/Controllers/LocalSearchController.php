@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Search\LocalSearchResult;
 use App\Models\Agreement;
+use App\Models\Attachment;
 use App\Models\Bylaw;
 use App\Models\Employment;
 use App\Models\LocalSearch;
@@ -50,27 +51,34 @@ class LocalSearchController extends Controller
          * https://laraveldaily.com/new-package-laravel-searchable-easily-search-in-multiple-models/
          * https://packagist.org/packages/spatie/laravel-searchable
          * https://medium.com/justlaravel/search-functionality-in-laravel-a2527282150b
-         * General site search, topics, posts and pages.
-         * also, whatever else is public.
-         *
-         * sub committees posts, post comments
-         * venues
-         * agreements
-         * bylaws
-         * jobs
-         * minutes
-         *
-         * tags
-         * organizations
-         *
-         * pages posts topics users
-         * search with logged in or logged out state
-         * consistently deliver results
          */
 
         $data['plural'] = Str::plural('Result', $data['results']->count());
 
         return view('search', ['data' => $data]);
+    }
+
+    public function admin_attachment_search(LocalSearchResult $request)
+    {
+        $data = [
+            'search' => $request->search,
+            'results' => (new Search())
+                ->registerModel(Attachment::class, ['file_name', 'description'])
+                ->search($request->search),
+        ];
+
+        foreach($data['results'] as $d)
+        {
+            $d->searchable->path_info = pathinfo(storage_path('app/' . $d->searchable->subfolder) . '/' . $d->searchable->file);
+            $d->searchable->extension = $d->searchable->path_info['extension'];
+            $d->searchable->imagedata = getimagesize(storage_path('app/' . $d->searchable->subfolder) . '/' . $d->searchable->file);
+            $d->searchable->filesize =  $this->human_filesize(filesize(storage_path('app/' . $d->searchable->subfolder) . '/' . $d->searchable->file));
+            //dd($d->searchable);
+        }
+
+        $data['plural'] = Str::plural('Result', $data['results']->count());
+
+        return view('admin.listattachments_search_result', ['data' => $data]);
     }
 
 
@@ -85,5 +93,12 @@ class LocalSearchController extends Controller
         dd(__METHOD__);
     }
 
+
+    protected function human_filesize($bytes, $decimals = 2)
+    {
+        $factor = floor((strlen($bytes) - 1) / 3);
+        if ($factor > 0) $sz = 'KMGT';
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
+    }
 
 }
