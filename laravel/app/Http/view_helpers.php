@@ -61,13 +61,13 @@ if (!function_exists('select_options')) {
                 foreach ($attributes as $name => $value)
                 {
                     $result .= ' ' . $name . '="' . htmlspecialchars($value) . '" ';
-                    if ($name == 'placeholder') {
+                    if ($name === 'placeholder') {
                         $placeholder = _select_opt_output(null, $value, array(), 'disabled hidden selected="selected"');
                     }
                 }
             } elseif ($attributes !== true) {
-                //todo RTL: pull 'placeholder' text from $attributes string
-                $result .= strval($attributes);
+                //todo: todoRTL: pull 'placeholder' text from $attributes string
+                $result .= $attributes;
             }
             $result .= ">\n";
         }
@@ -79,7 +79,7 @@ if (!function_exists('select_options')) {
         $selected = array_map('strval', array_values((array)$selected));
         foreach ($data as $key => $val)
         {
-            $result .= _select_opt_output(strval($key), $val, $selected);
+            $result .= _select_opt_output((string) $key, $val, $selected);
         }
 
         $result .= $closeTag;
@@ -113,19 +113,20 @@ if (!function_exists('select_options')) {
     }
 
     /**
-     * @param $label
+     * @param $group_label
      * @param array $subarray
      * @param $selected
      * @return string
      */
-    function _select_optgroup_output($label, array $subarray, $selected)
+    function _select_optgroup_output($group_label, array $subarray, $selected)
     {
-        $optgroup_html = '<optgroup label="' . htmlspecialchars($label) . '">' . "\n";
+        $optgroup_html = '<optgroup label="' . htmlspecialchars($group_label) . '">' . "\n";
         foreach ($subarray as $value => $label)
         {
-            $optgroup_html .= _select_opt_output(strval($value), $label, $selected);
+            $optgroup_html .= _select_opt_output((string) $value, $label, $selected);
         }
         $optgroup_html .= "</optgroup>\n";
+
         return $optgroup_html;
     }
 }

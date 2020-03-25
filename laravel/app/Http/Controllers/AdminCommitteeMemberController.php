@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -21,13 +22,14 @@ class AdminCommitteeMemberController extends Controller
     public function index(Request $request, Committee $committee)
     {
         $this->authorize('viewAny', Auth::user());
-        $users = User::sortable()->with('committee_membership')->paginate(20);
+        /** @var Collection $users */
+        $users = User::sortable()->with('committee_memberships')->paginate(20);
 
         $data = [];
-        $data['users'] = $users->map(function ($user) use ($committee) {
+        $data['users'] = $users->map(static function (User $user) use ($committee) {
             $info = $user->toArray();
-            $info['isMember'] = $user->committee_membership->contains(function (Committee $membership) use ($committee) {
-                return $membership->slug == $committee->slug;
+            $info['isMember'] = $user->committee_memberships->contains(static function (Committee $membership) use ($committee) {
+                return $membership->slug === $committee->slug;
             });
             return $info;
         });

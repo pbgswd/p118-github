@@ -28,7 +28,7 @@ use Spatie\Searchable\Searchable;
  * @property Address       $address
  * @property Membership    $membership
  * @property Attachment[]  $attachments
- * @property Committee[]   $committee_membership
+ * @property Committee[]   $committee_memberships
  */
 class User extends Authenticatable implements HasAttachment, Searchable
 {
@@ -137,9 +137,8 @@ class User extends Authenticatable implements HasAttachment, Searchable
     /**
      * @return BelongsToMany
      */
-    public function committee_membership(): BelongsToMany
+    public function committee_memberships(): BelongsToMany
     {
-        //TODO: pluralize method name
         return $this->belongsToMany(Committee::class)->withPivot('role');
     }
 

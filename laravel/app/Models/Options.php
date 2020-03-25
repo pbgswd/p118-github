@@ -453,8 +453,8 @@ class Options
 
     public static function days()
     {
-        $days = range(1, 31);
-        return array_combine($days, $days);
+        $days = \range(1, 31);
+        return \array_combine($days, $days);
     }
 
 
@@ -462,7 +462,7 @@ class Options
     {
         $sorted = $class::orderBy('sort_order')->get();
         $data = [];
-        $sorted->map(function ($item, $key) use (&$data) {
+        $sorted->map(function ($item) use (&$data) {
             $data[$item->code] = $item->display_text;
         });
         return $data;

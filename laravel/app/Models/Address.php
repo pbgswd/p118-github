@@ -6,25 +6,26 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $id
- * @property string $unit
- * @property string $street
- * @property string $city
- * @property string $province
- * @property string $postal_code
- * @property string $country
- * @property DateTime created_at
- * @property DateTime updated_at
+ * @property int       $id
+ * @property string    $unit
+ * @property string    $street
+ * @property string    $city
+ * @property string    $province
+ * @property string    $postal_code
+ * @property string    $country
+ * @property DateTime  $created_at
+ * @property DateTime  $updated_at
  */
 class Address extends Model
 {
+    /** @var string  */
     protected $guard_name = 'web';
 
-    protected $dates =
-        [
-            'created_at',
-            'updated_at'
-        ];
+    /** @var array  */
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -39,5 +40,4 @@ class Address extends Model
         'postal_code',
         'country',
     ];
-
 }

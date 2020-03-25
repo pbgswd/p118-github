@@ -42,12 +42,10 @@ class AttachmentService
      */
     public function updateAttachment(Request $request, HasAttachment $model): bool
     {
-    //todo will updateAttachment work with everything?
-        if(isset($request->attachment)) {
-            foreach ($request->attachment as $k => $v )
-            {
-                $attachment = Attachment::where('id', $k)->first();
-                $attachment->description = trim($v['description']);
+        if (isset($request->attachment)) {
+            foreach ($request->attachment as $k => $v ) {
+                $attachment = Attachment::find($k);
+                $attachment->description = \trim($v['description']);
                 $attachment->save();
 
                 if (isset($v['id'])) {
@@ -57,14 +55,13 @@ class AttachmentService
             }
             return true;
         }
-        else {
-            return false;
-        }
+
+        return false;
     }
 
     /**
-     * @param Request $request
      * @param HasAttachment $model
+     *
      * @return bool
      */
     public function destroyAttachment(HasAttachment $model): bool
@@ -74,7 +71,6 @@ class AttachmentService
         foreach ($model->attachments as $attachment)
         {
             Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
-
             Attachment::destroy($attachment['id']);
         }
         return true;
@@ -92,30 +88,9 @@ class AttachmentService
 
     public static function human_filesize($bytes, $decimals = 2)
     {
-        $factor = floor((strlen($bytes) - 1) / 3);
-        if ($factor > 0) $sz = 'KMGT';
-        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
+        $factor = \floor((\strlen($bytes) - 1) / 3);
+        if ($factor > 0) { $sz = 'KMGT'; }
+
+        return \sprintf("%.{$decimals}f", $bytes / (1024 ** $factor)) . @$sz[$factor - 1] . 'B';
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

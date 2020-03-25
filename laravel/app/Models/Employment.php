@@ -15,6 +15,7 @@ use Spatie\Searchable\SearchResult;
  * @property int          $id
  * @property string       $title
  * @property string       $description
+ * @property string       $url
  * @property boolean      $live
  * @property boolean      $status
  * @property User         $user

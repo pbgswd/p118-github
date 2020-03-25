@@ -39,7 +39,7 @@ class AdminUserController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $users = User::with('roles')->sortable()->paginate(20);
-        return view('admin.listusers', ['data' => array('users' => $users)]);
+        return view('admin.listusers', ['data' => ['users' => $users]]);
     }
 
     /**
@@ -243,12 +243,14 @@ class AdminUserController extends Controller
 
         //todo cannot delete user when user has a post, page, topic, or is a member of a committee. Deal with this
 //todo user soft delete
+
+        // todo: todoRTL: User::find() returns a single User. What is this foreach() looping through?!
         foreach ($users as $user)
         {
             $user_roles = $user->getRoleNames()->toArray();
             $user_roles = array_combine($user_roles, $user_roles);
 
-            foreach($user_roles as $r)
+            foreach ($user_roles as $r)
             {
                 $user->removeRole($r);
             }
@@ -275,8 +277,7 @@ class AdminUserController extends Controller
     protected function uploadImage(FormRequest $request)
     {
         if (null !== $request->file('image')) {
-            $path = $request->file('image')->store('', 'users');
-            return $path;
+            return $request->file('image')->store('', 'users');
         }
 
     }

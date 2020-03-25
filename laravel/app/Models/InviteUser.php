@@ -2,20 +2,24 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class InviteUser
- * @package App\Models
- * @property int id
- * @property int user_id
- * @property string name
- * @property string email
- * @property string $password
- * @property string $role
+ *
+ * @property int       $id
+ * @property int       $user_id
+ * @property string    $name
+ * @property string    $email
+ * @property string    $password
+ * @property string    $role
+ * @property DateTime  $created_at
+ * @property DateTime  $updated_at
  *
  */
 class InviteUser extends Model
@@ -24,12 +28,15 @@ class InviteUser extends Model
     use Sortable;
     use HasRoles;
 
+    /** @var string  */
     protected $guard_name = 'web';
 
+    /** @var array  */
     protected $policies = [
        // User::class => UserPolicy::class,
     ];
 
+    /** @var array  */
     public $sortable = [
         'id',
         'name',
@@ -38,11 +45,11 @@ class InviteUser extends Model
         'updated_at',
     ];
 
-    protected $dates =
-        [
-            'created_at',
-            'updated_at',
-        ];
+    /** @var array  */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -75,7 +82,10 @@ class InviteUser extends Model
         'email_verified_at' => 'datetime',
     ];
 
-    public function user()
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

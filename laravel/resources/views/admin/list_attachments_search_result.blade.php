@@ -12,15 +12,15 @@ $attachments = $data['results'];
             <div class="col-8">
 
                 <h3>
-                    <a href="{{ route('attachments_list')}}">Images & Attachments</a>
+                    <a href="{{ route('attachments_list') }}">Images & Attachments</a>
                     <span class="badge badge-primary badge-pill">
-                       {{ $attachments->count()}}
+                       {{ $attachments->count() }}
                     </span>
                     Files. | <a href="{{ route('attachment_create') }}">Add new file <i class="far fa-arrow-alt-circle-right"></i></a>
                 </h3>
             </div>
             <div class="col-4">
-                <form id="search-form" action="{{ route('list_attachments_search_result')}}" method="POST">
+                <form id="search-form" action="{{ route('list_attachments_search_result') }}" method="POST">
                     @csrf
                     <input class="form-control form-control-dark w-100" type="text" name="search" placeholder="Attachment Search" aria-label="Search">
                 </form>
@@ -28,7 +28,7 @@ $attachments = $data['results'];
         </div>
     </div>
     @if ($attachments->count() > 0)
-        <form name="delete" method="POST" action="{{ route('attachment_destroy')}}">
+        <form name="delete" method="POST" action="{{ route('attachment_destroy') }}">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}
             <div class="form-group">
@@ -51,7 +51,7 @@ $attachments = $data['results'];
                                     <td>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="id[]" value="{{ $a->searchable->id}}" />
+                                                <input type="checkbox" name="id[]" value="{{ $a->searchable->id }}" />
                                             </label>
                                         </div>
                                     </td>
@@ -71,13 +71,13 @@ $attachments = $data['results'];
                                                 @endif
                                             @endif
                                         </a>
-                                        Size: {{ $a->searchable->filesize}}
+                                        Size: {{ $a->searchable->filesize }}
                                         <h4>
                                             <a title="{{ $a->searchable->name }}" href="{{ route('admin_attachment_edit', $a->searchable->id) }}">{{ $a->searchable->file_name }}</a>
                                         </h4>
                                     </td>
                                     <td>
-                                        {{ $a->searchable->id}}
+                                        {{ $a->searchable->id }}
                                     </td>
                                     <td> {{ $a->searchable->user->name }} </td>
                                     <td>

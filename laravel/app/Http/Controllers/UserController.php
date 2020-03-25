@@ -30,7 +30,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::with('user_info')->sortable()->orderBy('name')->paginate(20);
-        return view('listusers', ['data' => array('users' => $users)]);
+        return view('listusers', ['data' => ['users' => $users]]);
     }
 
     /**
@@ -41,7 +41,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->load('committee_membership', 'phone_number', 'user_info', 'address', 'membership');
+        $user->load('committee_memberships', 'phone_number', 'user_info', 'address', 'membership');
         //$currentUser = Auth::user(); // the logged in user, perms to edit?
         //$regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
@@ -161,9 +161,8 @@ class UserController extends Controller
 
     protected function uploadImage(FormRequest $request)
     {
-        if(null !== $request->file('image')) {
-            $path = $request->file('image')->store('', 'users');
-            return $path;
+        if (null !== $request->file('image')) {
+            return $request->file('image')->store('', 'users');
         }
     }
 }

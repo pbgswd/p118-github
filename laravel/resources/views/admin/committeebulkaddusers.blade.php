@@ -38,14 +38,14 @@
                                     <h4>
                                         <a title="{{ $i['name'] }}" href="{{ route('user_edit', $i['id']) }}">{{ $i['name'] }}</a>
                                         @if($i['isMember'] == 'true')
-                                            {{$i['committee_membership'][0]['pivot']['role']}}
+                                            {{$i['committee_memberships'][0]['pivot']['role']}}
                                         @endif
                                     </h4>
                                 </td>
                                 <td> {{ $i['email'] }} </td>
                                 <td>
                                     @if($i['isMember'] == 'true')
-                                        {{$i['committee_membership'][0]['pivot']['role']}}
+                                        {{$i['committee_memberships'][0]['pivot']['role']}}
                                     @else
                                         <div class="form-group">
                                             {{ select_options($data['committee_roles'], old('member.role', 'Member'), ['name' => 'members['. $i['id'] .'][role]', 'class' => 'form-control', 'placeholder' => 'Role'], $selected = '') }}
