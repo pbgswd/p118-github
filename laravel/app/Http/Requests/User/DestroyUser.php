@@ -4,6 +4,11 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class DestroyUser
+ *
+ * @property int[] $id
+ */
 class DestroyUser extends FormRequest
 {
     /**

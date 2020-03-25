@@ -239,12 +239,11 @@ class AdminUserController extends Controller
     {
         $this->authorize('delete', Auth::user());
 
+        // NOTE: $request->id is an array
         $users = User::find($request->id);
 
         //todo cannot delete user when user has a post, page, topic, or is a member of a committee. Deal with this
 //todo user soft delete
-
-        // todo: todoRTL: User::find() returns a single User. What is this foreach() looping through?!
         foreach ($users as $user)
         {
             $user_roles = $user->getRoleNames()->toArray();
@@ -280,5 +279,6 @@ class AdminUserController extends Controller
             return $request->file('image')->store('', 'users');
         }
 
+        return null;
     }
 }
