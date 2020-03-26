@@ -175,7 +175,7 @@ class AgreementController extends Controller
         {
             $result = $this->attachmentService->destroyAttachment($agreement);
 
-            agreement::destroy($agreement->id);
+            Agreement::destroy($agreement->id);
         }
 
         Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) . ' and any related files deleted.');

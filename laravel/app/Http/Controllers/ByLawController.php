@@ -162,21 +162,18 @@ class ByLawController extends Controller
      */
     public function destroy(DestroyBylawRequest $request )
     {
-
-        //todo delete without global scopes
         $this->authorize('delete', Auth::user());
         /** @var Collection $bylaws */
         $bylaws = Bylaw::withoutGlobalScopes()->find($request->id);
 
         foreach($bylaws as $bylaw)
         {
-            //todo scope exclusion issue does not delete, it crashes.
-            $result = $this->attachmentService->destroyAttachment($request, $bylaw);
+            $result = $this->attachmentService->destroyAttachment($bylaw, $request);
 
-            Bylaw::where('id', $bylaw->id)->delete();  //todo go back to destroy method
+            Bylaw::withoutGlobalScopes()->where('id', $bylaw->id)->delete();
         }
 
-        Session::flash('success', Str::plural($bylaws->count() . ' posting', $bylaws->count() . ' and any related files deleted.'));
+        Session::flash('success', Str::plural($bylaws->count() . ' bylaw', $bylaws->count()) . ' and any related files deleted.');
 
         return redirect()->route('admin_bylaws_list');
     }
