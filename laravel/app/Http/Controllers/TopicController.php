@@ -20,9 +20,7 @@ use Illuminate\View\View;
 
 class TopicController extends Controller
 {
-    /**
-     * @var AttachmentService
-     */
+    /** @var AttachmentService */
     private $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
@@ -208,7 +206,7 @@ class TopicController extends Controller
             $topic->pages()->detach();
             $topic->posts()->detach();
 
-            $result = $this->attachmentService->destroyAttachment($topic);
+            $result = $this->attachmentService->destroyAttachments($topic);
 
             Topic::destroy($topic->id);
         }

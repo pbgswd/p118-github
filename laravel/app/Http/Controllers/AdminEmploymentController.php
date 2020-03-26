@@ -12,9 +12,7 @@ use Illuminate\Support\Str;
 
 class AdminEmploymentController extends Controller
 {
-    /**
-     * @var AttachmentService
-     */
+    /** @var AttachmentService */
     private $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
@@ -136,7 +134,7 @@ class AdminEmploymentController extends Controller
 
         foreach($employments as $employment)
         {
-            $result = $this->attachmentService->destroyAttachment($employment);
+            $result = $this->attachmentService->destroyAttachments($employment);
 
             Employment::destroy($employment->id);
         }

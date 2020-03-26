@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Agreement;
+use App\Models\Bylaw;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +28,15 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        Route::bind('any_agreement', static function ($id) {
+            return Agreement::withoutGlobalScopes()->findOrFail($id);
+        });
+        Route::bind('any_bylaw', static function ($id) {
+            return Bylaw::withoutGlobalScopes()->findOrFail($id);
+        });
+        Route::bind('any_user', static function ($id) {
+            return User::withoutGlobalScopes()->findOrFail($id);
+        });
     }
 
     /**

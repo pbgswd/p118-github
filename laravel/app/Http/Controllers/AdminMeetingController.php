@@ -142,7 +142,7 @@ class AdminMeetingController extends Controller
 
         foreach($meetings as $meeting)
         {
-            $result = $this->attachmentService->destroyAttachment($meeting);
+            $result = $this->attachmentService->destroyAttachments($meeting);
 
             Meeting::destroy($meeting->id);
         }

@@ -64,7 +64,7 @@ class AttachmentService
      *
      * @return bool
      */
-    public function destroyAttachment(HasAttachment $model): bool
+    public function destroyAttachments(HasAttachment $model): bool
     {
         $model->attachments;
 

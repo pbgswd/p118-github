@@ -239,7 +239,7 @@ class PageController extends Controller
             }
             $page->topics()->detach($assignedTopics);
 
-            $result = $this->attachmentService->destroyAttachment($page);
+            $result = $this->attachmentService->destroyAttachments($page);
 
             Page::destroy($page->id);
         }

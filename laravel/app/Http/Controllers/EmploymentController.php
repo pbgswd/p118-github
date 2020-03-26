@@ -151,7 +151,7 @@ class EmploymentController extends Controller
 
         foreach($employments as $employment)
         {
-            $result = $this->attachmentService->destroyAttachment($employment);
+            $result = $this->attachmentService->destroyAttachments($employment);
 
             Employment::destroy($employment->id);
         }

@@ -206,9 +206,8 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('bylaws-list/', 'ByLawController@index')->name('admin_bylaws_list');
     Route::get('bylaw/', 'ByLawController@create')->name('admin_bylaw_create');
     Route::post('bylaw/', 'ByLawController@store');
-    Route::post('bylaw/{bylaw_id}', 'ByLawController@update');
+    Route::post('bylaw/{any_bylaw}', 'ByLawController@update');
     Route::delete('/bylaw/delete', 'ByLawController@destroy')->name('admin_bylaw_destroy');
-
-    Route::get('/bylaw/{bylaw_id}', 'ByLawController@edit')->name('admin_bylaw_edit');
+    Route::get('/bylaw/{any_bylaw}', 'ByLawController@edit')->name('admin_bylaw_edit');
 
 });

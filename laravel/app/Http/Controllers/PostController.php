@@ -226,7 +226,7 @@ class PostController extends Controller
             }
             $post->topics()->detach($assignedTopics);
 
-            $result = $this->attachmentService->destroyAttachment($post);
+            $result = $this->attachmentService->destroyAttachments($post);
             Post::destroy($post->id);
         }
         Session::flash('success', Str::plural('post', count($request->id)) . ' deleted.');

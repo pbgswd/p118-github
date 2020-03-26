@@ -15,6 +15,9 @@ use Illuminate\Support\Str;
 
 class AgreementController extends Controller
 {
+    /** @var AttachmentService  */
+    private $attachmentService;
+
     /**
      * AgreementController constructor.
      * @param AttachmentService $attachmentService
@@ -173,7 +176,7 @@ class AgreementController extends Controller
 
         foreach($agreements as $agreement)
         {
-            $result = $this->attachmentService->destroyAttachment($agreement);
+            $result = $this->attachmentService->destroyAttachments($agreement);
 
             Agreement::destroy($agreement->id);
         }

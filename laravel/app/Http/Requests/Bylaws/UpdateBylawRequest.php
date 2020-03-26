@@ -4,14 +4,19 @@ namespace App\Http\Requests\Bylaws;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBylaw extends FormRequest
+/**
+ * Class UpdateBylawRequest
+ *
+ * @property array $bylaw
+ */
+class UpdateBylawRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +26,7 @@ class UpdateBylaw extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'bylaw.title' => 'required|max:255',

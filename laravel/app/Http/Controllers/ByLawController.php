@@ -4,18 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Bylaws\DestroyBylawRequest;
 use App\Http\Requests\Bylaws\StoreBylaw;
-use App\Http\Requests\Bylaws\UpdateBylaw;
+use App\Http\Requests\Bylaws\UpdateBylawRequest;
 use App\Models\Bylaw;
 use App\Services\AttachmentService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class ByLawController extends Controller
 {
+    /** @var AttachmentService  */
+    private $attachmentService;
+
     /**
      * BylawController constructor.
+     *
      * @param AttachmentService $attachmentService
      */
     public function __construct(AttachmentService $attachmentService)
@@ -24,8 +32,7 @@ class ByLawController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function index()
     {
@@ -50,8 +57,8 @@ class ByLawController extends Controller
 
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+     * @throws AuthorizationException
      */
     public function create()
     {
@@ -64,8 +71,8 @@ class ByLawController extends Controller
 
     /**
      * @param StoreBylaw $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function store(StoreBylaw $request)
     {
@@ -81,7 +88,7 @@ class ByLawController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $bylaw);
 
-            if($result) {
+            if ($result) {
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
             }
             else
@@ -107,42 +114,40 @@ class ByLawController extends Controller
 
     /**
      * @param Bylaw $bylaw
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return Factory|View
+     * @throws AuthorizationException
      */
-    public function edit(int $bylaw_id)
+    public function edit(Bylaw $bylaw)
     {
         $this->authorize('update', Auth::user());
-        $bylaw = Bylaw::withoutGlobalScopes()->find($bylaw_id);
-
-        $data['bylaw'] = $bylaw->load('user', 'attachments');
+        $data = ['bylaw' => $bylaw->load('user', 'attachments')];
 
         return view('admin.bylaw', ['data' => ['data' => $data, 'action' => 'Edit']]);
     }
 
     /**
-     * @param UpdateBylaw $request
-     * @param Bylaw $bylaw
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param UpdateBylawRequest $request
+     * @param Bylaw $any_bylaw
+     *
+     * @return RedirectResponse
      */
-    public function update(UpdateBylaw $request, int $bylaw_id)
+    public function update(UpdateBylawRequest $request, Bylaw $any_bylaw): RedirectResponse
     {
         $this->authorize('update', Auth::user());
-        $bylaw = Bylaw::withoutGlobalScopes()->find($bylaw_id);
-        $bylaw->fill($request['bylaw']);
+        $any_bylaw->fill($request->bylaw);
 
-        $bylaw->user_id = Auth::user()->id;
-        $bylaw->access_level = 'members';
-        $bylaw->save();
+        $any_bylaw->user()->save(Auth::user());
+        $any_bylaw->access_level = 'members';
+        $any_bylaw->save();
 
-        $result = $this->attachmentService->updateAttachment($request, $bylaw);
+        $result = $this->attachmentService->updateAttachment($request, $any_bylaw);
 
         if (null !== ($request->file('attachments')))
         {
-            $result = $this->attachmentService->createAttachment($request, $bylaw);
+            $result = $this->attachmentService->createAttachment($request, $any_bylaw);
 
-            if($result){
+            if ($result){
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
             }
             else
@@ -153,25 +158,23 @@ class ByLawController extends Controller
 
         Session::flash('success', "You have edited the bylaw information");
 
-        return redirect()->route('admin_bylaw_edit', [$bylaw->id]);
+        return redirect()->route('admin_bylaw_edit', [$any_bylaw->id]);
     }
 
     /**
      * @param DestroyBylawRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function destroy(DestroyBylawRequest $request )
     {
         $this->authorize('delete', Auth::user());
         /** @var Collection $bylaws */
-        $bylaws = Bylaw::withoutGlobalScopes()->find($request->id);
-
-        foreach($bylaws as $bylaw)
-        {
-            $result = $this->attachmentService->destroyAttachment($bylaw, $request);
-
-            Bylaw::withoutGlobalScopes()->where('id', $bylaw->id)->delete();
-        }
+        $bylaws = Bylaw::withoutGlobalScopes()
+            ->find($request->id)
+            ->each(function (Bylaw $bylaw) {
+                $this->attachmentService->destroyAttachments($bylaw);
+                $bylaw->delete();
+            });
 
         Session::flash('success', Str::plural($bylaws->count() . ' bylaw', $bylaws->count()) . ' and any related files deleted.');
 
