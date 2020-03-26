@@ -4,7 +4,11 @@ namespace App\Http\Requests\Bylaws;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DestroyBylaw extends FormRequest
+/**
+ * Class DestroyBylawRequest
+ * @property int[] $id
+ */
+class DestroyBylawRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

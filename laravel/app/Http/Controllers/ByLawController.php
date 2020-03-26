@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Bylaws\DestroyBylaw;
+use App\Http\Requests\Bylaws\DestroyBylawRequest;
 use App\Http\Requests\Bylaws\StoreBylaw;
 use App\Http\Requests\Bylaws\UpdateBylaw;
 use App\Models\Bylaw;
 use App\Services\AttachmentService;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -28,9 +29,11 @@ class ByLawController extends Controller
      */
     public function index()
     {
+
         $this->authorize('viewAny', Auth::user());
-        $data['bylaws'] = Bylaw::sortable()->with('attachments')->orderBy('date', 'desc')->paginate(20);
-        $data['count'] = count(Bylaw::all());
+        $data = [];
+        $data['bylaws'] = Bylaw::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('date', 'desc')->paginate(20);
+        $data['count'] = Bylaw::withoutGlobalScopes()->count();
 
         return view('admin.bylaws_list', ['data' => ['data' => $data]]);
     }
@@ -38,9 +41,9 @@ class ByLawController extends Controller
     public function list()
     {
         $this->authorize('viewAny', Auth::user());
-
+        $data = [];
         $data['bylaws'] = Bylaw::sortable()->where('live', '1')->with('attachments')->orderBy('date', 'desc')->paginate(20);
-        $data['count'] = count(bylaw::all());
+        $data['count'] = Bylaw::count();
 
         return view('bylaws_list', ['data' => ['data' => $data]]);
     }
@@ -107,9 +110,11 @@ class ByLawController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(Bylaw $bylaw)
+    public function edit(int $bylaw_id)
     {
         $this->authorize('update', Auth::user());
+        $bylaw = Bylaw::withoutGlobalScopes()->find($bylaw_id);
+
         $data['bylaw'] = $bylaw->load('user', 'attachments');
 
         return view('admin.bylaw', ['data' => ['data' => $data, 'action' => 'Edit']]);
@@ -121,10 +126,10 @@ class ByLawController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(UpdateBylaw $request, Bylaw $bylaw)
+    public function update(UpdateBylaw $request, int $bylaw_id)
     {
         $this->authorize('update', Auth::user());
-
+        $bylaw = Bylaw::withoutGlobalScopes()->find($bylaw_id);
         $bylaw->fill($request['bylaw']);
 
         $bylaw->user_id = Auth::user()->id;
@@ -152,23 +157,26 @@ class ByLawController extends Controller
     }
 
     /**
-     * @param DestroyBylaw $bylaw
+     * @param DestroyBylawRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(DestroyBylaw $bylaw)
+    public function destroy(DestroyBylawRequest $request )
     {
+
+        //todo delete without global scopes
         $this->authorize('delete', Auth::user());
-        $bylaws = Bylaw::find($bylaw->id);
+        /** @var Collection $bylaws */
+        $bylaws = Bylaw::withoutGlobalScopes()->find($request->id);
 
         foreach($bylaws as $bylaw)
         {
-            $result = $this->attachmentService->destroyAttachment($bylaw);
+            //todo scope exclusion issue does not delete, it crashes.
+            $result = $this->attachmentService->destroyAttachment($request, $bylaw);
 
-            Bylaw::destroy($bylaw->id);
+            Bylaw::where('id', $bylaw->id)->delete();  //todo go back to destroy method
         }
 
-        Session::flash('success', Str::plural(count($bylaws->id) . ' posting', count($bylaws->id)) . ' and any related files deleted.');
+        Session::flash('success', Str::plural($bylaws->count() . ' posting', $bylaws->count() . ' and any related files deleted.'));
 
         return redirect()->route('admin_bylaws_list');
     }

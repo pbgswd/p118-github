@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Contact\SubmitContact;
 use App\Models\Contact;
+use App\Models\Page;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
@@ -19,6 +21,10 @@ class ContactController extends Controller
     public function show(Contact $contact)
     {
         $data = [];
+
+        if(Auth::user()) {
+            $data = ['contactPage' => Page::withoutGlobalScopes()->where('slug', 'local-118-contacts')->get()];
+        }
 
         return view('contact', ['data' => $data]);
     }

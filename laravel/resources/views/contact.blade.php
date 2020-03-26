@@ -68,44 +68,11 @@
         </div>
         @guest
         @else
-            <div class="col-12 mt-lg-4 pt-4">
-                <h2>Contact Information for Members</h2>
-                <h4>Emails and phone numbers</h4>
-                <h3>Executive Board:</h3>
-                <ul>
-                    <li>President - Derrall Dunlop - <a href="mailto:president@iatse118.com">president@iatse118.com</a></li>
-                    <li>Vice-President - Eric St. Laurent - <a href="mailto:vicepresident@iatse118.com">vicepresident@iatse118.com</a></li>
-                    <li>Recording Secretary - Kate Rittenhouse - <a href="mailto:recsec@iatse118.com">recsec@iatse118.com</a></li>
-                    <li>Financial Secretary-Treasurer - Alex Liveland - <a href="mailto:financialsecretary@iatse118.com">financialsecretary@iatse118.com</a></li>
-                    <li>Business Agent - Jordan Both - <a href="mailto:businessagent@iatse118.com">businessagent@iatse118.com</a></li>
-                    <li>Members-at-Large &ndash; Dave Wilson and Brian Heath &ndash; <a href="mailto:memberatlarge@iatse118.com">memberatlarge@iatse118.com</a> </li>
-                </ul>
-                <h3>Health &amp; Welfare:</h3>
-                <ul>
-                    <li>H&amp;W Administrator - Margaret Underhill <a href="mailto:healthandwelfare@iatse118.com">healthandwelfare@iatse118.com</a></li>
-                </ul>
-                <h3>Trustees:</h3>
-                <ul>
-                    <li>Local 118 Trustees - Alex Livland, Don Underhill, Kate Rittenhouse - <a href="mailto:trustee@iatse118.com">trustee@iatse118.com</a></li>
-                 </ul>
-                <h3>Constitution &amp; Bylaw Committee:</h3>
-                <ul>
-                    <li><a href="mailto:constitution@iatse118.com">constitution@iatse118.com</a></li>
-                </ul>
-                <ul>
-                    <li>For office administration matters please contact: <a href="mailto:admin@iatse118.com">admin@iatse118.com</a></li>
-                    <li>Dispatch: General Dispatch: Text message: 236-886-5797 Email: <a href="mailto:dispatch@iatse118.com">dispatch@iatse118.com</a></li>
-                    <li>ACT Costume Dispatch: Kirsten McGhie: 604-687-5315 ext 106 Email: <a href="mailto:kmcghie@artsclub.com">kmcghie@artsclub.com</a></li>
-                    <li>Okanagan Dispatch: Gord Osland: 250-809-0741 Email: <a href="mailto:oslandgord@gmail.com">oslandgord@gmail.com</a></li>
-                </ul>
-                <h3>Members:</h3>
-                <ul>
-                    <li><a href="{{route('members')}}" title="Members Page">Members List</a></li>
-                    <li>Training Committee - <a href="mailto:">training@iatse118.com</a></li>
-                    <li>Young Workers Committee - <a href="mailto:ywc@iatse118.com">ywc@iatse118.com</a></li>
-                    <li>Payroll: <a href="mailto:payroll@iatse118.com">payroll@iatse118.com</a></li>
-                </ul>
+            <div class="col-12 border mt-lg-4 pt-4">
+                <?php //dd($data['contactPage'][0]->content); ?>
+                {!! $data['contactPage'][0]->content !!}
             </div>
+
         @endguest
     </div>
 </div>
