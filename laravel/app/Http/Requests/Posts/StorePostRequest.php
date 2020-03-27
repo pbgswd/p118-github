@@ -4,14 +4,14 @@ namespace App\Http\Requests\Posts;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePost extends FormRequest
+class StorePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class StorePost extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'post.title' => 'required|unique:posts,title|max:255',
@@ -32,7 +32,6 @@ class StorePost extends FormRequest
             'post.in_menu' => 'boolean',
             'post.allow_comments' => 'boolean',
             'post.live' => 'boolean',
-            'image' => 'image',
         ];
     }
 }

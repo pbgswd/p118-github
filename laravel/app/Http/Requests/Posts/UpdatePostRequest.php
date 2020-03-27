@@ -4,14 +4,14 @@ namespace App\Http\Requests\Posts;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePost extends FormRequest
+class UpdatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,10 +21,10 @@ class UpdatePost extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'post.title' => 'required|max:255|unique:posts,title,' . $this->route('post')->slug . ',slug',
+            'post.title' => 'required|max:255|unique:posts,title,' . $this->route('any_post')->slug . ',slug',
             'post.description' => 'required',
             'post.content' => 'required',
             'post.access_level' => 'required|string|max:255',
@@ -32,7 +32,6 @@ class UpdatePost extends FormRequest
             'post.in_menu' => 'boolean',
             'post.allow_comments' => 'boolean',
             'post.live' => 'boolean',
-            'image' => 'image',
         ];
     }
 }

@@ -132,12 +132,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/page/{any_page}', 'AdminPageController@update')->name('admin_update_page');
     Route::delete('/page/delete', 'AdminPageController@destroy')->name('page_destroy');
 
-    Route::get('/posts', 'PostController@index')->name('posts_list');
-    Route::get('/post', 'PostController@create')->name('post_create');
-    Route::post('/post', 'PostController@store');
-    Route::get('/post/{post}', 'PostController@edit')->name('post_edit');
-    Route::post('/post/{post}', 'PostController@update');
-    Route::delete('/post/delete', 'PostController@destroy')->name('post_destroy');
+    Route::get('/posts', 'AdminPostController@index')->name('posts_list');
+    Route::get('/post', 'AdminPostController@create')->name('post_create');
+    Route::post('/post', 'AdminPostController@store');
+    Route::get('/post/{any_post}', 'AdminPostController@edit')->name('post_edit');
+    Route::post('/post/{any_post}', 'AdminPostController@update');
+    Route::delete('/post/delete', 'AdminPostController@destroy')->name('post_destroy');
 
     Route::get('/attachment', 'AttachmentController@create')->name('attachment_create');
     Route::get('/attachments', 'AttachmentController@index')->name('attachments_list');

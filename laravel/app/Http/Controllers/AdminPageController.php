@@ -38,7 +38,10 @@ class AdminPageController extends Controller
         $pages = Page::withoutGlobalScopes()->sortable()->with('tagged', 'user')->paginate(20);
         $count = Page::withoutGlobalScopes()->count();
 
-        return view('admin.listpages', ['data' => ['pages' => $pages, 'count' => $count]]);
+        return view('admin.listpages', ['data' => [
+            'pages' => $pages,
+            'count' => $count,
+            ]]);
     }
 
     /**
@@ -55,7 +58,13 @@ class AdminPageController extends Controller
         $topics = Topic::all();
         $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.page', ['data' => ['page' => $page, 'assignedTopics' => [], 'access_levels' => $access_levels, 'topics' => $topics, 'action' => 'Create']]);
+        return view('admin.page', ['data' => [
+            'page' => $page,
+            'assignedTopics' => [],
+            'access_levels' => $access_levels,
+            'topics' => $topics,
+            'action' => 'Create',
+            ]]);
     }
 
     /**
