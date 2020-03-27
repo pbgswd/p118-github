@@ -192,9 +192,9 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('/meetings', 'AdminMeetingController@index')->name('meetings_list');
     Route::get('/meeting/', 'AdminMeetingController@create')->name('meeting_create');
     Route::post('/meeting/', 'AdminMeetingController@store');
-    Route::post('/meeting/{meeting}', 'AdminMeetingController@update');
+    Route::post('/meeting/{any_meeting}', 'AdminMeetingController@update');
     Route::delete('/meeting/delete', 'AdminMeetingController@destroy')->name('meeting_destroy');
-    Route::get('/meeting/{meeting}', 'AdminMeetingController@edit')->name('meeting_edit');
+    Route::get('/meeting/{any_meeting}', 'AdminMeetingController@edit')->name('meeting_edit');
 
     Route::get('employment-list/', 'AdminEmploymentController@index')->name('admin_employment_list');
     Route::get('employment/', 'AdminEmploymentController@create')->name('admin_employment_create');

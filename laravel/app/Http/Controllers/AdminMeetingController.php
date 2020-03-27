@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Meetings\DestroyMeetingRequest;
+use App\Http\Requests\Meetings\StoreMeetingRequest;
+use App\Http\Requests\Meetings\UpdateMeetingRequest;
 use App\Models\Meeting;
 use App\Services\AttachmentService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +36,8 @@ class AdminMeetingController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $data = [];
-        $data['meetings'] = Meeting::sortable()->with('user', 'attachments')->orderBy('date', 'desc')->paginate(20);
-        $data['count'] = count(Meeting::all());
+        $data['meetings'] = Meeting::withoutGlobalScopes()->sortable()->with('user', 'attachments')->orderBy('date', 'desc')->paginate(20);
+        $data['count'] = Meeting::withoutGlobalScopes()->count();
 
         return view('admin.listmeetings', ['data' => $data]);
     }
@@ -48,16 +52,19 @@ class AdminMeetingController extends Controller
         $meeting = new Meeting();
         $meeting->live = 1;
 
-        return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Add']]);
+        return view('admin.meeting', ['data' => [
+            'meeting' => $meeting,
+            'action' => 'Add',
+            ]]);
     }
 
 
     /**
-     * @param Request $request
+     * @param StoreMeetingRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(StoreMeetingRequest $request)
     {
         $this->authorize('create', Auth::user());
 
@@ -94,27 +101,31 @@ class AdminMeetingController extends Controller
 
         $meeting->load('user', 'attachments');
 
-        return view('admin.meeting', ['data' => ['meeting' => $meeting, 'action' => 'Edit']]);
+        return view('admin.meeting', ['data' => [
+            'meeting' => $meeting,
+            'action' => 'Edit',
+            ]]);
     }
 
+
     /**
-     * @param Request $request
+     * @param UpdateMeetingRequest $request
      * @param Meeting $meeting
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Meeting $meeting)
+    public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
         $this->authorize('update', Auth::user());
 
-        $meeting->fill($request['meeting']);
-        $meeting->save();
+        $any_meeting->fill($request['meeting']);
+        $any_meeting->save();
 
-        $result = $this->attachmentService->updateAttachment($request, $meeting);
+        $result = $this->attachmentService->updateAttachment($request, $any_meeting);
 
         if (null !== ($request->file('attachments')))
         {
-            $result = $this->attachmentService->createAttachment($request, $meeting);
+            $result = $this->attachmentService->createAttachment($request, $any_meeting);
 
             if($result){
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
@@ -127,7 +138,7 @@ class AdminMeetingController extends Controller
 
         Session::flash('success', "You have edited the meeting information");
 
-        return redirect()->route('meeting_edit', [$meeting->id]);
+        return redirect()->route('meeting_edit', [$any_meeting->id]);
     }
 
     /**
@@ -135,17 +146,15 @@ class AdminMeetingController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Request $request)
+    public function destroy(DestroyMeetingRequest $request)
     {
         $this->authorize('delete', Auth::user());
-        $meetings = Meeting::find($request->id);
-
-        foreach($meetings as $meeting)
-        {
-            $result = $this->attachmentService->destroyAttachments($meeting);
-
-            Meeting::destroy($meeting->id);
-        }
+        Meeting::withoutGlobalScopes()
+            ->find($request->id)
+            ->each(function(Meeting $meeting) {
+                $this->attachmentService->destroyAttachments($meeting);
+                $meeting->delete();
+            });
 
         Session::flash('success', Str::plural(count($request->id) . ' Meeting', count($request->id)) . ' and any related files deleted.');
 

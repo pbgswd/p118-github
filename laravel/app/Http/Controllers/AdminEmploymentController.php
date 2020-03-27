@@ -51,7 +51,7 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreEmploymentRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */

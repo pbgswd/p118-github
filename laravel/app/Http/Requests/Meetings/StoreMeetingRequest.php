@@ -4,14 +4,14 @@ namespace App\Http\Requests\Meetings;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMeeting extends FormRequest
+class StoreMeetingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,11 +21,11 @@ class UpdateMeeting extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'meeting.title' => 'required|max:255',
-            'meeting.description' => 'string',
+            'agreement.title' => 'string|required|max:255',
+            'agreement.description' => 'string|nullable',
         ];
     }
 }
