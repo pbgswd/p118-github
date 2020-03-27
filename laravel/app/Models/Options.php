@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Constants\AccessLevelConstants;
+
 /**
  * @property Options $access_levels
  * @property Options $membership_levels
@@ -21,8 +23,7 @@ class Options
 {
     public static function access_levels()
     {
-        $access = ['public', 'members'];
-        return array_combine($access, $access);
+        return AccessLevelConstants::getConstants();
     }
 
     public static function membership_levels()

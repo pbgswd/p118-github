@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Agreements\DestroyAgreementRequest;
 use App\Http\Requests\Agreements\StoreAgreementRequest;
 use App\Http\Requests\Agreements\UpdateAgreementRequest;
 use App\Models\Agreement;
 use App\Services\AttachmentService;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class AdminAgreementController extends Controller
 {
@@ -27,8 +30,7 @@ class AdminAgreementController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function index()
     {
@@ -43,8 +45,7 @@ class AdminAgreementController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function create()
     {
@@ -55,18 +56,18 @@ class AdminAgreementController extends Controller
     }
 
     /**
-     * @param StoreMeeting $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param StoreAgreementRequest $request
+     *
+     * @return RedirectResponse
      */
-    public function store(StoreAgreementRequest $request)
+    public function store(StoreAgreementRequest $request): RedirectResponse
     {
         $this->authorize('create', Auth::user());
 
         $agreement = new Agreement($request->input('agreement'));
-        $agreement->user_id = Auth::id();
-        $agreement->access_level = 'members';
+        $agreement->access_level = AccessLevelConstants::MEMBERS;
         $agreement->save();
+        $agreement->user()->save(Auth::user());
 
         Session::flash('success', "agreement posting saved");
 
@@ -87,13 +88,13 @@ class AdminAgreementController extends Controller
 
     /**
      * @param Agreement $agreement
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return Factory|View
      */
     public function edit(Agreement $agreement)
     {
         $this->authorize('update', Auth::user());
-        $data['agreement'] = $agreement->load('user', 'attachments');
+        $data = ['agreement' => $agreement->load('user', 'attachments')];
 
         return view('admin.agreement', ['data' => ['data' => $data, 'action' => 'Edit']]);
     }
@@ -101,17 +102,17 @@ class AdminAgreementController extends Controller
     /**
      * @param UpdateAgreementRequest $request
      * @param Agreement $any_agreement
+     *
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateAgreementRequest $request, Agreement $any_agreement): RedirectResponse
     {
         $this->authorize('update', Auth::user());
 
-        $any_agreement->fill($request['agreement']);
+        $any_agreement->fill($request->agreement);
 
         $any_agreement->user_id = Auth::user()->id;
-        $any_agreement->access_level = 'members';
+        $any_agreement->access_level = AccessLevelConstants::MEMBERS;
         $any_agreement->save();
 
         $result = $this->attachmentService->updateAttachment($request, $any_agreement);
@@ -136,9 +137,10 @@ class AdminAgreementController extends Controller
 
     /**
      * @param DestroyAgreementRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @return RedirectResponse
      */
-    public function destroy(DestroyAgreementRequest $request)
+    public function destroy(DestroyAgreementRequest $request): RedirectResponse
     {
         //todo permissions for Agreement controller
         //$this->authorize('delete', Auth::user());

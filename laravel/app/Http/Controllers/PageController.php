@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Models\Page;
-use App\Services\AttachmentService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,39 +11,30 @@ use Illuminate\Support\Facades\Auth;
 class PageController extends Controller
 {
     /**
-     * @var AttachmentService
-     */
-    private $attachmentService;
-
-    public function __construct(AttachmentService $attachmentService)
-    {
-        $this->attachmentService = $attachmentService;
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function list()
+    public function list(): Response
     {
         // public
         if (Auth::check()) {
             $pages = Page::sortable()->with('tagged')->paginate(10);
         }
         else {
-            $pages = Page::sortable()->where('access_level', '=', 'public')->with('tagged')->paginate(10);
+            $pages = Page::sortable()->where('access_level', '=', AccessLevelConstants::PUBLIC)->with('tagged')->paginate(10);
         }
 
-        return view('pages', ['data' => array('pages' => $pages)]);
+        return view('pages', ['data' => ['pages' => $pages]]);
     }
 
     /**
      * Display the specified resource.
      * @param Page $page
+     *
      * @return Response
      */
-    public function show(Page $page)
+    public function show(Page $page): Response
     {
         $page->load('topics', 'user', 'attachments');
 
@@ -54,5 +44,4 @@ class PageController extends Controller
 
         return view('page', ['data' => $data]);
     }
-
 }

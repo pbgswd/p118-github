@@ -3,32 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agreement;
-use App\Services\AttachmentService;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class AgreementController extends Controller
 {
-    /** @var AttachmentService  */
-    private $attachmentService;
-
     /**
-     * AgreementController constructor.
-     * @param AttachmentService $attachmentService
-     */
-    public function __construct(AttachmentService $attachmentService)
-    {
-        $this->attachmentService = $attachmentService;
-    }
-
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function list()
     {
         //$this->authorize('viewAny', Auth::user());
-
+        $data = [];
         $data['agreements'] = Agreement::sortable()->where('live', '1')->with('attachments')->orderBy('until', 'desc')->paginate(20);
         $data['count'] = Agreement::count();
 
@@ -39,13 +26,13 @@ class AgreementController extends Controller
     /**
      * Display the specified resource.
      * @param Agreement $agreement
+     *
      * @return Response
      */
-    public function show(Agreement $agreement)
+    public function show(Agreement $agreement): Response
     {
         $agreement->load('user', 'attachments');
 
         return view('agreement_view', ['data' => ['agreement' => $agreement]]);
     }
-
 }

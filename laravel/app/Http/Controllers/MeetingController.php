@@ -3,30 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
-use App\Services\AttachmentService;
+use Illuminate\Http\Response;
 
 
 class MeetingController extends Controller
 {
     /**
-     * @var AttachmentService
-     */
-    private $attachmentService;
-
-    public function __construct(AttachmentService $attachmentService)
-    {
-         $this->attachmentService = $attachmentService;
-    }
-
-    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index()
+    public function index(): Response
     {
-        $data['meetings'] = Meeting::sortable()->with('user')->orderBy('date', 'desc')->paginate(20);
-        $data['count'] = count(Meeting::all());
+        $data = [
+            'meetings' => Meeting::sortable()->with('user')->orderBy('date', 'desc')->paginate(20),
+            'count' => Meeting::count(),
+        ];
 
         return view('list_meetings_minutes', ['data' => $data]);
     }
@@ -35,14 +27,13 @@ class MeetingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Meeting  $meeting
-     * @return \Illuminate\Http\Response
+     * @param Meeting $meeting
+     * @return Response
      */
-    public function show(Meeting $meeting)
+    public function show(Meeting $meeting): Response
     {
         $meeting->load('user', 'attachments');
 
         return view('meeting', ['data' => ['meeting' => $meeting]]);
     }
-
 }

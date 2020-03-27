@@ -17,6 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string           $name
  * @property string           $slug
  * @property string           $description
+ * @property string           $access_level
  * @property string           $email
  * @property User             $creator
  * @property boolean          $in_menu
