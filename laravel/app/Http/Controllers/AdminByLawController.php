@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Bylaws\DestroyBylawRequest;
-use App\Http\Requests\Bylaws\StoreBylaw;
+use App\Http\Requests\Bylaws\StoreBylawRequest;
 use App\Http\Requests\Bylaws\UpdateBylawRequest;
 use App\Models\Bylaw;
 use App\Services\AttachmentService;
@@ -60,11 +60,11 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @param StoreBylaw $request
+     * @param StoreBylawRequest $request
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(StoreBylaw $request)
+    public function store(StoreBylawRequest $request)
     {
         $this->authorize('create', Auth::user());
 

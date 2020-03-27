@@ -53,7 +53,7 @@ $attachment = $data['attachment'];
 @else
 &lt;i class="far fa-file fa-8x"&gt;&lt;/i&gt;
 @endif
-&lt;a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}} target="_blank" /&gt;
+&lt;a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" target="_blank" /&gt;
     {{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file_name']}}
 &lt;/a&gt;
 </code>

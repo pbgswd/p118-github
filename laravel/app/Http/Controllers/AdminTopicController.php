@@ -52,7 +52,11 @@ class AdminTopicController extends Controller
         $topic['user_id'] = Auth::id();
         $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.topic', ['data' => ['topic' => $topic, 'access_levels' => $access_levels, 'action' => 'Create']]);
+        return view('admin.topic', [
+            'data' => [
+                'topic' => $topic,
+                'access_levels' => $access_levels,
+                'action' => 'Create']]);
     }
 
     /**

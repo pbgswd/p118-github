@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Bylaws;
+namespace App\Http\Requests\Employment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBylaw extends FormRequest
+class DestroyEmploymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,13 +21,10 @@ class StoreBylaw extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'bylaw.title' => 'required|max:255',
-            'bylaw.description' => 'string',
-            'bylaw.date' => 'date',
-            'bylaw.live' => 'boolean',
+            'id' => 'required|exists:employment',
         ];
     }
 }

@@ -22,11 +22,12 @@ $employment = $data['employment'];
                 <i class="fas fa-envelope"></i> <a href="mailto:ogord@hotmail.com?Subject=work in Okanagan"> ogord@hotmail.com</a></p>
         </div>
             <div class="col-6">
-            <p><a target="_blank" href="/employment/attachment/270"> <i class="far fa-file-pdf fa-2x"></i> ONGOING: IATSE Local 118 Dispatcher Job Posting</a></p>
+            <p>
+                <a href="{{route('job_view', 14)}}" title="Dispatch" target="_blank"> <i class="far fa-file-pdf fa-2x"></i> ONGOING: IATSE Local 118 Dispatcher Job Posting</a></p>
             </div>
         <div class="col-6">
             <p>
-                <a href="/storage/public/uswork07.pdf" title="Working in the U.S.A." target="_blank">
+                <a href="/storage/public/YE1ppyxJzBmr52SkgxpbS146lGSeyYmZDzoNwYEh.pdf" title="Working in the U.S.A." target="_blank">
                     <i class="far fa-file-pdf fa-2x"></i>
                     <i class="fas fa-flag-usa fa-2x"></i>
                     Working in the U.S.A.</a>

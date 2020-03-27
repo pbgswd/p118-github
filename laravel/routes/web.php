@@ -199,9 +199,9 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('employment-list/', 'AdminEmploymentController@index')->name('admin_employment_list');
     Route::get('employment/', 'AdminEmploymentController@create')->name('admin_employment_create');
     Route::post('employment/', 'AdminEmploymentController@store');
-    Route::post('employment/{employment}', 'AdminEmploymentController@update');
+    Route::post('employment/{any_employment}', 'AdminEmploymentController@update');
     Route::delete('/employment/delete', 'AdminEmploymentController@destroy')->name('admin_employment_destroy');
-    Route::get('/employment/{employment}', 'AdminEmploymentController@edit')->name('admin_employment_edit');
+    Route::get('/employment/{any_employment}', 'AdminEmploymentController@edit')->name('admin_employment_edit');
 
     Route::get('bylaws-list/', 'AdminByLawController@index')->name('admin_bylaws_list');
     Route::get('bylaw/', 'AdminByLawController@create')->name('admin_bylaw_create');

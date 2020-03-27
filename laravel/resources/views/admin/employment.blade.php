@@ -25,7 +25,7 @@ $employment = $data['employment'];
     <h3><a href="{{ route('admin_employment_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of employment postings</a></h3>
     <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row mt-lg-3"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>

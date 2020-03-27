@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Employment\DestroyEmploymentRequest;
+use App\Http\Requests\Employment\StoreEmploymentRequest;
+use App\Http\Requests\Employment\UpdateEmploymentRequest;
 use App\Models\Employment;
 use App\Services\AttachmentService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -51,7 +55,7 @@ class AdminEmploymentController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(StoreEmploymentRequest $request)
     {
         $this->authorize('create', Auth::user());
         $employment = new Employment($request->input('employment'));
@@ -87,26 +91,29 @@ class AdminEmploymentController extends Controller
         $this->authorize('update', Auth::user());
         $employment->load('user', 'attachments');
 
-        return view('admin.employment', ['data' => ['employment' => $employment, 'action' => 'Edit']]);
+        return view('admin.employment', ['data' => [
+            'employment' => $employment,
+            'action' => 'Edit',
+            ]]);
     }
 
     /**
-     * @param Request $request
-     * @param Employment $employment
+     * @param UpdateEmploymentRequest $request
+     * @param Employment $any_employment
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Employment $employment)
+    public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
     {
         $this->authorize('update', Auth::user());
-        $employment->fill($request['employment']);
-        $employment->save();
+        $any_employment->fill($request['employment']);
+        $any_employment->save();
 
-        $result = $this->attachmentService->updateAttachment($request, $employment);
+        $result = $this->attachmentService->updateAttachment($request, $any_employment);
 
         if (null !== ($request->file('attachments')))
         {
-            $result = $this->attachmentService->createAttachment($request, $employment);
+            $result = $this->attachmentService->createAttachment($request, $any_employment);
 
             if($result){
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
@@ -119,25 +126,23 @@ class AdminEmploymentController extends Controller
 
         Session::flash('success', "You have edited the employment information");
 
-        return redirect()->route('admin_employment_edit', [$employment->id]);
+        return redirect()->route('admin_employment_edit', [$any_employment->id]);
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param DestroyEmploymentRequest $request
+     * @return RedirectResponse
      */
-    public function destroy(Request $request)
+    public function destroy(DestroyEmploymentRequest $request)
     {
         $this->authorize('delete', Auth::user());
-        $employments = Employment::find($request->id);
 
-        foreach($employments as $employment)
-        {
-            $result = $this->attachmentService->destroyAttachments($employment);
-
-            Employment::destroy($employment->id);
-        }
+        Employment::withoutGlobalScopes()
+            ->find($request->id)
+            ->each(function(Employment $employment) {
+               $this->attachmentService->destroyAttachments($employment);
+               $employment->delete();
+            });
 
         Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) . ' and any related files deleted.');
 
