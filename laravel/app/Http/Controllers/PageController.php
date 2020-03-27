@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Page\DestroyPage;
+use App\Http\Requests\Page\DestroyPageRequest;
 use App\Http\Requests\Page\StorePage;
-use App\Http\Requests\Page\UpdatePage;
+use App\Http\Requests\Page\UpdatePageRequest;
 use App\Models\Page;
 use App\Models\Topic;
 use App\Services\AttachmentService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -34,11 +36,11 @@ class PageController extends Controller
      */
     public function index(Request $request)
     {
-        //admin
         $this->authorize('viewAny', Auth::user());
-        $pages = Page::sortable()->with('tagged', 'user')->paginate(20);
+        $pages = Page::withoutGlobalScopes()->sortable()->with('tagged', 'user')->paginate(20);
+        $count = Page::withoutGlobalScopes()->count();
 
-        return view('admin.listpages', ['data' => array('pages' => $pages)]);
+        return view('admin.listpages', ['data' => ['pages' => $pages, 'count' => $count]]);
     }
 
     /**
@@ -145,46 +147,39 @@ class PageController extends Controller
 
         $page->load('user', 'attachments', 'topics');
 
-        $assignedTopics = [];
-        foreach ($page->topics as $topic)
-        {
-            $assignedTopics[] = $topic->pivot->topic_id;
-        }
-
-        $topics = Topic::all();
-
-        $access_levels = $this->getFormOptions(['access_levels']);
-
-        $data = ['page' => $page, 'topics' => $topics, 'assignedTopics' => $assignedTopics, 'access_levels' => $access_levels, 'action' => 'Edit'];
+        $data = [
+            'page' => $page,
+            'topics' => Topic::all(),
+            'assignedTopics' => $page->topics->pluck('id')->toArray(),
+            'access_levels' => $this->getFormOptions(['access_levels']),
+            'action' => 'Edit',
+        ];
 
         return view('admin.page', ['data' => $data]);
     }
 
     /**
-     * @param UpdatePage $request
-     * @param Page $page
+     * @param UpdatePageRequest $request
+     * @param Page $any_page
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(UpdatePage $request, Page $page)
+    public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
     {
         $this->authorize('update', Auth::user());
 
         $user = Auth::user();
         $user->roles;
-//todo, page controller needs proper update PagePolicy
-        $this->authorize('update', $page);
 
-        $data = $request['page'];
+        $this->authorize('update', $any_page);
 
-        $page->fill($data);
-        $page->save();
+        $any_page->fill($request->page);
+        $any_page->save();
 
-        $result = $this->attachmentService->updateAttachment($request, $page);
+        $result = $this->attachmentService->updateAttachment($request, $any_page);
 
         if (null !== ($request->file('attachments'))) {
-            $result = $this->attachmentService->createAttachment($request, $page);
-
+            $result = $this->attachmentService->createAttachment($request, $any_page);
             if($result) {
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
             }
@@ -194,55 +189,47 @@ class PageController extends Controller
             }
         }
 
-        if (empty($data['topic_id'])) {
+        if (empty($request->page['topic_id'])) {
             $assignedTopics = [];
-            foreach ($page->topics as $topic)
+            foreach ($request->page['topics'] as $topic)
             {
                 $assignedTopics[] = $topic->pivot->topic_id;
             }
-            $page->topics()->detach($assignedTopics);
+            $any_page->topics()->detach($assignedTopics);
         } else {
-            $page->topics()->sync($data['topic_id']);
+            $any_page->topics()->sync($request->page['topic_id']);
         }
 
+        //todo make tags a service
         if (empty($request->tags)) {
-            $page->untag();
+            $any_page->untag();
         } else {
-            $page->retag(trim($request->tags, ','));
+            $any_page->retag(trim($request->tags, ','));
         }
 
         Session::flash('success', "You have edited the page");
 
-        return redirect()->route('page_edit', [$page->slug]);
+        return redirect()->route('page_edit', [$any_page->slug]);
     }
 
 
     /**
-     * @param DestroyPage $request
+     * @param DestroyPageRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(DestroyPage $request)
+    public function destroy(DestroyPageRequest $request)
     {
         $this->authorize('delete', Auth::user());
 
-        $pages = Page::find($request->id);
-
-        foreach($pages as $page)
-        {
-            $page->untag();
-
-            $assignedTopics = [];
-            foreach ($page->topics as $topic)
-            {
-                $assignedTopics[] = $topic->pivot->topic_id;
-            }
-            $page->topics()->detach($assignedTopics);
-
-            $result = $this->attachmentService->destroyAttachments($page);
-
-            Page::destroy($page->id);
-        }
+        Page::withoutGlobalScopes()
+            ->find($request->id)
+            ->each(function (Page $page) {
+                $page->untag();
+                $this->attachmentService->destroyAttachments($page);
+                $page->topics()->detach();
+                $page->delete();
+            });
 
         Session::flash('success', Str::plural('Page', count($request->id)) . ' deleted.');
 

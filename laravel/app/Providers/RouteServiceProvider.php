@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Agreement;
 use App\Models\Bylaw;
+use App\Models\Page;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('any_bylaw', static function ($id) {
             return Bylaw::withoutGlobalScopes()->findOrFail($id);
+        });
+        Route::bind('any_page', static function ($slug) {
+            return Page::withoutGlobalScopes()->where('slug', $slug)->first();
         });
         Route::bind('any_user', static function ($id) {
             return User::withoutGlobalScopes()->findOrFail($id);

@@ -165,7 +165,7 @@ class ByLawController extends Controller
      * @param DestroyBylawRequest $request
      * @return RedirectResponse
      */
-    public function destroy(DestroyBylawRequest $request )
+    public function destroy(DestroyBylawRequest $request)
     {
         $this->authorize('delete', Auth::user());
         /** @var Collection $bylaws */

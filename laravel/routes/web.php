@@ -128,8 +128,8 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('/pages', 'PageController@index')->name('pages_list');
     Route::get('/page', 'PageController@create')->name('page_create');
     Route::post('/page', 'PageController@store');
-    Route::get('/page/{page}', 'PageController@edit')->name('page_edit');
-    Route::post('/page/{page}', 'PageController@update');
+    Route::get('/page/{any_page}', 'PageController@edit')->name('page_edit');
+    Route::post('/page/{any_page}', 'PageController@update')->name('admin_update_page');
     Route::delete('/page/delete', 'PageController@destroy')->name('page_destroy');
 
     Route::get('/posts', 'PostController@index')->name('posts_list');

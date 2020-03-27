@@ -4,14 +4,19 @@ namespace App\Http\Requests\Page;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePage extends FormRequest
+/**
+ * Class UpdatePageRequest
+ * @package App\Http\Requests\Page
+ * @property Page $page
+ */
+class UpdatePageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,10 +26,10 @@ class UpdatePage extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'page.title' => 'required|max:255|unique:pages,title,' . $this->route('page')->slug . ',slug',
+            'page.title' => 'required|max:255|unique:pages,title,' . $this->route('any_page')->slug . ',slug',
             'page.description' => 'required',
             'page.content' => 'required',
             'page.access_level' => 'required|string|max:255',
@@ -32,7 +37,6 @@ class UpdatePage extends FormRequest
             'page.in_menu' => 'boolean',
             'page.allow_comments' => 'boolean',
             'page.live' => 'boolean',
-            'image' => 'image',
         ];
     }
 }
