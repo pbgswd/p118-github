@@ -101,12 +101,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     //Route::get('/search', 'LocalSearchController@admin_index')->name('admin_search_show');
     Route::post('/attachment_search', 'LocalSearchController@admin_attachment_search')->name('list_attachments_search_result');
 
-    Route::get('/topics', 'TopicController@index')->name('topics_list');
-    Route::get('/topic', 'TopicController@create')->name('topic_create');
-    Route::post('/topic', 'TopicController@store');
-    Route::get('/topic/{topic}', 'TopicController@edit')->name('topic_edit');
-    Route::post('/topic/{topic}', 'TopicController@update');
-    Route::delete('/topic/delete', 'TopicController@destroy')->name('topic_destroy');
+    Route::get('/topics', 'AdminTopicController@index')->name('topics_list');
+    Route::get('/topic', 'AdminTopicController@create')->name('topic_create');
+    Route::post('/topic', 'AdminTopicController@store');
+    Route::get('/topic/{any_topic}', 'AdminTopicController@edit')->name('topic_edit');
+    Route::post('/topic/{any_topic}', 'AdminTopicController@update');
+    Route::delete('/topic/delete', 'AdminTopicController@destroy')->name('topic_destroy');
 
     Route::get('/users', 'AdminUserController@index')->name('users_list');
     Route::get('/user', 'AdminUserController@create')->name('user_create');

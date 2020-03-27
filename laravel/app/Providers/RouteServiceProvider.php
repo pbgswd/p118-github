@@ -6,6 +6,7 @@ use App\Models\Agreement;
 use App\Models\Bylaw;
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('any_post', static function ($slug) {
             return Post::withoutGlobalScopes()->where('slug', $slug)->first();
+        });
+        Route::bind('any_topic', static function ($slug) {
+            return Topic::withoutGlobalScopes()->where('slug', $slug)->first();
         });
         Route::bind('any_user', static function ($id) {
             return User::withoutGlobalScopes()->findOrFail($id);

@@ -26,7 +26,7 @@ class PageController extends Controller
      *
      * @return Response
      */
-    public function list(Request $request)
+    public function list()
     {
         // public
         if (Auth::check()) {

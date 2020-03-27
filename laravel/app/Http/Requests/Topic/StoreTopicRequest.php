@@ -4,14 +4,14 @@ namespace App\Http\Requests\Topic;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class StoreTopicRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class StoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'topic.name' => 'required|unique:topics,name|max:255',
@@ -30,7 +30,6 @@ class StoreRequest extends FormRequest
             'topic.in_menu' => 'boolean',
             'topic.allow_comments' => 'boolean',
             'topic.live' => 'boolean',
-            'image' => 'image',
         ];
     }
 }
