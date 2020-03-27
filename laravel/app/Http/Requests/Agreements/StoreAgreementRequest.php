@@ -4,14 +4,14 @@ namespace App\Http\Requests\Agreements;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAgreement extends FormRequest
+class StoreAgreementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class StoreAgreement extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'agreement.title' => 'required|max:255',

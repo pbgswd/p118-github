@@ -175,12 +175,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('committee/{committee}/post/{committeePost}/edit', 'CommitteePostController@update');
     Route::delete('committee/{committee}/post/delete', 'CommitteePostController@destroy')->name('committee_post_destroy');
 
-    Route::get('agreements', 'AgreementController@index')->name('agreements_list');
-    Route::get('agreement/', 'AgreementController@create')->name('agreement_create');
-    Route::post('agreement/', 'AgreementController@store');
-    Route::delete('/agreement/delete', 'AgreementController@destroy')->name('agreement_destroy');
-    Route::get('/agreement/{agreement}', 'AgreementController@edit')->name('agreement_edit');
-    Route::post('/agreement/{agreement}', 'AgreementController@update');
+    Route::get('agreements', 'AdminAgreementController@index')->name('agreements_list');
+    Route::get('agreement/', 'AdminAgreementController@create')->name('agreement_create');
+    Route::post('agreement/', 'AdminAgreementController@store');
+    Route::delete('/agreement/delete', 'AdminAgreementController@destroy')->name('agreement_destroy');
+    Route::get('/agreement/{any_agreement}', 'AdminAgreementController@edit')->name('agreement_edit');
+    Route::post('/agreement/{any_agreement}', 'AdminAgreementController@update');
 
     Route::get('/organizations', 'OrganizationController@index')->name('organizations_list');
     Route::get('/organization/', 'OrganizationController@create')->name('organization_create');
