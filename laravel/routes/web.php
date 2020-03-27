@@ -125,12 +125,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/invited_user/{inviteUser}', 'InviteUserController@update');
     Route::delete('/invited_user/delete', 'InviteUserController@destroy')->name('invited_user_destroy');
 
-    Route::get('/pages', 'PageController@index')->name('pages_list');
-    Route::get('/page', 'PageController@create')->name('page_create');
-    Route::post('/page', 'PageController@store');
-    Route::get('/page/{any_page}', 'PageController@edit')->name('page_edit');
-    Route::post('/page/{any_page}', 'PageController@update')->name('admin_update_page');
-    Route::delete('/page/delete', 'PageController@destroy')->name('page_destroy');
+    Route::get('/pages', 'AdminPageController@index')->name('pages_list');
+    Route::get('/page', 'AdminPageController@create')->name('page_create');
+    Route::post('/page', 'AdminPageController@store');
+    Route::get('/page/{any_page}', 'AdminPageController@edit')->name('page_edit');
+    Route::post('/page/{any_page}', 'AdminPageController@update')->name('admin_update_page');
+    Route::delete('/page/delete', 'AdminPageController@destroy')->name('page_destroy');
 
     Route::get('/posts', 'PostController@index')->name('posts_list');
     Route::get('/post', 'PostController@create')->name('post_create');
