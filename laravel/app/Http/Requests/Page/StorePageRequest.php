@@ -4,14 +4,14 @@ namespace App\Http\Requests\Page;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePage extends FormRequest
+class StorePageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class StorePage extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array 
     {
         return [
             'page.title' => 'required|unique:pages,title|max:255',
@@ -32,7 +32,6 @@ class StorePage extends FormRequest
             'page.in_menu' => 'boolean',
             'page.allow_comments' => 'boolean',
             'page.live' => 'boolean',
-            'image' => 'image',
         ];
     }
 }

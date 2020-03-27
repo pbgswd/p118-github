@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Page\DestroyPageRequest;
-use App\Http\Requests\Page\StorePage;
+use App\Http\Requests\Page\StorePageRequest;
 use App\Http\Requests\Page\UpdatePageRequest;
 use App\Models\Page;
 use App\Models\Topic;
@@ -59,11 +59,11 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @param StorePage $request
+     * @param StorePageRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(StorePage $request)
+    public function store(StorePageRequest $request)
     {
         $this->authorize('create', Auth::user());
 
