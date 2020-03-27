@@ -29,8 +29,8 @@ class AdminEmploymentController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $data = [];
-        $data['employment'] = Employment::sortable()->with('attachments')->orderBy('deadline', 'desc')->paginate(20);
-        $data['count'] = count(Employment::all());
+        $data['employment'] = Employment::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('deadline', 'desc')->paginate(20);
+        $data['count'] = Employment::withoutGlobalScopes()->count();
 
         return view('admin.employment_list', ['data' => $data]);
     }

@@ -203,11 +203,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::delete('/employment/delete', 'AdminEmploymentController@destroy')->name('admin_employment_destroy');
     Route::get('/employment/{employment}', 'AdminEmploymentController@edit')->name('admin_employment_edit');
 
-    Route::get('bylaws-list/', 'ByLawController@index')->name('admin_bylaws_list');
-    Route::get('bylaw/', 'ByLawController@create')->name('admin_bylaw_create');
-    Route::post('bylaw/', 'ByLawController@store');
-    Route::post('bylaw/{any_bylaw}', 'ByLawController@update');
-    Route::delete('/bylaw/delete', 'ByLawController@destroy')->name('admin_bylaw_destroy');
-    Route::get('/bylaw/{any_bylaw}', 'ByLawController@edit')->name('admin_bylaw_edit');
+    Route::get('bylaws-list/', 'AdminByLawController@index')->name('admin_bylaws_list');
+    Route::get('bylaw/', 'AdminByLawController@create')->name('admin_bylaw_create');
+    Route::post('bylaw/', 'AdminByLawController@store');
+    Route::post('bylaw/{any_bylaw}', 'AdminByLawController@update');
+    Route::delete('/bylaw/delete', 'AdminByLawController@destroy')->name('admin_bylaw_destroy');
+    Route::get('/bylaw/{any_bylaw}', 'AdminByLawController@edit')->name('admin_bylaw_edit');
 
 });
