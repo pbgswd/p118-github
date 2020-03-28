@@ -36,9 +36,13 @@ class AdminVenueController extends Controller
         $this->authorize('create', Auth::user());
         $venue = new Venue;
 
-        $access_levels = $this->getFormOptions(['access_levels']);
-
-        return view('admin.venue', ['data' => ['venue' => $venue, 'access_levels' => $access_levels, 'action' => 'Create']]);
+        return view('admin.venue', [
+            'data' => [
+                'venue' => $venue,
+                'access_levels' => $this->getFormOptions(['access_levels']),
+                'action' => 'Create',
+                ]
+        ]);
     }
 
     /**

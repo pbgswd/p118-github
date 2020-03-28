@@ -182,12 +182,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('/agreement/{any_agreement}', 'AdminAgreementController@edit')->name('agreement_edit');
     Route::post('/agreement/{any_agreement}', 'AdminAgreementController@update');
 
-    Route::get('/organizations', 'OrganizationController@index')->name('organizations_list');
-    Route::get('/organization/', 'OrganizationController@create')->name('organization_create');
-    Route::post('/organization/', 'OrganizationController@store');
-    Route::post('/organization/{organization}', 'OrganizationController@update');
-    Route::delete('/organization/delete', 'OrganizationController@destroy')->name('organization_destroy');
-    Route::get('/organization/{organization}', 'OrganizationController@edit')->name('organization_edit');
+    Route::get('/organizations', 'AdminOrganizationController@index')->name('organizations_list');
+    Route::get('/organization/', 'AdminOrganizationController@create')->name('organization_create');
+    Route::post('/organization/', 'AdminOrganizationController@store');
+    Route::post('/organization/{any_organization}', 'AdminOrganizationController@update');
+    Route::delete('/organization/delete', 'AdminOrganizationController@destroy')->name('organization_destroy');
+    Route::get('/organization/{any_organization}', 'AdminOrganizationController@edit')->name('organization_edit');
 
     Route::get('/meetings', 'AdminMeetingController@index')->name('meetings_list');
     Route::get('/meeting/', 'AdminMeetingController@create')->name('meeting_create');
