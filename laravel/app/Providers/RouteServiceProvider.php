@@ -10,6 +10,7 @@ use App\Models\Page;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
+use App\Models\Venue;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,10 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('any_user', static function ($id) {
             return User::withoutGlobalScopes()->findOrFail($id);
         });
+        Route::bind('any_venue', static function ($slug) {
+            return Venue::withoutGlobalScopes()->where('slug', $slug)->first();
+        });
+
     }
 
     /**

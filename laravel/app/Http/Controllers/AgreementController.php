@@ -29,7 +29,7 @@ class AgreementController extends Controller
      *
      * @return Response
      */
-    public function show(Agreement $agreement): Response
+    public function show(Agreement $agreement)
     {
         $agreement->load('user', 'attachments');
 

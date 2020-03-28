@@ -16,8 +16,8 @@ class MeetingController extends Controller
     public function index()
     {
         $data = [
-            'meetings' => Meeting::sortable()->with('user')->orderBy('date', 'desc')->paginate(20),
-            'count' => Meeting::count(),
+            'meetings' => Meeting::withoutGlobalScopes()->sortable()->with('user')->orderBy('date', 'desc')->paginate(20),
+            'count' => Meeting::withoutGlobalScopes()->count(),
         ];
 
         return view('list_meetings_minutes', ['data' => $data]);
@@ -25,12 +25,10 @@ class MeetingController extends Controller
 
 
     /**
-     * Display the specified resource.
-     *
      * @param Meeting $meeting
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Meeting $meeting): Response
+    public function show(Meeting $meeting)
     {
         $meeting->load('user', 'attachments');
 

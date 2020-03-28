@@ -150,12 +150,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
 
     Route::get('/roles', 'RoleController@index')->name('roles_list');
 
-    Route::get('/venues', 'VenueController@index')->name('venues_list');
-    Route::get('/venue', 'VenueController@create')->name('venue_create');
-    Route::post('/venue', 'VenueController@store');
-    Route::get('/venue/{venue}', 'VenueController@edit')->name('venue_edit');
-    Route::post('/venue/{venue}', 'VenueController@update');
-    Route::delete('/venue/delete', 'VenueController@destroy')->name('venue_destroy');
+    Route::get('/venues', 'AdminVenueController@index')->name('venues_list');
+    Route::get('/venue', 'AdminVenueController@create')->name('venue_create');
+    Route::post('/venue', 'AdminVenueController@store');
+    Route::get('/venue/{any_venue}', 'AdminVenueController@edit')->name('venue_edit');
+    Route::post('/venue/{any_venue}', 'AdminVenueController@update');
+    Route::delete('/venue/delete', 'AdminVenueController@destroy')->name('venue_destroy');
 
     Route::get('committees', 'AdminCommitteeController@index')->name('committees_list');
     Route::get('committee/', 'AdminCommitteeController@create')->name('committee_create');

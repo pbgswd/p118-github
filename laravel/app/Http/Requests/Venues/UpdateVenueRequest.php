@@ -4,14 +4,14 @@ namespace App\Http\Requests\Venues;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateVenue extends FormRequest
+class UpdateVenueRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,12 +21,12 @@ class UpdateVenue extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'venue.name' => 'required|max:255',
+            'venue.name' => 'required|max:255|unique:venues,name,' . $this->route('any_venue')->slug . ',slug',
             'venue.description' => 'required|string',
-            'venue.url' => 'string',
+            'venue.url' => 'url|nullable',
             'venue.access_level' => 'required|string|max:255',
             'venue.sort_order' =>  'required|numeric',
             'venue.in_menu' => 'boolean',
@@ -34,4 +34,4 @@ class UpdateVenue extends FormRequest
         ];
     }
 }
-//,' . $this->route('venues')->slug . ',slug',
+
