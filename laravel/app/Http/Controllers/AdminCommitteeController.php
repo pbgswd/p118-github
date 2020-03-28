@@ -8,7 +8,6 @@ use App\Http\Requests\Committees\UpdateCommittee;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;

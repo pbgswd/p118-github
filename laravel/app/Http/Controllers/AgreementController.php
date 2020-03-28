@@ -16,7 +16,7 @@ class AgreementController extends Controller
     {
         //$this->authorize('viewAny', Auth::user());
         $data = [];
-        $data['agreements'] = Agreement::sortable()->where('live', '1')->with('attachments')->orderBy('until', 'desc')->paginate(20);
+        $data['agreements'] = Agreement::sortable()->with('attachments')->orderBy('until', 'desc')->paginate(20);
         $data['count'] = Agreement::count();
 
         return view('agreements_list', ['data' => ['data' => $data]]);

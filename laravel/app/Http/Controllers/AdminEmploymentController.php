@@ -8,7 +8,6 @@ use App\Http\Requests\Employment\UpdateEmploymentRequest;
 use App\Models\Employment;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;

@@ -16,7 +16,6 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Models\Venue;
-use App\Services\AttachmentService;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Spatie\Searchable\ModelSearchAspect;
