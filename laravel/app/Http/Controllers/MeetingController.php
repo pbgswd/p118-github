@@ -13,7 +13,7 @@ class MeetingController extends Controller
      *
      * @return Response
      */
-    public function index(): Response
+    public function index()
     {
         $data = [
             'meetings' => Meeting::sortable()->with('user')->orderBy('date', 'desc')->paginate(20),
