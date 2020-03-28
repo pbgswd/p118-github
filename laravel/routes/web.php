@@ -160,9 +160,9 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('committees', 'AdminCommitteeController@index')->name('committees_list');
     Route::get('committee/', 'AdminCommitteeController@create')->name('committee_create');
     Route::post('committee/', 'AdminCommitteeController@store');
-    Route::get('committee/show/{committee}', 'AdminCommitteeController@show')->name('committee_show');
-    Route::get('committee/{committee}', 'AdminCommitteeController@edit')->name('committee_edit');
-    Route::post('committee/{committee}', 'AdminCommitteeController@update');
+    Route::get('committee/show/{any_committee}', 'AdminCommitteeController@show')->name('committee_show');
+    Route::get('committee/{any_committee}', 'AdminCommitteeController@edit')->name('committee_edit');
+    Route::post('committee/{any_committee}', 'AdminCommitteeController@update');
     Route::delete('committee/delete', 'AdminCommitteeController@destroy')->name('committee_destroy');
 
     Route::get('committee/{committee}/list-bulk-add', 'AdminCommitteeMemberController@index')->name('list-bulk-add');

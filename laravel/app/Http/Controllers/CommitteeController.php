@@ -171,7 +171,7 @@ class CommitteeController extends Controller
          *  get sortable thing
          *  get paginate thing
          *
-         * do we use visibility preferenences for users profile?
+         * do we use visibility preferences for users profile?
          * do we say if you are a member you have to show your email
          * do we say if you are a member you have to show your profile?
          * show member status? Chair, Co-chair, Secretary, Member

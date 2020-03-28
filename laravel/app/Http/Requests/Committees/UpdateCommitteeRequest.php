@@ -9,14 +9,14 @@ use Illuminate\Foundation\Http\FormRequest;
  *
  * @property mixed[] $committee
  */
-class UpdateCommittee extends FormRequest
+class UpdateCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -26,10 +26,10 @@ class UpdateCommittee extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'committee.name' => 'required|max:255|unique:committees,name,' . $this->route('committee')->slug . ',slug',
+            'committee.name' => 'required|max:255|unique:committees,name,' . $this->route('any_committee')->slug . ',slug',
             'committee.description' => 'required',
             'committee.email' => 'string|max:255',
             'committee.access_level' => 'required|string|max:255',

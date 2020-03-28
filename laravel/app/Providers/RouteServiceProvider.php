@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Agreement;
 use App\Models\Bylaw;
+use App\Models\Committee;
 use App\Models\Employment;
 use App\Models\Meeting;
 use App\Models\Organization;
@@ -41,7 +42,9 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('any_bylaw', static function ($id) {
             return Bylaw::withoutGlobalScopes()->findOrFail($id);
         });
-        //committee
+        Route::bind('any_committee', static function ($slug) {
+            return Committee::withoutGlobalScopes()->where('slug', $slug)->first();
+        });
         //committee_post
         Route::bind('any_employment', static function ($id) {
             return Employment::withoutGlobalScopes()->findOrFail($id);

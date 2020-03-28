@@ -33,15 +33,13 @@ class AdminOrganizationController extends Controller
     public function create()
     {
         $this->authorize('create', Auth::user());
-        $org = new Organization();
-        $org['user_id'] = Auth::id();
 
         return view('admin.organization', [
             'data' => [
-                'organization' => $org,
+                'organization' => new Organization(),
                 'access_levels' => $this->getFormOptions(['access_levels']),
                 'action' => 'Create',
-                ]
+            ]
         ]);
     }
 
@@ -63,7 +61,7 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @param Organization $organization
+     * @param Organization $any_organization
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */

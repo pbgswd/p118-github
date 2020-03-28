@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Committees\DestroyCommittee;
+use App\Http\Requests\Committees\DestroyCommitteeRequest;
 use App\Http\Requests\Committees\StoreCommitteeRequest;
-use App\Http\Requests\Committees\UpdateCommittee;
+use App\Http\Requests\Committees\UpdateCommitteeRequest;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
@@ -23,9 +23,9 @@ class AdminCommitteeController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Auth::user());
-        $c = Committee::with('creator')->sortable()->paginate(10);
+        $c = Committee::withoutGlobalScopes()->with('creator')->sortable()->paginate(10);
 
-        return view('admin.listcommittees', ['data' => array('committees' => $c)]);
+        return view('admin.listcommittees', ['data' => ['committees' => $c,]]);
     }
 
     /**
@@ -35,14 +35,16 @@ class AdminCommitteeController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $committee = new Committee;
-        $access_levels = $this->getFormOptions(['access_levels']);
         $data = [
             'user_id' => Auth::id(),
-            'committee' => $committee,
+            'committee' => new Committee,
         ];
 
-        return view('admin.committee', ['data' => ['data' => $data, 'access_levels' => $access_levels, 'action' => 'Create']]);
+        return view('admin.committee', ['data' => [
+            'data' => $data,
+            'access_levels' => $this->getFormOptions(['access_levels']),
+            'action' => 'Create',]
+        ]);
     }
 
     /**
@@ -54,9 +56,8 @@ class AdminCommitteeController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $data = $request->committee;
-        $data['user_id'] = Auth::id();
-        $committee = new Committee($data);
+        $committee = New Committee($request->input('committee'));
+        $committee->user_id = Auth::id();
         $committee->save();
 
         Session::flash('success', "You have saved a new committee, " . $committee->name);
@@ -65,82 +66,98 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @param Committee $committee
+     * @param Committee $any_committee
      * @param User $users
-     *
      * @return Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Committee $committee, User $users)
+    public function show(Committee $any_committee, User $users)
     {
         $this->authorize('create', Auth::user());
 
-        $committee->load('creator', 'committee_members');
+        $any_committee->load('creator', 'committee_members');
 
-        $committee['member_count'] = count($committee->committee_members);
-        $committee['post_count'] = count($committee->posts);
+        $any_committee['member_count'] = $any_committee->committee_members->count();
+        $any_committee['post_count'] = $any_committee->posts->count();
+        $any_committee['committee_roles'] = Options::committee_roles();
 
-        $committee['committee_roles'] = Options::committee_roles();
         $committee_executive_roles = Options::committee_executive_roles();
 
-        $committee['executives'] = $committee->committee_members->filter( function (User $user) use ($committee_executive_roles) {
-            return in_array($user->pivot->role, $committee_executive_roles);
-        })
-        ->sortBy( function (User $user) use ($committee_executive_roles) {
-            return array_search($user->pivot->role, $committee_executive_roles);
-        });
+        $any_committee['executives'] = $any_committee->committee_members->filter(
+            function (User $user) use ($committee_executive_roles) {
+                return in_array($user->pivot->role, $committee_executive_roles);
+            })
+            ->sortBy(
+                function (User $user) use ($committee_executive_roles) {
+                    return array_search($user->pivot->role, $committee_executive_roles);
+                });
 
-        return view('admin.show_committee', ['data' => ['committee' => $committee, 'action' => 'View']]);
+        return view('admin.show_committee', ['data' => [
+                'committee' => $any_committee,
+                'action' => 'View',
+            ]
+        ]);
     }
 
     /**
-     * @param Committee $committee
-     *
+     * @param Committee $any_committee
      * @return Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(Committee $committee)
+    public function edit(Committee $any_committee)
     {
         $this->authorize('create', Auth::user());
 
-        $committee->creator;
-        $committee->committee_members;
-        $committee['member_count'] = count($committee->committee_members);
-        $data = ['committee' => $committee];
+        $any_committee->creator;
+        $any_committee->committee_members;
+        $any_committee['member_count'] = count($any_committee->committee_members);
+        $data = ['committee' => $any_committee];
         $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.committee', ['data' => ['data' => $data, 'access_levels' => $access_levels, 'action' => 'Edit']]);
+        return view('admin.committee', ['data' => [
+            'data' => $data,
+            'access_levels' => $access_levels,
+            'action' => 'Edit',
+            ]
+        ]);
     }
 
     /**
-     * @param UpdateCommittee $request
-     * @param Committee $committee
-     *
+     * @param UpdateCommitteeRequest $request
+     * @param Committee $any_committee
      * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(UpdateCommittee $request, Committee $committee): RedirectResponse
+    public function update(UpdateCommitteeRequest $request, Committee $any_committee): RedirectResponse
     {
         $this->authorize('update', Auth::user());
-        $committee->fill($request->committee);
-        $committee->save();
+        $any_committee->fill($request->committee);
+        $any_committee->save();
 
-        Session::flash('success', "You have updated committee " . $committee->name);
+        Session::flash('success', "You have updated committee " . $any_committee->name);
 
-        return redirect()->route('committee_edit', $committee->slug);
+        return redirect()->route('committee_edit', $any_committee->slug);
     }
 
     /**
-     * @param DestroyCommittee $request
+     * @param DestroyCommitteeRequest $request
      *
      * @return RedirectResponse
      */
-    public function destroy(DestroyCommittee $request): RedirectResponse
+    public function destroy(DestroyCommitteeRequest $request): RedirectResponse
     {
         $this->authorize('delete', Auth::user());
-        // set to... archive?
-        // destroy committee relation?
-        // destroy committee posts?
-        // delete members?
 
-        Committee::destroy($request->id);
+        Committee::withoutGlobalScopes()
+        ->find($request->id)
+        ->each(function (Committee $committee) {
+            //todo committee set to... archive?
+            //todo committee destroy committee relation?
+            //todo committee destroy committee posts?
+            //todo committee delete members?
+
+            $committee->delete();
+        });
 
         Session::flash('success', Str::plural('Committee', count($request->id)) . ' deleted.');
 
