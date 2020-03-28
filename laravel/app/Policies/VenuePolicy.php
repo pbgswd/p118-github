@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Constants\AccessLevelConstants;
 use App\Models\User;
 use App\Models\Venue;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -38,7 +39,7 @@ class VenuePolicy
     public function view(User $user, Venue $venue)
     {
 
-        if($venue->access_level == 'public' && $venue->live == 1){
+        if ($venue->access_level === AccessLevelConstants::PUBLIC && $venue->live == 1){
             return true;
         }
 

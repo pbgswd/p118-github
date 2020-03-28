@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Bylaws\DestroyBylawRequest;
 use App\Http\Requests\Bylaws\StoreBylawRequest;
 use App\Http\Requests\Bylaws\UpdateBylawRequest;
@@ -69,9 +70,9 @@ class AdminByLawController extends Controller
         $this->authorize('create', Auth::user());
 
         $bylaw = new Bylaw($request->input('bylaw'));
-        $bylaw->user_id = Auth::id();
-        $bylaw->access_level = 'members';
+        $bylaw->access_level = AccessLevelConstants::MEMBERS;
         $bylaw->save();
+        $bylaw->user()->save(Auth::user());
 
         Session::flash('success', "bylaw posting saved");
 
@@ -115,7 +116,7 @@ class AdminByLawController extends Controller
         $any_bylaw->fill($request->bylaw);
 
         $any_bylaw->user()->save(Auth::user());
-        $any_bylaw->access_level = 'members';
+        $any_bylaw->access_level = AccessLevelConstants::MEMBERS;
         $any_bylaw->save();
 
         $result = $this->attachmentService->updateAttachment($request, $any_bylaw);
