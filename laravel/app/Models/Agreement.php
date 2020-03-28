@@ -17,6 +17,7 @@ use Spatie\Searchable\SearchResult;
  * @property string        $description
  * @property string        $access_level
  * @property boolean       $live
+ * @property int           $user_id
  * @property User          $user
  * @property Attachment[]  $attachments
  * @property DateTime      $created_at

@@ -4,7 +4,12 @@ namespace App\Http\Requests\Committees;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCommittee extends FormRequest
+/**
+ * Class StoreCommitteeRequest
+ *
+ * @property mixed[] $committee
+ */
+class StoreCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

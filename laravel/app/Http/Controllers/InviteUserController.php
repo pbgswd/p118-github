@@ -63,7 +63,7 @@ class InviteUserController extends Controller
     {
         $invitation = new InviteUser($request->input('invite'));
         $invitation->password = str_replace ('/', '', hash::make(Str::random(8)));
-        $invitation->user_id = Auth::user()->id;
+        $invitation->user_id = Auth::id();
         $invitation->role = $request->user_role;
         $invitation->save();
 

@@ -11,18 +11,20 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
+ * Class Bylaw
+ *
  * @property int          $id
  * @property string       $title
  * @property string       $description
  * @property string       $access_level
  * @property boolean      $live
+ * @property int          $user_id
  * @property User         $user
  * @property Attachment[] $attachments
  * @property DateTime     $created_at
  * @property DateTime     $updated_at
  * @property DateTime     $date
  */
-
 class Bylaw extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;

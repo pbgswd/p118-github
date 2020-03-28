@@ -1,6 +1,6 @@
 <?php
 
-$agreement = $data['data']['agreement'];
+$agreement = $data['agreement'];
 
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' agreement ' . ($data["action"] == 'Edit' ? $agreement->name : '') ])

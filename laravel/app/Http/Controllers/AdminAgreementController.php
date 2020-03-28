@@ -52,7 +52,7 @@ class AdminAgreementController extends Controller
         $this->authorize('create', Auth::user());
         $agreement = new Agreement;
 
-        return view('admin.agreement', ['data' => ['data' => $agreement, 'action' => 'Create']]);
+        return view('admin.agreement', ['data' => ['agreement' => $agreement, 'action' => 'Create']]);
     }
 
     /**
@@ -64,10 +64,10 @@ class AdminAgreementController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $agreement = new Agreement($request->input('agreement'));
+        $agreement = new Agreement($request->agreement);
         $agreement->access_level = AccessLevelConstants::MEMBERS;
+        $agreement->user_id = Auth::id();
         $agreement->save();
-        $agreement->user()->save(Auth::user());
 
         Session::flash('success', "agreement posting saved");
 
@@ -94,9 +94,12 @@ class AdminAgreementController extends Controller
     public function edit(Agreement $agreement)
     {
         $this->authorize('update', Auth::user());
-        $data = ['agreement' => $agreement->load('user', 'attachments')];
+        $data = [
+            'agreement' => $agreement->load('user', 'attachments'),
+            'action' => 'Edit',
+        ];
 
-        return view('admin.agreement', ['data' => ['data' => $data, 'action' => 'Edit']]);
+        return view('admin.agreement', ['data' => $data]);
     }
 
     /**
@@ -111,7 +114,7 @@ class AdminAgreementController extends Controller
 
         $any_agreement->fill($request->agreement);
 
-        $any_agreement->user_id = Auth::user()->id;
+        $any_agreement->user_id = Auth::id();
         $any_agreement->access_level = AccessLevelConstants::MEMBERS;
         $any_agreement->save();
 

@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Committees\DestroyCommittee;
-use App\Http\Requests\Committees\StoreCommittee;
+use App\Http\Requests\Committees\StoreCommitteeRequest;
 use App\Http\Requests\Committees\UpdateCommittee;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class AdminCommitteeController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function index()
     {
@@ -29,8 +30,7 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function create()
     {
@@ -47,15 +47,15 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @param StoreCommittee $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param StoreCommitteeRequest $request
+     *
+     * @return RedirectResponse
      */
-    public function store(StoreCommittee $request)
+    public function store(StoreCommitteeRequest $request): RedirectResponse
     {
         $this->authorize('create', Auth::user());
 
-        $data = $request->input('committee');
+        $data = $request->committee;
         $data['user_id'] = Auth::id();
         $committee = new Committee($data);
         $committee->save();
@@ -68,8 +68,8 @@ class AdminCommitteeController extends Controller
     /**
      * @param Committee $committee
      * @param User $users
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return Factory|View
      */
     public function show(Committee $committee, User $users)
     {
@@ -95,8 +95,8 @@ class AdminCommitteeController extends Controller
 
     /**
      * @param Committee $committee
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return Factory|View
      */
     public function edit(Committee $committee)
     {
@@ -114,10 +114,10 @@ class AdminCommitteeController extends Controller
     /**
      * @param UpdateCommittee $request
      * @param Committee $committee
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return RedirectResponse
      */
-    public function update(UpdateCommittee $request, Committee $committee)
+    public function update(UpdateCommittee $request, Committee $committee): RedirectResponse
     {
         $this->authorize('update', Auth::user());
         $committee->fill($request->committee);
@@ -130,10 +130,10 @@ class AdminCommitteeController extends Controller
 
     /**
      * @param DestroyCommittee $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return RedirectResponse
      */
-    public function destroy(DestroyCommittee $request)
+    public function destroy(DestroyCommittee $request): RedirectResponse
     {
         $this->authorize('delete', Auth::user());
         // set to... archive?
