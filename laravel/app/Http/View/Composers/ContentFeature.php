@@ -28,9 +28,9 @@ class ContentFeature
             $query->where('slug', 'news');
         };
 //todo expand filter for home page view
-        $topics = Topic::where('live', 1)->orderBy('created_at', 'desc')->take(10)->get();
-        $posts = Post::where('live', 1)->where('in_menu', 1)->orderBy('created_at', 'desc')->take(10)->get();
-        $pages = Page::where('live', 1)->where('in_menu', 1)->orderBy('created_at', 'desc')->take(10)->get();
+        $topics = Topic::orderBy('created_at', 'desc')->take(10)->get();
+        $posts = Post::where('in_menu', 1)->orderBy('created_at', 'desc')->take(10)->get();
+        $pages = Page::where('in_menu', 1)->orderBy('created_at', 'desc')->take(10)->get();
 
         $data = ['topics' => $topics, 'posts' => $posts, 'pages' => $pages];
 
