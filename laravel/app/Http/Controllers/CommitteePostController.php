@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommitteePost\DestroyCommitteePostRequest;
+use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
+use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class CommitteePostController extends Controller
 {
-    //todo implement policies for Committee post controller
     /**
      * Display a listing of the resource.
      *
@@ -21,32 +25,7 @@ class CommitteePostController extends Controller
      * @param CommitteePost $committeePost
      * @return Response
      */
-    public function index(CommitteePost $committeePost, Committee $committee)
-    {
-        // $this->authorize('list', Auth::user());
-        $data = [];
-        $data['committee'] = $committee;
-        $data['posts'] = CommitteePost::sortable()
-            ->where('committee_id', '=', $committee->id)
-            ->orderBy('created_at')
-            ->paginate(10);
 
-        return view('admin.committee_posts_list', ['data' => array('data' => $data)]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create(Committee $committee)
-    {
-        // $this->authorize('create', Auth::user());
-        $post = new CommitteePost;
-        $post['committee'] = $committee;
-
-        return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create']]);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -56,7 +35,7 @@ class CommitteePostController extends Controller
      * @param User $user
      * @return Response
      */
-    public function store(Request $request, Committee $committee, User $user)
+    public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
     {
         //$this->authorize('create', Auth::user());
         $post = new CommitteePost($request->input('post'));
@@ -77,71 +56,57 @@ class CommitteePostController extends Controller
      * @param CommitteePost $committeePost
      * @param CommitteePostComment $committeePostComments
      * @return Response
+     * public
      */
     public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComment $committeePostComments)
     {
         // $this->authorize('create', Auth::user());
-        $committeePost->load('creator', 'committee', 'post_comments.commentAuthor');
 
-        $data['committeepost'] = $committeePost;
-        $data['action'] = 'Add';
+        $data['committeepost'] = $committeePost->load('creator', 'committee', 'post_comments.commentAuthor');
         $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
+        $data['action'] = 'Add';
 
         return view('committee_post', ['data' => $data]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return Response
-     */
-    public function edit(Committee $committee, CommitteePost $committeePost)
-    {
-        // $this->authorize('update', Auth::user());
-        $committeePost->creator;
-        $data['post'] = $committeePost;
-        $data['action'] = 'Edit';
-
-        return view('admin.committee_post', ['data' => $data]);
-    }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param $post blank parameter to handle order of arguments in url
-     * @param CommitteePost $committeePost
-     * @return Response
+     * @param UpdateCommitteePostRequest $request
+     * @param $post
+     * @param CommitteePost $any_committee_post
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $post, CommitteePost $committeePost)
+    public function update(UpdateCommitteePostRequest $request, $post, CommitteePost $any_committee_post)
     {
         // $this->authorize('update', Auth::user());
         $data = $request['post'];
 
-        $committeePost->fill($data);
-        $committeePost->save();
+        $any_committee_post->fill($data);
+        $any_committee_post->save();
 
         Session::flash('success', "You have edited the post");
 
-        $committeePost->committee;
+        $any_committee_post->committee;
 
-        return redirect()->route('committee_post_edit', [$committeePost->committee->slug, $committeePost->slug]);
+        return redirect()->route('committee_post_edit', [$any_committee_post->committee->slug, $any_committee_post->slug]);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param CommitteePost $committeePost
-     * @return Response
+     * @param DestroyCommitteePostRequest $request
+     * @param Committee $committee
+     * @return RedirectResponse
      */
-    public function destroy(CommitteePost $committeePost)
+    public function destroy(DestroyCommitteePostRequest $request, Committee $committee): RedirectResponse
     {
-        // $this->authorize('delete', Auth::user());
-        dd(__METHOD__);
-        // delete comments associated with it
-        // delete the post
+        CommitteePost::withoutGlobalScopes()
+            ->find($request->id)
+            ->each(function (CommitteePost $post) {
+                //todo delete comments associated with a committee post
+                $post->delete();
+            });
 
+        Session::flash('success', 'Committee ' . Str::plural('post', count($request->id)) . ' deleted.');
+
+        return redirect()->route('committee_posts_list', $committee->slug);
     }
 }

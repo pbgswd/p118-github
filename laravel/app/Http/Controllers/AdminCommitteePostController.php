@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
-class CommitteePostController extends Controller
+class AdminCommitteePostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -53,47 +53,7 @@ class CommitteePostController extends Controller
         return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create',]]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @param Committee $committee
-     * @param User $user
-     * @return Response
-     */
-    public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
-    {
-        //$this->authorize('create', Auth::user());
-        $post = new CommitteePost($request->input('post'));
-        $post->committee_id = $committee->id;
-        $post->user_id = Auth::id();
 
-        $post->save();
-
-        Session::flash('success', "You have saved a new post in " . $committee->name);
-
-        return redirect()->route('committee_post', [$committee->slug, $post->slug]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @param CommitteePostComment $committeePostComments
-     * @return Response
-     * public
-     */
-    public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComment $committeePostComments)
-    {
-        // $this->authorize('create', Auth::user());
-
-        $data['committeepost'] = $committeePost->load('creator', 'committee', 'post_comments.commentAuthor');
-        $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
-        $data['action'] = 'Add';
-
-        return view('committee_post', ['data' => $data]);
-    }
 
     /**
      * Show the form for editing the specified resource.

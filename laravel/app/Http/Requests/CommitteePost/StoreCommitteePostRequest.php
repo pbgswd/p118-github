@@ -11,9 +11,9 @@ class StoreCommitteePostRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,15 @@ class StoreCommitteePostRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'post.title' => 'required|unique:committee_posts,title|max:255',
+            'post.content' => 'required',
+            'post.sticky' => 'boolean',
+            'post.allow_comments' => 'boolean',
+            'post.live' => 'boolean',
+
         ];
     }
 }

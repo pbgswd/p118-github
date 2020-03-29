@@ -66,24 +66,24 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @param Committee $any_committee
+     * @param Committee $committee
      * @param User $users
      * @return Factory|View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Committee $any_committee, User $users)
+    public function show(Committee $committee, User $users)
     {
         $this->authorize('create', Auth::user());
 
-        $any_committee->load('creator', 'committee_members');
+        $committee->load('creator', 'committee_members');
 
-        $any_committee['member_count'] = $any_committee->committee_members->count();
-        $any_committee['post_count'] = $any_committee->posts->count();
-        $any_committee['committee_roles'] = Options::committee_roles();
+        $committee['member_count'] = $committee->committee_members->count();
+        $committee['post_count'] = $committee->posts->count();
+        $committee['committee_roles'] = Options::committee_roles();
 
         $committee_executive_roles = Options::committee_executive_roles();
 
-        $any_committee['executives'] = $any_committee->committee_members->filter(
+        $committee['executives'] = $committee->committee_members->filter(
             function (User $user) use ($committee_executive_roles) {
                 return in_array($user->pivot->role, $committee_executive_roles);
             })
@@ -93,7 +93,7 @@ class AdminCommitteeController extends Controller
                 });
 
         return view('admin.show_committee', ['data' => [
-                'committee' => $any_committee,
+                'committee' => $committee,
                 'action' => 'View',
             ]
         ]);
@@ -149,15 +149,15 @@ class AdminCommitteeController extends Controller
         $this->authorize('delete', Auth::user());
 
         Committee::withoutGlobalScopes()
-        ->find($request->id)
-        ->each(function (Committee $committee) {
-            //todo committee set to... archive?
-            //todo committee destroy committee relation?
-            //todo committee destroy committee posts?
-            //todo committee delete members?
+            ->find($request->id)
+            ->each(function (Committee $committee) {
+                //todo committee set to... archive?
+                //todo committee destroy committee relation?
+                //todo committee destroy committee posts?
+                //todo committee delete members?
 
-            $committee->delete();
-        });
+                $committee->delete();
+            });
 
         Session::flash('success', Str::plural('Committee', count($request->id)) . ' deleted.');
 

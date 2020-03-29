@@ -168,12 +168,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('committee/{committee}/list-bulk-add', 'AdminCommitteeMemberController@index')->name('list-bulk-add');
     Route::post('committee/{committee}/list-bulk-add', 'AdminCommitteeMemberController@store');
 
-    Route::get('committee/{committee}/posts/list', 'CommitteePostController@index')->name('committee_posts_list');
-    Route::get('committee/{committee}/post', 'CommitteePostController@create')->name('committee_post');
-    Route::post('committee/{committee}/post', 'CommitteePostController@store');
-    Route::get('committee/{committee}/post/{committeePost}/edit', 'CommitteePostController@edit')->name('committee_post_edit');
-    Route::post('committee/{committee}/post/{committeePost}/edit', 'CommitteePostController@update');
-    Route::delete('committee/{committee}/post/delete', 'CommitteePostController@destroy')->name('committee_post_destroy');
+    Route::get('committee/{committee}/posts/list', 'AdminCommitteePostController@index')->name('committee_posts_list');
+    Route::get('committee/{committee}/post', 'AdminCommitteePostController@create')->name('committee_post');
+    Route::post('committee/{committee}/post', 'AdminCommitteePostController@store');
+    Route::get('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@edit')->name('committee_post_edit');
+    Route::post('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@update');
+    Route::delete('committee/{committee}/post/delete', 'AdminCommitteePostController@destroy')->name('committee_post_destroy');
 
     Route::get('agreements', 'AdminAgreementController@index')->name('agreements_list');
     Route::get('agreement/', 'AdminAgreementController@create')->name('agreement_create');
