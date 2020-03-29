@@ -61,14 +61,12 @@ class CommitteePostController extends Controller
     public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComment $committeePostComments)
     {
         // $this->authorize('create', Auth::user());
-        //todo problem at post_comments.commentAuthor , 'post_comments.commentAuthor'
-        //todo problem with posts that have comments
-       // dd($committeePost);
+
         $data =[];
         $data['committeepost'] = $committeePost->load('creator', 'committee' , 'post_comments');
         $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
         $data['action'] = 'Add';
-//dd($data);
+
         return view('committee_post', ['data' => $data]);
     }
 

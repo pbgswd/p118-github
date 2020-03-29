@@ -1,6 +1,8 @@
 <?php
+
 $post = $data['committeepost'];
 $c = $data['committeepost']->committee;
+//dd($data['committeepost']->post_comments);
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -38,14 +40,13 @@ $c = $data['committeepost']->committee;
                     <i class="far fa-comment"></i> Add my comment to {{$post->title}}
                 </a>
             </div>
-
         </div>
         <div class="row  mt-3 p-4">
             @foreach($data['committeepost']->post_comments as $comment)
                 <div class="col-12 border border-dark rounded mb-4">
                     <div class="col-12 mb-2 mt-1">
-                        <a title="{{$comment->commentAuthor->name}}" href="{{route('member', $comment->user_id)}}">
-                            {{$comment->commentAuthor->name}}
+                        <a title="{{$comment->comment_author->name}}" href="{{route('member', $comment->user_id)}}">
+                            {{$comment->comment_author->name}}
                         </a>
                         {{ \Carbon\Carbon::parse($comment->created_at)->format(' F j, Y') }}
                     </div>

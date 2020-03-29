@@ -34,6 +34,7 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
+        //todo organization show method, public
         dd(__METHOD__);
     }
 }

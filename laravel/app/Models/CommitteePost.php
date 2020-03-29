@@ -105,7 +105,6 @@ class CommitteePost extends LiveableModel
      */
     public function post_comments(): HasMany
     {
-      // dd($this->hasMany(CommitteePostComment::class, 'post_id', 'id'));
         return $this->hasMany(CommitteePostComment::class, 'post_id', 'id');
     }
 }
