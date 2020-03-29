@@ -54,6 +54,20 @@ class AdminCommitteePostController extends Controller
     }
 
 
+    public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
+    {
+        //$this->authorize('create', Auth::user());
+        $post = new CommitteePost($request->input('post'));
+        $post->committee_id = $committee->id;
+        $post->user_id = Auth::id();
+
+        $post->save();
+
+        Session::flash('success', "You have saved a new post in " . $committee->name);
+
+        return redirect()->route('admin.committee_post', [$committee->slug, $post->slug]);
+    }
+    
 
     /**
      * Show the form for editing the specified resource.
