@@ -16,8 +16,7 @@ class ViewComposers
 {
     public function topics(View $view)
     {
-        $topics = Topic::where('live', 1)
-            ->where('in_menu', 1)
+        $topics = Topic::where('in_menu', 1)
             ->orderBy('sort_order', 'ASC')
             ->get();
         $view->with('topics', $topics);
@@ -59,8 +58,7 @@ class ViewComposers
 
     public function adminTopicsMenu(View $view)
     {
-        $menu = Topic::where('live', 1)
-            ->where('is_page', 0)
+        $menu = Topic::where('is_page', 0)
             ->orderBy('sort_order', 'ASC')
             ->get();
         $view->with('admin_topics_menu', $menu);
