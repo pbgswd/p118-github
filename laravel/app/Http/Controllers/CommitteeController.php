@@ -31,7 +31,7 @@ class CommitteeController extends Controller
          * subscribe status, or unsubscribe
          */
 
-        return view('committees', ['data' => array('committees' => $c)]);
+        return view('committees', ['data' => ['committees' => $c]]);
     }
 
     /**

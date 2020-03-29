@@ -16,7 +16,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function getFormOptions(array $options, $data = array())
+    protected function getFormOptions(array $options, $data = [])
     {
         foreach ($options as $option)
         {

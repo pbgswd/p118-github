@@ -62,7 +62,7 @@ if (!function_exists('select_options')) {
                 {
                     $result .= ' ' . $name . '="' . htmlspecialchars($value) . '" ';
                     if ($name === 'placeholder') {
-                        $placeholder = _select_opt_output(null, $value, array(), 'disabled hidden selected="selected"');
+                        $placeholder = _select_opt_output(null, $value, [], 'disabled hidden selected="selected"');
                     }
                 }
             } elseif ($attributes !== true) {

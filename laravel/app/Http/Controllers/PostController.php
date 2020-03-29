@@ -28,7 +28,7 @@ class PostController extends Controller
     {
         $posts = Post::sortable()->with('tagged')->paginate(10);
 
-        return view('posts', ['data' => array('posts' => $posts)]);
+        return view('posts', ['data' => ['posts' => $posts]]);
     }
 
     /**

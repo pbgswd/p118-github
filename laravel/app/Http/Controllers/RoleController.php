@@ -18,6 +18,6 @@ class RoleController extends Controller
 
         $roles = Role::get();
 
-        return view('admin.roles', ['data' => array('roles' => $roles)]);
+        return view('admin.roles', ['data' => ['roles' => $roles]]);
     }
 }

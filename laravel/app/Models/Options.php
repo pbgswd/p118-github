@@ -58,7 +58,7 @@ class Options
 
     public static function state_prov()
     {
-        $provinces = array();
+        $provinces = [];
         $provinces['AB'] = 'Alberta';
         $provinces['BC'] = 'British Columbia';
         $provinces['MB'] = 'Manitoba';
@@ -73,7 +73,7 @@ class Options
         $provinces['SK'] = 'Saskatchewan';
         $provinces['YT'] = 'Yukon';
 
-        $states = array();
+        $states = [];
         $states['AL'] = 'Alabama';
         $states['AK'] = 'Alaska';
         $states['AZ'] = 'Arizona';
@@ -136,7 +136,7 @@ class Options
 
     public static function countries()
     {
-        $countries = array();
+        $countries = [];
         $countries[] = 'USA';
         $countries[] = 'Canada';
         $countries[] = 'United Kingdom';
@@ -434,7 +434,7 @@ class Options
 
     public static function months()
     {
-        $months = array();
+        $months = [];
         $months[1] = 'January';
         $months[2] = 'February';
         $months[3] = 'March';

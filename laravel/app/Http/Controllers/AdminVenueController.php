@@ -24,7 +24,7 @@ class AdminVenueController extends Controller
         $data = [];
         $data['venues'] = Venue::withoutGlobalScopes()->sortable()->orderBy('name')->paginate(10);
 
-        return view('admin.listvenues', ['data' => array('data' => $data)]);
+        return view('admin.listvenues', ['data' => ['data' => $data]]);
     }
 
     /**
