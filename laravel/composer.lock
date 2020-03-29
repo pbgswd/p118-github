@@ -2283,28 +2283,28 @@
         },
         {
             "name": "rtconner/laravel-tagging",
-            "version": "3.3.0",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rtconner/laravel-tagging.git",
-                "reference": "aca7331832f6bc2669dc3ef22e155f7a95be07b4"
+                "reference": "2e60145343edc9d6e3e48551ca6fc3ad8be87eb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rtconner/laravel-tagging/zipball/aca7331832f6bc2669dc3ef22e155f7a95be07b4",
-                "reference": "aca7331832f6bc2669dc3ef22e155f7a95be07b4",
+                "url": "https://api.github.com/repos/rtconner/laravel-tagging/zipball/2e60145343edc9d6e3e48551ca6fc3ad8be87eb6",
+                "reference": "2e60145343edc9d6e3e48551ca6fc3ad8be87eb6",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": ">= 5.0|^6.0|^7.0",
-                "illuminate/support": ">= 5.0|^6.0|^7.0",
-                "php": ">=7.0"
+                "illuminate/database": ">= 5.0",
+                "illuminate/support": ">= 5.0",
+                "php": ">= 7.0"
             },
             "require-dev": {
                 "mockery/mockery": "~1.2",
-                "orchestra/testbench": "5.*|4.*",
-                "phpunit/phpunit": "8.*",
-                "vlucas/phpdotenv": "~4.1"
+                "orchestra/testbench": "~3.8",
+                "phpunit/phpunit": "7.5.*",
+                "vlucas/phpdotenv": "~3.3"
             },
             "type": "library",
             "extra": {
@@ -2341,7 +2341,7 @@
                 "tagging",
                 "tags"
             ],
-            "time": "2020-03-02T22:08:33+00:00"
+            "time": "2019-08-12T00:27:27+00:00"
         },
         {
             "name": "spatie/image",

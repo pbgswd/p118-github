@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 
 class CommitteePostCommentController extends Controller
 {
+
     /**
      * Store a newly created resource in storage.
      *
