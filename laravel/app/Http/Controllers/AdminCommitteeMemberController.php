@@ -76,7 +76,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function show(User $user)
     {
-        //
+        //todo methods to admin show list of members of a committee
     }
 
     /**
@@ -85,6 +85,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function edit(User $user)
     {
+        //todo methods and request validators for editing users in committees
         $this->authorize('update', Auth::user());
     }
 
@@ -95,6 +96,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        //todo methods and request validators for updating users in committees
         $this->authorize('update', Auth::user());
     }
 
@@ -104,7 +106,8 @@ class AdminCommitteeMemberController extends Controller
      */
     public function destroy(User $user)
     {
+        //todo methods and request validators for deleting users in committees
+
         $this->authorize('delete', Auth::user());
     }
-
 }

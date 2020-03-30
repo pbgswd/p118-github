@@ -6,6 +6,7 @@ use App\Models\Agreement;
 use App\Models\Bylaw;
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\CommitteePostComment;
 use App\Models\Employment;
 use App\Models\Meeting;
 use App\Models\Organization;
@@ -46,11 +47,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('any_committee', static function ($slug) {
             return Committee::withoutGlobalScopes()->where('slug', $slug)->first();
         });
-        //committee_posts slug
         Route::bind('any_committee_post', static function ($slug) {
             return CommitteePost::withoutGlobalScopes()->where('slug', $slug)->first();
         });
-        //committee_post_comments id
+        Route::bind('any_committee_post_comment', static function ($id) {
+            return CommitteePostComment::withoutGlobalScopes()->findOrFail($id);
+        });
         Route::bind('any_employment', static function ($id) {
             return Employment::withoutGlobalScopes()->findOrFail($id);
         });

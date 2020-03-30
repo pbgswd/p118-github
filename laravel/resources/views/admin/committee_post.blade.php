@@ -53,7 +53,7 @@ $committee = $data['post']['committee'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row mt-lg-3"> &nbsp;</div>
         <div class="row">
             <div class="col-md-4">
                 <div class="col-lg-2"><h4>Status</h4></div>
@@ -78,14 +78,12 @@ $committee = $data['post']['committee'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;">
+        <div class="row mt-lg-3">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
-
     </form>
-
         @if ($data['action'] == 'Edit')
 
                  <div class="col-sm" style="float:right">
@@ -98,9 +96,29 @@ $committee = $data['post']['committee'];
                     </form>
                  </div>
             </div>
-            <div class="row" style="margin-top:3em; margin-bottom: 3em;">
-                post added by {{$post->creator->name}}
+    </div>
+            <div class="row mt-lg-3 mb-lg-3">
+                Post added by {{$post->creator->name}}
             </div>
         @endif
-    </div>
+        @if (null !== $post->post_comments)
+            <h2>
+                {{$post->admin_post_comments->count()}} Post {{Str::plural('Comment', $post->admin_post_comments->count())}}.
+                <a href="{{route('committee_post_comment', $post->slug)}}">Add new</a>
+            </h2>
+            @foreach ($post->admin_post_comments as $pc)
+                <div class="row">
+                    <div class="col-3">Comment Posted By: {{$pc->comment_author->name}}</div>
+                    <div class="col-3">Created at: {{$pc->created_at}}</div>
+                    <div class="col-3">Live status: {{$pc->live ? "Live" : 'Not Live'}}</div>
+                    <div class="col-8 border border-dark rounded m-lg-2 p-lg-4">
+                        {!! $pc->content !!} <br />
+                        <a href="{{ route('committee_post_comment_edit',$pc->id) }}" title="Edit Comment ">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                    </div>
+                </div>
+            @endforeach
+            <div class="h-50"></div>
+        @endif
 @endsection

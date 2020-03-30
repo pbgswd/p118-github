@@ -40,12 +40,13 @@ class AdminCommitteePostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @param Committee $committee
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Committee $committee)
     {
+        //todo enable permission
+
         // $this->authorize('create', Auth::user());
         $post = new CommitteePost;
         $post['committee'] = $committee;
@@ -67,19 +68,19 @@ class AdminCommitteePostController extends Controller
 
         return redirect()->route('admin.committee_post', [$committee->slug, $post->slug]);
     }
-    
+
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return Response
+     * @param CommitteePost $any_committee_post
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Committee $committee, CommitteePost $any_committee_post)
     {
         // $this->authorize('update', Auth::user());
-        $any_committee_post->creator;
+//todo doesnt load a post comment if it is not live
+        $any_committee_post->load('creator', 'committee' , 'admin_post_comments');
+
         $data['post'] = $any_committee_post;
         $data['action'] = 'Edit';
 
@@ -88,16 +89,14 @@ class AdminCommitteePostController extends Controller
 
     /**
      * @param UpdateCommitteePostRequest $request
-     * @param $post
      * @param CommitteePost $any_committee_post
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateCommitteePostRequest $request, $post, CommitteePost $any_committee_post)
+    public function update(UpdateCommitteePostRequest $request, $committee_slug, CommitteePost $any_committee_post): RedirectResponse
     {
         // $this->authorize('update', Auth::user());
-        $data = $request['post'];
 
-        $any_committee_post->fill($data);
+        $any_committee_post->fill($request->input('post'));
         $any_committee_post->save();
 
         Session::flash('success', "You have edited the post");

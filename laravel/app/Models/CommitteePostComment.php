@@ -19,6 +19,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property DateTime  $created_at
  * @property DateTime  $updated_at
  * @property User      $comment_author
+ * @property CommitteePost $committee_post
+ * @property Committee $committee
  */
 class CommitteePostComment extends LiveableModel
 {
@@ -29,6 +31,7 @@ class CommitteePostComment extends LiveableModel
     protected $guard_name = 'web';  //????
 
     protected $policies = [
+        //todo enable CommitteePolicy
         //Committee::class=>CommitteePolicy::class,
     ];
 
@@ -62,5 +65,21 @@ class CommitteePostComment extends LiveableModel
     public function comment_author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function committee_post(): HasOne
+    {
+        return $this->hasOne(CommitteePost::class, 'id', 'post_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function committee(): HasOne
+    {
+        return $this->hasOne(Committee::class, 'id', 'committee_id');
     }
 }

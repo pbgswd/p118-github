@@ -178,6 +178,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@update');
     Route::delete('committee/{committee}/post/delete', 'AdminCommitteePostController@destroy')->name('committee_post_destroy');
 
+    route::get('committee_post_comment/{any_committee_post}/create', 'CommitteePostCommentController@create')->name('committee_post_comment');
+    route::get('committee_post_comment/{any_committee_post_comment}/edit', 'CommitteePostCommentController@edit')->name('committee_post_comment_edit');
+    route::post('committee_post_comment/{any_committee_post}/{any_committee_post_comment}/edit', 'CommitteePostCommentController@update');
+    route::delete('committee_post_comment/delete/', 'CommitteePostCommentController@destroy')->name('committee_post_comment_destroy');
+
     Route::get('agreements', 'AdminAgreementController@index')->name('agreements_list');
     Route::get('agreement/', 'AdminAgreementController@create')->name('agreement_create');
     Route::post('agreement/', 'AdminAgreementController@store');

@@ -4,7 +4,7 @@ namespace App\Http\Requests\CommitteePostComment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCommitteePostComment extends FormRequest
+class UpdateCommitteePostCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class UpdateCommitteePostComment extends FormRequest
     public function rules(): array
     {
         return [
-            'post.content' => 'required',
+            'comment.content' => 'required',
         ];
     }
 }

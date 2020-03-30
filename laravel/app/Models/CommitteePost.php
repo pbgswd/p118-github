@@ -31,7 +31,7 @@ class CommitteePost extends LiveableModel
     use HasRoles;
 
     protected $guard_name = 'web';  //????
-
+//todo committeePost policy
     protected $policies = [
         //Committee::class=>CommitteePolicy::class,
     ];
@@ -106,5 +106,13 @@ class CommitteePost extends LiveableModel
     public function post_comments(): HasMany
     {
         return $this->hasMany(CommitteePostComment::class, 'post_id', 'id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function admin_post_comments(): HasMany
+    {
+        return $this->hasMany(CommitteePostComment::class, 'post_id', 'id')->withoutGlobalScopes();
     }
 }

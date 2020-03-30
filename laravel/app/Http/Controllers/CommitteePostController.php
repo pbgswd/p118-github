@@ -67,6 +67,7 @@ class CommitteePostController extends Controller
         $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
         $data['action'] = 'Add';
 
+
         return view('committee_post', ['data' => $data]);
     }
 

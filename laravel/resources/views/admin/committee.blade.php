@@ -143,7 +143,7 @@ $committee = $data['data']['committee'];
             </div>
         </div>
 
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
+        <div class="row mt-lg-3"> &nbsp;</div>
 
         <div class="row">
             <div class="col-sm">
@@ -164,6 +164,6 @@ $committee = $data['data']['committee'];
             </form>
          </div>
     @endif
-    <div class="row" style="margin-top:100px;"> &nbsp;</div>
+    <div class="row mt-lg-5"> &nbsp;</div>
 </div>
 @endsection

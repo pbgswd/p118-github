@@ -24,8 +24,8 @@ class StoreMeetingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'agreement.title' => 'string|required|max:255',
-            'agreement.description' => 'string|nullable',
+            'meeting.title' => 'string|required|max:255',
+            'meeting.description' => 'string|nullable',
         ];
     }
 }
