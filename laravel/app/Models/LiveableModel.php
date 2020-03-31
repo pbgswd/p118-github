@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\LiveScope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,5 +21,34 @@ class LiveableModel extends Model
         parent::boot();
 
         static::addGlobalScope(new LiveScope());
+    }
+
+    /**
+     * @param $relations
+     * @param array $scopes
+     *
+     * @return $this
+     */
+    public function loadWithoutGlobalScopes($relations, $scopes = []): self
+    {
+        $relations = (array) $relations;
+        $scopes = (array) $scopes;
+
+        $builders = \collect($relations)
+            ->mapWithKeys(static function ($relation, $key) use ($scopes) {
+                if (\is_string($relation)) {
+                    return [$relation => static function (Builder $query) use ($scopes) {
+                        return $query->withoutGlobalScopes($scopes);
+                    }];
+                }
+                \assert(\is_callable($relation), 'Unexpected parameters to `loadWithoutGlobalScopes()`.');
+
+                return [$key => static function (Builder $query) use ($scopes, $relation) {
+                    return $relation($query->withoutGlobalScopes($scopes));
+                }];
+            })
+            ->toArray();
+
+        return $this->load($builders);
     }
 }

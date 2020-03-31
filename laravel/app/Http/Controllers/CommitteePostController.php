@@ -63,7 +63,7 @@ class CommitteePostController extends Controller
         // $this->authorize('create', Auth::user());
 
         $data =[];
-        $data['committeepost'] = $committeePost->load('creator', 'committee' , 'post_comments');
+        $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee' , 'post_comments']);
         $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
         $data['action'] = 'Add';
 
