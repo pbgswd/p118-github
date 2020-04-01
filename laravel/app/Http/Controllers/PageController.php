@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Page;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 
 class PageController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function list(): Response
+    public function list()
     {
         // public
         if (Auth::check()) {
@@ -29,16 +26,12 @@ class PageController extends Controller
     }
 
     /**
-     * Display the specified resource.
      * @param Page $page
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Page $page): Response
+    public function show(Page $page)
     {
         $page->load('topics', 'user', 'attachments');
-
-        //todo handle 2 criteria live, and access_level another scope
 
         $data = ['page' => $page];
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Constants\AccessLevelConstants;
 use App\Models\Topic;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -30,13 +29,10 @@ class TopicController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Topic $topic
-     *
-     * @return Response
+     * @return Factory|\Illuminate\Http\RedirectResponse|View
      */
-    public function show(Topic $topic): Response
+    public function show(Topic $topic)
     {
         if (false === Auth::check() && $topic->access_level != AccessLevelConstants::PUBLIC){
             Session::flash('warning', "Login to view " . $topic->name);
