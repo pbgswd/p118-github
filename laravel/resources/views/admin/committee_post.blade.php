@@ -1,7 +1,6 @@
 <?php
 $post = $data['post'];
 $committee = $data['post']['committee'];
-//dd($post);
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' . ($data["action"] == 'Edit' ? $post->title : ' in ' . $committee->name) ])
 @section('content')
@@ -94,12 +93,11 @@ $committee = $data['post']['committee'];
                     <input class="btn btn-outline-danger" type="submit" value="Delete">
                 </form>
              </div>
-        </div>
-
-        <div class="row mt-lg-3 mb-lg-3">
-            Post added by {{$post->creator->name}}
-        </div>
+            <div class="row mt-lg-3 mb-lg-3">
+                Post added by {{$post->creator->name}}
+            </div>
         @endif
+        </div>
         @if (null !== $post->post_comments)
             <h2>
                 {{$post->admin_post_comments->count()}} Post {{Str::plural('Comment', $post->admin_post_comments->count())}}.

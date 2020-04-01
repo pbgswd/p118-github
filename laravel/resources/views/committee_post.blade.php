@@ -1,8 +1,6 @@
 <?php
-
 $post = $data['committeepost'];
 $c = $data['committeepost']->committee;
-//dd($data['committeepost']->post_comments);
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -23,7 +21,6 @@ $c = $data['committeepost']->committee;
                 </h5>
                 {!! $post->content !!}
                 <br clear="all" />
-
                 @hasanyrole('super-admin|admin')
                 <h5><a href="{{route('committee_post_edit_form', [$c->slug, $post->slug])}}"><i class="far fa-edit"></i> Edit Post</a></h5>
                 @endhasanyrole
