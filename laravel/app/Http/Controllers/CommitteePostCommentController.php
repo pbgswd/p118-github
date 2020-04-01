@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommitteePostComment\DestroyCommitteePostCommentRequest;
 use App\Http\Requests\CommitteePostComment\StoreCommitteePostCommentRequest;
 use App\Http\Requests\CommitteePostComment\UpdateCommitteePostCommentRequest;
-use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use Illuminate\Http\RedirectResponse;
@@ -24,10 +23,11 @@ class CommitteePostCommentController extends Controller
         //todo enable permission
         //$this->authorize('create', Auth::user());
         $data = [];
-        $data['committee_post_comment'] = new CommitteePostComment;
-        $data['committee_post_comment']->load('committee', 'committee_post');
+        $data['post_comment'] = new CommitteePostComment;
+
         $data['committee_post'] = $committeePost;
-        $data['committee'] = $data['committee_post_comment']->committee;
+        $data['committee'] = $committeePost->committee;
+
         $data['action'] = 'Create';
         return view('admin.committee_post_comment', ['data' => $data]);
     }
@@ -38,63 +38,50 @@ class CommitteePostCommentController extends Controller
      */
     public function edit(CommitteePostComment $any_committee_post_comment)
     {
+        //todo no need for perms under admin
+
         // $this->authorize('update', Auth::user());
 
-        $data = [];
-        $any_committee_post_comment->load('comment_author', 'committee_post', 'committee');
-        // $data['post'] = $any_committee_post;
-        $data['post_comment'] = $any_committee_post_comment;
+        $any_committee_post_comment->loadWithoutGlobalScopes(['comment_author', 'committee_post', 'committee']);
 
-        $data['action'] = 'Edit';
+        $data = [
+            'committee_post' => $any_committee_post_comment->committee_post,
+            'post_comment' => $any_committee_post_comment,
+            'committee' =>  $any_committee_post_comment->committee,
+            'action' => 'Edit',
+        ];
+
         return view('admin.committee_post_comment', ['data' => $data]);
-
-        //todo idea for loading up
-
-/**
-        $post->load([
-            'post_comments' => function ($query) {
-                return $query->withoutGlobalScope(LiveScope::class);
-            },
-            'committee' => function ($query) {
-                return $query->withoutGlobalScope(LiveScope::class);
-            },
-            'creator' => function ($query) {
-                return $query->withoutGlobalScope(LiveScope::class);
-            },
-        ]);
-*/
-
     }
 
     /**
      * @param StoreCommitteePostCommentRequest $request
-     * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function store(StoreCommitteePostCommentRequest $request, Committee $committee, CommitteePost $committeePost)
+    public function store(StoreCommitteePostCommentRequest $request, CommitteePost $committeePost)
     {
-        //// $this->authorize('create', Auth::user());
+        //$this->authorize('create', Auth::user());
+
         $postComment = new CommitteePostComment($request->input('comment'));
-        $postComment->committee_id = $committee->id;
+        $postComment->committee_id = $committeePost->committee_id;
         $postComment->user_id = Auth::id();
         $postComment->post_id = $committeePost->id;
         $postComment->parent_id = null;
+
         $postComment->save();
 
         Session::flash('success', "You have added your comment to " . $committeePost->title);
 
-        return redirect()->route('committee_post_show', [$committee->slug, $committeePost->slug]);
+        return redirect()->route('committee_post_comment_edit', $postComment->id);
     }
-
 
     /**
      * @param UpdateCommitteePostCommentRequest $request
-     * @param $post
      * @param CommitteePostComment $any_committee_post_comment
      * @return RedirectResponse
      */
-    public function update(UpdateCommitteePostCommentRequest $request, $post, CommitteePostComment $any_committee_post_comment): RedirectResponse
+    public function update(UpdateCommitteePostCommentRequest $request, CommitteePostComment $any_committee_post_comment): RedirectResponse
     {
         // $this->authorize('update', Auth::user());
         $any_committee_post_comment->fill($request->input('comment'));
@@ -102,7 +89,7 @@ class CommitteePostCommentController extends Controller
 
         Session::flash('success', "You have edited the post");
 
-        return redirect()->route('committee_post_comment_edit', [$post->slug, $any_committee_post_comment->id]);
+        return redirect()->route('committee_post_comment_edit', $any_committee_post_comment->id);
     }
 
     /**
@@ -111,15 +98,21 @@ class CommitteePostCommentController extends Controller
      */
     public function destroy(DestroyCommitteePostCommentRequest $request): RedirectResponse
     {
+        $post_id = null;
+
         // $this->authorize('destroy', Auth::user());
+
         CommitteePostComment::withoutGlobalScopes()
             ->find($request->id)
-            ->each(function (CommitteePostComment $post_comment) {
+            ->each(function (CommitteePostComment $post_comment) use (&$post_id) {
+                $post_id = $post_comment->post_id;
                 $post_comment->delete();
             });
 
+        $committee_post = CommitteePost::withoutGlobalScopes()->where('id', $post_id)->first();
+
         Session::flash('success', 'Committee Post ' . Str::plural('Comment', count($request->id)) . ' deleted.');
 
-        return view('admin.committee_post', ['data' => $post_comment->post_id]);
+        return redirect()->route('committee_post_edit', [$committee_post->committee->slug, $committee_post->slug]);
     }
 }

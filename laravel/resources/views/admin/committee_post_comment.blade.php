@@ -1,9 +1,7 @@
 <?php
-
-$post = $data['post_comment']->committee_post;
-$comment = $data['post_comment'];
-$committee = $data['post_comment']['committee'];
-//dd($post);
+$post      = $data['committee_post'];
+$comment   = $data['post_comment'];
+$committee = $data['committee'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post  comment under "' . $post->title . '" in ' . $committee->name ])
 @section('content')
@@ -29,9 +27,9 @@ $committee = $data['post_comment']['committee'];
     <h3>
         <a href="{{route('committee_show', $committee->slug)}}">
             <i class="far fa-arrow-alt-circle-left"></i>
-            {{$committee->name}} Committee
+            {{$committee->name}}
         </a>
-<br />
+        <br />
         <a href="{{ route('committee_post_edit',[$committee->slug, $post->slug]) }}" title="Edit {{ $post->title }}">
             <i class="fas fa-edit"></i> Back to {{$post->title}} post page
         </a>
@@ -40,13 +38,15 @@ $committee = $data['post_comment']['committee'];
             <i class="far fa-arrow-alt-circle-left"></i> List of posts
         </a>
     </h3>
-
     <form method="post" name="comment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row">
-        Comment By: {{$data['post_comment']->comment_author->name}} Created:
-            {{ \Carbon\Carbon::parse($data['post_comment']->created_at)->format(' F j, Y H:i:s') }}
-        </div>
+        @if($data['action'] == 'Edit')
+            <div class="row">
+                Comment By: {{$data['post_comment']->comment_author->name}}
+                Created: {{ \Carbon\Carbon::parse($data['post_comment']->created_at)->format(' F j, Y H:i:s') }}
+                Last updated: {{ \Carbon\Carbon::parse($data['post_comment']->updated_at)->format(' F j, Y H:i:s') }}
+            </div>
+        @endif
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -78,7 +78,6 @@ $committee = $data['post_comment']['committee'];
             </div>
     </form>
         @if ($data['action'] == 'Edit')
-
                  <div class="col-sm" style="float:right">
                      <form name="delete" method="POST" action="{{route('committee_post_comment_destroy')}}">
                          {!! csrf_field() !!}
@@ -89,12 +88,9 @@ $committee = $data['post_comment']['committee'];
                     </form>
                  </div>
             </div>
-    </div>
             <div class="row mt-lg-3 mb-lg-3">
                 Post added by {{$post->creator->name}}
             </div>
         @endif
-
         <div class="h-50"></div>
-
 @endsection

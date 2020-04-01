@@ -85,37 +85,56 @@ $committee = $data['post']['committee'];
             </div>
     </form>
         @if ($data['action'] == 'Edit')
+             <div class="col-sm" style="float:right">
+                 <form name="delete" method="POST" action="{{route('committee_post_destroy', $committee->slug  )}}">
+                     {!! csrf_field() !!}
+                     {!! method_field('DELETE') !!}
+                    <i class="far fa-trash-alt fa-2x"></i>
+                    <input type="hidden" name="id[]" value="{{ $post->id }}">
+                    <input class="btn btn-outline-danger" type="submit" value="Delete">
+                </form>
+             </div>
+        </div>
 
-                 <div class="col-sm" style="float:right">
-                     <form name="delete" method="POST" action="{{route('committee_post_destroy', $committee->slug  )}}">
-                         {!! csrf_field() !!}
-                         {!! method_field('DELETE') !!}
-                        <i class="far fa-trash-alt fa-2x"></i>
-                        <input type="hidden" name="id[]" value="{{ $post->id }}">
-                        <input class="btn btn-outline-danger" type="submit" value="Delete">
-                    </form>
-                 </div>
-            </div>
-    </div>
-            <div class="row mt-lg-3 mb-lg-3">
-                Post added by {{$post->creator->name}}
-            </div>
+        <div class="row mt-lg-3 mb-lg-3">
+            Post added by {{$post->creator->name}}
+        </div>
         @endif
         @if (null !== $post->post_comments)
             <h2>
                 {{$post->admin_post_comments->count()}} Post {{Str::plural('Comment', $post->admin_post_comments->count())}}.
-                <a href="{{route('committee_post_comment', $post->slug)}}">Add new</a>
+                <a href="{{route('committee_post_comment', $post->slug)}}"><button type="button" class="btn btn-outline-success">Add New</button></a>
             </h2>
             @foreach ($post->admin_post_comments as $pc)
                 <div class="row">
-                    <div class="col-3">Comment Posted By: {{$pc->comment_author->name}}</div>
-                    <div class="col-3">Created at: {{$pc->created_at}}</div>
-                    <div class="col-3">Live status: {{$pc->live ? "Live" : 'Not Live'}}</div>
-                    <div class="col-8 border border-dark rounded m-lg-2 p-lg-4">
-                        {!! $pc->content !!} <br />
-                        <a href="{{ route('committee_post_comment_edit',$pc->id) }}" title="Edit Comment ">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
+                    <div class="col-8 border border-dark rounded pb-lg-3 pt-lg-2 mb-lg-3">
+                        <div class="col-12">
+                            <div class="col-md-4">Comment By: {{$pc->comment_author->name}}</div>
+                            <div class="col-md-6">
+                                Created: {{ \Carbon\Carbon::parse($pc->created_at)->format(' F j, Y H:i:s') }} <br />
+                                Last updated: {{ \Carbon\Carbon::parse($pc->updated_at)->format(' F j, Y H:i:s') }}
+                            </div>
+                            <div class="col-md-2">Live status: {{$pc->live ? "Live" : 'Not Live'}}</div>
+                        </div>
+                        <div class="col-12">
+                            {!! $pc->content !!}
+                        </div>
+                        <div class="col-12 p-lg-4">
+                            <div class="col-6" style="float:left">
+                                <a href="{{ route('committee_post_comment_edit',$pc->id) }}" title="Edit Comment ">
+                                    <i class="fas fa-edit fa-2x"></i><button type="button" class="btn btn-outline-primary">Edit</button>
+                                </a>
+                            </div>
+                            <div class="col-4" style="float:right">
+                                <form name="delete" method="POST" action="{{route('committee_post_comment_destroy')}}">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('DELETE') !!}
+                                    <i class="far fa-trash-alt fa-2x"></i>
+                                    <input type="hidden" name="id[]" value="{{$pc->id}}">
+                                    <input class="btn btn-outline-danger" type="submit" value="Delete">
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             @endforeach
