@@ -4,7 +4,7 @@ namespace App\Http\Requests\Attachments;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAttachment extends FormRequest
+class StoreAttachmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +25,7 @@ class StoreAttachment extends FormRequest
     {
         return [
           'images' => 'required',
+           // 'attachment.access_level' => 'string|required',
           //'mage.*' => 'unique:attachments,name|max:255|distinct',
         ];
 //todo image store attachment validation completion

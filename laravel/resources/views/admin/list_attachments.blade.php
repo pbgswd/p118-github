@@ -30,6 +30,7 @@ $attachments = $data['attachments'];
                     <tr>
                         <th> @sortablelink('id','#') </th>
                         <th> @sortablelink('file_name', 'File Name') </th>
+                        <th> @sortablelink('access_level', 'Access Level') </th>
                         <th> @sortablelink('id', 'Id') </th>
                         <th> @sortablelink('user_id', 'Uploaded By') </th>
                         <th> Edit </th>
@@ -53,6 +54,9 @@ $attachments = $data['attachments'];
                                 </h4>
                             </td>
                             <td>
+                                {{$a->access_level}}
+                            </td>
+                            <td>
                                 {{$a->id}}
                             </td>
                             <td> {{ $a->user->name }} </td>
@@ -66,7 +70,7 @@ $attachments = $data['attachments'];
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="7">&nbsp;</td>
+                        <td colspan="8">&nbsp;</td>
                     </tr>
                     </tbody>
                 </table>

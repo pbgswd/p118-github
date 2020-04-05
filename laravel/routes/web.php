@@ -74,9 +74,9 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('committee/{committee}/post/{committeePost}', 'CommitteePostController@show')->name('committee_post_show');
     Route::post('committee/{committee}/post/{committeePost}', 'CommitteePostController@store');
 
-    Route::get('committee/{committee}/post', 'CommitteeController@create_post')->name('committee_add_public_post');
-    Route::post('committee/{committee}/post', 'CommitteeController@store_post');
-    Route::get('committee/{committee}/edit/{committeePost}', 'CommitteeController@edit_post')->name('committee_post_edit_form');
+    Route::get('committee/{committee}/post', 'CommitteePostController@create')->name('committee_add_public_post');
+    Route::post('committee/{committee}/post', 'CommitteePostController@store');
+    Route::get('committee/{committee}/edit/{committeePost}', 'CommitteePostController@edit_post')->name('committee_post_edit_form');
     Route::post('committee/{committee}/edit/{committeePost}', 'CommitteeController@update_post');
 
     Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('committee_post_comment');
@@ -92,6 +92,8 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     Route::post('/search', 'LocalSearchController@index')->name('search');
     Route::get('/search/{search}', 'LocalSearchController@show')->name('search_show');
+
+   // Route::get('/{folder}/attachment/{attachment}', 'AttachmentController@download')->name('attachment_download');
 
 });
 
@@ -149,7 +151,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/attachment/{attachment}', 'AttachmentController@update');
     Route::delete('/attachment/delete', 'AttachmentController@destroy')->name('attachment_destroy');
 
-    Route::get('/{folder}/attachment/{attachment}', 'AttachmentController@download')->name('attachment_download');
+
 
     Route::get('/roles', 'RoleController@index')->name('roles_list');
 

@@ -55,16 +55,15 @@ class AdminPageController extends Controller
         $page = new Page;
         $page['user_id'] = Auth::id();
         $page->topics;
-        $topics = Topic::all();
-        $access_levels = $this->getFormOptions(['access_levels']);
 
         return view('admin.page', ['data' => [
             'page' => $page,
             'assignedTopics' => [],
-            'access_levels' => $access_levels,
-            'topics' => $topics,
+            'access_levels' => $this->getFormOptions(['access_levels']),
+            'topics' => Topic::all(),
             'action' => 'Create',
-            ]]);
+            ]
+        ]);
     }
 
     /**

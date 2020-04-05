@@ -28,6 +28,24 @@ class CommitteePostController extends Controller
 
 
     /**
+     * @param Committee $committee
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create(Committee $committee)
+    {
+        // $this->authorize('create', Auth::user());
+        $post = new CommitteePost;
+        $post['committee'] = $committee;
+
+        return view('committee_post_form', [
+            'data' => [
+                'post' => $post, 'action' => 'Create'
+            ]
+        ]);
+    }
+
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
@@ -37,6 +55,7 @@ class CommitteePostController extends Controller
      */
     public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
     {
+
         //$this->authorize('create', Auth::user());
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
@@ -46,8 +65,61 @@ class CommitteePostController extends Controller
 
         Session::flash('success', "You have saved a new post in " . $committee->name);
 
-        return redirect()->route('committee_post', [$committee->slug, $post->slug]);
+        //return redirect()->route('committee_post', [$committee->slug, $post->slug]);
+        return redirect()->route('committee_post_edit_form', [$committee->slug, $post->id]);
     }
+
+
+
+
+
+    public function store_post(Request $request, Committee $committee,  CommitteePost $committeePost, User $user)
+    {
+        dd(__METHOD__);
+        //$this->authorize('create', Auth::user());
+        $post = new CommitteePost($request->input('post'));
+        // dd($post);
+        $post->committee_id = $committee->id;
+        $post->user_id = Auth::id();
+
+        $post->save();
+
+        Session::flash('success', "You have saved a new post in " . $committee->name);
+
+        return redirect()->route('committee_post_edit_form', [$committee->slug, $post->id]);
+    }
+
+
+
+    public function edit_post(Committee $committee, CommitteePost $committeePost)
+    {
+        dd(__METHOD__);
+        $committeePost->creator;
+        //dd($committeePost);
+        return view('committee_post_form', [$committee->slug, $committeePost->slug], [
+            'data' => [
+                'post' => $committeePost, 'action' => 'Edit'
+            ]
+        ]);
+    }
+
+    public function update_post(Request $request, Committee $committee, CommitteePost $committeePost)
+    {
+        dd(__METHOD__);
+        $committeePost->fill($request['post']);
+        $committeePost->save();
+        $committeePost->creator;
+        return view('committee_post_form', [
+            $committee->slug, $committeePost->slug], [
+            'data' => ['post' => $committeePost, 'action' => 'Edit']
+        ]);
+    }
+
+    public function delete_post(Request $request, Committee $committee)
+    {
+        dd($request->all());
+    }
+
 
     /**
      * Display the specified resource.
@@ -66,7 +138,6 @@ class CommitteePostController extends Controller
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee' , 'post_comments']);
         $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
         $data['action'] = 'Add';
-
 
         return view('committee_post', ['data' => $data]);
     }

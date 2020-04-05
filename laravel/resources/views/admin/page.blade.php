@@ -108,6 +108,15 @@ $topics = $data['topics'];
             </div>
         </div>
         <div class="row mt-lg-3"> &nbsp;</div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-2"><h4>Tags</h4></div>
+                <div class="col-lg-10">
+                    <label><input type="text" name="tags" value="<?php echo htmlentities(old('tags', join(', ', $page->tagNames()))); ?>"size="40" />
+                        <br />Add tags related to page, comma separated.</label>
+                </div>
+            </div>
+        </div>
         <div class="row mt-lg-3">
             <div class="col-md-6">
                 <div class="form-group">
@@ -119,15 +128,7 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-2"><h4>Tags</h4></div>
-                <div class="col-lg-10">
-                    <label><input type="text" name="tags" value="<?php echo htmlentities(old('tags', join(', ', $page->tagNames()))); ?>"size="40" />
-                        <br />Add tags related to page, comma separated.</label>
-                </div>
-            </div>
-        </div>
+
 
         @if ($data['action'] == 'Edit')
             @if(count($page->attachments) > 0)
@@ -155,6 +156,11 @@ $topics = $data['topics'];
                                 </td>
                                 <td>
                                     <a href="{{route('attachment_download', [$page->getAttachmentFolder(), $pa->id])}}" title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
+
+                                    ||
+
+                                    <a href="{{route('admin_attachment_edit', $pa->id)}}"><i class="far fa-file"></i> Page </a>
+
                                 </td>
                                 <td>
                                     <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$pa->id}}][description]" value="{{ old('attachments.description', $pa->description)}}" size="40"/>

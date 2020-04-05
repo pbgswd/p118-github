@@ -25,7 +25,7 @@ class AdminCommitteeController extends Controller
         $this->authorize('viewAny', Auth::user());
         $c = Committee::withoutGlobalScopes()->with('creator')->sortable()->paginate(10);
 
-        return view('admin.listcommittees', ['data' => ['committees' => $c,]]);
+        return view('admin.listcommittees', ['data' => ['committees' => $c]]);
     }
 
     /**
@@ -108,8 +108,7 @@ class AdminCommitteeController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $any_committee->creator;
-        $any_committee->committee_members;
+        $any_committee->load('creator','committee_members');
         $any_committee['member_count'] = count($any_committee->committee_members);
         $data = ['committee' => $any_committee];
         $access_levels = $this->getFormOptions(['access_levels']);

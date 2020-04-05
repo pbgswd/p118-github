@@ -20,7 +20,10 @@ class AttachmentService
     {
         foreach ($request->file('attachments') as $file)
         {
-        //todo what about max file size, number of files uploaded at a time, resizing images generate thumb $file
+        //todo what about max file size, number of files uploaded at a time,
+        // resizing images generate thumb $file
+            //todo wp image thumb style is with a page
+
             $attachment = new Attachment;
             $attachment['user_id'] = Auth::id();
 
@@ -55,7 +58,6 @@ class AttachmentService
             }
             return true;
         }
-
         return false;
     }
 

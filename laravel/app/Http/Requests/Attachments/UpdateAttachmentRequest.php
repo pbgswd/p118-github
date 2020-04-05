@@ -4,7 +4,7 @@ namespace App\Http\Requests\Attachments;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DestroyAttachment extends FormRequest
+class UpdateAttachmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class DestroyAttachment extends FormRequest
      */
     public function rules()
     {
-        //todo destroy attachment form validation rules
         return [
-            //
+            'attachment.access_level' => 'string|required',
+            'attachment.description' => 'string|max:256|nullable',
         ];
     }
 }

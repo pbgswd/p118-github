@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Attachments\DestroyAttachment;
-use App\Http\Requests\Attachments\StoreAttachment;
-use App\Http\Requests\Attachments\UpdateAttachment;
+use App\Constants\AccessLevelConstants;
+use App\Http\Requests\Attachments\DestroyAttachmentRequest;
+use App\Http\Requests\Attachments\StoreAttachmentRequest;
+use App\Http\Requests\Attachments\UpdateAttachmentRequest;
 use App\Models\Attachment;
 use App\Services\AttachmentService;
 use Illuminate\Contracts\View\Factory;
@@ -31,6 +32,16 @@ class AttachmentController extends Controller
     public function download(string $folder, Attachment $attachment)
     {
 //todo policy, security for download attachment method?
+
+
+        /**
+         * if not Auth && AccessLevelConstants == member
+         * disallow download
+         * Otherwise allow it
+         * What is stopping it now?
+         */
+        //TODO $access_levels = AccessLevelConstants::PUBLIC/MEMBER;
+
         return $this->attachmentService->downloadAttachment($attachment, $folder);
     }
 
@@ -46,27 +57,7 @@ class AttachmentController extends Controller
         $data = [];
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'ASC')->paginate(30);
 
-        $storedFiles = [];
-// todo: todoRTL: this method pulls _all_ attachments and _all_ files. is that necessary?
-        $allAttachments = Attachment::all();
-        foreach ($allAttachments as $storedFile)
-        {
-            $storedFiles[] = $storedFile['name'];
-        }
-
-        $files = File::allFiles('storage');
-
-        $data['filecount'] = count($files);
-
-        $uploadedImgs = [];
-        foreach ($files as $file)
-        {
-            $uploadedImgs[] = $file->getBasename();
-        }
-
-        $imgs = array_diff($uploadedImgs, $storedFiles);
-
-        return view('admin.list_attachments', ['data' => $data, 'images' => $imgs]);
+        return view('admin.list_attachments', ['data' => $data]);
     }
 
     /**
@@ -75,18 +66,18 @@ class AttachmentController extends Controller
     public function create()
     {
         $this->authorize('create', Auth::user());
-
+//todo access level in page.
         $attachment = new Attachment;
-
+        $attachment->access_levels = AccessLevelConstants::getConstants();
         return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Add']]);
     }
 
     /**
-     * @param StoreAttachment $request
+     * @param StoreAttachmentRequest $request
      *
      * @return RedirectResponse
      */
-    public function store(StoreAttachment $request): RedirectResponse
+    public function store(StoreAttachmentRequest $request): RedirectResponse
     {
         $this->authorize('create', Auth::user());
 
@@ -107,9 +98,8 @@ class AttachmentController extends Controller
         Session::flash('success', Str::plural(count($request->images) . ' Attachment', count($request->images)) . ' uploaded.');
 
         if (count($request->file('images')) == 1 ) {
-            return redirect()->route('attachment_edit', [$attachment->id]);
+            return redirect()->route('admin_attachment_edit', $attachment->id);
         }
-
         return redirect()->route('attachments_list');
     }
 
@@ -128,30 +118,42 @@ class AttachmentController extends Controller
             return \redirect()->route('attachments_list');
         }
 
-        $attachment->setCalculatedProperties();
+        $attachment->access_levels = AccessLevelConstants::getConstants();
 
-        return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
+        $attachment->setCalculatedProperties();
+//dd($attachment->filesize);
+        return view('admin.attachment', ['data' => [
+            'attachment' => $attachment,
+            'action' => 'Edit'
+            ]
+        ]);
     }
 
     /**
-     * @param UpdateAttachment $request
+     * @param UpdateAttachmentRequest $request
      * @param Attachment $attachment
      *
      * @return Factory|View
      */
-    public function update(UpdateAttachment $request, Attachment $attachment)
+    public function update(UpdateAttachmentRequest $request, Attachment $attachment)
     {
         $this->authorize('update', Auth::user());
-        //todo no actions programmatically really.
-        return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Edit']]);
+
+        $attachment->fill($request->attachment);
+        $attachment->save();
+
+        Session::flash('success', "You have updated " . $attachment->file_name);
+
+        return redirect()->route('admin_attachment_edit', $attachment->id);
+
     }
 
     /**
-     * @param DestroyAttachment $request
+     * @param DestroyAttachmentRequest $request
      *
      * @return RedirectResponse
      */
-    public function destroy(DestroyAttachment $request): RedirectResponse
+    public function destroy(DestroyAttachmentRequest $request): RedirectResponse
     {
         $this->authorize('delete', Auth::user());
 
@@ -161,6 +163,7 @@ class AttachmentController extends Controller
             Storage::disk('public')->delete($a['file']);
             Attachment::destroy($a->id);
         }
+        //todo detach any other relation?
         Session::flash('success', Str::plural(count($request->id) . ' Attachment', count($request->id)) . ' deleted.');
 
         return redirect()->route('attachments_list');

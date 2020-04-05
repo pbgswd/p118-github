@@ -42,9 +42,13 @@ class CommitteeController extends Controller
      */
     public function join(Request $request, Committee $committee)
     {
+        dd(Auth::id());
         // if you are already a member, dont allow
         // if you are  a past member, set to member
         // check if this person is a member before adding them
+
+       // $user =
+
         dd(__METHOD__);
         $committee->committee_members()->attach(Auth::id(), ['role' => 'Member']);
 
@@ -108,55 +112,8 @@ class CommitteeController extends Controller
         return view('committee', ['data' => $data]);
     }
 
-    public function create_post(Committee $committee)
-    {
-//dd($committee->name);
-        // $this->authorize('create', Auth::user());
-        $post = new CommitteePost;
-        $post['committee'] = $committee;
 
-        return view('committee_post_form', ['data' => ['post' => $post, 'action' => 'Create']]);
-    }
 
-    public function store_post(Request $request, Committee $committee,  CommitteePost $committeePost, User $user)
-    {
-      //  dd($request->all());
-
-        //$this->authorize('create', Auth::user());
-        $post = new CommitteePost($request->input('post'));
-       // dd($post);
-        $post->committee_id = $committee->id;
-        $post->user_id = Auth::id();
-
-        $post->save();
-
-        Session::flash('success', "You have saved a new post in " . $committee->name);
-//todo committee and slug
-        return redirect()->route('committee_post_edit_form', [$committee->slug, $post->id]);
-    }
-
-    public function edit_post(Committee $committee, CommitteePost $committeePost)
-    {
-        $committeePost->creator;
-        //dd($committeePost);
-        return view('committee_post_form', [$committee->slug, $committeePost->slug], ['data' => ['post' => $committeePost, 'action' => 'Edit']]);
-    }
-
-    public function update_post(Request $request, Committee $committee, CommitteePost $committeePost)
-    {
-
-        $data = $request['post'];
-
-        $committeePost->fill($data);
-        $committeePost->save();
-        $committeePost->creator;
-        return view('committee_post_form', [$committee->slug, $committeePost->slug], ['data' => ['post' => $committeePost, 'action' => 'Edit']]);
-    }
-
-    public function delete_post(Request $request, Committee $committee)
-    {
-        dd($request->all());
-    }
 
 
     /**
@@ -183,37 +140,4 @@ class CommitteeController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Committee $committee
-     * @return Response
-     */
-    public function edit(Committee $committee)
-    {
-        // allow chair, cochair, and secretary to edit?
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Committee $committee
-     * @return Response
-     */
-    public function update(Request $request, Committee $committee)
-    {
-        // allow chair, cochair, and secretary to update
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Committee $committee
-     * @return Response
-     */
-    public function destroy(Committee $committee)
-    {
-        //     //// allow chair, cochair, and secretary to destroy? Or set to archive.
-    }
 }

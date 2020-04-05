@@ -4,7 +4,7 @@ namespace App\Http\Requests\Attachments;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAttachment extends FormRequest
+class DestroyAttachmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,8 @@ class UpdateAttachment extends FormRequest
      */
     public function rules()
     {
-        //todo attachment update form request rules
         return [
-            //
+            'id' => 'required|exists:attachments',
         ];
     }
 }

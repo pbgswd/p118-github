@@ -14,7 +14,6 @@ class PageController extends Controller
      */
     public function list()
     {
-        // public
         if (Auth::check()) {
             $pages = Page::sortable()->with('tagged')->paginate(10);
         }
@@ -33,8 +32,6 @@ class PageController extends Controller
     {
         $page->load('topics', 'user', 'attachments');
 
-        $data = ['page' => $page];
-
-        return view('page', ['data' => $data]);
+        return view('page', ['data' =>  ['page' => $page]]);
     }
 }

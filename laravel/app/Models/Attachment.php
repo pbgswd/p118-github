@@ -8,6 +8,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -19,6 +20,7 @@ use Spatie\Searchable\SearchResult;
  * @property string    $file_name
  * @property string    $subfolder
  * @property string    $description
+ * @property string    $access_level
  * @property User      $user
  * @property Meeting[] $meetings
  * @property DateTime  $created_at
@@ -26,6 +28,8 @@ use Spatie\Searchable\SearchResult;
  */
 class Attachment extends Model implements Searchable
 {
+    use Sortable;
+
     /** @var string */
     public $path_info;
 
@@ -44,6 +48,14 @@ class Attachment extends Model implements Searchable
     /** @var array */
     protected $policies = [
         Attachment::class => AttachmentPolicy::class,
+    ];
+
+    public $sortable = [
+        'id',
+        'file_name',
+        'access_level',
+        'created_at',
+        'updated_at',
     ];
 
     /**
