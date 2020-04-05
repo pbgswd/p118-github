@@ -19,6 +19,10 @@ $data['access_levels'] = $attachment->access_levels;
                     Upload file to server & database. Insert or attach to content after.
                     You may add many images at once.
                 </p>
+                Access Level for content:
+                <div class="form-group">
+                    {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level), ['name' => 'attachment[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                </div>
             </div>
         </div>
         @else
