@@ -62,7 +62,7 @@ if (!function_exists('select_options')) {
                 {
                     $result .= ' ' . $name . '="' . htmlspecialchars($value) . '" ';
                     if ($name === 'placeholder') {
-                        $placeholder = _select_opt_output(null, $value, [], 'disabled hidden selected="selected"');
+                        $placeholder = _select_opt_output(null, $value, [], ' selected="selected"');
                     }
                 }
             } elseif ($attributes !== true) {
@@ -75,6 +75,8 @@ if (!function_exists('select_options')) {
         if ($placeholder) {
             $result .= $placeholder;
         }
+
+        //todo selected not appearing in function select_options view_helpers
 
         $selected = array_map('strval', array_values((array)$selected));
         foreach ($data as $key => $val)

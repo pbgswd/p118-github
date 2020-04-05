@@ -22,17 +22,18 @@ $data['access_levels'] = $attachment->access_levels;
             </div>
         </div>
         @else
-            @if(!in_array($attachment['extension'], ['jpg', 'jpeg', 'png', 'gif']))
+
+            @if(!in_array($attachment->extension, ['jpg', 'jpeg', 'png', 'gif']))
                 <div class="row">
                     <div class="col-md-2">
-                        @if($attachment['extension'] == 'pdf')
-                        <i class="far fa-file-pdf fa-8x"></i>
+                        @if($attachment->extension == 'pdf')
+                            <i class="far fa-file-pdf fa-8x"></i>
                         @else
                             <i class="far fa-file fa-8x"></i>
                         @endif
                     </div>
                     <div class="col-md-8 text-wrap">
-                        <h2><i class="far fa-file"></i> File Info</h2>
+                        <h2>File Info</h2>
                         <h4>
                             <ul style="line-height: 1.6; list-style-type: none;">
                                 <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}</a></li>
@@ -46,9 +47,10 @@ $data['access_levels'] = $attachment->access_levels;
                                         @else
                                             <i class="fas fa-file-download fa-4x"></i>
                                         @endif
-                                        Download {{$attachment['file_name']}}</a></li>
+                                        Download {{$attachment['file_name']}}</a>
+                                </li>
                                 <li>File Type: {{$attachment->extension}}</li>
-                                <li>Last Updated: {{$attachment['updated_at']}}</li>
+                                <li>Last Updated: {{$attachment->updated_at->format('F j Y H:i:s')}}</li>
                             </ul>
                         </h4>
                         Description:
@@ -89,10 +91,10 @@ $data['access_levels'] = $attachment->access_levels;
                             <li><a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])}}" title="Download {{$attachment->file_name}}"><i class="fas fa-file-download"></i> Download {{$attachment['file_name']}}</a></li>
                             <li>Uploaded File Name: {{$attachment['file']}}</li>
                             <li>File Type: {{$attachment->extension}}</li>
-                            <li>Width: {{$attachment['imageData'][0]}} px</li>
-                            <li>Height: {{$attachment['imageData'][1]}} px</li>
-                            <li>Mime Type: {{$attachment['imageData']['mime']}}</li>
-                            <li>Last Updated: {{$attachment['updated_at']}}</li>
+                            <li>Width: {{$attachment->imagedata[0]}} px</li>
+                            <li>Height: {{$attachment->imagedata[1]}} px</li>
+                            <li>Mime Type: {{$attachment->imagedata['mime']}}</li>
+                            <li>Last Updated: {{$attachment['updated_at']->format('F j Y H:i:s')}}</li>
                         </ul>
                         Description
                         <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[description]" value="{{ old('attachment.description', $attachment->description)}}" size="40"/>
@@ -111,7 +113,7 @@ $data['access_levels'] = $attachment->access_levels;
                 </div>
                 @endif
         @endif
-        <div class="row mt-1">
+        <div class="row mt-1 mb-lg-5">
             <div class="col-md-6">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />

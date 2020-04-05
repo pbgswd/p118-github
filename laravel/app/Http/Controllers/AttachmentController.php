@@ -57,6 +57,8 @@ class AttachmentController extends Controller
         $data = [];
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'ASC')->paginate(30);
 
+        $data['filecount'] = Attachment::count();
+
         return view('admin.list_attachments', ['data' => $data]);
     }
 
@@ -69,7 +71,12 @@ class AttachmentController extends Controller
 //todo access level in page.
         $attachment = new Attachment;
         $attachment->access_levels = AccessLevelConstants::getConstants();
-        return view('admin.attachment', ['data' => ['attachment' => $attachment, 'action' => 'Add']]);
+        return view('admin.attachment', [
+            'data' => [
+            'attachment' => $attachment,
+            'action' => 'Add',
+            ]
+        ]);
     }
 
     /**
@@ -160,7 +167,11 @@ class AttachmentController extends Controller
         $attachments = Attachment::find($request->id);
         foreach ($attachments as $a)
         {
-            Storage::disk('public')->delete($a['file']);
+            //todo destroy file in its directory
+            //todo what about pivot relation
+            //todo attachement service supporeted delete
+            //dd($a);
+            Storage::disk($a->subfolder)->delete($a->file);
             Attachment::destroy($a->id);
         }
         //todo detach any other relation?
