@@ -66,7 +66,7 @@ if (!function_exists('select_options')) {
                     }
                 }
             } elseif ($attributes !== true) {
-                //todo: todoRTL: pull 'placeholder' text from $attributes string
+//todo: todoRTL: pull 'placeholder' text from $attributes string
                 $result .= $attributes;
             }
             $result .= ">\n";
@@ -76,9 +76,8 @@ if (!function_exists('select_options')) {
             $result .= $placeholder;
         }
 
-        //todo selected not appearing in function select_options view_helpers
-
         $selected = array_map('strval', array_values((array)$selected));
+
         foreach ($data as $key => $val)
         {
             $result .= _select_opt_output((string) $key, $val, $selected);
