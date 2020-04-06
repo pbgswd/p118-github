@@ -68,6 +68,7 @@ class Attachment extends Model implements Searchable
         'file_name',
         'subfolder',
         'description',
+        'access_level',
     ];
 
     /** @var array */

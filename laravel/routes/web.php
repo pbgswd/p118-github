@@ -151,8 +151,6 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/attachment/{attachment}', 'AttachmentController@update');
     Route::delete('/attachment/delete', 'AttachmentController@destroy')->name('attachment_destroy');
 
-
-
     Route::get('/roles', 'RoleController@index')->name('roles_list');
 
     Route::get('/venues', 'AdminVenueController@index')->name('venues_list');

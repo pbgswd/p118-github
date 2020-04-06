@@ -63,30 +63,28 @@ $attachment = $data['attachment'];
                         Description:
                             <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[description]" value="{{ old('attachment.description', $attachment->description)}}" size="40"/>
 
-                        Access Level for attachment: {{$attachment->access_level}}
+                        Access Level for attachment:
 
                             <div class="form-group">
                                 {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level), ['name' => 'attachment[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
                             </div>
                     </div>
                     <div class="col-md-8">
-                    <h4>Insert into content with:</h4>
+                        <h4>Insert into content with:</h4>
 <pre>
-<code>
-@if($attachment['extension'] == 'pdf')
-&lt;i class="far fa-file-pdf fa-8x"&gt;&lt;/i&gt;
-@else
-&lt;i class="far fa-file fa-8x"&gt;&lt;/i&gt;
-@endif
-&lt;a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" target="_blank" /&gt;
-    {{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file_name']}}
-&lt;/a&gt;
-</code>
+    <code>
+    @if($attachment['extension'] == 'pdf')
+    &lt;i class="far fa-file-pdf fa-8x"&gt;&lt;/i&gt;
+    @else
+    &lt;i class="far fa-file fa-8x"&gt;&lt;/i&gt;
+    @endif
+    &lt;a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" target="_blank" /&gt;
+        {{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file_name']}}&lt;/a&gt;
+    </code>
 </pre>
                     </div>
                 </div>
-                    <div class="col-md-2"></div>
-                </div>
+                <div class="col-md-2"></div>
             @else
                 <div class="row">
                     <div class="col-md-6 mb-lg-1">
