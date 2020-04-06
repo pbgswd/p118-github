@@ -60,17 +60,8 @@ $employment = $data['employment'];
                 </div>
             </div>
         </div>
-
         <div class="row mt-lg-2">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="exampleInputFile">
-                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        Add File(s) To Employment Posting
-                    </label>
-                    <input type="file" id="inputFile" name="attachments[]" multiple />
-                </div>
-            </div>
+
             <div class="col-md-4">
                 <div class="col-2"><h4>Live on website</h4></div>
                 <div class="col-sm">
@@ -92,9 +83,18 @@ $employment = $data['employment'];
                     <p>ie.: Checked means status is open.</p>
                 </div>
             </div>
-
-
         </div>
+        <div class="row mt-lg-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To Employment Posting
+                    </label>
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
+                </div>
+            </div>
+            >/
         @if ($data['action'] == 'Edit')
             @if(count($employment->attachments) > 0)
                 <div class="col-md-12">

@@ -45,17 +45,6 @@ $topic = $data['topic'];
         </div>
         <div class="row mt-lg-3">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="exampleInputFile">
-                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        Add File(s) To Page
-                    </label>
-                    <input type="file" id="inputFile" name="attachments[]" multiple />
-                </div>
-            </div>
-        </div>
-        <div class="row mt-lg-3">
-            <div class="col-md-6">
                 <div class="row">
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level for content</h4></div>
                     <div class="col-6 col-sm-3">
@@ -111,6 +100,17 @@ $topic = $data['topic'];
                         <input type="text" name="tags" value="<?php echo htmlentities(old('tags', join(', ', $topic->tagNames()))); ?>"size="40" />
                         <br />Add tags related to topic, comma separated.
                     </label>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-lg-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To this topic
+                    </label>
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
         </div>

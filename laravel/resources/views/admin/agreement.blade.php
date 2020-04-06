@@ -27,7 +27,6 @@ $agreement = $data['agreement'];
     <h3>  <a href="{{ route('agreements_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of agreements</a>  </h3>
     <form method="post" name="agreement" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
@@ -62,19 +61,6 @@ $agreement = $data['agreement'];
         </div>
         <div class="row mt-lg-3">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="exampleInputFile">
-                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        Add File(s) To Agreement
-                    </label>
-                    <input type="file" id="inputFile" name="attachments[]" multiple />
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-lg-3">
-            <div class="col-md-6">
-
             </div>
             <div class="col-md-4">
                 <div class="col-lg-2"><h4>Status</h4></div>
@@ -84,6 +70,17 @@ $agreement = $data['agreement'];
                          <input name="agreement[live]" type="checkbox" value="1" {{ checked( old('agreement.live', $agreement->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-lg-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To Agreement
+                    </label>
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
         </div>

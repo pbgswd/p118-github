@@ -1,6 +1,5 @@
 <?php
 $committee = $data['data']['committee'];
-//dd($data['data']['user_id']);
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' committee ' . ($data["action"] == 'Edit' ? $committee->name : '') ])
 @section('content')
@@ -59,8 +58,7 @@ $committee = $data['data']['committee'];
     @endif
     <form method="post" name="committee" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
@@ -68,7 +66,6 @@ $committee = $data['data']['committee'];
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -87,11 +84,7 @@ $committee = $data['data']['committee'];
                 </div>
             </div>
         </div>
-
-
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-
-        <div class="row">
+        <div class="row mt-lg-5">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
@@ -102,7 +95,6 @@ $committee = $data['data']['committee'];
                     </div>
                     <div class="col-6 col-sm-3"></div>
                     <div class="col-6 col-sm-3"></div>
-                    <!-- Force next columns to break to new line -->
                     <div class="w-100"></div>
                     <div class="col-12">&nbsp;</div>
                     <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
@@ -130,9 +122,6 @@ $committee = $data['data']['committee'];
                         <input name="committee[allow_comments]" type="checkbox" value="1" {{ checked(old('committee.allow_comments',$committee->allow_comments)) }} /> Allow Comments?
                     </label>
                 </div>
-
-
-
                 <div class="col-sm">
                     <label>
                          <input name="committee[live]" type="hidden" value="0" />

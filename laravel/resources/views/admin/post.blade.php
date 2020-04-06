@@ -22,9 +22,8 @@ $topics = $data['topics'];
             ]
         });
     </script>
-
 <div class="container">
-    <h3>  <a href="{{ route('posts_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>  </h3>
+    <h3><a href="{{ route('posts_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a></h3>
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row">
@@ -72,19 +71,7 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3"> &nbsp;</div>
-        <div class="row mt-lg-3 mb-2">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="exampleInputFile">
-                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        Add File(s) To Page
-                    </label>
-                    <input type="file" id="inputFile" name="attachments[]" multiple />
-                </div>
-            </div>
-        </div>
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level for content</h4></div>
@@ -108,7 +95,6 @@ $topics = $data['topics'];
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="col-lg-2"><h4>Status</h4></div>
                 <div class="col-sm">
@@ -118,14 +104,12 @@ $topics = $data['topics'];
                     </label>
                 </div>
                 <div class="col-sm">
-
                     <label>
                         <input name="post[allow_comments]" type="hidden" value="0" />
                         <input name="post[allow_comments]" type="checkbox" value="1" {{ checked(old('post.allow_comments', $post->allow_comments)) }} /> Allow Comments
                     </label>
                 </div>
                 <div class="col-sm">
-
                     <label>
                          <input name="post[live]" type="hidden" value="0" />
                          <input name="post[live]" type="checkbox" value="1" {{ checked( old('post.live', $post->live)) }} /> Check now to make Live
@@ -134,9 +118,7 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3"> &nbsp;</div>
-
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Tags</h4></div>
                 <div class="col-lg-10">
@@ -145,7 +127,17 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-
+        <div class="row mt-lg-3 mb-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To Page
+                    </label>
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
+                </div>
+            </div>
+        </div>
         @if ($data['action'] == 'Edit')
             @if(count($post->attachments) > 0)
                 <div class="col-md-12">
