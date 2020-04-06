@@ -145,9 +145,7 @@ class AttachmentController extends Controller
     public function update(UpdateAttachmentRequest $request, Attachment $attachment)
     {
         $this->authorize('update', Auth::user());
-//dd($request->attachment['access_level']);
         $attachment->fill($request->attachment);
-       // dd($attachment);
         $attachment->save();
 
         Session::flash('success', "You have updated " . $attachment->file_name);

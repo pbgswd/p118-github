@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Constants\AccessLevelConstants;
 use App\Models\Attachment;
 use App\Models\Interfaces\HasAttachment;
 use Illuminate\Http\Request;
@@ -85,6 +86,9 @@ class AttachmentService
      */
     public function downloadAttachment(Attachment $attachment, string $folder)
     {
+        if(false === Auth::check() && $attachment->access_level != AccessLevelConstants::PUBLIC) {
+            abort(403, 'Unauthorized action.');
+        }
         return Storage::download( $folder . '/' . $attachment['file'], $attachment['file_name'], [], 'inline' );
     }
 

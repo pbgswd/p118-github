@@ -35,6 +35,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/site_invitation/{inviteUser}/{password}', 'InviteUserController@show')->name('invite_user_signup');
     Route::post('/site_invitation/{inviteUser}/{password}', 'InviteUserController@process_user');
+
+    Route::get('/{folder}/download/{attachment}', 'AttachmentController@download')->name('attachment_download');
 });
 
 
@@ -50,8 +52,6 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     Route::get('jobs', 'EmploymentController@index')->name('jobs_list');
     Route::get('job/{employment}', 'EmploymentController@show')->name('job_view');
-
-    Route::get('/{folder}/download/{attachment}', 'AttachmentController@download')->name('attachment_download');
 
     Route::get('/members', 'UserController@index')->name('members');
     Route::get('/member/{user}', 'UserController@show')->name('member');
