@@ -97,7 +97,7 @@ $committee = $data['data']['committee'];
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
                     <div class="col-6 col-sm-3">
                         <div class="form-group">
-                            {{ select_options($data['access_levels'], old('committee.access_level', $committee->access_level), ['name' => 'committee[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                            {{ select_options($data['access_levels'], old('committee.access_level', $committee->access_level), ['name' => 'committee[access_level]', 'class' => 'form-control']) }}
                         </div>
                     </div>
                     <div class="col-6 col-sm-3"></div>

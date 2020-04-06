@@ -1,7 +1,7 @@
 <?php
 $attachment = $data['attachment'];
-$data['access_levels'] = $attachment->access_levels;
-//dd($attachment);
+
+//dd($attachment->access_level);
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> ' . $data['action'] . ' File'])
 @section('content')
@@ -19,9 +19,10 @@ $data['access_levels'] = $attachment->access_levels;
                     Upload file to server & database. Insert or attach to content after.
                     You may add many images at once.
                 </p>
-                Access Level for content:
+                Access Level for content: {{$attachment->access_level}}
                 <div class="form-group">
-                    {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level), ['name' => 'attachment[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                    {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level),
+                            ['name' => 'attachment[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
                 </div>
             </div>
         </div>
@@ -57,14 +58,18 @@ $data['access_levels'] = $attachment->access_levels;
                                 <li>Last Updated: {{$attachment->updated_at->format('F j Y H:i:s')}}</li>
                             </ul>
                         </h4>
+                    </div>
+                    <div class="col-md-8">
                         Description:
                             <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[description]" value="{{ old('attachment.description', $attachment->description)}}" size="40"/>
 
-                        Access Level for attachment: {{$attachment->access_level}} ??
+                        Access Level for attachment: {{$attachment->access_level}}
+
                             <div class="form-group">
                                 {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level), ['name' => 'attachment[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
                             </div>
-
+                    </div>
+                    <div class="col-md-8">
                     <h4>Insert into content with:</h4>
 <pre>
 <code>
@@ -79,6 +84,7 @@ $data['access_levels'] = $attachment->access_levels;
 </code>
 </pre>
                     </div>
+                </div>
                     <div class="col-md-2"></div>
                 </div>
             @else
@@ -102,10 +108,10 @@ $data['access_levels'] = $attachment->access_levels;
                         </ul>
                         Description
                         <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[description]" value="{{ old('attachment.description', $attachment->description)}}" size="40"/>
-                        Access Level for content:
-                            <div class="form-group">
-                                {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level), ['name' => 'attachment[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
-                            </div>
+                        Access Level for content: {{$attachment->access_level}} peter
+                        <div class="form-group">
+                            {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level), ['name' => 'attachment[access_level]', 'class' => 'form-control']) }}
+                        </div>
 
                         <h4>Insert into content with:</h4>
 <pre>

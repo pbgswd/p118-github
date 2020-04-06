@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Organization\DestroyOrganizationRequest;
 use App\Http\Requests\Organization\StoreOrganizationRequest;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
@@ -37,7 +38,7 @@ class AdminOrganizationController extends Controller
         return view('admin.organization', [
             'data' => [
                 'organization' => new Organization(),
-                'access_levels' => $this->getFormOptions(['access_levels']),
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
                 'action' => 'Create',
             ]
         ]);
@@ -52,6 +53,7 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('create', Auth::user());
         $org = new Organization($request->input('organization'));
+        $org->access_level = 'members';
         $org->user_id = Auth::id();
         $org->save();
 
@@ -71,7 +73,7 @@ class AdminOrganizationController extends Controller
 
         return view('admin.organization', ['data' => [
             'organization' => $any_organization,
-            'access_levels' => $this->getFormOptions(['access_levels']),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             ]
         ]);
@@ -87,6 +89,7 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('update', Auth::user());
         $any_organization->fill($request['organization']);
+        $any_organization->access_level = 'members';
         $any_organization->save();
 
         Session::flash('success', "You have edited the organization");

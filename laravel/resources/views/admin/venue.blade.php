@@ -53,18 +53,10 @@ $venue = $data['venue'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
-                    <div class="col-6 col-sm-3">
-                       <p>Access Level for content:</p>
-                        <div class="form-group">
-                            {{ select_options($data['access_levels'], old('venue.access_level', $venue->access_level), ['name' => 'venue[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-3"></div>
+                     <div class="col-6 col-sm-3"></div>
                     <div class="col-6 col-sm-3"></div>
                     <!-- Force next columns to break to new line -->
                     <div class="w-100"></div>

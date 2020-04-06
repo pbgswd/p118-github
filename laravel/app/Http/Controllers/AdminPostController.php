@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Posts\DestroyPostRequest;
 use App\Http\Requests\Posts\StorePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
@@ -48,18 +49,18 @@ class AdminPostController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $post = new post;
+        $post = new Post;
         $post->topics;
-        $topics = Topic::all();
-        $access_levels = $this->getFormOptions(['access_levels']);
 
-        return view('admin.post', ['data' => [
+        return view('admin.post', [
+            'data' => [
                 'post' => $post,
                 'assignedTopics' => [],
-                'topics' => $topics,
-                'access_levels' => $access_levels,
+                'topics' => Topic::all(),
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
                 'action' => 'Create',
-            ]]);
+            ]
+        ]);
     }
 
     /**
@@ -119,9 +120,14 @@ class AdminPostController extends Controller
         }
 
         $topics = Topic::all();
-        $access_levels = $this->getFormOptions(['access_levels']);
 
-        $data = ['post' => $post, 'topics' => $topics, 'assignedTopics' => $assignedTopics, 'access_levels' => $access_levels, 'action' => 'Edit'];
+        $data = [
+            'post' => $post,
+            'topics' => $topics,
+            'assignedTopics' => $assignedTopics,
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
+            'action' => 'Edit',
+            ];
 
         return view('admin.post', ['data' => $data]);
     }

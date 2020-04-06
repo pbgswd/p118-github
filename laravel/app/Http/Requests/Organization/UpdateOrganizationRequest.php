@@ -27,7 +27,7 @@ class UpdateOrganizationRequest extends FormRequest
             'organization.name' => 'required|max:255|unique:organizations,name,' . $this->route('any_organization')->slug . ',slug',
             'organization.description' => 'required|string',
             'organization.url' => 'url|nullable',
-            'organization.access_level' => 'required|string|max:255',
+            //'organization.access_level' => 'required|string|max:255',
             'organization.sort_order' =>  'required|numeric',
             'organization.in_menu' => 'boolean',
             'organization.live' => 'boolean',

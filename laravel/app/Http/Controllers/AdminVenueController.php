@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Venues\DestroyVenueRequest;
 use App\Http\Requests\Venues\StoreVenueRequest;
 use App\Http\Requests\Venues\UpdateVenueRequest;
@@ -34,12 +35,11 @@ class AdminVenueController extends Controller
     public function create()
     {
         $this->authorize('create', Auth::user());
-        $venue = new Venue;
 
         return view('admin.venue', [
             'data' => [
-                'venue' => $venue,
-                'access_levels' => $this->getFormOptions(['access_levels']),
+                'venue' => new Venue,
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
                 'action' => 'Create',
                 ]
         ]);
@@ -55,7 +55,7 @@ class AdminVenueController extends Controller
         $this->authorize('create', Auth::user());
 
         $venue = new Venue($request->input('venue'));
-
+        $venue->access_level = 'members';
         $venue->save();
         Session::flash('success', "You have saved a new venue");
 
@@ -71,13 +71,13 @@ class AdminVenueController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        $access_levels = $this->getFormOptions(['access_levels']);
-
-        return view('admin.venue', ['data' => [
-            'venue' => $any_venue,
-            'access_levels' => $access_levels,
-            'action' => 'Edit',
-            ]]);
+        return view('admin.venue', [
+            'data' => [
+                'venue' => $any_venue,
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
+                'action' => 'Edit',
+            ]
+        ]);
     }
 
     /**
@@ -90,6 +90,7 @@ class AdminVenueController extends Controller
     {
         $this->authorize('update', Auth::user());
         $any_venue->fill($request['venue']);
+        $any_venue->access_level = 'members';
         $any_venue->save();
         Session::flash('success', "You have edited the venue");
 
@@ -115,5 +116,4 @@ class AdminVenueController extends Controller
 
         return redirect()->route('venues_list');
     }
-
 }

@@ -25,8 +25,7 @@ $organization = $data['organization'];
     <h3>  <a href="{{ route('organizations_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of organizations</a>  </h3>
     <form method="post" name="organization" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
@@ -44,8 +43,7 @@ $organization = $data['organization'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-8"><h4>organization Website Link</h4></div>
                 <div class="col-lg-10">
@@ -53,17 +51,9 @@ $organization = $data['organization'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
-                    <div class="col-6 col-sm-3">
-                       <p>Access Level for content:</p>
-                        <div class="form-group">
-                            {{ select_options($data['access_levels'], old('organization.access_level', $organization->access_level), ['name' => 'organization[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
-                        </div>
-                    </div>
                     <div class="col-6 col-sm-3"></div>
                     <div class="col-6 col-sm-3"></div>
                     <!-- Force next columns to break to new line -->
@@ -90,8 +80,7 @@ $organization = $data['organization'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
@@ -109,6 +98,6 @@ $organization = $data['organization'];
             </form>
          </div>
     @endif
-    <div class="row" style="margin-top:100px;"> &nbsp;</div>
+    <div class="row mt-lg-5">&nbsp;</div>
 </div>
 @endsection

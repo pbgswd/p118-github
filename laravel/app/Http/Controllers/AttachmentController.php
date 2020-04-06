@@ -70,10 +70,11 @@ class AttachmentController extends Controller
         $this->authorize('create', Auth::user());
 //todo access level in page.
         $attachment = new Attachment;
-        $attachment->access_levels = AccessLevelConstants::getConstants();
+
         return view('admin.attachment', [
             'data' => [
             'attachment' => $attachment,
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
             'action' => 'Add',
             ]
         ]);
@@ -125,12 +126,11 @@ class AttachmentController extends Controller
             return \redirect()->route('attachments_list');
         }
 
-        $attachment->access_levels = AccessLevelConstants::getConstants();
-
         $attachment->setCalculatedProperties();
-//dd($attachment->filesize);
+
         return view('admin.attachment', ['data' => [
             'attachment' => $attachment,
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
             'action' => 'Edit'
             ]
         ]);

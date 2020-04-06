@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Topic\DestroyTopicRequest;
 use App\Http\Requests\Topic\StoreTopicRequest;
 use App\Http\Requests\Topic\UpdateTopicRequest;
@@ -50,12 +51,11 @@ class AdminTopicController extends Controller
 
         $topic = new Topic;
         $topic['user_id'] = Auth::id();
-        $access_levels = $this->getFormOptions(['access_levels']);
 
         return view('admin.topic', [
             'data' => [
                 'topic' => $topic,
-                'access_levels' => $access_levels,
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
                 'action' => 'Create']]);
     }
 
@@ -102,11 +102,9 @@ class AdminTopicController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        $topic->load('user','attachments');
-
         $data = [
-            'topic' => $topic,
-            'access_levels' => $this->getFormOptions(['access_levels']),
+            'topic' => $topic->load('user','attachments'),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             ];
 

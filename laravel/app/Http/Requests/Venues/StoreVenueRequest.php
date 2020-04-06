@@ -27,7 +27,7 @@ class StoreVenueRequest extends FormRequest
             'venue.name' => 'required|unique:venues,name|max:255',
             'venue.description' => 'required|string',
             'venue.url' => 'url|nullable',
-            'venue.access_level' => 'required|string|max:255',
+           // 'venue.access_level' => 'required|string|max:255',
             'venue.sort_order' =>  'required|numeric',
             'venue.in_menu' => 'boolean',
             'venue.live' => 'boolean',

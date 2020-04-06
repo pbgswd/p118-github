@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Page\DestroyPageRequest;
 use App\Http\Requests\Page\StorePageRequest;
 use App\Http\Requests\Page\UpdatePageRequest;
@@ -59,7 +60,7 @@ class AdminPageController extends Controller
         return view('admin.page', ['data' => [
             'page' => $page,
             'assignedTopics' => [],
-            'access_levels' => $this->getFormOptions(['access_levels']),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
             'topics' => Topic::all(),
             'action' => 'Create',
             ]
@@ -119,7 +120,7 @@ class AdminPageController extends Controller
             'page' => $page,
             'topics' => Topic::all(),
             'assignedTopics' => $page->topics->pluck('id')->toArray(),
-            'access_levels' => $this->getFormOptions(['access_levels']),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
             'action' => 'Edit',
         ];
 

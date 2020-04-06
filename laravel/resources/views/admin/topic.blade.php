@@ -60,7 +60,7 @@ $topic = $data['topic'];
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level for content</h4></div>
                     <div class="col-6 col-sm-3">
                         <div class="form-group">
-                            {{ select_options($data['access_levels'], old('topic.access_level', $topic->access_level), ['name' => 'topic[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                            {{ select_options($data['access_levels'], old('topic.access_level', $topic->access_level), ['name' => 'topic[access_level]', 'class' => 'form-control']) }}
                         </div>
                     </div>
                     <div class="col-6 col-sm-3"></div>
