@@ -119,11 +119,9 @@ class AdminPostController extends Controller
             $assignedTopics[] = $topic->pivot->topic_id;
         }
 
-        $topics = Topic::all();
-
         $data = [
             'post' => $post,
-            'topics' => $topics,
+            'topics' => Topic::all(),
             'assignedTopics' => $assignedTopics,
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
             'action' => 'Edit',
@@ -145,6 +143,7 @@ class AdminPostController extends Controller
         $any_post->fill($request->post);
         $any_post->save();
 
+        //todo do I ever want to detach files from a post instead of delete ?
         $result = $this->attachmentService->updateAttachment($request, $any_post);
 
         if (null !== ($request->file('attachments'))) {
@@ -152,22 +151,22 @@ class AdminPostController extends Controller
 
             if($result) {
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
-            }
-            else
-            {
+            } else {
                 Session::flash('error', "You have an upload problem");
             }
         }
 
-        if (empty($request->post['topic_id'])) {
+        if (!empty($request->post['topic_id'])) {
+
             $assignedTopics = [];
-            foreach ($request->page->topics as $topic)
+
+            foreach ($request->post['topic_id'] as $id)
             {
-                $assignedTopics[] = $topic->pivot->topic_id;
+                $assignedTopics[] = $id;
             }
-            $any_post->topics()->detach($assignedTopics);
+            $any_post->topics()->sync($request->post['topic_id']);
         } else {
-            $any_post->topics()->sync($request->page['topic_id']);
+           $any_post->topics()->detach();//no topics selected
         }
 
         if (empty($request->tags)) {

@@ -147,6 +147,8 @@ $topics = $data['topics'];
                         <tr>
                             <th> # </th>
                             <th> File </th>
+                            <th> Access Level</th>
+                            <th> </th>
                             <th> Description </th>
                             <th> Created At </th>
                             <th> Updated At </th>
@@ -164,6 +166,13 @@ $topics = $data['topics'];
                                 </td>
                                 <td>
                                     <a href="{{route('attachment_download', [$post->getAttachmentFolder(), $pa->id])}}" title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
+                                </td>
+                                <td>
+                                    {{$pa->access_level}}
+
+                                </td>
+                                <td>
+                                    <a title="edit access_level, description for {{ $pa->file_name }}" href="{{ route('admin_attachment_edit', $pa->id) }}"><i class="fas fa-edit"></i></a>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$pa->id}}][description]" value="{{ old('attachments.description', $pa->description)}}" size="40"/>

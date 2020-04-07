@@ -19,15 +19,16 @@ class AttachmentService
      */
     public function createAttachment(Request $request, HasAttachment $model): bool
     {
+
         foreach ($request->file('attachments') as $file)
         {
         //todo what about max file size, number of files uploaded at a time,
-        // resizing images generate thumb $file
-            //todo wp image thumb style is with a page
+        //resizing images generate thumb $file
+        //todo wp image thumb style is a settings page
 
             $attachment = new Attachment;
-            $attachment['user_id'] = Auth::id();
-
+            $attachment->user_id = Auth::id();
+            $attachment->access_level = $model->access_level;
             $attachment['file_name'] = $file->getClientOriginalName();
             $attachment['file'] = $file->store('', $model->getAttachmentFolder());
             $attachment['subfolder'] = $model->getAttachmentFolder();
@@ -47,11 +48,13 @@ class AttachmentService
     public function updateAttachment(Request $request, HasAttachment $model): bool
     {
         if (isset($request->attachment)) {
-            foreach ($request->attachment as $k => $v ) {
+            foreach ($request->attachment as $k => $v )
+            {
                 $attachment = Attachment::find($k);
+                $attachment->access_level = $model->access_level;
                 $attachment->description = \trim($v['description']);
                 $attachment->save();
-
+                //todo do I ever want to detach files from a post instead of delete ?
                 if (isset($v['id'])) {
                     Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
                     Attachment::destroy($v['id']);
@@ -74,6 +77,7 @@ class AttachmentService
         foreach ($model->attachments as $attachment)
         {
             Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
+            //todo delete attachment relation if exists?
             Attachment::destroy($attachment['id']);
         }
         return true;
