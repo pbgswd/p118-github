@@ -139,6 +139,8 @@ $topics = $data['topics'];
                         <tr>
                             <th> # </th>
                             <th> File </th>
+                            <th>Access Level </th>
+                            <th> </th>
                             <th> Description </th>
                             <th> Created At </th>
                             <th> Updated At </th>
@@ -156,11 +158,12 @@ $topics = $data['topics'];
                                 </td>
                                 <td>
                                     <a href="{{route('attachment_download', [$page->getAttachmentFolder(), $pa->id])}}" title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
-
-                                    ||
-
-                                    <a href="{{route('admin_attachment_edit', $pa->id)}}"><i class="far fa-file"></i> Page </a>
-
+                                </td>
+                                <td>
+                                    {{$page->access_level}}
+                                </td>
+                                <td>
+                                    <a href="{{route('admin_attachment_edit', $pa->id)}}" title="edit access level and description for {{$pa->file_name}} on Attachment page"> <i class="fas fa-edit"></i> </a>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$pa->id}}][description]" value="{{ old('attachments.description', $pa->description)}}" size="40"/>
@@ -174,7 +177,7 @@ $topics = $data['topics'];
                             </tr>
                         @endforeach
                         <tr>
-                            <td colspan="5">
+                            <td colspan="7">
                                 <i class="far fa-trash-alt"></i> Select checkbox to delete a file
                             </td>
                         </tr>
