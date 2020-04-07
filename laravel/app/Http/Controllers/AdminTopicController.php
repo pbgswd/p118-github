@@ -124,6 +124,9 @@ class AdminTopicController extends Controller
         $any_topic->fill($request->topic);
         $any_topic->save();
 
+        //todo dissociateAttachment from model, dont delete file or row in Attachments.
+        //$result = $this->attachmentService->dissociateAttachments($request, $any_topic);
+
         $result = $this->attachmentService->updateAttachment($request, $any_topic);
 
         if (null !== ($request->file('attachments'))) {

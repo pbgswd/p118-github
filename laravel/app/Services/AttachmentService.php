@@ -67,7 +67,30 @@ class AttachmentService
 
     /**
      * @param HasAttachment $model
-     *
+     * @return bool
+     */
+    public function dissociateAttachments(Request $request, HasAttachment $model): bool
+    {
+        //todo in some models, on update method,
+        // remove association with entity,
+        // do not delete file or entry in Attachments entity
+//dd($request->all());
+
+        if (isset($request->attachment)) {
+            foreach ($request->attachment as $k => $v )
+            {
+                if (isset($v['id'])) {
+                   // dd($v);
+                    $v['id']->detach();
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param HasAttachment $model
      * @return bool
      */
     public function destroyAttachments(HasAttachment $model): bool

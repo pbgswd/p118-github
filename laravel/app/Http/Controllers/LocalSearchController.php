@@ -125,6 +125,7 @@ class LocalSearchController extends Controller
 
     public function admin_attachment_search(LocalSearchResult $request)
     {
+        //todo dont crash search when file is not on host
         $data = [
             'search' => $request->search,
             'results' => (new Search())

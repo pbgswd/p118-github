@@ -56,6 +56,7 @@ $attachments = $data['results'];
                                         </div>
                                     </td>
                                     <td>
+                                        {{$a->searchable->description}}<br />
                                         <a href="{{ route('admin_attachment_edit', $a->searchable->id) }}" title="Edit {{ $a->searchable->file_name }} ">
                                             @if(!in_array($a->searchable->extension, ['jpg', 'jpeg', 'png', 'gif']))
                                                 @if($a->searchable->extension == 'pdf')
@@ -71,10 +72,11 @@ $attachments = $data['results'];
                                                 @endif
                                             @endif
                                         </a>
-                                        Size: {{ $a->searchable->filesize }}
+
                                         <h4>
                                             <a title="{{ $a->searchable->name }}" href="{{ route('admin_attachment_edit', $a->searchable->id) }}">{{ $a->searchable->file_name }}</a>
                                         </h4>
+                                        <h5>Size: {{ $a->searchable->filesize }}</h5>
                                     </td>
                                     <td>
                                         {{ $a->searchable->id }}
