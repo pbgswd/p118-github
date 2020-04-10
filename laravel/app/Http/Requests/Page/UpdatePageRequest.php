@@ -7,7 +7,8 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * Class UpdatePageRequest
  * @package App\Http\Requests\Page
- * @property Page $page
+ *
+ * @property mixed[] $page
  */
 class UpdatePageRequest extends FormRequest
 {

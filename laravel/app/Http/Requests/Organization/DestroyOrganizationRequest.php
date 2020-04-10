@@ -4,6 +4,11 @@ namespace App\Http\Requests\Organization;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class DestroyOrganizationRequest
+ *
+ * @property int[] $id
+ */
 class DestroyOrganizationRequest extends FormRequest
 {
     /**

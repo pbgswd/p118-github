@@ -54,12 +54,13 @@ class AdminMeetingController extends Controller
         $meeting = new Meeting();
         $meeting->live = $meeting->getDefaultLiveStatus();
 
-        return view('admin.meeting', [
-                'data' =>
-                    [
-                        'meeting' => $meeting,
-                        'action' => 'Add',
-                    ]
+        return view(
+            'admin.meeting',
+            [
+                'data' => [
+                    'meeting' => $meeting,
+                    'action' => 'Add',
+                ],
             ]
         );
     }
@@ -103,12 +104,13 @@ class AdminMeetingController extends Controller
 
         $meeting->load('user', 'attachments');
 
-        return view('admin.meeting', [
-                'data' =>
-                    [
-                        'meeting' => $meeting,
-                        'action' => 'Edit',
-                    ]
+        return view(
+            'admin.meeting',
+            [
+                'data' => [
+                    'meeting' => $meeting,
+                    'action' => 'Edit',
+                ],
             ]
         );
     }
@@ -116,15 +118,14 @@ class AdminMeetingController extends Controller
 
     /**
      * @param UpdateMeetingRequest $request
-     * @param Meeting $meeting
+     * @param Meeting $any_meeting
      * @return RedirectResponse
-     * @throws AuthorizationException
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
         $this->authorize('update', Auth::user());
 
-        $any_meeting->fill($request['meeting']);
+        $any_meeting->fill($request->meeting);
         $any_meeting->save();
 
         $result = $this->attachmentService->updateAttachment($request, $any_meeting);

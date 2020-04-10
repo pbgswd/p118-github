@@ -1,6 +1,6 @@
 <?php
-$posts = $data['data'];
-$committee = $data['data']['committee'];
+$posts = $data['posts'];
+$committee = $data['committee'];
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Posts for ' . $committee->name])
 @section('content')
@@ -10,7 +10,7 @@ $committee = $data['data']['committee'];
                     <i class="fas fa-arrow-circle-left"></i> Back
                 </a> &nbsp;
                <span class="badge badge-primary badge-pill">
-                   {!! count($posts['posts'])  !!}
+                   {!! count($posts)  !!}
                </span>
                Posts.
                 <a href="{{route('committee_post', $committee->slug)}}">
@@ -19,7 +19,7 @@ $committee = $data['data']['committee'];
                 </a>
             </h3>
     </div>
-    @if(count($posts['posts']) < 1)
+    @if(count($posts) < 1)
         No posts yet.   <a href="{{route('committee_post', $committee->slug)}}">
             <i class="fas fa-pen-square"></i>
             Add New Post
@@ -43,7 +43,7 @@ $committee = $data['data']['committee'];
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $posts['posts'] as $p )
+                            @foreach ( $posts as $p )
                                 <tr>
                                     <td>
                                         <div class="checkbox">
@@ -83,7 +83,7 @@ $committee = $data['data']['committee'];
                 <div class="col-6">
                     <div class="list-group">
                         <ul class="pagination">
-                             {{ $posts['posts']->links() }}
+                             {{ $posts->links() }}
                         </ul>
                     </div>
                 </div>

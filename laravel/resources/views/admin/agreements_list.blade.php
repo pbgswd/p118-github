@@ -1,18 +1,18 @@
 <?php
 //dd($data);
-$agreements = $data['data']['agreements'];
+$agreements = $data['agreements'];
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List agreements'])
 @section('content')
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {{$data['data']['count']}}
+               {{$data['count']}}
            </span>
             agreements. | <a href="{{ route('agreement_create') }}">Create new agreement <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
-    @if($data['data']['count'] < 1)
+    @if($data['count'] < 1)
     No agreements defined yet
     @else
 <form name="delete" method="POST" action="{{route('agreement_destroy')}}">

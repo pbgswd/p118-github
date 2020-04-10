@@ -15,6 +15,7 @@ use Spatie\Searchable\SearchResult;
  * @property int        $id
  * @property int        $user_id
  * @property string     $name
+ * @property string     $slug
  * @property string     $description
  * @property string     $url
  * @property string     $access_level
@@ -63,6 +64,12 @@ class Organization extends LiveableModel implements Searchable
     protected $casts = [
         'live' => 'boolean',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->access_level = AccessLevelConstants::MEMBERS;
+    }
 
     /**
      * @return SearchResult

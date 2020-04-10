@@ -1,18 +1,18 @@
 <?php
-$organizations = $data['data'];
+$organizations = $data['organizations'];
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List organizations'])
 @section('content')
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! count($organizations['organizations'])  !!}
+               {!! count($organizations)  !!}
            </span>
             organizations. | <a href="{{ route('organization_create') }}">Create new organization <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 
-    @if(count($organizations['organizations']) < 1)
+    @if(count($organizations) < 1)
     No organizations
     @else
 <form name="delete" method="POST" action="{{route('organization_destroy')}}">
@@ -36,7 +36,7 @@ $organizations = $data['data'];
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $organizations['organizations'] as $org )
+                    @foreach ( $organizations as $org )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -79,7 +79,7 @@ $organizations = $data['data'];
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                     {{ $organizations['organizations']->links() }}
+                     {{ $organizations->links() }}
                 </ul>
             </div>
         </div>

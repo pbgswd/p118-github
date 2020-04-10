@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Agreements\DestroyAgreementRequest;
 use App\Http\Requests\Agreements\StoreAgreementRequest;
 use App\Http\Requests\Agreements\UpdateAgreementRequest;
@@ -41,7 +40,7 @@ class AdminAgreementController extends Controller
         $data['agreements'] = Agreement::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('until', 'desc')->paginate(20);
         $data['count'] = Agreement::withoutGlobalScopes()->count();
 
-        return view('admin.agreements_list', ['data' => ['data' => $data]]);
+        return view('admin.agreements_list', ['data' => $data]);
     }
 
     /**
@@ -74,7 +73,7 @@ class AdminAgreementController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $agreement);
 
-            if($result) {
+            if ($result) {
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
             }
             else
@@ -147,7 +146,7 @@ class AdminAgreementController extends Controller
         //$this->authorize('delete', Auth::user());
 
         Agreement::withoutGlobalScopes()
-        ->find($request->id)
+            ->find($request->id)
             ->each(function(Agreement $agreement) {
                 $this->attachmentService->destroyAttachments($agreement);
                 $agreement->delete();

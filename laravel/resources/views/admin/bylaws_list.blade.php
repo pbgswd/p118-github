@@ -1,18 +1,18 @@
 <?php
 //dd($data);
-$bylaws = $data['data']['bylaws'];
+$bylaws = $data['bylaws'];
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-gavel"></i> List By-laws'])
 @section('content')
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {{$data['data']['count']}}
+               {{$data['count']}}
            </span>
             bylaws. | <a href="{{ route('admin_bylaw_create') }}">Create new by-law <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
-    @if($data['data']['count'] < 1)
+    @if($data['count'] < 1)
     No bylaws defined yet
     @else
 <form name="delete" method="POST" action="{{route('admin_bylaw_destroy')}}">

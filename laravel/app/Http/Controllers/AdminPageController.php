@@ -6,6 +6,7 @@ use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Page\DestroyPageRequest;
 use App\Http\Requests\Page\StorePageRequest;
 use App\Http\Requests\Page\UpdatePageRequest;
+use App\Models\Options;
 use App\Models\Page;
 use App\Models\Topic;
 use App\Services\AttachmentService;
@@ -39,10 +40,15 @@ class AdminPageController extends Controller
         $pages = Page::withoutGlobalScopes()->sortable()->with('tagged', 'user')->paginate(20);
         $count = Page::withoutGlobalScopes()->count();
 
-        return view('admin.listpages', ['data' => [
-            'pages' => $pages,
-            'count' => $count,
-            ]]);
+        return view(
+            'admin.listpages',
+            [
+                'data' => [
+                    'pages' => $pages,
+                    'count' => $count,
+                ],
+            ]
+        );
     }
 
     /**
@@ -57,14 +63,18 @@ class AdminPageController extends Controller
         $page['user_id'] = Auth::id();
         $page->topics;
 
-        return view('admin.page', ['data' => [
-            'page' => $page,
-            'assignedTopics' => [],
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
-            'topics' => Topic::all(),
-            'action' => 'Create',
+        return view(
+            'admin.page',
+            [
+                'data' => [
+                    'page' => $page,
+                    'assignedTopics' => [],
+                    'access_levels' => Options::access_levels(),
+                    'topics' => Topic::all(),
+                    'action' => 'Create',
+                ],
             ]
-        ]);
+        );
     }
 
     /**
@@ -76,7 +86,7 @@ class AdminPageController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $page = new Page($request->input('page'), $request->input('tags'));
+        $page = new Page($request->page, $request->input('tags'));
         $page->user_id = Auth::id();
         $page->save();
 
@@ -120,7 +130,7 @@ class AdminPageController extends Controller
             'page' => $page,
             'topics' => Topic::all(),
             'assignedTopics' => $page->topics->pluck('id')->toArray(),
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
+            'access_levels' => Options::access_levels(),
             'action' => 'Edit',
         ];
 
@@ -158,9 +168,9 @@ class AdminPageController extends Controller
             }
         }
 
-        if (empty($request->page['topic_id'])) {
+        if (empty($request->input('page.topic_id'))) {
             $assignedTopics = [];
-            foreach ($request->page['topics'] as $topic)
+            foreach ($request->input('page.topics') as $topic)
             {
                 $assignedTopics[] = $topic->pivot->topic_id;
             }

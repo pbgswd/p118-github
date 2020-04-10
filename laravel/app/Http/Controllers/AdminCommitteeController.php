@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Committees\DestroyCommitteeRequest;
 use App\Http\Requests\Committees\StoreCommitteeRequest;
 use App\Http\Requests\Committees\UpdateCommitteeRequest;
@@ -39,15 +38,11 @@ class AdminCommitteeController extends Controller
         $data = [
             'user_id' => Auth::id(),
             'committee' => new Committee,
+            'access_levels' => Options::access_levels(),
+            'action' => 'Create',
         ];
 
-        return view('admin.committee', [
-            'data' => [
-                'data' => $data,
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
-                'action' => 'Create',
-            ]
-        ]);
+        return view('admin.committee', ['data' => $data]);
     }
 
     /**
@@ -116,10 +111,10 @@ class AdminCommitteeController extends Controller
 
         return view('admin.committee', [
             'data' => [
-                'data' => ['committee' => $any_committee],
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
+                'committee' => $any_committee,
+                'access_levels' => Options::access_levels(),
                 'action' => 'Edit',
-            ]
+            ],
         ]);
     }
 

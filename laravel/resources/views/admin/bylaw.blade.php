@@ -1,6 +1,6 @@
 <?php
 
-$bylaw = $data['data']['bylaw'];
+$bylaw = $data['bylaw'];
 
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-gavel"></i> <i class="fas fa-edit"></i>' . $data["action"] . ' By-law ' . ($data["action"] == 'Edit' ? $bylaw->name : '') ])
@@ -138,6 +138,7 @@ $bylaw = $data['data']['bylaw'];
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
+        </div>
     </form>
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')

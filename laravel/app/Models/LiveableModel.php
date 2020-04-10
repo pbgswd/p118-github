@@ -23,8 +23,8 @@ class LiveableModel extends Model
     }
 
     /**
-     * @param $relations
-     * @param array $scopes
+     * @param string|array $relations
+     * @param string|array $scopes
      *
      * @return $this
      */

@@ -4,6 +4,11 @@ namespace App\Http\Requests\CommitteePost;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class DestroyCommitteePostRequest
+ *
+ * @property int[] $id
+ */
 class DestroyCommitteePostRequest extends FormRequest
 {
     /**

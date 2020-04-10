@@ -5,6 +5,11 @@ namespace App\Http\Requests\Bylaws;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class StoreBylawRequest
+ *
+ * @property mixed[] $bylaw
+ */
 class StoreBylawRequest extends FormRequest
 {
     /**

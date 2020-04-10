@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Bylaws\DestroyBylawRequest;
 use App\Http\Requests\Bylaws\StoreBylawRequest;
 use App\Http\Requests\Bylaws\UpdateBylawRequest;
@@ -37,13 +36,12 @@ class AdminByLawController extends Controller
      */
     public function index()
     {
-
         $this->authorize('viewAny', Auth::user());
         $data = [];
         $data['bylaws'] = Bylaw::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('date', 'desc')->paginate(20);
         $data['count'] = Bylaw::withoutGlobalScopes()->count();
 
-        return view('admin.bylaws_list', ['data' => ['data' => $data]]);
+        return view('admin.bylaws_list', ['data' => $data]);
     }
 
 
@@ -54,10 +52,12 @@ class AdminByLawController extends Controller
     public function create()
     {
         $this->authorize('create', Auth::user());
-        $data = [];
-        $data['bylaw'] = new Bylaw;
+        $data = [
+            'bylaw' => new Bylaw,
+            'action' => 'Create',
+        ];
 
-        return view('admin.bylaw', ['data' => ['data' => $data, 'action' => 'Create']]);
+        return view('admin.bylaw', ['data' => $data]);
     }
 
     /**
@@ -69,9 +69,7 @@ class AdminByLawController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $bylaw = new Bylaw($request->input('bylaw'));
-
-        $bylaw->access_level = $bylaw->getAttachmentAccessLevel();
+        $bylaw = new Bylaw($request->bylaw);
 
         $bylaw->save();
 
@@ -100,15 +98,12 @@ class AdminByLawController extends Controller
     public function edit(Bylaw $bylaw)
     {
         $this->authorize('update', Auth::user());
-        $data = ['bylaw' => $bylaw->load('user', 'attachments')];
+        $data = [
+            'bylaw' => $bylaw->load('user', 'attachments'),
+            'action' => 'Edit',
+        ];
 
-        return view('admin.bylaw', [
-                'data' => [
-                    'data' => $data,
-                    'action' => 'Edit'
-                ]
-            ]
-        );
+        return view('admin.bylaw', ['data' => $data]);
     }
 
     /**

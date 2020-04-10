@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Organization\DestroyOrganizationRequest;
 use App\Http\Requests\Organization\StoreOrganizationRequest;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
@@ -24,7 +23,7 @@ class AdminOrganizationController extends Controller
         $data = [];
         $data['organizations'] = Organization::withoutGlobalScopes()->sortable()->orderBy('name')->paginate(10);
 
-        return view('admin.listorganizations', ['data' => ['data' => $data]]);
+        return view('admin.listorganizations', ['data' => $data]);
     }
 
     /**
@@ -35,12 +34,15 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        return view('admin.organization', [
-            'data' => [
-                'organization' => new Organization(),
-                'action' => 'Create',
+        return view(
+            'admin.organization',
+            [
+                'data' => [
+                    'organization' => new Organization(),
+                    'action' => 'Create',
+                ],
             ]
-        ]);
+        );
     }
 
     /**
@@ -52,8 +54,6 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('create', Auth::user());
         $org = new Organization($request->organization);
-
-        $org->access_level = $org->getAccessLevel();
 
         $org->save();
 
@@ -71,11 +71,15 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        return view('admin.organization', ['data' => [
-            'organization' => $any_organization,
-            'action' => 'Edit',
+        return view(
+            'admin.organization',
+            [
+                'data' => [
+                    'organization' => $any_organization,
+                    'action' => 'Edit',
+                ],
             ]
-        ]);
+        );
     }
 
     /**
@@ -105,7 +109,7 @@ class AdminOrganizationController extends Controller
         $this->authorize('delete', Auth::user());
         Organization::withoutGlobalScopes()
             ->find($request->id)
-            ->each(function (Organization $org) {
+            ->each(static function (Organization $org) {
                 $org->delete();
             }
         );

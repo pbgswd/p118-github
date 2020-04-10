@@ -26,6 +26,7 @@ use Spatie\Searchable\SearchResult;
  * @property boolean      $in_menu
  * @property boolean      $allow_comments
  * @property User         $user
+ * @property int          $user_id
  * @property Topic[]      $topics
  * @property Attachment[] $attachments
  * @property DateTime     $created_at

@@ -4,6 +4,11 @@ namespace App\Http\Requests\Page;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class StorePageRequest
+ *
+ * @property mixed[] $page
+ */
 class StorePageRequest extends FormRequest
 {
     /**

@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\Meetings;
 
-use App\Constants\AccessLevelConstants;
 use App\Traits\ModifiesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
  * Class StoreMeetingRequest
- * @package App\Http\Requests\Meetings
+ *
+ * @property mixed[] $meeting
  */
 class StoreMeetingRequest extends FormRequest
 {

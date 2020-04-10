@@ -6,6 +6,11 @@ use App\Traits\ModifiesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class StoreOrganizationRequest
+ *
+ * @property mixed[] $organization
+ */
 class StoreOrganizationRequest extends FormRequest
 {
     use ModifiesInputTrait;

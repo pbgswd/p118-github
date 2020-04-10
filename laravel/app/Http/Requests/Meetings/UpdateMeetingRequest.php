@@ -4,6 +4,11 @@ namespace App\Http\Requests\Meetings;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class UpdateMeetingRequest
+ *
+ * @property mixed[] $meeting
+ */
 class UpdateMeetingRequest extends FormRequest
 {
     /**

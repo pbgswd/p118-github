@@ -4,6 +4,11 @@ namespace App\Http\Requests\CommitteePost;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class StoreCommitteePostRequest
+ *
+ * @property mixed[] $post
+ */
 class StoreCommitteePostRequest extends FormRequest
 {
     /**

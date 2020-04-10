@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Employment\DestroyEmploymentRequest;
 use App\Http\Requests\Employment\StoreEmploymentRequest;
 use App\Http\Requests\Employment\UpdateEmploymentRequest;
@@ -91,10 +90,15 @@ class AdminEmploymentController extends Controller
         $this->authorize('update', Auth::user());
         $employment->load('user', 'attachments');
 
-        return view('admin.employment', ['data' => [
-            'employment' => $employment,
-            'action' => 'Edit',
-            ]]);
+        return view(
+            'admin.employment',
+            [
+                'data' => [
+                    'employment' => $employment,
+                    'action' => 'Edit',
+                ],
+            ]
+        );
     }
 
     /**
@@ -143,7 +147,7 @@ class AdminEmploymentController extends Controller
 
         Employment::withoutGlobalScopes()
             ->find($request->id)
-            ->each(function(Employment $employment) {
+            ->each(function (Employment $employment) {
                $this->attachmentService->destroyAttachments($employment);
                $employment->delete();
             });

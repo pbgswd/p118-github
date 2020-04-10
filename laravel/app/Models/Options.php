@@ -23,7 +23,8 @@ class Options
 {
     public static function access_levels()
     {
-        return AccessLevelConstants::getConstants();
+        $levels = AccessLevelConstants::getConstants();
+        return \array_combine($levels, $levels);
     }
 
     public static function membership_levels()

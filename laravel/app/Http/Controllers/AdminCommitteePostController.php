@@ -7,10 +7,8 @@ use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
-use App\Models\CommitteePostComment;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -28,15 +26,16 @@ class AdminCommitteePostController extends Controller
     public function index(CommitteePost $committeePost, Committee $committee)
     {
         // $this->authorize('list', Auth::user());
-        $data = [];
-        $data['committee'] = $committee;
-        $data['posts'] = CommitteePost::withoutGlobalScopes()
-            ->sortable()
-            ->where('committee_id', '=', $committee->id)
-            ->orderBy('created_at')
-            ->paginate(10);
+        $data = [
+            'committee' => $committee,
+            'posts' => CommitteePost::withoutGlobalScopes()
+                ->sortable()
+                ->where('committee_id', $committee->id)
+                ->orderBy('created_at')
+                ->paginate(10),
+        ];
 
-        return view('admin.committee_posts_list', ['data' => ['data' => $data]]);
+        return view('admin.committee_posts_list', ['data' => $data]);
     }
 
     /**
@@ -81,8 +80,10 @@ class AdminCommitteePostController extends Controller
 //todo doesnt load a post comment if it is not live
         $any_committee_post->load('creator', 'committee' , 'admin_post_comments');
 
-        $data['post'] = $any_committee_post;
-        $data['action'] = 'Edit';
+        $data = [
+            'post' => $any_committee_post,
+            'action' => 'Edit',
+        ];
 
         return view('admin.committee_post', ['data' => $data]);
     }
@@ -96,7 +97,7 @@ class AdminCommitteePostController extends Controller
     {
         // $this->authorize('update', Auth::user());
 
-        $any_committee_post->fill($request->input('post'));
+        $any_committee_post->fill($request->post);
         $any_committee_post->save();
 
         Session::flash('success', "You have edited the post");
@@ -115,7 +116,7 @@ class AdminCommitteePostController extends Controller
     {
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
-            ->each(function (CommitteePost $post) {
+            ->each(static function (CommitteePost $post) {
                 //todo delete comments associated with a committee post
                 $post->delete();
             });
