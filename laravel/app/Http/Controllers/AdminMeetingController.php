@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Meetings\DestroyMeetingRequest;
 use App\Http\Requests\Meetings\StoreMeetingRequest;
 use App\Http\Requests\Meetings\UpdateMeetingRequest;
@@ -67,8 +68,8 @@ class AdminMeetingController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $meeting = new Meeting($request->input('meeting'));
-        $meeting->user_id = Auth::id();
+        $meeting = new Meeting($request->meeting);
+
         $meeting->save();
 
         Session::flash('success', "Meeting saved");
@@ -100,10 +101,14 @@ class AdminMeetingController extends Controller
 
         $meeting->load('user', 'attachments');
 
-        return view('admin.meeting', ['data' => [
-            'meeting' => $meeting,
-            'action' => 'Edit',
-            ]]);
+        return view('admin.meeting', [
+            'data' =>
+                [
+                    'meeting' => $meeting,
+                    'action' => 'Edit',
+                ]
+            ]
+        );
     }
 
 

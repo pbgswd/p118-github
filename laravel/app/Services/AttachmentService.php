@@ -28,7 +28,8 @@ class AttachmentService
 
             $attachment = new Attachment;
             $attachment->user_id = Auth::id();
-            $attachment->access_level = $model->access_level;
+            $attachment->access_level = $model->getAttachmentAccessLevel();
+
             $attachment['file_name'] = $file->getClientOriginalName();
             $attachment['file'] = $file->store('', $model->getAttachmentFolder());
             $attachment['subfolder'] = $model->getAttachmentFolder();
@@ -51,38 +52,24 @@ class AttachmentService
             foreach ($request->attachment as $k => $v )
             {
                 $attachment = Attachment::find($k);
-                $attachment->access_level = $model->access_level;
-                $attachment->description = \trim($v['description']);
-                $attachment->save();
                 //todo do I ever want to detach files from a post instead of delete ?
                 if (isset($v['id'])) {
-                    Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
-                    Attachment::destroy($v['id']);
-                }
-            }
-            return true;
-        }
-        return false;
-    }
+                    if ($model->keepDissociatedAttachments()) {
+                        //dissociate file,
+                        $model->attachments()->detach($attachment);
 
-    /**
-     * @param HasAttachment $model
-     * @return bool
-     */
-    public function dissociateAttachments(Request $request, HasAttachment $model): bool
-    {
-        //todo in some models, on update method,
-        // remove association with entity,
-        // do not delete file or entry in Attachments entity
-//dd($request->all());
-
-        if (isset($request->attachment)) {
-            foreach ($request->attachment as $k => $v )
-            {
-                if (isset($v['id'])) {
-                   // dd($v);
-                    $v['id']->detach();
+                    } else {
+                        // delete the file
+                        Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
+                        Attachment::destroy($v['id']);
+                    }
+                    continue;
                 }
+
+                $attachment->access_level = $model->access_level ?? AccessLevelConstants::MEMBERS;
+
+                $attachment->description = \trim($v['description']);
+                $attachment->save();
             }
             return true;
         }

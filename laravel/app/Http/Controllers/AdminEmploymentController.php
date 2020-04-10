@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Employment\DestroyEmploymentRequest;
 use App\Http\Requests\Employment\StoreEmploymentRequest;
 use App\Http\Requests\Employment\UpdateEmploymentRequest;
@@ -56,12 +57,11 @@ class AdminEmploymentController extends Controller
      */
     public function store(StoreEmploymentRequest $request)
     {
+        dd($request->all());
         $this->authorize('create', Auth::user());
-        $employment = new Employment($request->input('employment'));
-        $employment->user_id = Auth::id();
-        $employment->save();
+        $employment = new Employment($request->employment);
 
-        Session::flash('success', "employment posting saved");
+        $employment->save();
 
         if (null !== ($request->file('attachments')))
         {
@@ -76,6 +76,7 @@ class AdminEmploymentController extends Controller
             }
         }
 
+        Session::flash('success', "employment posting saved");
         return redirect()->route('admin_employment_edit', [$employment->id]);
 
     }
@@ -104,8 +105,12 @@ class AdminEmploymentController extends Controller
      */
     public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
     {
+
+        //todo bug with update
         $this->authorize('update', Auth::user());
-        $any_employment->fill($request['employment']);
+
+        $any_employment->fill($request->employment);
+//dd($any_employment);
         $any_employment->save();
 
         $result = $this->attachmentService->updateAttachment($request, $any_employment);

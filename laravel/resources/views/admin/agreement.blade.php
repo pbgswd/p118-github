@@ -94,6 +94,8 @@ $agreement = $data['agreement'];
                             <tr>
                                 <th> # </th>
                                 <th> File </th>
+                                <th> Access Level</th>
+                                <th> <i class="far fa-edit"></i></th>
                                 <th> Description </th>
                                 <th> Created At </th>
                                 <th> Updated At </th>
@@ -111,6 +113,10 @@ $agreement = $data['agreement'];
                                     </td>
                                     <td>
                                         <a href="{{route('attachment_download', [$agreement->getAttachmentFolder(), $agreement_attachment->id])}}" title="Download {{$agreement_attachment->file_name}}">{{$agreement_attachment->file_name}}</a>
+                                    </td>
+                                    <td>{{$agreement_attachment->access_level}}</td>
+                                    <td>
+                                        <a title="Edit page for {{ $agreement_attachment->file_name }}" href="{{ route('admin_attachment_edit', $agreement_attachment->id) }}"><i class="far fa-edit"></i></a>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$agreement_attachment->id}}][description]" value="{{ old('attachments.description', $agreement_attachment->description)}}" size="40"/>

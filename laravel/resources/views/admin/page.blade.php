@@ -139,8 +139,8 @@ $topics = $data['topics'];
                         <tr>
                             <th> # </th>
                             <th> File </th>
-                            <th>Access Level </th>
-                            <th> </th>
+                            <th> Access Level </th>
+                            <th> <i class="fas fa-edit"></i> </th>
                             <th> Description </th>
                             <th> Created At </th>
                             <th> Updated At </th>
@@ -163,7 +163,7 @@ $topics = $data['topics'];
                                     {{$page->access_level}}
                                 </td>
                                 <td>
-                                    <a href="{{route('admin_attachment_edit', $pa->id)}}" title="edit access level and description for {{$pa->file_name}} on Attachment page"> <i class="fas fa-edit"></i> </a>
+                                    <a href="{{route('admin_attachment_edit', $pa->id)}}" title="edit access level and description for {{$pa->file_name}} on Attachment page"><i class="fas fa-edit"></i></a>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$pa->id}}][description]" value="{{ old('attachments.description', $pa->description)}}" size="40"/>

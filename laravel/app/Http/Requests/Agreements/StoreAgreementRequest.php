@@ -36,4 +36,5 @@ class StoreAgreementRequest extends FormRequest
             'agreement.live' => 'boolean',
         ];
     }
+
 }

@@ -31,17 +31,6 @@ class AttachmentController extends Controller
 
     public function download(string $folder, Attachment $attachment)
     {
-//todo policy, security for download attachment method?
-
-
-        /**
-         * if not Auth && AccessLevelConstants == member
-         * disallow download
-         * Otherwise allow it
-         * What is stopping it now?
-         */
-        //TODO $access_levels = AccessLevelConstants::PUBLIC/MEMBER;
-
         return $this->attachmentService->downloadAttachment($attachment, $folder);
     }
 
@@ -68,7 +57,7 @@ class AttachmentController extends Controller
     public function create()
     {
         $this->authorize('create', Auth::user());
-//todo access level in page.
+
         $attachment = new Attachment;
 
         return view('admin.attachment', [
@@ -130,7 +119,7 @@ class AttachmentController extends Controller
 
         return view('admin.attachment', ['data' => [
             'attachment' => $attachment,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
             'action' => 'Edit'
             ]
         ]);

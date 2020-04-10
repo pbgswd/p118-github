@@ -87,6 +87,8 @@ $bylaw = $data['data']['bylaw'];
                             <tr>
                                 <th> # </th>
                                 <th> File </th>
+                                <th> Access Level </th>
+                                <th> <i class="far fa-edit"></i></th>
                                 <th> Description </th>
                                 <th> Created At </th>
                                 <th> Updated At </th>
@@ -104,6 +106,10 @@ $bylaw = $data['data']['bylaw'];
                                     </td>
                                     <td>
                                         <a href="{{route('attachment_download', [$bylaw->getAttachmentFolder(), $bylaw_attachment->id])}}" title="Download {{$bylaw_attachment->file_name}}">{{$bylaw_attachment->file_name}}</a>
+                                    </td>
+                                    <td>{{$bylaw_attachment->access_level}}</td>
+                                    <td>
+                                        <a title="Edit page for {{ $bylaw_attachment->file_name }}" href="{{ route('admin_attachment_edit', $bylaw_attachment->id) }}"><i class="far fa-edit"></i></a>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$bylaw_attachment->id}}][description]" value="{{ old('attachments.description', $bylaw_attachment->description)}}" size="40"/>

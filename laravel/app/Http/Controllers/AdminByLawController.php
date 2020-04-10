@@ -70,7 +70,7 @@ class AdminByLawController extends Controller
         $this->authorize('create', Auth::user());
 
         $bylaw = new Bylaw($request->input('bylaw'));
-        $bylaw->access_level = AccessLevelConstants::MEMBERS;
+
         $bylaw->user_id = Auth::id();
         $bylaw->save();
 
@@ -115,7 +115,6 @@ class AdminByLawController extends Controller
         $this->authorize('update', Auth::user());
         $any_bylaw->fill($request->bylaw);
 
-        $any_bylaw->access_level = AccessLevelConstants::MEMBERS;
         $any_bylaw->user_id = Auth::id();
         $any_bylaw->save();
 

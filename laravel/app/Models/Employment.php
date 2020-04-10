@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\EmploymentPolicy;
 use DateTime;
@@ -19,6 +20,7 @@ use Spatie\Searchable\SearchResult;
  * @property boolean      $live
  * @property boolean      $status
  * @property User         $user
+ * @property int          $user_id
  * @property Attachment[] $attachments
  * @property DateTime     $deadline
  * @property DateTime     $created_at
@@ -42,6 +44,7 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
         'status',
         'live',
         'deadline',
+        'user_id',
     ];
 
     public $sortable = [
@@ -97,5 +100,15 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
     public function getAttachmentFolder(): string
     {
         return 'employment';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return false;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return AccessLevelConstants::MEMBERS;
     }
 }

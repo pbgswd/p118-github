@@ -82,6 +82,8 @@ $meeting = $data['meeting'];
                             <tr>
                                 <th> # </th>
                                 <th> File </th>
+                                <th> Access Level </th>
+                                <th> <i class="far fa-edit"></i> </th>
                                 <th> Description </th>
                                 <th> Created At </th>
                                 <th> Updated At </th>
@@ -99,6 +101,12 @@ $meeting = $data['meeting'];
                                     </td>
                                     <td>
                                         <a href="{{route('attachment_download', [$meeting->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
+                                    </td>
+                                    <td>
+                                        {{$ma->access_level}}
+                                    </td>
+                                    <td>
+                                        <a title="Edit page for {{ $ma->file_name }}" href="{{ route('admin_attachment_edit', $ma->id) }}"><i class="far fa-edit"></i></a>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$ma->id}}][description]" value="{{ old('attachments.description', $ma->description)}}" size="40"/>

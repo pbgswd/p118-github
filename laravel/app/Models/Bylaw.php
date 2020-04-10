@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,7 +17,6 @@ use Spatie\Searchable\SearchResult;
  * @property int          $id
  * @property string       $title
  * @property string       $description
- * @property string       $access_level
  * @property boolean      $live
  * @property int          $user_id
  * @property User         $user
@@ -35,7 +35,6 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
     protected $fillable = [
         'title',
         'description',
-        'access_level',
         'live',
         'date',
     ];
@@ -84,5 +83,15 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
     public function getAttachmentFolder(): string
     {
         return 'bylaws';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return false;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return AccessLevelConstants::MEMBERS;
     }
 }

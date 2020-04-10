@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\AgreementPolicy;
 use DateTime;
@@ -15,7 +16,6 @@ use Spatie\Searchable\SearchResult;
  * @property int           $id
  * @property string        $title
  * @property string        $description
- * @property string        $access_level
  * @property boolean       $live
  * @property int           $user_id
  * @property User          $user
@@ -43,16 +43,16 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
+    //todo remove agreement.access_level in migration
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
         'title',
         'description',
-        'access_level',
         'live',
         'from',
-        'until'
+        'until',
     ];
 
     protected $dates = [
@@ -102,5 +102,15 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
     public function getAttachmentFolder(): string
     {
         return 'agreements';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return false;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return AccessLevelConstants::MEMBERS;
     }
 }

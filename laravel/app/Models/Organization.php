@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\AccessLevelConstants;
 use App\Policies\OrganizationPolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -12,6 +13,7 @@ use Spatie\Searchable\SearchResult;
 
 /**
  * @property int        $id
+ * @property int        $user_id
  * @property string     $name
  * @property string     $description
  * @property string     $url
@@ -40,6 +42,7 @@ class Organization extends LiveableModel implements Searchable
         'access_level',
         'live',
         'sort_order',
+        'user_id',
     ];
 
     public $sortable = [
@@ -66,13 +69,10 @@ class Organization extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        //todo organization route for front end, needed for search
-        //$url = route('meeting', $this->id);
-
         return new SearchResult(
             $this,
             $this->name,
-            '',
+            \route('organization', $this->slug),
         );
     }
 
@@ -102,4 +102,5 @@ class Organization extends LiveableModel implements Searchable
     {
         return $this->hasOne(User::class);
     }
+
 }

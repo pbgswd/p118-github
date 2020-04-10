@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
+use phpDocumentor\Reflection\Types\Boolean;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -147,5 +148,15 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     public function getAttachmentFolder(): string
     {
         return 'public';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return $this->access_level;
     }
 }

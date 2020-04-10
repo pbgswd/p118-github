@@ -55,7 +55,7 @@ class AdminVenueController extends Controller
         $this->authorize('create', Auth::user());
 
         $venue = new Venue($request->input('venue'));
-        $venue->access_level = 'members';
+
         $venue->save();
         Session::flash('success', "You have saved a new venue");
 
@@ -90,7 +90,6 @@ class AdminVenueController extends Controller
     {
         $this->authorize('update', Auth::user());
         $any_venue->fill($request['venue']);
-        $any_venue->access_level = 'members';
         $any_venue->save();
         Session::flash('success', "You have edited the venue");
 

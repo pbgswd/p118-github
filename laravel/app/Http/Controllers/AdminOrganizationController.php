@@ -52,9 +52,8 @@ class AdminOrganizationController extends Controller
     public function store(StoreOrganizationRequest $request)
     {
         $this->authorize('create', Auth::user());
-        $org = new Organization($request->input('organization'));
-        $org->access_level = 'members';
-        $org->user_id = Auth::id();
+        $org = new Organization($request->organization);
+
         $org->save();
 
         Session::flash('success', "You have saved a new venue");
@@ -88,8 +87,7 @@ class AdminOrganizationController extends Controller
     public function update(UpdateOrganizationRequest $request, Organization $any_organization)
     {
         $this->authorize('update', Auth::user());
-        $any_organization->fill($request['organization']);
-        $any_organization->access_level = 'members';
+        $any_organization->fill($request->organization);
         $any_organization->save();
 
         Session::flash('success', "You have edited the organization");

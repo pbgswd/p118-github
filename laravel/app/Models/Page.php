@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\PagePolicy;
 use Conner\Tagging\Taggable;
@@ -138,5 +139,15 @@ class Page extends LiveableModel implements HasAttachment, Searchable
     public function getAttachmentFolder(): string
     {
         return 'public';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return $this->access_level;
     }
 }

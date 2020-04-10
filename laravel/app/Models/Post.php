@@ -138,4 +138,14 @@ class Post extends LiveableModel implements HasAttachment, Searchable
     {
         return 'public';
     }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return $this->access_level;
+    }
 }
