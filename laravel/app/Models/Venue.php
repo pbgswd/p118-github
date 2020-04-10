@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\AccessLevelConstants;
 use App\Policies\VenuePolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -105,5 +106,10 @@ class Venue extends LiveableModel implements Searchable
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
+    }
+
+    public function getAccessLevel(): string
+    {
+        return AccessLevelConstants::MEMBERS;
     }
 }

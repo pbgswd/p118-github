@@ -71,7 +71,8 @@ class AdminByLawController extends Controller
 
         $bylaw = new Bylaw($request->input('bylaw'));
 
-        $bylaw->user_id = Auth::id();
+        $bylaw->access_level = $bylaw->getAttachmentAccessLevel();
+
         $bylaw->save();
 
         Session::flash('success', "bylaw posting saved");
@@ -101,7 +102,13 @@ class AdminByLawController extends Controller
         $this->authorize('update', Auth::user());
         $data = ['bylaw' => $bylaw->load('user', 'attachments')];
 
-        return view('admin.bylaw', ['data' => ['data' => $data, 'action' => 'Edit']]);
+        return view('admin.bylaw', [
+                'data' => [
+                    'data' => $data,
+                    'action' => 'Edit'
+                ]
+            ]
+        );
     }
 
     /**
@@ -113,9 +120,9 @@ class AdminByLawController extends Controller
     public function update(UpdateBylawRequest $request, Bylaw $any_bylaw): RedirectResponse
     {
         $this->authorize('update', Auth::user());
+
         $any_bylaw->fill($request->bylaw);
 
-        $any_bylaw->user_id = Auth::id();
         $any_bylaw->save();
 
         $result = $this->attachmentService->updateAttachment($request, $any_bylaw);

@@ -39,7 +39,6 @@ class AdminVenueController extends Controller
         return view('admin.venue', [
             'data' => [
                 'venue' => new Venue,
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
                 'action' => 'Create',
                 ]
         ]);
@@ -54,9 +53,12 @@ class AdminVenueController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $venue = new Venue($request->input('venue'));
+        $venue = new Venue($request->venue);
+
+        $venue->access_level = $venue->getAccessLevel();
 
         $venue->save();
+
         Session::flash('success', "You have saved a new venue");
 
         return redirect()->route('venue_edit', [$venue->slug]);
@@ -74,7 +76,6 @@ class AdminVenueController extends Controller
         return view('admin.venue', [
             'data' => [
                 'venue' => $any_venue,
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
                 'action' => 'Edit',
             ]
         ]);
@@ -89,8 +90,11 @@ class AdminVenueController extends Controller
     public function update(UpdateVenueRequest $request, Venue $any_venue)
     {
         $this->authorize('update', Auth::user());
+
         $any_venue->fill($request['venue']);
+
         $any_venue->save();
+
         Session::flash('success', "You have edited the venue");
 
         return redirect()->route('venue_edit', [$any_venue->slug]);

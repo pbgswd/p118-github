@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Agreements;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class StoreAgreementRequest
@@ -37,4 +38,14 @@ class StoreAgreementRequest extends FormRequest
         ];
     }
 
+    protected function modifyInput(): void
+    {
+        $agreement = \array_merge(
+            $this->input('agreement'),
+            [
+                'user_id' => Auth::id(),
+            ]
+        );
+        $this->merge(['agreement' => $agreement]);
+    }
 }

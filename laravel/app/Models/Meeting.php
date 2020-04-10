@@ -107,4 +107,10 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
     {
         return AccessLevelConstants::MEMBERS;
     }
+
+    public function getDefaultLiveStatus(): bool
+    {
+        return true;
+    }
+
 }

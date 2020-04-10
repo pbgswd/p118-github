@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Venues;
 
+use App\Constants\AccessLevelConstants;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreVenueRequest extends FormRequest
 {
@@ -27,11 +29,20 @@ class StoreVenueRequest extends FormRequest
             'venue.name' => 'required|unique:venues,name|max:255',
             'venue.description' => 'required|string',
             'venue.url' => 'url|nullable',
-           // 'venue.access_level' => 'required|string|max:255',
             'venue.sort_order' =>  'required|numeric',
             'venue.in_menu' => 'boolean',
             'venue.live' => 'boolean',
         ];
     }
-    //todo set access_level in Request
+    protected function modifyInput(): void
+    {
+        $venue = \array_merge(
+            $this->input('venue'),
+            [
+                'user_id' => Auth::id()
+            ]
+        );
+
+        $this->merge(['venue' => $venue]);
+    }
 }

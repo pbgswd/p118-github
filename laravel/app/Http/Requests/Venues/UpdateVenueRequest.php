@@ -27,12 +27,10 @@ class UpdateVenueRequest extends FormRequest
             'venue.name' => 'required|max:255|unique:venues,name,' . $this->route('any_venue')->slug . ',slug',
             'venue.description' => 'required|string',
             'venue.url' => 'url|nullable',
-            //'venue.access_level' => 'required|string|max:255',
             'venue.sort_order' =>  'required|numeric',
             'venue.in_menu' => 'boolean',
             'venue.live' => 'boolean',
         ];
     }
-    //todo set access_level in Request
 }
 

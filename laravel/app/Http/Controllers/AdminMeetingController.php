@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Meetings\DestroyMeetingRequest;
 use App\Http\Requests\Meetings\StoreMeetingRequest;
 use App\Http\Requests\Meetings\UpdateMeetingRequest;
 use App\Models\Meeting;
 use App\Services\AttachmentService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 
 class AdminMeetingController extends Controller
@@ -28,8 +30,8 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+     * @throws AuthorizationException
      */
     public function index()
     {
@@ -43,26 +45,30 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+     * @throws AuthorizationException
      */
     public function create()
     {
         $this->authorize('create', Auth::user());
         $meeting = new Meeting();
-        $meeting->live = 1;
+        $meeting->live = $meeting->getDefaultLiveStatus();
 
-        return view('admin.meeting', ['data' => [
-            'meeting' => $meeting,
-            'action' => 'Add',
-            ]]);
+        return view('admin.meeting', [
+                'data' =>
+                    [
+                        'meeting' => $meeting,
+                        'action' => 'Add',
+                    ]
+            ]
+        );
     }
 
 
     /**
      * @param StoreMeetingRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function store(StoreMeetingRequest $request)
     {
@@ -74,26 +80,22 @@ class AdminMeetingController extends Controller
 
         Session::flash('success', "Meeting saved");
 
-        if (null !== ($request->file('attachments')))
-        {
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $meeting);
 
-            if($result){
+            if ($result) {
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
-            }
-            else
-            {
+            } else {
                 Session::flash('error', "You have an upload problem");
             }
         }
-
         return redirect()->route('meeting_edit', [$meeting->id]);
     }
 
     /**
      * @param Meeting $meeting
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+     * @throws AuthorizationException
      */
     public function edit(Meeting $meeting)
     {
@@ -102,11 +104,11 @@ class AdminMeetingController extends Controller
         $meeting->load('user', 'attachments');
 
         return view('admin.meeting', [
-            'data' =>
-                [
-                    'meeting' => $meeting,
-                    'action' => 'Edit',
-                ]
+                'data' =>
+                    [
+                        'meeting' => $meeting,
+                        'action' => 'Edit',
+                    ]
             ]
         );
     }
@@ -115,8 +117,8 @@ class AdminMeetingController extends Controller
     /**
      * @param UpdateMeetingRequest $request
      * @param Meeting $meeting
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
@@ -127,15 +129,12 @@ class AdminMeetingController extends Controller
 
         $result = $this->attachmentService->updateAttachment($request, $any_meeting);
 
-        if (null !== ($request->file('attachments')))
-        {
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_meeting);
 
-            if($result){
+            if ($result) {
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
-            }
-            else
-            {
+            } else {
                 Session::flash('error', "You have an upload problem");
             }
         }
@@ -147,15 +146,15 @@ class AdminMeetingController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(DestroyMeetingRequest $request)
     {
         $this->authorize('delete', Auth::user());
         Meeting::withoutGlobalScopes()
             ->find($request->id)
-            ->each(function(Meeting $meeting) {
+            ->each(function (Meeting $meeting) {
                 $this->attachmentService->destroyAttachments($meeting);
                 $meeting->delete();
             });

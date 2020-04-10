@@ -103,4 +103,8 @@ class Organization extends LiveableModel implements Searchable
         return $this->hasOne(User::class);
     }
 
+    public function getAccessLevel(): string
+    {
+        return AccessLevelConstants::MEMBERS;
+    }
 }

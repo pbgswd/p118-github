@@ -41,6 +41,7 @@ class StoreEmploymentRequest extends FormRequest
             'employment.deadline' => 'date',
         ];
     }
+
     protected function modifyInput(): void
     {
         $employment = \array_merge(

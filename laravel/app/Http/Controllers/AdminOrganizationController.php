@@ -38,7 +38,6 @@ class AdminOrganizationController extends Controller
         return view('admin.organization', [
             'data' => [
                 'organization' => new Organization(),
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
                 'action' => 'Create',
             ]
         ]);
@@ -53,6 +52,8 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('create', Auth::user());
         $org = new Organization($request->organization);
+
+        $org->access_level = $org->getAccessLevel();
 
         $org->save();
 
@@ -72,7 +73,6 @@ class AdminOrganizationController extends Controller
 
         return view('admin.organization', ['data' => [
             'organization' => $any_organization,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             ]
         ]);

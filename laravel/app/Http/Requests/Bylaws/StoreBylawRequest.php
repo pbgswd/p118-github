@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Bylaws;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreBylawRequest extends FormRequest
 {
@@ -29,5 +30,16 @@ class StoreBylawRequest extends FormRequest
             'bylaw.date' => 'date',
             'bylaw.live' => 'boolean',
         ];
+    }
+
+    protected function modifyInput(): void
+    {
+        $bylaw = \array_merge(
+            $this->input('bylaw'),
+            [
+                'user_id' => Auth::id(),
+            ]
+        );
+        $this->merge(['bylaw' => $bylaw]);
     }
 }

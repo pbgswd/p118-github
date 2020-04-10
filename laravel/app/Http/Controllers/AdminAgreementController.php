@@ -65,7 +65,8 @@ class AdminAgreementController extends Controller
         $this->authorize('create', Auth::user());
 
         $agreement = new Agreement($request->agreement);
-        $agreement->user_id = Auth::id();
+        $agreement->access_level = $agreement->getAttachmentAccessLevel();
+
         $agreement->save();
 
         Session::flash('success', "agreement posting saved");
@@ -112,7 +113,7 @@ class AdminAgreementController extends Controller
         $this->authorize('update', Auth::user());
 
         $any_agreement->fill($request->agreement);
-        $any_agreement->user_id = Auth::id();
+
         $any_agreement->save();
 
         $result = $this->attachmentService->updateAttachment($request, $any_agreement);
