@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Employment;
 
-use App\Constants\AccessLevelConstants;
 use App\Traits\ModifiesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;

@@ -64,7 +64,6 @@ class AdminAgreementController extends Controller
         $this->authorize('create', Auth::user());
 
         $agreement = new Agreement($request->agreement);
-        $agreement->access_level = $agreement->getAttachmentAccessLevel();
 
         $agreement->save();
 

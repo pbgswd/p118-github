@@ -22,7 +22,10 @@ $employment = $data['employment'];
         });
     </script>
 <div class="container">
-    <h3><a href="{{ route('admin_employment_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of employment postings</a></h3>
+    <h3><a href="{{ route('admin_employment_list') }}">
+            <i class="far fa-arrow-alt-circle-left"></i> List of employment postings
+        </a>
+    </h3>
     <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-lg-3"> &nbsp;</div>
@@ -36,7 +39,7 @@ $employment = $data['employment'];
         </div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2"><h4><i class="fas fa-calendar-alt"></i> Date of deadline </h4></div>
+                <div class="col-lg-8"><h4><i class="fas fa-calendar-alt"></i> Date of deadline </h4></div>
                 <div class="col-lg-10">
                     <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="employment[deadline]" value="{{ old('employment.date', $employment->deadline)}}" size="80" required/>
                 </div>
@@ -61,7 +64,6 @@ $employment = $data['employment'];
             </div>
         </div>
         <div class="row mt-lg-2">
-
             <div class="col-md-4">
                 <div class="col-2"><h4>Live on website</h4></div>
                 <div class="col-sm">
@@ -72,7 +74,6 @@ $employment = $data['employment'];
                     <p>ie.: Draft or Published.</p>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="col-2"><h4>Status (open/closed)</h4></div>
                 <div class="col-sm">
@@ -94,7 +95,6 @@ $employment = $data['employment'];
                     <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
-            >/
         @if ($data['action'] == 'Edit')
             @if(count($employment->attachments) > 0)
                 <div class="col-md-12">
@@ -143,8 +143,8 @@ $employment = $data['employment'];
                 </div>
             @endif
         @endif
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        </div>
+        <div class="row mt-lg-3">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />

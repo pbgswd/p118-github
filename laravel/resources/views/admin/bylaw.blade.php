@@ -1,7 +1,5 @@
 <?php
-
 $bylaw = $data['bylaw'];
-
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-gavel"></i> <i class="fas fa-edit"></i>' . $data["action"] . ' By-law ' . ($data["action"] == 'Edit' ? $bylaw->name : '') ])
 @section('content')
@@ -27,7 +25,6 @@ $bylaw = $data['bylaw'];
     <h3>  <a href="{{ route('admin_bylaws_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of By-laws</a>  </h3>
     <form method="post" name="bylaw" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
@@ -133,12 +130,11 @@ $bylaw = $data['bylaw'];
                 @endif
             @endif
         </div>
-        <div class="row">
+        <div class="row mb-lg-5">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
-        </div>
     </form>
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
@@ -152,6 +148,5 @@ $bylaw = $data['bylaw'];
             </form>
          </div>
     @endif
-    <div class="row" style="margin-top:100px;"> &nbsp;</div>
 </div>
 @endsection

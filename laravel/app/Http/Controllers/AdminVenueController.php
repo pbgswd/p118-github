@@ -42,11 +42,10 @@ class AdminVenueController extends Controller
 
         $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
 
-        $venue->setRelation('all_agreements', $all_agreements);
-
         return view('admin.venue', [
             'data' => [
                 'venue' => $venue,
+                'all_agreements' => $all_agreements,
                 'action' => 'Create',
             ]
         ]);

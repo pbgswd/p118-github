@@ -56,14 +56,12 @@ class AdminEmploymentController extends Controller
      */
     public function store(StoreEmploymentRequest $request)
     {
-        dd($request->all());
         $this->authorize('create', Auth::user());
         $employment = new Employment($request->employment);
 
         $employment->save();
 
-        if (null !== ($request->file('attachments')))
-        {
+        if (null !== ($request->file('attachments'))){
             $result = $this->attachmentService->createAttachment($request, $employment);
 
             if($result){
@@ -114,13 +112,12 @@ class AdminEmploymentController extends Controller
         $this->authorize('update', Auth::user());
 
         $any_employment->fill($request->employment);
-//dd($any_employment);
+
         $any_employment->save();
 
         $result = $this->attachmentService->updateAttachment($request, $any_employment);
 
-        if (null !== ($request->file('attachments')))
-        {
+        if (null !== ($request->file('attachments'))){
             $result = $this->attachmentService->createAttachment($request, $any_employment);
 
             if($result){

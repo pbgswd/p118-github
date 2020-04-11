@@ -56,6 +56,7 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         'live',
         'from',
         'until',
+        'user_id',
     ];
 
     protected $dates = [
@@ -68,6 +69,12 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
     protected $casts = [
         'live' => 'boolean',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->access_level = AccessLevelConstants::MEMBERS;
+    }
 
     /**
      * @return SearchResult
