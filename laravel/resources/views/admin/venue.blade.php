@@ -1,5 +1,6 @@
 <?php
 $venue = $data['venue'];
+
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Venue ' . ($data["action"] == 'Edit' ? $venue->name : '') ])
 @section('content')
@@ -22,11 +23,10 @@ $venue = $data['venue'];
         });
     </script>
 <div class="container">
-    <h3>  <a href="{{ route('venues_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of venues</a>  </h3>
+    <h3><a href="{{ route('venues_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of venues</a>  </h3>
     <form method="post" name="venue" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
@@ -44,8 +44,7 @@ $venue = $data['venue'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-8"><h4>Venue Website Link</h4></div>
                 <div class="col-lg-10">
@@ -88,8 +87,51 @@ $venue = $data['venue'];
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
-        <div class="row">
+        <div class="row border border-dark m-t-5 mb-lg-5">
+        @if ($data['action'] == 'Edit')
+            <div class="col-5 m-1 border border-dark">
+                Agreements attached to {{$venue->name}}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Until</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($venue->agreements as $va)
+                        <tr>
+                            <th scope="row">
+                                <input type="checkbox" name="id[]" value="{{$va->id}}" />
+                            </th>
+                            <td>
+                                <a title="{{$va->title }}" href="{{ route('agreement_edit', $va->id) }}">{{ $va->title }}</a>
+                            </td>
+                            <td>{{$va->from->format('F j Y')}}</td>
+                            <td>{{$va->until->format('F j Y')}}</td>
+                        </tr>
+                    @endforeach
+                    <td> <i class="far fa-trash-alt fa"></i></td>
+                    <td colspan="3">Check to remove from Venue</td>
+                    </tbody>
+                </table>
+            </div>
+        @endif
+            <div class="col-5 m-1 border border-dark">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect2">List of all agreements not currently attached to {{$venue->name}}. Select and submit to attach to venue</label>
+                    <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
+                        @foreach($venue->all_agreements as $agr)
+                            <option value="{{$agr->id}}">{{$agr->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-lg-3">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
@@ -107,6 +149,6 @@ $venue = $data['venue'];
             </form>
          </div>
     @endif
-    <div class="row" style="margin-top:100px;"> &nbsp;</div>
+    <div class="row mt-lg-5"> &nbsp;</div>
 </div>
 @endsection

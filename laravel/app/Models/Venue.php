@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Constants\AccessLevelConstants;
 use App\Policies\VenuePolicy;
 use DateTime;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -106,6 +107,11 @@ class Venue extends LiveableModel implements Searchable
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
+    }
+
+    public function agreements(): BelongsToMany
+    {
+        return $this->belongsToMany(Agreement::class);
     }
 
     public function getAccessLevel(): string

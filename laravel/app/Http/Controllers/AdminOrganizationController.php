@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Organization\DestroyOrganizationRequest;
 use App\Http\Requests\Organization\StoreOrganizationRequest;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
+use App\Models\Agreement;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,11 +35,16 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('create', Auth::user());
 
+        $org = new Organization;
+        $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
+
+        $org->setRelation('all_agreements', $all_agreements);
+
         return view(
             'admin.organization',
             [
                 'data' => [
-                    'organization' => new Organization(),
+                    'organization' => $org,
                     'action' => 'Create',
                 ],
             ]
@@ -57,6 +63,8 @@ class AdminOrganizationController extends Controller
 
         $org->save();
 
+        $org->agreements()->sync($request->all_agreements);
+
         Session::flash('success', "You have saved a new venue");
 
         return redirect()->route('organization_edit', [$org->slug]);
@@ -70,6 +78,19 @@ class AdminOrganizationController extends Controller
     public function edit(Organization $any_organization)
     {
         $this->authorize('update', Auth::user());
+
+        $any_organization->load('agreements');
+
+        $arr = [];
+
+        foreach($any_organization->agreements as $a)
+        {
+            $arr[] = $a->id;
+        }
+
+        $all_agreements = Agreement::whereNotIn('id', array_values($arr))->orderBy('title')->get();
+
+        $any_organization->setRelation('all_agreements', $all_agreements);
 
         return view(
             'admin.organization',
@@ -93,6 +114,12 @@ class AdminOrganizationController extends Controller
         $this->authorize('update', Auth::user());
         $any_organization->fill($request->organization);
         $any_organization->save();
+
+        if(null !== $request->id) {
+            $any_organization->agreements()->detach($request->id);
+        }
+
+        $any_organization->agreements()->attach($request->all_agreements);
 
         Session::flash('success', "You have edited the organization");
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Constants\AccessLevelConstants;
 use App\Policies\OrganizationPolicy;
 use DateTime;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -113,5 +114,10 @@ class Organization extends LiveableModel implements Searchable
     public function getAccessLevel(): string
     {
         return AccessLevelConstants::MEMBERS;
+    }
+
+    public function agreements(): BelongsToMany
+    {
+        return $this->belongsToMany(Agreement::class);
     }
 }

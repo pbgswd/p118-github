@@ -33,8 +33,8 @@ class VenueController extends Controller
     {
         $this->authorize('view', Auth::user());
 
+        $venue->load('agreements');
+
         return view('venue', ['data' => ['venue' => $venue]]);
     }
-
-
 }

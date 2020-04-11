@@ -21,6 +21,8 @@ use Spatie\Searchable\SearchResult;
  * @property int           $user_id
  * @property User          $user
  * @property Attachment[]  $attachments
+ * @property Venue[]       $venues
+ * @property Organization[] $organizations
  * @property DateTime      $created_at
  * @property DateTime      $updated_at
  * @property DateTime      $from
@@ -95,7 +97,15 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         return $this->belongsToMany(Attachment::class, 'attachment_agreement');
     }
 
-    //todo Agreement Model needs manyToMany or belongsToMany with Venues, Organizations
+    public function venues(): BelongsToMany
+    {
+        return $this->belongsToMany(Venue::class, 'agreement_venue');
+    }
+
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class, 'agreement_organization');
+    }
 
     /**
      * @return string

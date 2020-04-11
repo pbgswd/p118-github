@@ -29,6 +29,7 @@ class OrganizationController extends Controller
     public function show(Organization $organization)
     {
         //$this->authorize('viewAny', Auth::user());
+        $organization->load('agreements');
         $data = [];
         $data['organization'] = $organization;
 

@@ -80,6 +80,53 @@ $organization = $data['organization'];
                 </div>
             </div>
         </div>
+
+        <div class="row border border-dark m-t-5 mb-lg-5">
+            @if ($data['action'] == 'Edit')
+                <div class="col-5 m-1 border border-dark">
+                    Agreements attached to {{$organization->name}}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">From</th>
+                            <th scope="col">Until</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($organization->agreements as $oa)
+                            <tr>
+                                <th scope="row">
+                                    <input type="checkbox" name="id[]" value="{{$oa->id}}" />
+                                </th>
+                                <td>
+                                    <a title="{{ $oa->title }}" href="{{ route('agreement_edit', $oa->id) }}">{{ $oa->title }}</a>
+                                </td>
+                                <td>{{$oa->from->format('F j Y')}}</td>
+                                <td>{{$oa->until->format('F j Y')}}</td>
+                            </tr>
+                        @endforeach
+                        <td> <i class="far fa-trash-alt fa"></i></td>
+                        <td colspan="3">Check to remove from Venue</td>
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+            <div class="col-5 m-1 border border-dark">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect2">List of all agreements not currently attached to {{$organization->name}}. Select and submit to attach to venue</label>
+                    <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
+                        @foreach($organization->all_agreements as $agr)
+                            <option value="{{$agr->id}}">{{$agr->title}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
         <div class="row mt-lg-3">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>

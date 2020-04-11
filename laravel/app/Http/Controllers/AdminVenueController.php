@@ -6,8 +6,10 @@ use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Venues\DestroyVenueRequest;
 use App\Http\Requests\Venues\StoreVenueRequest;
 use App\Http\Requests\Venues\UpdateVenueRequest;
+use App\Models\Agreement;
 use App\Models\Venue;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -36,11 +38,17 @@ class AdminVenueController extends Controller
     {
         $this->authorize('create', Auth::user());
 
+        $venue = new Venue;
+
+        $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
+
+        $venue->setRelation('all_agreements', $all_agreements);
+
         return view('admin.venue', [
             'data' => [
-                'venue' => new Venue,
+                'venue' => $venue,
                 'action' => 'Create',
-                ]
+            ]
         ]);
     }
 
@@ -51,6 +59,7 @@ class AdminVenueController extends Controller
      */
     public function store(StoreVenueRequest $request)
     {
+
         $this->authorize('create', Auth::user());
 
         $venue = new Venue($request->venue);
@@ -58,6 +67,8 @@ class AdminVenueController extends Controller
         $venue->access_level = $venue->getAccessLevel();
 
         $venue->save();
+
+        $venue->agreements()->sync($request->all_agreements);
 
         Session::flash('success', "You have saved a new venue");
 
@@ -72,6 +83,19 @@ class AdminVenueController extends Controller
     public function edit(Venue $any_venue)
     {
         $this->authorize('update', Auth::user());
+
+        $any_venue->load('agreements');
+
+        $arr = [];
+
+        foreach($any_venue->agreements as $a)
+        {
+            $arr[] = $a->id;
+        }
+
+        $all_agreements = Agreement::whereNotIn('id', array_values($arr))->orderBy('title')->get();
+
+        $any_venue->setRelation('all_agreements', $all_agreements);
 
         return view('admin.venue', [
             'data' => [
@@ -94,6 +118,12 @@ class AdminVenueController extends Controller
         $any_venue->fill($request['venue']);
 
         $any_venue->save();
+
+        if(null !== $request->id) {
+            $any_venue->agreements()->detach($request->id);
+        }
+
+        $any_venue->agreements()->attach($request->all_agreements);
 
         Session::flash('success', "You have edited the venue");
 
