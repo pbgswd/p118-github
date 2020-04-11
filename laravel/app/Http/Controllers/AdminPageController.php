@@ -87,7 +87,7 @@ class AdminPageController extends Controller
         $this->authorize('create', Auth::user());
 
         $page = new Page($request->page, $request->input('tags'));
-        $page->user_id = Auth::id();
+
         $page->save();
 
         if (null !== ($request->file('attachments'))) {

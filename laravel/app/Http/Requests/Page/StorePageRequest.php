@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Page;
 
+use App\Traits\ModifiesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class StorePageRequest
@@ -11,6 +13,8 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class StorePageRequest extends FormRequest
 {
+    use ModifiesInputTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -38,5 +42,17 @@ class StorePageRequest extends FormRequest
             'page.allow_comments' => 'boolean',
             'page.live' => 'boolean',
         ];
+    }
+
+    protected function modifyInput(): void
+    {
+        $venue = \array_merge(
+            $this->input('venue'),
+            [
+                'user_id' => Auth::id()
+            ]
+        );
+
+        $this->merge(['venue' => $venue]);
     }
 }

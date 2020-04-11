@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\Venues;
 
-use App\Constants\AccessLevelConstants;
+use App\Traits\ModifiesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 class StoreVenueRequest extends FormRequest
 {
+    use ModifiesInputTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,6 +36,7 @@ class StoreVenueRequest extends FormRequest
             'venue.live' => 'boolean',
         ];
     }
+
     protected function modifyInput(): void
     {
         $venue = \array_merge(
