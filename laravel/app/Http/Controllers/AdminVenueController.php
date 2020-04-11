@@ -59,12 +59,9 @@ class AdminVenueController extends Controller
      */
     public function store(StoreVenueRequest $request)
     {
-
         $this->authorize('create', Auth::user());
 
         $venue = new Venue($request->venue);
-
-        $venue->access_level = $venue->getAccessLevel();
 
         $venue->save();
 
@@ -86,20 +83,20 @@ class AdminVenueController extends Controller
 
         $any_venue->load('agreements');
 
-        $arr = [];
+        $all_agreements = Agreement::whereNotIn(
+            'id',
+            $any_venue->agreements->map(function (Agreement $agreement) {
+                return $agreement->id;
+            }))
+            ->orderBy('title')->get();
 
-        foreach($any_venue->agreements as $a)
-        {
-            $arr[] = $a->id;
-        }
-
-        $all_agreements = Agreement::whereNotIn('id', array_values($arr))->orderBy('title')->get();
-
-        $any_venue->setRelation('all_agreements', $all_agreements);
+        //todo remove relation, pass in data
+         $any_venue->setRelation('all_agreements', $all_agreements);
 
         return view('admin.venue', [
             'data' => [
                 'venue' => $any_venue,
+                'all_agreements' => $all_agreements,
                 'action' => 'Edit',
             ]
         ]);

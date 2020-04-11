@@ -1,6 +1,6 @@
 <?php
 $venue = $data['venue'];
-
+$all_agreements = $data['all_agreements'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Venue ' . ($data["action"] == 'Edit' ? $venue->name : '') ])
 @section('content')
@@ -107,7 +107,7 @@ $venue = $data['venue'];
                                 <input type="checkbox" name="id[]" value="{{$va->id}}" />
                             </th>
                             <td>
-                                <a title="{{$va->title }}" href="{{ route('agreement_edit', $va->id) }}">{{ $va->title }}</a>
+                                <a title="{{$va->title}}" href="{{ route('agreement_edit', $va->id) }}">{{ $va->title }}</a>
                             </td>
                             <td>{{$va->from->format('F j Y')}}</td>
                             <td>{{$va->until->format('F j Y')}}</td>
@@ -123,7 +123,7 @@ $venue = $data['venue'];
                 <div class="form-group">
                     <label for="exampleFormControlSelect2">List of all agreements not currently attached to {{$venue->name}}. Select and submit to attach to venue</label>
                     <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
-                        @foreach($venue->all_agreements as $agr)
+                        @foreach($all_agreements as $agr)
                             <option value="{{$agr->id}}">{{$agr->title}}</option>
                         @endforeach
                     </select>

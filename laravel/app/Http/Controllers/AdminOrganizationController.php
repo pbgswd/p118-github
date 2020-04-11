@@ -81,14 +81,12 @@ class AdminOrganizationController extends Controller
 
         $any_organization->load('agreements');
 
-        $arr = [];
-
-        foreach($any_organization->agreements as $a)
-        {
-            $arr[] = $a->id;
-        }
-
-        $all_agreements = Agreement::whereNotIn('id', array_values($arr))->orderBy('title')->get();
+        $all_agreements = Agreement::whereNotIn(
+            'id',
+            $any_organization->agreements->map(function (Agreement $agreement) {
+                return $agreement->id;
+            }))
+            ->orderBy('title')->get();
 
         $any_organization->setRelation('all_agreements', $all_agreements);
 
@@ -97,6 +95,7 @@ class AdminOrganizationController extends Controller
             [
                 'data' => [
                     'organization' => $any_organization,
+                    'all_agreements' => $all_agreements,
                     'action' => 'Edit',
                 ],
             ]

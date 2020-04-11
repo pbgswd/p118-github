@@ -69,6 +69,15 @@ class Venue extends LiveableModel implements Searchable
         'live' => 'boolean',
     ];
 
+    /**
+     * Venue constructor.
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->access_level = AccessLevelConstants::MEMBERS;
+    }
 
     /**
      * @return SearchResult
@@ -112,10 +121,5 @@ class Venue extends LiveableModel implements Searchable
     public function agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class);
-    }
-
-    public function getAccessLevel(): string
-    {
-        return AccessLevelConstants::MEMBERS;
     }
 }

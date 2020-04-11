@@ -1,5 +1,6 @@
 <?php
 $organization = $data['organization'];
+$all_agreements = $data['all_agreements'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' organization ' . ($data["action"] == 'Edit' ? $organization->name : '') ])
 @section('content')
@@ -117,7 +118,7 @@ $organization = $data['organization'];
                 <div class="form-group">
                     <label for="exampleFormControlSelect2">List of all agreements not currently attached to {{$organization->name}}. Select and submit to attach to venue</label>
                     <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
-                        @foreach($organization->all_agreements as $agr)
+                        @foreach($all_agreements as $agr)
                             <option value="{{$agr->id}}">{{$agr->title}}</option>
                         @endforeach
                     </select>
