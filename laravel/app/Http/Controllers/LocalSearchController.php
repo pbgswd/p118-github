@@ -137,17 +137,4 @@ class LocalSearchController extends Controller
 
         return view('admin.list_attachments_search_result', ['data' => $data]);
     }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param LocalSearch $search
-     * @return Response
-     */
-    public function show(LocalSearch $search)
-    {
-        dd(__METHOD__);
-    }
-
 }

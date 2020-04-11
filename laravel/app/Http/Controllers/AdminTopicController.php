@@ -120,7 +120,7 @@ class AdminTopicController extends Controller
     public function update(UpdateTopicRequest $request, Topic $any_topic): RedirectResponse
     {
         $this->authorize('update', Auth::user());
-        //dd($request->all());
+
         $any_topic->fill($request->topic);
         $any_topic->save();
 

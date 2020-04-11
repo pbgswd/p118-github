@@ -84,7 +84,7 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
 
-    Route::get('/venues', 'VenueController@list')->name('venues');
+    Route::get('/venues', 'VenueController@list')->name('venues');     
     Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
 
     Route::get('/organizations', 'OrganizationController@list')->name('organizations');

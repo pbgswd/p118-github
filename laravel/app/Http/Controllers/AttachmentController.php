@@ -155,14 +155,10 @@ class AttachmentController extends Controller
         $attachments = Attachment::find($request->id);
         foreach ($attachments as $a)
         {
-            //todo destroy file in its directory
-            //todo what about pivot relation
-            //todo attachement service supporeted delete
-            //dd($a);
             Storage::disk($a->subfolder)->delete($a->file);
             Attachment::destroy($a->id);
         }
-        //todo detach any other relation?
+
         Session::flash('success', Str::plural(count($request->id) . ' Attachment', count($request->id)) . ' deleted.');
 
         return redirect()->route('attachments_list');
