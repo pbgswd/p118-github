@@ -59,8 +59,10 @@ class InviteUser extends Model
     protected $fillable = [
         'name',
         'email',
+        'message',
         'password',
         'role',
+        'user_id',
     ];
 
     /**

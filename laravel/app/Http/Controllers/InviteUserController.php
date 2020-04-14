@@ -61,10 +61,10 @@ class InviteUserController extends Controller
      */
     public function store(StoreInviteUserRequest  $request)
     {
-        $invitation = new InviteUser($request->input('invite'));
+        $invitation = new InviteUser($request->invite);
+
         $invitation->password = str_replace ('/', '', hash::make(Str::random(8)));
-        $invitation->user_id = Auth::id();
-        $invitation->role = $request->user_role;
+
         $invitation->save();
 
         Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]], function ($m) use ($invitation) {

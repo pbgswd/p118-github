@@ -9,7 +9,6 @@ $roles = $data['roles'];
 <h3>Note: there is a 48 hour expiry time on invitations.</h3>
         <form method="post" name="invite_user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-
             <div class="col-12 input-group mt-lg-5 mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
@@ -23,13 +22,24 @@ $roles = $data['roles'];
                 </div>
             </div>
             <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-2">
+                        <h4>Message</h4>
+                    </div>
+                    <div class="col-lg-10">
+                        <textarea name="invite[message]" id="invite-message" class="form-control">{{old('invite.message', $invite->message)}}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-12 mt-lg-2 p-2">
                     <h4>User website roles </h4>
                     @foreach ($roles as $role)
                         <div class="input-group mb-6 col-12">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input name="user_role" type="radio" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $invite->role)) }} />
+                                    <input name="invite[user_role]" type="radio" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $invite->role)) }} />
                                 </div>
                             </div>
                             <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{$role->name}} ( @foreach ($role->permissions as $p){{ $p->name }},  @endforeach)" size="40" readonly />
@@ -58,8 +68,6 @@ $roles = $data['roles'];
         @endhasanyrole
     @endif
     <div class="row mt-lg-5"> &nbsp;</div>
-
-
 </div>
 <div class="row mt-lg-3"> &nbsp;</div>
 @endsection
