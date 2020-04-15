@@ -2,17 +2,12 @@
 $topics = $data['topics'];
 $pages = $data['pages'];
 $posts = $data['posts'];
-
 ?>
 <div class="row border border-dark rounded-lg mt-3 pt-3" style="background: rgba(220,220,220,0.6);">
-
     <div class="col-md-3">
         <div class="col-12">
-            <h4>
-                Menu
-            </h4>
+            <h4> Menu </h4>
         </div>
-
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('member', Auth::user()->id)}}" title="My Profile">&nbsp<i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
         </div>
@@ -91,4 +86,3 @@ $posts = $data['posts'];
         @endforeach
     </div>
 </div>
-

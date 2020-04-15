@@ -27,7 +27,7 @@ class ContentFeature
         $topicFilter = function ($query) {
             $query->where('slug', 'news');
         };
-//todo expand filter for home page view
+
         $topics = Topic::orderBy('sort_order', 'desc')->get();
         $posts = Post::where('in_menu', 1)->orderBy('updated_at', 'desc')->take(10)->get();
         $pages = Page::where('in_menu', 1)->orderBy('updated_at', 'desc')->take(10)->get();

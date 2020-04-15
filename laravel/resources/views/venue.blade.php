@@ -1,17 +1,14 @@
 <?php
 $venue = $data['venue'];
-//dd($venue);
 ?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg pl-lg-1" style="background: rgba(220,220,220,0.6);">
-
         <a href="{{ route('hello') }}">Home /</a>
         <a href="{{route('venues')}}">venues /</a> {{$venue->name}}
-
         <div class="col-12">
-            <h1 class="display-3">{{$venue->name}}</h1>
+            <h1>{{$venue->name}}</h1>
         </div>
         <div class="col-12">
             <p>
@@ -22,7 +19,7 @@ $venue = $data['venue'];
         <div class="col-12">
             {!! $venue->description !!}
         </div>
-        @if (null !== $venue->agreements)
+        @if (0 < $venue->agreements->count())
             <div class="row mt-lg-5">
                 <div class="col-11 m-1 m-lg-4 border border-dark">
                     Agreements attached to {{$venue->name}}

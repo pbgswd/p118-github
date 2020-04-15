@@ -3,13 +3,13 @@ $employment = $data['employment'];
 ?>
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> Employment Postings'])
 @section('content')
-<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); max-width:768px;">
-<h1 class="display-3">employment Postings</h1>
-    <h3>
-       <span class="badge badge-primary badge-pill">
-           {{ $data['count'] }} employment postings
-       </span>
-    </h3>
+<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
+    <div class="row">
+        <h1>
+            <span class="badge badge-primary badge-pill">{{ $data['count'] }}</span>
+            Employment Postings
+        </h1>
+    </div>
     <div class="row">
         <div class="col-6">
             <a target="_blank" href="http://www.citt.org/cgi/page.cgi/citt_news.html/Job_Board" title=""CITT Website Job Postings">
@@ -34,9 +34,9 @@ $employment = $data['employment'];
             </p>
         </div>
     </div>
-</div>
-<div class="table-responsive-md border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;  max-width:768px; margin-left:auto; margin-right:auto;">
-    <table class="table table-dark table-sm" style="margin-left:auto; margin-right:auto;">
+
+<div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.6); padding:1em; margin-left:auto; margin-right:auto;">
+    <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
         <thead>
         <tr>
             <th> @sortablelink('title', 'Title') </th>
@@ -61,7 +61,7 @@ $employment = $data['employment'];
                     @endif
                 </td>
                 <td>
-                    {{ $e->deadline->format('M j Y') }}
+                    {{ $e->deadline->format('F j Y') }}
                 </td>
             </tr>
         @endforeach
@@ -71,7 +71,7 @@ $employment = $data['employment'];
         </tbody>
     </table>
 </div>
-<div class="row" style="margin-top:2em;">
+<div class="row mt-lg-2 mb-lg-5">
     <div class="col-5"></div>
     <div class="col-3">
         <div class="list-group">
@@ -82,5 +82,7 @@ $employment = $data['employment'];
     </div>
     <div class="col-3"></div>
 </div>
-<div class="row" style="margin-top:6em;"></div>
+
+</div>
+
 @endsection
