@@ -170,9 +170,8 @@ sup {
 }
 
 a {
-  color: #3490dc;
-  text-decoration: none;
-  background-color: transparent;
+    color: #002a80;
+    text-decoration: none;
 }
 
 a:hover {
@@ -193,6 +192,10 @@ a:not([href]):not([tabindex]):focus {
 
 a:not([href]):not([tabindex]):focus {
   outline: 0;
+}
+
+a:visited {
+    color: #1b4b72;
 }
 
 pre,

@@ -28,17 +28,20 @@ class ContentFeature
             $query->where('slug', 'news');
         };
 //todo expand filter for home page view
-        $topics = Topic::orderBy('created_at', 'desc')->take(10)->get();
-        $posts = Post::where('in_menu', 1)->orderBy('created_at', 'desc')->take(10)->get();
-        $pages = Page::where('in_menu', 1)->orderBy('created_at', 'desc')->take(10)->get();
+        $topics = Topic::orderBy('sort_order', 'desc')->get();
+        $posts = Post::where('in_menu', 1)->orderBy('updated_at', 'desc')->take(10)->get();
+        $pages = Page::where('in_menu', 1)->orderBy('updated_at', 'desc')->take(10)->get();
 
-        $data = ['topics' => $topics, 'posts' => $posts, 'pages' => $pages];
+        $data = [
+            'topics' => $topics,
+            'posts' => $posts,
+            'pages' => $pages,
+            ];
 
        // $posts->short_body = substr($posts->content, 0, 60) . '...';
             // dangerous! body is in html -- truncation could split a tag
 
-        // dd($data);
-
+        //dd($data);
         $view->with('data', $data);
     }
 

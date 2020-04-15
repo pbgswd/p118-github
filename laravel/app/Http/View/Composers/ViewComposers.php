@@ -39,6 +39,7 @@ class ViewComposers
         //todo clean post->body so markup doesnt break
         $post->short_body = substr($post->body, 0, 3000) . '...';
             // dangerous! body is in html -- truncation could split a tag
+
         $view->with('cont', $post);
     }
 

@@ -42,10 +42,9 @@
 			                <p class="lead">This is your invitation to join the completely updated IATSE Local 118 website. </p>
                             <p class="lead">The site has been rebuilt completely from the ground up. This means you will
                                 need to create a secure password to go with your profile to log on to the site.
-                                Use the following link to begin the registration process.</p>
-
-                              {{$data['invitation']['message']}}
-
+                                Use the following link to begin the registration process.
+                            </p>
+                              {{$data['invitation']['message'] ?? ''}}
                             <p>
                                 <a href="{{route('invite_user_signup', ['inviteUser' => $data['invitation']['id'], 'password' => $data['invitation']['password']])}}" target="_blank">
                                     {{route('invite_user_signup', [$data['invitation']['id'], $data['invitation']['password']])}}
