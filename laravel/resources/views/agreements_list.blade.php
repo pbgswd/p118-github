@@ -10,7 +10,6 @@ $agreements = $data['data']['agreements'];
            {{ $data['data']['count'] }} agreement postings
        </span>
     </h3>
-
 <div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.6); margin-left:auto; margin-right:auto;">
     <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
         <thead>
@@ -21,19 +20,18 @@ $agreements = $data['data']['agreements'];
         </tr>
         </thead>
         <tbody>
-        @foreach ( $agreements as $agreement )
+        @foreach ($agreements as $agreement)
             <tr>
                 <td>
                     <h5>
                         <a title="{{ $agreement->title }}" href="{{route('agreement_show', $agreement->id)}}"> {{ $agreement->title }}</a>
                     </h5>
                 </td>
-
                 <td>
-                    {{ $agreement->from->format('M j Y') }}
+                    {{ $agreement->from->format('F j Y') }}
                 </td>
                 <td>
-                    {{ $agreement->until->format('M j Y') }}
+                    {{ $agreement->until->format('F j Y') }}
                 </td>
             </tr>
         @endforeach

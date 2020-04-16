@@ -14,9 +14,6 @@ $c = $data['committee'];
                 </h2>
             </div>
             <div class="col-12">
-                <h1 class="display-4">{{$c->name}}</h1>
-            </div>
-            <div class="col-12">
                 <h2>{!! $c->description !!}</h2>
             </div>
             <div class="col-12 small">
@@ -54,16 +51,22 @@ $c = $data['committee'];
                     @endforeach
                 </p>
                 <p>
-                    <i class="far fa-envelope"></i> Email: <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee"> {{$data['committee']->email}}</a>
+                    <i class="far fa-envelope"></i>
+                    Email:
+                    <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee"> {{$data['committee']->email}}</a>
                 </p>
             </div>
             <div class="col-12 p-lg-2 mt-lg-3 border border-dark rounded-lg">
-                <h4>{{count($c->committee_members)}} {{Str::plural('Member', count($c->committee_members))}}.
-                @if(count($c->committee_members) > 0)
-                    <a href="{{route('committee_list_members', $data['committee']->slug)}}">View membership</a></h4>
-                @endif
+                <h4>
+                    <span class="badge badge-primary badge-pill">
+                        {{$c->active_committee_members->count()}}
+                    </span>
+                    {{Str::plural('Member', $c->active_committee_members->count())}}.
+                    @if(0 < $c->active_committee_members->count())
+                        <a href="{{route('committee_list_members', $data['committee']->slug)}}">View membership</a>
+                    @endif
+                </h4>
                 @if($data['isMember'] != 1)
-                    <h5>Join {{$c->name}}</h5>
                     <form method="post" name="committee-join" action="{{ url()->current() }}/join" enctype="multipart/form-data" class="needs-validation" novalidate>
                         {!! csrf_field() !!}
                         <div class="col">

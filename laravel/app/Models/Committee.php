@@ -26,6 +26,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property DateTime         $created_at
  * @property DateTime         $updated_at
  * @property User[]           $committee_members
+ * @property User[]           $active_committee_members
  * @property CommitteePost[]  $posts
  */
 class Committee extends LiveableModel
@@ -108,11 +109,20 @@ class Committee extends LiveableModel
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function active_committee_members(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)
+            ->wherePivotIn('role', array_merge(Options::committee_executive_roles(), ['Member' => 'Member']))
+            ->withTimestamps();
+    }
+
+    /**
      * @return HasMany
      */
     public function posts(): HasMany
     {
         return $this->hasMany(CommitteePost::class);
     }
-
 }
