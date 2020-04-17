@@ -13,11 +13,11 @@ $committee = $data['committee'];
     </h3>
 </div>
 <div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.6); max-width:768px; margin-left:auto; margin-right:auto;">
-    <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
+    <table class="table table-sm ml-auto mr-auto">
         <thead>
             <tr>
                 <th> @sortablelink('name', 'Name') </th>
-                <th> role </th>
+                <th> Role </th>
                 <th> @sortablelink('email', 'Email') </th>
                 <th> @sortablelink('created_at', 'Joined') </th>
             </tr>
@@ -33,7 +33,7 @@ $committee = $data['committee'];
                     </h4>
                 </td>
                 <td>
-                       role
+                    {{$c->pivot->role}}
                 </td>
                 <td>
                     <a href="mailto:{{ $c->email }}">{{ $c->email }}</a>

@@ -68,12 +68,8 @@ class CommitteeController extends Controller
      */
     public function leave(Request $request, Committee $committee)
     {
-//dd(__METHOD__);
-        // if you are already a member, dont allow
-        // if you are  a past member, set to member
-
         $committee->committee_members()->updateExistingPivot(Auth::id(), ['role' => 'Past-Member']);
-       // dd($committee->committee_members);
+
         Session::flash('success', 'You have left' . $committee->name);
 
         return redirect()->route('committee', $committee->slug);
@@ -94,24 +90,23 @@ class CommitteeController extends Controller
 
         $committee->posts = $committee->posts()->orderByDesc('updated_at')->paginate(5);
 
-        $committee['committee_roles'] = Options::committee_roles();
-        $committee_executive_roles = Options::committee_executive_roles();
-
-        //todo fetch users who are executives for this committee 
-        $committee['executives'] = $committee->active_committee_members->filter( function (User $user) use ($committee_executive_roles) {
-            return in_array($user->pivot->role, $committee_executive_roles);
-        })
-        ->sortBy( function (User $user) use ($committee_executive_roles) {
-            return array_search($user->pivot->role, $committee_executive_roles);
-        });
-
-
-        $data = ['committee' => $committee];
         /** @var  User $user */
         $user = Auth::user();
 
+        $executives = [];
+        foreach($committee->active_committee_members as $acm)
+        {
+            if(in_array($acm->pivot->role, Options::committee_executive_roles() ) ){
+                $executives[] = $acm;
+            }
+        }
+
+        $data = ['committee' => $committee,
+            'executives' => $executives,
+            ];
+
         $data['isMember'] = $user->committee_memberships->filter(function (Committee $user_committee) use ($committee) {
-           return $user_committee->slug == $committee->slug &&  $user_committee->pivot->role != 'Past-Member';
+           return $user_committee->slug == $committee->slug && $user_committee->pivot->role != 'Past-Member';
         })->isNotEmpty();
 
         return view('committee', ['data' => $data]);

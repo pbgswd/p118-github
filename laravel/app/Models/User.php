@@ -143,8 +143,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
         return $this->belongsToMany(Committee::class)->withPivot('role');
     }
 
-    //public function scopeActive
-
     /**
      * @return string
      */

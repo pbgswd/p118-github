@@ -7,7 +7,7 @@ $user = $data['user'];
 @extends('layouts.jumbo')
 
 @section('content')
-    <div class="jumbotron">
+    <div class="jumbotron mb-lg-5">
         <div class="container border border-dark rounded-lg p-2" style="background: rgba(220,220,220,0.6);">
             <h1>
                 <a href="{{route('members')}}">
@@ -42,15 +42,19 @@ $user = $data['user'];
                 <div class="col-12">
                     <h3>Membership in committees</h3>
                     @foreach($user->committee_memberships as $m)
-                        <div class="col-3 border border-dark rounded-lg m-1 mt-3 mr-3">
-                            <h3>
-                                <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">{{$m->name}}</a>
-                            </h3>
-                        </div>
+                        @if($m->pivot->role != 'Past-Member')
+                            <div class="col-3 border border-dark rounded-lg m-1 mt-3 mr-3">
+                                <h3>
+                                    <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">{{$m->name}}</a>
+                                </h3>
+                                <h6>
+                                    {{$m->pivot->role}}
+                                </h6>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             @endif
         </div>
     </div>
-    <div class="row" style="margin-top:6em;"></div>
 @endsection

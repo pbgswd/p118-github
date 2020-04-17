@@ -46,6 +46,7 @@ class Committee extends LiveableModel
         'name',
         'created_at',
         'updated_at',
+        'role',
     ];
 
     protected $dates = [
@@ -115,6 +116,7 @@ class Committee extends LiveableModel
     {
         return $this->belongsToMany(User::class)
             ->wherePivotIn('role', array_merge(Options::committee_executive_roles(), ['Member' => 'Member']))
+            ->withPivot('role')
             ->withTimestamps();
     }
 
