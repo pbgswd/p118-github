@@ -63,6 +63,7 @@ class CommitteePost extends LiveableModel
         'live',
         'sticky',
         'allow_comments',
+        'user_id',
     ];
 
     /**

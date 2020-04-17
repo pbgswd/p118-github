@@ -44,7 +44,6 @@ class CommitteePostController extends Controller
         ]);
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -55,57 +54,43 @@ class CommitteePostController extends Controller
      */
     public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
     {
-
         //$this->authorize('create', Auth::user());
         $post = new CommitteePost($request->input('post'));
+        //todo pass in committee_id from form request
         $post->committee_id = $committee->id;
-        $post->user_id = Auth::id();
 
         $post->save();
 
         Session::flash('success', "You have saved a new post in " . $committee->name);
 
-        //return redirect()->route('committee_post', [$committee->slug, $post->slug]);
-        return redirect()->route('committee_post_edit_form', [$committee->slug, $post->id]);
+        return redirect()->route('committee_post_edit_form', [$committee->slug, $post->slug]);
     }
 
-
-
-
-
-    public function store_post(Request $request, Committee $committee,  CommitteePost $committeePost, User $user)
+    /**
+     * @param Committee $committee
+     * @param CommitteePost $committeePost
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Committee $committee, CommitteePost $committeePost)
     {
-        dd(__METHOD__);
-        //$this->authorize('create', Auth::user());
-        $post = new CommitteePost($request->input('post'));
-        // dd($post);
-        $post->committee_id = $committee->id;
-        $post->user_id = Auth::id();
-
-        $post->save();
-
-        Session::flash('success', "You have saved a new post in " . $committee->name);
-
-        return redirect()->route('committee_post_edit_form', [$committee->slug, $post->id]);
-    }
-
-
-
-    public function edit_post(Committee $committee, CommitteePost $committeePost)
-    {
-        dd(__METHOD__);
         $committeePost->creator;
-        //dd($committeePost);
         return view('committee_post_form', [$committee->slug, $committeePost->slug], [
             'data' => [
-                'post' => $committeePost, 'action' => 'Edit'
+                'post' => $committeePost,
+                'action' => 'Edit',
             ]
         ]);
     }
 
-    public function update_post(Request $request, Committee $committee, CommitteePost $committeePost)
+    /**
+     * @param UpdateCommitteePostRequest $request
+     * @param Committee $committee
+     * @param CommitteePost $committeePost
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function update(UpdateCommitteePostRequest $request, Committee $committee, CommitteePost $committeePost)
     {
-        dd(__METHOD__);
+
         $committeePost->fill($request['post']);
         $committeePost->save();
         $committeePost->creator;
@@ -114,12 +99,6 @@ class CommitteePostController extends Controller
             'data' => ['post' => $committeePost, 'action' => 'Edit']
         ]);
     }
-
-    public function delete_post(Request $request, Committee $committee)
-    {
-        dd($request->all());
-    }
-
 
     /**
      * Display the specified resource.
@@ -144,33 +123,15 @@ class CommitteePostController extends Controller
 
 
     /**
-     * @param UpdateCommitteePostRequest $request
-     * @param $post
-     * @param CommitteePost $any_committee_post
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(UpdateCommitteePostRequest $request, $post, CommitteePost $any_committee_post)
-    {
-        // $this->authorize('update', Auth::user());
-        $data = $request['post'];
-
-        $any_committee_post->fill($data);
-        $any_committee_post->save();
-
-        Session::flash('success', "You have edited the post");
-
-        $any_committee_post->committee;
-
-        return redirect()->route('committee_post_edit', [$any_committee_post->committee->slug, $any_committee_post->slug]);
-    }
-
-    /**
      * @param DestroyCommitteePostRequest $request
      * @param Committee $committee
      * @return RedirectResponse
      */
     public function destroy(DestroyCommitteePostRequest $request, Committee $committee): RedirectResponse
     {
+     //todo if post has comments, it cannot be deleted
+     //todo archive when it has comments
+
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (CommitteePost $post) {
@@ -180,6 +141,6 @@ class CommitteePostController extends Controller
 
         Session::flash('success', 'Committee ' . Str::plural('post', count($request->id)) . ' deleted.');
 
-        return redirect()->route('committee_posts_list', $committee->slug);
+        return redirect()->route('committee', $committee->slug);
     }
 }

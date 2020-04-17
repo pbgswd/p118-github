@@ -76,15 +76,17 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     Route::get('committee/{committee}/post', 'CommitteePostController@create')->name('committee_add_public_post');
     Route::post('committee/{committee}/post', 'CommitteePostController@store');
-    Route::get('committee/{committee}/edit/{committeePost}', 'CommitteePostController@edit_post')->name('committee_post_edit_form');
-    Route::post('committee/{committee}/edit/{committeePost}', 'CommitteeController@update_post');
+    Route::get('committee/{committee}/edit/{committeePost}', 'CommitteePostController@edit')->name('committee_post_edit_form');
+    Route::post('committee/{committee}/edit/{committeePost}', 'CommitteePostController@update');
+
+    Route::delete('committee/{committee}/post/{committeePost}', 'CommitteePostController@destroy')->name('public_committee_post_destroy');
 
     Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('committee_post_comment');
 
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
 
-    Route::get('/venues', 'VenueController@list')->name('venues');     
+    Route::get('/venues', 'VenueController@list')->name('venues');
     Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
 
     Route::get('/organizations', 'OrganizationController@list')->name('organizations');

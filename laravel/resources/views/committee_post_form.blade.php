@@ -64,7 +64,7 @@ $post = $data['post'];
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
-             <form name="delete" method="POST" action="{{route('post_destroy')}}">
+             <form name="delete" method="POST" action="{{route('public_committee_post_destroy', [$post['committee']->slug, $post->slug])}}">
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
@@ -75,6 +75,6 @@ $post = $data['post'];
     @endif
 </div>
     @if ( $data['action'] == 'Edit')
-        <div class="row mt-lg-3 mb-lg-3"> &nbsp;post added by {{$post->creator->name}}</div>
+        <div class="row mt-lg-3 mb-lg-3"> post added by {{$post->creator->name}}</div>
     @endif
 @endsection

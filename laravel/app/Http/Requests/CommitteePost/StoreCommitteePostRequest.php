@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\CommitteePost;
 
+use App\Traits\ModifiesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class StoreCommitteePostRequest
@@ -11,6 +13,7 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class StoreCommitteePostRequest extends FormRequest
 {
+    use ModifiesInputTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,7 +37,17 @@ class StoreCommitteePostRequest extends FormRequest
             'post.sticky' => 'boolean',
             'post.allow_comments' => 'boolean',
             'post.live' => 'boolean',
-
         ];
+    }
+
+    protected function modifyInput(): void
+    {
+        $post = \array_merge(
+            $this->input('post'),
+            [
+                'user_id' => Auth::id(),
+            ]
+        );
+        $this->merge(['post' => $post]);
     }
 }
