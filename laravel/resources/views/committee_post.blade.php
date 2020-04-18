@@ -22,7 +22,10 @@ $c = $data['committeepost']->committee;
                 {!! $post->content !!}
                 <br clear="all" />
                 @hasanyrole('super-admin|admin')
-                <h5><a href="{{route('committee_post_edit_form', [$c->slug, $post->slug])}}"><i class="far fa-edit"></i> Edit Post</a></h5>
+                <h5>
+                    <a href="{{route('committee_post_edit_form', [$c->slug, $post->slug])}}">
+                        <i class="far fa-edit"></i> Edit Post</a>
+                </h5>
                 @endhasanyrole
             </div>
         </div>

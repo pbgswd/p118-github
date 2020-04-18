@@ -62,7 +62,7 @@ class AdminCommitteePostCommentController extends Controller
      */
     public function store(StoreCommitteePostCommentRequest $request, Committee $committee, CommitteePost $committeePost)
     {
-        dd(__METHOD__);
+
         //$this->authorize('create', Auth::user());
 //todo make committee post comment store method work. Does not like parameters in signature
 

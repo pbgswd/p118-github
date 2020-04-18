@@ -6,25 +6,20 @@ $committee = $data['committee'];
 @section('content')
     <div class="container">
             <h3>
-                <a href="{{ route('committee_show', $committee->slug) }}" title="Back to admin {{$committee->name}} view">
+                <a href="{{ route('admin_committee_show', $committee->slug) }}" title="Back to admin {{$committee->name}} view">
                     <i class="fas fa-arrow-circle-left"></i> Back
                 </a> &nbsp;
                <span class="badge badge-primary badge-pill">
                    {!! count($posts)  !!}
                </span>
                Posts.
-                <a href="{{route('committee_post', $committee->slug)}}">
+                <a href="{{route('admin_committee_post', $committee->slug)}}">
                     <i class="fas fa-pen-square"></i>
                     Add New Post in  {{$committee->name}}
                 </a>
             </h3>
     </div>
-    @if(count($posts) < 1)
-        No posts yet.   <a href="{{route('committee_post', $committee->slug)}}">
-            <i class="fas fa-pen-square"></i>
-            Add New Post
-            </a>
-    @else
+    @if(0 < $posts->count())
         <form name="delete" method="POST" action="{{route('committee_post_destroy', $committee->slug)}}">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}
@@ -54,13 +49,13 @@ $committee = $data['committee'];
                                     </td>
                                     <td>
                                         <h4>
-                                            <a title="{{ $p->title}}" href="{{ route('committee_post_edit',[$committee->slug, $p->slug]) }}">{{ $p->title}}</a>
+                                            <a title="{{ $p->title}}" href="{{ route('admin_committee_post_edit',[$committee->slug, $p->slug]) }}">{{ $p->title}}</a>
                                         </h4>
                                     </td>
                                     <td> {!! $p->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
                                     <td> {!! $p->sticky ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
                                     <td>
-                                        <a href="{{ route('committee_post_edit',[$committee->slug, $p->slug]) }}" title="Edit {{ $p->title }}">
+                                        <a href="{{ route('admin_committee_post_edit',[$committee->slug, $p->slug]) }}" title="Edit {{ $p->title }}">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>

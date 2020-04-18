@@ -1,6 +1,5 @@
 <?php
 $post = $data['post'];
-//dd($post);
 ?>
 @extends('layouts.jumbo',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . 'post' ])
 @section('content')
@@ -28,7 +27,7 @@ $post = $data['post'];
         <a href="{{ route('committee', $post['committee']->slug) }}">{{$post['committee']->name}}</a>
      / {{$data['action']}} Post
         @if($data['action'] == "Edit")
-            <a href="{{route('committee_post_show', [$post['committee']->slug, $post->slug])}}">{{$post->title}}</a>
+            <a href="{{route('public_committee_post_show', [$post['committee']->slug, $post->slug])}}">{{$post->title}}</a>
             <a href="{{ route('committee', $post['committee']->slug) }}"> <i class="far fa-arrow-alt-circle-left"></i> List of posts</a>
         @endif
     </h3>

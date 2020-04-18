@@ -65,7 +65,7 @@ class AdminCommitteePostController extends Controller
 
         Session::flash('success', "You have saved a new post in " . $committee->name);
 
-        return redirect()->route('admin.committee_post', [$committee->slug, $post->slug]);
+        return redirect()->route('admin_committee_post_edit', [$committee->slug, $post->slug]);
     }
 
 
@@ -93,18 +93,19 @@ class AdminCommitteePostController extends Controller
      * @param CommitteePost $any_committee_post
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateCommitteePostRequest $request, $committee_slug, CommitteePost $any_committee_post): RedirectResponse
+
+    public function update(UpdateCommitteePostRequest $request, Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
         // $this->authorize('update', Auth::user());
 
-        $any_committee_post->fill($request->post);
-        $any_committee_post->save();
+        $committeePost->fill($request->post);
+        $committeePost->save();
 
         Session::flash('success', "You have edited the post");
 
-        $any_committee_post->committee;
+        $committeePost->committee;
 
-        return redirect()->route('committee_post_edit', [$any_committee_post->committee->slug, $any_committee_post->slug]);
+        return redirect()->route('committee_post_edit', [$committeePost->committee->slug, $committeePost->slug]);
     }
 
     /**

@@ -30,7 +30,7 @@ $execs = $data['executives'];
             @foreach($c->posts as $p)
                 <div class="col-12 border border-dark rounded-lg m-1">
                     <h3>
-                        <a href="{{route('committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a>
+                        <a href="{{route('public_committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a>
                     </h3>
                     {{$p->updated_at}}
                 </div>

@@ -1,6 +1,5 @@
 <?php
 $committee = $data['committee'];
-
 ?>
 @extends('layouts.dashboard', ['title' => ' <i class="fas fa-users"></i> View Committee \'' . $committee->name .'\''])
 @section('content')
@@ -114,7 +113,7 @@ $committee = $data['committee'];
                 <a href="{{route('committee_posts_list', $committee->slug)}}">
                 <i class="far fa-folder-open"></i> {{$committee['post_count']}}
                     posts in {{ $committee->name }} </a> |
-                <a href="{{route('committee_post', $committee->slug)}}">Add New Post</a>
+                <a href="{{route('admin_committee_post', $committee->slug)}}">Add New Post</a>
             </h5>
         </div>
     <br />

@@ -5,7 +5,7 @@
        <span class="badge badge-primary badge-pill">
            {!! count($data['users']) !!}***
        </span>
-        Members. <a href="{{route('committee_show', $data['committee']['slug'])}}">Return to {{$data['committee']['name']}} page</a>
+        Members. <a href="{{route('admin_committee_show', $data['committee']['slug'])}}">Return to {{$data['committee']['name']}} page</a>
     </h3>
     <form method="post" name="committee-bulk-add" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}

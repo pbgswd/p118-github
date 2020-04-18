@@ -83,19 +83,6 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('public_committee_post_comment');
 
-    //route::post('committee_post/{any_committee_post}/committee_post_comment/create', 'CommitteePostCommentController@store');
-
-    //route::get('committee_post/{any_committee_post}/committee_post_comment/create', 'AdminCommitteePostCommentController@create')->name('committee_post_comment');
-
-    //route::get('committee_post_comment/{any_committee_post_comment}/edit', 'AdminCommitteePostCommentController@edit')->name('committee_post_comment_edit');
-    //route::post('committee_post_comment/{any_committee_post_comment}/edit', 'AdminCommitteePostCommentController@update');
-    //route::delete('committee_post_comment/delete/', 'AdminCommitteePostCommentController@destroy')->name('committee_post_comment_destroy');
-
-
-
-
-
-
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
 
@@ -178,7 +165,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('committees', 'AdminCommitteeController@index')->name('committees_list');
     Route::get('committee/', 'AdminCommitteeController@create')->name('committee_create');
     Route::post('committee/', 'AdminCommitteeController@store');
-    Route::get('committee/show/{any_committee}', 'AdminCommitteeController@show')->name('committee_show');
+    Route::get('committee/show/{any_committee}', 'AdminCommitteeController@show')->name('admin_committee_show');
     Route::get('committee/{any_committee}', 'AdminCommitteeController@edit')->name('committee_edit');
     Route::post('committee/{any_committee}', 'AdminCommitteeController@update');
     Route::delete('committee/delete', 'AdminCommitteeController@destroy')->name('committee_destroy');
@@ -187,17 +174,19 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('committee/{committee}/list-bulk-add', 'AdminCommitteeMemberController@store');
 
     Route::get('committee/{committee}/posts/list', 'AdminCommitteePostController@index')->name('committee_posts_list');
-    Route::get('committee/{committee}/post', 'AdminCommitteePostController@create')->name('committee_post');
-    Route::post('committee/{committee}/post', 'AdminCommitteePostController@store');
-    Route::get('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@edit')->name('committee_post_edit');
+    Route::get('committee/{committee}/create', 'AdminCommitteePostController@create')->name('admin_committee_post');
+    Route::post('committee/{committee}/create', 'AdminCommitteePostController@store');
+    Route::get('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@edit')->name('admin_committee_post_edit');
     Route::post('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@update');
     Route::delete('committee/{committee}/post/delete', 'AdminCommitteePostController@destroy')->name('committee_post_destroy');
 
 
-
-    route::get('committee_post/{any_committee_post}/committee_post_comment/create', 'AdminCommitteePostCommentController@create')->name('committee_post_comment');
+    route::get('committee_post/{any_committee_post}/committee_post_comment/create', 'AdminCommitteePostCommentController@create')->name('admin_committee_post_comment');
     route::post('committee_post/{any_committee_post}/committee_post_comment/create', 'AdminCommitteePostCommentController@store');
-    route::get('committee_post_comment/{any_committee_post_comment}/edit', 'AdminCommitteePostCommentController@edit')->name('committee_post_comment_edit');
+
+    route::get('committee_post_comment/{any_committee_post_comment}/edit/{slug}', 'AdminCommitteePostCommentController@edit')->name('admin_committee_post_comment_edit');
+
+
     route::post('committee_post_comment/{any_committee_post_comment}/edit', 'AdminCommitteePostCommentController@update');
     route::delete('committee_post_comment/delete/', 'AdminCommitteePostCommentController@destroy')->name('committee_post_comment_destroy');
 

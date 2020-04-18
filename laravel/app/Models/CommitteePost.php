@@ -114,6 +114,6 @@ class CommitteePost extends LiveableModel
      */
     public function admin_post_comments(): HasMany
     {
-        return $this->hasMany(CommitteePostComment::class, 'post_id', 'id')->withoutGlobalScopes();
+        return $this->hasMany(CommitteePostComment::class, 'post_id', 'id')->withoutGlobalScopes()->orderByDesc('updated_at');
     }
 }

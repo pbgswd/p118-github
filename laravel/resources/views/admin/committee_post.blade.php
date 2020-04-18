@@ -1,6 +1,7 @@
 <?php
 $post = $data['post'];
 $committee = $data['post']['committee'];
+
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' . ($data["action"] == 'Edit' ? $post->title : ' in ' . $committee->name) ])
 @section('content')
@@ -98,44 +99,57 @@ $committee = $data['post']['committee'];
             </div>
         @endif
         </div>
-        @if (null !== $post->post_comments)
-            <h2>
-                {{$post->admin_post_comments->count()}} Post {{Str::plural('Comment', $post->admin_post_comments->count())}}.
-                <a href="{{route('committee_post_comment', $post->slug)}}"><button type="button" class="btn btn-outline-success">Add New</button></a>
-            </h2>
-            @foreach ($post->admin_post_comments as $pc)
-                <div class="row">
-                    <div class="col-8 border border-dark rounded pb-lg-3 pt-lg-2 mb-lg-3">
-                        <div class="col-12">
-                            <div class="col-md-4">Comment By: {{$pc->comment_author->name}}</div>
-                            <div class="col-md-6">
-                                Created: {{ \Carbon\Carbon::parse($pc->created_at)->format(' F j, Y H:i:s') }} <br />
-                                Last updated: {{ \Carbon\Carbon::parse($pc->updated_at)->format(' F j, Y H:i:s') }}
-                            </div>
-                            <div class="col-md-2">Live status: {{$pc->live ? "Live" : 'Not Live'}}</div>
-                        </div>
-                        <div class="col-12">
-                            {!! $pc->content !!}
-                        </div>
-                        <div class="col-12 p-lg-4">
-                            <div class="col-6" style="float:left">
-                                <a href="{{ route('committee_post_comment_edit',$pc->id) }}" title="Edit Comment ">
-                                    <i class="fas fa-edit fa-2x"></i><button type="button" class="btn btn-outline-primary">Edit</button>
-                                </a>
-                            </div>
-                            <div class="col-4" style="float:right">
-                                <form name="delete" method="POST" action="{{route('committee_post_comment_destroy')}}">
-                                    {!! csrf_field() !!}
-                                    {!! method_field('DELETE') !!}
-                                    <i class="far fa-trash-alt fa-2x"></i>
-                                    <input type="hidden" name="id[]" value="{{$pc->id}}">
-                                    <input class="btn btn-outline-danger" type="submit" value="Delete">
-                                </form>
-                            </div>
-                        </div>
+
+
+    @if ($data['action'] == 'Edit')
+        <div class="row mt-lg-5 mb-lg-5">
+            <div class="col-12">
+                <h2>
+                    {{$post->admin_post_comments->count()}} Post
+                    {{Str::plural('Comment', $post->admin_post_comments->count())}}.
+                    <a href="{{route('admin_committee_post_comment', $post->slug)}}">
+                        <button type="button" class="btn btn-outline-success">Add New</button>
+                    </a>
+                </h2>
+            </div>
+        </div>
+
+
+        @foreach ($post->admin_post_comments as $pc)
+            <div class="row border border-dark rounded pb-lg-3 pt-lg-2 mb-lg-3">
+                <div class="col-md-3">
+                    By: {{$pc->comment_author->name}}
+                </div>
+                <div class="col-md-3">
+                    Created: {{ \Carbon\Carbon::parse($pc->created_at)->format(' F j, Y H:i:s') }}
+                </div>
+                <div class="col-md-3">
+                    Last updated: {{ \Carbon\Carbon::parse($pc->updated_at)->format(' F j, Y H:i:s') }}
+                </div>
+                <div class="col-md-3">
+                    Live status: {{$pc->live ? "Live" : 'Not Live'}}
+                </div>
+                <div class="col-12 p-lg-4">
+                        {!! $pc->content !!}
+                </div>
+                <div class="col-12 p-lg-4">
+                    <div class="col-6" style="float:left">
+                        <a href="{{ route('committee_post_comment_edit',$pc->id) }}" title="Edit Comment ">
+                            <i class="fas fa-edit fa-2x"></i>
+                            <button type="button" class="btn btn-outline-primary">Edit</button>
+                        </a>
+                    </div>
+                    <div class="col-4" style="float:right">
+                        <form name="delete" method="POST" action="{{route('committee_post_comment_destroy')}}">
+                            {!! csrf_field() !!}
+                            {!! method_field('DELETE') !!}
+                            <i class="far fa-trash-alt fa-2x"></i>
+                            <input type="hidden" name="id[]" value="{{$pc->id}}">
+                            <input class="btn btn-outline-danger" type="submit" value="Delete">
+                        </form>
                     </div>
                 </div>
-            @endforeach
-            <div class="h-50"></div>
-        @endif
+            </div>
+        @endforeach
+    @endif
 @endsection

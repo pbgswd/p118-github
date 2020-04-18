@@ -31,7 +31,7 @@ $committee = $data['committee'];
         <div class="row">
             <div class="col-md border border-dark rounded-lg mt-3 mr-3">
                 <h4>
-                    View <a title="{{ $committee->name }}" href="{{ route('committee_show', $committee->slug) }}">
+                    View <a title="{{ $committee->name }}" href="{{ route('admin_committee_show', $committee->slug) }}">
                         {{ $committee->name }}
                     </a>
                 </h4>
@@ -51,7 +51,7 @@ $committee = $data['committee'];
                     <a href="{{route('committee_posts_list', $committee->slug)}}">
                         <i class="far fa-folder-open"></i>
                         posts in {{ $committee->name }}</a> |
-                    <a href="{{route('committee_post', $committee->slug)}}">Add New Post</a>
+                    <a href="{{route('admin_committee_post', $committee->slug)}}">Add New Post</a>
                 </h5>
             </div>
         </div>
@@ -131,29 +131,24 @@ $committee = $data['committee'];
                 </div>
             </div>
         </div>
-
-        <div class="row mt-lg-3"> &nbsp;</div>
-
-        <div class="row">
+        <div class="row mt-lg-5 mb-lg-5">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
-        </div>
     </form>
-
-    <div class="col-sm"> &nbsp;</div>
-    @if ($data['action'] == 'Edit')
-        <div class="col-sm" style="float:right">
-            <form name="delete" method="POST" action="{{route('committee_destroy')}}">
-                {!! csrf_field() !!}
-                {!! method_field('DELETE') !!}
-                <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $committee->id }}">
-                <input class="btn btn-outline-danger" type="submit" value="Delete">
-            </form>
-         </div>
-    @endif
-    <div class="row mt-lg-5"> &nbsp;</div>
+            <div class="col-sm"> &nbsp;</div>
+            @if ($data['action'] == 'Edit')
+                <div class="col-sm" style="float:right">
+                    <form name="delete" method="POST" action="{{route('committee_destroy')}}">
+                        {!! csrf_field() !!}
+                        {!! method_field('DELETE') !!}
+                        <i class="far fa-trash-alt fa-2x"></i>
+                        <input type="hidden" name="id[]" value="{{ $committee->id }}">
+                        <input class="btn btn-outline-danger" type="submit" value="Delete">
+                    </form>
+                 </div>
+            @endif
+        </div>
 </div>
 @endsection
