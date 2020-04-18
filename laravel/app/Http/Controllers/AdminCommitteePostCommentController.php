@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
-class CommitteePostCommentController extends Controller
+class AdminCommitteePostCommentController extends Controller
 {
     /**
      * @param CommitteePost $committeePost
@@ -57,13 +57,14 @@ class CommitteePostCommentController extends Controller
 
     /**
      * @param StoreCommitteePostCommentRequest $request
-     * @param Committee $committee
      * @param CommitteePost $committeePost
      * @return RedirectResponse
      */
     public function store(StoreCommitteePostCommentRequest $request, Committee $committee, CommitteePost $committeePost)
     {
+        dd(__METHOD__);
         //$this->authorize('create', Auth::user());
+//todo make committee post comment store method work. Does not like parameters in signature
 
         $postComment = new CommitteePostComment($request->input('comment'));
 
@@ -76,16 +77,14 @@ class CommitteePostCommentController extends Controller
 
         Session::flash('success', "You have added your comment to " . $committeePost->title);
 
-        return redirect()->route('public_committee_post_show', [$committee->slug, $committeePost->slug]);
+        return redirect()->route('committee_post_comment_edit', $postComment->id);
     }
-
 
     /**
      * @param UpdateCommitteePostCommentRequest $request
      * @param CommitteePostComment $any_committee_post_comment
      * @return RedirectResponse
      */
-    /***
     public function update(UpdateCommitteePostCommentRequest $request, CommitteePostComment $any_committee_post_comment): RedirectResponse
     {
         // $this->authorize('update', Auth::user());
@@ -96,13 +95,11 @@ class CommitteePostCommentController extends Controller
 
         return redirect()->route('committee_post_comment_edit', $any_committee_post_comment->id);
     }
-***/
 
     /**
      * @param DestroyCommitteePostCommentRequest $request
      * @return RedirectResponse
      */
-    /***
     public function destroy(DestroyCommitteePostCommentRequest $request): RedirectResponse
     {
         $post_id = null;
@@ -122,5 +119,4 @@ class CommitteePostCommentController extends Controller
 
         return redirect()->route('committee_post_edit', [$committee_post->committee->slug, $committee_post->slug]);
     }
-     * ***/
 }

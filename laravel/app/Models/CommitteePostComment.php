@@ -57,6 +57,7 @@ class CommitteePostComment extends LiveableModel
     protected $fillable = [
         'content',
         'live',
+        'user_id',
     ];
 
     /**

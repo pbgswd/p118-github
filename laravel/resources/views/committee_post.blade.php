@@ -57,7 +57,7 @@ $c = $data['committeepost']->committee;
                 @endforeach
             </div>
             <a name="comment"></a>
-            <form class="form-horizontal" role="form" action="{{ route('committee_post_comment', [$c->slug, $post->slug]) }}" method="post">
+            <form class="form-horizontal" role="form" action="{{ route('public_committee_post_comment', [$c->slug, $post->slug]) }}" method="post">
                 {!! csrf_field() !!}
                 <div class="row mt-lg-3 p-2">
                     <div class="col-12 pb-lg-3">

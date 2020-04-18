@@ -52,7 +52,7 @@ class CommitteePostController extends Controller
      * @param User $user
      * @return Response
      */
-    public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
+    public function store(StoreCommitteePostRequest $request, Committee $committee)
     {
         //$this->authorize('create', Auth::user());
         $post = new CommitteePost($request->input('post'));
@@ -112,9 +112,10 @@ class CommitteePostController extends Controller
     public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComment $committeePostComments)
     {
         // $this->authorize('create', Auth::user());
-//todo allow comments filter on committee post
+
         $data =[];
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee' , 'post_comments']);
+        //todo some sort of ascending / descending sort order for the comments on posts.
         $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
         $data['action'] = 'Add';
 

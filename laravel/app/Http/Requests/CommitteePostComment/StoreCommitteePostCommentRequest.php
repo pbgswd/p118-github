@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\CommitteePostComment;
 
+use App\Traits\ModifiesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreCommitteePostCommentRequest extends FormRequest
 {
+    use ModifiesInputTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,5 +29,16 @@ class StoreCommitteePostCommentRequest extends FormRequest
         return [
             'comment.content' => 'required',
         ];
+    }
+
+    protected function modifyInput(): void
+    {
+        $comment = \array_merge(
+            $this->input('comment'),
+            [
+                'user_id' => Auth::id(),
+            ]
+        );
+        $this->merge(['comment' => $comment]);
     }
 }

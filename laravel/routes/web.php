@@ -71,7 +71,7 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::post('committee/{committee}/join', 'CommitteeController@join');
     Route::post('committee/{committee}/leave', 'CommitteeController@leave');
     Route::get('committee/{committee}/show-members', 'CommitteeController@show_members')->name('committee_list_members');
-    Route::get('committee/{committee}/post/{committeePost}', 'CommitteePostController@show')->name('committee_post_show');
+    Route::get('committee/{committee}/post/{committeePost}', 'CommitteePostController@show')->name('public_committee_post_show');
     Route::post('committee/{committee}/post/{committeePost}', 'CommitteePostController@store');
 
     Route::get('committee/{committee}/post', 'CommitteePostController@create')->name('committee_add_public_post');
@@ -81,7 +81,20 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     Route::delete('committee/{committee}/post/{committeePost}', 'CommitteePostController@destroy')->name('public_committee_post_destroy');
 
-    Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('committee_post_comment');
+    Route::post('committee/{committee}/post/{committeePost}/comment', 'CommitteePostCommentController@store')->name('public_committee_post_comment');
+
+    //route::post('committee_post/{any_committee_post}/committee_post_comment/create', 'CommitteePostCommentController@store');
+
+    //route::get('committee_post/{any_committee_post}/committee_post_comment/create', 'AdminCommitteePostCommentController@create')->name('committee_post_comment');
+
+    //route::get('committee_post_comment/{any_committee_post_comment}/edit', 'AdminCommitteePostCommentController@edit')->name('committee_post_comment_edit');
+    //route::post('committee_post_comment/{any_committee_post_comment}/edit', 'AdminCommitteePostCommentController@update');
+    //route::delete('committee_post_comment/delete/', 'AdminCommitteePostCommentController@destroy')->name('committee_post_comment_destroy');
+
+
+
+
+
 
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
@@ -180,11 +193,13 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@update');
     Route::delete('committee/{committee}/post/delete', 'AdminCommitteePostController@destroy')->name('committee_post_destroy');
 
-    route::get('committee_post/{any_committee_post}/committee_post_comment/create', 'CommitteePostCommentController@create')->name('committee_post_comment');
-    route::post('committee_post/{any_committee_post}/committee_post_comment/create', 'CommitteePostCommentController@store');
-    route::get('committee_post_comment/{any_committee_post_comment}/edit', 'CommitteePostCommentController@edit')->name('committee_post_comment_edit');
-    route::post('committee_post_comment/{any_committee_post_comment}/edit', 'CommitteePostCommentController@update');
-    route::delete('committee_post_comment/delete/', 'CommitteePostCommentController@destroy')->name('committee_post_comment_destroy');
+
+
+    route::get('committee_post/{any_committee_post}/committee_post_comment/create', 'AdminCommitteePostCommentController@create')->name('committee_post_comment');
+    route::post('committee_post/{any_committee_post}/committee_post_comment/create', 'AdminCommitteePostCommentController@store');
+    route::get('committee_post_comment/{any_committee_post_comment}/edit', 'AdminCommitteePostCommentController@edit')->name('committee_post_comment_edit');
+    route::post('committee_post_comment/{any_committee_post_comment}/edit', 'AdminCommitteePostCommentController@update');
+    route::delete('committee_post_comment/delete/', 'AdminCommitteePostCommentController@destroy')->name('committee_post_comment_destroy');
 
     Route::get('agreements', 'AdminAgreementController@index')->name('agreements_list');
     Route::get('agreement/', 'AdminAgreementController@create')->name('agreement_create');
