@@ -108,7 +108,7 @@ $committee = $data['committee'];
             @endforeach
         </div>
     </div>
-        <div class="row" style="margin-top:2em;">
+        <div class="row mt-lg-5 mb-lg-5">
             <h5>
                 <a href="{{route('committee_posts_list', $committee->slug)}}">
                 <i class="far fa-folder-open"></i> {{$committee['post_count']}}
@@ -116,7 +116,5 @@ $committee = $data['committee'];
                 <a href="{{route('admin_committee_post', $committee->slug)}}">Add New Post</a>
             </h5>
         </div>
-    <br />
-    <div class="row" style="margin-bottom:5em;"></div>
 </div>
 @endsection

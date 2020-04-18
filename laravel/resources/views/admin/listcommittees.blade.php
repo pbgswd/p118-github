@@ -46,7 +46,7 @@ $committees = $data['committees'];
                                     </td>
                                     <td>
                                         <h4>
-                                            <a title="{{ $c->name }}" href="{{ route('committee_show', $c->slug) }}">{{ $c->name }}</a>
+                                            <a title="{{ $c->name }}" href="{{ route('admin_committee_show', $c->slug) }}">{{ $c->name }}</a>
                                         </h4>
                                     </td>
                                     <td> {{ $c->access_level }} </td>

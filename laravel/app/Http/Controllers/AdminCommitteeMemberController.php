@@ -56,6 +56,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function store(Request $request, Committee $committee)
     {
+        //todo form request work for committee member controller
         $this->authorize('create', Auth::user());
         foreach ($request->members as $member)
         {

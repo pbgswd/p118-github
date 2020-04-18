@@ -107,7 +107,6 @@ $committee = $data['committee'];
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="col-lg-2"><h4>Status</h4></div>
                 <div class="col-sm">
