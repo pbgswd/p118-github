@@ -107,8 +107,6 @@ class AdminEmploymentController extends Controller
      */
     public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
     {
-
-        //todo bug with update
         $this->authorize('update', Auth::user());
 
         $any_employment->fill($request->employment);

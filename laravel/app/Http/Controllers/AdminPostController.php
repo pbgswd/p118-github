@@ -143,7 +143,6 @@ class AdminPostController extends Controller
         $any_post->fill($request->post);
         $any_post->save();
 
-        //todo do I ever want to detach files from a post instead of delete ?
         $result = $this->attachmentService->updateAttachment($request, $any_post);
 
         if (null !== ($request->file('attachments'))) {

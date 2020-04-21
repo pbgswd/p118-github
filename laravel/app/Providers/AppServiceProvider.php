@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\View;
  * @package App\Providers
  * @property AppServiceProvider $register
  * @property AppServiceProvider $boot
+ *
  */
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -42,7 +42,8 @@ class AppServiceProvider extends ServiceProvider
          */
 
         if($this->app->environment('production')) {
-            UrlGenerator::forceScheme('https');
+            $urlg = new UrlGenerator();
+            $urlg->forceScheme('https');
         }
 
     }

@@ -64,7 +64,6 @@ class AdminCommitteePostCommentController extends Controller
     {
 
         //$this->authorize('create', Auth::user());
-//todo make committee post comment store method work. Does not like parameters in signature
 
         $postComment = new CommitteePostComment($request->input('comment'));
 

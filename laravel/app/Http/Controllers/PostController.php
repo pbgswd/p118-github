@@ -8,6 +8,7 @@ use App\Services\AttachmentService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
@@ -30,8 +31,7 @@ class PostController extends Controller
     {
         if (Auth::check()) {
             $posts = Post::sortable()->with('tagged')->paginate(10);
-        }
-        else {
+        } else {
             $posts = Post::sortable()->where('access_level', '=', AccessLevelConstants::PUBLIC)->with('tagged')->paginate(10);
         }
 
@@ -46,12 +46,15 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        // public
-        //todo policy control post public view
+        if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
+            Session::flash('warning', "Login to view this post.");
+            return redirect('login');
+        }
+
         $post->load('user', 'topics', 'attachments');
         $data = ['post' => $post];
 
         return view('post', ['data' => $data]);
-    }
 
+    }
 }

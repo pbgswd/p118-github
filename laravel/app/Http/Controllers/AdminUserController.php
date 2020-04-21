@@ -90,6 +90,7 @@ class AdminUserController extends Controller
         $this->authorize('create', Auth::user());
 
 //todo is password here just encrypting the word 'secret'?
+
 //todo create default password for new user based on name and other data
 //todo do not allow user to keep first password on signup.
 

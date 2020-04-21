@@ -34,10 +34,11 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        if (false === Auth::check() && $topic->access_level != AccessLevelConstants::PUBLIC){
-            Session::flash('warning', "Login to view " . $topic->name);
-            return redirect()->route('topics');
+        if (false === Auth::check() && $topic->access_level != AccessLevelConstants::PUBLIC) {
+            Session::flash('warning', "Login to view this topic.");
+            return redirect('login');
         }
+
         $topic->attachments = $topic->attachments->sortByDesc('created_at');
         $topic->pages = $topic->pages->sortByDesc('created_at');
         $topic->posts = $topic->posts->sortByDesc('created_at');

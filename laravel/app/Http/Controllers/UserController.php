@@ -101,6 +101,13 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
+        //todo load current records.
+        //todo compare to submission
+        //todo highlight changes.
+        //todo send in email
+
+
+
         $user->fill($userRequest['user']);
         $user->save();
 
@@ -154,6 +161,12 @@ class UserController extends Controller
                 }
         */
 //TODO notify office by email when user has updated contact information.
+
+
+
+
+
+
         Session::flash('success', "You have edited your profile");
 
         return redirect()->route('member_edit', [$user->id]);

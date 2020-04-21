@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\AccessLevelConstants;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class PageController extends Controller
@@ -30,6 +31,11 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
+        if (false === Auth::check() && $page->access_level != AccessLevelConstants::PUBLIC) {
+            Session::flash('warning', "Login to view this page.");
+            return redirect('login');
+        }
+
         $page->load('topics', 'user', 'attachments');
 
         return view('page', ['data' =>  ['page' => $page]]);

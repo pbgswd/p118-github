@@ -77,7 +77,7 @@ class AdminCommitteePostController extends Controller
     public function edit(Committee $committee, CommitteePost $any_committee_post)
     {
         // $this->authorize('update', Auth::user());
-//todo doesnt load a post comment if it is not live
+
         $any_committee_post->load('creator', 'committee' , 'admin_post_comments');
 
         $data = [
