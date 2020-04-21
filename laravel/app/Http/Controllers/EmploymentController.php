@@ -24,9 +24,14 @@ class EmploymentController extends Controller
     public function index()
     {
         $data = [];
-        $data['employment'] = Employment::sortable()->where('live', '=', 1)->with('attachments')->orderBy('deadline', 'desc')->paginate(20);
-        $data['count'] = count(Employment::all());
+        $data['employment'] = Employment::sortable()
+            ->where('live', '=', 1)
+            ->with('attachments')
+            ->orderBy('deadline', 'desc')
+            ->paginate(20);
 
+        $data['count'] = Employment::count();
+//todo use deadline to calculate status check or x
         return view('employment_list', ['data' => $data]);
     }
 

@@ -93,13 +93,13 @@ class CommitteeController extends Controller
         /** @var  User $user */
         $user = Auth::user();
 
-        $executives = [];
-        foreach($committee->active_committee_members as $acm)
-        {
-            if(in_array($acm->pivot->role, Options::committee_executive_roles() ) ){
-                $executives[] = $acm;
-            }
-        }
+        $rank = \array_flip(\array_values(Options::committee_executive_roles()));
+
+        $executives = $committee->active_committee_members->filter( static function (User $member) {
+            return \in_array($member->pivot->role, Options::committee_executive_roles());
+        })->sort(function ($a, $b) use ($rank) {
+            return $rank[$a->pivot->role] > $rank[$b->pivot->role];
+        });
 
         $data = ['committee' => $committee,
             'executives' => $executives,
