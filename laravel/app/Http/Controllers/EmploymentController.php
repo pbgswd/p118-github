@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employment;
 use App\Services\AttachmentService;
+use Carbon\Carbon;
 
 
 class EmploymentController extends Controller
@@ -24,12 +25,27 @@ class EmploymentController extends Controller
     public function index()
     {
         $data = [];
-        $data['employment'] = Employment::sortable()
+        $jobs = Employment::sortable()
             ->where('live', '=', 1)
             ->with('attachments')
             ->orderBy('deadline', 'desc')
             ->paginate(20);
 
+        //todo compare dates
+
+        $now = Carbon::now();
+
+        foreach($jobs as $job)
+        {
+           // $job->dlval = $now->diffInHours($job->deadline);
+
+            if($job->deadline->isPast()) {
+                $job->status = 1;
+            }
+        }
+
+
+        $data['employment'] = $jobs;
         $data['count'] = Employment::count();
 //todo use deadline to calculate status check or x
         return view('employment_list', ['data' => $data]);

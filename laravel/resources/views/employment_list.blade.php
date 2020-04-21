@@ -54,6 +54,7 @@ $employment = $data['employment'];
                     </h5>
                 </td>
                 <td>
+                    {{$e->dlval}}
                     @if($e->status == 1)
                         <i class="fas fa-check"></i>
                     @else

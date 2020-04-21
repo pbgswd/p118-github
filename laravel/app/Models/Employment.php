@@ -58,7 +58,7 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
     protected $dates = [
         'deadline',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [

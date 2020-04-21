@@ -20,9 +20,11 @@ class HelloController extends Controller
         $today = Carbon::today();
         $data['foundingDate'] = Carbon::createMidnightDate(1904, 9, 13);
         $data['years'] = $data['foundingDate']->diffInYears($today);
+
         if ($today->isBirthday($data['foundingDate'])) {
             $data['birthday'] = "Happy Birthday IATSE Local 118! You are " . $data['years'] . " years young today!";
         }
+
 //todo datetime - add time zone management to Laravel
 
         Session::flash('warning', "FYI: This website is in development. Anything you do or add could be wiped out.");
