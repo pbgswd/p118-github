@@ -40,14 +40,4 @@ class Membership extends Model
         'status',
         'admin_notes',
     ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'membership_date' => 'date',
-        'membership_expires' => 'date',
-    ];
 }

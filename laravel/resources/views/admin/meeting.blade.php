@@ -38,7 +38,16 @@ $meeting = $data['meeting'];
             <div class="form-group">
                 <div class="col-lg-2"><h4><i class="fas fa-calendar-alt"></i> Date</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="meeting[date]" value="{{ old('meeting.date', $meeting->date)}}" size="80" required/>
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="YYYY-MM-DD"
+                        name="meeting[date]"
+                        value="{{ old('meeting.date', \optional($meeting->date)->toDateString())}}"
+                        size="80"
+                        data-provide="datepicker"
+                        data-date-format="yyyy-mm-dd"
+                        required />
                 </div>
             </div>
         </div>
@@ -135,6 +144,7 @@ $meeting = $data['meeting'];
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
+        </div>
     </form>
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')

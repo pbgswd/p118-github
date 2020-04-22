@@ -49,13 +49,31 @@ $agreement = $data['agreement'];
             <div class="col-md-6">
                 <div class="form-group">
                     <h4>Start Date of Agreement</h4>
-                        <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="agreement[from]" value="{{ old('agreement.from', $agreement->from)}}" size="10" required/>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="YYYY-MM-DD"
+                            name="agreement[from]"
+                            value="{{ old('agreement.from', \optional($agreement->from)->toDateString())}}"
+                            size="10"
+                            data-provide="datepicker"
+                            data-date-format="yyyy-mm-dd"
+                            required />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <h4>End Date of Agreement</h4>
-                        <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="agreement[until]" value="{{ old('agreement.until', $agreement->until)}}" size="10" required/>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="YYYY-MM-DD"
+                            name="agreement[until]"
+                            value="{{ old('agreement.until', \optional($agreement->until)->toDateString())}}"
+                            size="10"
+                            data-provide="datepicker"
+                            data-date-format="yyyy-mm-dd"
+                            required />
                 </div>
             </div>
         </div>
@@ -78,7 +96,7 @@ $agreement = $data['agreement'];
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        Add File(s) To Agreement
+                        Add files to agreement
                     </label>
                     <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
@@ -122,10 +140,10 @@ $agreement = $data['agreement'];
                                         <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$agreement_attachment->id}}][description]" value="{{ old('attachments.description', $agreement_attachment->description)}}" size="40"/>
                                     </td>
                                     <td>
-                                        {{$agreement_attachment->created_at}}
+                                        {{ \optional($agreement_attachment->created_at)->toDateString() }}
                                     </td>
                                     <td>
-                                        {{$agreement_attachment->updated_at}}
+                                        {{ \optional($agreement_attachment->updated_at)->toDateString() }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -145,6 +163,7 @@ $agreement = $data['agreement'];
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
+        </div>
     </form>
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')

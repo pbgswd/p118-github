@@ -47,7 +47,16 @@ $bylaw = $data['bylaw'];
             <div class="col-md-6">
                 <div class="form-group">
                     <h4>Start Date of by-law</h4>
-                        <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="bylaw[date]" value="{{ old('bylaw.date', $bylaw->date)}}" size="10" required/>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="YYYY-MM-DD"
+                            name="bylaw[date]"
+                            value="{{ old('bylaw.date', \optional($bylaw->date)->toDateString())}}"
+                            size="10"
+                            data-provide="datepicker"
+                            data-date-format="yyyy-mm-dd"
+                            required />
                 </div>
             </div>
         </div>
@@ -135,6 +144,7 @@ $bylaw = $data['bylaw'];
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
+        </div>
     </form>
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
