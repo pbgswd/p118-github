@@ -23,7 +23,9 @@ class Membership extends Model
     /** @var array  */
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
+        'membership_date',
+        'membership_expires',
     ];
 
     /**
@@ -45,7 +47,7 @@ class Membership extends Model
      * @var array
      */
     protected $casts = [
-        'membership_date' => 'datetime',
-        'membership_expires' => 'datetime',
+        'membership_date' => 'date',
+        'membership_expires' => 'date',
     ];
 }

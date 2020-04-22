@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Page\DestroyPageRequest;
 use App\Http\Requests\Page\StorePageRequest;
 use App\Http\Requests\Page\UpdatePageRequest;
@@ -10,11 +9,14 @@ use App\Models\Options;
 use App\Models\Page;
 use App\Models\Topic;
 use App\Services\AttachmentService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 
 class AdminPageController extends Controller
@@ -31,8 +33,9 @@ class AdminPageController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return Factory|View
+     * @throws AuthorizationException
      */
     public function index(Request $request)
     {
@@ -52,8 +55,8 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+     * @throws AuthorizationException
      */
     public function create()
     {
@@ -79,8 +82,9 @@ class AdminPageController extends Controller
 
     /**
      * @param StorePageRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function store(StorePageRequest $request)
     {
@@ -117,8 +121,9 @@ class AdminPageController extends Controller
 
     /**
      * @param Page $page
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return Factory|View
+     * @throws AuthorizationException
      */
     public function edit(Page $page)
     {
@@ -140,8 +145,9 @@ class AdminPageController extends Controller
     /**
      * @param UpdatePageRequest $request
      * @param Page $any_page
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
     {
@@ -193,8 +199,9 @@ class AdminPageController extends Controller
 
     /**
      * @param DestroyPageRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(DestroyPageRequest $request)
     {

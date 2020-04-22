@@ -191,7 +191,11 @@ $user_roles = $data['user_roles'];
                                 <input name="user_role" type="radio" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $user_roles)) }} />
                             </div>
                         </div>
-                        <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{$role->name}} ( @foreach ($role->permissions as $p){{ $p->name }},  @endforeach)" size="40" readonly />
+                        <input
+                            type="text"
+                            class="form-control"
+                            aria-label="Text input with checkbox"
+                            value="{{$role->name}} ( @foreach ($role->permissions as $p){{ $p->name }},  @endforeach)" size="40" readonly />
                     </div>
                 @endforeach
             </div>
@@ -199,7 +203,7 @@ $user_roles = $data['user_roles'];
 
         <fieldset>
             <div class="row">
-                <span class="border border-primary rounded-lg border-3 mt-lg-2 p-2">
+                <div class="border border-primary rounded-lg border-3 mt-lg-2 p-2">
                     <div class="col-lg-12">
                         <h3>Membership</h3>
                     </div>
@@ -216,21 +220,38 @@ $user_roles = $data['user_roles'];
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Member Status</span>
                         </div>
-                            <input type="text" class="form-control"  placeholder="Status" name="user_membership[status]" value="{{ old('user_membership.status', $user->membership->status ?? '')}}" size="60" required/>
+                        <input type="text" class="form-control"  placeholder="Status" name="user_membership[status]" value="{{ old('user_membership.status', $user->membership->status ?? '')}}" size="60" required/>
                     </div>
 
                     <div class="col-12 input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Member Since</span>
                         </div>
-                            <input type="text" class="form-control"  placeholder="yyyy-mm-dd" name="user_membership[membership_date]" value="{{ old('user_membership.membership_date', $user->membership->membership_date ?? '')}}" size="60" required/>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="yyyy-mm-dd"
+                            name="user_membership[membership_date]"
+                            value="{{ old('user_membership.membership_date', \optional($user->membership->membership_date)->toDateString()) }}"
+                            size="60"
+                            required
+                            data-provide="datepicker"
+                            data-date-format="yyyy-mm-dd"/>
                     </div>
-
-                     <div class="col-12 input-group mb-3">
+                    <div class="col-12 input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Member Dues Status</span>
                         </div>
-                            <input type="text" class="form-control"  placeholder="dues status, paid until date" name="user_membership[membership_expires]" value="{{ old('user_membership.membership_expires', $user->membership->membership_expires ?? '')}}" size="60" required/>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="dues status, paid until date"
+                            name="user_membership[membership_expires]"
+                            value="{{ old('user_membership.membership_expires', \optional($user->membership->membership_expires)->toDateString())}}"
+                            size="60"
+                            required
+                            data-provide="datepicker"
+                            data-date-format="yyyy-mm-dd" />
                     </div>
 
                     <div class="col-lg-12" style="margin-top: 1em;">
@@ -239,7 +260,7 @@ $user_roles = $data['user_roles'];
                     <div class="col-lg-12">
                         <textarea name="user_membership[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control" disabled>{{old('user_membership.admin_notes', $user->membership->admin_notes ?? '')}}</textarea>
                     </div>
-                 </span>
+                 </div>
             </div>
         </fieldset>
         <div class="row mt-lg-4"> &nbsp;</div>
