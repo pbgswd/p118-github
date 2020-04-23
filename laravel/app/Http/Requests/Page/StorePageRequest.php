@@ -46,13 +46,13 @@ class StorePageRequest extends FormRequest
 
     protected function modifyInput(): void
     {
-        $venue = \array_merge(
-            $this->input('venue'),
+        $page = \array_merge(
+            $this->input('page'),
             [
                 'user_id' => Auth::id()
             ]
         );
 
-        $this->merge(['venue' => $venue]);
+        $this->merge(['page' => $page]);
     }
 }
