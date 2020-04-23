@@ -60,7 +60,7 @@ $employment = $data['employment'];
                                 @endif
                             </td>
                             <td> {!! $e->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
-                            <td> {!! $e->status ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                            <td> {!! $e->jobstatus ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
                             <td>
                                 <a href="{{ route('admin_employment_edit', $e->id) }}" title="Edit {{ $e->title }} ">
                                     <i class="fas fa-edit"></i>

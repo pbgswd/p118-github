@@ -41,7 +41,6 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
         'title',
         'description',
         'url',
-        'status',
         'live',
         'deadline',
         'user_id',

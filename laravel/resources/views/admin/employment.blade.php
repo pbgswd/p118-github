@@ -31,7 +31,9 @@ $employment = $data['employment'];
         <div class="row mt-lg-3"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2"><h4>Title</h4></div>
+                <div class="col-lg-2">
+                    <h4>Title</h4>
+                </div>
                 <div class="col-lg-10">
                     <input type="text" class="form-control"  placeholder="Title" name="employment[title]" value="{{ old('employment.title', $employment->title)}}" size="80" required/>
                 </div>
@@ -39,12 +41,25 @@ $employment = $data['employment'];
         </div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-8"><h4><i class="fas fa-calendar-alt"></i> Date of deadline </h4></div>
+                <div class="col-lg-8">
+                    <h4>
+                        <i class="fas fa-calendar-alt"></i>
+                        Date of deadline
+                    </h4>
+                </div>
                 <div class="col-lg-10">
                     <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="employment[deadline]" value="{{ old('employment.date', $employment->deadline)}}" size="80" required/>
                 </div>
             </div>
+            @if ($data['action'] == 'Edit')
+                <div class="col-12 mt-2 mb-2">
+                    <h4>
+                        Status: {!! $employment->jobstatus ? "<i class='fas fa-check'></i> Open" : "<i class='far fa-times-circle'></i> Closed" !!}
+                    </h4>
+                </div>
+            @endif
         </div>
+
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -64,25 +79,15 @@ $employment = $data['employment'];
             </div>
         </div>
         <div class="row mt-lg-2">
-            <div class="col-md-4">
-                <div class="col-2"><h4>Live on website</h4></div>
-                <div class="col-sm">
-                    <label>
-                        <input name="employment[live]" type="hidden" value="0" />
-                        <input name="employment[live]" type="checkbox" value="1" {{ checked( old('employment.live', $employment->live)) }} /> Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
-                </div>
+            <div class="col-2">
+                <h4>Live on website</h4>
             </div>
-            <div class="col-md-4">
-                <div class="col-2"><h4>Status (open/closed)</h4></div>
-                <div class="col-sm">
-                    <label>
-                        <input name="employment[status]" type="hidden" value="0" />
-                        <input name="employment[status]" type="checkbox" value="1" {{ checked( old('employment.status', $employment->status)) }} /> Check now to Change status manually
-                    </label>
-                    <p>ie.: Checked means status is open.</p>
-                </div>
+            <div class="col-sm">
+                <label>
+                    <input name="employment[live]" type="hidden" value="0" />
+                    <input name="employment[live]" type="checkbox" value="1" {{ checked( old('employment.live', $employment->live)) }} /> Check now to make Live
+                </label>
+                <p>ie.: Draft or Published.</p>
             </div>
         </div>
         <div class="row mt-lg-2">

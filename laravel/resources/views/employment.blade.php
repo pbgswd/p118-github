@@ -4,7 +4,7 @@ $employment = $data['employment'];
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
+    <div class="container border border-dark rounded-lg mb-lg-5" style="background: rgba(220,220,220,0.6);">
         <div class="col-12">
             <h4><a href="{{url()->previous()}}"><i class="far fa-arrow-alt-circle-left"></i>  Employment postings</a></h4>
         </div>
@@ -13,13 +13,13 @@ $employment = $data['employment'];
                 <h1 class="display-8">{{$employment->title}}</h1>
             </div>
         </div>
-        <div class="row" style="margin-bottom: 2em;">
+        <div class="row mb-lg-2">
             <div class="col-md-4">
                 <h4>Deadline: {{$employment->deadline->format('F j Y')}}</h4>
             </div>
             <div class="col-md-4">
                 <h4>Status:
-                    @if($employment->status == 1)
+                    @if($employment->jobstatus == 1)
                         <i class="fas fa-check"></i> Open
                     @else
                         <i class="far fa-times-circle"></i> Closed
@@ -27,8 +27,8 @@ $employment = $data['employment'];
                 </h4>
             </div>
         </div>
-        @if($employment->url !='')
-            <div class="row" style="margin-bottom: 2em;">
+        @if($employment->url != '')
+            <div class="row mb-lg-2">
                 <div class="col-12">
                     <h4>
                         <a href="{{$employment->url}}" title="External link to {{$employment->title}}" target="_blank"><i class="fas fa-external-link-alt fa-2x"></i>{{ $employment->url }}</a>
@@ -42,7 +42,7 @@ $employment = $data['employment'];
             </div>
         </div>
 
-        <div class="row"  style="margin-top: 2em;">
+        <div class="row mt-lg-2">
             <div class="col-12">
                 @if(count($employment->attachments) > 0)
                     <ul>
@@ -62,7 +62,6 @@ $employment = $data['employment'];
             </div>
         </div>
     </div>
-    <div class="row" style="margin-top:6em;"></div>
 </div>
 @endsection
 

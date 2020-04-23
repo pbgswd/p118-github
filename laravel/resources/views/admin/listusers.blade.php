@@ -2,12 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h1 class="display-3"></h1>
         <h3>
            <span class="badge badge-primary badge-pill">
                {!! $data['users']->total()  !!}
            </span>
-            Members. | <a href="{{ route('user_create') }}">Create new member <i class="far fa-arrow-alt-circle-right"></i> </a>
+            Members. | <a href="{{ route('invite_new_user') }}">Inite new member <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 

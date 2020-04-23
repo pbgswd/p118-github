@@ -35,8 +35,8 @@ $employment = $data['employment'];
         </div>
     </div>
 
-<div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.6); padding:1em; margin-left:auto; margin-right:auto;">
-    <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
+<div class="table-responsive-md border border-dark rounded-lg p-1 ml-auto mr-auto" style="background: rgba(220,220,220,0.6);">
+    <table class="table table-sm ml-auto mr-auto">
         <thead>
         <tr>
             <th> @sortablelink('title', 'Title') </th>
@@ -54,8 +54,7 @@ $employment = $data['employment'];
                     </h5>
                 </td>
                 <td>
-                    {{$e->dlval}}
-                    @if($e->status == 1)
+                    @if($e->jobstatus == 1)
                         <i class="fas fa-check"></i>
                     @else
                         <i class="far fa-times-circle"></i>

@@ -35,7 +35,6 @@ class StoreEmploymentRequest extends FormRequest
             'employment.title' => 'required|max:255',
             'employment.description' => 'string|nullable',
             'employment.url' => 'url|nullable',
-            'employment.status' => 'boolean',
             'employment.live' => 'boolean',
             'employment.deadline' => 'date',
         ];

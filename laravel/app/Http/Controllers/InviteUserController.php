@@ -69,7 +69,9 @@ class InviteUserController extends Controller
 
         Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]], function ($m) use ($invitation) {
             $m->from('noreply@iatse118.com', 'IATSE 118 Website Signup');
-            $m->to($invitation['email'], $invitation['name'])->subject('IATSE Local 118 Website Signup Invitation');
+            $m->to($invitation['email'], $invitation['name'])
+                ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
+                ->subject('IATSE Local 118 Website Signup Invitation');
         });
 
        // return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
@@ -90,6 +92,8 @@ class InviteUserController extends Controller
             Session::flash('error', "The invitation is not valid");
             return redirect()->route('hello');
         }
+
+        //todo 48 hour signup limitation of 48 hours before need to reapply
 /***
         $now = Carbon::now();
         $allowedInvitationTime = 60 * 48; // 2 days

@@ -32,7 +32,18 @@ class AdminEmploymentController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $data = [];
-        $data['employment'] = Employment::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('deadline', 'desc')->paginate(20);
+        $jobs = Employment::withoutGlobalScopes()
+            ->sortable()
+            ->with('attachments')
+            ->orderBy('deadline', 'desc')
+            ->paginate(20);
+
+        foreach($jobs as $job)
+        {
+            $job['jobstatus'] = $job->deadline->isPast() ? 0 : 1;
+        }
+
+        $data['employment'] = $jobs;
         $data['count'] = Employment::withoutGlobalScopes()->count();
 
         return view('admin.employment_list', ['data' => $data]);
@@ -87,6 +98,7 @@ class AdminEmploymentController extends Controller
     {
         $this->authorize('update', Auth::user());
         $employment->load('user', 'attachments');
+        $employment['jobstatus'] = $employment->deadline->isPast() ? 0 : 1;
 
         return view(
             'admin.employment',
@@ -115,10 +127,10 @@ class AdminEmploymentController extends Controller
 
         $result = $this->attachmentService->updateAttachment($request, $any_employment);
 
-        if (null !== ($request->file('attachments'))){
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_employment);
 
-            if($result){
+            if($result) {
                 Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
             }
             else

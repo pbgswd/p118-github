@@ -24,6 +24,7 @@ class EmploymentController extends Controller
      */
     public function index()
     {
+        //todo migration to drop status column
         $data = [];
         $jobs = Employment::sortable()
             ->where('live', '=', 1)
@@ -31,26 +32,16 @@ class EmploymentController extends Controller
             ->orderBy('deadline', 'desc')
             ->paginate(20);
 
-        //todo compare dates
-
-        $now = Carbon::now();
-
         foreach($jobs as $job)
         {
-           // $job->dlval = $now->diffInHours($job->deadline);
-
-            if($job->deadline->isPast()) {
-                $job->status = 1;
-            }
+            $job['jobstatus'] = $job->deadline->isPast() ? 0 : 1;
         }
-
 
         $data['employment'] = $jobs;
         $data['count'] = Employment::count();
-//todo use deadline to calculate status check or x
+
         return view('employment_list', ['data' => $data]);
     }
-
 
 
     /**
@@ -62,6 +53,8 @@ class EmploymentController extends Controller
     public function show(Employment $employment)
     {
         $employment->load('user', 'attachments');
+
+        $employment['jobstatus'] = $employment->deadline->isPast() ? 0 : 1;
 
         return view('employment', ['data' => ['employment' => $employment]]);
     }
