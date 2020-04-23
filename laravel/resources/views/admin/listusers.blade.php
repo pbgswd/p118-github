@@ -1,5 +1,4 @@
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Members'])
-
 @section('content')
 <div class="container">
         <h3>
@@ -9,11 +8,9 @@
             Members. | <a href="{{ route('invite_new_user') }}">Inite new member <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
-
 <form name="delete" method="POST" action="{{route('user_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
-
     <div class="form-group">
         <div class="table-responsive">
             <table class="table table-striped table-sm">
@@ -46,9 +43,8 @@
                         <td> {{ $i->email }} </td>
                         <td>
                             @foreach ($i->roles as $role)
-                            {{ $role['name'] }}
+                                {{ $role['name'] }}
                             @endforeach
-
                         </td>
                         <td>
                             <a href="{{ route('user_edit', $i->id) }}" title="Edit {{ $i->name }} ">
@@ -66,9 +62,8 @@
             </table>
         </div>
     </div>
-
     @if($data['users']->total() > 0)
-    <div class="row">
+    <div class="row mb-lg-5">
         <div class="col">
             <i class="far fa-trash-alt fa-2x"></i>
             <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
@@ -83,7 +78,5 @@
         <div class="col"></div>
     </div>
     @endif
-    <div class="row" style="margin-top:6em;"></div>
 </form>
-
 @endsection

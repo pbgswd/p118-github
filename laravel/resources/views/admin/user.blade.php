@@ -1,13 +1,11 @@
 <?php
 $user = $data['user'];
-
 $currentUserPermissions = $data['currentUserPermissions'];
 $roles = $data['roles'];
 $user_roles = $data['user_roles'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i> ' . $data["action"] . ' Member ' . ($data["action"] == "Edit" ? $user->name : '') ])
 @section('content')
-
     <script>
         tinymce.init({
             selector: 'textarea#admin_notes, textarea#about',
@@ -26,13 +24,13 @@ $user_roles = $data['user_roles'];
             ]
         });
     </script>
-<div class="container">
+<div class="container mb-lg-5">
     <h3>
         <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>
     </h3>
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row border border-primary rounded-lg border-3" style="margin-top:30px; padding:1em;">
+        <div class="row border border-primary rounded-lg border-3 mt-lg-4 p-lg-1">
             <div class="col-lg-12">
                 <h3>Primary Contact Information</h3>
             </div>
@@ -45,19 +43,19 @@ $user_roles = $data['user_roles'];
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
-                <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email ?? '')}}" size="80" required/>
+                <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email ?? null)}}" size="80" required/>
                 </div>
             </div>
             <div class="col-12 input-group mb-6">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[share_email]" type="hidden" value="0" />
-                        <input name="user_info[share_email]" type="checkbox" value="1" {{ checked(old('user_info.share_email', $user->user_info->share_email ?? '')) }} />
+                        <input name="user_info[share_email]" type="checkbox" value="1" {{ checked(old('user_info.share_email', $user->user_info->share_email ?? null)) }} />
                     </div>
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox" value="Share email in profile?" size="40" readonly>
             </div>
-            <div class="col-12 input-group mb-3" style="margin-top: 1em;">
+            <div class="col-12 input-group mb-3 mt-1">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
                    <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]" value="{{ old('user_phone.phone_number', $user->phone_number->phone_number ?? '')}}" size="80" required/>
@@ -73,7 +71,7 @@ $user_roles = $data['user_roles'];
                 <input type="text" class="form-control" aria-label="Text input with checkbox" value="Share phone number in profile?" size="40" readonly>
             </div>
         </div>
-        <div class="row border border-primary rounded-lg border-3" style="margin-top:1em; padding:1.5em;">
+        <div class="row border border-primary rounded-lg border-3 mt-lg-1 p-lg-1">
             <div class="row">
                 <div class="col-4">
                     <h4>Member Info</h4>
@@ -87,17 +85,15 @@ $user_roles = $data['user_roles'];
                     </div>
                     <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to share profile with other members." size="80" readonly>
                 </div>
-
             </div>
-            <div class="row" style="margin-top: 1em;">
+            <div class="row mt-lg-1">
                 @if( isset($user->user_info->image) )
-                    <div class="col-4" style="margin: 1em;">
+                    <div class="col-4 mt-lg-1">
                         <h4><i class="far fa-images"></i> Profile Image</h4>
                         <h5>Currently: {{ $user->user_info->file_name }}</h5>
                         <img src="{{ asset('storage/users/'. $user->user_info->image) }}" width="150px" />
                         <input type="hidden"  name="user_info[image]" value="{{$user->user_info->image}}" />
                     </div>
-
                     <div class="input-group mb-6 col-12">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -106,8 +102,7 @@ $user_roles = $data['user_roles'];
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to delete image." size="40" readonly>
                     </div>
-
-                    <div class="input-group mb-6 col-12" style="margin-top: 1em;">
+                    <div class="input-group mb-6 col-12 mt-lg-1">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input name="user_info[show_picture]" type="hidden" value="0" />
@@ -133,16 +128,14 @@ $user_roles = $data['user_roles'];
                     </div>
                 @endif
             </div>
-
-            <div class="row" style="margin-top: 2em;">
+            <div class="row mt-lg-2">
                 <div class="col-lg-10"><h4>Member personal profile info</h4></div>
                 <div class="col-lg-10">
                     <textarea name="user_info[about]" id="about" class="form-control"> {{ old('user_info.about', $user->user_info->about ?? '') }} </textarea>
                 </div>
             </div>
         </div>
-
-        <div class="row border border-primary rounded-lg border-3" style="margin-top:1em; padding:1em;">
+        <div class="row border border-primary rounded-lg border-3 mt-lg-1 p-lg-1">
             <div class="col-12"><h3>Primary Mailing Address</h3></div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
@@ -182,7 +175,7 @@ $user_roles = $data['user_roles'];
             </div>
         </div>
         <div class="row">
-            <div class="col-12 border border-primary rounded-lg border-3" style="margin-top:2em; padding:2em;">
+            <div class="col-12 border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
                 <h4>User website roles </h4>
                 @foreach ($roles as $role)
                     <div class="input-group mb-6 col-12">
@@ -200,29 +193,24 @@ $user_roles = $data['user_roles'];
                 @endforeach
             </div>
         </div>
-
         <fieldset>
             <div class="row">
                 <div class="border border-primary rounded-lg border-3 mt-lg-2 p-2">
                     <div class="col-lg-12">
                         <h3>Membership</h3>
                     </div>
-
                     <div class="col-12 input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Seniority Number</span>
                         </div>
                             <input type="text" class="form-control"  placeholder="Number" name="user_membership[seniority_number]" value="{{ old('user_membership.seniority_number', $user->membership->seniority_number ?? '')}}" size="60" required/>
                     </div>
-
-
                     <div class="col-12 input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Member Status</span>
                         </div>
                         <input type="text" class="form-control"  placeholder="Status" name="user_membership[status]" value="{{ old('user_membership.status', $user->membership->status ?? '')}}" size="60" required/>
                     </div>
-
                     <div class="col-12 input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default"> Member Since</span>
@@ -232,7 +220,7 @@ $user_roles = $data['user_roles'];
                             class="form-control"
                             placeholder="yyyy-mm-dd"
                             name="user_membership[membership_date]"
-                            value="{{ old('user_membership.membership_date', \optional($user->membership->membership_date)->toDateString()) }}"
+                            value="{{ old('user_membership.membership_date', \optional($user->membership->membership_date ?? null)->toDateString() )  }}"
                             size="60"
                             required
                             data-provide="datepicker"
@@ -240,22 +228,23 @@ $user_roles = $data['user_roles'];
                     </div>
                     <div class="col-12 input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroup-sizing-default"> Member Dues Status</span>
+                            <span class="input-group-text" id="inputGroup-sizing-default">Member Dues Status</span>
                         </div>
                         <input
                             type="text"
                             class="form-control"
                             placeholder="dues status, paid until date"
                             name="user_membership[membership_expires]"
-                            value="{{ old('user_membership.membership_expires', \optional($user->membership->membership_expires)->toDateString())}}"
+                            value="{{ old('user_membership.membership_expires', \optional($user->membership->membership_expires ?? null)->toDateString())}}"
                             size="60"
                             required
                             data-provide="datepicker"
                             data-date-format="yyyy-mm-dd" />
                     </div>
-
-                    <div class="col-lg-12" style="margin-top: 1em;">
-                        <h4>Admin notes (admin only)</h4>
+                    <div class="col-lg-12 mt-1">
+                        <h4>
+                            Admin notes (admin only)
+                        </h4>
                     </div>
                     <div class="col-lg-12">
                         <textarea name="user_membership[admin_notes]" id="admin_notes" placeholder="Admin notes" class="form-control" disabled>{{old('user_membership.admin_notes', $user->membership->admin_notes ?? '')}}</textarea>
@@ -284,6 +273,5 @@ $user_roles = $data['user_roles'];
          </div>
         @endhasanyrole
     @endif
-    <div class="row mt-lg-5"> &nbsp;</div>
 </div>
 @endsection
