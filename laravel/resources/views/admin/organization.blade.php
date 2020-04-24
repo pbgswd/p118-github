@@ -81,11 +81,13 @@ $all_agreements = $data['all_agreements'];
                 </div>
             </div>
         </div>
-
-        <div class="row border border-dark m-t-5 mb-lg-5">
+<div class="row mt-lg-5">
+    <h3>Agreements for Organization</h3>
+</div>
+        <div class="row m-t-5 mb-lg-5">
             @if ($data['action'] == 'Edit')
-                <div class="col-5 m-1 border border-dark">
-                    Agreements attached to {{$organization->name}}
+                <div class="col-5 m-1">
+                    <h4>Agreements attached to {{$organization->name}}</h4>
                     <table class="table">
                         <thead>
                         <tr>
@@ -114,9 +116,13 @@ $all_agreements = $data['all_agreements'];
                     </table>
                 </div>
             @endif
-            <div class="col-5 m-1 border border-dark">
+            <div class="col-5 m-lg-2">
                 <div class="form-group">
-                    <label for="exampleFormControlSelect2">List of all agreements not currently attached to {{$organization->name}}. Select and submit to attach to venue</label>
+                    <h4>
+                        <label for="exampleFormControlSelect2">
+                        List of all agreements not currently attached to this organization.
+                        Select and submit to attach.</label>
+                    </h4>
                     <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
                         @foreach($all_agreements as $agr)
                             <option value="{{$agr->id}}">{{$agr->title}}</option>
@@ -125,9 +131,6 @@ $all_agreements = $data['all_agreements'];
                 </div>
             </div>
         </div>
-
-
-
         <div class="row mt-lg-3">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>

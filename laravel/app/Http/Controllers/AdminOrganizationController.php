@@ -34,17 +34,18 @@ class AdminOrganizationController extends Controller
     public function create()
     {
         $this->authorize('create', Auth::user());
-
+//todo create error
         $org = new Organization;
         $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
 
-        $org->setRelation('all_agreements', $all_agreements);
-
+       // $org->setRelation('all_agreements', $all_agreements);
+//dd($org);
         return view(
             'admin.organization',
             [
                 'data' => [
                     'organization' => $org,
+                    'all_agreements' => $all_agreements,
                     'action' => 'Create',
                 ],
             ]
