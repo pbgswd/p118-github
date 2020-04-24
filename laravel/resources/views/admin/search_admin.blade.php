@@ -3,7 +3,7 @@
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! $data['results']->count()  !!} Results from search
+               {!! $data['results']->count()  !!} Search Results for "{{$data['search']}}"
            </span>
 
         </h3>

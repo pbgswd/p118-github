@@ -15,7 +15,7 @@ $attachments = $data['attachments'];
         <div class="col-6">
             <form id="search-form" action="{{route('list_attachments_search_result')}}" method="POST">
                 @csrf
-                <input class="form-control form-control-dark w-100" type="text" name="search" placeholder="Attachment Search" aria-label="Search">
+                <input class="form-control form-control-dark w-100" type="text"  style="background-color:#aaaaaa;" name="search" placeholder="Attachment Search" aria-label="Search">
             </form>
         </div>
     </div>

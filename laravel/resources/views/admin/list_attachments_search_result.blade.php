@@ -1,7 +1,5 @@
 <?php
-
 $attachments = $data['results'];
-
 ?>
 
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> Search result List Attachements and Images'])
@@ -10,19 +8,20 @@ $attachments = $data['results'];
     <div class="container">
         <div class="row">
             <div class="col-8">
-
                 <h3>
-                    <a href="{{ route('attachments_list') }}">Images & Attachments</a>
+                    <a href="{{ route('attachments_list') }}"><i class="far fa-arrow-alt-circle-left"></i></a>
                     <span class="badge badge-primary badge-pill">
-                       {{ $attachments->count() }}
+                       {{ $attachments->count() }} Search Results for "{{$data['search']}}"
                     </span>
-                    Files. | <a href="{{ route('attachment_create') }}">Add new file <i class="far fa-arrow-alt-circle-right"></i></a>
+                    | <a href="{{ route('attachment_create') }}">Add new file <i class="far fa-arrow-alt-circle-right"></i></a>
                 </h3>
             </div>
-            <div class="col-4">
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <form id="search-form" action="{{ route('list_attachments_search_result') }}" method="POST">
                     @csrf
-                    <input class="form-control form-control-dark w-100" type="text" name="search" placeholder="Attachment Search" aria-label="Search">
+                    <input class="form-control form-control-dark w-100" type="text" name="search" style="background-color:#aaaaaa;" placeholder="Attachment Search" aria-label="Search">
                 </form>
             </div>
         </div>
