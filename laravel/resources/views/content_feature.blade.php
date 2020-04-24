@@ -77,7 +77,7 @@ $posts = $data['posts'];
         @foreach ($pages as $page)
             <div class="col-12 border border-dark rounded-lg mb-2">
                 <h3>
-                    <a href="{{ route('post_show', $page->slug) }}">
+                    <a href="{{ route('page_show', $page->slug) }}">
                         {{ $page->title }}
                     </a>
                 </h3>
