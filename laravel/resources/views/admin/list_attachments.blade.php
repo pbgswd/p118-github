@@ -4,21 +4,26 @@ $attachments = $data['attachments'];
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> List Attachements and Images'])
 @section('content')
     <div class="container">
-        <div class="col-4">
-            <h3>
-               <span class="badge badge-primary badge-pill">
-                   {{$data['filecount']}}
-               </span>
-               Files. | <a href="{{ route('attachment_create') }}">Add new file <i class="far fa-arrow-alt-circle-right"></i> </a>
-            </h3>
+        <div class="row">
+            <div class="col-12">
+                <h3>
+                   <span class="badge badge-primary badge-pill">
+                       {{$data['filecount']}}
+                   </span>
+                   Files. | <a href="{{ route('attachment_create') }}">Add new file
+                        <i class="far fa-arrow-alt-circle-right"></i>
+                    </a>
+                </h3>
+            </div>
         </div>
-        <div class="col-6">
-            <form id="search-form" action="{{route('list_attachments_search_result')}}" method="POST">
-                @csrf
-                <input class="form-control form-control-dark w-100" type="text"  style="background-color:#aaaaaa;" name="search" placeholder="Attachment Search" aria-label="Search">
-            </form>
+        <div class="row">
+            <div class="col-12">
+                <form id="search-form" action="{{route('list_attachments_search_result')}}" method="POST">
+                    @csrf
+                    <input class="form-control form-control-dark w-100" type="text"  style="background-color:#aaaaaa;" name="search" placeholder="Attachment Search" aria-label="Search">
+                </form>
+            </div>
         </div>
-    </div>
 @if (count($attachments) > 0)
     <form name="delete" method="POST" action="{{route('attachment_destroy')}}">
         {!! csrf_field() !!}

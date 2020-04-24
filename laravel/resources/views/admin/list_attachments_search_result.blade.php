@@ -1,19 +1,21 @@
 <?php
 $attachments = $data['results'];
 ?>
-
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> Search result List Attachements and Images'])
-
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-8">
+            <div class="col-12">
                 <h3>
-                    <a href="{{ route('attachments_list') }}"><i class="far fa-arrow-alt-circle-left"></i></a>
+                    <a href="{{ route('attachments_list') }}">
+                        <i class="far fa-arrow-alt-circle-left"></i>
+                    </a>
                     <span class="badge badge-primary badge-pill">
                        {{ $attachments->count() }} Search Results for "{{$data['search']}}"
                     </span>
-                    | <a href="{{ route('attachment_create') }}">Add new file <i class="far fa-arrow-alt-circle-right"></i></a>
+                    | <a href="{{ route('attachment_create') }}">Add new file
+                        <i class="far fa-arrow-alt-circle-right"></i>
+                    </a>
                 </h3>
             </div>
         </div>
@@ -71,7 +73,6 @@ $attachments = $data['results'];
                                                 @endif
                                             @endif
                                         </a>
-
                                         <h4>
                                             <a title="{{ $a->searchable->name }}" href="{{ route('admin_attachment_edit', $a->searchable->id) }}">{{ $a->searchable->file_name }}</a>
                                         </h4>
@@ -102,18 +103,16 @@ $attachments = $data['results'];
                     <i class="far fa-trash-alt fa-2x"></i>
                     <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
                 </div>
-
                 <div class="col"></div>
             </div>
             <div class="row mt-lg-5"></div>
         </form>
     @endif
-
     @if (!empty($images))
         <h3>Files not in db </h3>
         @foreach ($images as $img)
 
         @endforeach
     @endif
-    <div class="row" style="margin-top:30px;"></div>
+    <div class="row mt-lg-5"></div>
 @endsection
