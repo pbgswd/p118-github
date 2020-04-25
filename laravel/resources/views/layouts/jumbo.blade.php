@@ -133,13 +133,8 @@
                             </div>
                         </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="true">Health</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown">
-                                <a class="dropdown-item" href="##" title="#">&nbsp<i class="fas fa-user"></i> ## </a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-industry"></i> ##</a>
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/topic/health-and-welfare-info">Health Info</a>
                         </li>
 
                     @endguest
