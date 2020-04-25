@@ -139,25 +139,24 @@ $meeting = $data['meeting'];
             @endif
         @endif
         <div class="row mt-lg-3"> &nbsp;</div>
-        <div class="row">
+        <div class="row mb-lg-5">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
-        </div>
     </form>
-    <div class="col-sm"> &nbsp;</div>
-    @if ($data['action'] == 'Edit')
-         <div class="col-sm" style="float:right">
-             <form name="delete" method="POST" action="{{route('meeting_destroy')}}">
-                 {!! csrf_field() !!}
-                 {!! method_field('DELETE') !!}
-                <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $meeting->id }}">
-                <input class="btn btn-outline-danger" type="submit" value="Delete Meeting">
-            </form>
-         </div>
-    @endif
-    <div class="row mt-lg-5"> &nbsp;</div>
+            <div class="col-sm"></div>
+            @if ($data['action'] == 'Edit')
+                 <div class="col-sm" style="float:right">
+                     <form name="delete" method="POST" action="{{route('meeting_destroy')}}">
+                         {!! csrf_field() !!}
+                         {!! method_field('DELETE') !!}
+                        <i class="far fa-trash-alt fa-2x"></i>
+                        <input type="hidden" name="id[]" value="{{ $meeting->id }}">
+                        <input class="btn btn-outline-danger" type="submit" value="Delete Meeting">
+                    </form>
+                 </div>
+            @endif
+        </div>
 </div>
 @endsection

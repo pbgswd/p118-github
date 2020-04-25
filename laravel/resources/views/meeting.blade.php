@@ -15,23 +15,24 @@ $meeting = $data['meeting'];
             <p>{{$meeting->date->format('F j Y')}}</p>
             <p>{!! $meeting->description !!}</p>
         </div>
-        @if(count($meeting->attachments) > 0)
-            <ul>
-                @foreach($meeting->attachments as $att)
-                    <li>
-                        <h4>
-                            <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->description}}" target="_blank">
-                                <i class="fas fa-file-download fa-1x"></i>
-                            {{$att->file_name}}
-                            </a> &nbsp;
-                            {{$att->description}}
-                        </h4>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
+        <div class="row mb-lg-5">
+            @if(count($meeting->attachments) > 0)
+                <ul style="list-style-type:none;">
+                    @foreach($meeting->attachments as $att)
+                        <li>
+                            <h4>
+                                <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->description}}" target="_blank">
+                                    <i class="fas fa-file-download fa-1x"></i>
+                                    {{$att->file_name}}
+                                </a> &nbsp;
+                                {{$att->description}}
+                            </h4>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
     </div>
-    <div class="row" style="margin-top:6em;"></div>
 </div>
 @endsection
 
