@@ -107,6 +107,9 @@
                     @guest
                     @else
                         <li class="nav-item">
+                            <a class="nav-link" href="/topic/health-and-welfare-info">Health Info</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="https://login.callsteward.ca/" target="_blank" title="Link to CallSteward">
                                 <i class="fas fa-headset"></i> CS</a>
                         </li>
@@ -132,11 +135,6 @@
                                 <a class="dropdown-item" href="/site"><i class="fas fa-industry"></i> Landing Page</a>
                             </div>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/topic/health-and-welfare-info">Health Info</a>
-                        </li>
-
                     @endguest
                 </ul>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
