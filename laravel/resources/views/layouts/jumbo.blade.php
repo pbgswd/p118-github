@@ -10,10 +10,11 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }}</title>
         <!-- Scripts -->
+        <script src="/js/jquery-slim.min.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.bundle.min.js"></script>
         <script src="/js/bootstrap-datepicker.min.js"></script>
-        <script src="/js/jquery.slim.min.js"></script>
+
 
 
         <script src="{{ mix('js/app.js') }}"></script>
