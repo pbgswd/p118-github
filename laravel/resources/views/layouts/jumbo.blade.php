@@ -74,6 +74,7 @@
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
     </head>
     <body>
+    <div id="app">
         <a name="top"></a>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="{{ route('hello') }}">{{config('app.name')}}</a>
@@ -124,7 +125,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="true">Menu</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown">
-                                <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}" title="My Profile">&nbsp<i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
+                                <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}" title="My Profile"><i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
                                 <a class="dropdown-item" href="{{route('committees')}}"><i class="fas fa-users"></i> Committees</a>
                                 <a class="dropdown-item" href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meetings & Minutes</a>
                                 <a class="dropdown-item" href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members</a>
@@ -138,6 +139,18 @@
                         </li>
                     @endguest
                 </ul>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <!-- Right Side Of Navbar -->
@@ -223,15 +236,10 @@
                 </div>
             </div>
         </footer>
-        <script src="/js/jquery-3.3.1.slim.min.js"
-                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
-        <script src="/js/bootstrap.bundle.min.js"
-                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
-                crossorigin="anonymous"></script>
+
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
               integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    </div>
         </body>
 </html>
 
