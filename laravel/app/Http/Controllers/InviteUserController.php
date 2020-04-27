@@ -68,13 +68,13 @@ class InviteUserController extends Controller
         $invitation->save();
 
         Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]], function ($m) use ($invitation) {
-            $m->from('noreply@iatse118.com', 'IATSE 118 Website Signup');
+            $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME ') . ' Website Signup');
             $m->to($invitation['email'], $invitation['name'])
                 ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
                 ->subject('IATSE Local 118 Website Signup Invitation');
         });
 
-       // return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
+//       return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
 
       Session::flash('success', "Invitation for access sent to " . $invitation['name']);
 

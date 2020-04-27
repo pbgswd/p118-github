@@ -37,10 +37,10 @@ class ContactController extends Controller
      */
     public function submit(SubmitContact $request)
     {
-
+//dd($request->all());
         // $request['email']
         Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request) {
-            $m->from(env('MAIL_USERNAME'), "Local 118 Contact Page Message from " . $request['name']);
+            $m->from(env('MAIL_FROM_ADDRESS'), "Local 118 Contact Page Message from " . $request['name']);
             $m->to(env('ADMIN_EMAIL'), env('ADMIN_EMAIL_NAME'))
                 ->replyTo($request['email'], $request['name'])
                 ->subject('Contact Page ' . $request['subject']);

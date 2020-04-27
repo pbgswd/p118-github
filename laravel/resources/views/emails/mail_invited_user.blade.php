@@ -38,14 +38,17 @@
                       <table class="twelve columns">
                         <tr>
                           <td>
-                            <h1>Hi {{$data['invitation']['name']}}</h1>
+                            <h4>Hi {{$data['invitation']['name']}}</h4>
+
+                              {!! $data['invitation']['message'] ?? '' !!}
+
 			                <p class="lead">This is your invitation to join the completely updated IATSE Local 118 website. </p>
-                            <p class="lead">The site has been rebuilt completely from the ground up. This means you will
-                                need to create a secure password to go with your profile to log on to the site.
+                            <p class="lead">You will need to create a secure password to go with your profile
+                                to log on to the site.
                                 Use the following link to begin the registration process.
                             </p>
-                              {{$data['invitation']['message'] ?? ''}}
-                            <p>
+
+                            <p style="margin-top: 2em;">
                                 <a href="{{route('invite_user_signup', ['inviteUser' => $data['invitation']['id'], 'password' => $data['invitation']['password']])}}" target="_blank">
                                     {{route('invite_user_signup', [$data['invitation']['id'], $data['invitation']['password']])}}
                                 </a>
