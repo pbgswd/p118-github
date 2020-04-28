@@ -1,8 +1,10 @@
-laravel/public/js
 laravel/node_modules
 laravel/public/hot
 laravel/public/storage
 laravel/public/users
+laravel/public/js/tinymce.js
+laravel/public/js/app.js
+laravel/public/js/dashboard.js
 laravel/storage/*.key
 laravel/storage/app/users/*
 laravel/storage/app/public/*

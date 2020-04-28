@@ -9,19 +9,14 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }}</title>
-        <!-- Scripts -->
-        <script src="/js/jquery-slim.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.bundle.min.js"></script>
+
+
         <script src="/js/bootstrap-datepicker.min.js"></script>
 
 
-
-        <script src="{{ mix('js/app.js') }}"></script>
-
         <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k"></script>
         <script src="/js/tinymce.js"></script>
-        <link rel="canonical" href="http://project118/hello/">
+        <link rel="canonical" href="http://{{env('APP_URL')}}/">
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
         <!-- Styles -->
@@ -35,7 +30,6 @@
                 -ms-user-select: none;
                 user-select: none;
             }
-
             .dropcap {
                 font-size: 4rem;
                 color: #903;
@@ -74,7 +68,6 @@
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
     </head>
     <body>
-    <div id="app">
         <a name="top"></a>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="{{ route('hello') }}">{{config('app.name')}}</a>
@@ -111,6 +104,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/topic/health-and-welfare-info">Health Info</a>
                         </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/site"><i class="fas fa-industry"></i> Landing Page</a>
+                    </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://login.callsteward.ca/" target="_blank" title="Link to CallSteward">
                                 <i class="fas fa-headset"></i> CS</a>
@@ -139,18 +135,6 @@
                         </li>
                     @endguest
                 </ul>
-
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown button
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div>
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <!-- Right Side Of Navbar -->
@@ -236,10 +220,11 @@
                 </div>
             </div>
         </footer>
-
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
               integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    </div>
+        <script src="/js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="/js/jquery.slim.min.js"><\/script>')</script>
+        <script src="/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
         </body>
 </html>
 
