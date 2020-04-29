@@ -134,6 +134,7 @@ class InviteUserController extends Controller
         ];
 
         $user = new User($data);
+
         $user->save();
 
         $user->assignRole($inviteUser->role);

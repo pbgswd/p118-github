@@ -6,7 +6,7 @@ $roles = $data['roles'];
 @section('content')
 <div class='container mt-lg-4'>
     <h1>Invite User</h1>
-<h3>Note: there is a 48 hour expiry time on invitations.</h3>
+<h3>Note: In the future, there will be a 48 hour expiry time on invitations.</h3>
         <form method="post" name="invite_user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
             <div class="col-12 input-group mt-lg-5 mb-3">
@@ -39,7 +39,7 @@ $roles = $data['roles'];
                         <div class="input-group mb-6 col-12">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input name="invite[user_role]" type="radio" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $invite->role)) }} />
+                                    <input name="invite[role]" type="radio" value="{{$role->name}}" {{ checked(array_key_exists($role->name, $invite->role)) }} />
                                 </div>
                             </div>
                             <input type="text" class="form-control" aria-label="Text input with checkbox" value="{{$role->name}} ( @foreach ($role->permissions as $p){{ $p->name }},  @endforeach)" size="40" readonly />

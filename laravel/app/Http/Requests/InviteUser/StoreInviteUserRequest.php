@@ -30,8 +30,8 @@ class StoreInviteUserRequest extends FormRequest
         return [
             'invite.name' => 'required|string|min:2|max:255',
             'invite.email' => 'required|email|min:6|max:255',
-            'invite.message' => 'string|min:0|max:1024',
-            'invite.user_role'  => 'required|string',
+            'invite.message' => 'max:1024',
+            'invite.role'  => 'required|string',
         ];
     }
 
