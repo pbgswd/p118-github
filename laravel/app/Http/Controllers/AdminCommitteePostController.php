@@ -50,7 +50,7 @@ class AdminCommitteePostController extends Controller
         $post = new CommitteePost;
         $post['committee'] = $committee;
 
-        return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create',]]);
+        return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create']]);
     }
 
 
@@ -105,7 +105,7 @@ class AdminCommitteePostController extends Controller
 
         $committeePost->committee;
 
-        return redirect()->route('committee_post_edit', [$committeePost->committee->slug, $committeePost->slug]);
+        return redirect()->route('admin_committee_post_edit', [$committeePost->committee->slug, $committeePost->slug]);
     }
 
     /**

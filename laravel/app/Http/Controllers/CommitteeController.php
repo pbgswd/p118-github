@@ -136,6 +136,4 @@ class CommitteeController extends Controller
 
         return view('committee_list_members', ['data' => ['committee' => $committee]]);
     }
-
-
 }

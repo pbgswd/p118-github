@@ -28,7 +28,7 @@ class CommitteePostComment extends LiveableModel
     use Sortable;
     use HasRoles;
 
-    protected $guard_name = 'web';  //????
+    protected $guard_name = 'web';
 
     protected $policies = [
         //todo enable CommitteePolicy
@@ -44,7 +44,7 @@ class CommitteePostComment extends LiveableModel
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [

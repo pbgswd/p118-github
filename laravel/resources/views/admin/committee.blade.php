@@ -117,12 +117,6 @@ $committee = $data['committee'];
                 </div>
                 <div class="col-sm">
                     <label>
-                        <input name="committee[allow_comments]" type="hidden" value="0" />
-                        <input name="committee[allow_comments]" type="checkbox" value="1" {{ checked(old('committee.allow_comments',$committee->allow_comments)) }} /> Allow Comments?
-                    </label>
-                </div>
-                <div class="col-sm">
-                    <label>
                          <input name="committee[live]" type="hidden" value="0" />
                          <input name="committee[live]" type="checkbox" value="1" {{ checked( old('committee.live', $committee->live)) }} /> Check now to make Live
                     </label>

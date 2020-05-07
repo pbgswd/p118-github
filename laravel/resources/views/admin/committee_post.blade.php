@@ -25,7 +25,7 @@ $committee = $data['post']['committee'];
     </script>
 <div class="container">
     <h3>
-        <a href="{{route('committee_show', $committee->slug)}}">
+        <a href="{{route('admin_committee_show', $committee->slug)}}">
             <i class="far fa-arrow-alt-circle-left"></i>
             {{$committee->name}} Committee Page
         </a> |
@@ -134,7 +134,8 @@ $committee = $data['post']['committee'];
                 </div>
                 <div class="col-12 p-lg-4">
                     <div class="col-6" style="float:left">
-                        <a href="{{ route('committee_post_comment_edit',$pc->id) }}" title="Edit Comment ">
+
+                        <a href="{{ route('admin_committee_post_comment_edit', [$post->slug, $pc->id])}}" title="Edit Comment">
                             <i class="fas fa-edit fa-2x"></i>
                             <button type="button" class="btn btn-outline-primary">Edit</button>
                         </a>

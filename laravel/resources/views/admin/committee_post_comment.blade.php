@@ -25,12 +25,12 @@ $committee = $data['committee'];
     </script>
 <div class="container">
     <h3>
-        <a href="{{route('committee_show', $committee->slug)}}">
+        <a href="{{route('admin_committee_show', $committee->slug)}}">
             <i class="far fa-arrow-alt-circle-left"></i>
             {{$committee->name}}
         </a>
         <br />
-        <a href="{{ route('committee_post_edit',[$committee->slug, $post->slug]) }}" title="Edit {{ $post->title }}">
+        <a href="{{ route('admin_committee_post_edit',[$committee->slug, $post->slug]) }}" title="Edit {{ $post->title }}">
             <i class="fas fa-edit"></i> Back to {{$post->title}} post page
         </a>
         <br />

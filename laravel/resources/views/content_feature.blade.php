@@ -12,12 +12,6 @@ $posts = $data['posts'];
             <a href="{{route('member', Auth::user()->id)}}" title="My Profile">&nbsp<i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="{{route('committees')}}"><i class="fas fa-users"></i> Committees</a>
-        </div>
-        <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meetings & Minutes</a>
-        </div>
-        <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
@@ -28,6 +22,15 @@ $posts = $data['posts'];
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('organizations')}}"><i class="fas fa-user-tie"></i> Organizations</a>
+        </div>
+        <div class="col-12 border border-dark rounded-lg mb-2">
+            Governance
+        </div>
+        <div class="col-12 border border-dark rounded-lg mb-2">
+            <a href="{{route('committees')}}"><i class="fas fa-users"></i> Committees</a>
+        </div>
+        <div class="col-12 border border-dark rounded-lg mb-2">
+            <a href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meetings & Minutes</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('agreements_list_public')}}"><i class="far fa-handshake"></i> Agreements</a>

@@ -29,7 +29,7 @@ class UpdateCommitteePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'post.title' => 'required|max:255|unique:committee_posts,title,'.$this->route('committeePost')->slug.',slug',
+            'post.title' => 'required|max:255|unique:committee_posts,title,'.$this->route('any_committee_post')->slug.',slug',
             'post.content' => 'required',
             'post.sticky' => 'boolean',
             'post.allow_comments' => 'boolean',

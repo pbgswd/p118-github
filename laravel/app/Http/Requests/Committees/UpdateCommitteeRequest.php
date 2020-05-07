@@ -35,7 +35,6 @@ class UpdateCommitteeRequest extends FormRequest
             'committee.access_level' => 'required|string|max:255',
             'committee.sort_order' =>  'required|numeric',
             'committee.in_menu' => 'boolean',
-            'committee.allow_comments' => 'boolean',
             'committee.live' => 'boolean',
         ];
     }
