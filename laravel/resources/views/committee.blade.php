@@ -1,12 +1,11 @@
 <?php
-//dd($data);
 $c = $data['committee'];
 $execs = $data['executives'];
 ?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.6);">
+    <div class="container border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-12">
                 <h2>
@@ -23,7 +22,7 @@ $execs = $data['executives'];
                 <h4>
                     <i class="far fa-newspaper"></i> {{$c->postsCount}} {{Str::plural('Post', $c->postsCount ) }}
                     @if($data['isMember'] == 1)
-                        | <i class="far fa-edit"></i><a href="{{route('committee_add_public_post', $c)}}">Add New Post</a>
+                        | <i class="far fa-edit"></i><a href="{{route('committee_add_public_post', $c->slug)}}">Add New Post</a>
                     @endif
                 </h4>
             </div>

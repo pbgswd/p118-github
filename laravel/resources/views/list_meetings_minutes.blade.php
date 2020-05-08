@@ -3,7 +3,7 @@ $meetings = $data['meetings'];
 ?>
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Members'])
 @section('content')
-<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); max-width:768px;">
+<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8); max-width:768px;">
 <h1>Meetings & Minutes</h1>
     <h3>
        <span class="badge badge-primary badge-pill">
@@ -11,7 +11,7 @@ $meetings = $data['meetings'];
        </span>
     </h3>
 </div>
-<div class="table-responsive-md border border-dark rounded-lg" style="background: rgba(220,220,220,0.6); padding:1em;  max-width:768px; margin-left:auto; margin-right:auto;">
+<div class="table-responsive-md border border-dark rounded-lg" style="background: rgba(220,220,220,0.8); padding:1em;  max-width:768px; margin-left:auto; margin-right:auto;">
     <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
         <thead>
         <tr>

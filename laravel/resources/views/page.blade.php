@@ -5,7 +5,7 @@ $tags = join(', ', $page->tagNames());
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
+    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
         <div  class="col-12">
             <h1 class="display-3">{{$page->title}}</h1>
         </div>

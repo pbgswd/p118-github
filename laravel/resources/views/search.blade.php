@@ -4,7 +4,7 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg pt-lg-2" style="background: rgba(220,220,220,0.6);">
+    <div class="container border border-dark rounded-lg pt-lg-2" style="background: rgba(220,220,220,0.8);">
         <div class="col-12">
             <h1 class="display-8">Search Results</h1>
         </div>

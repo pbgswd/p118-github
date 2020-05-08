@@ -8,7 +8,7 @@ $user = $data['user'];
 
 @section('content')
     <div class="jumbotron mb-lg-5">
-        <div class="container border border-dark rounded-lg p-2" style="background: rgba(220,220,220,0.6);">
+        <div class="container border border-dark rounded-lg p-2" style="background: rgba(220,220,220,0.8);">
             <h1>
                 <a href="{{route('members')}}">
                     <i class="far fa-arrow-alt-circle-left"></i> Members /

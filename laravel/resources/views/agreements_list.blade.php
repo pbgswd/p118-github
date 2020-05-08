@@ -3,14 +3,14 @@ $agreements = $data['data']['agreements'];
 ?>
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> Agreement Postings'])
 @section('content')
-<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
+<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
 <h1><i class="far fa-handshake"></i> Collective Agreements </h1>
     <h3>
        <span class="badge badge-primary badge-pill">
            {{ $data['data']['count'] }} agreement postings
        </span>
     </h3>
-<div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.6); margin-left:auto; margin-right:auto;">
+<div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.8); margin-left:auto; margin-right:auto;">
     <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
         <thead>
         <tr>

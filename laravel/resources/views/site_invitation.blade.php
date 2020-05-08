@@ -4,7 +4,7 @@ $user = $data['invitation'];
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg p-5" style="background: rgba(220,220,220,0.6);">
+    <div class="container border border-dark rounded-lg p-5" style="background: rgba(220,220,220,0.8);">
         <h1>Hi {{$user->name}}</h1>
         <h3>
                Add your password. Once you do that you may log in to the site.

@@ -5,7 +5,7 @@ $c = $data['committeepost']->committee;
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg p-lg-2" style="background: rgba(220,220,220,0.6);">
+    <div class="container border border-dark rounded-lg p-lg-2" style="background: rgba(220,220,220,0.8);">
         <div class="row p-4">
             <div class="col-12">
                <h3>

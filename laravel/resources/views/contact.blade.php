@@ -1,7 +1,7 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="container">
-    <div class="row border border-dark rounded-lg p-lg-5" style="background: rgba(220,220,220,0.6);">
+    <div class="row border border-dark rounded-lg p-lg-5" style="background: rgba(220,220,220,0.8);">
         <div class="col-12 mb-4">
             <h1 class="display-3">Contact IATSE Local 118</h1>
         </div>

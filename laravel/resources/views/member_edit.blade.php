@@ -6,7 +6,7 @@ $user_roles = $data['user_roles'];
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-<div class="container border border-dark rounded-lg  p-5" style="background: rgba(220,220,220,0.6);">
+<div class="container border border-dark rounded-lg  p-5" style="background: rgba(220,220,220,0.8);">
     <h1>
         <a href="{{route('members')}}">
             <i class="far fa-arrow-alt-circle-left"></i>

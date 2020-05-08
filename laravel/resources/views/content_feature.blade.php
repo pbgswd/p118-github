@@ -3,7 +3,7 @@ $topics = $data['topics'];
 $pages = $data['pages'];
 $posts = $data['posts'];
 ?>
-<div class="row border border-dark rounded-lg mt-3 pt-3" style="background: rgba(220,220,220,0.6);">
+<div class="row border border-dark rounded-lg mt-3 pt-3" style="background: rgba(220,220,220,0.8);">
     <div class="col-md-3">
         <div class="col-12">
             <h4> Menu </h4>

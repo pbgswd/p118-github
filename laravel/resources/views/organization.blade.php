@@ -4,7 +4,7 @@ $organization = $data['organization'];
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg p-lg-1" style="background: rgba(220,220,220,0.6);">
+    <div class="container border border-dark rounded-lg p-lg-1" style="background: rgba(220,220,220,0.8);">
         <a href="{{ route('hello') }}">Home /</a>
         <a href="{{route('organizations')}}">organizations /</a> {{$organization->name}}
         <div class="col-12">

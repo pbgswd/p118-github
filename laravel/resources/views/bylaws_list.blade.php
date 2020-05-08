@@ -3,7 +3,7 @@ $bylaws = $data['data']['bylaws'];
 ?>
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> bylaw Postings'])
 @section('content')
-<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
+<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
     <div class="row">
         <h1>
             <i class="fas fa-gavel"></i> Local 118 Constitution and By-Laws
@@ -17,7 +17,7 @@ $bylaws = $data['data']['bylaws'];
            </span>
         </h3>
     </div>
-    <div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.6); margin-left:auto; margin-right:auto;">
+    <div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.8); margin-left:auto; margin-right:auto;">
         <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
             <thead>
             <tr>

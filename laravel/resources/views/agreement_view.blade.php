@@ -4,7 +4,7 @@ $agreement = $data['agreement'];
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
+    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
         <div class="col-12">
             <h4><a href="{{url()->previous()}}"><i class="far fa-arrow-alt-circle-left"></i>  agreement postings</a></h4>
         </div>

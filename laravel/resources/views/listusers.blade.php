@@ -1,6 +1,6 @@
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Members'])
 @section('content')
-<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.6);">
+<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
     <h1>
        <span class="badge badge-primary badge-pill">
            {!! $data['users']->total()  !!}
@@ -10,7 +10,7 @@
     <h5>
         <a href="{{route('member', Auth::user()->id)}}">View my profile <i class="far fa-arrow-alt-circle-right"></i></a>
     </h5>
-    <div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.6); margin-left:auto; margin-right:auto;">
+    <div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.8); margin-left:auto; margin-right:auto;">
         <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
             <thead>
                 <tr>

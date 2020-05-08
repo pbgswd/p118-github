@@ -22,7 +22,7 @@ $post = $data['post'];
         });
     </script>
 
-<div class="container  border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.6);">
+<div class="container  border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.8);">
     <h3>
         <a href="{{ route('committee', $post['committee']->slug) }}">{{$post['committee']->name}}</a>
      / {{$data['action']}} Post

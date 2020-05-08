@@ -4,7 +4,7 @@ $venue = $data['venue'];
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg pl-lg-1" style="background: rgba(220,220,220,0.6);">
+    <div class="container border border-dark rounded-lg pl-lg-1" style="background: rgba(220,220,220,0.8);">
         <a href="{{ route('hello') }}">Home /</a>
         <a href="{{route('venues')}}">venues /</a> {{$venue->name}}
         <div class="col-12">
