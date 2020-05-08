@@ -74,23 +74,18 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     Route::get('committee/{committee}/show-members', 'CommitteeController@show_members')->name('committee_list_members');
 
+    Route::get('committee/{committee}/post/create', 'CommitteePostController@create')->name('committee_add_public_post');
+    Route::post('committee/{committee}/post/create', 'CommitteePostController@store');
     Route::get('committee/{committee}/post/{committeePost}', 'CommitteePostController@show')->name('public_committee_post_show');
 
     //Route::post('committee/{committee}/post/{committeePost}/create', 'CommitteePostController@store');
-
-    Route::get('committee/{committee}/create', 'CommitteePostController@create')->name('committee_add_public_post');
-    Route::post('committee/{committee}/create', 'CommitteePostController@store');
 
     Route::get('committee/{committee}/post/{committeePost}/edit', 'CommitteePostController@edit')->name('committee_post_edit_form');
     Route::post('committee/{committee}/post/{any_committee_post}/edit', 'CommitteePostController@update');
 
     Route::delete('committee/{committee}/post/{committeePost}/destroy', 'CommitteePostController@destroy')->name('public_committee_post_destroy');
 
-
     Route::post('committee/{committee}/post/{committeePost}/comment/create', 'CommitteePostCommentController@store')->name('public_committee_post_comment');
-
-
-
 
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
