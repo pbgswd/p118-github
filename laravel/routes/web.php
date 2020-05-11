@@ -66,7 +66,7 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('bylaws', 'ByLawController@list')->name('bylaws_list_public');
     Route::get('/bylaws/{bylaw}', 'ByLawController@show')->name('bylaw_show');
 
-    Route::get('policies', 'PolicyController@list')->name('policys_list_public');
+    Route::get('policies', 'PolicyController@index')->name('policies_list_public');
     Route::get('/policies/{policy}', 'PolicyController@show')->name('policy_show_public');
 
     Route::get('committees', 'CommitteeController@index')->name('committees');

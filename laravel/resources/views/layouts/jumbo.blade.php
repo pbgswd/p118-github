@@ -122,14 +122,15 @@
                                aria-expanded="true">Menu</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown">
                                 <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}" title="My Profile"><i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
-                                <a class="dropdown-item" href="{{route('committees')}}"><i class="fas fa-users"></i> Committees</a>
-                                <a class="dropdown-item" href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meetings & Minutes</a>
                                 <a class="dropdown-item" href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members</a>
                                 <a class="dropdown-item" href="{{route('jobs_list')}}"><i class="fas fa-hard-hat"></i> Jobs</a>
                                 <a class="dropdown-item" href="{{route('venues')}}"><i class="far fa-building"></i> Venues</a>
                                 <a class="dropdown-item" href="{{route('organizations')}}"><i class="fas fa-user-tie"></i> Organizations</a>
+                                <a class="dropdown-item" href="{{route('committees')}}"><i class="fas fa-users"></i> Committees</a>
                                 <a class="dropdown-item" href="{{route('agreements_list_public')}}"><i class="far fa-handshake"></i> Agreements</a>
                                 <a class="dropdown-item" href="{{route('bylaws_list_public')}}"><i class="fas fa-gavel"></i> By-Laws</a>
+                                <a class="dropdown-item" href="{{route('policies_list_public')}}"><i class="fas fa-scroll"></i>  Policies</a>
+                                <a class="dropdown-item" href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meetings & Minutes</a>
                                 <a class="dropdown-item" href="/site"><i class="fas fa-industry"></i> Landing Page</a>
                             </div>
                         </li>

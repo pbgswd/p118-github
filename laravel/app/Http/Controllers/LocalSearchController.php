@@ -11,6 +11,7 @@ use App\Models\LocalSearch;
 use App\Models\Meeting;
 use App\Models\Organization;
 use App\Models\Page;
+use App\Models\Policy;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
@@ -39,6 +40,7 @@ class LocalSearchController extends Controller
                 ->registerModel(Topic::class, ['name', 'description'])
                 ->registerModel(Agreement::class, ['title', 'description'])
                 ->registerModel(Bylaw::class, ['title', 'description'])
+                ->registerModel(Policy::class, ['title', 'description'])
                 ->registerModel(Employment::class, ['title', 'description'])
                 ->registerModel(Meeting::class, ['title', 'description'])
                 ->registerModel(Organization::class, ['name', 'description'])
@@ -113,6 +115,10 @@ class LocalSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(UserInfo::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('about')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Policy::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addExactSearchableAttribute('description')
                         ->withoutGlobalScope(LiveScope::class);
                 })
             ->search($request->search)

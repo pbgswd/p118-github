@@ -38,6 +38,9 @@ $posts = $data['posts'];
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('bylaws_list_public')}}"><i class="fas fa-gavel"></i> By-Laws</a>
         </div>
+        <div class="col-12 border border-dark rounded-lg mb-2">
+            <a href="{{route('policies_list_public')}}"><i class="fas fa-scroll"></i>  Policies</a>
+        </div>
     </div>
     <div class="col-md-3">
         <div class="col-12">
