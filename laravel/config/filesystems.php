@@ -90,6 +90,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'policies' => [
+            'driver' => 'local',
+            'root' => storage_path('app/policies'),
+            'url' => env('APP_URL').'/policies',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

@@ -4,29 +4,14 @@ namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
-use DateTime;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-/**
- * Class Bylaw
- *
- * @property int          $id
- * @property string       $title
- * @property string       $description
- * @property string       $access_level
- * @property boolean      $live
- * @property int          $user_id
- * @property User         $user
- * @property Attachment[] $attachments
- * @property DateTime     $created_at
- * @property DateTime     $updated_at
- * @property DateTime     $date
- */
-class Bylaw extends LiveableModel implements HasAttachment, Searchable
+class Policy extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
 
@@ -51,12 +36,6 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
         'live' => 'boolean',
     ];
 
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->access_level = AccessLevelConstants::MEMBERS;
-    }
-
     /**
      * @return SearchResult
      */
@@ -65,7 +44,7 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
         return new SearchResult(
             $this,
             $this->title,
-            \route('bylaw_show', $this->id),
+            \route('policy_show_public', $this->id),
         );
     }
 
@@ -82,7 +61,7 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
      */
     public function attachments(): BelongsToMany
     {
-        return $this->belongsToMany(Attachment::class, 'attachment_bylaw');
+        return $this->belongsToMany(Attachment::class, 'attachment_policies');
     }
 
     /**
@@ -90,7 +69,7 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
      */
     public function getAttachmentFolder(): string
     {
-        return 'bylaws';
+        return 'policies';
     }
 
     public function keepDissociatedAttachments(): bool
@@ -102,4 +81,5 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
     {
         return AccessLevelConstants::MEMBERS;
     }
+
 }

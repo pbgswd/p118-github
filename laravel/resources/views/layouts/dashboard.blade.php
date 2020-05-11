@@ -82,21 +82,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('topics_list') }}">
+                                <a class="nav-link" href="#">
                                     <span data-feather="file"></span>
-                                    Topics
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users_list') }}">
-                                    <span data-feather="file"></span>
-                                    Members
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('list_invited_users') }}">
-                                    <span data-feather="file"></span>
-                                    Invite Members
+                                    <h5>Governance</h5>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -112,18 +100,6 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('venues_list') }}">
-                                    <span data-feather="file"></span>
-                                    Venues
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('organizations_list') }}">
-                                    <span data-feather="file"></span>
-                                    Organizations
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('committees_list') }}">
                                     <span data-feather="file"></span>
                                     Committees
@@ -136,9 +112,47 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('attachments_list') }}">
+                                <a class="nav-link" href="{{ route('policies_list') }}">
                                     <span data-feather="file"></span>
-                                    Images & Attachments
+                                    Policies
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file"></span>
+                                    <h5>Membership</h5>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users_list') }}">
+                                    <span data-feather="file"></span>
+                                    Members
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('list_invited_users') }}">
+                                    <span data-feather="file"></span>
+                                    Invite Members
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('roles_list') }}">
+                                    <span data-feather="file"></span>
+                                    Roles
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file"></span>
+                                    <h5>Content </h5>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('topics_list') }}">
+                                    <span data-feather="file"></span>
+                                    Topics
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -153,22 +167,34 @@
                                     Posts
                                 </a>
                             </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('roles_list') }}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('attachments_list') }}">
                                     <span data-feather="file"></span>
-                                    Roles
+                                    Images & Attachments
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('blank') }}">
+                                <a class="nav-link" href="{{ route('venues_list') }}">
                                     <span data-feather="file"></span>
-                                    Blank Page
+                                    Venues
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('organizations_list') }}">
+                                    <span data-feather="file"></span>
+                                    Organizations
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin_employment_list') }}">
                                     <span data-feather="file"></span>
                                     Employment
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('blank') }}">
+                                    <span data-feather="file"></span>
+                                    Blank Page
                                 </a>
                             </li>
                         </ul>

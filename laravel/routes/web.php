@@ -66,6 +66,9 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('bylaws', 'ByLawController@list')->name('bylaws_list_public');
     Route::get('/bylaws/{bylaw}', 'ByLawController@show')->name('bylaw_show');
 
+    Route::get('policies', 'PolicyController@list')->name('policys_list_public');
+    Route::get('/policies/{policy}', 'PolicyController@show')->name('policy_show_public');
+
     Route::get('committees', 'CommitteeController@index')->name('committees');
     Route::get('committee/{committee}', 'CommitteeController@show')->name('committee');
 
@@ -111,6 +114,13 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/search', 'LocalSearchController@admin_search')->name('admin_search');
     //Route::get('/search', 'LocalSearchController@admin_index')->name('admin_search_show');
     Route::post('/attachment_search', 'LocalSearchController@admin_attachment_search')->name('list_attachments_search_result');
+
+    Route::get('/policies', 'AdminPolicyController@index')->name('policies_list');
+    Route::get('/policy/create', 'AdminPolicyController@create')->name('admin_policy_create');
+    Route::post('/policy/create', 'AdminPolicyController@store');
+    Route::get('/policy/{any_policy}/edit', 'AdminPolicyController@edit')->name('admin_policy_edit');
+    Route::post('/policy/{any_policy}/edit', 'AdminPolicyController@update');
+    Route::delete('/policy/delete', 'AdminPolicyController@destroy')->name('admin_policy_destroy');
 
     Route::get('/topics', 'AdminTopicController@index')->name('topics_list');
     Route::get('/topic/create', 'AdminTopicController@create')->name('topic_create');

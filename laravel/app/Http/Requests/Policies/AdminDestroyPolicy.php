@@ -1,15 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Agreements;
+namespace App\Http\Requests\Policies;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class UpdateAgreementRequest
- *
- * @property mixed[] $agreement
- */
-class UpdateAgreementRequest extends FormRequest
+class AdminDestroyPolicy extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,10 +24,7 @@ class UpdateAgreementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'agreement.title' => 'required|max:255',
-            'agreement.from' => 'required|date',
-            'agreement.until' => 'required|date',
-            'agreement.live' => 'boolean',
+            'id' => 'required|exists:policies',
         ];
     }
 }

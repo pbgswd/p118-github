@@ -1,17 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Agreements;
+namespace App\Http\Requests\Policies;
 
 use App\Traits\ModifiesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-/**
- * Class StoreAgreementRequest
- *
- * @property mixed[] $agreement
- */
-class StoreAgreementRequest extends FormRequest
+class AdminStorePolicy extends FormRequest
 {
     use ModifiesInputTrait;
     /**
@@ -32,21 +27,19 @@ class StoreAgreementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'agreement.title' => 'required|max:255',
-            'agreement.from' => 'date',
-            'agreement.until' => 'date',
-            'agreement.live' => 'boolean',
+            'policy.title' => 'required|max:255',
+            'policy.date' => 'date',
+            'policy.live' => 'boolean',
         ];
     }
-
     protected function modifyInput(): void
     {
-        $agreement = \array_merge(
-            $this->input('agreement'),
+        $policy = \array_merge(
+            $this->input('policy'),
             [
                 'user_id' => Auth::id(),
             ]
         );
-        $this->merge(['agreement' => $agreement]);
+        $this->merge(['policy' => $policy]);
     }
 }

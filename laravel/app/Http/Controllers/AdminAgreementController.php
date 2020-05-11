@@ -92,6 +92,7 @@ class AdminAgreementController extends Controller
     public function edit(Agreement $agreement)
     {
         $this->authorize('update', Auth::user());
+
         $data = [
             'agreement' => $agreement->load('user', 'attachments'),
             'action' => 'Edit',
