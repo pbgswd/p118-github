@@ -11,6 +11,7 @@ use App\Models\Employment;
 use App\Models\Meeting;
 use App\Models\Organization;
 use App\Models\Page;
+use App\Models\Policy;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
@@ -77,7 +78,9 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('any_venue', static function ($slug) {
             return Venue::withoutGlobalScopes()->where('slug', $slug)->first();
         });
-
+        Route::bind('any_policy', static function ($id) {
+            return Policy::withoutGlobalScopes()->findOrFail($id);
+        });
     }
 
     /**

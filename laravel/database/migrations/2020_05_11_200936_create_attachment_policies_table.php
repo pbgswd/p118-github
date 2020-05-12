@@ -15,7 +15,7 @@ class CreateAttachmentPoliciesTable extends Migration
     {
         Schema::create('attachment_policies', function (Blueprint $table) {
             $table->unsignedBigInteger('attachment_id')->index();
-            $table->foreign('attachment_id')->references('id')->on('policies')->onDelete('cascade');
+            $table->foreign('attachment_id')->references('id')->on('attachments')->onDelete('cascade');
             $table->unsignedBigInteger('policy_id')->index();
             $table->foreign('policy_id')->references('id')->on('policies')->onDelete('cascade');
         });

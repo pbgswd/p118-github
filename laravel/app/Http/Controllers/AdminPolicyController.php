@@ -8,9 +8,7 @@ use App\Http\Requests\Policies\AdminUpdatePolicy;
 use App\Models\Policy;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -70,6 +68,7 @@ class AdminPolicyController extends Controller
         $policy->save();
 
         Session::flash('success', "policy posting saved");
+//dd([$request->all, $policy]);
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $policy);
@@ -95,9 +94,8 @@ class AdminPolicyController extends Controller
      */
     public function edit(Policy $any_policy)
     {
-
         $data = [
-            'policy' => $any_policy->load('user', 'attachments'),
+            'policy' => $any_policy->loadWithoutGlobalScopes('user', 'attachments'),
             'action' => 'Edit',
         ];
 
