@@ -151,7 +151,7 @@ $user_roles = $data['user_roles'];
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Postal Code</span>
                 </div>
-                <input type="text" class="form-control" name="user_address[postal_code]" value="{{ old('user_address.postal_code', $user->address->postal_code ?? '') }}" size="40" />
+                <input type="text" class="form-control" style="text-transform:uppercase" name="user_address[postal_code]" value="{{ old('user_address.postal_code', $user->address->postal_code ?? '') }}" size="40" />
             </div>
 
 

@@ -11,6 +11,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
 
@@ -101,15 +102,26 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        //todo load current records.
-        //todo compare to submission
-        //todo highlight changes.
-        //todo send in email
+        $user->load('phone_number', 'address'); //todo load current records.
 
+        $message = [];
+        $original_name = $user->name;
 
+        if($userRequest->user['name'] != $user->name) {
+
+            $message['Name'] = $userRequest->user['name'];
+        }
+
+        if($userRequest->user['email'] != $user->email) {
+            $message['Email'] = $userRequest->user['email'];
+        }
 
         $user->fill($userRequest['user']);
         $user->save();
+
+        if($userRequest->user_phone['phone_number'] != $user->phone_number->phone_number) {
+            $message['Phone'] = $userRequest->user_phone['phone_number'];
+        }
 
         if ($user->phone_number instanceof PhoneNumber) {
             $user->phone_number->fill($userRequest['user_phone']);
@@ -141,35 +153,48 @@ class UserController extends Controller
             $user_info->image = $this->uploadImage($userRequest);
             $user->user_info()->save($user_info);
         }
+
+        $addr = ['unit','street','city','province','postal_code','country'];
+
+        foreach($addr as $a)
+        {
+            if($userRequest->user_address[$a] != $user->address->$a) {
+                $message[ucfirst($a)] = $userRequest->user_address[$a];
+            }
+        }
+
+
         if ($user->address instanceof Address) {
-            $user->address->fill($userRequest['user_address']);
+
+            $user->address->fill($userRequest->user_address);
             $user->address->save();
         } else {
-            $address = new Address($userRequest['user_address']);
+
+            $address = new Address($userRequest->user_address);
             $user->address()->save($address);
         }
 
-        /*
-                $user->syncRoles($userRequest['user_roles']);
+        if(!empty($message)){
 
-                if ($user->membership instanceof Membership) {
-                    $user->membership->fill($userRequest['user_membership']);
-                    $user->membership->save();
-                } else {
-                    $membership = new Membership($userRequest['user_membership']);
-                    $user->membership()->save($membership);
-                }
-        */
-//TODO notify office by email when user has updated contact information.
+            $message['id'] = $user->id;
+            $message['original_name'] = $original_name;
+            $message['original_email'] = $user->email;
+
+           // return view('emails.user_profile_update', ['data' => $message]);
 
 
+            Mail::send('emails.user_profile_update', ['data' => $message], function ($m) use ($message, $user) {
+                $m->from('no-reply@iatse118.com', "Local 118 Website");
+                $m->to(env('ADMIN_EMAIL'), env('ADMIN_EMAIL_NAME'))
+                    ->replyTo($user->email, $message['Name'] ?? $user->name)
+                    ->subject("Local 118 - Member Contact Info Update from " . $message['original_name']);
 
-
-
+            });
+        }
 
         Session::flash('success', "You have edited your profile");
 
-        return redirect()->route('member_edit', [$user->id]);
+        return redirect()->route('member_edit', $user->id);
     }
 
     protected function uploadImage(FormRequest $request)
