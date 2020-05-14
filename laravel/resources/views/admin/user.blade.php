@@ -165,7 +165,7 @@ $user_roles = $data['user_roles'];
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default"> Postal Code</span>
                 </div>
-                    <input type="text" style="text-transform:uppercase" class="form-control"  placeholder="Postal Code" name="user_address[postal_code]" value="{{ old('user_address.postal_code', $user->address->postal_code ?? '')}}" size="60" required/>
+                    <input type="text" style="text-transform:uppercase" class="form-control"  placeholder="Postal Code" name="user_address[postal_code]" value="{{ old('user_address.postal_code', strtoupper($user->address->postal_code ?? ''))}}" size="60" required/>
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
