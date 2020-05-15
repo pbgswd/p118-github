@@ -42,9 +42,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->load('committee_memberships', 'phone_number', 'user_info', 'address', 'membership');
-        //$currentUser = Auth::user(); // the logged in user, perms to edit?
-        //$regions = $this->getFormOptions(['countries', 'statesprovs']);
+        $user->load('committee_memberships', 'phone_number', 'user_info', 'address', 'membership', 'executives');
+
         $roles = Role::get();
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
@@ -53,11 +52,7 @@ class UserController extends Controller
             'user' => $user,
             'user_roles' => $member_roles,
             'roles' => $roles,
-            //'currentUserPermissions' => $currentUser->permissions,
-            //'countries' =>  $regions['countries'],
-            //'provinces' =>   $regions['statesprovs']['Provinces'],
         ];
-        //todo users roles, provinces, countries
 
         return view('member', ['data' => $data]);
     }
@@ -72,7 +67,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $user->load('phone_number', 'user_info', 'address', 'membership');
-        $currentUser = Auth::user(); // the logged in user, perms to edit?
+
+        $currentUser = Auth::user();
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
         $user_roles = $user->getRoleNames()->toArray();

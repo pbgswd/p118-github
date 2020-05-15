@@ -5,7 +5,7 @@
            <span class="badge badge-primary badge-pill">
                {!! $data['users']->total()  !!}
            </span>
-            Members. | <a href="{{ route('invite_new_user') }}">Inite new member <i class="far fa-arrow-alt-circle-right"></i> </a>
+            Members. | <a href="{{ route('invite_new_user') }}">Invite new member <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 <form name="delete" method="POST" action="{{route('user_destroy')}}">
@@ -37,8 +37,14 @@
                         </td>
                         <td>
                             <h4>
-                                <a title="{{ $i->name }}" href="{{ route('user_edit', $i->id) }}">{{ $i->name }}</a>
+                                <a title="public profile for {{ $i->name }}" target="_blank" href="{{ route('member', $i->id) }}">
+                                    <i class="far fa-user-circle"></i>
+                                </a>
+                                <a title="admin edit page for {{ $i->name }}" href="{{ route('user_edit', $i->id) }}">
+                                    {{ $i->name }}
+                                </a>
                             </h4>
+
                         </td>
                         <td> {{ $i->email }} </td>
                         <td>

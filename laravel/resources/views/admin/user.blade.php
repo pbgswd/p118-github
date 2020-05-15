@@ -25,9 +25,39 @@ $user_roles = $data['user_roles'];
         });
     </script>
 <div class="container mb-lg-5">
-    <h3>
-        <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>
-    </h3>
+    <div class="row">
+        <div class="col-4">
+            <h4>
+                <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>
+            </h4>
+        </div>
+        <div class="col-4">
+            <h4>
+                <a title="public profile for {{ $user->name }}" target="_blank" href="{{ route('member', $user->id) }}">
+                    <i class="far fa-user-circle"></i> View public profile
+                </a>
+            </h4>
+        </div>
+        <div class="col-4">
+            <h4>
+                <a title="public profile for {{ $user->name }}" href="{{ route('admin_executive_create', $user->id) }}">
+                    <i class="far fa-user-circle"></i>Create Executive Role
+                </a>
+            </h4>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach($user->executives as $exec)
+            <a href="{{route('admin_executive_edit', $exec->id)}}">
+                Executive Title: {{$exec->title}}, {{$exec->start_date}} to {{$exec->end_date}}
+                {!! $exec->current ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!}
+            </a>
+        @endforeach
+    </div>
+
+
+
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row border border-primary rounded-lg border-3 mt-lg-4 p-lg-1">
@@ -87,6 +117,7 @@ $user_roles = $data['user_roles'];
                 </div>
             </div>
             <div class="row mt-lg-1">
+
                 @if( isset($user->user_info->image) )
                     <div class="col-4 mt-lg-1">
                         <h4><i class="far fa-images"></i> Profile Image</h4>

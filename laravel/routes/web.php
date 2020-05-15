@@ -136,6 +136,13 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/user/{user}/edit', 'AdminUserController@update');
     Route::delete('/user/delete', 'AdminUserController@destroy')->name('user_destroy');
 
+    Route::get('/executives', 'AdminExecutiveController@index')->name('admin_executives_list');
+    Route::get('/user/{user}/executive/create', 'AdminExecutiveController@create')->name('admin_executive_create');
+    Route::post('/user/{user}/executive/create', 'AdminExecutiveController@store');
+    Route::get('/executive/{executive}/edit', 'AdminExecutiveController@edit')->name('admin_executive_edit');
+    Route::post('/executive/{executive}/edit', 'AdminExecutiveController@update');
+    Route::delete('/executive/delete', 'AdminExecutiveController@destroy')->name('admin_executive_destroy');
+
     Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');
     Route::post('/invite_new_user', 'InviteUserController@store');
     Route::post('/invite_user', 'InviteUserController@send');

@@ -34,27 +34,40 @@ $user = $data['user'];
                     <h3><i class="fas fa-envelope"></i> <a href="mailto:{{$user->email}}">{{$user->email}}</a></h3>
                 @endif
                 @if (($user->user_info->share_phone  ?? '' )  == 1)
-                    <h3> <i class="fas fa-phone-square"></i> <a href="tel:{{$user->phone_number->phone_number}}">{{$user->phone_number->phone_number}}</a></h3>
+                    <h3><i class="fas fa-phone-square"></i> <a href="tel:{{$user->phone_number->phone_number}}">{{$user->phone_number->phone_number}}</a></h3>
                 @endif
                 <p>{!! $user->user_info->about  ?? '' !!}</p>
             </div>
-            @if(count($user->committee_memberships) > 0)
-                <div class="col-12">
-                    <h3>Membership in committees</h3>
-                    @foreach($user->committee_memberships as $m)
-                        @if($m->pivot->role != 'Past-Member')
-                            <div class="col-3 border border-dark rounded-lg m-1 mt-3 mr-3">
-                                <h3>
-                                    <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">{{$m->name}}</a>
-                                </h3>
-                                <h6>
-                                    {{$m->pivot->role}}
-                                </h6>
-                            </div>
-                        @endif
+            <div class="row">
+                <div class="col-6 border border-dark rounded-lg mt-3">
+                    @foreach($user->executives as $exec)
+                            Executive Title: {{$exec->title}} <br />
+                            From: {{$exec->start_date}} <br />
+                            Until: {{$exec->end_date}} <br />
+                        Email: {{$exec->email}} <br />
+
+                            {!! $exec->current ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!}
                     @endforeach
                 </div>
-            @endif
+
+                @if(count($user->committee_memberships) > 0)
+                    <div class="col-6">
+                        <h3>Membership in committees</h3>
+                        @foreach($user->committee_memberships as $m)
+                            @if($m->pivot->role != 'Past-Member')
+                                <div class="col-12 border border-dark rounded-lg m-1 mt-3 mr-3">
+                                    <h3>
+                                        <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">{{$m->name}}</a>
+                                    </h3>
+                                    <h6>
+                                        {{$m->pivot->role}}
+                                    </h6>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 @endsection

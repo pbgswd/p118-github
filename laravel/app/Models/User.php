@@ -160,4 +160,15 @@ class User extends Authenticatable implements HasAttachment, Searchable
     {
         return AccessLevelConstants::MEMBERS;
     }
+
+    public function executives()
+    {
+        return $this->hasMany(Executive::class);
+    }
+
+    public function current_executive()
+{
+    //todo when you want to get the current executive role 
+    //return $this->hasOne(Executive::class);
+}
 }

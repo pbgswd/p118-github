@@ -11,6 +11,18 @@ use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
+/**
+ * Class Policy
+ * @package App\Models
+ * @property int       $id
+ * @property int       $user_id
+ * @property string    $title
+ * @property string    $description
+ * @property DateTime  $date
+ * @property DateTime  $created_at
+ * @property DateTime  $updated_at
+ * @property bool      $live
+ */
 class Policy extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;

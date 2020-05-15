@@ -139,8 +139,8 @@ class AdminUserController extends Controller
     {
         $this->authorize('admin_update', Auth::user());
 
-        $user->load('phone_number', 'user_info', 'address', 'membership');
-
+        $user->load('phone_number', 'user_info', 'address', 'membership', 'executives');
+//dd($user);
         $currentUser = Auth::user(); // the logged in user, perms to edit?
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
