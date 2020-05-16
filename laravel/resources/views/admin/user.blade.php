@@ -40,7 +40,7 @@ $user_roles = $data['user_roles'];
         </div>
         <div class="col-4">
             <h4>
-                <a title="public profile for {{ $user->name }}" href="{{ route('admin_executive_create', $user->id) }}">
+                <a title="Create executive role for {{ $user->name }}" href="{{ route('admin_executive_create', $user->id) }}">
                     <i class="far fa-user-circle"></i>Create Executive Role
                 </a>
             </h4>
@@ -49,10 +49,12 @@ $user_roles = $data['user_roles'];
 
     <div class="row">
         @foreach($user->executives as $exec)
-            <a href="{{route('admin_executive_edit', $exec->id)}}">
-                Executive Title: {{$exec->title}}, {{$exec->start_date}} to {{$exec->end_date}}
-                {!! $exec->current ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!}
-            </a>
+            <div class="col-12">
+                <a href="{{route('admin_executive_edit', $exec->id)}}">
+                    Executive Title: {{$exec->title}}, {{$exec->start_date->format('F j Y')}} to {{$exec->end_date->format('F j Y')}}
+                    {!! $exec->current ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!}
+                </a>
+            </div>
         @endforeach
     </div>
 

@@ -43,7 +43,7 @@ Route::group(['middleware' => 'web'], function () {
 Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     //Route::get('/site', 'SiteController@index')->name('site');
-
+//todo a controller? use HomeController?
     Route::get('/site', function () {
         return view('site');
     });

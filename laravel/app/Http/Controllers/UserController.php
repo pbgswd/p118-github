@@ -48,6 +48,8 @@ class UserController extends Controller
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
 
+
+
         $data = [
             'user' => $user,
             'user_roles' => $member_roles,

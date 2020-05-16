@@ -61,8 +61,8 @@ $executives = $data['executives'];
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $e->start_date }} </td>
-                            <td> {{ $e->end_date }} </td>
+                            <td> {{ $e->start_date->format('F j Y') }} </td>
+                            <td> {{ $e->end_date->format('F j Y') }} </td>
                             <td> {{ $e->created_at }} </td>
                             <td> {{ $e->updated_at }} </td>
                         </tr>

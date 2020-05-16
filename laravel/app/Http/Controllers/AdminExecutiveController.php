@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Executive\AdminDestroyExecutive;
 use App\Models\Executive;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -80,6 +81,12 @@ class AdminExecutiveController extends Controller
     public function edit(Executive $executive)
     {
         $executive->load('user');
+
+        if($executive->end_date->isPast()){
+             $executive->fill([$executive->current = 0]);
+             $executive->save();
+        }
+
         //todo check end_date to set current
         $data = [
             'executive' => $executive,
@@ -99,15 +106,19 @@ class AdminExecutiveController extends Controller
     public function update(Request $request, Executive $executive)
     {
         //todo form validator
-        //todo check end_date to set current
 
         $executive->fill($request->executive);
+        $endDate = new Carbon($request->executive['end_date']);
+        if($endDate->isPast()){
+            $executive->current = 0;
+        }
+
         $executive->save();
         $executive->user;
 
         Session::flash('success', "Executive role for " . $executive->user->name . " updated");
 
-        return redirect()->route('admin_executive_edit', [$executive->user_id]);
+        return redirect()->route('admin_executive_edit', [$executive->id]);
     }
 
     /**

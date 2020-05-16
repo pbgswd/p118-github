@@ -42,8 +42,8 @@ $user = $data['user'];
                 <div class="col-6 border border-dark rounded-lg mt-3">
                     @foreach($user->executives as $exec)
                             Executive Title: {{$exec->title}} <br />
-                            From: {{$exec->start_date}} <br />
-                            Until: {{$exec->end_date}} <br />
+                            From: {{$exec->start_date->format('F j Y')}} <br />
+                            Until: {{$exec->end_date->format('F j Y')}} <br />
                         Email: {{$exec->email}} <br />
 
                             {!! $exec->current ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!}
