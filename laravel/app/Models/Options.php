@@ -48,6 +48,10 @@ class Options
 
     public static function executive_emails()
     {
+        $ems = [
+            'president' => ['title' => 'President', 'email' => 'president@iatse118.com'],
+        ];
+
         $emails = [
             'president' => 'president@iatse118.com',
             'vicepresident' => 'vicepresident@iatse118.com',

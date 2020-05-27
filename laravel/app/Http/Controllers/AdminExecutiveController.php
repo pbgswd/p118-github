@@ -43,6 +43,8 @@ class AdminExecutiveController extends Controller
 //todo verify this is the right way to assign relation.
         $executive->user = $user;
 
+        //todo options menu for emails, exec role titles 
+
         $data = [
             'executive' => $executive,
             'action' => 'Create',
@@ -60,9 +62,13 @@ class AdminExecutiveController extends Controller
     public function store(Request $request, User $user)
     {
 //todo form validator
-        //todo status of current var
+
         $executive = new Executive($request->executive);
         $executive->user_id = $user->id;
+
+        $endDate = new Carbon($request->executive['end_date']);
+        $executive->current = $endDate->isPast() ? 0 : 1;
+
         $executive->save();
 
         Session::flash('success', "Executive role for " . $user->name . " saved");
@@ -82,7 +88,7 @@ class AdminExecutiveController extends Controller
     {
         $executive->load('user');
 
-        if($executive->end_date->isPast()){
+        if($executive->end_date->isPast()) {
              $executive->fill([$executive->current = 0]);
              $executive->save();
         }

@@ -12,10 +12,7 @@ $posts = $topic->posts;
             <h1 class="display-3">{{$topic->name}}</h1>
             <a href="{{route('topics')}}">Topics /</a> {{$topic->name}}
         </div>
-        <div class="col-12">
-            <h2>{!! $topic->description !!}</h2>
-            {!! $topic->description !!}
-        </div>
+
         <div class="row p-lg-4">
             @if (count($pages) > 0)
                 <div class="col-6">
