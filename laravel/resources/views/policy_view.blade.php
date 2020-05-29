@@ -6,7 +6,7 @@ $policy = $data['policy'];
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
         <div class="col-12">
-            <h4><a href="{{url()->previous()}}"><i class="far fa-arrow-alt-circle-left"></i> Policies</a></h4>
+            <h4><a href="{{route('policies_list_public')}}"><i class="far fa-arrow-alt-circle-left"></i> Policies</a></h4>
         </div>
         <div class="row">
             <div  class="col-12">
