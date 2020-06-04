@@ -9,11 +9,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }}</title>
-
-
         <script src="/js/bootstrap-datepicker.min.js"></script>
-
-
         <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k"></script>
         <script src="/js/tinymce.js"></script>
         <link rel="canonical" href="http://{{env('APP_URL')}}/">
@@ -176,7 +172,20 @@
                 <hr/>
             </div> <!-- /container -->
         </main>
-        <footer class="container">
+        <footer class="container border border-dark rounded-lg mb-lg-5">
+            <div class="row">
+                <div class="col-12 mb-5">
+                    <a href="http://www.bcfed.com/" target="_blank">
+                        <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png" style="padding:1em;" />
+                    </a>
+                    <a href="https://www.iatse.net/" target="_blank">
+                        <img src="/storage/public/pu3zroqN8hUMes44mXBXQUuhsfCX9kQi6uP2xq01.png" style="padding:1em;" />
+                    </a>
+                    <a href="http://www.iatse-intl.org/" target="_blank">
+                        <img src="/storage/public/dK2ytnJHZU1Q0eJ3FTJYG9ogwR9V1zLHzB1ab9RE.png" style="padding:1em;" />
+                    </a>
+                </div>
+            </div>
             @guest
             @else
             <div class="row">
@@ -191,7 +200,21 @@
             </div>
             @endguest
             <div class="row">
-                <div class="col-12 mb-4">
+                <div class="col-4 mb-4">
+                    <h2>IATSE Local 118</h2>
+                    <h3>#206 - 2940 Main Street<br />
+                    Vancouver, BC, V5T 3G3</h3>
+                </div>
+
+
+                <div class="col-4 content">
+                    <h3><a href="https://goo.gl/maps/h1ftiTc6NoBXj5D1A" target="_blank" title="IATSE Local 118 Office"><i class="fas fa-map-marked-alt"></i> Maps</a></h3>
+                    <h3><a href="tel:604-685-9553"><i class="fas fa-phone-square"></i> 604-685-9553</a></h3>
+                    <h3><a href="mailto:office@iatse118.com"><i class="fas fa-envelope"></i> office@iatse118.com</a></h3>
+                </div>
+
+
+                <div class="col-4 mb-4">
                     <a href="/page/terms-of-use">Terms of Use</a> | <a href="/page/privacy-policy">Privacy Policy</a> | <a
                         href="/page/disclaimer">Disclaimer</a> | <a href="/page/links">Links</a> | <a href="/page/apply-for-work">Apply
                         for work</a>
@@ -202,13 +225,6 @@
                         | <a href="{{route('admin')}}" title="Admin"><i
                                 class="fas fa-tachometer-alt"></i></a>
                         @endrole
-                        <div class="col-12 mt-3">
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">Logout
-                                </button>
-                            </form>
-                        </div>
                     @endguest
                 </div>
             </div>
@@ -216,7 +232,12 @@
                 <div class="col-4 text-left">
                     <i class="far fa-copyright"></i> {{ config('app.name')}} <?php echo date('Y'); ?>
                 </div>
-                <div class="col-8 text-right">
+
+                <div class="col-4 text-left">
+                    Site by Peter Gordon and IATSE 118 Members
+                </div>
+
+                <div class="col-4 text-right">
                     <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
                 </div>
             </div>
