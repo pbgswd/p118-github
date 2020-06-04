@@ -130,7 +130,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdown">
                             <a class="dropdown-item" href="{{route('organizations')}}"><i class="fas fa-user-tie"></i> Organizations</a>
                             <a class="dropdown-item" href="{{route('venues')}}"><i class="far fa-building"></i> Venues</a>
-                            <a class="dropdown-item" href="#" title="">Master Rate Sheet</a>
+                            <a class="dropdown-item" href="{{route('agreement_show', 38)}}" title="">Master Rate Sheet</a>
                             <a class="dropdown-item" href="{{route('agreements_list_public')}}"><i class="far fa-handshake"></i> Agreements</a>
                         </div>
                     </li>
