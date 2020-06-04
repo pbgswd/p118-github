@@ -186,35 +186,8 @@
                     </a>
                 </div>
             </div>
-            @guest
-            @else
             <div class="row">
-                <div class="col-12 mb-5">
-                    <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
-                        {!! csrf_field() !!}
-                        <i class="fas fa-search"></i> &nbsp;
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">
-                        <button type="submit" name="Submit" value="Submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
-                    </form>
-                </div>
-            </div>
-            @endguest
-            <div class="row">
-                <div class="col-4 mb-4">
-                    <h2>IATSE Local 118</h2>
-                    <h3>#206 - 2940 Main Street<br />
-                    Vancouver, BC, V5T 3G3</h3>
-                </div>
-
-
-                <div class="col-4 content">
-                    <h3><a href="https://goo.gl/maps/h1ftiTc6NoBXj5D1A" target="_blank" title="IATSE Local 118 Office"><i class="fas fa-map-marked-alt"></i> Maps</a></h3>
-                    <h3><a href="tel:604-685-9553"><i class="fas fa-phone-square"></i> 604-685-9553</a></h3>
-                    <h3><a href="mailto:office@iatse118.com"><i class="fas fa-envelope"></i> office@iatse118.com</a></h3>
-                </div>
-
-
-                <div class="col-4 mb-4">
+                <div class="col-12 mb-4">
                     <a href="/page/terms-of-use">Terms of Use</a> | <a href="/page/privacy-policy">Privacy Policy</a> | <a
                         href="/page/disclaimer">Disclaimer</a> | <a href="/page/links">Links</a> | <a href="/page/apply-for-work">Apply
                         for work</a>
@@ -228,6 +201,32 @@
                     @endguest
                 </div>
             </div>
+            @guest
+            @else
+            <div class="row">
+                <div class="col-12 mb-5">
+                    <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
+                        {!! csrf_field() !!}
+                        <i class="fas fa-search"></i> &nbsp;
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">
+                        <button type="submit" name="Submit" value="Submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                    </form>
+                </div>
+            </div>
+            @endguest
+            <div class="row mb-4">
+                <div class="col-6">
+                    <h2>IATSE Local 118</h2>
+                    <h3>#206 - 2940 Main Street<br />
+                    Vancouver, BC, V5T 3G3</h3>
+                </div>
+                <div class="col-6">
+                    <h3><a href="https://goo.gl/maps/h1ftiTc6NoBXj5D1A" target="_blank" title="IATSE Local 118 Office"><i class="fas fa-map-marked-alt"></i> Maps</a></h3>
+                    <h3><a href="tel:604-685-9553"><i class="fas fa-phone-square"></i> 604-685-9553</a></h3>
+                    <h3><a href="mailto:office@iatse118.com"><i class="fas fa-envelope"></i> office@iatse118.com</a></h3>
+                </div>
+            </div>
+
             <div class="row mt-2 mb-lg-2">
                 <div class="col-4 text-left">
                     <i class="far fa-copyright"></i> {{ config('app.name')}} <?php echo date('Y'); ?>
