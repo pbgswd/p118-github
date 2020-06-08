@@ -6,7 +6,9 @@ use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\UserPolicy;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
@@ -161,14 +163,30 @@ class User extends Authenticatable implements HasAttachment, Searchable
         return AccessLevelConstants::MEMBERS;
     }
 
-    public function executives()
+    /**
+     * Limit to current active roles
+     *
+     * @return HasMany
+     */
+    public function executiveRoles(): HasMany
+    {
+        // todo: todoRTL: does this work if end_date = NULL?
+        return $this->hasMany(Executive::class)->whereRaw('NOW() BETWEEN start_date AND end_date');
+    }
+
+    /**
+     * All historical executive roles
+     *
+     * @return HasMany
+     */
+    public function allExecutiveRoles(): HasMany
     {
         return $this->hasMany(Executive::class);
     }
 
     public function current_executive()
-{
-    //todo when you want to get the current executive role
-    //return $this->hasOne(Executive::class);
-}
+    {
+        //todo when you want to get the current executive role
+        //return $this->hasOne(Executive::class);
+    }
 }
