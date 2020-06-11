@@ -77,20 +77,24 @@
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="{{ route('hello') }}">{{config('app.name')}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">Menus
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('hello') }}" title="Home Page {{ config('app.name') }}">
                             <i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="true">About Us</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown">
+
+
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            About Us
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                             <a class="dropdown-item" href="{{route('page_show', 'history')}}" title="History">
                                 History
                             </a>
@@ -100,11 +104,13 @@
                             <a class="dropdown-item" href="#">118 Store</a>
                             <a class="dropdown-item" href="#">Photos</a>
                         </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="true">Membership</a>
+                    </div>
+                    &nbsp;
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Membership
+                        </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown">
                             <a class="dropdown-item" href="{{route('page_show', 'apply-for-work')}}"
                                title="Apply for Work">Apply</a>
@@ -115,11 +121,13 @@
                             <a class="dropdown-item" href="#">Dues</a>
                             <a class="dropdown-item" href="#">Leaving Membership</a>
                         </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="true">Benefits</a>
+                    </div>
+                    &nbsp;
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Benefits
+                        </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown">
                             <a class="dropdown-item" href="{{route('topic_show', 'health-and-welfare-info')}}"
                                title="Health & Welfare Overview">H & W Overview</a>
@@ -128,11 +136,13 @@
                             <a class="dropdown-item" href="#">Discounts & Promotions</a>
                             <a class="dropdown-item" href="#">Health & Safety</a>
                         </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="true">News & Events</a>
+                    </div>
+                    &nbsp;
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            News & Events
+                        </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown">
                             <a class="dropdown-item" href="#" title="Events">Event Listings</a>
                             <a class="dropdown-item" href="#">Members Only Events</a>
@@ -140,11 +150,13 @@
                             <a class="dropdown-item" href="#">News</a>
                             <a class="dropdown-item" href="#">Photos</a>
                         </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="true">Employers & Venues</a>
+                    </div>
+                    &nbsp;
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Employers & Venues
+                        </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown">
                             <a class="dropdown-item" href="{{route('organizations')}}">
                                 <i class="fas fa-user-tie"></i>
@@ -157,46 +169,55 @@
                                 <i class="far fa-handshake"></i>
                                 Agreements</a>
                         </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="true">Contact Us</a>
+                    </div>
+                    &nbsp;
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Contact Us
+                        </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown">
                             <a class="dropdown-item" href="{{route('hireus')}}">Why Hire Union</a>
                             <a class="dropdown-item" href="{{route('contact')}}">Contact</a>
                         </div>
-                    </li>
+                    </div>
+
+
+
                     @guest
                     @else
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="true">Members</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown">
-                            <a class="dropdown-item" href="{{route('list_meetings')}}"><i class="far fa-folder"></i>
-                                Meetings & Minutes</a>
-                            <a class="dropdown-item" href="#"><i class="far fa-folder"></i> Budgets & Audits</a>
-                            <a class="dropdown-item" href="{{route('committees')}}"><i class="fas fa-users"></i>
-                                Committees</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-users"></i> elections</a>
-                            <a class="dropdown-item" href="{{route('jobs_list')}}"><i class="fas fa-hard-hat"></i>
-                                Jobs</a>
-                            <a class="dropdown-item" href="https://login.callsteward.ca/" target="_blank"
-                               title="Link to CallSteward">
-                            <i class="fas fa-headset"></i> CS</a>
-                            <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}" title="My Profile">
-                                <i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
-                            <a class="dropdown-item" href="{{route('members')}}">
-                                <i class="fas fa-user-friends"></i> Members</a>
-                            <a class="dropdown-item" href="{{route('bylaws_list_public')}}">
-                                <i class="fas fa-gavel"></i> By-Laws</a>
-                            <a class="dropdown-item" href="{{route('policies_list_public')}}">
-                                <i class="fas fa-scroll"></i>  Policies</a>
-                            <a class="dropdown-item" href="/site"><i class="fas fa-industry">
-                                </i> Landing Page</a>
+                        &nbsp;
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Members
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdown">
+                                <a class="dropdown-item" href="{{route('list_meetings')}}"><i class="far fa-folder"></i>
+                                    Meetings & Minutes</a>
+                                <a class="dropdown-item" href="#"><i class="far fa-folder"></i> Budgets & Audits</a>
+                                <a class="dropdown-item" href="{{route('committees')}}"><i class="fas fa-users"></i>
+                                    Committees</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-users"></i> elections</a>
+                                <a class="dropdown-item" href="{{route('jobs_list')}}"><i class="fas fa-hard-hat"></i>
+                                    Jobs</a>
+                                <a class="dropdown-item" href="https://login.callsteward.ca/" target="_blank"
+                                   title="Link to CallSteward">
+                                    <i class="fas fa-headset"></i> CS</a>
+                                <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}" title="My Profile">
+                                    <i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
+                                <a class="dropdown-item" href="{{route('members')}}">
+                                    <i class="fas fa-user-friends"></i> Members</a>
+                                <a class="dropdown-item" href="{{route('bylaws_list_public')}}">
+                                    <i class="fas fa-gavel"></i> By-Laws</a>
+                                <a class="dropdown-item" href="{{route('policies_list_public')}}">
+                                    <i class="fas fa-scroll"></i>  Policies</a>
+                                <a class="dropdown-item" href="/site"><i class="fas fa-industry">
+                                    </i> Landing Page</a>
+                            </div>
                         </div>
-                    </li>
+
+
                     @endguest
                     @guest
                     @else
