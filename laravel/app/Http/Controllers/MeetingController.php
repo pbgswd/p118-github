@@ -16,7 +16,8 @@ class MeetingController extends Controller
     public function index()
     {
         $data = [
-            'meetings' => Meeting::withoutGlobalScopes()->sortable()->with('user')->orderBy('date', 'desc')->paginate(20),
+            'meetings' => Meeting::withoutGlobalScopes()
+                ->sortable()->with('user')->orderBy('date', 'desc')->paginate(20),
             'count' => Meeting::withoutGlobalScopes()->count(),
         ];
 

@@ -75,20 +75,26 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::post('committee/{committee}/join', 'CommitteeController@join');
     Route::post('committee/{committee}/leave', 'CommitteeController@leave');
 
-    Route::get('committee/{committee}/show-members', 'CommitteeController@show_members')->name('committee_list_members');
+    Route::get('committee/{committee}/show-members', 'CommitteeController@show_members')
+        ->name('committee_list_members');
 
-    Route::get('committee/{committee}/post/create', 'CommitteePostController@create')->name('committee_add_public_post');
+    Route::get('committee/{committee}/post/create', 'CommitteePostController@create')
+        ->name('committee_add_public_post');
     Route::post('committee/{committee}/post/create', 'CommitteePostController@store');
-    Route::get('committee/{committee}/post/{committeePost}', 'CommitteePostController@show')->name('public_committee_post_show');
+    Route::get('committee/{committee}/post/{committeePost}', 'CommitteePostController@show')
+        ->name('public_committee_post_show');
 
     //Route::post('committee/{committee}/post/{committeePost}/create', 'CommitteePostController@store');
 
-    Route::get('committee/{committee}/post/{committeePost}/edit', 'CommitteePostController@edit')->name('committee_post_edit_form');
+    Route::get('committee/{committee}/post/{committeePost}/edit', 'CommitteePostController@edit')
+        ->name('committee_post_edit_form');
     Route::post('committee/{committee}/post/{any_committee_post}/edit', 'CommitteePostController@update');
 
-    Route::delete('committee/{committee}/post/{committeePost}/destroy', 'CommitteePostController@destroy')->name('public_committee_post_destroy');
+    Route::delete('committee/{committee}/post/{committeePost}/destroy', 'CommitteePostController@destroy')
+        ->name('public_committee_post_destroy');
 
-    Route::post('committee/{committee}/post/{committeePost}/comment/create', 'CommitteePostCommentController@store')->name('public_committee_post_comment');
+    Route::post('committee/{committee}/post/{committeePost}/comment/create', 'CommitteePostCommentController@store')
+        ->name('public_committee_post_comment');
 
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
@@ -113,7 +119,8 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
 
     Route::post('/search', 'LocalSearchController@admin_search')->name('admin_search');
     //Route::get('/search', 'LocalSearchController@admin_index')->name('admin_search_show');
-    Route::post('/attachment_search', 'LocalSearchController@admin_attachment_search')->name('list_attachments_search_result');
+    Route::post('/attachment_search', 'LocalSearchController@admin_attachment_search')
+        ->name('list_attachments_search_result');
 
     Route::get('/policies', 'AdminPolicyController@index')->name('policies_list');
     Route::get('/policy/create', 'AdminPolicyController@create')->name('admin_policy_create');
@@ -136,12 +143,17 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('/user/{user}/edit', 'AdminUserController@update');
     Route::delete('/user/delete', 'AdminUserController@destroy')->name('user_destroy');
 
-    Route::get('/executives', 'AdminExecutiveController@index')->name('admin_executives_list');
-    Route::get('/user/{user}/executive/create', 'AdminExecutiveController@create')->name('admin_executive_create');
-    Route::post('/user/{user}/executive/create', 'AdminExecutiveController@store');
-    Route::get('/executive/{executive}/edit', 'AdminExecutiveController@edit')->name('admin_executive_edit');
-    Route::post('/executive/{executive}/edit', 'AdminExecutiveController@update');
-    Route::delete('/executive/delete', 'AdminExecutiveController@destroy')->name('admin_executive_destroy');
+    Route::get('/executives', 'AdminExecutiveMembershipController@index')->name('admin_executives_list');
+
+    Route::get('/user/{user}/executiveMembership/create', 'AdminExecutiveMembershipController@create')->name('admin_executive_create');
+    Route::post('/user/{user}/executiveMembership/create', 'AdminExecutiveMembershipController@store');
+
+
+    Route::get('/executiveMembership/{executiveMembership}/edit', 'AdminExecutiveMembershipController@edit')
+        ->name('admin_executive_edit');
+    Route::post('/executiveMembership/{executiveMembership}/edit', 'AdminExecutiveMembershipController@update');
+    Route::delete('/executiveMembership/{executiveMembership}/delete', 'AdminExecutiveMembershipController@destroy')
+      ->name('admin_executive_destroy');
 
     Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');
     Route::post('/invite_new_user', 'InviteUserController@store');
@@ -195,9 +207,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::post('committee/{committee}/list-bulk-add', 'AdminCommitteeMemberController@store');
 
     Route::get('committee/{committee}/posts', 'AdminCommitteePostController@index')->name('committee_posts_list');
-    Route::get('committee/{committee}/post/create', 'AdminCommitteePostController@create')->name('admin_committee_post');
+    Route::get('committee/{committee}/post/create', 'AdminCommitteePostController@create')
+        ->name('admin_committee_post');
     Route::post('committee/{committee}/post/create', 'AdminCommitteePostController@store');
-    Route::get('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@edit')->name('admin_committee_post_edit');
+    Route::get('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@edit')
+        ->name('admin_committee_post_edit');
     Route::post('committee/{committee}/post/{any_committee_post}/edit', 'AdminCommitteePostController@update');
     Route::delete('committee/{committee}/post/delete', 'AdminCommitteePostController@destroy')->name('committee_post_destroy');
 

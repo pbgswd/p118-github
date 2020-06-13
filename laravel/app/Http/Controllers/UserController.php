@@ -22,7 +22,6 @@ use Spatie\Permission\Models\Role;
  */
 class UserController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -42,13 +41,13 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->load('committee_memberships', 'phone_number', 'user_info', 'address', 'membership', 'executives');
+       $user->load('committee_memberships', 'phone_number',
+                    'user_info', 'address', 'membership',
+                    'allExecutiveRoles');
 
         $roles = Role::get();
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
-
-
 
         $data = [
             'user' => $user,

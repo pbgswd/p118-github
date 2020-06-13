@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -11,11 +12,8 @@ use Kyslik\ColumnSortable\Sortable;
  * @package App\Models
  * @property int            $id
  * @property string         $title
- * @property boolean        $current
- * @property int            $user_id
+ * @property string         $email
  * @property User           $user
- * @property DateTime       $start_date
- * @property DateTime       $end_date
  * @property DateTime       $created_at
  * @property DateTime       $updated_at
  */
@@ -23,42 +21,37 @@ class Executive extends Model
 {
     use Sortable;
 
+    protected $table = 'executives';
+
     public $sortable = [
-        'user_id',
+        'id',
         'title',
         'email',
-        'start_date',
-        'end_date',
-        'current',
-    ];
-
-    protected $fillable = [
-      'user_id',
-      'title',
-      'email',
-      'start_date',
-      'end_date',
-      'current',
-    ];
-
-    protected $dates = [
-        'start_date',
-        'end_date',
         'created_at',
         'updated_at',
     ];
 
-    protected $casts = [
-        'current' => 'boolean',
+    protected $fillable = [
+        'id',
+      'title',
+      'email',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'start_date',
+        'end_date',
     ];
 
     /**
-     * @return HasOne
+     * @return BelongsToMany
      */
-    //todo executive to user relationship could be many titles, rows, to one user
-    public function user(): HasOne
+
+    public function user(): BelongsToMany
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsToMany(User::class, 'executive_user')
+            ->withPivot('id', 'start_date', 'end_date', 'current');
     }
 
 }

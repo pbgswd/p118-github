@@ -60,9 +60,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('any_meeting', static function ($id) {
             return Meeting::withoutGlobalScopes()->findOrFail($id);
         });
-        Route::bind('any_organization', static function ($slug) {
-            return Organization::withoutGlobalScopes()->where('slug', $slug)->first();
-        });
         Route::bind('any_page', static function ($slug) {
             return Page::withoutGlobalScopes()->where('slug', $slug)->first();
         });
@@ -75,8 +72,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('any_user', static function ($id) {
             return User::withoutGlobalScopes()->findOrFail($id);
         });
+        //todo remove scope venue, organization
         Route::bind('any_venue', static function ($slug) {
             return Venue::withoutGlobalScopes()->where('slug', $slug)->first();
+        });
+        Route::bind('any_organization', static function ($slug) {
+            return Organization::withoutGlobalScopes()->where('slug', $slug)->first();
         });
         Route::bind('any_policy', static function ($id) {
             return Policy::withoutGlobalScopes()->findOrFail($id);

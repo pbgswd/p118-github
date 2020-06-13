@@ -6,6 +6,7 @@ use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateUser;
 use App\Models\Address;
+use App\Models\Executive;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
@@ -15,6 +16,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -48,6 +50,11 @@ class AdminUserController extends Controller
      */
     public function create()
     {
+        Session::flash('warning', 'Create method blocked off. Contact admin for support.');
+
+        return redirect()->route('users_list');
+        exit();
+
         $this->authorize('create', Auth::user());
 
         $user = new User;
@@ -90,11 +97,9 @@ class AdminUserController extends Controller
         $this->authorize('create', Auth::user());
 
 //todo is password here just encrypting the word 'secret'?
-
 //todo create default password for new user based on name and other data
 //todo do not allow user to keep first password on signup.
-
-        //todo a fake password, then leverage password reset to send out login access
+//todo a fake password, then leverage password reset to send out login access
 
         $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]));
         $user->save();
@@ -139,9 +144,14 @@ class AdminUserController extends Controller
     {
         $this->authorize('admin_update', Auth::user());
 
-        $user->load('phone_number', 'user_info', 'address', 'membership', 'executives');
-//dd($user);
-        $currentUser = Auth::user(); // the logged in user, perms to edit?
+        $user->load('phone_number', 'user_info',
+                    'address', 'membership',
+                    'allExecutiveRoles',
+        );
+
+
+        $currentUser = Auth::user(); // the logged in user, perms to edit? // dd(Auth::user()->permissions);
+
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
         $user_roles = $user->getRoleNames()->toArray();
@@ -149,6 +159,7 @@ class AdminUserController extends Controller
 
         $data = [
             'user' => $user,
+            'executive_roles' => Executive::all(),
             'user_roles' => $user_roles,
             'roles' => $roles,
             'action' => 'Edit',
@@ -169,7 +180,7 @@ class AdminUserController extends Controller
     public function update(UpdateUser $userRequest, User $user)
     {
         $this->authorize('admin_update', $user);
-        //TODO send email to office when user updates contact information
+//TODO send email to office when user updates contact information
 
         $user->fill($userRequest['user']);
         $user->save();
@@ -243,7 +254,8 @@ class AdminUserController extends Controller
         // NOTE: $request->id is an array
         $users = User::find($request->id);
 
-        //todo cannot delete user when user has a post, page, topic, or is a member of a committee. Deal with this
+        //todo cannot delete user when user has a post, page, topic, or is a member of a committee.
+        // Deal with this
 //todo user soft delete
         foreach ($users as $user)
         {
@@ -254,6 +266,7 @@ class AdminUserController extends Controller
             {
                 $user->removeRole($r);
             }
+//todo delete executive relation
 
             PhoneNumber::where('user_id', $user->id)->delete();
             Address::where('user_id', $user->id)->delete();

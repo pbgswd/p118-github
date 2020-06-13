@@ -32,7 +32,8 @@ class PostController extends Controller
         if (Auth::check()) {
             $posts = Post::sortable()->with('tagged')->paginate(10);
         } else {
-            $posts = Post::sortable()->where('access_level', '=', AccessLevelConstants::PUBLIC)->with('tagged')->paginate(10);
+            $posts = Post::sortable()
+                ->where('access_level', '=', AccessLevelConstants::PUBLIC)->with('tagged')->paginate(10);
         }
 
         return view('posts', ['data' => ['posts' => $posts]]);

@@ -7,8 +7,10 @@ public/bylaws
 public/agreements
 public/css/skeleton.css
 public/css/normalize.css
-/public/css/app.css
+public/css/app.css
+public/mix-manifest.json
 public/css/email.css
+public/css/_tranitions.css
 public/js/app.js
 public/js/dashboard.js
 

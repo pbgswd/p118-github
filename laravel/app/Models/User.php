@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Searchable\SearchResult;
@@ -164,29 +165,24 @@ class User extends Authenticatable implements HasAttachment, Searchable
     }
 
     /**
-     * Limit to current active roles
+     * Limit to current active role(s) for the given user
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function executiveRoles(): HasMany
+    public function executive_roles(): BelongsToMany
     {
-        // todo: todoRTL: does this work if end_date = NULL?
-        return $this->hasMany(Executive::class)->whereRaw('NOW() BETWEEN start_date AND end_date');
+        return $this->belongsToMany(ExecutiveMembership::class);
     }
 
     /**
-     * All historical executive roles
+     * All historical executive roles of the given user
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function allExecutiveRoles(): HasMany
+    public function allExecutiveRoles(): BelongsToMany
     {
-        return $this->hasMany(Executive::class);
+        return $this->belongsToMany(Executive::class, 'executive_user')
+           ->withPivot('id', 'start_date', 'end_date', 'current');
     }
 
-    public function current_executive()
-    {
-        //todo when you want to get the current executive role
-        //return $this->hasOne(Executive::class);
-    }
 }

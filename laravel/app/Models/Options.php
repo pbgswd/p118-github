@@ -33,38 +33,6 @@ class Options
         return array_combine($membership, $membership);
     }
 
-    public static function executive()
-    {
-        $executive = [
-            'President',
-            'Vice-President',
-            'Business Agent',
-            'Member at Large',
-            'Recording Secretary',
-            'Financial Secretary-Treasurer',
-            ];
-        return array_combine($executive, $executive);
-    }
-
-    public static function executive_emails()
-    {
-        $ems = [
-            'president' => ['title' => 'President', 'email' => 'president@iatse118.com'],
-        ];
-
-        $emails = [
-            'president' => 'president@iatse118.com',
-            'vicepresident' => 'vicepresident@iatse118.com',
-            'businessagent' => 'businessagent@iatse118.com',
-            'financialsecretary' => 'finaicialsecretary@iatse118.com',
-            'memberatlarge1' => 'memberatlarge1@iatse118.com',
-            'memberatlarge2' => 'memberatlarge2@iatse118.com',
-            'constitution' => 'constitution@iatse118.com',
-            'healthandwelfare' => 'healthandwelfare@iatse118.com',
-        ];
-        return $emails;
-    }
-
     public static function committee_roles()
     {
         $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Past-Member'];

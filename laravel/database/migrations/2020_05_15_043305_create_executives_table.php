@@ -15,13 +15,8 @@ class CreateExecutivesTable extends Migration
     {
         Schema::create('executives', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
             $table->string('email')->nullable();
-            $table->date('start_date');
-            $table->date('end_date')->nullable();;
-            $table->boolean('current')->default(1);
             $table->timestamps();
         });
     }

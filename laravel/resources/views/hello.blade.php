@@ -27,7 +27,7 @@
                 Local 118 has a large, skilled and experienced workforce ready to meet the needs of your production.
             </p>
             <p>
-                <a class="btn btn-primary btn-lg" href="/page/about-us" role="button">Learn more &raquo;</a>
+                <a class="btn btn-primary btn-lg" href="/page/history" role="button">Learn more &raquo;</a>
             </p>
         </div>
     </div>
