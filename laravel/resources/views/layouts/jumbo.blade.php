@@ -272,16 +272,25 @@
             </div> <!-- /container -->
         </main>
         <footer class="container border border-dark rounded-lg mb-2">
-            <div class="row">
-                <div class="col-12 mb-5">
-                    <a href="http://www.bcfed.com/" target="_blank">
+            <div class="row mb-5">
+                <div class="col-3">
+                    <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
                         <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png" class="p-1" />
                     </a>
-                    <a href="https://www.iatse.net/" target="_blank">
-                        <img src="/storage/public/pu3zroqN8hUMes44mXBXQUuhsfCX9kQi6uP2xq01.png" class="p-1" />
-                    </a>
-                    <a href="http://www.iatse-intl.org/" target="_blank">
+                </div>
+                <div class="col-3">
+                    <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
                         <img src="/storage/public/dK2ytnJHZU1Q0eJ3FTJYG9ogwR9V1zLHzB1ab9RE.png" class="p-1" />
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="https://canadianlabour.ca/" title="Canadian labour Congress" target="_blank">
+                        <img src="/storage/public/KKVqVfiv4hU4ayxNukvYJsN5EKgIqnYfx5mssuT7.png" class="p-1" />
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="http://www.vdlc.ca/" title="Vancouver & District Labour Congress" target="_blank">
+                        <img src="/storage/public/mlL21yHivsR7ztxYh3hRB2Y8j9rcFzY5BfXtSLE1.jpeg" class="p-1" />
                     </a>
                 </div>
             </div>

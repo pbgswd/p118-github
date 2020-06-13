@@ -29,7 +29,10 @@ $user = $data['user'];
             </div>
             <div class="col-12">
                 @if (($user->user_info->share_email ?? '' ) == 1)
-                    <h3><i class="fas fa-envelope"></i> <a href="mailto:{{$user->email}}">{{$user->email}}</a></h3>
+                    <h3>
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:{{$user->email}}">{{$user->email}}</a>
+                    </h3>
                 @endif
                 @if (($user->user_info->share_phone  ?? '' )  == 1)
                     <h3>
@@ -42,20 +45,22 @@ $user = $data['user'];
                 <p>{!! $user->user_info->about  ?? '' !!}</p>
             </div>
             <div class="row p-4">
+                @if( $user->allExecutiveRoles->count() > 0 )
                 <div class="col-6 border border-dark rounded-lg mt-3 mr-1">
-                    @if( null !== $user->allExecutiveRoles )
-                        <h4>Executive Title:</h4>
-                        @foreach($user->allExecutiveRoles as $exec)
-                           <h5>{{$exec->title}}
+                    <h4>Executive Title:</h4>
+                    @foreach($user->allExecutiveRoles as $exec)
+                       <h5>{{$exec->title}}
                             {{ \Carbon\Carbon::parse($exec->pivot->end_date)->isPast() ? '':'(Currently)'}}
                             <a href="mailto:{{$exec->email}}" title="Send email to {{$exec->email}}">
                                 <i class="fas fa-envelope"></i>
                             </a> <br />
                             From: {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('F j Y')}}
-                            Until: {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('F j Y')}} </h5><br />
-                        @endforeach
-                    @endif
+                            Until: {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('F j Y')}}
+                       </h5>
+                        <br />
+                    @endforeach
                 </div>
+                @endif
                 @if(count($user->committee_memberships) > 0)
                     <div class="col-5 border border-dark rounded-lg mt-3">
                         <h4>Membership in committees</h4>
