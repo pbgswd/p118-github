@@ -31,7 +31,6 @@ class VenueController extends Controller
      */
     public function show(Venue $venue)
     {
-        $this->authorize('view', Auth::user());
 
         $venue->load('agreements');
 

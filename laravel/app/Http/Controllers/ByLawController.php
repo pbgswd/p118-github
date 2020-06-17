@@ -23,7 +23,6 @@ class ByLawController extends Controller
 
     public function list()
     {
-        $this->authorize('viewAny', Auth::user());
         $data = [];
         $data['bylaws'] = Bylaw::sortable()->with('attachments')->orderBy('date', 'desc')->paginate(20);
         $data['count'] = Bylaw::count();
@@ -39,6 +38,8 @@ class ByLawController extends Controller
      */
     public function show(Bylaw $bylaw)
     {
+        //todo bylaw checkbox members/public
+
         $bylaw->load('user', 'attachments');
 
         return view('bylaw_view', ['data' => ['bylaw' => $bylaw]]);

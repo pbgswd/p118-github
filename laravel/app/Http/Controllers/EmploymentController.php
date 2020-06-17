@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employment;
 use App\Services\AttachmentService;
-
+use Carbon\Carbon;
 
 
 class EmploymentController extends Controller
@@ -58,7 +58,5 @@ class EmploymentController extends Controller
 
         return view('employment', ['data' => ['employment' => $employment]]);
     }
-
-
 
 }

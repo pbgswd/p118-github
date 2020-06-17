@@ -14,7 +14,7 @@ class AgreementController extends Controller
      */
     public function list()
     {
-        //$this->authorize('viewAny', Auth::user());
+        //todo member/public for attachments
         $data = [];
         $data['agreements'] = Agreement::sortable()->with('attachments')->orderBy('until', 'desc')->paginate(20);
         $data['count'] = Agreement::count();

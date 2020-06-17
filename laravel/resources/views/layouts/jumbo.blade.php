@@ -80,15 +80,12 @@
                     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">Menus
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('hello') }}" title="Home Page {{ config('app.name') }}">
                             <i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
                     </li>
-
-
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -104,8 +101,7 @@
                             <a class="dropdown-item" href="#">118 Store</a>
                             <a class="dropdown-item" href="#">Photos</a>
                         </div>
-                    </div>
-                    &nbsp;
+                    </div>&nbsp;
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -121,8 +117,7 @@
                             <a class="dropdown-item" href="#">Dues</a>
                             <a class="dropdown-item" href="#">Leaving Membership</a>
                         </div>
-                    </div>
-                    &nbsp;
+                    </div>&nbsp;
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -136,8 +131,7 @@
                             <a class="dropdown-item" href="#">Discounts & Promotions</a>
                             <a class="dropdown-item" href="#">Health & Safety</a>
                         </div>
-                    </div>
-                    &nbsp;
+                    </div>&nbsp;
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -150,8 +144,7 @@
                             <a class="dropdown-item" href="#">News</a>
                             <a class="dropdown-item" href="#">Photos</a>
                         </div>
-                    </div>
-                    &nbsp;
+                    </div>&nbsp;
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -170,7 +163,6 @@
                                 Agreements</a>
                         </div>
                     </div>
-                    &nbsp;
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -181,12 +173,8 @@
                             <a class="dropdown-item" href="{{route('contact')}}">Contact</a>
                         </div>
                     </div>
-
-
-
                     @guest
-                    @else
-                        &nbsp;
+                    @else&nbsp;
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -216,8 +204,6 @@
                                     </i> Landing Page</a>
                             </div>
                         </div>
-
-
                     @endguest
                     @guest
                     @else
@@ -307,16 +293,24 @@
                         @endrole
                 </div>
                 @endguest
+            </div>
+            @guest
                 <div class="col-8 mb-4">
                     <a href="/login">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
                     </a>
                 </div>
-            </div>
-            @guest
             @else
             <div class="row">
-                <div class="col-12 mb-5">
+                <div class="col-6 mb-4">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+                <div class="col-6 mb-5">
                     <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
                         {!! csrf_field() !!}
                         <i class="fas fa-search"></i> &nbsp;
@@ -330,13 +324,13 @@
                 </div>
             </div>
             @endguest
-            <div class="row mb-4">
-                <div class="col-6">
+            <div class="row mb-6">
+                <div class="col-lg-6">
                     <h2>IATSE Local 118</h2>
-                    <h3>#206 - 2940 Main Street<br />
-                    Vancouver, BC, V5T 3G3</h3>
+                    <h4>#206 - 2940 Main Street<br />
+                    Vancouver, BC, V5T 3G3</h4>
                 </div>
-                <div class="col-6">
+                <div class="col-lg-6">
                     <h3>
                         <a href="https://goo.gl/maps/pXb7Bv8n1jHGykjh8" target="_blank" title="IATSE Local 118 Office">
                             <i class="fas fa-map-marked-alt"></i>
@@ -351,10 +345,10 @@
             </div>
             <div class="row mt-2 mb-lg-2">
                 <div class="col-4 text-left">
-                    <i class="far fa-copyright"></i> {{ config('app.name')}} <?php echo date('Y'); ?>
+                    <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
                 </div>
                 <div class="col-4 text-left">
-                    Site by Peter Gordon and IATSE 118 Members
+                    <h6>Site by Peter Gordon <br />& IATSE 118 Members</h6>
                 </div>
                 <div class="col-4 text-right">
                     <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>

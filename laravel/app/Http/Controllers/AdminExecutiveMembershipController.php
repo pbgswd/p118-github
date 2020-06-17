@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Executive;
 use App\Models\ExecutiveMembership;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -60,9 +61,13 @@ class AdminExecutiveMembershipController extends Controller
     {
         $executiveMembership = new ExecutiveMembership($request->input());
         $executiveMembership->user_id = $user->id;
-        $executiveMembership->current = $request->end_date->isPast() ? 0 : 1;
+
+        $endDate = Carbon::createFromDate($request->end_date);
+        $executiveMembership->current = $endDate->isPast() ? 0 : 1;
 
         $executiveMembership->save();
+
+        //todo msg member that he she has a role.
 
         Session::flash('success', "You have created a member executive role");
 
@@ -101,8 +106,11 @@ class AdminExecutiveMembershipController extends Controller
      */
     public function update(Request $request, ExecutiveMembership $executiveMembership)
     {
+        //todo form request
         $executiveMembership->fill($request->all());
         $executiveMembership->save();
+
+        Session::flash('success', "Role has been updated");
 
         return redirect()->route('admin_executive_edit', $executiveMembership->id);
     }

@@ -7,6 +7,7 @@ use App\Http\Requests\Employment\StoreEmploymentRequest;
 use App\Http\Requests\Employment\UpdateEmploymentRequest;
 use App\Models\Employment;
 use App\Services\AttachmentService;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -98,6 +99,7 @@ class AdminEmploymentController extends Controller
     {
         $this->authorize('update', Auth::user());
         $employment->load('user', 'attachments');
+
         $employment['jobstatus'] = $employment->deadline->isPast() ? 0 : 1;
 
         return view(

@@ -13,7 +13,6 @@ class OrganizationController extends Controller
      */
     public function list()
     {
-        //$this->authorize('viewAny', Auth::user());
         $data = [];
         $data['organizations'] = Organization::sortable()->orderBy('name')->paginate(10);
 
@@ -28,7 +27,7 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-        //$this->authorize('viewAny', Auth::user());
+
         $organization->load('agreements');
         $data = [];
         $data['organization'] = $organization;

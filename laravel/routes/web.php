@@ -36,6 +36,21 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/site_invitation/{inviteUser}/{password}', 'InviteUserController@show')->name('invite_user_signup');
     Route::post('/site_invitation/{inviteUser}/{password}', 'InviteUserController@process_user');
 
+
+
+    Route::get('/venues', 'VenueController@list')->name('venues');
+    Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
+
+    Route::get('/organizations', 'OrganizationController@list')->name('organizations');
+    Route::get('/organization/{organization}', 'OrganizationController@show')->name('organization');
+
+    Route::get('agreements', 'AgreementController@list')->name('agreements_list_public');
+    Route::get('/agreement/{agreement}', 'AgreementController@show')->name('agreement_show');
+
+    Route::get('bylaws', 'ByLawController@list')->name('bylaws_list_public');
+    Route::get('/bylaws/{bylaw}', 'ByLawController@show')->name('bylaw_show');
+
+
     Route::get('/{folder}/download/{attachment}', 'AttachmentController@download')->name('attachment_download');
 });
 
@@ -60,11 +75,6 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     Route::get('/invited/{user}/{hash}', 'InviteUserController@process')->name('process_user');
 
-    Route::get('agreements', 'AgreementController@list')->name('agreements_list_public');
-    Route::get('/agreement/{agreement}', 'AgreementController@show')->name('agreement_show');
-
-    Route::get('bylaws', 'ByLawController@list')->name('bylaws_list_public');
-    Route::get('/bylaws/{bylaw}', 'ByLawController@show')->name('bylaw_show');
 
     Route::get('policies', 'PolicyController@index')->name('policies_list_public');
     Route::get('/policies/{policy}', 'PolicyController@show')->name('policy_show_public');
@@ -99,11 +109,6 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
 
-    Route::get('/venues', 'VenueController@list')->name('venues');
-    Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
-
-    Route::get('/organizations', 'OrganizationController@list')->name('organizations');
-    Route::get('/organization/{organization}', 'OrganizationController@show')->name('organization');
 
     Route::post('/search', 'LocalSearchController@index')->name('search');
     Route::get('/search/{search}', 'LocalSearchController@show')->name('search_show');
