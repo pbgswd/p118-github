@@ -281,7 +281,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-8 mb-4">
+                <div class="col-12 mb-4">
                     <a href="/page/terms-of-use">Terms of Use</a> | <a href="/page/privacy-policy">Privacy Policy</a> |
                     <a href="/page/disclaimer">Disclaimer</a> | <a href="/page/links">Links</a> |
                     <a href="/page/apply-for-work">Apply for work</a>
@@ -294,43 +294,47 @@
                 </div>
                 @endguest
             </div>
-            @guest
-                <div class="col-8 mb-4">
-                    <a href="/login">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-                    </a>
+                @guest
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <a href="/login">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                        </a>
+                    </div>
                 </div>
-            @else
-            <div class="row">
-                <div class="col-6 mb-4">
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
-                            Logout
-                        </button>
-                    </form>
+                @else
+                <div class="row">
+                    <div class="col-6 mb-4">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
+                            {!! csrf_field() !!}
+                            <i class="fas fa-search"></i> &nbsp;
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search"
+                                   aria-label="Search" name="search">
+                            <button type="submit" name="Submit" value="Submit"
+                                    class="btn btn-outline-success my-2 my-sm-0">
+                                Search
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <div class="col-6 mb-5">
-                    <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
-                        {!! csrf_field() !!}
-                        <i class="fas fa-search"></i> &nbsp;
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search"
-                               aria-label="Search" name="search">
-                        <button type="submit" name="Submit" value="Submit"
-                                class="btn btn-outline-success my-2 my-sm-0">
-                            Search
-                        </button>
-                    </form>
-                </div>
+                @endguest
             </div>
-            @endguest
+
             <div class="row mb-6">
-                <div class="col-lg-6">
+                <div class="col-6">
                     <h2>IATSE Local 118</h2>
                     <h4>#206 - 2940 Main Street<br />
                     Vancouver, BC, V5T 3G3</h4>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-6">
                     <h3>
                         <a href="https://goo.gl/maps/pXb7Bv8n1jHGykjh8" target="_blank" title="IATSE Local 118 Office">
                             <i class="fas fa-map-marked-alt"></i>
@@ -342,7 +346,10 @@
                         <a href="mailto:office@iatse118.com"><i class="fas fa-envelope"></i> office@iatse118.com</a>
                     </h3>
                 </div>
+
             </div>
+
+
             <div class="row mt-2 mb-lg-2">
                 <div class="col-4 text-left">
                     <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
@@ -354,6 +361,10 @@
                     <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
                 </div>
             </div>
+
+
+
+
         </footer>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
               integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
