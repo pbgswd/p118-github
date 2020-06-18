@@ -19,7 +19,7 @@ $venue = $data['venue'];
         <div class="col-12">
             {!! $venue->description !!}
         </div>
-        @if (0 < $venue->agreements->count())
+        @if (0 < $data['agreements']->count())
             <div class="row mt-lg-5">
                 <div class="col-11 m-1 m-lg-4 border border-dark">
                     Agreements attached to {{$venue->name}}
@@ -33,13 +33,18 @@ $venue = $data['venue'];
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($venue->agreements as $va)
+                        @foreach($data['agreements'] as $va)
                             <tr>
                                 <th scope="row">
 
                                 </th>
                                 <td>
-                                    <a title="{{ $va->title }}" href="{{route('agreement_show', $va->id)}}"> {{ $va->title }}</a>
+                                    @if(\Carbon\Carbon::parse($va->until)->isPast())
+                                        <i>(Not current)</i>
+                                    @endif
+                                    <a title="{{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
+                                        {{ $va->title }}
+                                    </a>
                                 </td>
                                 <td>{{$va->from->format('F j Y')}}</td>
                                 <td>{{$va->until->format('F j Y')}}</td>

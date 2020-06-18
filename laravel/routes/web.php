@@ -36,8 +36,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/site_invitation/{inviteUser}/{password}', 'InviteUserController@show')->name('invite_user_signup');
     Route::post('/site_invitation/{inviteUser}/{password}', 'InviteUserController@process_user');
 
-
-
     Route::get('/venues', 'VenueController@list')->name('venues');
     Route::get('/venue/{venue}', 'VenueController@show')->name('venue');
 

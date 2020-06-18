@@ -149,7 +149,7 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Employers & Venues
-                        </button>
+                        </button>&nbsp;
                         <div class="dropdown-menu" aria-labelledby="dropdown">
                             <a class="dropdown-item" href="{{route('organizations')}}">
                                 <i class="fas fa-user-tie"></i>

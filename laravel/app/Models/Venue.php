@@ -7,6 +7,7 @@ use App\Policies\VenuePolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
@@ -120,6 +121,14 @@ class Venue extends LiveableModel implements Searchable
 
     public function agreements(): BelongsToMany
     {
-        return $this->belongsToMany(Agreement::class);
+            return $this->belongsToMany(Agreement::class)
+                ->whereRaw('NOW() < until');
     }
+
+    public function member_agreements(): BelongsToMany
+    {
+            return $this->belongsToMany(Agreement::class);
+
+    }
+
 }

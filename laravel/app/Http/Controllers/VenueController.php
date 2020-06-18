@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Venue;
 use Auth;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 
 class VenueController extends Controller
@@ -32,8 +33,9 @@ class VenueController extends Controller
     public function show(Venue $venue)
     {
 
-        $venue->load('agreements');
+        $data['venue'] = $venue;
+        $data['agreements'] = Auth::check() ? $venue->member_agreements : $venue->agreements;
 
-        return view('venue', ['data' => ['venue' => $venue]]);
+        return view('venue', ['data' => $data]);
     }
 }

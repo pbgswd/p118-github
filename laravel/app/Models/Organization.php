@@ -113,6 +113,13 @@ class Organization extends LiveableModel implements Searchable
 
     public function agreements(): BelongsToMany
     {
+        return $this->belongsToMany(Agreement::class)
+            ->whereRaw('NOW() < until');
+    }
+
+    public function member_agreements(): BelongsToMany
+    {
         return $this->belongsToMany(Agreement::class);
+
     }
 }

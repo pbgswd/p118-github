@@ -103,13 +103,17 @@ class AttachmentService
         if(false === Auth::check() && $attachment->access_level != AccessLevelConstants::PUBLIC) {
             abort(403, 'Unauthorized action.');
         }
-        return Storage::download( $folder . '/' . $attachment['file'], $attachment['file_name'], [], 'inline' );
+        return Storage::download( $folder . '/' . $attachment['file'],
+            $attachment['file_name'], [], 'inline' );
     }
 
     public static function human_filesize($bytes, $decimals = 2)
     {
         $factor = \floor((\strlen($bytes) - 1) / 3);
-        if ($factor > 0) { $sz = 'KMGT'; }
+
+        if ($factor > 0) {
+            $sz = 'KMGT';
+        }
 
         return \sprintf("%.{$decimals}f", $bytes / (1024 ** $factor)) . @$sz[$factor - 1] . 'B';
     }

@@ -127,6 +127,7 @@ $all_agreements = $data['all_agreements'];
                         @foreach($all_agreements as $agr)
                             <option value="{{$agr->id}}">{{$agr->title}}</option>
                         @endforeach
+                            <option value=""></option>
                     </select>
                 </div>
             </div>

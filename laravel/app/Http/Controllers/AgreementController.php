@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agreement;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class AgreementController extends Controller
@@ -16,8 +17,23 @@ class AgreementController extends Controller
     {
         //todo member/public for attachments
         $data = [];
-        $data['agreements'] = Agreement::sortable()->with('attachments')->orderBy('until', 'desc')->paginate(20);
-        $data['count'] = Agreement::count();
+
+        if(Auth::check() == false) {
+            $data['agreements'] = Agreement::sortable()
+                ->with('attachments')
+                ->whereRaw('NOW() < until')
+                ->orderBy('until', 'desc')
+                ->paginate(20);
+        }
+        else {
+            $data['agreements'] = Agreement::sortable()
+                ->with('attachments')
+                ->orderBy('until', 'desc')
+                ->paginate(20);
+        }
+
+        //todo full actual count
+        $data['count'] = $data['agreements']->count();
 
         return view('agreements_list', ['data' => ['data' => $data]]);
     }
