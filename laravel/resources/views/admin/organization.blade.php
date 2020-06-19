@@ -2,7 +2,8 @@
 $organization = $data['organization'];
 $all_agreements = $data['all_agreements'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' organization ' . ($data["action"] == 'Edit' ? $organization->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' organization '
+        . ($data["action"] == 'Edit' ? $organization->name : '') ])
 @section('content')
     <script>
         tinymce.init({
@@ -15,7 +16,8 @@ $all_agreements = $data['all_agreements'];
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table paste code help wordcount'
             ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | removeformat | help',
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tiny.cloud/css/codepen.min.css'
@@ -23,14 +25,20 @@ $all_agreements = $data['all_agreements'];
         });
     </script>
 <div class="container">
-    <h3>  <a href="{{ route('organizations_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of organizations</a>  </h3>
-    <form method="post" name="organization" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <h3>
+        <a href="{{ route('organizations_list') }}"> <i class="far fa-arrow-alt-circle-left"></i>
+            List of organizations
+        </a>
+    </h3>
+    <form method="post" name="organization" action="{{ url()->current() }}"
+          enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Name" name="organization[name]" value="{{ old('organization.name', $organization->name)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Name" name="organization[name]"
+                           value="{{ old('organization.name', $organization->name)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -40,7 +48,10 @@ $all_agreements = $data['all_agreements'];
                     <h4>Description</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="organization[description]" id="organization-description" placeholder="Summary content" class="form-control">{{old('organization.description', $organization->description)}}</textarea>
+                    <textarea name="organization[description]" id="organization-description"
+                              placeholder="Summary content" class="form-control">
+                        {{old('organization.description', $organization->description)}}
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -48,7 +59,9 @@ $all_agreements = $data['all_agreements'];
             <div class="form-group">
                 <div class="col-lg-8"><h4>organization Website Link</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Website Address - http://...." name="organization[url]" value="{{ old('organization.url', $organization->url)}}" size="80" />
+                    <input type="text" class="form-control"
+                           placeholder="Website Address - http://...." name="organization[url]"
+                           value="{{ old('organization.url', $organization->url)}}" size="80" />
                 </div>
             </div>
         </div>
@@ -62,7 +75,10 @@ $all_agreements = $data['all_agreements'];
                     <div class="col-12">&nbsp;</div>
                     <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="organization[sort_order]" value="{{old('organization.sort_order',$organization->sort_order)}}" size="30" required/>
+                        <input type="text" class="form-control"  id="validationCustom02"
+                               placeholder="e.g.: 1000, 2000" name="organization[sort_order]"
+                               value="{{old('organization.sort_order',$organization->sort_order)}}"
+                               size="30" required/>
                         <p>e.g.: 1000, 2000</p>
                     </div>
                     <div class="invalid-feedback">
@@ -75,7 +91,9 @@ $all_agreements = $data['all_agreements'];
                 <div class="col-sm">
                     <label>
                          <input name="organization[live]" type="hidden" value="0" />
-                         <input name="organization[live]" type="checkbox" value="1" {{ checked( old('organization.live', $organization->live)) }} /> Check now to make Live
+                         <input name="organization[live]" type="checkbox" value="1"
+                             {{ checked( old('organization.live', $organization->live)) }} />
+                        Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>
@@ -91,20 +109,25 @@ $all_agreements = $data['all_agreements'];
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">From</th>
-                            <th scope="col">Until</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($organization->agreements as $oa)
+                        @foreach($organization->member_agreements as $oa)
                             <tr>
                                 <th scope="row">
                                     <input type="checkbox" name="id[]" value="{{$oa->id}}" />
                                 </th>
                                 <td>
-                                    <a title="{{ $oa->title }}" href="{{ route('agreement_edit', $oa->id) }}">{{ $oa->title }}</a>
+                                    <a title="{{ $oa->title }}" href="{{ route('agreement_edit', $oa->id) }}">
+                                        {{ $oa->title }}
+                                    </a>
+                                    @if(\Carbon\Carbon::parse($oa->until)->isPast())
+                                        <i>(Not current)</i>
+                                    @endif
                                 </td>
                                 <td>{{$oa->from->format('F j Y')}}</td>
                                 <td>{{$oa->until->format('F j Y')}}</td>
@@ -150,6 +173,7 @@ $all_agreements = $data['all_agreements'];
             </form>
          </div>
     @endif
-    <div class="row mt-lg-5">&nbsp;</div>
 </div>
+<div class="row mt-lg-5">&nbsp;</div>
+
 @endsection

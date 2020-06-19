@@ -2,7 +2,8 @@
 $venue = $data['venue'];
 $all_agreements = $data['all_agreements'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Venue ' . ($data["action"] == 'Edit' ? $venue->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"]
+. ' Venue ' . ($data["action"] == 'Edit' ? $venue->name : '') ])
 @section('content')
     <script>
         tinymce.init({
@@ -15,7 +16,8 @@ $all_agreements = $data['all_agreements'];
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table paste code help wordcount'
             ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify ' +
+                '| bullist numlist outdent indent | removeformat | help',
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tiny.cloud/css/codepen.min.css'
@@ -24,13 +26,16 @@ $all_agreements = $data['all_agreements'];
     </script>
 <div class="container">
     <h3><a href="{{ route('venues_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of venues</a>  </h3>
-    <form method="post" name="venue" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form method="post" name="venue" action="{{ url()->current() }}"
+          enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Name" name="venue[name]" value="{{ old('venue.name', $venue->name)}}" size="80" required/>
+                    <input type="text" class="form-control"
+                           placeholder="Name" name="venue[name]"
+                           value="{{ old('venue.name', $venue->name)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -40,7 +45,10 @@ $all_agreements = $data['all_agreements'];
                     <h4>Description</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="venue[description]" id="venue-description" placeholder="Summary content" class="form-control">{{old('venue.description', $venue->description)}}</textarea>
+                    <textarea name="venue[description]" id="venue-description"
+                              placeholder="Summary content" class="form-control">
+                        {{old('venue.description', $venue->description)}}
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -48,7 +56,9 @@ $all_agreements = $data['all_agreements'];
             <div class="form-group">
                 <div class="col-lg-8"><h4>Venue Website Link</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Website Address - http://...." name="venue[url]" value="{{ old('venue.url', $venue->url)}}" size="80" />
+                    <input type="text" class="form-control"
+                           placeholder="Website Address - http://...." name="venue[url]"
+                           value="{{ old('venue.url', $venue->url)}}" size="80" />
                 </div>
             </div>
         </div>
@@ -62,7 +72,9 @@ $all_agreements = $data['all_agreements'];
                     <div class="col-12">&nbsp;</div>
                     <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="venue[sort_order]" value="{{old('venue.sort_order',$venue->sort_order)}}" size="30" required/>
+                        <input type="text" class="form-control"  id="validationCustom02"
+                               placeholder="e.g.: 1000, 2000" name="venue[sort_order]"
+                               value="{{old('venue.sort_order',$venue->sort_order)}}" size="30" required/>
                         <p>e.g.: 1000, 2000</p>
                     </div>
                     <div class="invalid-feedback">
@@ -75,13 +87,15 @@ $all_agreements = $data['all_agreements'];
                 <div class="col-sm">
                     <label>
                         <input name="venue[in_menu]" type="hidden" value="0" />
-                        <input name="venue[in_menu]" type="checkbox" value="1" {{ checked(old('venue.in_menu',$venue->in_menu)) }} /> In Menu
+                        <input name="venue[in_menu]" type="checkbox" value="1"
+                            {{ checked(old('venue.in_menu',$venue->in_menu)) }} /> In Menu
                     </label>
                 </div>
                 <div class="col-sm">
                     <label>
                          <input name="venue[live]" type="hidden" value="0" />
-                         <input name="venue[live]" type="checkbox" value="1" {{ checked( old('venue.live', $venue->live)) }} /> Check now to make Live
+                         <input name="venue[live]" type="checkbox" value="1"
+                             {{ checked( old('venue.live', $venue->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>
@@ -101,13 +115,18 @@ $all_agreements = $data['all_agreements'];
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($venue->agreements as $va)
+                    @foreach($venue->member_agreements as $va)
                         <tr>
                             <th scope="row">
                                 <input type="checkbox" name="id[]" value="{{$va->id}}" />
                             </th>
                             <td>
-                                <a title="{{$va->title}}" href="{{ route('agreement_edit', $va->id) }}">{{ $va->title }}</a>
+                                <a title="{{$va->title}}" href="{{ route('agreement_edit', $va->id) }}">
+                                    {{ $va->title }}
+                                </a>
+                                @if(\Carbon\Carbon::parse($va->until)->isPast())
+                                    <i>(Not current)</i>
+                                @endif
                             </td>
                             <td>{{$va->from->format('F j Y')}}</td>
                             <td>{{$va->until->format('F j Y')}}</td>
@@ -121,7 +140,8 @@ $all_agreements = $data['all_agreements'];
         @endif
             <div class="col-5 m-1 border border-dark">
                 <div class="form-group">
-                    <label for="exampleFormControlSelect2">List of all agreements not currently attached to {{$venue->name}}. Select and submit to attach to venue</label>
+                    <label for="exampleFormControlSelect2">List of all agreements not currently attached to
+                        {{$venue->name}}. Select and submit to attach to venue</label>
                     <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
                         @foreach($all_agreements as $agr)
                             <option value="{{$agr->id}}">{{$agr->title}}</option>

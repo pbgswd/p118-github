@@ -34,12 +34,10 @@ class AdminOrganizationController extends Controller
     public function create()
     {
         $this->authorize('create', Auth::user());
-//todo create error
+
         $org = new Organization;
         $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
 
-       // $org->setRelation('all_agreements', $all_agreements);
-//dd($org);
         return view(
             'admin.organization',
             [
@@ -80,7 +78,7 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        $any_organization->load('agreements');
+        $any_organization->load('member_agreements');
 
         $all_agreements = Agreement::whereNotIn(
             'id',

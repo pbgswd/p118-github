@@ -24,16 +24,19 @@ class AgreementController extends Controller
                 ->whereRaw('NOW() < until')
                 ->orderBy('until', 'desc')
                 ->paginate(20);
+
+            $data['count'] = Agreement::with('attachments')
+                ->whereRaw('NOW() < until')->count();
+
         }
         else {
             $data['agreements'] = Agreement::sortable()
                 ->with('attachments')
                 ->orderBy('until', 'desc')
                 ->paginate(20);
-        }
 
-        //todo full actual count
-        $data['count'] = $data['agreements']->count();
+            $data['count'] = Agreement::with('attachments')->count();
+        }
 
         return view('agreements_list', ['data' => ['data' => $data]]);
     }

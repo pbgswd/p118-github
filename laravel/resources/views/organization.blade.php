@@ -1,5 +1,7 @@
 <?php
 $organization = $data['organization'];
+$agreements = $data['agreements'];
+
 ?>
 @extends('layouts.jumbo')
 @section('content')
@@ -12,34 +14,41 @@ $organization = $data['organization'];
         </div>
         <div class="col-12">
             <p><i class="fas fa-external-link-alt"></i>
-                <a href="{{$organization->url}}" title="{{$organization->name}}" target="_blank">{{$organization->url}}</a>
+                <a href="{{$organization->url}}" title="{{$organization->name}}" target="_blank">
+                    {{$organization->url}}
+                </a>
             </p>
         </div>
         <div class="col-12">
             {!! $organization->description !!}
         </div>
-        @if (null !== $organization->agreements)
+        @if (null !== $agreements)
             <div class="row mt-lg-5">
                 <div class="col-11 m-1 m-lg-4 border border-dark">
                     Agreements attached to {{$organization->name}}
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Name</th>
-                            <th scope="col">From</th>
-                            <th scope="col">Until</th>
-                        </tr>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach($organization->agreements as $va)
+                        @foreach($agreements as $va)
                             <tr>
                                 <th scope="row"></th>
                                 <td>
-                                    <a title="{{ $va->title }}" href="{{route('agreement_show', $va->id)}}"> {{ $va->title }}</a>
+                                    @if(\Carbon\Carbon::parse($va->until)->isPast())
+                                        <i>(Not current)</i>
+                                    @endif
+                                    <a title="{{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
+                                        {{ $va->title }}
+                                    </a>
                                 </td>
-                                <td>{{$va->from->format('F j Y')}}</td>
-                                <td>{{$va->until->format('F j Y')}}</td>
+                                <td>From: {{$va->from->format('F j Y')}}</td>
+                                <td>Until: {{$va->until->format('F j Y')}}</td>
                             </tr>
                         @endforeach
                         <td colspan="4">&nbsp;</td>

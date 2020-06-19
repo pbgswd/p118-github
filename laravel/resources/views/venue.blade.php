@@ -20,24 +20,16 @@ $venue = $data['venue'];
             {!! $venue->description !!}
         </div>
         @if (0 < $data['agreements']->count())
-            <div class="row mt-lg-5">
-                <div class="col-11 m-1 m-lg-4 border border-dark">
+            <div class="row mt-lg-5 p-lg-5 border border-dark">
+                <div class="col-12">
                     Agreements attached to {{$venue->name}}
+                </div>
+                <div class="col-12">
                     <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Name</th>
-                            <th scope="col">From</th>
-                            <th scope="col">Until</th>
-                        </tr>
-                        </thead>
+                        <thead></thead>
                         <tbody>
                         @foreach($data['agreements'] as $va)
                             <tr>
-                                <th scope="row">
-
-                                </th>
                                 <td>
                                     @if(\Carbon\Carbon::parse($va->until)->isPast())
                                         <i>(Not current)</i>
@@ -46,11 +38,11 @@ $venue = $data['venue'];
                                         {{ $va->title }}
                                     </a>
                                 </td>
-                                <td>{{$va->from->format('F j Y')}}</td>
-                                <td>{{$va->until->format('F j Y')}}</td>
+                                <td>From: {{$va->from->format('F j Y')}}</td>
+                                <td>Until: {{$va->until->format('F j Y')}}</td>
                             </tr>
                         @endforeach
-                        <td colspan="4">&nbsp;</td>
+                        <td colspan="3">&nbsp;</td>
                         </tbody>
                     </table>
                 </div>

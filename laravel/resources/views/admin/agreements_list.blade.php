@@ -1,5 +1,4 @@
 <?php
-//dd($data);
 $agreements = $data['agreements'];
 ?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List agreements'])
@@ -9,7 +8,8 @@ $agreements = $data['agreements'];
            <span class="badge badge-primary badge-pill">
                {{$data['count']}}
            </span>
-            agreements. | <a href="{{ route('agreement_create') }}">Create new agreement <i class="far fa-arrow-alt-circle-right"></i> </a>
+            agreements. | <a href="{{ route('agreement_create') }}">Create new agreement
+                <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
     @if($data['count'] < 1)
@@ -18,7 +18,6 @@ $agreements = $data['agreements'];
 <form name="delete" method="POST" action="{{route('agreement_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
-
     <div class="form-group">
         <div class="table-responsive">
             <table class="table table-striped table-sm">
@@ -47,11 +46,19 @@ $agreements = $data['agreements'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $a->title }}" href="{{ route('agreement_edit', $a->id) }}">{{ $a->title }}</a>
+                                    <a title="{{ $a->title }}" href="{{ route('agreement_edit', $a->id) }}">
+                                        {{ $a->title }}
+                                    </a>
+                                    @if(\Carbon\Carbon::parse($a->until)->isPast())
+                                        <i>(Not current)</i>
+                                    @endif
                                 </h4>
                             </td>
                             <td> {{ $a->access_level }} </td>
-                            <td> {!! $a->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                            <td>
+                                {!! $a->live ? "<i class='fas fa-check'></i>"
+                                    : "<i class='far fa-times-circle'></i>" !!}
+                            </td>
                             <td>{{$a->from->format('F j Y')}}</td>
                             <td>{{$a->until->format('F j Y')}}</td>
                             <td>
@@ -70,8 +77,7 @@ $agreements = $data['agreements'];
             </table>
         </div>
     </div>
-
-    <div class="row">
+    <div class="row mb-lg-5">
         <div class="col">
             <i class="far fa-trash-alt fa-2x"></i>
             <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
@@ -85,10 +91,6 @@ $agreements = $data['agreements'];
         </div>
         <div class="col"></div>
     </div>
-
-
-
-    <div class="row" style="margin-top:6em;"></div>
 </form>
 @endif
 @endsection

@@ -102,6 +102,7 @@ class AttachmentService
     {
         if(false === Auth::check() && $attachment->access_level != AccessLevelConstants::PUBLIC) {
             abort(403, 'Unauthorized action.');
+
         }
         return Storage::download( $folder . '/' . $attachment['file'],
             $attachment['file_name'], [], 'inline' );

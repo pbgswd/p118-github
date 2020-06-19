@@ -80,7 +80,7 @@ class AdminVenueController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        $any_venue->load('agreements');
+        $any_venue->load('member_agreements');
 
         $all_agreements = Agreement::whereNotIn(
             'id',
@@ -89,8 +89,7 @@ class AdminVenueController extends Controller
             }))
             ->orderBy('title')->get();
 
-        //todo remove relation, pass in data
-         $any_venue->setRelation('all_agreements', $all_agreements);
+        $any_venue->setRelation('all_agreements', $all_agreements);
 
         return view('admin.venue', [
             'data' => [
@@ -116,7 +115,7 @@ class AdminVenueController extends Controller
         $any_venue->save();
 
         if(null !== $request->id) {
-            $any_venue->agreements()->detach($request->id);
+            $any_venue->member_agreements()->detach($request->id);
         }
 
         $any_venue->agreements()->attach($request->all_agreements);

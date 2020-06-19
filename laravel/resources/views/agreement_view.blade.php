@@ -15,7 +15,12 @@ $agreement = $data['agreement'];
         </div>
         <div class="row mb-lg-2">
             <div class="col-md-12">
-                <h4>From: {{$agreement->from->format('F j Y')}} Until {{$agreement->until->format('F j Y')}} </h4>
+                <h4>
+                    From: {{$agreement->from->format('F j Y')}} Until {{$agreement->until->format('F j Y')}}
+                    @if(\Carbon\Carbon::parse($agreement->until)->isPast())
+                        <i>(Not current)</i>
+                    @endif
+                </h4>
             </div>
         </div>
         <div class="row">

@@ -24,6 +24,9 @@ $agreements = $data['data']['agreements'];
             <tr>
                 <td>
                     <h5>
+                        @if(\Carbon\Carbon::parse($agreement->until)->isPast())
+                            <i>(Not current)</i>
+                        @endif
                         <a title="{{ $agreement->title }}" href="{{route('agreement_show', $agreement->id)}}"> {{ $agreement->title }}</a>
                     </h5>
                 </td>
