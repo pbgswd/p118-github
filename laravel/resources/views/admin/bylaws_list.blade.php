@@ -7,9 +7,10 @@ $bylaws = $data['bylaws'];
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {{$data['count']}}
+               {{$data['count']}} {{ Str::plural('Bylaw', $data['count']) }}
            </span>
-            bylaws. | <a href="{{ route('admin_bylaw_create') }}">Create new by-law <i class="far fa-arrow-alt-circle-right"></i> </a>
+            | <a href="{{ route('admin_bylaw_create') }}">Create new by-law
+                <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
     @if($data['count'] < 1)
@@ -18,7 +19,6 @@ $bylaws = $data['bylaws'];
 <form name="delete" method="POST" action="{{route('admin_bylaw_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
-
     <div class="form-group">
         <div class="table-responsive">
             <table class="table table-striped table-sm">
@@ -46,11 +46,15 @@ $bylaws = $data['bylaws'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $a->title }}" href="{{ route('admin_bylaw_edit', $a->id) }}">{{ $a->title }}</a>
+                                    <a title="{{ $a->title }}" href="{{ route('admin_bylaw_edit', $a->id) }}">
+                                        {{ $a->title }}
+                                    </a>
                                 </h4>
                             </td>
                             <td> {{ $a->access_level }} </td>
-                            <td> {!! $a->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                            <td> {!! $a->live ? "<i class='fas fa-check'></i>"
+                                        : "<i class='far fa-times-circle'></i>" !!}
+                            </td>
                             <td>{{$a->date->format('F j Y')}}</td>
                             <td>
                                 <a href="{{ route('admin_bylaw_edit', $a->id) }}" title="Edit {{ $a->title }} ">
@@ -68,8 +72,7 @@ $bylaws = $data['bylaws'];
             </table>
         </div>
     </div>
-
-    <div class="row">
+    <div class="row mb-lg-5">
         <div class="col">
             <i class="far fa-trash-alt fa-2x"></i>
             <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
@@ -83,10 +86,6 @@ $bylaws = $data['bylaws'];
         </div>
         <div class="col"></div>
     </div>
-
-
-
-    <div class="row" style="margin-top:6em;"></div>
 </form>
 @endif
 @endsection

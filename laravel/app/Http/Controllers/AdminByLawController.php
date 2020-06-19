@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Bylaws\DestroyBylawRequest;
 use App\Http\Requests\Bylaws\StoreBylawRequest;
 use App\Http\Requests\Bylaws\UpdateBylawRequest;
@@ -38,7 +39,12 @@ class AdminByLawController extends Controller
     {
         $this->authorize('viewAny', Auth::user());
         $data = [];
-        $data['bylaws'] = Bylaw::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('date', 'desc')->paginate(20);
+        $data['bylaws'] = Bylaw::withoutGlobalScopes()
+            ->sortable()
+            ->with('attachments')
+            ->orderBy('date', 'desc')
+            ->paginate(20);
+
         $data['count'] = Bylaw::withoutGlobalScopes()->count();
 
         return view('admin.bylaws_list', ['data' => $data]);
@@ -54,6 +60,8 @@ class AdminByLawController extends Controller
         $this->authorize('create', Auth::user());
         $data = [
             'bylaw' => new Bylaw,
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
             'action' => 'Create',
         ];
 
@@ -79,7 +87,8 @@ class AdminByLawController extends Controller
             $result = $this->attachmentService->createAttachment($request, $bylaw);
 
             if ($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded "
+                    . count($request->file('attachments')) . " files");
             }
             else
             {
@@ -100,6 +109,8 @@ class AdminByLawController extends Controller
         $this->authorize('update', Auth::user());
         $data = [
             'bylaw' => $bylaw->load('user', 'attachments'),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
             'action' => 'Edit',
         ];
 
@@ -127,7 +138,8 @@ class AdminByLawController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_bylaw);
 
             if ($result){
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded "
+                    . count($request->file('attachments')) . " files");
             }
             else
             {
@@ -155,7 +167,8 @@ class AdminByLawController extends Controller
                 $bylaw->delete();
             });
 
-        Session::flash('success', Str::plural($bylaws->count() . ' bylaw', $bylaws->count()) . ' and any related files deleted.');
+        Session::flash('success', Str::plural($bylaws->count()
+                . ' bylaw', $bylaws->count()) . ' and any related files deleted.');
 
         return redirect()->route('admin_bylaws_list');
     }

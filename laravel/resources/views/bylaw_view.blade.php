@@ -10,7 +10,15 @@ $bylaw = $data['bylaw'];
         </div>
         <div class="row">
             <div  class="col-12">
-                <h1 class="display-8"><i class="fas fa-gavel"></i> {{$bylaw->title}}</h1>
+                <h1 class="display-8"><i class="fas fa-gavel"></i>
+                    {{$bylaw->title}}
+                    <span class="small text-muted">
+                    @if(Auth::check())
+                            ({{$bylaw->access_level}})
+                        @endif
+                </span>
+                </h1>
+
             </div>
         </div>
         <div class="row mb-lg-2">

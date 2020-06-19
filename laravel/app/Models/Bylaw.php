@@ -36,6 +36,7 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
     protected $fillable = [
         'title',
         'description',
+        'access_level',
         'live',
         'date',
         'user_id',

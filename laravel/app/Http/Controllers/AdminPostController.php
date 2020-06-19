@@ -57,7 +57,8 @@ class AdminPostController extends Controller
                 'post' => $post,
                 'assignedTopics' => [],
                 'topics' => Topic::all(),
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                    AccessLevelConstants::getConstants()),
                 'action' => 'Create',
             ]
         ]);
@@ -81,7 +82,8 @@ class AdminPostController extends Controller
             $result = $this->attachmentService->createAttachment($request, $post);
 
             if($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded "
+                    . count($request->file('attachments')) . " files");
             }
             else
             {
@@ -123,7 +125,8 @@ class AdminPostController extends Controller
             'post' => $post,
             'topics' => Topic::all(),
             'assignedTopics' => $assignedTopics,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants()
+                ,AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             ];
 
@@ -149,7 +152,8 @@ class AdminPostController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_post);
 
             if($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded "
+                    . count($request->file('attachments')) . " files");
             } else {
                 Session::flash('error', "You have an upload problem");
             }

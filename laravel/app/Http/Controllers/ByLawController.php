@@ -24,8 +24,28 @@ class ByLawController extends Controller
     public function list()
     {
         $data = [];
-        $data['bylaws'] = Bylaw::sortable()->with('attachments')->orderBy('date', 'desc')->paginate(20);
+        if(Auth::check()) {
+        $data['bylaws'] = Bylaw::sortable()
+            ->with('attachments')
+            ->orderBy('date', 'desc')
+            ->paginate(20);
+
         $data['count'] = Bylaw::count();
+        }
+
+
+
+        else {
+        $data['bylaws'] = Bylaw::sortable()
+            ->where('access_level', 'public')
+            ->with('attachments')
+            ->orderBy('date', 'desc')
+            ->paginate(20);
+
+        $data['count'] = Bylaw::where('access_level', 'public')->count();
+        }
+
+
 
         return view('bylaws_list', ['data' => ['data' => $data]]);
     }

@@ -31,6 +31,7 @@ class UpdateBylawRequest extends FormRequest
         return [
             'bylaw.title' => 'required|max:255',
             'bylaw.description' => 'string',
+            'bylaw.access_level' => 'required|string|max:255',
             'bylaw.date' => 'date',
             'bylaw.live' => 'boolean',
         ];

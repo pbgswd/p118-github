@@ -8,16 +8,22 @@ $bylaws = $data['data']['bylaws'];
         <h1>
             <i class="fas fa-gavel"></i> Local 118 Constitution and By-Laws
         </h1>
-        <h3 class="font-italic">Please remember, we have pledged to keep confidential the work of this body and to do all in our
-            power to discourage and prevent violation of this requirement by brother and sister members.
+        <h3 class="font-italic">Please remember, we have pledged to keep
+            confidential the work of this body and
+            to do all in our power to discourage and
+            prevent violation of this requirement
+            by brother and sister members.
         </h3>
         <h3>
            <span class="badge badge-primary badge-pill">
-               {{ $data['data']['count'] }} Bylaw Documents
+               {{ $data['data']['count'] }}
+               Bylaw
+               {{ Str::plural('Document', $data['data']['count']) }}
            </span>
         </h3>
     </div>
-    <div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.8); margin-left:auto; margin-right:auto;">
+    <div class="table-responsive-md border border-dark rounded-lg p-1"
+         style="background: rgba(220,220,220,0.8); margin-left:auto; margin-right:auto;">
         <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
             <thead>
             <tr>
@@ -29,11 +35,18 @@ $bylaws = $data['data']['bylaws'];
             @foreach ( $bylaws as $bylaw )
                 <tr>
                     <td>
-                        <h5>
-                            <a title="{{ $bylaw->title }}" href="{{route('bylaw_show', $bylaw->id)}}"> {{ $bylaw->title }}</a>
-                        </h5>
-                    </td>
+                        <p class="h5">
+                            <a title="{{ $bylaw->title }}" href="{{route('bylaw_show', $bylaw->id)}}">
+                                {{ $bylaw->title }}
+                            </a>
+                            <span class="small text-muted">
+                            @if(Auth::check())
+                                ({{$bylaw->access_level}})
+                            @endif
+                        </span>
+                        </p>
 
+                    </td>
                     <td>
                         {{ $bylaw->date->format('F j Y') }}
                     </td>

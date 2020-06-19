@@ -1,7 +1,8 @@
 <?php
 $bylaw = $data['bylaw'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-gavel"></i> <i class="fas fa-edit"></i>' . $data["action"] . ' By-law ' . ($data["action"] == 'Edit' ? $bylaw->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-gavel"></i> <i class="fas fa-edit"></i>'
+                . $data["action"] . ' By-law ' . ($data["action"] == 'Edit' ? $bylaw->name : '') ])
 @section('content')
 <script>
     tinymce.init({
@@ -14,7 +15,8 @@ $bylaw = $data['bylaw'];
             'searchreplace visualblocks code fullscreen',
             'insertdatetime media table paste code help wordcount'
         ],
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | ' +
+            'bullist numlist outdent indent | removeformat | help',
         content_css: [
             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
             '//www.tiny.cloud/css/codepen.min.css'
@@ -22,14 +24,20 @@ $bylaw = $data['bylaw'];
     });
 </script>
 <div class="container">
-    <h3>  <a href="{{ route('admin_bylaws_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of By-laws</a>  </h3>
-    <form method="post" name="bylaw" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <h3>  <a href="{{ route('admin_bylaws_list') }}"> <i class="far fa-arrow-alt-circle-left"></i>
+            List of By-laws
+        </a>
+    </h3>
+    <form method="post" name="bylaw" action="{{ url()->current() }}"
+          enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="bylaw[title]" value="{{ old('bylaw.title', $bylaw->title)}}" size="80" required/>
+                    <input type="text" class="form-control"
+                           placeholder="Title" name="bylaw[title]"
+                           value="{{ old('bylaw.title', $bylaw->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -39,7 +47,11 @@ $bylaw = $data['bylaw'];
                     <h4>Description</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="bylaw[description]" id="bylaw-description" placeholder="Information about the by-law, or pasted from the pdf." class="form-control">{{old('bylaw.description', $bylaw->description)}}</textarea>
+                    <textarea name="bylaw[description]" id="bylaw-description"
+                              placeholder="Information about the by-law, or pasted from the pdf."
+                              class="form-control">
+                        {{old('bylaw.description', $bylaw->description)}}
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -62,13 +74,25 @@ $bylaw = $data['bylaw'];
         </div>
         <div class="row mt-lg-3">
             <div class="col-md-4">
-                <div class="col-lg-2"><h4>Status</h4></div>
+                <div class="col-lg-2">
+                    <h4>Status</h4>
+                </div>
                 <div class="col-sm">
                     <label>
                          <input name="bylaw[live]" type="hidden" value="0" />
-                         <input name="bylaw[live]" type="checkbox" value="1" {{ checked( old('bylaw.live', $bylaw->live)) }} /> Check now to make Live
+                         <input name="bylaw[live]" type="checkbox" value="1"
+                             {{ checked( old('bylaw.live', $bylaw->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-lg-3">
+            <div class="col-12 col-sm-3 align-middle"><h4>Access Level for content</h4></div>
+            <div class="col-12 col-sm-3">
+                <div class="form-group">
+                    {{ select_options($data['access_levels'], old('post.access_level', $bylaw->access_level),
+                        ['name' => 'bylaw[access_level]', 'class' => 'form-control']) }}
                 </div>
             </div>
         </div>
@@ -106,19 +130,32 @@ $bylaw = $data['bylaw'];
                                     <td>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="attachment[{{$bylaw_attachment->id}}][id]" value="{{$bylaw_attachment->id}}" />
+                                                <input type="checkbox" name="attachment[{{$bylaw_attachment->id}}][id]"
+                                                       value="{{$bylaw_attachment->id}}" />
                                             </label>
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', [$bylaw->getAttachmentFolder(), $bylaw_attachment->id])}}" title="Download {{$bylaw_attachment->file_name}}">{{$bylaw_attachment->file_name}}</a>
+                                        <a href="{{route('attachment_download', [
+                                            $bylaw->getAttachmentFolder(), $bylaw_attachment->id])}}"
+                                           title="Download {{$bylaw_attachment->file_name}}">
+                                            {{$bylaw_attachment->file_name}}
+                                        </a>
                                     </td>
                                     <td>{{$bylaw_attachment->access_level}}</td>
                                     <td>
-                                        <a title="Edit page for {{ $bylaw_attachment->file_name }}" href="{{ route('admin_attachment_edit', $bylaw_attachment->id) }}"><i class="far fa-edit"></i></a>
+                                        <a title="Edit page for {{ $bylaw_attachment->file_name }}"
+                                           href="{{ route('admin_attachment_edit', $bylaw_attachment->id) }}">
+                                            <i class="far fa-edit"></i>
+                                        </a>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$bylaw_attachment->id}}][description]" value="{{ old('attachments.description', $bylaw_attachment->description)}}" size="40"/>
+                                        <input type="text" class="form-control"
+                                               placeholder="Add a description for this file"
+                                               name="attachment[{{$bylaw_attachment->id}}][description]"
+                                               value="{{ old('attachments.description'
+                                                            , $bylaw_attachment->description)}}"
+                                               size="40"/>
                                     </td>
                                     <td>
                                         {{$bylaw_attachment->created_at}}
@@ -139,12 +176,11 @@ $bylaw = $data['bylaw'];
                 @endif
             @endif
         </div>
-        <div class="row mb-lg-5">
+        <div class="row mt-lg-5 mb-lg-5">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
-        </div>
     </form>
     <div class="col-sm"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
@@ -158,5 +194,6 @@ $bylaw = $data['bylaw'];
             </form>
          </div>
     @endif
+    </div>
 </div>
 @endsection
