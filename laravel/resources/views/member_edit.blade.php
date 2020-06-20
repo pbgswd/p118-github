@@ -12,7 +12,8 @@ $user_roles = $data['user_roles'];
             <i class="far fa-arrow-alt-circle-left"></i>
             Members /</a>  <a href="{{route('member', Auth::user()->id)}}">{{$user->name}}</a>
     </h1>
-    <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data"
+          class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row border border-primary rounded-lg border-3 p-4 mt-5">
             <div class="col-lg-12">
@@ -22,37 +23,46 @@ $user_roles = $data['user_roles'];
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Name</span>
                 </div>
-                <input type="text" class="form-control"  placeholder="Name" name="user[name]" value="{{ old('user.name', $user->name)}}" size="80" required/>
+                <input type="text" class="form-control"  placeholder="Name" name="user[name]"
+                       value="{{ old('user.name', $user->name)}}" size="80" required/>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Email</span>
                 </div>
-                <input type="text" class="form-control"  placeholder="Email" name="user[email]" value="{{ old('user.email', $user->email ?? '')}}" size="80" required/>
+                <input type="text" class="form-control"  placeholder="Email" name="user[email]"
+                       value="{{ old('user.email', $user->email ?? '')}}" size="80" required/>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[share_email]" type="hidden" value="0" />
-                        <input name="user_info[share_email]" type="checkbox" value="1" {{ checked(old('user_info.share_email', $user->user_info->share_email ?? '')) }} />
+                        <input name="user_info[share_email]" type="checkbox" value="1"
+                            {{ checked(old('user_info.share_email', $user->user_info->share_email ?? '')) }} />
                     </div>
                 </div>
-                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Share email in profile?" size="40" readonly>
+                <input type="text" class="form-control" aria-label="Text input with checkbox"
+                       value="Share email in profile?" size="40" readonly>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Phone</span>
                 </div>
-                <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]" value="{{ old('user_phone.phone_number', $user->phone_number->phone_number ?? '') }}" size="80" required />
+                <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]"
+                       value="{{ old('user_phone.phone_number', $user->phone_number->phone_number ?? '') }}" size="80"
+                       required />
             </div>
             <div class="input-group mb-6">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[share_phone]" type="hidden" value="0" />
-                        <input name="user_info[share_phone]" type="checkbox" value="1" {{ checked(old('user_info.share_phone', $user->user_info->share_phone ?? '')) }} />
+                        <input name="user_info[share_phone]" type="checkbox"
+                               value="1"
+                            {{ checked(old('user_info.share_phone', $user->user_info->share_phone ?? '')) }} />
                     </div>
                 </div>
-                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Share phone number in profile?" size="40" readonly>
+                <input type="text" class="form-control" aria-label="Text input with checkbox"
+                       value="Share phone number in profile?" size="40" readonly>
             </div>
         </div>
         <div class="row border border-primary rounded-lg border-3 mt-4 p-4">
@@ -63,10 +73,12 @@ $user_roles = $data['user_roles'];
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[show_profile]" type="hidden" value="0" />
-                        <input name="user_info[show_profile]" type="checkbox" value="1" {{ checked(old('user_info.show_profile', $user->user_info->show_profile ?? '')) }} />
+                        <input name="user_info[show_profile]" type="checkbox" value="1"
+                            {{ checked(old('user_info.show_profile', $user->user_info->show_profile ?? '')) }} />
                     </div>
                 </div>
-                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to share profile with other members." size="40" readonly>
+                <input type="text" class="form-control" aria-label="Text input with checkbox"
+                       value="Check to share profile with other members." size="40" readonly>
             </div>
             @if( isset($user->user_info->image) )
                 <div class="col-6 mt-2">
@@ -74,16 +86,20 @@ $user_roles = $data['user_roles'];
                         Image preview - Currently: {{ $user->user_info->file_name }}
                     </h4>
                     <img src="{{ asset('storage/users/'. $user->user_info->image) }}" style="margin: 1em;"/>
-                    <input type="hidden"  name="user_info[image]" value="{{$user->user_info->image}}" />
+                    <input type="hidden" name="user_info[image]" value="{{$user->user_info->image}}" />
                 </div>
-                <div class="col-6 mt-2"><i class="fas fa-info-circle"></i> Image help: use an image ideally no larger than 150x150px</div>
+                <div class="col-6 mt-2">
+                    <i class="fas fa-info-circle"></i>
+                    Image help: use an image ideally no larger than 150x150px
+                </div>
                 <div class="input-group mb-6">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <input name="user_info[delete_image]" type="checkbox" value="1" />
                         </div>
                     </div>
-                    <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to delete image." size="40" readonly>
+                    <input type="text" class="form-control" aria-label="Text input with checkbox"
+                           value="Check to delete image." size="40" readonly>
                 </div>
             @else
                 <div class="form-group">
@@ -101,23 +117,29 @@ $user_roles = $data['user_roles'];
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[show_picture]" type="hidden" value="0" />
-                        <input name="user_info[show_picture]" type="checkbox" value="1" {{ checked(old('user_info.show_picture', $user->user_info->show_picture ?? '')) }} />
+                        <input name="user_info[show_picture]" type="checkbox" value="1"
+                            {{ checked(old('user_info.show_picture', $user->user_info->show_picture ?? '')) }} />
                     </div>
                 </div>
-                <input type="text" class="form-control" aria-label="Text input with checkbox" value="Check to show picture in your profile." size="40" readonly>
+                <input type="text" class="form-control" aria-label="Text input with checkbox"
+                       value="Check to show picture in your profile." size="40" readonly>
             </div>
             <div class="row mt-4">
                 <div class="col-lg-10"><h4>About Me</h4></div>
-                @if(null === $user->user_info->about)
+                @if (!optional($user->user_info)->about)
                     <div class="col-lg-10 m-lg-3">
-                        <p class="font-italic">Add something here about you such as your experience in
+                        <p class="font-italic">
+                            Add something here about you such as your experience in
                             stage and theatre, your skills. Do you have a side hustle?
-                            Got creative work? Tell us about it! Share your social media links if you like.
+                            Got creative work? Tell us about it! Share your social media
+                            links if you like.
                         </p>
                     </div>
                 @endif
                 <div class="col-lg-10">
-                    <textarea name="user_info[about]" id="about" class="form-control">{{ old('user_info.about', $user->user_info->about ?? '') }} </textarea>
+                    <textarea name="user_info[about]" id="about" class="form-control">
+                        {{ old('user_info.about', $user->user_info->about ?? '') }}
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -127,56 +149,62 @@ $user_roles = $data['user_roles'];
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Apt #</span>
                 </div>
-                <input type="text" class="form-control" name="user_address[unit]" value="{{ old('user_address.unit', $user->address->unit ?? '') }}" size="40" />
+                <input type="text" class="form-control" name="user_address[unit]"
+                       value="{{ old('user_address.unit', $user->address->unit ?? '') }}" size="40" />
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Street</span>
                 </div>
-                <input type="text" class="form-control" name="user_address[street]" value="{{ old('user_address.street', $user->address->street ?? '') }}" size="40" />
+                <input type="text" class="form-control" name="user_address[street]"
+                       value="{{ old('user_address.street', $user->address->street ?? '') }}" size="40" />
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">City</span>
                 </div>
-                <input type="text" class="form-control" name="user_address[city]" value="{{ old('user_address.city', $user->address->city ?? '') }}" size="40" />
+                <input type="text" class="form-control" name="user_address[city]"
+                       value="{{ old('user_address.city', $user->address->city ?? '') }}" size="40" />
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Province</span>
                 </div>
-                {{ select_options($data['provinces'], old('user_address.province', $user->address->province ?? ''), ['name' => 'user_address[province]', 'class' => 'form-control', 'placeholder' => 'Province']) }}
+                {{ select_options($data['provinces'], old('user_address.province', $user->address->province ?? ''),
+                    ['name' => 'user_address[province]', 'class' => 'form-control', 'placeholder' => 'Province']) }}
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Postal Code</span>
                 </div>
-                <input type="text" class="form-control" style="text-transform:uppercase" name="user_address[postal_code]" value="{{ old('user_address.postal_code', strtoupper($user->address->postal_code ?? '')) }}" size="40" />
+                <input
+                    type="text"
+                    class="form-control"
+                    style="text-transform:uppercase"
+                    name="user_address[postal_code]"
+                    value="{{ old('user_address.postal_code',
+                    strtoupper($user->address->postal_code ?? '')) }}"
+                    size="40" />
             </div>
-
-
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
                 </div>
-                {{ select_options($data['countries'], old('user_address.country', $user->address->country ?? ''), ['name' => 'user_address[country]', 'class' => 'form-control', 'placeholder' => 'Country']) }}
+                {{ select_options($data['countries'], old('user_address.country', $user->address->country ?? ''),
+                    ['name' => 'user_address[country]', 'class' => 'form-control', 'placeholder' => 'Country']) }}
             </div>
-
             <div class="col-12 mt-lg-5">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-primary" type="submit" value="{{ $data['action'] }} My Profile" />
             </div>
-
-            @if(Auth::user()->id == $user->id)
-
-            @endif
         </div>
     </form>
     <br />
     <h3>
         <a href="{{route('members')}}">
             <i class="far fa-arrow-alt-circle-left"></i>
-            members /</a>  <a href="{{route('member', Auth::user()->id)}}">{{$user->name}}</a>
+            members /</a>  <a href="{{route('member', Auth::user()->id)}}">{{$user->name}}
+        </a>
     </h3>
 </div>
 <div class="row mt-5"></div>
