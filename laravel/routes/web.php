@@ -22,6 +22,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('contact', 'ContactController@show')->name('contact');
     Route::post('contact', 'ContactController@submit');
 
+    Route::get('carousel', 'CarouselController@show')->name('carousel');
+
     Route::get('/hire-us', 'HireUsController@show')->name('hireus');
 
     Route::get('/pages', 'PageController@list')->name('pages');
