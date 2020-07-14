@@ -48,7 +48,18 @@ $employment = $data['employment'];
                     </h4>
                 </div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="employment[deadline]" value="{{ old('employment.date', $employment->deadline)}}" size="80" required/>
+                    <input
+                        type='text'
+                        name="employment[deadline]"
+                        class="form-control"
+                        placeholder="YYYY-MM-DD"
+                        id="pdate"
+                        data-provide="datepicker"
+                        data-date-format="yyyy-mm-dd"
+                        data-date-startDate="-3d"
+                        style='width: 300px;'
+                        value="{{ old('employment.date', $employment->deadline->format('Y-m-d') )}}"
+                    >
                 </div>
             </div>
             @if ($data['action'] == 'Edit')
@@ -59,7 +70,6 @@ $employment = $data['employment'];
                 </div>
             @endif
         </div>
-
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">

@@ -59,8 +59,8 @@ $venues = $data['data'];
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $v->created_at }} </td>
-                            <td> {{ $v->updated_at }} </td>
+                            <td> {{ $v->created_at->format('F j Y H:i:s') }} </td>
+                            <td> {{ $v->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
                     @endforeach
                     <tr>

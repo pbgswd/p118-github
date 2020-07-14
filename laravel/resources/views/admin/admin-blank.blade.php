@@ -34,4 +34,14 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    container 3
+    <div class="row border border-primary">
+        <div class='col-12'>
+x
+
+        </div>
+    </div>
+</div>
 @endsection

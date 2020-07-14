@@ -66,9 +66,9 @@ $employment = $data['employment'];
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $e->deadline }} </td>
-                            <td> {{ $e->created_at }} </td>
-                            <td> {{ $e->updated_at }} </td>
+                            <td> {{ $e->deadline->format('F j Y') }} </td>
+                            <td> {{ $e->created_at->format('F j Y H:i:s') }} </td>
+                            <td> {{ $e->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
                     @endforeach
                     <tr>

@@ -61,8 +61,8 @@ $bylaws = $data['bylaws'];
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $a->created_at }} </td>
-                            <td> {{ $a->updated_at }} </td>
+                            <td> {{ $a->created_at->format('F j Y H:i:s') }} </td>
+                            <td> {{ $a->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
                     @endforeach
                     <tr>

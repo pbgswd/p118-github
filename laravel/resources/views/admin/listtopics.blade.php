@@ -63,8 +63,8 @@
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>
-                        <td> {{ $i->created_at }} </td>
-                        <td> {{ $i->updated_at }} </td>
+                        <td> {{ $i->created_at->format('F j Y H:i:s') }} </td>
+                        <td> {{ $i->updated_at->format('F j Y H:i:s') }} </td>
                     </tr>
                 @endforeach
                     <tr>

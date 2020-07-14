@@ -20,10 +20,7 @@ mix
     .sass('resources/sass/dashboard.scss', 'public/css')
     .sass('resources/sass/jumbotron.scss', 'public/css')
     .sass('resources/sass/skeleton.scss', 'public/css')
-    //.sass('resources/sass/_transitions.scss', 'public.css')
     .sass('resources/sass/normalize.scss','public/css').version();
-
-//todo tiny mce updates needs to work with all of the mix
 
 if (mix.inProduction()) {
     mix.version();

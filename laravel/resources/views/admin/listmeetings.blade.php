@@ -45,7 +45,6 @@ $meetings = $data['meetings'];
                                 </h4>
                             </td>
                             <td>
-
                                 @if(null !== ($a->attachments))
                                     @foreach($a->attachments as $att)
                                         <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->file_name}}"><i class="fas fa-file-download fa-2x"></i></a>
@@ -57,9 +56,9 @@ $meetings = $data['meetings'];
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $a->date->format('F j Y H:i:s') }} </td>
-                            <td> {{ $a->created_at }} </td>
-                            <td> {{ $a->updated_at }} </td>
+                            <td> {{ $a->date->format('F j Y') }} </td>
+                            <td> {{ $a->created_at->format('F j Y H:i:s') }} </td>
+                            <td> {{ $a->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
                     @endforeach
                     <tr>

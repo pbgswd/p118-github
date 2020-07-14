@@ -39,7 +39,7 @@ $committee = $data['committee'];
                     <a href="mailto:{{ $c->email }}">{{ $c->email }}</a>
                 </td>
                 <td>
-                    {{ $c->created_at }}
+                    {{ $c->created_at->format('F j Y H:i:s') }}
                 </td>
             </tr>
         @endforeach

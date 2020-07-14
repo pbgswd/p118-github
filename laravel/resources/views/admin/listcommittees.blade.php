@@ -59,8 +59,8 @@ $committees = $data['committees'];
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>
-                                    <td> {{ $c->created_at }} </td>
-                                    <td> {{ $c->updated_at }} </td>
+                                    <td> {{ $c->created_at->format('F j Y H:i:s') }} </td>
+                                    <td> {{ $c->updated_at->format('F j Y H:i:s') }} </td>
                                 </tr>
                             @endforeach
                             <tr>

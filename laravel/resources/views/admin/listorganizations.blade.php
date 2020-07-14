@@ -59,8 +59,8 @@ $organizations = $data['organizations'];
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $org->created_at }} </td>
-                            <td> {{ $org->updated_at }} </td>
+                            <td> {{ $org->created_at->format('F j Y H:i:s') }} </td>
+                            <td> {{ $org->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
                     @endforeach
                     <tr>

@@ -42,8 +42,8 @@
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>
-                        <td> {{ $i->searchable->created_at }} </td>
-                        <td> {{ $i->searchable->updated_at }} </td>
+                        <td> {{ $i->searchable->created_at->format('F j Y H:i:s') }} </td>
+                        <td> {{ $i->searchable->updated_at->format('F j Y H:i:s') }} </td>
                     </tr>
                 @endforeach
                     <tr>
