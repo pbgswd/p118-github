@@ -99,13 +99,12 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        $user->load('phone_number', 'address'); //todo load current records.
+        $user->load('phone_number', 'address');
 
         $message = [];
         $original_name = $user->name;
 
         if($userRequest->user['name'] != $user->name) {
-
             $message['Name'] = $userRequest->user['name'];
         }
 
@@ -133,7 +132,6 @@ class UserController extends Controller
 
             if (isset($user_info['delete_image'])) {
                 Storage::disk('users')->delete($user_info['image']);
-
                 Session::flash('info', "You have deleted " . $user_info['image']);
                 $user_info['image'] = null;
                 $user_info['file_name'] = null;
@@ -160,32 +158,45 @@ class UserController extends Controller
             }
         }
 
-
         if ($user->address instanceof Address) {
-
             $user->address->fill($userRequest->user_address);
             $user->address->save();
         } else {
-
             $address = new Address($userRequest->user_address);
             $user->address()->save($address);
         }
 
-        if(!empty($message)){
-
+        if(!empty($message)) {
             $message['id'] = $user->id;
             $message['original_name'] = $original_name;
             $message['original_email'] = $user->email;
 
            // return view('emails.user_profile_update', ['data' => $message]);
 
+            $recipient = env('ADMIN_EMAIL');
 
-            Mail::send('emails.user_profile_update', ['data' => $message], function ($m) use ($message, $user) {
-                $m->from('no-reply@iatse118.com', "Local 118 Website");
-                $m->to(env('ADMIN_EMAIL'), env('ADMIN_EMAIL_NAME'))
-                    ->replyTo($user->email, $message['Name'] ?? $user->name)
-                    ->subject("Local 118 - Member Contact Info Update from " . $message['original_name']);
+            if (env('APP_ENV') == 'local') {
+                $recipient = env('ADMIN_EMAIL');
+                $cc = '';
+            }
 
+            if (env('APP_ENV') == 'production') {
+                //todo admin email in .env
+                $recipient = 'admin@iatse118.com';
+                $cc = 'healthandwelfare@iatse118.com';
+            }
+
+            Mail::send('emails.user_profile_update', ['data' => $message], function ($m) use ($message,
+                $user,
+                $recipient,
+                $cc) {
+                $m->from('no-reply@iatse118.com', "Local 118 Website profile update for ". $user->name);
+                $m->to($recipient, $recipient);
+                if($cc != '') {
+                    $m->cc($cc, $cc);
+                }
+                $m->replyTo($user->email, $message['Name'] ?? $user->name)
+                ->subject("Local 118 - Member Contact Info Update from " . $message['original_name']);
             });
         }
 
