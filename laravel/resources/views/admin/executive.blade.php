@@ -35,7 +35,7 @@ $roles = $data['roles'];
         <div class="form-group">
             <div class="col-12">
                 <label for="exampleFormControlSelect1">
-                    <h4>Title & email</h4>
+                    <h4>Title & Email</h4>
                 </label>
                 <select class="form-control" id="exampleFormControlSelect1" name="executive_id">
                     @if($data['action'] == 'Create')
@@ -57,20 +57,28 @@ $roles = $data['roles'];
     </div>
     <div class="row">
         <div class="form-group">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <h4>
                     <i class="fas fa-calendar-alt"></i>
                     Start date of Term
                 </h4>
             </div>
-            <div class="col-lg-10">
-                <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="start_date"
-                       value="@if( $data['action'] == 'Edit')
-{{$assigned_role->start_date->format('Y-m-d')}}
-                           @else
-{{ \Carbon\Carbon::now()->format('Y-m-d') }}
-                           @endif
-" size="40" required/>
+            <div class="col-lg-12">
+                <input
+                    type='text'
+                    name="start_date"
+                    class="form-control"
+                    id="pdate"
+                    data-provide="datepicker"
+                    data-date-format="yyyy-mm-dd"
+                    data-date-startDate="-3d"
+                    style='width: 300px;'
+                    value="@if( $data['action'] == 'Edit')
+                    {{$assigned_role->start_date->format('Y-m-d')}}
+                    @else
+                    {{ \Carbon\Carbon::now()->format('Y-m-d') }}
+                    @endif" required
+                >
             </div>
         </div>
     </div>
@@ -83,13 +91,21 @@ $roles = $data['roles'];
                 </h4>
             </div>
             <div class="col-lg-10">
-                <input type="text" class="form-control"  placeholder="YYYY-MM-DD" name="end_date"
-                       value="@if( $data['action'] == 'Edit')
-{{$assigned_role->end_date->format('Y-m-d')}}
-                       @else
-{{ \Carbon\Carbon::now()->add('1 year')->format('Y-m-d') }}
-                       @endif
-" size="40" required/>
+                <input
+                    type='text'
+                    name="end_date"
+                    class="form-control"
+                    id="pdate"
+                    data-provide="datepicker"
+                    data-date-format="yyyy-mm-dd"
+                    data-date-startDate="-3d"
+                    style='width: 300px;'
+                    value="@if( $data['action'] == 'Edit')
+                    {{$assigned_role->end_date->format('Y-m-d')}}
+                    @else
+                    {{ \Carbon\Carbon::now()->add('1 year')->format('Y-m-d') }}
+                    @endif" required
+                >
             </div>
         </div>
     </div>
