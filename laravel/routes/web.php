@@ -75,7 +75,6 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
     Route::get('/invited/{user}/{hash}', 'InviteUserController@process')->name('process_user');
 
-
     Route::get('policies', 'PolicyController@index')->name('policies_list_public');
     Route::get('/policies/{policy}', 'PolicyController@show')->name('policy_show_public');
 
@@ -145,7 +144,7 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('/user/create', 'AdminUserController@create')->name('user_create');
     Route::post('/user/create', 'AdminUserController@store');
     Route::get('/user/{user}/edit', 'AdminUserController@edit')->name('user_edit');
-    Route::post('/user/{user}/edit', 'AdminUserController@update');
+    Route::post('/user/{user}/edit', 'AdminUserController@update')->name('user_edit_update');
     Route::delete('/user/delete', 'AdminUserController@destroy')->name('user_destroy');
 
     Route::get('/executives', 'AdminExecutiveMembershipController@index')->name('admin_executives_list');

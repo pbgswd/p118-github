@@ -43,10 +43,15 @@
                       <table class="twelve columns">
                         <tr>
                           <td>
-                            <h1>Contact info update from {{$data['original_name']}}</h1>
-			    <p class="lead">Email: <a href="mailto:{{$data['original_email']}}">{{$data['original_email']}}</a></p>
-                            <p class="lead">Local 118 - Member Contact Info Update from<br />  {{$data['original_name']}}</p>
-                            <p>The following contact information has been updated in the {{env('APP_NAME')}} Web site database: </p>
+                            <h1>Contact info update for {{$data['original_name']}}</h1>
+
+			                <p class="lead">
+                                Email: <a href="mailto:{{$data['original_email']}}">{{$data['original_email']}}</a>
+                            </p>
+                            <p>
+                                The following contact information has been updated in the
+                                {{env('APP_NAME')}} Web site database:
+                            </p>
                               <ul>
                                   @foreach($data as $k => $v)
                                       @if($k != 'original_email' and $k != 'id' and $k != 'original_name')
@@ -54,12 +59,29 @@
                                       @endif
                                   @endforeach
                               </ul>
+                              @if(Route::currentRouteName() == 'user_edit_update')
+                                  <p>This ADMIN update for
+                                      {{ $data['Name'] ?? $data['original_name'] }}
+                                      was submitted by {{Auth::user()->name}}.
+                                  </p>
+                              @endif
                           </td>
                             <td class="expander"></td>
                         </tr>
                           <tr>
                               <td>
-                                  Admin Profile page for <a title="{{ $data['Name'] ?? $data['original_name']}}" href="{{ route('user_edit', $data['id'])}}">{{ $data['Name'] ?? $data['original_name'] }}</a>
+                                 <p><a title="{{ $data['Name'] ?? $data['original_name']}}"
+                                                              href="{{ route('user_edit', $data['id'])}}">
+                                         Admin Profile page for
+                                         {{ $data['Name'] ?? $data['original_name'] }}
+                                                        </a>
+                                 </p>
+                                  <p><a title="{{ $data['Name'] ?? $data['original_name']}}"
+                                                                href="{{ route('member', $data['id'])}}">
+                                          Member Profile page for
+                                          {{ $data['Name'] ?? $data['original_name'] }}
+                                                        </a>
+                                  </p>
                               </td>
                             <td class="expander"></td>
                           </tr>

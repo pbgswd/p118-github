@@ -11,12 +11,14 @@ use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Services\EmailMemberUpdateService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -30,6 +32,16 @@ use Spatie\Permission\Models\Role;
  */
 class AdminUserController extends Controller
 {
+    /**
+     * @var EmailMemberUpdateService
+     */
+
+    private $emailMemberUpdateService;
+
+    public function __construct(EmailMemberUpdateService $emailMemberUpdateService)
+    {
+        $this->emailMemberUpdateService = $emailMemberUpdateService;
+    }
 
     /**
      * @param Request $request
@@ -94,6 +106,9 @@ class AdminUserController extends Controller
      */
     public function store(StoreUser $request)
     {
+        Session::flash('warning', 'Store method blocked off. Contact admin for support.');
+        return redirect()->route('users_list');
+        exit();
         $this->authorize('create', Auth::user());
 
 //todo is password here just encrypting the word 'secret'?
@@ -124,10 +139,6 @@ class AdminUserController extends Controller
 
         $user_roles = new Role($request->input('user_roles'));
         $user_roles->save();
-
-        // send new user an email with login instructions.
-
-        //todo something like password reset to send out login information
 
         Session::flash('success', "You have saved a new member");
 
@@ -180,10 +191,26 @@ class AdminUserController extends Controller
     public function update(UpdateUser $userRequest, User $user)
     {
         $this->authorize('admin_update', $user);
-//TODO send email to office when user updates contact information
+
+        $user->load('phone_number', 'address');
+
+        $message = [];
+        $original_name = $user->name;
+
+        if($userRequest->user['name'] != $user->name) {
+            $message['Name'] = $userRequest->user['name'];
+        }
+
+        if($userRequest->user['email'] != $user->email) {
+            $message['Email'] = $userRequest->user['email'];
+        }
 
         $user->fill($userRequest['user']);
         $user->save();
+
+        if($userRequest->user_phone['phone_number'] != $user->phone_number->phone_number) {
+            $message['Phone'] = $userRequest->user_phone['phone_number'];
+        }
 
         if ($user->phone_number instanceof PhoneNumber) {
             $user->phone_number->fill($userRequest['user_phone']);
@@ -219,6 +246,15 @@ class AdminUserController extends Controller
             $user->user_info()->save($user_info);
         }
 
+        $addr = ['unit','street','city','province','postal_code','country'];
+
+        foreach($addr as $a)
+        {
+            if($userRequest->user_address[$a] != $user->address->$a) {
+                $message[ucfirst($a)] = $userRequest->user_address[$a];
+            }
+        }
+
         if ($user->address instanceof Address) {
             $user->address->fill($userRequest['user_address']);
             $user->address->save();
@@ -235,6 +271,10 @@ class AdminUserController extends Controller
         } else {
             $membership = new Membership($userRequest['user_membership']);
             $user->membership()->save($membership);
+        }
+
+        if(!empty($message)) {
+            $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
         Session::flash('success', "You have edited a member profile");
@@ -254,7 +294,7 @@ class AdminUserController extends Controller
         // NOTE: $request->id is an array
         $users = User::find($request->id);
 
-        //todo ca   nnot delete user when user has a post, page, topic, or is a member of a committee.
+        //todo cannot delete user when user has a post, page, topic, or is a member of a committee.
         // Deal with this
 //todo user soft delete
         foreach ($users as $user)

@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Services\EmailMemberUpdateService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -22,6 +23,17 @@ use Spatie\Permission\Models\Role;
  */
 class UserController extends Controller
 {
+    /**
+     * @var EmailMemberUpdateService
+     */
+
+    private $emailMemberUpdateService;
+
+    public function __construct(EmailMemberUpdateService $emailMemberUpdateService)
+    {
+        $this->emailMemberUpdateService = $emailMemberUpdateService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -167,37 +179,7 @@ class UserController extends Controller
         }
 
         if(!empty($message)) {
-            $message['id'] = $user->id;
-            $message['original_name'] = $original_name;
-            $message['original_email'] = $user->email;
-
-           // return view('emails.user_profile_update', ['data' => $message]);
-
-            $recipient = env('ADMIN_EMAIL');
-
-            if (env('APP_ENV') == 'local') {
-                $recipient = env('ADMIN_EMAIL');
-                $cc = '';
-            }
-
-            if (env('APP_ENV') == 'production') {
-                //todo admin email in .env
-                $recipient = 'admin@iatse118.com';
-                $cc = 'healthandwelfare@iatse118.com';
-            }
-
-            Mail::send('emails.user_profile_update', ['data' => $message], function ($m) use ($message,
-                $user,
-                $recipient,
-                $cc) {
-                $m->from('no-reply@iatse118.com', "Local 118 Website profile update for ". $user->name);
-                $m->to($recipient, $recipient);
-                if($cc != '') {
-                    $m->cc($cc, $cc);
-                }
-                $m->replyTo($user->email, $message['Name'] ?? $user->name)
-                ->subject("Local 118 - Member Contact Info Update from " . $message['original_name']);
-            });
+            $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
         Session::flash('success', "You have edited your profile");

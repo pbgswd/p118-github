@@ -32,7 +32,6 @@ class VenueController extends Controller
      */
     public function show(Venue $venue)
     {
-
         $data['venue'] = $venue;
         $data['agreements'] = Auth::check() ? $venue->member_agreements : $venue->agreements;
 
