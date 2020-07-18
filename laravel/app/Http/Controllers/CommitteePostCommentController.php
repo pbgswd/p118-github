@@ -86,7 +86,8 @@ class CommitteePostCommentController extends Controller
      * @return RedirectResponse
      */
     /***
-    public function update(UpdateCommitteePostCommentRequest $request, CommitteePostComment $any_committee_post_comment): RedirectResponse
+    public function update(UpdateCommitteePostCommentRequest $request,
+     * CommitteePostComment $any_committee_post_comment): RedirectResponse
     {
         // $this->authorize('update', Auth::user());
         $any_committee_post_comment->fill($request->input('comment'));

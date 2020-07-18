@@ -90,7 +90,6 @@ class CommitteePostController extends Controller
      */
     public function update(UpdateCommitteePostRequest $request, Committee $committee, CommitteePost $committeePost)
     {
-
         $committeePost->fill($request['post']);
         $committeePost->save();
         $committeePost->creator;
@@ -117,11 +116,10 @@ class CommitteePostController extends Controller
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee']);
         //todo some sort of ascending / descending sort order for the comments on posts.
 
-        if($data['committeepost']->allow_comments == 1) {
+/*        if($data['committeepost']->allow_comments == 1) {
             $data['committeepost']->load('post_comments');
             $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
-        }
-
+        }*/
 
         $data['action'] = 'Add';
 
