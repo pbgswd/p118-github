@@ -11,6 +11,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Searchable\SearchResult;
+use Spatie\Searchable\Searchable;
+
 
 /**
  * @property int              $id
@@ -29,7 +32,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property User[]           $active_committee_members
  * @property CommitteePost[]  $posts
  */
-class Committee extends LiveableModel
+class Committee extends LiveableModel implements Searchable
 {
     use Notifiable;
     use Sortable;
@@ -80,6 +83,27 @@ class Committee extends LiveableModel
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                $this->name,
+                \route('admin_committee_show', $this->slug)
+            );
+        }
+
+        return new SearchResult(
+            $this,
+            $this->name,
+            \route('committee', $this->slug),
+        );
     }
 
     /**

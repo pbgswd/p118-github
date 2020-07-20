@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int                     $id
@@ -24,7 +26,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Committee               $committee
  * @property CommitteePostComment[]  $post_comments
  */
-class CommitteePost extends LiveableModel
+class CommitteePost extends LiveableModel implements Searchable
 {
     use Notifiable;
     use Sortable;
@@ -53,6 +55,28 @@ class CommitteePost extends LiveableModel
         'allow_comments' => 'boolean',
         'live' => 'boolean',
     ];
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                $this->title,
+                \route('admin_commitee_show', $this->slug)
+            );
+        }
+
+        return new SearchResult(
+            $this,
+            $this->name,
+            \route('committee', $this->slug),
+        );
+    }
+
 
     /**
      * The attributes that are mass assignable.

@@ -91,6 +91,15 @@ class User extends Authenticatable implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
+
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                $this->name,
+                \route('user_edit', $this->id)
+            );
+        }
+
         return new SearchResult(
             $this,
             $this->name,

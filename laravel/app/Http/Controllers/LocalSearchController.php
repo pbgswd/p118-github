@@ -6,6 +6,8 @@ use App\Http\Requests\Search\LocalSearchResult;
 use App\Models\Agreement;
 use App\Models\Attachment;
 use App\Models\Bylaw;
+use App\Models\Committee;
+use App\Models\CommitteePost;
 use App\Models\Employment;
 use App\Models\LocalSearch;
 use App\Models\Meeting;
@@ -45,6 +47,7 @@ class LocalSearchController extends Controller
                 ->registerModel(Meeting::class, ['title', 'description'])
                 ->registerModel(Organization::class, ['name', 'description'])
                 ->registerModel(Venue::class, ['name', 'description'])
+               // ->registerModel(Committee::class, ['name', 'description'])
                 ->registerModel(User::class, 'name')
                 ->registerModel(UserInfo::class, 'about')
                 ->search($request->search),
@@ -113,13 +116,26 @@ class LocalSearchController extends Controller
                 })->registerModel(User::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('name')
                         ->withoutGlobalScope(LiveScope::class);
+
                 })->registerModel(UserInfo::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('about')
                         ->withoutGlobalScope(LiveScope::class);
+
                 })->registerModel(Policy::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
                         ->addExactSearchableAttribute('description')
                         ->withoutGlobalScope(LiveScope::class);
+
+                })->registerModel(Committee::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('name')
+                        ->addExactSearchableAttribute('description')
+                        ->withoutGlobalScope(LiveScope::class);
+
+                })->registerModel(CommitteePost::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addExactSearchableAttribute('content')
+                        ->withoutGlobalScope(LiveScope::class);
+
                 })
             ->search($request->search)
         ];

@@ -53,6 +53,15 @@ class Policy extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
+
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                $this->title,
+                \route('admin_policy_edit', $this->id)
+            );
+        }
+
         return new SearchResult(
             $this,
             $this->title,

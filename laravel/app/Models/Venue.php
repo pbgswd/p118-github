@@ -85,6 +85,14 @@ class Venue extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                $this->name,
+                \route('venue_edit', $this->slug)
+            );
+        }
+
         return new SearchResult(
             $this,
             $this->name,

@@ -70,6 +70,15 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
+
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                $this->title,
+                \route('admin_employment_edit', $this->id)
+            );
+        }
+
         return new SearchResult(
             $this,
             $this->title,

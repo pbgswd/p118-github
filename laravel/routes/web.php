@@ -108,7 +108,6 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');
 
-
     Route::post('/search', 'LocalSearchController@index')->name('search');
     Route::get('/search/{search}', 'LocalSearchController@show')->name('search_show');
 

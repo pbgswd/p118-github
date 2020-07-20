@@ -84,6 +84,14 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                $this->name,
+                \route('topic_edit', $this->slug)
+            );
+        }
+
         return new SearchResult(
             $this,
             $this->name,
