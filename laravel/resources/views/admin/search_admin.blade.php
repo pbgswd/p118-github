@@ -18,7 +18,7 @@
                         <th> @sortablelink('live', 'Is Live?') </th>
                         <th> @sortablelink('sort_order', 'Sort Order') </th>
                         <th> @sortablelink('in_menu', 'In Menu?') </th>
-                        <th> @sortablelink('allow_comments', 'Allow Comments?') </th>
+
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -36,7 +36,7 @@
                         <td> {!! $i->searchable->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
                         <td> {{ $i->searchable->sort_order }} </td>
                         <td> {!! $i->searchable->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
-                        <td> {!! $i->searchable->allow_comments ? "<i class='fas fa-check'></i>" : '<i class="far fa-times-circle"></i>' !!} </td>
+
                         <td>
                             <a href="{{ $i->url }}" title="Edit {{ $i->title }} ">
                                 <i class="fas fa-edit"></i>

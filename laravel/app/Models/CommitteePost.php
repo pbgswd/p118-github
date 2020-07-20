@@ -61,19 +61,20 @@ class CommitteePost extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        $committee = Committee::where('id', $this->committee_id)->first('slug');
 
         if(request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
-                \route('admin_commitee_show', $this->slug)
+                \route('admin_committee_post_edit', [$committee->slug, $this->slug]),
             );
         }
 
         return new SearchResult(
             $this,
-            $this->name,
-            \route('committee', $this->slug),
+            $this->title,
+            \route('public_committee_post_show', [$committee->slug, $this->slug]),
         );
     }
 

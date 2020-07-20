@@ -8,6 +8,7 @@ use App\Models\Attachment;
 use App\Models\Bylaw;
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\CommitteePostComment;
 use App\Models\Employment;
 use App\Models\LocalSearch;
 use App\Models\Meeting;
@@ -21,11 +22,13 @@ use App\Models\UserInfo;
 use App\Models\Venue;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
 
 class LocalSearchController extends Controller
 {
+    use Sortable;
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +50,9 @@ class LocalSearchController extends Controller
                 ->registerModel(Meeting::class, ['title', 'description'])
                 ->registerModel(Organization::class, ['name', 'description'])
                 ->registerModel(Venue::class, ['name', 'description'])
-               // ->registerModel(Committee::class, ['name', 'description'])
+                ->registerModel(Committee::class, ['name', 'description'])
+                ->registerModel(CommitteePost::class, ['title', 'content'])
+                ->registerModel(CommitteePostComment::class, ['content'])
                 ->registerModel(User::class, 'name')
                 ->registerModel(UserInfo::class, 'about')
                 ->search($request->search),
@@ -116,26 +121,24 @@ class LocalSearchController extends Controller
                 })->registerModel(User::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('name')
                         ->withoutGlobalScope(LiveScope::class);
-
                 })->registerModel(UserInfo::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('about')
                         ->withoutGlobalScope(LiveScope::class);
-
                 })->registerModel(Policy::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
                         ->addExactSearchableAttribute('description')
                         ->withoutGlobalScope(LiveScope::class);
-
                 })->registerModel(Committee::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('name')
-                        ->addExactSearchableAttribute('description')
+                        ->addSearchableAttribute('description')
                         ->withoutGlobalScope(LiveScope::class);
-
                 })->registerModel(CommitteePost::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
-                        ->addExactSearchableAttribute('content')
+                        ->addSearchableAttribute('content')
                         ->withoutGlobalScope(LiveScope::class);
-
+                })->registerModel(CommitteePostComment::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('content')
+                        ->withoutGlobalScope(LiveScope::class);
                 })
             ->search($request->search)
         ];
