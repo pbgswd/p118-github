@@ -102,8 +102,8 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
     Route::delete('committee/{committee}/post/{committeePost}/destroy', 'CommitteePostController@destroy')
         ->name('public_committee_post_destroy');
 
-    Route::post('committee/{committee}/post/{committeePost}/comment/create', 'CommitteePostCommentController@store')
-        ->name('public_committee_post_comment');
+    // Route::post('committee/{committee}/post/{committeePost}/comment/create', 'CommitteePostCommentController@store')
+    //    ->name('public_committee_post_comment');
 
     Route::get('meetings_minutes', 'MeetingController@index')->name('list_meetings');
     Route::get('/meeting/{meeting}', 'MeetingController@show')->name('meeting');

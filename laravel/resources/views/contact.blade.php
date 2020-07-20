@@ -14,6 +14,7 @@
                 <h3><a href="https://goo.gl/maps/h1ftiTc6NoBXj5D1A" target="_blank" title="IATSE Local 118 Office"><i class="fas fa-map-marked-alt"></i> Maps</a></h3>
                 <h3><a href="tel:604-685-9553"><i class="fas fa-phone-square"></i> 604-685-9553</a></h3>
             <h3><a href="mailto:office@iatse118.com"><i class="fas fa-envelope"></i> office@iatse118.com</a></h3>
+            <h3><a href="mailto:admin@iatse118.com"><i class="fas fa-envelope"></i> admin@iatse118.com</a></h3>
         </div>
         @guest
         @else
