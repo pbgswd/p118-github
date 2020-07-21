@@ -24,6 +24,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('carousel', 'CarouselController@show')->name('carousel');
 
+    Route::get('executive', 'ExecutiveController@index')->name('executive');
+
     Route::get('/hire-us', 'HireUsController@show')->name('hireus');
 
     Route::get('/pages', 'PageController@list')->name('pages');

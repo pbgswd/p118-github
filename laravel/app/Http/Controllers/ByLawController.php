@@ -32,9 +32,6 @@ class ByLawController extends Controller
 
         $data['count'] = Bylaw::count();
         }
-
-
-
         else {
         $data['bylaws'] = Bylaw::sortable()
             ->where('access_level', 'public')
@@ -44,8 +41,6 @@ class ByLawController extends Controller
 
         $data['count'] = Bylaw::where('access_level', 'public')->count();
         }
-
-
 
         return view('bylaws_list', ['data' => ['data' => $data]]);
     }

@@ -92,6 +92,8 @@
                                 History
                             </a>
                             <a class="dropdown-item" href="#">Governance</a>
+                            <a class="dropdown-item" href="{{route('executive')}}">Executive</a>
+
                             <a class="dropdown-item" href="{{route('bylaws_list_public')}}">C & B</a>
                             <a class="dropdown-item" href="{{route('page_show', 'links')}}">Links</a>
                             <a class="dropdown-item" href="#">118 Store</a>
