@@ -15,7 +15,9 @@ class ExecutiveController extends Controller
     public function index()
     {
         $data = [];
-        $data = Executive::with('user')->get();
+        $data = Executive::with('current_executive_user')->get();
+
+
 
         return view('executive_list', ['data' => $data]);
     }

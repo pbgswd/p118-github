@@ -14,14 +14,18 @@
              @foreach($data as $e)
                 <div class="col-12 mb-3">
                      <h3>{{$e->title}}</h3>
-                    @auth
-                        <a title="{{ $e->user[0]->name }}" href="{{ route('member', $e->user[0]->id) }}">
-                    @endauth
-                    {{$e->user[0]->name ?? ''}}
-                    @auth
-                        </a>
-                    @endauth
-                    <a href="mailto:{{$e->email}}">{{$e->email}}</a>
+                    @if( !empty($e->user[0]))
+                        @auth
+                            <a title="{{ $e->user[0]->name }}" href="{{ route('member', $e->user[0]->id) }}">
+                        @endauth
+                        {{$e->user[0]->name ?? ''}}
+                        @auth
+                            </a>
+                        @endauth
+                        <a href="mailto:{{$e->email}}">{{$e->email}}</a>
+                    @else
+                        <i>(To be assigned)</i>
+                    @endif
                 </div>
             @endforeach
         </div>

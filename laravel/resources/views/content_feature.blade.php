@@ -30,6 +30,9 @@ $posts = $data['posts'];
             <a href="{{route('committees')}}"><i class="fas fa-users"></i> Committees</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
+            <a href="{{route('executive')}}"><i class="fas fa-users"></i> Executive</a>
+        </div>
+        <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meetings & Minutes</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">

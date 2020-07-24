@@ -53,4 +53,11 @@ class Executive extends Model
             ->withPivot('id', 'start_date', 'end_date', 'current');
     }
 
+    public function current_executive_user(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'executive_user')
+            ->whereRaw('NOW() > start_date AND NOW() < end_date')
+            ->withPivot('id', 'start_date', 'end_date', 'current');
+    }
+
 }
