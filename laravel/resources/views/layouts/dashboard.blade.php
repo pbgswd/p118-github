@@ -125,6 +125,14 @@
                                     <h5>Membership</h5>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin_executives') }}">
+                                    <span data-feather="file"></span>
+                                    Executives
+                                </a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('users_list') }}">
                                     <span data-feather="file"></span>

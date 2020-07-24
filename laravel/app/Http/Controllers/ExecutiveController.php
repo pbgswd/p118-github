@@ -14,14 +14,8 @@ class ExecutiveController extends Controller
      */
     public function index()
     {
-        //todo list current executive
         $data = [];
-
         $data = Executive::with('user')->get();
-
-       foreach($data as $e) {
-           //dd($e->user[0]->name);
-       }
 
         return view('executive_list', ['data' => $data]);
     }
