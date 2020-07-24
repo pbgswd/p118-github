@@ -48,7 +48,7 @@ $roles = $data['roles'];
                     <label for="exampleFormControlSelect1">
                         <h4>Title & Email</h4>
                     </label>
-                    <select class="form-control" id="exampleFormControlSelect1" name="executive_id">
+                    <select class="form-control" id="exampleFormControlSelect1" name="executive_id" required>
                         @if($data['action'] == 'Create')
                             <option value="">Select</option>
                         @endif
