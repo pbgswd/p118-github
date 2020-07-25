@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Carousel;
+use App\Services\AttachmentService;
+use Illuminate\Http\Request;
+
+class AdminCarouselController extends Controller
+{
+
+    /** @var AttachmentService  */
+    private $attachmentService;
+
+    /**
+     * BylawController constructor.
+     *
+     * @param AttachmentService $attachmentService
+     */
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $data = [];
+
+        return view('admin.carousel', ['data' => $data]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Carousel  $carousel
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Carousel $carousel)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Carousel  $carousel
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Carousel $carousel)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Carousel  $carousel
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Carousel $carousel)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Carousel  $carousel
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Carousel $carousel)
+    {
+        //
+    }
+}

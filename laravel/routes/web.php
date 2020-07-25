@@ -122,6 +122,8 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('/', 'AdminController@index')->name('admin');
     Route::get('/blank', 'AdminController@blank')->name('blank');
 
+    Route::get('/carousel', 'AdminCarouselController@index')->name('admin_carousel');
+
     Route::post('/search', 'LocalSearchController@admin_search')->name('admin_search');
     //Route::get('/search', 'LocalSearchController@admin_index')->name('admin_search_show');
     Route::post('/attachment_search', 'LocalSearchController@admin_attachment_search')

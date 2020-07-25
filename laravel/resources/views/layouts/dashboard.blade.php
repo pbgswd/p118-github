@@ -184,6 +184,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin_carousel') }}">
+                                    <span data-feather="file"></span>
+                                    Carousel Management
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('venues_list') }}">
                                     <span data-feather="file"></span>
                                     Venues
