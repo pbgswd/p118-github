@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Requests\Executive;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreAdminExecutiveMembership extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules(): array
+    {
+        //dd($this->executive['executive_id']);
+        return [
+            'executive.executive_id' => 'required',
+            'executive.start_date' => 'date',
+            'executive.end_date' => 'date',
+        ];
+    }
+}

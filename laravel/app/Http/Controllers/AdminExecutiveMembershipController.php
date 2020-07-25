@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Executive\DestroyAdminExecutiveMembership;
+use App\Http\Requests\Executive\StoreAdminExecutiveMembership;
+use App\Http\Requests\Executive\UpdateAdminExecutiveMembership;
 use App\Models\Executive;
 use App\Models\ExecutiveMembership;
 use App\Models\User;
@@ -54,17 +57,17 @@ class AdminExecutiveMembershipController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreAdminExecutiveMembership $request
+     * @param User $user
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function store(Request $request, User $user)
+    public function store(StoreAdminExecutiveMembership $request, User $user)
     {
-        $executiveMembership = new ExecutiveMembership($request->input());
+        $executiveMembership = new ExecutiveMembership($request->input('executive'));
         $executiveMembership->user_id = $user->id;
-
         $endDate = Carbon::createFromDate($request->end_date);
         $executiveMembership->current = $endDate->isPast() ? 0 : 1;
-
         $executiveMembership->save();
 
         //todo msg member that he she has a role.
@@ -78,8 +81,10 @@ class AdminExecutiveMembershipController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ExecutiveMembership  $executiveMembership
+     * @param UpdateAdminExecutiveMembership $request
+     * @param Request $executiveMembership
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(ExecutiveMembership $executiveMembership)
     {
@@ -104,10 +109,9 @@ class AdminExecutiveMembershipController extends Controller
      * @param  \App\Models\ExecutiveMembership  $executiveMembership
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExecutiveMembership $executiveMembership)
+    public function update(UpdateAdminExecutiveMembership $request, ExecutiveMembership $executiveMembership)
     {
-        //todo form request
-        $executiveMembership->fill($request->all());
+        $executiveMembership->fill($request->input('executive'));
         $executiveMembership->save();
 
         Session::flash('success', "Role has been updated");
@@ -118,18 +122,19 @@ class AdminExecutiveMembershipController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ExecutiveMembership  $executiveMembership
+     * @param DestroyAdminExecutiveMembership $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExecutiveMembership $executiveMembership)
+    public function destroy(DestroyAdminExecutiveMembership $request)
     {
-        $user = $executiveMembership->user;
-
-        ExecutiveMembership::destroy($executiveMembership->id);
-
+        foreach($request->id as $i)
+        {
+            $e = ExecutiveMembership::find($i);
+            $e->delete();
+        }
 
         Session::flash('success', 'Executive role deleted.');
 
-        return redirect()->route('user_edit', [$user->id]);
+        return redirect()->route('admin_executives');
     }
 }

@@ -153,16 +153,16 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function 
     Route::get('/user/{user}/executiveMembership/create', 'AdminExecutiveMembershipController@create')
         ->name('admin_executive_create');
     Route::post('/user/{user}/executiveMembership/create', 'AdminExecutiveMembershipController@store');
-
-
     Route::get('/executiveMembership/{executiveMembership}/edit', 'AdminExecutiveMembershipController@edit')
         ->name('admin_executive_edit');
     Route::post('/executiveMembership/{executiveMembership}/edit', 'AdminExecutiveMembershipController@update');
-    Route::delete('/executiveMembership/{executiveMembership}/delete', 'AdminExecutiveMembershipController@destroy')
-      ->name('admin_executive_destroy');
 
-    Route::get('executives', 'AdminExecutiveController@index')->name('admin_executives');
-    Route::delete('executives/delete', 'AdminExecutiveController@destroy')->name('admin_executives_destroy');
+    //Route::delete('/executiveMembership/{executiveMembership}/delete', 'AdminExecutiveMembershipController@destroy')
+    //  ->name('admin_executive_destroy');
+
+    Route::get('executive_members', 'AdminExecutiveController@index')->name('admin_executives');
+
+    Route::delete('executives/delete', 'AdminExecutiveMembershipController@destroy')->name('admin_executive_destroy');
 
 
     Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');

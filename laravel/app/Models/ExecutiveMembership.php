@@ -18,11 +18,8 @@ class ExecutiveMembership extends Model
     ];
 
     protected $fillable = [
-        'id',
-        'user_id',
         'executive_id',
-        'title',
-        'email',
+        'current',
         'start_date',
         'end_date',
     ];
@@ -33,6 +30,10 @@ class ExecutiveMembership extends Model
         'start_date',
         'end_date',
     ];
+    /**
+     * @var mixed
+     */
+    private $user;
 
     /**
      * @return HasOne

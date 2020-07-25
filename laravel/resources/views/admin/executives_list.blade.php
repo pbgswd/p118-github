@@ -13,7 +13,7 @@ $executives = $data['executives'];
     @if($executives->count() < 1)
         No executive roles defined yet
     @else
-        <form name="delete" method="POST" action="{{route('admin_executives_destroy')}}">
+        <form name="delete" method="POST" action="{{route('admin_executive_destroy')}}">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}
             <div class="form-group">

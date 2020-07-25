@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Hello;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Session;
 
 class HelloController extends Controller
 {

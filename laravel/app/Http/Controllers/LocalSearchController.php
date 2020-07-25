@@ -10,7 +10,6 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use App\Models\Employment;
-use App\Models\LocalSearch;
 use App\Models\Meeting;
 use App\Models\Organization;
 use App\Models\Page;

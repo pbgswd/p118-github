@@ -48,9 +48,10 @@ $roles = $data['roles'];
                     <label for="exampleFormControlSelect1">
                         <h4>Title & Email</h4>
                     </label>
-                    <select class="form-control" id="exampleFormControlSelect1" name="executive_id" required>
+
+                    <select class="form-control" id="exampleFormControlSelect1" name="executive[executive_id]" required>
                         @if($data['action'] == 'Create')
-                            <option value="">Select</option>
+                            <option value="">Select Executive Role</option>
                         @endif
                          @foreach($roles as $r)
                             <option value="{{$r->id}}"
@@ -59,8 +60,7 @@ $roles = $data['roles'];
                                             selected
                                         @endif
                                     @endif
-                                        > {{$r->title}} | {{$r->email}}
-                            </option>
+                                        >{{$r->title}} | {{$r->email}}</option>
                          @endforeach
                     </select>
                 </div>
@@ -77,7 +77,7 @@ $roles = $data['roles'];
                 <div class="col-lg-12">
                     <input
                         type='text'
-                        name="start_date"
+                        name="executive[start_date]"
                         class="form-control"
                         id="pdate"
                         data-provide="datepicker"
@@ -104,7 +104,7 @@ $roles = $data['roles'];
                 <div class="col-lg-10">
                     <input
                         type='text'
-                        name="end_date"
+                        name="executive[end_date]"
                         class="form-control"
                         id="pdate"
                         data-provide="datepicker"
@@ -130,12 +130,13 @@ $roles = $data['roles'];
         <div class="col-sm"> &nbsp;</div>
         @if ($data['action'] == 'Edit')
              <div class="col-sm" style="float:right">
-                 <form name="delete" method="POST" action="{{route('admin_executive_destroy', $assigned_role->id)}}">
+                 <form name="delete" method="POST" action="{{route('admin_executive_destroy')}}">
                      {!! csrf_field() !!}
                      {!! method_field('DELETE') !!}
-                    <i class="far fa-trash-alt fa-2x"></i>
-                    <input class="btn btn-outline-danger" type="submit" value="Delete Executive Member role">
-                </form>
+                     <input type="hidden" name="id[]" value="{{$assigned_role->id}}" />
+                     <i class="far fa-trash-alt fa-2x"></i>
+                     <input class="btn btn-outline-danger" type="submit" value="Delete Executive Member role">
+                 </form>
              </div>
         @endif
     </div>

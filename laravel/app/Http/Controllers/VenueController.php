@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Venue;
 use Auth;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 
 
 class VenueController extends Controller

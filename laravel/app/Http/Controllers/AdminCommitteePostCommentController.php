@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommitteePostComment\DestroyCommitteePostCommentRequest;
 use App\Http\Requests\CommitteePostComment\StoreCommitteePostCommentRequest;
 use App\Http\Requests\CommitteePostComment\UpdateCommitteePostCommentRequest;
-use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
