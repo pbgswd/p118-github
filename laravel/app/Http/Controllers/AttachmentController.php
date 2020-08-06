@@ -43,7 +43,7 @@ class AttachmentController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $data = [];
-        $data['attachments'] = Attachment::with('user')->orderBy('id', 'ASC')->paginate(30);
+        $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
 
         $data['filecount'] = Attachment::count();
 
@@ -87,6 +87,7 @@ class AttachmentController extends Controller
             $attachment = new Attachment();
             $attachment['file_name'] = $imageName;
             $attachment['file'] = $file;
+            $attachment['access_level'] = $request->attachment['access_level'];
             $attachment['user_id'] = Auth::id();
             $attachment->save();
         }

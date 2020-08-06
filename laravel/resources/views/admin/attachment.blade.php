@@ -6,7 +6,8 @@ $attachment = $data['attachment'];
     <div class="row mb-3">
         <a href="{{route('attachments_list')}}">Back to Images & Attachments</a>
     </div>
-    <form method="post" name="attachment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form method="post" name="attachment" action="{{ url()->current() }}" enctype="multipart/form-data"
+          class="needs-validation" novalidate>
         {!! csrf_field() !!}
         @if ($data['action'] == 'Add')
         <div class="col-md-8 border border-primary rounded p-lg-4 mt-lg-1">
@@ -23,7 +24,8 @@ $attachment = $data['attachment'];
                 Access Level for content: {{$attachment->access_level}}
                 <div class="form-group">
                     {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level),
-                            ['name' => 'attachment[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                            ['name' => 'attachment[access_level]', 'class' => 'form-control',
+                            'placeholder' => 'Access Level'], 'required') }}
                 </div>
             </div>
         </div>
@@ -42,12 +44,17 @@ $attachment = $data['attachment'];
                         <h2>File Info</h2>
                         <p>
                             <ul style="line-height: 1.6; list-style-type: none;">
-                                <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}</a></li>
+                                <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/
+                                        {{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/
+                                        {{$attachment->subfolder}}/{{$attachment['file']}}
+                                    </a>
+                                </li>
                                 <li>File Size: {{$attachment->filesize}}</li>
                                 <li>Original File Name: {{$attachment['file_name']}}</li>
                                 <li>Uploaded File Name: {{$attachment['file']}}</li>
                                 <li>
-                                    <a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])}}" title="Download {{$attachment->file_name}}">
+                                    <a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])
+                                            }}" title="Download {{$attachment->file_name}}">
                                         @if($attachment->extension == 'pdf')
                                             <i class="fas fa-file-pdf fa-4x"></i>
                                         @else
@@ -62,12 +69,16 @@ $attachment = $data['attachment'];
                     </div>
                     <div class="col-md-8 mt-lg-3">
                         Description:
-                            <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[description]" value="{{ old('attachment.description', $attachment->description)}}" size="40"/>
+                            <input type="text" class="form-control"  placeholder="Add a description for this file"
+                                   name="attachment[description]" value="{{ old('attachment.description',
+                                    $attachment->description)}}" size="40"/>
                     </div>
                     <div class="col-md-8 mt-lg-3">
                         Access Level for attachment:
                             <div class="form-group">
-                                {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level), ['name' => 'attachment[access_level]', 'class' => 'form-control', 'placeholder' => 'Access Level']) }}
+                                {{ select_options($data['access_levels'], old('attachment.access_level',
+                                    $attachment->access_level), ['name' => 'attachment[access_level]',
+                                    'class' => 'form-control', 'placeholder' => 'Access Level'], 'required') }}
                             </div>
                     </div>
                     <div class="col-md-8 mt-lg-4">
@@ -91,15 +102,25 @@ $attachment = $data['attachment'];
             @else
                 <div class="row">
                     <div class="col-md-6 mb-lg-1">
-                        <img src="{{ asset('storage/' . $attachment->subfolder . "/" . $attachment['file']) }}" {{$attachment['imageData'][3]}} />
+                        <img src="{{ asset('storage/' . $attachment->subfolder . "/" . $attachment['file']) }}"
+                            {{$attachment['imageData'][3]}} />
                     </div>
                     <div class="col-md-12 mt-lg-3 ml-lg-2">
                         <h3><i class="far fa-file-image"></i> Image Info</h3>
                         <ul>
-                            <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}</a></li>
+                            <li>Location: <a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/
+                                    {{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/
+                                    {{$attachment->subfolder}}/{{$attachment['file']}}
+                                </a>
+                            </li>
                             <li>File Size: {{$attachment->filesize}}</li>
                             <li>Original File Name: {{$attachment['file_name']}}</li>
-                            <li><a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])}}" title="Download {{$attachment->file_name}}"><i class="fas fa-file-download"></i> Download {{$attachment['file_name']}}</a></li>
+                            <li>
+                                <a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])}}"
+                                   title="Download {{$attachment->file_name}}"><i class="fas fa-file-download"></i>
+                                    Download {{$attachment['file_name']}}
+                                </a>
+                            </li>
                             <li>Uploaded File Name: {{$attachment['file']}}</li>
                             <li>File Type: {{$attachment->extension}}</li>
                             <li>Width: {{$attachment->imagedata[0]}} px</li>
@@ -110,18 +131,22 @@ $attachment = $data['attachment'];
                     </div>
                     <div class="col-md-12 mb-lg-1">
                         Description
-                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[description]" value="{{ old('attachment.description', $attachment->description)}}" size="40"/>
+                        <input type="text" class="form-control"  placeholder="Add a description for this file"
+                               name="attachment[description]" value="{{ old('attachment.description',
+                                $attachment->description)}}" size="40"/>
                     </div>
                     <div class="col-md-12 mt-lg-3 mb-lg-1">
                         Access Level for content:
                         <div class="form-group">
-                            {{ select_options($data['access_levels'], old('attachment.access_level', $attachment->access_level), ['name' => 'attachment[access_level]', 'class' => 'form-control']) }}
+                            {{ select_options($data['access_levels'], old('attachment.access_level',
+                                    $attachment->access_level), ['name' => 'attachment[access_level]',
+                                    'class' => 'form-control'], 'required') }}
                         </div>
 
                         <h4>Insert into content with:</h4>
 <pre>
     <code>
-&lt;img src="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" style="padding:1em;" /&gt;
+&lt;img src="/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" style="padding:1em;" /&gt;
     </code>
 </pre>
                     </div>

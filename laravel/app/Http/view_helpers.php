@@ -48,7 +48,7 @@ if (!function_exists('select_options')) {
      * @usage   {{ select_options($data['countries'], $user->country_code, ['name' => 'user[country_code]',
      * 'class' => 'xs_selectbox']) }}
      */
-    function select_options(array $data, $selected = null, $attributes = true)
+    function select_options(array $data, $selected = null, $attributes = true, $required = null)
     {
         $placeholder = null;
         if ($attributes === false) {
@@ -69,7 +69,7 @@ if (!function_exists('select_options')) {
 //todo: todoRTL: pull 'placeholder' text from $attributes string
                 $result .= $attributes;
             }
-            $result .= ">\n";
+            $result .= $required . ">\n";
         }
 
         if ($placeholder) {

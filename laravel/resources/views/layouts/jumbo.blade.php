@@ -75,7 +75,14 @@
     <body>
         <a name="top"></a>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="{{ route('hello') }}">{{config('app.name')}}</a>
+            <a class="navbar-brand" href="{{ route('hello') }}">
+                <img src="/storage/public/1Ck1qXvyIEzjPkIk8zK9qGaOWKtJqzhlFMVM4iBY.png"
+                     alt="{{config('app.name')}}"
+                     title="{{config('app.name')}}"
+                     style="" />
+            </a>
+
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">Menus
                 <span class="navbar-toggler-icon"></span>
@@ -263,7 +270,7 @@
                 </div>
                 <div class="col-3">
                     <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
-                        <img src="/storage/public/dK2ytnJHZU1Q0eJ3FTJYG9ogwR9V1zLHzB1ab9RE.png" class="p-1" />
+                        <img src="/storage/public/y5u3G1esTcDQ61DvMh222Q8UJ99xl5rmR0fiorjw.jpeg" class="p-1" />
                     </a>
                 </div>
                 <div class="col-3">
@@ -346,21 +353,17 @@
 
             </div>
 
-
             <div class="row mt-2 mb-lg-2">
                 <div class="col-4 text-left">
                     <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
                 </div>
                 <div class="col-4 text-left">
-                    <h6>Site by Peter Gordon <br />& IATSE 118 Members</h6>
+                    <h6>Site by IATSE 118 Members</h6>
                 </div>
                 <div class="col-4 text-right">
                     <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
                 </div>
             </div>
-
-
-
 
         </footer>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
