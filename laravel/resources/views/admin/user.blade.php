@@ -208,14 +208,14 @@ $user_roles = $data['user_roles'];
                     <span class="input-group-text" id="inputGroup-sizing-default">Street</span>
                 </div>
                 <input type="text" class="form-control" placeholder="Street" name="user_address[street]"
-                       value="{{ old('user_address.street', $user->address->street ?? '') }}" size="60" required/>
+                       value="{{ old('user_address.street', $user->address->street ?? '') }}" size="60"/>
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">City</span>
                 </div>
                 <input type="text" class="form-control" placeholder="City" name="user_address[city]"
-                       value="{{ old('user_address.city', $user->address->city ?? '')}}" size="40" required/>
+                       value="{{ old('user_address.city', $user->address->city ?? '')}}" size="40"/>
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
@@ -232,7 +232,7 @@ $user_roles = $data['user_roles'];
                     <input type="text" style="text-transform:uppercase" class="form-control"
                            placeholder="Postal Code" name="user_address[postal_code]"
                            value="{{ old('user_address.postal_code', strtoupper($user->address->postal_code ?? ''))}}"
-                           size="60" required/>
+                           size="60" />
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">

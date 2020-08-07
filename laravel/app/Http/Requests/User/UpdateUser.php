@@ -13,7 +13,7 @@ class UpdateUser extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,7 +23,7 @@ class UpdateUser extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             //unique:table,column,except,idColumn
@@ -37,16 +37,17 @@ class UpdateUser extends FormRequest
             'user_info.image'=> 'string|nullable',
             'user_info.about'=> 'string|nullable|max:2000',
             'user_address.unit' => 'max:255|nullable',
-            'user_address.street'=> 'string|required|max:255',
-            'user_address.city'=> 'string|required|max:255',
-            'user_address.province'=> 'string|required|max:255',
-            'user_address.postal_code'=> 'string|required|max:255',
-            'user_address.country'=> 'string|required|max:255',
+            'user_address.street'=> 'string|max:255|nullable',
+            'user_address.city'=> 'string|max:255|nullable',
+            'user_address.province'=> 'string|max:255|nullable',
+            'user_address.postal_code'=> 'string|max:255|nullable',
+            'user_address.country'=> 'string|max:255|nullable',
             'user_role' => 'required',
             /**
             'user_membership.membership_date' => 'date',
             'user_membership.membership_expires' => 'date',
-            'user_membership.seniority_number' => 'required|integer|unique:memberships,seniority_number,' . $this->route('user')->id . ',user_id',
+            'user_membership.seniority_number' => 'required|integer|unique:memberships,seniority_number,'
+             * . $this->route('user')->id . ',user_id',
             'user_membership.status' => 'string|required|max:255',
             'user_membership.admin_notes' => 'string|nullable|max:2000',
              **/
