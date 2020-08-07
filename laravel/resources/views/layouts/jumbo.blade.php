@@ -75,14 +75,12 @@
     <body>
         <a name="top"></a>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="{{ route('hello') }}">
-                <img src="/storage/public/1Ck1qXvyIEzjPkIk8zK9qGaOWKtJqzhlFMVM4iBY.png"
+            <a class="" href="{{ route('hello') }}">
+                <img src="/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png"
                      alt="{{config('app.name')}}"
                      title="{{config('app.name')}}"
-                     style="" />
+                     style="padding-right: 1em;" />
             </a>
-
-
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">Menus
                 <span class="navbar-toggler-icon"></span>
@@ -270,7 +268,7 @@
                 </div>
                 <div class="col-3">
                     <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
-                        <img src="/storage/public/y5u3G1esTcDQ61DvMh222Q8UJ99xl5rmR0fiorjw.jpeg" class="p-1" />
+                        <img src="/storage/public/E9psVVljWX9afHmiwfyeTCuXEU6WnKHUIoevll6Y.jpeg" class="p-1" />
                     </a>
                 </div>
                 <div class="col-3">
