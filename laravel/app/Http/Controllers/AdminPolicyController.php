@@ -34,7 +34,8 @@ class AdminPolicyController extends Controller
     public function index()
     {
         $data = [];
-        $data['policies'] = Policy::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('date', 'desc')->paginate(20);
+        $data['policies'] = Policy::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('date', 'desc')
+            ->paginate(20);
         $data['count'] = Policy::withoutGlobalScopes()->count();
 
         return view('admin.policies_list', ['data' => $data]);
@@ -68,7 +69,6 @@ class AdminPolicyController extends Controller
         $policy->save();
 
         Session::flash('success', "policy posting saved");
-//dd([$request->all, $policy]);
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $policy);
@@ -83,8 +83,6 @@ class AdminPolicyController extends Controller
         }
         return redirect()->route('admin_policy_edit', [$policy->id]);
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
@@ -155,7 +153,8 @@ class AdminPolicyController extends Controller
                 $policy->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) . ' and any related files deleted.');
+        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) .
+            ' and any related files deleted.');
 
         return redirect()->route('policies_list');
     }

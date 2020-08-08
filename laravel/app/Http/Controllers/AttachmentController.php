@@ -92,7 +92,8 @@ class AttachmentController extends Controller
             $attachment->save();
         }
 
-        Session::flash('success', Str::plural(count($request->images) . ' Attachment', count($request->images)) . ' uploaded.');
+        Session::flash('success', Str::plural(count($request->images) .
+                ' Attachment', count($request->images)) . ' uploaded.');
 
         if (count($request->file('images')) == 1 ) {
             return redirect()->route('admin_attachment_edit', $attachment->id);
@@ -119,7 +120,8 @@ class AttachmentController extends Controller
 
         return view('admin.attachment', ['data' => [
             'attachment' => $attachment,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
             'action' => 'Edit'
             ]
         ]);

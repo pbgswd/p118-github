@@ -5,7 +5,8 @@
            <span class="badge badge-primary badge-pill">
                {!! $data['users']->total()  !!}
            </span>
-            Members. | <a href="{{ route('invite_new_user') }}">Invite new member <i class="far fa-arrow-alt-circle-right"></i> </a>
+            Members. | <a href="{{ route('invite_new_user') }}">Invite new member
+                <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 <form name="delete" method="POST" action="{{route('user_destroy')}}">
@@ -37,14 +38,24 @@
                         </td>
                         <td>
                             <h4>
-                                <a title="public profile for {{ $i->name }}" target="_blank" href="{{ route('member', $i->id) }}">
+                                <a title="public profile for {{ $i->name }}" target="_blank"
+                                   href="{{ route('member', $i->id) }}">
                                     <i class="far fa-user-circle"></i>
                                 </a>
                                 <a title="admin edit page for {{ $i->name }}" href="{{ route('user_edit', $i->id) }}">
                                     {{ $i->name }}
                                 </a>
                             </h4>
+                            @if(count($i->allCurrentExecutiveRoles) > 0)
 
+                                @foreach($i->allCurrentExecutiveRoles as $a)
+                                    {{$a->title}} From:
+                                    {{\Carbon\Carbon::parse($a->pivot->start_date)->format('F j Y')}}
+                                    Until:  {{\Carbon\Carbon::parse($a->pivot->end_date)->format('F j Y')}}
+                                    <br />
+
+                                @endforeach
+                            @endif
                         </td>
                         <td> {{ $i->email }} </td>
                         <td>

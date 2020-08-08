@@ -37,7 +37,8 @@ class AdminAgreementController extends Controller
 
         $data = [];
 
-        $data['agreements'] = Agreement::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('until', 'desc')->paginate(20);
+        $data['agreements'] = Agreement::withoutGlobalScopes()->sortable()->with('attachments')
+            ->orderBy('until', 'desc')->paginate(20);
         $data['count'] = Agreement::withoutGlobalScopes()->count();
 
         return view('admin.agreements_list', ['data' => $data]);
@@ -152,7 +153,8 @@ class AdminAgreementController extends Controller
                 $agreement->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) . ' and any related files deleted.');
+        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) .
+            ' and any related files deleted.');
 
         return redirect()->route('agreements_list');
     }

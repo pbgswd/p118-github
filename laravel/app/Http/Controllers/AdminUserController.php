@@ -52,6 +52,8 @@ class AdminUserController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $users = User::with('roles')->sortable()->paginate(20);
+        $users->load('allCurrentExecutiveRoles');
+
         return view('admin.listusers', ['data' => ['users' => $users]]);
     }
 

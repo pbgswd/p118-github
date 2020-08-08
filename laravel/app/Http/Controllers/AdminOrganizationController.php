@@ -139,7 +139,8 @@ class AdminOrganizationController extends Controller
             }
         );
 
-        Session::flash('success', Str::plural(count($request->id) . ' Organization', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural(count($request->id) . ' Organization', count($request->id)) .
+            ' deleted.');
 
         return redirect()->route('organizations_list');
     }
