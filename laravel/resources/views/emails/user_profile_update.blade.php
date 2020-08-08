@@ -9,26 +9,26 @@
             <tr>
               <td class="center" align="center">
                 <center>
-
                   <table class="container">
                     <tr>
                       <td class="wrapper last">
                         <table class="twelve columns">
                           <tr>
-                      <td class="six sub-columns">
-                          <a href="{{Request::root()}}" title="{{env('APP_NAME')}}">{{env('APP_NAME')}}</a>
-                            </td>
-                            <td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
-                              <span class="template-label"></span>
-                            </td>
-                            <td class="expander"></td>
+                              <td class="six sub-columns">
+                                  <a href="{{Request::root()}}" title="{{env('APP_NAME')}}">
+                                      <img src="{{env('APP_URL')}}/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png"
+                                           alt="{{env('APP_NAME')}}" style="padding:1em;" />
+                                  </a>
+                              </td>
+                              <td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
+                                  <span class="template-label"></span>
+                              </td>
+                              <td class="expander"></td>
                           </tr>
                         </table>
-
                       </td>
                     </tr>
                   </table>
-
                 </center>
               </td>
             </tr>

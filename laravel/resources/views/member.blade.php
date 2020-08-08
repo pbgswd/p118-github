@@ -31,7 +31,7 @@ $user = $data['user'];
                 @if (($user->user_info->share_email ?? '' ) == 1)
                     <h3>
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:{{$user->email}}">{{$user->email}}</a>
+                        <a href="mailto:{{$user->email}}" title="Email {{$user->name}}">{{$user->email}}</a>
                     </h3>
                 @endif
                 @if (($user->user_info->share_phone  ?? '' )  == 1)
@@ -46,20 +46,20 @@ $user = $data['user'];
             </div>
             <div class="row p-4">
                 @if( $user->allExecutiveRoles->count() > 0 )
-                <div class="col-6 border border-dark rounded-lg mt-3 mr-1">
-                    <h4>Executive Title:</h4>
-                    @foreach($user->allExecutiveRoles as $exec)
-                       <h5>{{$exec->title}}
-                            {{ \Carbon\Carbon::parse($exec->pivot->end_date)->isPast() ? '':'(Currently)'}}
-                            <a href="mailto:{{$exec->email}}" title="Send email to {{$exec->email}}">
-                                <i class="fas fa-envelope"></i>
-                            </a> <br />
-                            From: {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('F j Y')}}
-                            Until: {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('F j Y')}}
-                       </h5>
-                        <br />
-                    @endforeach
-                </div>
+                    <div class="col-6 border border-dark rounded-lg mt-3 mr-1">
+                        <h4>Executive Title:</h4>
+                        @foreach($user->allExecutiveRoles as $exec)
+                           <h5>{{$exec->title}}
+                                {{ \Carbon\Carbon::parse($exec->pivot->end_date)->isPast() ? '':'(Currently)'}}
+<a href="mailto:{{$exec->email}}" title="Email {{$user->name}} {{$exec->title}} at {{$exec->email}}">
+                                    <i class="fas fa-envelope"></i>
+                                </a> <br />
+                                From: {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('F j Y')}}
+                                Until: {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('F j Y')}}
+                           </h5>
+                            <br />
+                        @endforeach
+                    </div>
                 @endif
                 @if(count($user->committee_memberships) > 0)
                     <div class="col-5 border border-dark rounded-lg mt-3">

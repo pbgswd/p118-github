@@ -274,13 +274,15 @@ class AdminUserController extends Controller
 
         $user->syncRoles($userRequest['user_role']);
 
-/*        if ($user->membership instanceof Membership) {
+/*
+        if ($user->membership instanceof Membership) {
             $user->membership->fill($userRequest['user_membership']);
             $user->membership->save();
         } else {
             $membership = new Membership($userRequest['user_membership']);
             $user->membership()->save($membership);
-        }*/
+        }
+*/
 
         if(!empty($message)) {
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
@@ -300,12 +302,12 @@ class AdminUserController extends Controller
     {
         $this->authorize('delete', Auth::user());
 
-        // NOTE: $request->id is an array
         $users = User::find($request->id);
 
-        //todo cannot delete user when user has a post, page, topic, or is a member of a committee.
-        // Deal with this
+//todo cannot delete user when user has a post, page, topic, or is a member of a committee.
+// Deal with this
 //todo user soft delete
+
         foreach ($users as $user)
         {
             $user_roles = $user->getRoleNames()->toArray();
@@ -315,7 +317,6 @@ class AdminUserController extends Controller
             {
                 $user->removeRole($r);
             }
-//todo delete executive relation
 
             PhoneNumber::where('user_id', $user->id)->delete();
             Address::where('user_id', $user->id)->delete();
