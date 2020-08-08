@@ -46,14 +46,12 @@
                                     {{ $i->name }}
                                 </a>
                             </h4>
-                            @if(count($i->allCurrentExecutiveRoles) > 0)
-
-                                @foreach($i->allCurrentExecutiveRoles as $a)
+                            @if(count($i->currentExecutiveRoles) > 0)
+                                @foreach($i->currentExecutiveRoles as $a)
                                     {{$a->title}} From:
                                     {{\Carbon\Carbon::parse($a->pivot->start_date)->format('F j Y')}}
                                     Until:  {{\Carbon\Carbon::parse($a->pivot->end_date)->format('F j Y')}}
                                     <br />
-
                                 @endforeach
                             @endif
                         </td>

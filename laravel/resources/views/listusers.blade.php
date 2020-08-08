@@ -31,6 +31,16 @@
                                 </a>
                             @endif
                         </h4>
+
+                        @if(count($i->currentExecutiveRoles) > 0)
+                            @foreach($i->currentExecutiveRoles as $a)
+                                {{$a->title}} From:
+                                {{\Carbon\Carbon::parse($a->pivot->start_date)->format('F j Y')}}
+                                Until:  {{\Carbon\Carbon::parse($a->pivot->end_date)->format('F j Y')}}
+                                <br />
+                            @endforeach
+                        @endif
+
                     </td>
                     <td>
                         @if (!empty($i->user_info->share_email))

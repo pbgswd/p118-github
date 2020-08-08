@@ -200,10 +200,10 @@ class User extends Authenticatable implements HasAttachment, Searchable
      *
      * @return BelongsToMany
      */
-    public function allCurrentExecutiveRoles(): BelongsToMany
+    public function currentExecutiveRoles(): BelongsToMany
     {
-        // get  current_executive_user method in Executive
         return $this->belongsToMany(Executive::class, 'executive_user')
+            ->whereRaw('NOW() > start_date AND NOW() < end_date')
             ->withPivot('id', 'start_date', 'end_date', 'current');
     }
 
