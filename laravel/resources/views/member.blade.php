@@ -47,15 +47,17 @@ $user = $data['user'];
             <div class="row p-4">
                 @if( $user->allExecutiveRoles->count() > 0 )
                     <div class="col-6 border border-dark rounded-lg mt-3 mr-1">
-                        <h4>Executive Title:</h4>
+                        <h4>
+                            Executive {{ Str::plural('Title', $user->allExecutiveRoles->count()) }}
+                        </h4>
                         @foreach($user->allExecutiveRoles as $exec)
                            <h5>{{$exec->title}}
                                 {{ \Carbon\Carbon::parse($exec->pivot->end_date)->isPast() ? '':'(Currently)'}}
 <a href="mailto:{{$exec->email}}" title="Email {{$user->name}} {{$exec->title}} at {{$exec->email}}">
                                     <i class="fas fa-envelope"></i>
                                 </a> <br />
-                                From: {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('F j Y')}}
-                                Until: {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('F j Y')}}
+                                {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('M j Y')}} -
+                                {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('M j Y')}}
                            </h5>
                             <br />
                         @endforeach

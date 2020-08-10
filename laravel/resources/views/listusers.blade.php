@@ -34,9 +34,12 @@
 
                         @if(count($i->currentExecutiveRoles) > 0)
                             @foreach($i->currentExecutiveRoles as $a)
-                                {{$a->title}} From:
-                                {{\Carbon\Carbon::parse($a->pivot->start_date)->format('F j Y')}}
-                                Until:  {{\Carbon\Carbon::parse($a->pivot->end_date)->format('F j Y')}}
+                                <a href="mailto:{{$a->email}}" title="email {{$i->name}} at {{$a->email}}">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                {{$a->title}}
+                                {{\Carbon\Carbon::parse($a->pivot->start_date)->format('M j Y')}}
+                                 - {{\Carbon\Carbon::parse($a->pivot->end_date)->format('M j Y')}}
                                 <br />
                             @endforeach
                         @endif
