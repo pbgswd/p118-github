@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Constants\AccessLevelConstants;
+use App\Constants\TopicConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\TopicPolicy;
 use Conner\Tagging\Taggable;
@@ -132,6 +134,32 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class);
+
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function public_pages(): BelongsToMany
+    {
+        return $this->belongsToMany(Page::class)
+            ->where([
+                ['access_level', AccessLevelConstants::PUBLIC],
+                ['live', 1],
+            ]);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function news_pages(): BelongsToMany
+    {
+        return $this->belongsToMany(Page::class, 'page_topic')
+            ->where([
+                ['topic_id', TopicConstants::NEWS],
+                ['live', 1],
+            ])
+            ->withPivot('topic_id');
     }
 
     /**
@@ -140,6 +168,19 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class);
+    }
+
+
+    /**
+     * @return BelongsToMany
+     */
+    public function public_posts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class)
+            ->where([
+                ['access_level', AccessLevelConstants::PUBLIC],
+                ['live', 1],
+            ]);
     }
 
     /**
