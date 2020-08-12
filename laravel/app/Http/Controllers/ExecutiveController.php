@@ -19,17 +19,4 @@ class ExecutiveController extends Controller
         return view('executive_list', ['data' => $data]);
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Executive  $executive
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Executive $executive)
-    {
-        //
-    }
-
-
 }

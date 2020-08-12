@@ -10,22 +10,40 @@
 
     <div class="row"  style="background: #fff;">
         <div class="col-12 mb-lg-1 border border-dark rounded-lg" style="height:300px;">
-Carousel
+            <h1>Carousel</h1>
         </div>
     </div>
-
     <div class="row mb-2 mt-lg-5">
         <div class="w-50 col-6 border border-dark rounded-lg pt-2">
             <h1><i class="far fa-newspaper"></i> News & Highlights</h1>
-            <ul>
-                <li>News </li>
-                <li>News </li>
-                <li>News </li>
-                <li>News </li>
-                <li>News </li>
-                <li>News </li>
-                <li>News </li>
-            </ul>
+            @if($data['news']['posts']->count() > 0)
+                <h3><a href="{{route('posts')}}">Posts</a></h3>
+                <ul>
+                    @foreach($data['news']['posts'] as $post)
+                        <li>
+                            <a href="{{route('post_show', $post->slug)}}"
+                                title="{{$post->title}}">
+                                {{$post->title}}
+                            </a>
+                            {{$post->updated_at->format('M j Y')}}
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+            @if($data['news']['pages']->count() > 0)
+                <h3><a href="{{route('pages')}}">Pages</a></h3>
+                <ul>
+                    @foreach($data['news']['pages'] as $page)
+                        <li>
+                            <a href="{{route('page_show', $page->slug)}}"
+                                title="{{$page->title}}">
+                                {{$page->title}}
+                            </a>
+                            {{$page->updated_at->format('M j Y')}}
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
         <div class="w-50 col-6">
             <div class="col-12 border border-dark rounded-lg mb-lg-1 pt-2">
@@ -89,7 +107,7 @@ Carousel
     </div>
 
     <div class="row mt-lg-5" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12 border border-light rounded-lg p-lg-4">
+        <div class="col-12 border border-dark rounded-lg p-lg-4">
             @if($data['birthday'] != '')
                 <h2> <i class="fas fa-birthday-cake"></i> {{ $data['birthday'] }}</h2>
             @endif
