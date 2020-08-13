@@ -4,10 +4,9 @@
     <div class="container">
         <div class="row">
             <div class="col-3 border border-dark rounded-lg">
-                <h1>{{config('app.name')}}</h1>
+                <h2>{{config('app.name')}}</h2>
             </div>
             <div class="col-2">
-
             </div>
             <div class="col-6 border border-dark rounded-lg">
                 <h2>
