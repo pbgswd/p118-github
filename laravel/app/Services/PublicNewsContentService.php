@@ -6,15 +6,15 @@ namespace App\Services;
 
 use App\Models\Topic;
 
-class AllNewsContentService
+class PublicNewsContentService
 {
     public function getNewsPages()
     {
-        return Topic::with('news_pages')->get();
+        return Topic::with('public_news_pages')->get();
     }
 
     public function getNewsPosts()
     {
-        return Topic::with('news_posts')->get();
+        return Topic::with('public_news_posts')->get();
     }
 }

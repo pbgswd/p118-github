@@ -15,9 +15,15 @@
     </div>
     <div class="row mb-2 mt-lg-5">
         <div class="w-50 col-6 border border-dark rounded-lg pt-2">
-            <h1><i class="far fa-newspaper"></i> News & Highlights</h1>
+            <h1>
+                <a href="{{route('topic_show', 'news')}}" title="news and highlights">
+                    <i class="far fa-newspaper"></i> News & Highlights
+                </a>
+            </h1>
             @if($data['news']['posts']->count() > 0)
-                <h3><a href="{{route('posts')}}">Posts</a></h3>
+                <h3>
+                    <a href="{{route('posts')}}">Posts</a>
+                </h3>
                 <ul>
                     @foreach($data['news']['posts'] as $post)
                         <li>
@@ -25,13 +31,15 @@
                                 title="{{$post->title}}">
                                 {{$post->title}}
                             </a>
-                            {{$post->updated_at->format('M j Y')}}
+                            {{$post->created_at->format('M j Y')}}
                         </li>
                     @endforeach
                 </ul>
             @endif
             @if($data['news']['pages']->count() > 0)
-                <h3><a href="{{route('pages')}}">Pages</a></h3>
+                <h3>
+                    <a href="{{route('pages')}}">Pages</a>
+                </h3>
                 <ul>
                     @foreach($data['news']['pages'] as $page)
                         <li>
@@ -39,7 +47,7 @@
                                 title="{{$page->title}}">
                                 {{$page->title}}
                             </a>
-                            {{$page->updated_at->format('M j Y')}}
+                            {{$page->created_at->format('M j Y')}}
                         </li>
                     @endforeach
                 </ul>

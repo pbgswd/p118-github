@@ -2,17 +2,20 @@
 @section('content')
 <div class="jumbotron">
     <div class="container">
-        <div class="card justify-content-center">
-            <div class="card-header">
+        <div class="row">
+            <div class="col-3 border border-dark rounded-lg">
                 <h1>{{config('app.name')}}</h1>
             </div>
-            <div class="card-body">
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
-                You are redirected to this page when you are logged in.
+            <div class="col-2">
+                
+            </div>
+            <div class="col-6 border border-dark rounded-lg">
+                Hi {{Auth::user()->name}} <br />
+
+                <a href="{{route('member', Auth::user()->id)}}" title="My Profile">
+                    <i class="fas fa-user"></i> My profile
+                </a>
+
             </div>
         </div>
         @include('content_feature')

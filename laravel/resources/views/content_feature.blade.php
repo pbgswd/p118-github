@@ -44,8 +44,7 @@ $posts = $data['posts'];
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('policies_list_public')}}"><i class="fas fa-scroll"></i>  Policies</a>
         </div>
-    </div>
-    <div class="col-md-3">
+
         <div class="col-12">
             <h4>
                 <a href="{{route('topics')}}">Topics</a>
@@ -59,7 +58,11 @@ $posts = $data['posts'];
             </div>
         @endforeach
     </div>
-    <div class="col-md-3">
+
+    <div class="col-md-9">
+        <div class="col-12">
+            <h3>Important Announcements</h3>
+        </div>
         <div class="col-12">
             <h4>
                 <a href="{{route('posts')}}">Posts</a>
@@ -76,8 +79,7 @@ $posts = $data['posts'];
                 {!! $post->description !!}
             </div>
         @endforeach
-    </div>
-    <div class="col-md-3">
+
         <div class="col-12">
             <h4>
                 <a href="{{route('pages')}}">Pages</a>
