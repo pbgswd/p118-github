@@ -8,9 +8,9 @@ Project Title: Local 118 Rebuild
 
 Background
 
-IATSE Local 118 in Vancouver has a website which has served its needs well in the past. With more recent influences such as innovation in how to present content on the web, greater adoption of the site and growth in the local, a new instance of the website that makes use of current software will better serve the local. It will allow for management of more timely information, addition of online services and the reorganization of current ones to best suit the needs of both member users and public visitors of the website. 
+IATSE Local 118 in Vancouver has a website which has served its needs well in the past. Now a new instance of the website that makes use of current software will better serve the local. It will allow for management of more timely information, addition of online services and the reorganization of current ones to best suit the needs of both member users and public visitors of the website. 
 
-Peter Gordon is a member in good standing with IATSE 118, with approximately two years experience with the Local. Peter has over 18 years experience in Web application development, and has approached other members about the possibility of rebuilding the website.
+Peter Gordon is a member in good standing with IATSE 118, three years membership experience with the Local. Peter has over 18 years experience in Web application development, and has approached other members about the possibility of rebuilding the website.
 
 High-Level Project Proposal
 
@@ -20,19 +20,9 @@ Peter will inform the key stakeholders and seek further approval to build out th
 
 The second phase of the project will import member data and content, build out improvements for the site and plan the user migration to the new site, change to the new site and retire the current website. 
 
-Possible New Features
-
-Dues tracking. Users to be made aware of status of membership dues.
-Dynamic generation of member list.
-Moderated discussion. 
-Administrative privileges for different areas of the site.
-Other features as needed.
-
-
 Development Schedule 
 
-Peter Gordon will perform the development work for this project on a casual basis, time permitting. 
-Delivery and presentation of the first phase will be in summer 2019. 
+Work performed is when Peter Gordon is not working, so there has not been a delivery date fixed for this project. 
 
 
 Resources 
@@ -43,14 +33,14 @@ Laravel Framework.
 Twitter Bootstrap Library for layout. 
 Vue.js for dynamic generation of resources. 
 MySQL/MariaDB for database.
-BitBucket account for website version control with GIT.
+BitBucket account with Git version control.
 LaraDock for development environment.
 Docker containerization for deployment.
 Linux operating system.
 PHPStorm & emacs for editors.
-Google Drive, Trello, Asana, and BitBucket issues tracker will be used for project. communication and documentation. 
-Google Analytics. Possibly New Relic or DataDog.
-Email: MailGun as a proposed initial solution, also Gmail for Business. 
+Google Drive, Trello, and BitBucket issues tracker will be used for project. communication and documentation. 
+Google Analytics. 
+
 Hosting: Vultur, DigitalOcean or Amazon Web Services. 
 
 Budget
@@ -62,8 +52,8 @@ The new website hosting cost would be between $5 - $20 per month.
 
 Key Stakeholders
 
-President Corin Gutteridge.
-Brother Andrew McLean Youth Committee.
+President Derrall Dunlop.
+Jordan Both, Business Agent. Project Sponsor.
 Brother Don Underhill (previous webmaster).
 IATSE 118 Executive Board.
 Peter Gordon, IATSE 118 Member, Web Application Developer.
