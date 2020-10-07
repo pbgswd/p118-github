@@ -57,7 +57,7 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 
-Route::group(['middleware' =>  ['web', 'auth',]], function () {
+Route::group(['middleware' =>  ['web', 'auth',] ], function () {
 
     //Route::get('/site', 'SiteController@index')->name('site');
 //todo a controller? use HomeController?
@@ -117,7 +117,9 @@ Route::group(['middleware' =>  ['web', 'auth',]], function () {
 
 });
 
-Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin']], function () {
+
+//Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function () {
 
     Route::get('/', 'AdminController@index')->name('admin');
     Route::get('/blank', 'AdminController@blank')->name('blank');
