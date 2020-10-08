@@ -14,7 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
-
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class UserController
@@ -38,7 +38,7 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $users = User::with(['user_info', 'currentExecutiveRoles'])->sortable()->orderBy('name')->paginate(20);
         return view('listusers', ['data' => ['users' => $users]]);
@@ -126,16 +126,17 @@ class UserController extends Controller
         $user->fill($userRequest['user']);
         $user->save();
 
-        if($userRequest->user_phone['phone_number'] != $user->phone_number->phone_number) {
-            $message['Phone'] = $userRequest->user_phone['phone_number'];
-        }
-
         if ($user->phone_number instanceof PhoneNumber) {
             $user->phone_number->fill($userRequest['user_phone']);
             $user->phone_number->save();
+            if($userRequest->user_phone['phone_number'] != $user->phone_number->phone_number) {
+                $message['Phone'] = $userRequest->user_phone['phone_number'];
+            }
+
         } else {
             $phone = new PhoneNumber($userRequest['user_phone']);
             $user->phone_number()->save($phone);
+            $message['Phone'] = $userRequest->user_phone['phone_number'];
         }
 
         if ($user->user_info instanceof UserInfo) {
@@ -164,7 +165,7 @@ class UserController extends Controller
 
         foreach($addr as $a)
         {
-            if($userRequest->user_address[$a] != $user->address->$a) {
+            if(($userRequest->user_address[$a] ?? '') != ($user->address->$a ?? '')) {
                 $message[ucfirst($a)] = $userRequest->user_address[$a];
             }
         }
