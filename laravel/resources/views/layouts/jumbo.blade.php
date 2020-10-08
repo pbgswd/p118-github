@@ -171,7 +171,7 @@
                             Contact Us
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown">
-                            <a class="dropdown-item" href="{{route('hireus')}}">Why Hire Union</a>
+                            <a class="dropdown-item" href="{{route('hire-us')}}">Why Hire Union</a>
                             <a class="dropdown-item" href="{{route('contact')}}">Contact</a>
                         </div>
                     </div>
@@ -183,7 +183,8 @@
                                 Members
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdown">
-                                <a class="dropdown-item" href="{{route('list_meetings')}}"><i class="far fa-folder"></i>
+                                <a class="dropdown-item" href="{{route('list_meetings')}}">
+                                    <i class="far fa-folder"></i>
                                     Meetings & Minutes</a>
                                 <a class="dropdown-item" href="#"><i class="far fa-folder"></i> Budgets & Audits</a>
                                 <a class="dropdown-item" href="{{route('committees')}}"><i class="fas fa-users"></i>
@@ -194,7 +195,8 @@
                                 <a class="dropdown-item" href="https://login.callsteward.ca/" target="_blank"
                                    title="Link to CallSteward">
                                     <i class="fas fa-headset"></i> CS</a>
-                                <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}" title="My Profile">
+                                <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}"
+                                   title="My Profile">
                                     <i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
                                 <a class="dropdown-item" href="{{route('members')}}">
                                     <i class="fas fa-user-friends"></i> Members</a>
@@ -214,8 +216,9 @@
                     </li>
                         @role('super-admin')
                              <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin')}}" title="Admin"><i
-                                        class="fas fa-tachometer-alt"></i></a>
+                                <a class="nav-link" href="{{route('admin')}}" title="Admin">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                </a>
                             </li>
                         @endrole
                     @endguest
@@ -259,7 +262,7 @@
                     @yield('data')
             </div> <!-- /container -->
         </main>
-        <footer class="container border border-dark rounded-lg mb-2">
+        <footer class="container border border-dark rounded-lg mb-lg-5">
             <div class="row mb-5">
                 <div class="col-3">
                     <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
@@ -329,7 +332,6 @@
                 </div>
                 @endguest
             </div>
-
             <div class="row mb-6">
                 <div class="col-6">
                     <h2>IATSE Local 118</h2>
@@ -348,9 +350,7 @@
                         <a href="mailto:office@iatse118.com"><i class="fas fa-envelope"></i> office@iatse118.com</a>
                     </h3>
                 </div>
-
             </div>
-
             <div class="row mt-2 mb-lg-2">
                 <div class="col-4 text-left">
                     <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
@@ -362,7 +362,6 @@
                     <a href="#top" title="Top of page"><i class="fas fa-angle-up"></i> Top of page</a>
                 </div>
             </div>
-
         </footer>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
               integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"

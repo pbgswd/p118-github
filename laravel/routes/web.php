@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +29,7 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('executive', 'ExecutiveController@index')->name('executive');
 
-    Route::get('/hire-us', 'HireUsController@show')->name('hireus');
+    Route::get('/hire-us', 'HireUsController@show')->name('hire-us');
 
     Route::get('/pages', 'PageController@list')->name('pages');
     Route::get('/page/{page}', 'PageController@show')->name('page_show');
