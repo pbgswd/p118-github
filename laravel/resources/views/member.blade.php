@@ -34,11 +34,11 @@ $user = $data['user'];
                         <a href="mailto:{{$user->email}}" title="Email {{$user->name}}">{{$user->email}}</a>
                     </h3>
                 @endif
-                @if (($user->user_info->share_phone  ?? '' )  == 1)
+                @if (($user->user_info->share_phone  ?? '' )  == 1 && !empty($user->phone_number->phone_number))
                     <h3>
                         <i class="fas fa-phone-square"></i>
-                        <a href="tel:{{$user->phone_number->phone_number}}">
-                            {{$user->phone_number->phone_number}}
+                        <a href="tel:{{$user->phone_number->phone_number ?? '' }}">
+                            {{$user->phone_number->phone_number ?? '' }}
                         </a>
                     </h3>
                 @endif
