@@ -23,7 +23,7 @@ class AccessControl extends Command
      *
      * @var string
      */
-    protected $description = "Show the site's access permissions and roles.";
+    protected $description = "Show the site's access permissions and roles for users.";
 
 
     /**
