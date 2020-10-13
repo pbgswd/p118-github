@@ -40,7 +40,7 @@ class Controller extends BaseController
                     break;
 
                 case 'membership_level':
-                    $data['access_level'] = Options::membership_level();
+                    $data['access_level'] = Options::membership_levels();
                     break;
 
                 case 'committee_roles':
