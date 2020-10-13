@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Auth;
 use App\Models\User;
 use App\Models\Page;
+use Exception;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PagePolicy
@@ -13,8 +13,8 @@ class PagePolicy
 
     /**
      * @param User $user
-     * @return bool
-     * @throws \Exception
+     * @return bool|void
+     * @throws Exception
      */
     public function viewAny(User $user)
     {
@@ -26,14 +26,12 @@ class PagePolicy
         if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
             return true;
         }
+        return;
     }
 
     /**
-     * Determine whether the user can view the page.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Page  $page
-     * @return mixed
+     * @param User $user
+     * @param Page $page
      */
     public function view(User $user, Page $page)
     {
@@ -43,7 +41,7 @@ class PagePolicy
     /**
      * @param User $user
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(User $user)
     {
@@ -55,13 +53,14 @@ class PagePolicy
         if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles'])) {
             return true;
         }
+        return true;
     }
 
     /**
      * @param User $user
      * @param Page $page
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function update(User $user, Page $page)
     {
@@ -81,7 +80,7 @@ class PagePolicy
      * @param User $user
      * @param Page $page
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete(User $user, Page $page)
     {
@@ -98,12 +97,11 @@ class PagePolicy
     }
 
     /**
-     * Determine whether the user can restore the page.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Page  $page
-     * @return mixed
+     * @param User $user
+     * @param Page $page
+     * @return bool
      */
+
     public function restore(User $user, Page $page)
     {
         //admin
@@ -119,11 +117,9 @@ class PagePolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the page.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Page  $page
-     * @return mixed
+     * @param User $user
+     * @param Page $page
+     * @return bool
      */
     public function forceDelete(User $user, Page $page)
     {

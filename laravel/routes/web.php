@@ -20,6 +20,8 @@ Route::group(['middleware' => 'web'], function () {
     Auth::routes(['verify' => true, 'register' => false, 'reset' => true, 'login' => true]);
     // turn off register route for production, web.
 
+
+
     Route::get('/', 'HelloController@index')->name('hello');
 
     Route::get('contact', 'ContactController@show')->name('contact');
