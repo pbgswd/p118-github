@@ -13,6 +13,7 @@ use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Searchable\SearchResult;
 use Spatie\Searchable\Searchable;
+use function route;
 
 
 /**
@@ -31,6 +32,7 @@ use Spatie\Searchable\Searchable;
  * @property User[]           $committee_members
  * @property User[]           $active_committee_members
  * @property CommitteePost[]  $posts
+ * @method static withoutGlobalScopes()
  */
 class Committee extends LiveableModel implements Searchable
 {
@@ -90,19 +92,10 @@ class Committee extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-
-        if(request()->route()->getName() == 'admin_search') {
-            return new SearchResult(
-                $this,
-                $this->name,
-                \route('admin_committee_show', $this->slug)
-            );
-        }
-
-        return new SearchResult(
+         return new SearchResult(
             $this,
             $this->name,
-            \route('committee', $this->slug),
+            route(request()->route()->getName(), $this->slug)
         );
     }
 

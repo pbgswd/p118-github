@@ -30,6 +30,7 @@ use Spatie\Searchable\SearchResult;
  * @property Membership    $membership
  * @property Attachment[]  $attachments
  * @property Committee[]   $committee_memberships
+ * @method static has(string $string)
  */
 class User extends Authenticatable implements HasAttachment, Searchable
 {
@@ -100,7 +101,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
         return new SearchResult(
             $this,
             $this->name,
-            \route('member', $this->id),
+            \route('member', $this->id)
         );
     }
 

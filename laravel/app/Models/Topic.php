@@ -34,6 +34,7 @@ use Spatie\Searchable\SearchResult;
  * @property Page[]        $pages
  * @property Post[]        $posts
  * @property Attachment[]  $attachments
+ * @method static withoutGlobalScope()
  */
 class Topic extends LiveableModel implements HasAttachment, Searchable
 {
@@ -97,7 +98,7 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
         return new SearchResult(
             $this,
             $this->name,
-            \route('topic_show', $this->slug),
+            \route('topic_show', $this->slug)
         );
     }
 

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Extend this class for models that have a boolean `$live` field
  *
  * @property boolean $live
+ * @method static withoutGlobalScope() Builder
  */
 class LiveableModel extends Model
 {

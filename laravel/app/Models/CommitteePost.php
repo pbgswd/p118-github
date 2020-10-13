@@ -25,6 +25,8 @@ use Spatie\Searchable\SearchResult;
  * @property User                    $creator
  * @property Committee               $committee
  * @property CommitteePostComment[]  $post_comments
+ * @property int                     $committee_id
+ * @method static withoutGlobalScopes()
  */
 class CommitteePost extends LiveableModel implements Searchable
 {
@@ -67,14 +69,14 @@ class CommitteePost extends LiveableModel implements Searchable
             return new SearchResult(
                 $this,
                 $this->title,
-                \route('admin_committee_post_edit', [$committee->slug, $this->slug]),
+                \route('admin_committee_post_edit', [$committee->slug, $this->slug])
             );
         }
 
         return new SearchResult(
             $this,
             $this->title,
-            \route('public_committee_post_show', [$committee->slug, $this->slug]),
+            \route('public_committee_post_show', [$committee->slug, $this->slug])
         );
     }
 

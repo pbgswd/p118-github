@@ -25,6 +25,7 @@ use Spatie\Searchable\SearchResult;
  * @property DateTime     $created_at
  * @property DateTime     $updated_at
  * @property DateTime     $date
+ * @method static withoutGlobalScopes()
  */
 class Bylaw extends LiveableModel implements HasAttachment, Searchable
 {
@@ -63,19 +64,10 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-
-        if(request()->route()->getName() == 'admin_search') {
-            return new SearchResult(
-                $this,
-                $this->title,
-                \route('admin_bylaw_edit', $this->id)
-            );
-        }
-
         return new SearchResult(
             $this,
             $this->title,
-            \route('bylaw_show', $this->id),
+            \route(request()->route()->getName(), $this->id)
         );
     }
 
