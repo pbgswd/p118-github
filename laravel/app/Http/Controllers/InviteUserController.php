@@ -8,25 +8,28 @@ use App\Http\Requests\InviteUser\StoreInviteUserRequest;
 use App\Models\InviteUser;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
 class InviteUserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
         $invitations = InviteUser::with('user')->sortable()->paginate(20);
-        $invitations->each(function ($item, $key) {
+        $invitations->each(function ($item) {
             $item->since = $item->updated_at->diffForHumans(Carbon::now());
             $item->remaining = 48 - $item->updated_at->diffInHours(Carbon::now());
         });
@@ -38,9 +41,7 @@ class InviteUserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -54,10 +55,8 @@ class InviteUserController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreInviteUserRequest $request
+     * @return RedirectResponse
      */
     public function store(StoreInviteUserRequest  $request)
     {
@@ -84,7 +83,7 @@ class InviteUserController extends Controller
     /**
      * @param InviteUser $inviteUser
      * @param $password
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @return Factory|RedirectResponse|View
      */
     public function show(InviteUser $inviteUser, $password)
     {
@@ -120,7 +119,7 @@ class InviteUserController extends Controller
     /**
      * @param Request $request
      * @param InviteUser $inviteUser
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function process_user(ProcessUserRequest $request, InviteUser $inviteUser)
     {
@@ -164,13 +163,14 @@ class InviteUserController extends Controller
         Session::flash('success', "Thank you! Your password has now been securely stored.
                                     You may now login with your email and password");
 
+        Auth::logout();
         return redirect()->route('login');
     }
 
     /**
      * @param DestroyInviteUserRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(DestroyInviteUserRequest $request)
     {
