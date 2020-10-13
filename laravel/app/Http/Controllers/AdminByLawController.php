@@ -8,7 +8,7 @@ use App\Http\Requests\Bylaws\StoreBylawRequest;
 use App\Http\Requests\Bylaws\UpdateBylawRequest;
 use App\Models\Bylaw;
 use App\Services\AttachmentService;
-use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
@@ -33,8 +33,9 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return Application|Factory|View
      */
+
     public function index()
     {
         $this->authorize('viewAny', Auth::user());
@@ -53,7 +54,6 @@ class AdminByLawController extends Controller
 
     /**
      * @return Factory|View
-     * @throws AuthorizationException
      */
     public function create()
     {
@@ -71,7 +71,6 @@ class AdminByLawController extends Controller
     /**
      * @param StoreBylawRequest $request
      * @return RedirectResponse
-     * @throws AuthorizationException
      */
     public function store(StoreBylawRequest $request)
     {
@@ -102,7 +101,6 @@ class AdminByLawController extends Controller
      * @param Bylaw $bylaw
      *
      * @return Factory|View
-     * @throws AuthorizationException
      */
     public function edit(Bylaw $bylaw)
     {
@@ -120,7 +118,6 @@ class AdminByLawController extends Controller
     /**
      * @param UpdateBylawRequest $request
      * @param Bylaw $any_bylaw
-     *
      * @return RedirectResponse
      */
     public function update(UpdateBylawRequest $request, Bylaw $any_bylaw): RedirectResponse

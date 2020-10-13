@@ -57,7 +57,7 @@ class AccessControl extends Command
             foreach ($roles as $key => $role)
             {
                 $users = Arr::pluck($role['users'], 'email');
-                $rolesData[$key] = [$role['name'],  $role['guard_name'], join(', ', $users) ];
+                $rolesData[$key] = [$role['name'],  $role['guard_name'], join(", \n", $users) ];
             }
             $this->info("\nRoles");
             $this->table(['Name', 'Guard Name', 'Users'], $rolesData);
