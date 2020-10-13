@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 
 class AdminCommitteeMemberController extends Controller
@@ -16,8 +20,7 @@ class AdminCommitteeMemberController extends Controller
     /**
      * @param Request $request
      * @param Committee $committee
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function index(Request $request, Committee $committee)
     {
@@ -41,7 +44,7 @@ class AdminCommitteeMemberController extends Controller
     }
 
     /**
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
      */
     public function create()
     {
@@ -51,8 +54,8 @@ class AdminCommitteeMemberController extends Controller
     /**
      * @param Request $request
      * @param Committee $committee
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function store(Request $request, Committee $committee)
     {
@@ -80,7 +83,6 @@ class AdminCommitteeMemberController extends Controller
 
     /**
      * @param User $user
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(User $user)
     {
@@ -90,10 +92,8 @@ class AdminCommitteeMemberController extends Controller
 
     /**
      * @param Request $request
-     * @param User $user
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
         //todo methods and request validators for updating users in committees
         $this->authorize('update', Auth::user());
@@ -101,7 +101,6 @@ class AdminCommitteeMemberController extends Controller
 
     /**
      * @param User $user
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(User $user)
     {

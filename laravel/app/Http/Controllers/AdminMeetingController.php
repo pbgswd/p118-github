@@ -31,7 +31,7 @@ class AdminMeetingController extends Controller
 
     /**
      * @return Factory|View
-     * @throws AuthorizationException
+
      */
     public function index()
     {
@@ -46,7 +46,7 @@ class AdminMeetingController extends Controller
 
     /**
      * @return Factory|View
-     * @throws AuthorizationException
+
      */
     public function create()
     {
@@ -69,7 +69,7 @@ class AdminMeetingController extends Controller
     /**
      * @param StoreMeetingRequest $request
      * @return RedirectResponse
-     * @throws AuthorizationException
+
      */
     public function store(StoreMeetingRequest $request)
     {
@@ -96,7 +96,7 @@ class AdminMeetingController extends Controller
     /**
      * @param Meeting $meeting
      * @return Factory|View
-     * @throws AuthorizationException
+
      */
     public function edit(Meeting $meeting)
     {
@@ -120,6 +120,7 @@ class AdminMeetingController extends Controller
      * @param UpdateMeetingRequest $request
      * @param Meeting $any_meeting
      * @return RedirectResponse
+
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
@@ -148,7 +149,7 @@ class AdminMeetingController extends Controller
     /**
      * @param Request $request
      * @return RedirectResponse
-     * @throws AuthorizationException
+
      */
     public function destroy(DestroyMeetingRequest $request)
     {

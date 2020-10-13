@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employment;
 use App\Services\AttachmentService;
+use Illuminate\Http\Response;
 
 
 class EmploymentController extends Controller
@@ -19,7 +20,7 @@ class EmploymentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -46,8 +47,8 @@ class EmploymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Employment $employment
-     * @return \Illuminate\Http\Response
+     * @param Employment $employment
+     * @return Response
      */
     public function show(Employment $employment)
     {

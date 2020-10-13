@@ -7,16 +7,20 @@ use App\Http\Requests\Organization\StoreOrganizationRequest;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Models\Agreement;
 use App\Models\Organization;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class AdminOrganizationController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+
      */
     public function index()
     {
@@ -28,8 +32,8 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+
      */
     public function create()
     {
@@ -52,8 +56,8 @@ class AdminOrganizationController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function store(StoreOrganizationRequest $request)
     {
@@ -71,8 +75,8 @@ class AdminOrganizationController extends Controller
 
     /**
      * @param Organization $any_organization
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+
      */
     public function edit(Organization $any_organization)
     {
@@ -104,8 +108,8 @@ class AdminOrganizationController extends Controller
     /**
      * @param UpdateOrganizationRequest $request
      * @param Organization $any_organization
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function update(UpdateOrganizationRequest $request, Organization $any_organization)
     {
@@ -126,8 +130,8 @@ class AdminOrganizationController extends Controller
 
     /**
      * @param DestroyOrganizationRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function destroy(DestroyOrganizationRequest $request)
     {

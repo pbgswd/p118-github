@@ -35,7 +35,7 @@ class AdminPageController extends Controller
      * @param Request $request
      *
      * @return Factory|View
-     * @throws AuthorizationException
+
      */
     public function index(Request $request)
     {
@@ -56,7 +56,7 @@ class AdminPageController extends Controller
 
     /**
      * @return Factory|View
-     * @throws AuthorizationException
+
      */
     public function create()
     {
@@ -84,7 +84,7 @@ class AdminPageController extends Controller
      * @param StorePageRequest $request
      *
      * @return RedirectResponse
-     * @throws AuthorizationException
+
      */
     public function store(StorePageRequest $request)
     {
@@ -123,7 +123,7 @@ class AdminPageController extends Controller
      * @param Page $page
      *
      * @return Factory|View
-     * @throws AuthorizationException
+
      */
     public function edit(Page $page)
     {
@@ -147,7 +147,7 @@ class AdminPageController extends Controller
      * @param Page $any_page
      *
      * @return RedirectResponse
-     * @throws AuthorizationException
+
      */
     public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
     {
@@ -201,7 +201,7 @@ class AdminPageController extends Controller
      * @param DestroyPageRequest $request
      *
      * @return RedirectResponse
-     * @throws AuthorizationException
+
      */
     public function destroy(DestroyPageRequest $request)
     {

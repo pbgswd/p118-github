@@ -7,7 +7,10 @@ use App\Http\Requests\Policies\AdminStorePolicy;
 use App\Http\Requests\Policies\AdminUpdatePolicy;
 use App\Models\Policy;
 use App\Services\AttachmentService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -29,7 +32,7 @@ class AdminPolicyController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -44,7 +47,7 @@ class AdminPolicyController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -59,8 +62,8 @@ class AdminPolicyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function store(AdminStorePolicy $request)
     {
@@ -87,8 +90,8 @@ class AdminPolicyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Policy  $policy
-     * @return \Illuminate\Http\Response
+     * @param Policy $any_policy
+     * @return Response
      */
     public function edit(Policy $any_policy)
     {
@@ -103,9 +106,9 @@ class AdminPolicyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Policy  $policy
-     * @return \Illuminate\Http\Response
+     * @param AdminUpdatePolicy $request
+     * @param Policy $any_policy
+     * @return RedirectResponse
      */
     public function update(AdminUpdatePolicy $request, Policy $any_policy): RedirectResponse
     {
@@ -136,8 +139,9 @@ class AdminPolicyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Policy  $policy
-     * @return \Illuminate\Http\Response
+     * @param AdminDestroyPolicy $request
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy(AdminDestroyPolicy $request): RedirectResponse
     {

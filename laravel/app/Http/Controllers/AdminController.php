@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class AdminController extends Controller
 {
@@ -21,12 +24,9 @@ class AdminController extends Controller
 
 
     /**
-     * Display the specified resource.
-     *
-     * @param \App\Admin $admin
-     * @return Response
+     * @return Application|Factory|View
      */
-    public function blank(Admin $admin)
+    public function blank()
     {
         // a page for doing css/js/html experiments
         return view('admin.admin-blank');

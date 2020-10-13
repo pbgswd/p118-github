@@ -8,6 +8,7 @@ use App\Http\Requests\Committees\UpdateCommitteeRequest;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ use Illuminate\View\View;
 class AdminCommitteeController extends Controller
 {
     /**
-     * @return Factory|View
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -29,7 +30,7 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -47,7 +48,6 @@ class AdminCommitteeController extends Controller
 
     /**
      * @param StoreCommitteeRequest $request
-     *
      * @return RedirectResponse
      */
     public function store(StoreCommitteeRequest $request): RedirectResponse
@@ -67,7 +67,6 @@ class AdminCommitteeController extends Controller
      * @param Committee $committee
      * @param User $users
      * @return Factory|View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Committee $committee, User $users)
     {
@@ -100,7 +99,6 @@ class AdminCommitteeController extends Controller
     /**
      * @param Committee $any_committee
      * @return Factory|View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Committee $any_committee)
     {
@@ -122,7 +120,6 @@ class AdminCommitteeController extends Controller
      * @param UpdateCommitteeRequest $request
      * @param Committee $any_committee
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateCommitteeRequest $request, Committee $any_committee): RedirectResponse
     {
@@ -137,7 +134,6 @@ class AdminCommitteeController extends Controller
 
     /**
      * @param DestroyCommitteeRequest $request
-     *
      * @return RedirectResponse
      */
     public function destroy(DestroyCommitteeRequest $request): RedirectResponse

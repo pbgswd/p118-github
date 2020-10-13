@@ -7,16 +7,18 @@ use App\Http\Requests\Venues\StoreVenueRequest;
 use App\Http\Requests\Venues\UpdateVenueRequest;
 use App\Models\Agreement;
 use App\Models\Venue;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 
 class AdminVenueController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function index()
     {
@@ -29,8 +31,7 @@ class AdminVenueController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function create()
     {
@@ -51,8 +52,8 @@ class AdminVenueController extends Controller
 
     /**
      * @param StoreVenueRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function store(StoreVenueRequest $request)
     {
@@ -70,9 +71,9 @@ class AdminVenueController extends Controller
     }
 
     /**
-     * @param Venue $venue
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param Venue $any_venue
+     * @return Factory|View
+
      */
     public function edit(Venue $any_venue)
     {
@@ -101,8 +102,8 @@ class AdminVenueController extends Controller
     /**
      * @param UpdateVenueRequest $request
      * @param Venue $any_venue
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function update(UpdateVenueRequest $request, Venue $any_venue)
     {
@@ -125,8 +126,7 @@ class AdminVenueController extends Controller
 
     /**
      * @param DestroyVenueRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
      */
     public function destroy(DestroyVenueRequest $request)
     {

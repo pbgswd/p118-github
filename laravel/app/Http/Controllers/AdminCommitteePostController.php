@@ -8,11 +8,14 @@ use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\User;
+use Exception;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class AdminCommitteePostController extends Controller
 {
@@ -40,7 +43,7 @@ class AdminCommitteePostController extends Controller
 
     /**
      * @param Committee $committee
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create(Committee $committee)
     {
@@ -72,7 +75,7 @@ class AdminCommitteePostController extends Controller
     /**
      * @param Committee $committee
      * @param CommitteePost $any_committee_post
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit(Committee $committee, CommitteePost $any_committee_post)
     {
@@ -90,8 +93,9 @@ class AdminCommitteePostController extends Controller
 
     /**
      * @param UpdateCommitteePostRequest $request
-     * @param CommitteePost $any_committee_post
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Committee $committee
+     * @param CommitteePost $committeePost
+     * @return RedirectResponse
      */
 
     public function update(UpdateCommitteePostRequest $request, Committee $committee, CommitteePost $committeePost): RedirectResponse
@@ -112,6 +116,7 @@ class AdminCommitteePostController extends Controller
      * @param DestroyCommitteePostRequest $request
      * @param Committee $committee
      * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy(DestroyCommitteePostRequest $request, Committee $committee): RedirectResponse
     {

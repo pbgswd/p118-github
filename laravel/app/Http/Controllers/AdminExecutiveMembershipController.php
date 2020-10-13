@@ -9,7 +9,9 @@ use App\Models\Executive;
 use App\Models\ExecutiveMembership;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -19,12 +21,13 @@ class AdminExecutiveMembershipController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         //todo index method
         //'admin_executives_list'
+        $data = [];
  /***
         $this->authorize('viewAny', Auth::user());
         $data = [];
@@ -38,7 +41,8 @@ class AdminExecutiveMembershipController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
     public function create(User $user)
     {
@@ -59,8 +63,7 @@ class AdminExecutiveMembershipController extends Controller
      *
      * @param StoreAdminExecutiveMembership $request
      * @param User $user
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @return Response
      */
     public function store(StoreAdminExecutiveMembership $request, User $user)
     {
@@ -81,10 +84,9 @@ class AdminExecutiveMembershipController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param UpdateAdminExecutiveMembership $request
-     * @param Request $executiveMembership
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param ExecutiveMembership $executiveMembership
+     * @return Response
+     * @throws AuthorizationException
      */
     public function edit(ExecutiveMembership $executiveMembership)
     {
@@ -105,9 +107,9 @@ class AdminExecutiveMembershipController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ExecutiveMembership  $executiveMembership
-     * @return \Illuminate\Http\Response
+     * @param UpdateAdminExecutiveMembership $request
+     * @param ExecutiveMembership $executiveMembership
+     * @return Response
      */
     public function update(UpdateAdminExecutiveMembership $request, ExecutiveMembership $executiveMembership)
     {
@@ -123,7 +125,7 @@ class AdminExecutiveMembershipController extends Controller
      * Remove the specified resource from storage.
      *
      * @param DestroyAdminExecutiveMembership $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(DestroyAdminExecutiveMembership $request)
     {

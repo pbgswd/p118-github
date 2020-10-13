@@ -13,6 +13,8 @@ use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Services\EmailMemberUpdateService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
@@ -43,11 +45,9 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return Factory|View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Application|Factory|View
      */
-    public function index(Request $request)
+    public function index()
     {
         $this->authorize('viewAny', Auth::user());
 
@@ -59,7 +59,6 @@ class AdminUserController extends Controller
 
     /**
      * @return Factory|View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
@@ -103,7 +102,6 @@ class AdminUserController extends Controller
     /**
      * @param StoreUser $request
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreUser $request)
     {
@@ -149,17 +147,17 @@ class AdminUserController extends Controller
     /**
      * @param User $user
      * @return Factory|View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
 
     public function edit(User $user)
     {
         $this->authorize('admin_update', Auth::user());
 
-        $user->load('phone_number', 'user_info',
+        $user->load('phone_number',
+                    'user_info',
                     'address',
-                    'allExecutiveRoles',
-        );
+                    'allExecutiveRoles'
+                    );
 
         $currentUser = Auth::user(); // the logged in user, perms to edit? // dd(Auth::user()->permissions);
 
@@ -186,7 +184,6 @@ class AdminUserController extends Controller
      * @param UpdateUser $userRequest
      * @param User $user
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateUser $userRequest, User $user)
     {
@@ -246,9 +243,6 @@ class AdminUserController extends Controller
             $user->user_info()->save($user_info);
         }
 
-        //dd($userRequest->user_phone['phone_number'], $user->phone_number->phone_number);
-        // dd($userRequest->user_phone['phone_number']);
-
         $addr = ['unit','street','city','province','postal_code','country'];
 
         if ($user->address instanceof Address) {
@@ -298,7 +292,7 @@ class AdminUserController extends Controller
     /**
      * @param DestroyUser $request
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+
      */
     public function destroy(DestroyUser $request)
     {

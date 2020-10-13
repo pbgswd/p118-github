@@ -7,10 +7,13 @@ use App\Http\Requests\Employment\StoreEmploymentRequest;
 use App\Http\Requests\Employment\UpdateEmploymentRequest;
 use App\Models\Employment;
 use App\Services\AttachmentService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 
 class AdminEmploymentController extends Controller
@@ -24,8 +27,8 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+
      */
     public function index()
     {
@@ -50,8 +53,8 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+
      */
     public function create()
     {
@@ -62,8 +65,8 @@ class AdminEmploymentController extends Controller
 
     /**
      * @param StoreEmploymentRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function store(StoreEmploymentRequest $request)
     {
@@ -91,8 +94,8 @@ class AdminEmploymentController extends Controller
 
     /**
      * @param Employment $employment
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+
      */
     public function edit(Employment $employment)
     {
@@ -115,8 +118,8 @@ class AdminEmploymentController extends Controller
     /**
      * @param UpdateEmploymentRequest $request
      * @param Employment $any_employment
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
     {

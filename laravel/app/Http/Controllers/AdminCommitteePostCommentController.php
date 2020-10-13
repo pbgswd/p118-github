@@ -7,15 +7,19 @@ use App\Http\Requests\CommitteePostComment\StoreCommitteePostCommentRequest;
 use App\Http\Requests\CommitteePostComment\UpdateCommitteePostCommentRequest;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class AdminCommitteePostCommentController extends Controller
 {
     /**
      * @param CommitteePost $committeePost
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function create(CommitteePost $committeePost)
     {
@@ -34,9 +38,9 @@ class AdminCommitteePostCommentController extends Controller
 
     /**
      * @param CommitteePostComment $any_committee_post_comment
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
-    public function edit(CommitteePost $committeePost, CommitteePostComment $any_committee_post_comment)
+    public function edit(CommitteePostComment $any_committee_post_comment)
     {
 
         $any_committee_post_comment->loadWithoutGlobalScopes(['comment_author', 'committee_post', 'committee']);
@@ -58,8 +62,6 @@ class AdminCommitteePostCommentController extends Controller
      */
     public function store(StoreCommitteePostCommentRequest $request, CommitteePost $committeePost)
     {
-       // dd([$request->all(), $committeePost]);
-        //$this->authorize('create', Auth::user());
 
         $postComment = new CommitteePostComment($request->input('comment'));
 
@@ -71,12 +73,13 @@ class AdminCommitteePostCommentController extends Controller
         $postComment->save();
 
         Session::flash('success', "You have added your comment to " . $committeePost->title);
-//dd($postComment);
+
         return redirect()->route('admin_committee_post_comment_edit', [$committeePost->slug, $postComment->id]);
     }
 
     /**
      * @param UpdateCommitteePostCommentRequest $request
+     * @param CommitteePost $committeePost
      * @param CommitteePostComment $any_committee_post_comment
      * @return RedirectResponse
      */
@@ -94,6 +97,7 @@ class AdminCommitteePostCommentController extends Controller
     /**
      * @param DestroyCommitteePostCommentRequest $request
      * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy(DestroyCommitteePostCommentRequest $request): RedirectResponse
     {

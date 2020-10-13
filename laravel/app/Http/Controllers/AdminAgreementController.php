@@ -7,6 +7,8 @@ use App\Http\Requests\Agreements\StoreAgreementRequest;
 use App\Http\Requests\Agreements\UpdateAgreementRequest;
 use App\Models\Agreement;
 use App\Services\AttachmentService;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +31,8 @@ class AdminAgreementController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return Application|Factory|View
+
      */
     public function index()
     {
@@ -45,7 +48,8 @@ class AdminAgreementController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return Application|Factory|View
+
      */
     public function create()
     {
@@ -57,8 +61,8 @@ class AdminAgreementController extends Controller
 
     /**
      * @param StoreAgreementRequest $request
-     *
      * @return RedirectResponse
+
      */
     public function store(StoreAgreementRequest $request): RedirectResponse
     {
@@ -87,8 +91,8 @@ class AdminAgreementController extends Controller
 
     /**
      * @param Agreement $agreement
-     *
-     * @return Factory|View
+     * @return Application|Factory|View
+
      */
     public function edit(Agreement $agreement)
     {
@@ -105,8 +109,8 @@ class AdminAgreementController extends Controller
     /**
      * @param UpdateAgreementRequest $request
      * @param Agreement $any_agreement
-     *
      * @return RedirectResponse
+
      */
     public function update(UpdateAgreementRequest $request, Agreement $any_agreement): RedirectResponse
     {
@@ -138,8 +142,8 @@ class AdminAgreementController extends Controller
 
     /**
      * @param DestroyAgreementRequest $request
-     *
      * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy(DestroyAgreementRequest $request): RedirectResponse
     {

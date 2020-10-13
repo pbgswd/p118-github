@@ -19,8 +19,11 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Models\Venue;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
@@ -28,11 +31,12 @@ use Spatie\Searchable\Search;
 class LocalSearchController extends Controller
 {
     use Sortable;
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param LocalSearchResult $request
+     * @return Application|Factory|View
      */
+
     public function index(LocalSearchResult $request)
     {
 
@@ -69,10 +73,10 @@ class LocalSearchController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param LocalSearchResult $request
+     * @return Application|Factory|View
      */
+
     public function admin_search(LocalSearchResult $request)
     {
 

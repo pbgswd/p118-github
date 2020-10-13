@@ -9,11 +9,14 @@ use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Services\AttachmentService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class AdminPostController extends Controller
 {
@@ -29,8 +32,8 @@ class AdminPostController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+
      */
     public function index(Request $request)
     {
@@ -42,8 +45,8 @@ class AdminPostController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+
      */
     public function create()
     {
@@ -66,8 +69,8 @@ class AdminPostController extends Controller
 
     /**
      * @param StorePostRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function store(StorePostRequest $request)
     {
@@ -106,8 +109,8 @@ class AdminPostController extends Controller
 
     /**
      * @param Post $post
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+
      */
     public function edit(Post $post)
     {
@@ -135,9 +138,9 @@ class AdminPostController extends Controller
 
     /**
      * @param UpdatePostRequest $request
-     * @param Post $post
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param Post $any_post
+     * @return RedirectResponse
+
      */
     public function update(UpdatePostRequest $request, Post $any_post): RedirectResponse
     {
@@ -185,8 +188,8 @@ class AdminPostController extends Controller
 
     /**
      * @param DestroyPostRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+
      */
     public function destroy(DestroyPostRequest $request)
     {

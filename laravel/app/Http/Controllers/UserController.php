@@ -71,11 +71,10 @@ class UserController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param User $member
-     * @return Response
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
     public function edit(User $user)
     {
         $user->load('phone_number', 'user_info', 'address', 'membership');
