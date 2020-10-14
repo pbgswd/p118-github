@@ -78,7 +78,7 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
         return new SearchResult(
             $this,
             $this->title,
-            \route('meeting', $this->id),
+            \route('meeting', $this->id)
         );
     }
 

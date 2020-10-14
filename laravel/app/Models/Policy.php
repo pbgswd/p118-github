@@ -65,7 +65,7 @@ class Policy extends LiveableModel implements HasAttachment, Searchable
         return new SearchResult(
             $this,
             $this->title,
-            \route('policy_show_public', $this->id),
+            \route('policy_show_public', $this->id)
         );
     }
 

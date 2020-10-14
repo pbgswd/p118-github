@@ -66,7 +66,7 @@ class UserInfo extends Model implements Searchable
         return new SearchResult(
             $this->user,
             $this->user->name,
-            \route('member', $this->user_id),
+            \route('member', $this->user_id)
         );
     }
 

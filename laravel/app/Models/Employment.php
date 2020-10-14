@@ -82,7 +82,7 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
         return new SearchResult(
             $this,
             $this->title,
-            \route('job_view', $this->id),
+            \route('job_view', $this->id)
         );
     }
 

@@ -96,7 +96,7 @@ class Venue extends LiveableModel implements Searchable
         return new SearchResult(
             $this,
             $this->name,
-            \route('venue', $this->slug),
+            \route('venue', $this->slug)
         );
     }
 

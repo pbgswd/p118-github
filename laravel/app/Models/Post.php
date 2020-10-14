@@ -90,7 +90,7 @@ class Post extends LiveableModel implements HasAttachment, Searchable
         return new SearchResult(
             $this,
             $this->title,
-            \route('post_show', $this->slug),
+            \route('post_show', $this->slug)
         );
     }
 

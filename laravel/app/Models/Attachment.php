@@ -85,7 +85,7 @@ class Attachment extends Model implements Searchable
         return new SearchResult(
             $this->setCalculatedProperties(),
             $this->file_name,
-            \route('admin_attachment_edit', $this->id),
+            \route('admin_attachment_edit', $this->id)
         );
     }
 

@@ -89,7 +89,7 @@ class Organization extends LiveableModel implements Searchable
         return new SearchResult(
             $this,
             $this->name,
-            \route('organization', $this->slug),
+            \route('organization', $this->slug)
         );
     }
 
