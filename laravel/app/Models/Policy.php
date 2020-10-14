@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
@@ -18,9 +17,6 @@ use Spatie\Searchable\SearchResult;
  * @property int       $user_id
  * @property string    $title
  * @property string    $description
- * @property DateTime  $date
- * @property DateTime  $created_at
- * @property DateTime  $updated_at
  * @property bool      $live
  */
 class Policy extends LiveableModel implements HasAttachment, Searchable

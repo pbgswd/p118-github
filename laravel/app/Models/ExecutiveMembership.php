@@ -30,6 +30,7 @@ class ExecutiveMembership extends Model
         'start_date',
         'end_date',
     ];
+
     /**
      * @var mixed
      */

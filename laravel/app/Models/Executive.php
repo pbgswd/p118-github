@@ -13,8 +13,6 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string         $title
  * @property string         $email
  * @property User           $user
- * @property DateTime       $created_at
- * @property DateTime       $updated_at
  */
 class Executive extends Model
 {

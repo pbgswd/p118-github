@@ -55,19 +55,12 @@ class UserInfo extends Model implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
-            return new SearchResult(
-                $this->user,
-                $this->user->name,
-                \route('user_edit', $this->user_id)
-            );
-        }
-
-        return new SearchResult(
+           return new SearchResult(
             $this->user,
             $this->user->name,
-            \route('member', $this->user_id)
+            \route(request()->route()->getName(), $this->user_id)
         );
+
     }
 
     /**
