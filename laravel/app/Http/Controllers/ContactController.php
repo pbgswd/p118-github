@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Contact\SubmitContact;
 use App\Models\Contact;
 use App\Models\Page;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -30,10 +31,8 @@ class ContactController extends Controller
     }
 
     /**
-     * Submit the form to send email.
-     *
-     * @param Contact $contact
-     * @return Response
+     * @param SubmitContact $request
+     * @return RedirectResponse
      */
     public function submit(SubmitContact $request)
     {

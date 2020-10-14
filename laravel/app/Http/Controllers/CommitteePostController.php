@@ -9,11 +9,14 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class CommitteePostController extends Controller
 {
@@ -28,7 +31,7 @@ class CommitteePostController extends Controller
 
     /**
      * @param Committee $committee
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create(Committee $committee)
     {
@@ -44,12 +47,9 @@ class CommitteePostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
+     * @param StoreCommitteePostRequest $request
      * @param Committee $committee
-     * @param User $user
-     * @return Response
+     * @return RedirectResponse
      */
     public function store(StoreCommitteePostRequest $request, Committee $committee)
     {
@@ -68,7 +68,7 @@ class CommitteePostController extends Controller
     /**
      * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function edit(Committee $committee, CommitteePost $committeePost)
     {
@@ -85,7 +85,7 @@ class CommitteePostController extends Controller
      * @param UpdateCommitteePostRequest $request
      * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function update(UpdateCommitteePostRequest $request, Committee $committee, CommitteePost $committeePost)
     {

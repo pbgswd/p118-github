@@ -6,10 +6,14 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\Options;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class CommitteeController extends Controller
 {
@@ -35,10 +39,9 @@ class CommitteeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param Request $request
-     * @return Response
+     * @param Committee $committee
+     * @return RedirectResponse
      */
     public function join(Request $request, Committee $committee)
     {
@@ -61,10 +64,9 @@ class CommitteeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param Request $request
-     * @return Response
+     * @param Committee $committee
+     * @return RedirectResponse
      */
     public function leave(Request $request, Committee $committee)
     {
@@ -77,10 +79,9 @@ class CommitteeController extends Controller
 
 
     /**
-     * Display the specified resource.
-     *
      * @param Committee $committee
-     * @return Response
+     * @param CommitteePost $committeePost
+     * @return Application|Factory|View
      */
     public function show(Committee $committee, CommitteePost $committeePost)
     {

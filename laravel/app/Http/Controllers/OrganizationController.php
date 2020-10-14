@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class OrganizationController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
+     * @throws AuthorizationException
      */
     public function list()
     {
@@ -22,8 +26,8 @@ class OrganizationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Organization  $organization
-     * @return \Illuminate\Http\Response
+     * @param Organization $organization
+     * @return Response
      */
     public function show(Organization $organization)
     {

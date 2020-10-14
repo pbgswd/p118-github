@@ -9,8 +9,6 @@ use App\Models\Executive;
 use App\Models\ExecutiveMembership;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -86,7 +84,6 @@ class AdminExecutiveMembershipController extends Controller
      *
      * @param ExecutiveMembership $executiveMembership
      * @return Response
-     * @throws AuthorizationException
      */
     public function edit(ExecutiveMembership $executiveMembership)
     {

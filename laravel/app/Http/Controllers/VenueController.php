@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Venue;
 use Auth;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 
 class VenueController extends Controller
@@ -26,8 +29,7 @@ class VenueController extends Controller
 
     /**
      * @param Venue $venue
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return Factory|View
      */
     public function show(Venue $venue)
     {

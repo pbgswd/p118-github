@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 
 class MeetingController extends Controller
@@ -27,7 +29,7 @@ class MeetingController extends Controller
 
     /**
      * @param Meeting $meeting
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function show(Meeting $meeting)
     {

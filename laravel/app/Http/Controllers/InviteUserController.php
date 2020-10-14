@@ -117,7 +117,7 @@ class InviteUserController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param ProcessUserRequest $request
      * @param InviteUser $inviteUser
      * @return RedirectResponse
      */
@@ -170,7 +170,6 @@ class InviteUserController extends Controller
     /**
      * @param DestroyInviteUserRequest $request
      * @return RedirectResponse
-     * @throws AuthorizationException
      */
     public function destroy(DestroyInviteUserRequest $request)
     {

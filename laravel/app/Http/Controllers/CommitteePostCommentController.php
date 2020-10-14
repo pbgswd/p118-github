@@ -8,14 +8,16 @@ use App\Http\Requests\CommitteePostComment\UpdateCommitteePostCommentRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class CommitteePostCommentController extends Controller
 {
     /**
      * @param CommitteePost $committeePost
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create(CommitteePost $committeePost)
     {
@@ -33,7 +35,7 @@ class CommitteePostCommentController extends Controller
 
     /**
      * @param CommitteePostComment $any_committee_post_comment
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit(CommitteePostComment $any_committee_post_comment)
     {

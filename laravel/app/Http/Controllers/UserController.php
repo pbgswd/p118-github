@@ -8,11 +8,16 @@ use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Services\EmailMemberUpdateService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Storage;
 
@@ -72,7 +77,7 @@ class UserController extends Controller
 
     /**
      * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
 
     public function edit(User $user)
@@ -102,8 +107,8 @@ class UserController extends Controller
     /**
      * @param UpdateMember $userRequest
      * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateMember $userRequest, User $user)
     {

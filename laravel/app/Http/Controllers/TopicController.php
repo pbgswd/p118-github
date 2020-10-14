@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\AccessLevelConstants;
 use App\Models\Topic;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -31,7 +32,7 @@ class TopicController extends Controller
 
     /**
      * @param Topic $topic
-     * @return Factory|\Illuminate\Http\RedirectResponse|View
+     * @return Factory|RedirectResponse|View
      */
     public function show(Topic $topic)
     {

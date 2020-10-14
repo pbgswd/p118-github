@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Page;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 
 class PageController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function list()
     {
@@ -28,7 +30,7 @@ class PageController extends Controller
 
     /**
      * @param Page $page
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function show(Page $page)
     {
