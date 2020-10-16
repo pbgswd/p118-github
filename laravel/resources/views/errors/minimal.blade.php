@@ -58,6 +58,17 @@
     </head>
     <body>
         <div class="container">
+            <div class="row d-flex justify-content-around mt-3">
+                <a href="/">
+                    <i class="fas fa-home fa-2x text-secondary"></i>
+                </a>
+                <a href="/admin">
+                    <i class="fas fa-tachometer-alt fa-2x text-secondary"></i>
+                </a>
+                <a href="/login">
+                    <i class="fas fa-sign-in-alt fa-2x text-secondary"></i>
+                </a>
+            </div>
             <div class="flex-center position-ref full-height">
                 <div class="row">
                     <div class="code">
