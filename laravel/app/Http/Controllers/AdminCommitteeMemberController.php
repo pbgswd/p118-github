@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use App\Models\User;
-use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
@@ -18,20 +18,20 @@ use Illuminate\View\View;
 class AdminCommitteeMemberController extends Controller
 {
     /**
-     * @param Request $request
      * @param Committee $committee
-     * @return Factory|View
+     * @return Application|Factory|View
      */
-    public function index(Request $request, Committee $committee)
+    public function index(Committee $committee)
     {
         $this->authorize('viewAny', Auth::user());
         /** @var Collection $users */
-        $users = User::sortable()->with('committee_memberships')->paginate(20);
+        $users = User::with('committee_memberships')->sortable()->paginate(20);
 
         $data = [];
         $data['users'] = $users->map(static function (User $user) use ($committee) {
             $info = $user->toArray();
-            $info['isMember'] = $user->committee_memberships->contains(static function (Committee $membership) use ($committee) {
+            $info['isMember'] = $user->committee_memberships
+                ->contains(static function (Committee $membership) use ($committee) {
                 return $membership->slug === $committee->slug;
             });
             return $info;
@@ -55,7 +55,6 @@ class AdminCommitteeMemberController extends Controller
      * @param Request $request
      * @param Committee $committee
      * @return RedirectResponse
-
      */
     public function store(Request $request, Committee $committee)
     {
@@ -63,10 +62,13 @@ class AdminCommitteeMemberController extends Controller
         $this->authorize('create', Auth::user());
         foreach ($request->members as $member)
         {
-           $committee->committee_members()->attach($member['id'], ['role' => $member['role']]);
+            if(!empty($member['id'])) {
+                $committee->committee_members()->attach($member['id'], ['role' => $member['role']]);
+            }
         }
 
-        Session::flash('success', "You have added " . count($request->members) . " members to committee " . $committee->name);
+        Session::flash('success', "You have added " . count($request->members)
+            . " members to committee " . $committee->name);
         return redirect()->route('list-bulk-add', $request->committee['slug']);
     }
 
@@ -105,7 +107,6 @@ class AdminCommitteeMemberController extends Controller
     public function destroy(User $user)
     {
         //todo methods and request validators for deleting users in committees
-
         $this->authorize('delete', Auth::user());
     }
 }
