@@ -143,7 +143,7 @@ class LocalSearchController extends Controller
                     $aspect->addSearchableAttribute('content')
                         ->withoutGlobalScope(LiveScope::class);
                 })
-            ->search($request->search)
+                ->search($request->search)
         ];
 
         $data['plural'] = Str::plural('Result', count($data['results']));
@@ -165,4 +165,5 @@ class LocalSearchController extends Controller
 
         return view('admin.list_attachments_search_result', ['data' => $data]);
     }
+
 }
