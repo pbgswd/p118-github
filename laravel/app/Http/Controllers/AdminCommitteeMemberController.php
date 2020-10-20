@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommitteeMember\SearchCommitteeMember;
+use App\Http\Requests\CommitteeMember\StoreCommitteeMember;
 use App\Models\Committee;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -24,41 +26,58 @@ class AdminCommitteeMemberController extends Controller
     public function index(Committee $committee)
     {
         $this->authorize('viewAny', Auth::user());
-        /** @var Collection $users */
-        $users = User::with('committee_memberships')->sortable()->paginate(20);
-
         $data = [];
-        $data['users'] = $users->map(static function (User $user) use ($committee) {
-            $info = $user->toArray();
-            $info['isMember'] = $user->committee_memberships
-                ->contains(static function (Committee $membership) use ($committee) {
-                return $membership->slug === $committee->slug;
-            });
-            return $info;
-        });
+
+        $committee->load('active_committee_members')->sortable();
 
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
+        $data['search'] = [];
 
-        return view('admin.committeebulkaddusers', ['data' => $data, 'users' => $users]);
+        return view('admin.committee_members_list', ['data' => $data]);
     }
 
+
+    public function search(SearchCommitteeMember $request, Committee $committee)
+    {
+        $data = [];
+        $data['search'] = User::where('name', 'LIKE', '%'.$request->search.'%')->
+            with('committee_memberships')->get();
+        $committee->load('active_committee_members')->sortable();
+        $data['committee'] = $committee;
+        $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
+        return view('admin.committee_members_list', ['data' => $data]);
+    }
+
+
     /**
-     *
+     * @param Committee $committee
+     * @param User $user
      */
-    public function create()
+    public function create(Committee $committee, User $user)
     {
         $this->authorize('create', Auth::user());
+        $data= [];
+        $data['committee'] = $committee;
+        $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
+        $data['user'] = $user;
+
+        //todo redirect user if already in this committee and active
+
+        return view('admin.committee_manage_membership', ['data' => $data]);
     }
 
     /**
-     * @param Request $request
+     * @param StoreCommitteeMember $request
      * @param Committee $committee
+     * @param User $user
      * @return RedirectResponse
      */
-    public function store(Request $request, Committee $committee)
+    public function store(StoreCommitteeMember $request, Committee $committee, User $user)
     {
-        //todo form request work for committee member controller
+        dd($request->all());
+
+
         $this->authorize('create', Auth::user());
         foreach ($request->members as $member)
         {

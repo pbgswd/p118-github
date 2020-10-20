@@ -7,12 +7,12 @@ $committee = $data['committee'];
     <h5>
         <a href="{{ route('committees_list') }}" title="return to list of committees">
             <i class="far fa-arrow-alt-circle-left"></i>
-            List of committees
+            List of Committees
         </a>
     </h5>
     <div class="row">
         <div class="col-lg-10">
-           <h4>{{$committee->name }}</h4>
+           <h4>{{$committee->name}}</h4>
         </div>
     </div>
     <div class="row">
@@ -61,9 +61,9 @@ $committee = $data['committee'];
             </div>
             <div class="col-sm">
                 @if($committee->allow_comments == 1)
-                    Comments allowed
+                    &nbsp;
                 @else
-                    Comments not allowed
+                    &nbsp;
                 @endif
             </div>
             <div class="col-sm">
@@ -76,7 +76,8 @@ $committee = $data['committee'];
         </div>
         <div class="col-sm">
             <h4>
-                <a href="{{ route('committee', $committee->slug) }}" title="View {{$committee->name }} on {{env('APP_NAME')}}" target="_blank">
+                <a href="{{ route('committee', $committee->slug) }}"
+                   title="View {{$committee->name }} on {{env('APP_NAME')}}" target="_blank">
                     <i class="fas fa-external-link-alt"></i>
                     View {{$committee->name }} on {{env('APP_NAME')}}.
                 </a>
@@ -92,9 +93,14 @@ $committee = $data['committee'];
     <hr />
     <div class="row" style="margin-top:2em;">
         <div class="col-md">
-            <h4><i class="fas fa-users"></i> {{$committee['member_count']}} members in {{ $committee->name }}</h4>
+            <h4><i class="fas fa-users"></i>
+                {{$committee['member_count']}} members in {{ $committee->name }}
+            </h4>
             <h4>
-                <a href="{{route('list-bulk-add', $committee->slug)}}"><i class="fas fa-users"></i> Bulk add members</a>
+                <a href="{{route('admin-list-committee-members', $committee->slug)}}">
+                    <i class="fas fa-users"></i>
+                    List, Add, Edit Committee Members
+                </a>
             </h4>
         </div>
         @hasanyrole('super-admin|admin')
