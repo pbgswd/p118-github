@@ -11,6 +11,7 @@ const mix = require('laravel-mix');
  | .sass('resources/sass/_dropdown.scss') 'public/css').version();
  */
 
+
 mix
     .js('resources/js/app.js', 'public/js')
     .js('resources/js/dashboard.js', 'public/js')
