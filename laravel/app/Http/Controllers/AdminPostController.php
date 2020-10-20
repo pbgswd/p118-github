@@ -9,7 +9,6 @@ use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Services\AttachmentService;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,7 +32,6 @@ class AdminPostController extends Controller
     /**
      * @param Request $request
      * @return Factory|View
-
      */
     public function index(Request $request)
     {

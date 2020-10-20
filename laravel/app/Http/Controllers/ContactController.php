@@ -18,6 +18,7 @@ class ContactController extends Controller
      *
      * @param Contact $contact
      * @return Response
+     * @method flash
      */
     public function show(Contact $contact)
     {

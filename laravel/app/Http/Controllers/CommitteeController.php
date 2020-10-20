@@ -131,8 +131,6 @@ class CommitteeController extends Controller
          * show member status? Chair, Co-chair, Secretary, Member
          */
 
-//todo pagination for list of members - needs to paginate on committee_members, not committee
-
         $committee->load('active_committee_members')->sortable();
 
         return view('committee_list_members', ['data' => ['committee' => $committee]]);
