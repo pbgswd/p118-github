@@ -73,7 +73,7 @@
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
     </head>
     <body>
-        <a name="top"></a>
+        <a id="top"></a>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="" href="{{ route('hello') }}">
                 <img src="/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png"
@@ -100,7 +100,6 @@
                             <a class="dropdown-item" href="{{route('executive')}}">Executive</a>
                             <a class="dropdown-item" href="{{route('bylaws_list_public')}}">C & B</a>
                             <a class="dropdown-item" href="{{route('page_show', 'links')}}">Links</a>
-                            <a class="dropdown-item" href="#">118 Store</a>
                             <a class="dropdown-item" href="#">Photos</a>
                         </div>
                     </div>&nbsp;
@@ -128,25 +127,9 @@
                         <div class="dropdown-menu" aria-labelledby="dropdown">
                             <a class="dropdown-item" href="{{route('topic_show', 'health-and-welfare-info')}}"
                                title="Health & Welfare Overview">H & W Overview</a>
-                            <a class="dropdown-item" href="#">RRSP Overview</a>
-                            <a class="dropdown-item" href="#">Financial Assistance</a>
-                            <a class="dropdown-item" href="#">Discounts & Promotions</a>
-                            <a class="dropdown-item" href="#">Health & Safety</a>
                         </div>
                     </div>&nbsp;
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            News & Events
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdown">
-                            <a class="dropdown-item" href="#" title="Events">Event Listings</a>
-                            <a class="dropdown-item" href="#">Members Only Events</a>
-                            <a class="dropdown-item" href="#">Calendar</a>
-                            <a class="dropdown-item" href="#">News</a>
-                            <a class="dropdown-item" href="#">Photos</a>
-                        </div>
-                    </div>&nbsp;
+
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -157,7 +140,8 @@
                                 <i class="fas fa-user-tie"></i>
                                 Organizations</a>
                             <a class="dropdown-item" href="{{route('venues')}}">
-                                <i class="far fa-building"></i> Venues</a>
+                                <i class="far fa-building"></i>
+                                Venues</a>
                             <a class="dropdown-item" href="{{route('agreement_show', 38)}}" title="">
                                 Master Rate Sheet</a>
                             <a class="dropdown-item" href="{{route('agreements_list_public')}}">
@@ -234,11 +218,6 @@
                                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
                                 </a>
                             </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item float-right">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
                         @else
                             <li class="nav-item">
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST">

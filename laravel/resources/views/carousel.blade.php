@@ -1,16 +1,32 @@
 @extends('layouts.jumbo')
 @section('content')
-<div class="container">
+    <!-- https://madewithvuejs.com/vue-carousel
+https://jsfiddle.net/quinnssense/bojn4dz4/2/
+-->
+    <style scoped>
+        .VueCarousel-slide {
+            position: relative;
+            background: #42b983;
+            color: #fff;
+            font-family: Arial;
+            font-size: 24px;
+            text-align: center;
+            min-height: 100px;
+        }
 
-    <div class="row border border-light rounded-lg p-lg-2 mb-2" style="background: #fff;">
-        <div class="col-12 mb-lg-1">
-            <h1>{{config('app.name')}}</h1>
-        </div>
+        .label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+<div class="container">
+    <div id="app">
+        <div id="example"></div>
+        @{{ msg }}
     </div>
-    <div class="row border border-light rounded-lg p-lg-2" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12">
-         <h1> carousel page</h1>
-        </div>
-    </div>
+
+    <script src="{{asset('/js/app.js')}}"></script>
 </div>
 @endsection

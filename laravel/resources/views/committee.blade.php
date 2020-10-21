@@ -1,4 +1,5 @@
 <?php
+/** @var TYPE_NAME $data */
 $c = $data['committee'];
 $execs = $data['executives'];
 ?>
@@ -19,14 +20,18 @@ $execs = $data['executives'];
                 <h4>
                     <i class="far fa-newspaper"></i> {{$c->postsCount}} {{Str::plural('Post', $c->postsCount ) }}
                     @if($data['isMember'] == 1)
-                        | <i class="far fa-edit"></i><a href="{{route('committee_add_public_post', $c->slug)}}">Add New Post</a>
+                        | <i class="far fa-edit"></i><a href="{{route('committee_add_public_post', $c->slug)}}">
+                            Add New Post
+                        </a>
                     @endif
                 </h4>
             </div>
             @foreach($c->posts as $p)
                 <div class="col-12 border border-dark rounded-lg m-1">
                     <h3>
-                        <a href="{{route('public_committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">{{$p->title}}</a>
+                        <a href="{{route('public_committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">
+                            {{$p->title}}
+                        </a>
                     </h3>
                     {{$p->updated_at}}
                 </div>
@@ -44,13 +49,17 @@ $execs = $data['executives'];
                 <h5>{{$c->name}} Executive</h5>
                 <p>
                     @foreach ($execs as $exec)
-                        <i class="fas fa-user-tie"></i> {{$exec->pivot->role}}: <a href="{{route('member', $exec->id)}}">{{$exec->name}}</a> <br />
+                        <i class="fas fa-user-tie"></i> {{$exec->pivot->role}}:
+                        <a href="{{route('member', $exec->id)}}">{{$exec->name}}
+                        </a> <br />
                     @endforeach
                 </p>
                 <p>
                     <i class="far fa-envelope"></i>
                     Email:
-                    <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee"> {{$data['committee']->email}}</a>
+                    <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee">
+                        {{$data['committee']->email}}
+                    </a>
                 </p>
             </div>
         </div>

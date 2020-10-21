@@ -4,27 +4,29 @@
     <div class="row"  style="background: #fff;">
         <div class="col-12 mb-lg-1">
             <img src="/storage/public/64tsEl26mhTFapH4Rco0QidSjj5yMx9s0cJfePq8.png"
-                 style="padding:1em; display: block; margin-left: auto; margin-right: auto;" />
+                 style="padding:1em; display: block; margin-left: auto; margin-right: auto;" alt="BC Federation of Labor" />
         </div>
     </div>
-
     <div class="row" style="background: #fff;">
         <div class="col-12 mb-lg-1 border border-dark rounded-lg" style="height:300px;">
             <h1>Carousel</h1>
+            <input type="date" id="pick-date" name="date" />
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 border border-dark rounded-lg p-2 pt-2 mt-lg-5 mb-lg-2">
-            <h1>
-                <a href="{{route('topic_show', 'news')}}" title="news and highlights">
-                    <i class="far fa-newspaper"></i> News & Highlights
-                </a>
-            </h1>
+    <div class="row  border border-info rounded-lg mt-3">
+        <div class="col-12 border border-dark rounded-lg p-2 pt-2">
+            <div class="col-12 border border-dark rounded-lg ">
+                <h3>
+                    <a href="{{route('topic_show', 'news')}}" title="news and highlights">
+                        <i class="far fa-newspaper"></i> News & Highlights
+                    </a>
+                </h3>
+            </div>
         </div>
     </div>
-    <div class="row">
-
-        <div class="col-5 border border-dark rounded-lg p-2 pt-2 mb-lg-2 mr-2">
+    <div class="row  border border-info rounded-lg mb-lg-2">
+        <div class="col-6 border border-dark rounded-lg p-2 pt-2" style="display: flex;">
+            <div class="col-12 border border-dark rounded-lg ">
             @if($data['news']['posts']->count() > 0)
                 <h3>
                     <a href="{{route('posts')}}">Posts</a>
@@ -41,9 +43,11 @@
                     @endforeach
                 </ul>
             @endif
+            </div>
         </div>
 
-        <div class="col-5 border border-dark rounded-lg p-2 pt-2 mb-lg-2">
+        <div class="col-6 border border-dark rounded-lg p-2 pt-2">
+            <div class="col-12 border border-dark rounded-lg ">
             @if($data['news']['pages']->count() > 0)
                 <h3>
                     <a href="{{route('pages')}}">Pages</a>
@@ -60,17 +64,18 @@
                     @endforeach
                 </ul>
             @endif
+            </div>
         </div>
     </div>
 
-        <div class="row border border-dark rounded-lg mt-3">
-            <div class="col-12 mb-lg-1 p-4">
+        <div class="row mt-3 mb-lg-1">
+            <div class="col-4 p-4 border border-dark rounded-lg mr-1">
                 <h2>
                     <i class="fas fa-hashtag"></i> Social Media
                 </h2>
             </div>
 
-            <div class="col-12">
+            <div class="col-6 border border-dark rounded-lg">
                 <ul>
                     <li>
                         <a href="https://twitter.com/IATSE_118" target="_blank" title="IATSE Local 118">
