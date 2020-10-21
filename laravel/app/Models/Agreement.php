@@ -28,6 +28,7 @@ use Spatie\Searchable\SearchResult;
  * @property DateTime       $from
  * @property DateTime       $until
  * @method static withoutGlobalScopes()
+ * @method static whereNotIn(string $string, $map)
  */
 
 class Agreement extends LiveableModel implements HasAttachment, Searchable

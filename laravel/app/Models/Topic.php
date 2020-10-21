@@ -35,6 +35,7 @@ use Spatie\Searchable\SearchResult;
  * @property Post[]        $posts
  * @property Attachment[]  $attachments
  * @method static withoutGlobalScope()
+ * @method static withoutGlobalScopes()
  */
 class Topic extends LiveableModel implements HasAttachment, Searchable
 {

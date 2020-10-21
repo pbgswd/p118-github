@@ -25,6 +25,7 @@ use Spatie\Searchable\SearchResult;
  * @property User       $user
  * @property DateTime   $created_at
  * @property DateTime   $updated_at
+ * @method static withoutGlobalScopes()
  */
 class Venue extends LiveableModel implements Searchable
 {

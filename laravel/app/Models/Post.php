@@ -28,6 +28,7 @@ use Spatie\Searchable\SearchResult;
  * @property Attachment[]  $attachments
  * @property DateTime      $created_at
  * @property DateTime      $updated_at
+ * @method static withoutGlobalScopes()
  */
 class Post extends LiveableModel implements HasAttachment, Searchable
 {
