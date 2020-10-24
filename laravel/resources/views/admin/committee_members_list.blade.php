@@ -1,5 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> Managing Users for Committees ' .
-    $data['committee']->name ])
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> Manage Users for ' .
+    $data['committee']->name  . ' Committee'])
 @section('content')
 <div class="container">
     <h3>
@@ -20,8 +20,11 @@
                 {!! csrf_field() !!}
                 <div class="form-group">
                     <h4>
-                        <label for="search">Look Up Member</label>
-                        <input type="text" name="search" value="" size="40" required/>
+                        <label for="search">
+                            <i class="fas fa-search"></i>
+                            Look Up Member to Add or Edit
+                        </label>
+                        <input type="text" name="search" value="{{$data['query'] ?? '' }}" size="40" required/>
                         <button type="submit" class="btn btn-secondary">Submit</button>
                     </h4>
                 </div>
@@ -39,22 +42,29 @@
                                 <th>  &nbsp; </th>
                                 <th> @sortablelink('name', 'Name') </th>
                                 <th> @sortablelink('email', 'Email') </th>
-                                <th> Edit </th>
+                                <th> Action </th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($data['search'] as $s)
                                 <tr>
-                                    <td> &nbsp;</td>
+                                    <td> &nbsp;&nbsp; </td>
                                     <td><h4>{{$s->name}}</h4> </td>
-                                    <td> {{$s->email}}</td>
+                                    <td> <a href="mailto:{{$s->email}}">{{$s->email}}</a></td>
                                     <td>
-                                        slug: {{$data['committee']['slug']}} user id: {{$s->id}}
-                                        <a
-                                            href="{{route('admin_create_committee_members',
-                                                [$data['committee']['slug'], $s->id])}}">
-                                            Add / Edit
-                                        </a>
+                                        @if(($s->committee_memberships[0]->id ?? '') != $data['committee']->id)
+                                            <a
+                                                href="{{route('admin_create_committee_members',
+                                                    [$data['committee']['slug'], $s->id])}}" alt="Add" title="Add">
+                                                <i class="fas fa-user-plus"></i> Add to Committee
+                                            </a>
+                                        @else
+                                            <a
+                                                href="{{route('admin_edit_committee_members',
+                                                    [$data['committee']['slug'], $s->id])}}" alt="edit" title="edit">
+                                                <i class="far fa-edit"></i> Edit
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -84,7 +94,7 @@
                             <th> @sortablelink('name', 'Name') </th>
                             <th> @sortablelink('email', 'Email') </th>
                             <th> Role </th>
-                            <th> Edit </th>
+                            <th> Action </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,11 +110,21 @@
                                         </a>
                                     </h4>
                                 </td>
-                                <td> {{ $i['email'] }} </td>
+                                <td>
+                                    <a href="mailto:{{$i['email']}}">
+                                        {{$i['email']}}
+                                    </a>
+                                </td>
                                 <td>
                                     {{$i['committee_memberships'][0]['pivot']['role']}}
                                 </td>
-                                <td>Edit</td>
+                                <td>
+                                    <a
+                                        href="{{route('admin_create_committee_members',
+                                                [$data['committee']['slug'], $i->id])}}" alt="edit" title="edit">
+                                        <i class="far fa-edit"></i> Edit
+                                    </a>
+                                </td>
                             </tr>
                         @empty
                             <tr>

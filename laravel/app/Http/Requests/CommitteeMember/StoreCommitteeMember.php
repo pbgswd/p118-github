@@ -24,9 +24,9 @@ class StoreCommitteeMember extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|exists:user',
+            //'id' => 'required|exists:user',
             'role' => 'required|string',
-            'committee_id' => 'required|int|exists:committees'
+            //'committee_id' => 'required|int|exists:committees'
         ];
     }
 }

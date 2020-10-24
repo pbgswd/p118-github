@@ -144,5 +144,7 @@ class Committee extends LiveableModel implements Searchable
     public function posts(): HasMany
     {
         return $this->hasMany(CommitteePost::class);
+        //->with(User::class);
+        //todo with associated author   return $this->belongsTo(User::class);
     }
 }

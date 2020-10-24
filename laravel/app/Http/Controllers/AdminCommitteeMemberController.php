@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommitteeMember\DestroyCommitteeMember;
 use App\Http\Requests\CommitteeMember\SearchCommitteeMember;
 use App\Http\Requests\CommitteeMember\StoreCommitteeMember;
+use App\Http\Requests\CommitteeMember\UpdateCommitteeMember;
 use App\Models\Committee;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -37,13 +36,18 @@ class AdminCommitteeMemberController extends Controller
         return view('admin.committee_members_list', ['data' => $data]);
     }
 
-
+    /**
+     * @param SearchCommitteeMember $request
+     * @param Committee $committee
+     * @return Application|Factory|View
+     */
     public function search(SearchCommitteeMember $request, Committee $committee)
     {
         $data = [];
-        $data['search'] = User::where('name', 'LIKE', '%'.$request->search.'%')->
+        $data['search'] = User::where('name', 'LIKE', '%'. $request->search .'%')->
             with('committee_memberships')->get();
         $committee->load('active_committee_members')->sortable();
+        $data['query'] = $request->search;
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
         return view('admin.committee_members_list', ['data' => $data]);
@@ -53,6 +57,7 @@ class AdminCommitteeMemberController extends Controller
     /**
      * @param Committee $committee
      * @param User $user
+     * @return Application|Factory|View
      */
     public function create(Committee $committee, User $user)
     {
@@ -61,8 +66,7 @@ class AdminCommitteeMemberController extends Controller
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
         $data['user'] = $user;
-
-        //todo redirect user if already in this committee and active
+        $data['action'] = 'Add';
 
         return view('admin.committee_manage_membership', ['data' => $data]);
     }
@@ -75,57 +79,73 @@ class AdminCommitteeMemberController extends Controller
      */
     public function store(StoreCommitteeMember $request, Committee $committee, User $user)
     {
-        dd($request->all());
-
-
         $this->authorize('create', Auth::user());
-        foreach ($request->members as $member)
-        {
-            if(!empty($member['id'])) {
-                $committee->committee_members()->attach($member['id'], ['role' => $member['role']]);
-            }
-        }
+        $user->load('committee_memberships');
 
-        Session::flash('success', "You have added " . count($request->members)
-            . " members to committee " . $committee->name);
-        return redirect()->route('list-bulk-add', $request->committee['slug']);
+        $committee->committee_members()->attach($user['id'], ['role' => $request['role']]);
+
+        //todo send email to member
+
+        Session::flash('success', "You have added " . $user->name . " to " . $committee->name);
+
+        return redirect()->route('admin-list-committee-members', [$committee->slug, $user->id]);
+    }
+
+
+    /**
+     * @param Committee $committee
+     * @param User $user
+     * @return Application|Factory|View
+     */
+    public function edit(Committee $committee, User $user)
+    {
+        $this->authorize('create', Auth::user());
+        $data = [];
+        $data['committee'] = $committee;
+        $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
+        $data['user'] = $user;
+        $data['action'] = 'Edit';
+        return view('admin.committee_manage_membership', ['data' => $data]);
     }
 
     /**
-     * Display the specified resource.
-     *
+     * @param UpdateCommitteeMember $request
+     * @param Committee $committee
      * @param User $user
-     * @return Response
+     * @return RedirectResponse
      */
-    public function show(User $user)
+    public function update(UpdateCommitteeMember $request, Committee $committee, User $user)
     {
-        //todo methods to admin show list of members of a committee
-    }
-
-    /**
-     * @param User $user
-     */
-    public function edit(User $user)
-    {
-        //todo methods and request validators for editing users in committees
         $this->authorize('update', Auth::user());
+        $user->load('committee_memberships');
+        $committee->committee_members()->updateExistingPivot($user['id'], ['role' => $request['role']]);
+
+        //todo send email to member
+
+        Session::flash('success', "You have updated " . $user->name . " in " . $committee->name);
+
+        return redirect()->route('admin-list-committee-members', [$committee->slug, $user->id]);
     }
 
     /**
-     * @param Request $request
-     */
-    public function update(Request $request)
-    {
-        //todo methods and request validators for updating users in committees
-        $this->authorize('update', Auth::user());
-    }
-
-    /**
+     * @param DestroyCommitteeMember $request
+     * @param Committee $committee
      * @param User $user
+     * @return RedirectResponse
      */
-    public function destroy(User $user)
+    public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user)
     {
-        //todo methods and request validators for deleting users in committees
+
+//todo do I want to hold a history of membership in committees?
         $this->authorize('delete', Auth::user());
+
+        $committee->committee_members()->updateExistingPivot($user['id'],
+            ['role' => 'Past-Member']);
+
+        $committee->committee_members()->detach($user['id']);
+
+        Session::flash('success', $user->name . " was deleted from " . $committee->name);
+
+        return redirect()->route('admin-list-committee-members', [$committee->slug]);
     }
 }
