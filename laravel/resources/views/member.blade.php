@@ -73,7 +73,7 @@ $user = $data['user'];
                                             {{$m->name}} -  {{$m->pivot->role}}
                                         </a>
                                     </h5>
-                                </div>
+
                             @endif
                         @endforeach
                     </div>
