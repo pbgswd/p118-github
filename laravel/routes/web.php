@@ -222,30 +222,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin']], functi
     Route::post('committee/{any_committee}/edit', 'AdminCommitteeController@update');
     Route::delete('committee/delete', 'AdminCommitteeController@destroy')->name('committee_destroy');
 
-
-
     Route::post('committee/{committee}/admin-list-committee-members', 'AdminCommitteeMemberController@search');
     Route::get('committee/{committee}/admin-list-committee-members', 'AdminCommitteeMemberController@index')
         ->name('admin-list-committee-members');
-
     Route::get('committee/{committee}/admin-create-committee-members/user/{user}',
         'AdminCommitteeMemberController@create')->name('admin_create_committee_members');
-
     Route::post('committee/{committee}/admin-create-committee-members/user/{user}',
         'AdminCommitteeMemberController@store');
-
-
     Route::get('committee/{committee}/admin-edit-committee-members/user/{user}',
         'AdminCommitteeMemberController@edit')->name('admin_edit_committee_members');
-
     Route::post('committee/{committee}/admin-edit-committee-members/user/{user}',
         'AdminCommitteeMemberController@update');
-
-
-
     Route::delete('committee/{committee}/admin-manage-committee-members/user/{user}/delete',
         'AdminCommitteeMemberController@destroy')->name('admin_delete-committee_member');
-
 
     Route::get('committee/{committee}/posts', 'AdminCommitteePostController@index')->name('committee_posts_list');
     Route::get('committee/{committee}/post/create', 'AdminCommitteePostController@create')

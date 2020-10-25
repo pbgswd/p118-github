@@ -41,8 +41,8 @@ $committee = $data['committee'];
                     <i class="fas fa-users"></i> Committee Membership in {{ $committee->name }}
                 </h4>
                 <h4>
-                    <a href="{{route('list-bulk-add', $committee->slug)}}">
-                        Bulk add committee members
+                    <a href="{{route('admin-list-committee-members', $committee->slug)}}">
+                        Add, manage committee membership.
                     </a>
                 </h4>
             </div>
@@ -50,7 +50,8 @@ $committee = $data['committee'];
                 <h5>
                     <a href="{{route('committee_posts_list', $committee->slug)}}">
                         <i class="far fa-folder-open"></i>
-                        posts in {{ $committee->name }}</a> |
+                        posts in {{ $committee->name }}</a>
+                    <br />
                     <a href="{{route('admin_committee_post', $committee->slug)}}">Add New Post</a>
                 </h5>
             </div>

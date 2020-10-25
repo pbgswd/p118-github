@@ -33,7 +33,8 @@ $execs = $data['executives'];
                             {{$p->title}}
                         </a>
                     </h3>
-                    {{$p->updated_at}}
+
+                    {{ \Carbon\Carbon::parse($p->updated_at)->format(' F j, Y') }}
                 </div>
             @endforeach
             @if($c->posts->count() > 5)

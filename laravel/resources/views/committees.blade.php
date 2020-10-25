@@ -6,10 +6,6 @@
             <div class="col-12">
                 <h1 class="display-3">Committees</h1>
             </div>
-            <div class="col-12">
-                <a href="{{ route('hello') }}">Home /</a>
-                <a href="{{route('committees')}}">Committees /</a>
-            </div>
         </div>
         <div class="row">
             @foreach ( $data['committees'] as $c )
