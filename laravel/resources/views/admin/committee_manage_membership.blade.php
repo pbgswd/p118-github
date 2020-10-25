@@ -1,34 +1,46 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> add edit  ' .
-     $data['user']->name . ' for ' . $data['committee']->name ])
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> ' .
+    $data['action'] . ' ' .  $data['user']->name .
+    ' for ' . $data['committee']->name ])
 @section('content')
     <div class='container m-lg-5'>
-        <div class="row border border-dark">
-            <div class="col-12 p-lg-3">
-                <form method="post" name="manage_committee_members"
-                      action="{{ url()->current() }}"
-                      enctype="multipart/form-data"
-                      class="needs-validation" novalidate>
-                    {!! csrf_field() !!}
+        <div class="row border border-dark rounded">
+            <form method="post" name="manage_committee_members"
+                  action="{{ url()->current() }}"
+                  enctype="multipart/form-data"
+                  class="needs-validation" novalidate>
+                {!! csrf_field() !!}
+                <div class="col-8 p-3">
                     <div class="form-group">
                         <h4>
-                            <label for="role">Select role for {{$data['user']->name}} in {{$data['committee']->name}}</label>
-                                <div class="form-group">
-                                    {{ select_options($data['committee_roles'],
-                                        old('role', 'Member'),
-                                        ['name' => 'role',
-                                        'class' => 'form-control',
-                                        'placeholder' => 'Role'], $selected = ''
-                                        )
-                                    }}
-                                </div>
+                            <label for="role">
+                                {{$data['action'] == 'Edit' ? 'Edit': 'Add'}}
+                                role for {{$data['user']->name}} in {{$data['committee']->name}}
+                            </label>
+                            <div class="form-group">
+                                {{ select_options($data['committee_roles'],
+                                    old('role', $data['user']->committee_memberships[0]->pivot->role),
+                                    ['name' => 'role',
+                                    'class' => 'form-control',
+                                    'placeholder' => 'Role'], $selected = 'rrrr'
+                                    )
+                                }}
+                            </div>
                             <br />
-                            <button type="submit" class="btn btn-secondary">{{$data['action']}}</button>
+                            @if($data['action'] == 'Edit')
+                                <i class="far fa-edit"></i>
+                            @else
+                                <i class="fas fa-user-plus"></i>
+                            @endif
+                            <button type="submit" class="btn btn-secondary">
+                                {{$data['action']}}
+                            </button>
                         </h4>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
+            <div class="col-2 p-3"></div>
             @if($data['action'] == 'Edit')
-                <div class="col-md-12">
+                <div class="col-2 p-3">
                     <form method="post" name="manage_committee_members"
                           action="{{ route('admin_delete-committee_member',
                                     [$data['committee']->slug, $data['user']->id]) }}"
@@ -36,15 +48,21 @@
                           class="needs-validation" novalidate>
                         {!! csrf_field() !!}
                         {!! method_field('DELETE') !!}
-                        <i class="far fa-trash-alt fa-2x"></i>
                         <div class="form-group">
-                            Delete  {{$data['user']->name}} from {{$data['committee']->name}}
-                            (sets status to 'Past Member').
+                            <h4 class="mb-3">Delete  {{$data['user']->name}} from {{$data['committee']->name}}</h4>
+                            <i class="far fa-trash-alt fa-2x"></i>
                             <input class="btn btn-outline-danger" type="submit" value="Delete" />
                         </div>
                     </form>
                 </div>
             @endif
         </div>
+    <div class="row mt-lg-5">
+        <div class="col-md-12">
+            <a href="{{route('admin-list-committee-members', $data['committee']->slug)}}">
+                <i class="far fa-hand-point-left fa-2x"></i> Go back
+            </a>
+        </div>
+    </div>
     </div>
 @endsection

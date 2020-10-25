@@ -99,12 +99,16 @@ class AdminCommitteeMemberController extends Controller
      */
     public function edit(Committee $committee, User $user)
     {
+        $user->load('committee_memberships');
+        //todo get relevant membership only, not all of them
+
         $this->authorize('create', Auth::user());
         $data = [];
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
         $data['user'] = $user;
         $data['action'] = 'Edit';
+
         return view('admin.committee_manage_membership', ['data' => $data]);
     }
 

@@ -2,16 +2,12 @@
     $data['committee']->name  . ' Committee'])
 @section('content')
 <div class="container">
-    <h3>
-       <span class="badge badge-primary badge-pill">
-           {!! $data['committee']['active_committee_members']->count() !!}
-       </span>
-        {{ Str::plural('Member', $data['committee']['active_committee_members']->count()) }}.
+    <h4>
         <a href="{{route('admin_committee_show', $data['committee']['slug'])}}">
-            Return to {{$data['committee']['name']}} page
+            <i class="far fa-hand-point-left fa-2x"></i> Back to {{$data['committee']['name']}} page
         </a>
-    </h3>
-    <div class="row border border-dark">
+    </h4>
+    <div class="row border border-dark rounded">
         <div class="col-12 p-lg-3">
             <form method="post" name="search_committee_members"
                   action="{{ url()->current() }}"
@@ -32,7 +28,7 @@
         </div>
     </div>
     @if(!empty($data['search']))
-        <div class="row border border-dark mt-3">
+        <div class="row border border-dark mt-3  rounded">
             <div class="col-12 p-lg-3">
                 <h4>Results from search</h4>
                 <div class="table-responsive">
@@ -41,6 +37,7 @@
                             <tr>
                                 <th>  &nbsp; </th>
                                 <th> @sortablelink('name', 'Name') </th>
+                                <th> Role </th>
                                 <th> @sortablelink('email', 'Email') </th>
                                 <th> Action </th>
                             </tr>
@@ -50,6 +47,7 @@
                                 <tr>
                                     <td> &nbsp;&nbsp; </td>
                                     <td><h4>{{$s->name}}</h4> </td>
+                                    <td><h4>   {{$s['committee_memberships'][0]['pivot']['role']}}</h4> </td>
                                     <td> <a href="mailto:{{$s->email}}">{{$s->email}}</a></td>
                                     <td>
                                         @if(($s->committee_memberships[0]->id ?? '') != $data['committee']->id)
@@ -81,7 +79,7 @@
             </div>
         </div>
     @endif
-    <div class="row border border-dark mt-3 mb-lg-5">
+    <div class="row border border-dark mt-3 mb-lg-5  rounded">
         <div class="col-12 p-lg-3">
             <h4>
                 Current members of {{$data['committee']->name}}
@@ -120,7 +118,7 @@
                                 </td>
                                 <td>
                                     <a
-                                        href="{{route('admin_create_committee_members',
+                                        href="{{route('admin_edit_committee_members',
                                                 [$data['committee']['slug'], $i->id])}}" alt="edit" title="edit">
                                         <i class="far fa-edit"></i> Edit
                                     </a>
@@ -149,5 +147,12 @@
         </div>
         @endif
         </div>
+    <div class="row mt-lg-5 mb-lg-5">
+        <div class="col-md-12">
+            <a href="{{route('admin_committee_show', $data['committee']['slug'])}}">
+                <i class="far fa-hand-point-left fa-2x"></i> Go back
+            </a>
+        </div>
+    </div>
 </div>
 @endsection
