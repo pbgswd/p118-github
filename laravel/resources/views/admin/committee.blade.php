@@ -1,7 +1,8 @@
 <?php
 $committee = $data['committee'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' committee ' . ($data["action"] == 'Edit' ? $committee->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' committee ' .
+($data["action"] == 'Edit' ? $committee->name : '') ])
 @section('content')
 <script>
     tinymce.init({
@@ -14,7 +15,8 @@ $committee = $data['committee'];
             'searchreplace visualblocks code fullscreen',
             'insertdatetime media table paste code help wordcount'
         ],
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify ' +
+            '| bullist numlist outdent indent | removeformat | help',
         content_css: [
             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
             '//www.tiny.cloud/css/codepen.min.css'
@@ -22,7 +24,8 @@ $committee = $data['committee'];
     });
 </script>
 <div class="container">
-    <h3><a href="{{ route('committees_list') }}">
+    <h3>
+        <a href="{{ route('committees_list') }}">
             <i class="far fa-arrow-alt-circle-left"></i>
             List of committees
         </a>
@@ -57,13 +60,15 @@ $committee = $data['committee'];
             </div>
         </div>
     @endif
-    <form method="post" name="committee" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form method="post" name="committee" action="{{ url()->current() }}" enctype="multipart/form-data"
+          class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Name" name="committee[name]" value="{{ old('committee.name', $committee->name)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Name" name="committee[name]"
+                           value="{{ old('committee.name', $committee->name)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -73,7 +78,10 @@ $committee = $data['committee'];
                     <h4>Description</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="committee[description]" id="committee-description" placeholder="Summary content" class="form-control">{{old('committee.description', $committee->description)}}</textarea>
+                    <textarea name="committee[description]" id="committee-description"
+                              placeholder="Summary content" class="form-control">
+                        {{old('committee.description', $committee->description)}}
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -81,7 +89,8 @@ $committee = $data['committee'];
             <div class="form-group">
                 <div class="col-lg-2"><h4>Email</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Email" name="committee[email]" value="{{ old('committee.email', $committee->email)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Email" name="committee[email]"
+                           value="{{ old('committee.email', $committee->email)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -91,7 +100,10 @@ $committee = $data['committee'];
                     <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
                     <div class="col-6 col-sm-3">
                         <div class="form-group">
-                            {{ select_options($data['access_levels'], old('committee.access_level', $committee->access_level), ['name' => 'committee[access_level]', 'class' => 'form-control']) }}
+                            {{ select_options($data['access_levels'],
+                                old('committee.access_level', $committee->access_level),
+                                ['name' => 'committee[access_level]', 'class' => 'form-control'])
+                            }}
                         </div>
                     </div>
                     <div class="col-6 col-sm-3"></div>
@@ -100,7 +112,9 @@ $committee = $data['committee'];
                     <div class="col-12">&nbsp;</div>
                     <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
                     <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="committee[sort_order]" value="{{old('committee.sort_order',$committee->sort_order)}}" size="30" required/>
+                        <input type="text" class="form-control"  id="validationCustom02"
+                               placeholder="e.g.: 1000, 2000" name="committee[sort_order]"
+                               value="{{old('committee.sort_order',$committee->sort_order)}}" size="30" required/>
                         <p>e.g.: 1000, 2000</p>
                     </div>
                     <div class="invalid-feedback">
@@ -113,13 +127,16 @@ $committee = $data['committee'];
                 <div class="col-sm">
                     <label>
                         <input name="committee[in_menu]" type="hidden" value="0" />
-                        <input name="committee[in_menu]" type="checkbox" value="1" {{ checked(old('committee.in_menu',$committee->in_menu)) }} /> In Menu
+                        <input name="committee[in_menu]" type="checkbox" value="1"
+                            {{ checked(old('committee.in_menu',$committee->in_menu)) }} /> In Menu
                     </label>
                 </div>
                 <div class="col-sm">
                     <label>
                          <input name="committee[live]" type="hidden" value="0" />
-                         <input name="committee[live]" type="checkbox" value="1" {{ checked( old('committee.live', $committee->live)) }} /> Check now to make Live
+                         <input name="committee[live]" type="checkbox" value="1"
+                             {{ checked( old('committee.live', $committee->live)) }} />
+                        Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>
