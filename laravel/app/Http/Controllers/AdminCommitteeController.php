@@ -58,9 +58,9 @@ class AdminCommitteeController extends Controller
         $committee->user_id = Auth::id();
         $committee->save();
 
-        Session::flash('success', "You have saved a new committee, " . $committee->name);
+        Session::flash('success', "You have created a new committee, " . $committee->name);
 
-        return redirect()->route('committee_show', $committee->slug);
+        return redirect()->route('admin_committee_show', $committee->slug);
     }
 
     /**
