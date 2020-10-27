@@ -32,31 +32,37 @@ $committee = $data['committee'];
     </h3>
     @if ($data['action'] == 'Edit')
         <div class="row">
-            <div class="col-md border border-dark rounded-lg mt-3 mr-3">
+            <div class="col-md border border-dark rounded-lg mt-3 mr-3 pt-4">
                 <h4>
-                    View <a title="{{ $committee->name }}" href="{{ route('admin_committee_show', $committee->slug) }}">
+                    View
+                    <a title="{{ $committee->name }}" href="{{ route('admin_committee_show', $committee->slug) }}">
                         {{ $committee->name }}
                     </a>
                 </h4>
             </div>
-            <div class="col-md border border-dark rounded-lg mt-3 mr-3">
+            <div class="col-md border border-dark rounded-lg mt-3 mr-3 pt-4">
                 <h4>
                     <i class="fas fa-users"></i> Committee Membership in {{ $committee->name }}
                 </h4>
+                <h4>{{$committee->active_committee_members->count()}} Active Members.</h4>
                 <h4>
                     <a href="{{route('admin-list-committee-members', $committee->slug)}}">
                         Add, manage committee membership.
                     </a>
                 </h4>
             </div>
-            <div class="col-md border border-dark rounded-lg mt-3 mr-3">
-                <h5>
+            <div class="col-md border border-dark rounded-lg mt-3 mr-3 pt-4">
+                <h4>
                     <a href="{{route('committee_posts_list', $committee->slug)}}">
                         <i class="far fa-folder-open"></i>
                         posts in {{ $committee->name }}</a>
-                    <br />
-                    <a href="{{route('admin_committee_post', $committee->slug)}}">Add New Post</a>
-                </h5>
+                </h4>
+                <h4>
+                    <a href="{{route('admin_committee_post', $committee->slug)}}">
+                        <i class="fas fa-edit"></i>
+                        Add New Post
+                    </a>
+                </h4>
             </div>
         </div>
     @endif
@@ -110,7 +116,9 @@ $committee = $data['committee'];
                     <div class="col-6 col-sm-3"></div>
                     <div class="w-100"></div>
                     <div class="col-12">&nbsp;</div>
-                    <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
+                    <div class="col-6 col-sm-3">
+                        <h4>Sort Order</h4>
+                    </div>
                     <div class="col-6 col-sm-3">
                         <input type="text" class="form-control"  id="validationCustom02"
                                placeholder="e.g.: 1000, 2000" name="committee[sort_order]"
@@ -158,7 +166,7 @@ $committee = $data['committee'];
                         <input type="hidden" name="id[]" value="{{ $committee->id }}">
                         <input class="btn btn-outline-danger" type="submit" value="Delete">
                     </form>
-                 </div>
+                </div>
             @endif
         </div>
 </div>

@@ -72,9 +72,8 @@ class AdminCommitteeController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $committee->load('creator', 'committee_members');
+        $committee->load('creator', 'active_committee_members');
 
-        $committee['member_count'] = $committee->committee_members->count();
         $committee['post_count'] = $committee->posts->count();
         $committee['committee_roles'] = Options::committee_roles();
 
@@ -104,8 +103,7 @@ class AdminCommitteeController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        $any_committee->load('creator','committee_members');
-        $any_committee['member_count'] = count($any_committee->committee_members);
+        $any_committee->load('creator','active_committee_members');
 
         return view('admin.committee', [
             'data' => [
