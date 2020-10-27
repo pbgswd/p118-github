@@ -37,18 +37,28 @@
                             <tr>
                                 <th>  &nbsp; </th>
                                 <th> @sortablelink('name', 'Name') </th>
-                                <th> Role </th>
                                 <th> @sortablelink('email', 'Email') </th>
+                                <th> Role </th>
                                 <th> Action </th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($data['search'] as $s)
                                 <tr>
-                                    <td> &nbsp;&nbsp; </td>
-                                    <td><h4>{{$s->name}}</h4> </td>
-                                    <td><h4>   {{$s['committee_memberships'][0]['pivot']['role']}}</h4> </td>
-                                    <td> <a href="mailto:{{$s->email}}">{{$s->email}}</a></td>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                        <h4>{{$s->name}}</h4>
+                                    </td>
+                                    <td>
+                                        <a href="mailto:{{$s->email}}">
+                                            {{$s->email}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <h4>
+                                            {{$s['committee_memberships'][0]['pivot']['role'] ?? '-'}}
+                                        </h4>
+                                    </td>
                                     <td>
                                         @if(($s->committee_memberships[0]->id ?? '') != $data['committee']->id)
                                             <a
@@ -114,7 +124,9 @@
                                     </a>
                                 </td>
                                 <td>
-                                    {{$i['committee_memberships'][0]['pivot']['role']}}
+                                    <h4>
+                                        {{$i->pivot->role}}
+                                    </h4>
                                 </td>
                                 <td>
                                     <a

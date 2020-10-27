@@ -21,7 +21,7 @@
                                     old('role', $data['user']->committee_memberships[0]->pivot->role),
                                     ['name' => 'role',
                                     'class' => 'form-control',
-                                    'placeholder' => 'Role'], $selected = 'rrrr'
+                                    'placeholder' => 'Role'], $selected = ''
                                     )
                                 }}
                             </div>

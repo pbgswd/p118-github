@@ -30,6 +30,7 @@ class AdminCommitteeMemberController extends Controller
         $committee->load('active_committee_members')->sortable();
 
         $data['committee'] = $committee;
+
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
         $data['search'] = [];
 
@@ -44,9 +45,17 @@ class AdminCommitteeMemberController extends Controller
     public function search(SearchCommitteeMember $request, Committee $committee)
     {
         $data = [];
-        $data['search'] = User::where('name', 'LIKE', '%'. $request->search .'%')->
-            with('committee_memberships')->get();
+
+        $data['search'] = User::where('name', 'LIKE', '%'. filter_var($request->search, FILTER_SANITIZE_STRING) .'%')
+            ->with(
+                ['committee_memberships' => function ($query) use ($committee) {
+                    $query->where('committee_id', $committee->id);
+                }]
+            )
+            ->get();
+
         $committee->load('active_committee_members')->sortable();
+
         $data['query'] = $request->search;
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
@@ -99,8 +108,9 @@ class AdminCommitteeMemberController extends Controller
      */
     public function edit(Committee $committee, User $user)
     {
-        $user->load('committee_memberships');
-        //todo get relevant membership only, not all of them
+        $user->load(['committee_memberships' => function ($query) use ($committee) {
+            $query->where('committee_id', $committee->id);
+        }]);
 
         $this->authorize('create', Auth::user());
         $data = [];

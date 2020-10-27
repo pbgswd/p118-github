@@ -156,7 +156,8 @@ class AdminUserController extends Controller
         $user->load('phone_number',
                     'user_info',
                     'address',
-                    'allExecutiveRoles'
+                    'allExecutiveRoles',
+                    'committee_memberships'
                     );
 
         $currentUser = Auth::user(); // the logged in user, perms to edit? // dd(Auth::user()->permissions);

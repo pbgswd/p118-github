@@ -44,7 +44,7 @@ $user_roles = $data['user_roles'];
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row border border-primary rounded-lg border-3 mt-lg-4 p-lg-1 mb-3">
+        <div class="row border border-primary rounded-lg border-3 mt-lg-4 p-lg-1 mb-lg-3">
             <div class="col-lg-12">
                 <h3>Primary Contact Information</h3>
             </div>
@@ -95,6 +95,27 @@ $user_roles = $data['user_roles'];
             </div>
         </div>
         @if ($data['action'] == 'Edit')
+            <div class="row border border-primary rounded-lg border-3 mt-lg-1 pb-3 mb-lg-3">
+                <div class="col-12 pt-3">
+                    <h4>Committee Memberships</h4>
+                    <p>
+                        <a href="{{route('committees_list')}}">
+                            Go to Committees Admin
+                        </a>
+                    </p>
+                    @foreach($user->committee_memberships as $c)
+                        <h4>
+                            <a href="{{route('admin_committee_show', $c->slug)}}">
+                                {{$c->name}}
+                            </a>
+                             {{$c->pivot->role}}
+                            <a href="{{route('admin_edit_committee_members', [$c->slug, $user->id])}}">
+                                <i class="far fa-edit"></i> Edit
+                            </a>
+                        </h4>
+                    @endforeach
+                </div>
+            </div>
             <div class="row border border-primary rounded-lg border-3 mt-lg-1 pb-3">
                 <div class="col-6 pt-3">
                     <h4>Executive Title & Email</h4>
@@ -115,7 +136,7 @@ $user_roles = $data['user_roles'];
                                     until {{\Carbon\Carbon::parse($e->pivot->end_date)->format('F j Y')}}.
                                     <a href="{{route('admin_executive_edit', $e->pivot->id)}}"
                                        title="Edit">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-edit"></i> Edit
                                     </a>
                                 </h4>
                                 <br />

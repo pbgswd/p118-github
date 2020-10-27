@@ -133,7 +133,7 @@ class Committee extends LiveableModel implements Searchable
     {
         return $this->belongsToMany(User::class)
             ->wherePivotIn('role', array_merge(Options::committee_executive_roles(), ['Member' => 'Member']))
-            ->withPivot('role')
+            ->withPivot('role', 'committee_id')
             ->wherePivot('deleted_at', null)
             ->withTimestamps();
     }
