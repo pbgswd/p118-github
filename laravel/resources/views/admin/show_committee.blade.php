@@ -106,7 +106,9 @@ $committee = $data['committee'];
         <div class="col-md">
             <h4>
                 <i class="fas fa-users"></i>
-                {{$committee->active_committee_members->count()}} active members in {{ $committee->name }}
+                {{$committee->active_committee_members->count()}} active
+                {{Str::plural('member', $committee->active_committee_members->count())}}
+                in {{$committee->name}}
             </h4>
             <h4>
                 <a href="{{route('admin-list-committee-members', $committee->slug)}}">
@@ -135,7 +137,8 @@ $committee = $data['committee'];
             <a href="{{route('committee_posts_list', $committee->slug)}}">
                 <i class="far fa-folder-open"></i>
                 {{$committee['post_count']}}
-                posts in {{ $committee->name }}
+                {{Str::plural('post', $committee['post_count'])}}
+                in {{ $committee->name }}
             </a> |
             <a href="{{route('admin_committee_post', $committee->slug)}}">
                 Add New Post
