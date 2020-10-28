@@ -141,13 +141,17 @@ class AdminCommitteeController extends Controller
         Committee::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Committee $committee) {
+
+                $committee->committee_members()->detach();
+
                 //todo committee set to... archive?
                 //todo committee destroy committee relation?
                 //todo committee destroy committee posts?
-                //todo committee delete members?
+
 
                 $committee->delete();
             });
+
 
         Session::flash('success', Str::plural('Committee', count($request->id)) . ' deleted.');
 
