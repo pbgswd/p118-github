@@ -1,8 +1,3 @@
-<?php
-/** @var TYPE_NAME $data */
-$c = $data['committee'];
-$execs = $data['executives'];
-?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
@@ -10,46 +5,62 @@ $execs = $data['executives'];
         <div class="row">
             <div class="col-12">
                 <h2>
-                    <a href="{{route('committees')}}">Committees /</a>&nbsp;{{$c->name}}
+                    <a href="{{route('committees')}}">Committees /</a>&nbsp;{{$data['committee']->name}}
                 </h2>
             </div>
             <div class="col-12">
-                <h2>{!! $c->description !!}</h2>
+                <h2>{!! $data['committee']->description !!}</h2>
             </div>
-            <div class="col-12 mb-4">
+        </div>
+        <div class="row mb-4">
+            <div class="col-6">
                 <h4>
-                    <i class="far fa-newspaper"></i> {{$c->postsCount}} {{Str::plural('Post', $c->postsCount ) }}
-                    @if($data['isMember'] == 1)
-                        | <i class="far fa-edit"></i><a href="{{route('committee_add_public_post', $c->slug)}}">
-                            Add New Post
-                        </a>
-                    @endif
+                    <i class="far fa-newspaper"></i>
+                    {{$data['posts']->count()}} {{Str::plural('Post', $data['posts']->count()) }}
                 </h4>
             </div>
-            @foreach($c->posts as $p)
+            <div class="col-6 mb-4">
+                @if($data['isMember'] == 1)
+                    <h4>
+                        <i class="far fa-edit"></i>
+                        <a href="{{route('committee_add_public_post', $data['committee']->slug)}}">
+                            Add New Post
+                        </a>
+                    </h4>
+                @endif
+            </div>
+        </div>
+        <div class="row">
+            @forelse($data['posts'] as $p)
                 <div class="col-12 border border-dark rounded-lg m-1">
                     <h3>
-                        <a href="{{route('public_committee_post_show', [$c->slug, $p->slug])}}" title="{{$p->title}}">
+                        <a href="{{route('public_committee_post_show', [$data['committee']->slug, $p->slug])}}"
+                           title="{{$p->title}}">
                             {{$p->title}}
                         </a>
                     </h3>
-
+                    Posted by: {{$p->creator->name}}
                     {{ \Carbon\Carbon::parse($p->updated_at)->format(' F j, Y') }}
                 </div>
-            @endforeach
-            @if($c->posts->count() > 5)
+            @empty
+                <div class="col-12 border border-dark rounded-lg m-1 p-lg-3">
+                    <h4>No posts yet, but there will be soon!</h4>
+                </div>
+            @endforelse
+
+            @if($data['posts']->count() > 5)
                 <div class="row mt-lg-4">
                     <div class="col-3 text-center">
-                        {!! $c->posts->links() !!}
+                        {!! $data['posts']->links() !!}
                     </div>
                 </div>
             @endif
         </div>
         <div class="row mt-3">
             <div class="col-12 mr-2 pt-lg-2 border border-dark rounded-lg">
-                <h5>{{$c->name}} Executive</h5>
+                <h5>{{$data['committee']->name}} Executive</h5>
                 <p>
-                    @foreach ($execs as $exec)
+                    @foreach ($data['executives'] as $exec)
                         <i class="fas fa-user-tie"></i> {{$exec->pivot->role}}:
                         <a href="{{route('member', $exec->id)}}">{{$exec->name}}
                         </a> <br />

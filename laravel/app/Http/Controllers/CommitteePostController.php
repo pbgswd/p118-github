@@ -20,14 +20,6 @@ use Illuminate\View\View;
 
 class CommitteePostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return Response
-     */
-
 
     /**
      * @param Committee $committee
@@ -55,7 +47,6 @@ class CommitteePostController extends Controller
     {
         //$this->authorize('create', Auth::user());
         $post = new CommitteePost($request->input('post'));
-        //todo pass in committee_id from form request
         $post->committee_id = $committee->id;
 
         $post->save();
@@ -92,6 +83,7 @@ class CommitteePostController extends Controller
         $committeePost->fill($request['post']);
         $committeePost->save();
         $committeePost->creator;
+
         return view('committee_post_form', [
             $committee->slug, $committeePost->slug], [
             'data' => ['post' => $committeePost, 'action' => 'Edit']
@@ -113,12 +105,13 @@ class CommitteePostController extends Controller
 
         $data =[];
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee']);
-        //todo some sort of ascending / descending sort order for the comments on posts.
 
-/*        if($data['committeepost']->allow_comments == 1) {
+        /*
+        if($data['committeepost']->allow_comments == 1) {
             $data['committeepost']->load('post_comments');
             $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
-        }*/
+        }
+        */
 
         $data['action'] = 'Add';
 
@@ -133,13 +126,9 @@ class CommitteePostController extends Controller
      */
     public function destroy(DestroyCommitteePostRequest $request, Committee $committee): RedirectResponse
     {
-     //todo if post has comments, it cannot be deleted
-     //todo archive when it has comments
-
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (CommitteePost $post) {
-                //todo delete comments associated with a committee post
                 $post->delete();
             });
 
