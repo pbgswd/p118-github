@@ -18,7 +18,7 @@
                             </label>
                             <div class="form-group">
                                 {{ select_options($data['committee_roles'],
-                                    old('role', $data['user']->committee_memberships[0]->pivot->role),
+                                    old('role', $data['user']->committee_memberships[0]->pivot->role ?? ''),
                                     ['name' => 'role',
                                     'class' => 'form-control',
                                     'placeholder' => 'Role'], $selected = ''
@@ -49,7 +49,10 @@
                         {!! csrf_field() !!}
                         {!! method_field('DELETE') !!}
                         <div class="form-group">
-                            <h4 class="mb-3">Delete  {{$data['user']->name}} from {{$data['committee']->name}}</h4>
+                            <h4 class="mb-3">
+                                Delete  {{$data['user']->name}} from {{$data['committee']->name}}
+                            </h4>
+                            <input type="hidden" name="user_id" value="{{$data['user']->id}}" />
                             <i class="far fa-trash-alt fa-2x"></i>
                             <input class="btn btn-outline-danger" type="submit" value="Delete" />
                         </div>
