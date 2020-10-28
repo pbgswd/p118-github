@@ -24,7 +24,7 @@ class DestroyCommitteeMember extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|exists:committee_user',
+            'user_id' => 'required|exists:committee_user',
         ];
     }
 }
