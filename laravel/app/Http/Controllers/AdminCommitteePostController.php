@@ -98,7 +98,8 @@ class AdminCommitteePostController extends Controller
      * @return RedirectResponse
      */
 
-    public function update(UpdateCommitteePostRequest $request, Committee $committee, CommitteePost $committeePost): RedirectResponse
+    public function update(UpdateCommitteePostRequest $request, Committee $committee,
+                           CommitteePost $committeePost): RedirectResponse
     {
         // $this->authorize('update', Auth::user());
 
@@ -109,7 +110,8 @@ class AdminCommitteePostController extends Controller
 
         $committeePost->committee;
 
-        return redirect()->route('admin_committee_post_edit', [$committeePost->committee->slug, $committeePost->slug]);
+        return redirect()->route('admin_committee_post_edit',
+            [$committeePost->committee->slug, $committeePost->slug]);
     }
 
     /**

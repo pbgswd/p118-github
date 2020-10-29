@@ -43,7 +43,9 @@ class CommitteePostCommentController extends Controller
 
         // $this->authorize('update', Auth::user());
 
-        $any_committee_post_comment->loadWithoutGlobalScopes(['comment_author', 'committee_post', 'committee']);
+        $any_committee_post_comment->loadWithoutGlobalScopes(
+            ['comment_author', 'committee_post', 'committee']
+        );
 
         $data = [
             'committee_post' => $any_committee_post_comment->committee_post,
@@ -61,7 +63,8 @@ class CommitteePostCommentController extends Controller
      * @param CommitteePost $committeePost
      * @return RedirectResponse
      */
-    public function store(StoreCommitteePostCommentRequest $request, Committee $committee, CommitteePost $committeePost)
+    public function store(StoreCommitteePostCommentRequest $request,
+                          Committee $committee, CommitteePost $committeePost)
     {
         //$this->authorize('create', Auth::user());
 
@@ -76,7 +79,8 @@ class CommitteePostCommentController extends Controller
 
         Session::flash('success', "You have added your comment to " . $committeePost->title);
 
-        return redirect()->route('public_committee_post_show', [$committee->slug, $committeePost->slug]);
+        return redirect()->route('public_committee_post_show',
+            [$committee->slug, $committeePost->slug]);
     }
 
 

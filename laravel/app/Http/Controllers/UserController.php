@@ -45,7 +45,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['user_info', 'currentExecutiveRoles'])->sortable()->orderBy('name')->paginate(20);
+        $users = User::with(['user_info', 'currentExecutiveRoles'])
+            ->sortable()
+            ->orderBy('name')
+            ->paginate(20);
         return view('listusers', ['data' => ['users' => $users]]);
     }
 

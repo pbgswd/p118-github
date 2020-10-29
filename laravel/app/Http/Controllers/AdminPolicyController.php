@@ -37,7 +37,10 @@ class AdminPolicyController extends Controller
     public function index()
     {
         $data = [];
-        $data['policies'] = Policy::withoutGlobalScopes()->sortable()->with('attachments')->orderBy('date', 'desc')
+        $data['policies'] = Policy::withoutGlobalScopes()
+            ->sortable()
+            ->with('attachments')
+            ->orderBy('date', 'desc')
             ->paginate(20);
         $data['count'] = Policy::withoutGlobalScopes()->count();
 
@@ -77,7 +80,8 @@ class AdminPolicyController extends Controller
             $result = $this->attachmentService->createAttachment($request, $policy);
 
             if ($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             }
             else
             {
@@ -123,7 +127,8 @@ class AdminPolicyController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_policy);
 
             if($result){
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             }
             else
             {

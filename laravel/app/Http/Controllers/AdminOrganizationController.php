@@ -26,7 +26,10 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('viewAny', Auth::user());
         $data = [];
-        $data['organizations'] = Organization::withoutGlobalScopes()->sortable()->orderBy('name')->paginate(10);
+        $data['organizations'] = Organization::withoutGlobalScopes()
+            ->sortable()
+            ->orderBy('name')
+            ->paginate(10);
 
         return view('admin.listorganizations', ['data' => $data]);
     }

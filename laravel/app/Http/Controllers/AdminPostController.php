@@ -37,7 +37,10 @@ class AdminPostController extends Controller
     {
         $this->authorize('viewAny', Auth::user());
 
-        $posts = Post::withoutGlobalScopes()->sortable()->with('tagged')->paginate(20);
+        $posts = Post::withoutGlobalScopes()
+            ->sortable()
+            ->with('tagged')
+            ->paginate(20);
 
         return view('admin.listposts', ['data' => ['posts' => $posts]]);
     }

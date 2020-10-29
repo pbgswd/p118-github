@@ -34,7 +34,10 @@ class AdminTopicController extends Controller
     {
         $this->authorize('viewAny', Auth::user());
 
-        $topics = Topic::withoutGlobalScopes()->sortable()->with('tagged', 'user')->paginate(20);
+        $topics = Topic::withoutGlobalScopes()
+            ->sortable()
+            ->with('tagged', 'user')
+            ->paginate(20);
 
         return view('admin.listtopics', ['data' => ['topics' => $topics]]);
     }
@@ -52,7 +55,8 @@ class AdminTopicController extends Controller
         return view('admin.topic', [
             'data' => [
                 'topic' => $topic,
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                    AccessLevelConstants::getConstants()),
                 'action' => 'Create']]);
     }
 
@@ -74,7 +78,8 @@ class AdminTopicController extends Controller
             $result = $this->attachmentService->createAttachment($request, $topic);
 
             if($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             }
             else
             {
@@ -100,7 +105,8 @@ class AdminTopicController extends Controller
 
         $data = [
             'topic' => $topic->load('user','attachments'),
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             ];
 
@@ -127,7 +133,8 @@ class AdminTopicController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_topic);
 
             if($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             }
             else
             {

@@ -18,7 +18,9 @@ class OrganizationController extends Controller
     public function list()
     {
         $data = [];
-        $data['organizations'] = Organization::sortable()->orderBy('name')->paginate(10);
+        $data['organizations'] = Organization::sortable()
+            ->orderBy('name')
+            ->paginate(10);
 
         return view('organizations', ['data' => ['data' => $data]]);
     }
@@ -34,7 +36,8 @@ class OrganizationController extends Controller
 
         $data = [];
 
-        $data['agreements'] = Auth::check() ? $organization->member_agreements : $organization->agreements;
+        $data['agreements'] = Auth::check() ? $organization->member_agreements :
+            $organization->agreements;
 
         $data['organization'] = $organization;
 

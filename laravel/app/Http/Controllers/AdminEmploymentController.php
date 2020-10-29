@@ -163,7 +163,8 @@ class AdminEmploymentController extends Controller
                $employment->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) . ' and any related files deleted.');
+        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) .
+            ' and any related files deleted.');
 
         return redirect()->route('employment_list');
     }

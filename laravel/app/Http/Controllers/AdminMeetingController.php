@@ -38,7 +38,11 @@ class AdminMeetingController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $data = [];
-        $data['meetings'] = Meeting::withoutGlobalScopes()->sortable()->with('user', 'attachments')->orderBy('date', 'desc')->paginate(20);
+        $data['meetings'] = Meeting::withoutGlobalScopes()
+            ->sortable()
+            ->with('user', 'attachments')
+            ->orderBy('date', 'desc')
+            ->paginate(20);
         $data['count'] = Meeting::withoutGlobalScopes()->count();
 
         return view('admin.listmeetings', ['data' => $data]);
@@ -85,7 +89,8 @@ class AdminMeetingController extends Controller
             $result = $this->attachmentService->createAttachment($request, $meeting);
 
             if ($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             } else {
                 Session::flash('error', "You have an upload problem");
             }
@@ -135,7 +140,8 @@ class AdminMeetingController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_meeting);
 
             if ($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             } else {
                 Session::flash('error', "You have an upload problem");
             }
@@ -161,7 +167,8 @@ class AdminMeetingController extends Controller
                 $meeting->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' Meeting', count($request->id)) . ' and any related files deleted.');
+        Session::flash('success', Str::plural(count($request->id) . ' Meeting', count($request->id)) .
+            ' and any related files deleted.');
 
         return redirect()->route('meetings_list');
     }

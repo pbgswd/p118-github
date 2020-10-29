@@ -1,15 +1,11 @@
-<?php
-$topics = $data['topics'];
-$pages = $data['pages'];
-$posts = $data['posts'];
-?>
 <div class="row border border-dark rounded-lg mt-3 pt-3" style="background: rgba(220,220,220,0.8);">
     <div class="col-md-3">
         <div class="col-12">
             <h4> Menu </h4>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="{{route('member', Auth::user()->id)}}" title="My Profile">&nbsp<i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
+            <a href="{{route('member', Auth::user()->id)}}" title="My Profile">&nbsp
+                <i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members</a>
@@ -44,13 +40,12 @@ $posts = $data['posts'];
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('policies_list_public')}}"><i class="fas fa-scroll"></i>  Policies</a>
         </div>
-
         <div class="col-12">
             <h4>
                 <a href="{{route('topics')}}">Topics</a>
             </h4>
         </div>
-        @foreach ($topics as $t)
+        @foreach ($data['topics'] as $t)
             <div class="col-12 border border-dark rounded-lg mb-2">
                 <h3>
                     <a href="{{ route('topic_show', $t->slug) }}">{{ $t->name }}</a>
@@ -58,7 +53,6 @@ $posts = $data['posts'];
             </div>
         @endforeach
     </div>
-
     <div class="col-md-9">
         <div class="col-12">
             <h3>Important Announcements</h3>
@@ -68,7 +62,7 @@ $posts = $data['posts'];
                 <a href="{{route('posts')}}">Posts</a>
             </h4>
         </div>
-        @foreach ($posts as $post)
+        @foreach ($data['posts'] as $post)
             <div class="col-12 border border-dark rounded-lg mb-2">
                 <h6>{{$post->updated_at->format('F j Y')}}</h6>
                 <h3>
@@ -79,13 +73,12 @@ $posts = $data['posts'];
                 {!! $post->description !!}
             </div>
         @endforeach
-
         <div class="col-12">
             <h4>
                 <a href="{{route('pages')}}">Pages</a>
             </h4>
         </div>
-        @foreach ($pages as $page)
+        @foreach ($data['pages'] as $page)
             <div class="col-12 border border-dark rounded-lg mb-2">
                 <h3>
                     <a href="{{ route('page_show', $page->slug) }}">

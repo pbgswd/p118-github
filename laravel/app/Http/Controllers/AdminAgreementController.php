@@ -40,8 +40,11 @@ class AdminAgreementController extends Controller
 
         $data = [];
 
-        $data['agreements'] = Agreement::withoutGlobalScopes()->sortable()->with('attachments')
-            ->orderBy('until', 'desc')->paginate(20);
+        $data['agreements'] = Agreement::withoutGlobalScopes()
+            ->sortable()
+            ->with('attachments')
+            ->orderBy('until', 'desc')
+            ->paginate(20);
         $data['count'] = Agreement::withoutGlobalScopes()->count();
 
         return view('admin.agreements_list', ['data' => $data]);
@@ -78,7 +81,8 @@ class AdminAgreementController extends Controller
             $result = $this->attachmentService->createAttachment($request, $agreement);
 
             if ($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             }
             else
             {
@@ -127,7 +131,8 @@ class AdminAgreementController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_agreement);
 
             if($result){
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             }
             else
             {

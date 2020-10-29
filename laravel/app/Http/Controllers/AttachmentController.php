@@ -160,7 +160,8 @@ class AttachmentController extends Controller
             Attachment::destroy($a->id);
         }
 
-        Session::flash('success', Str::plural(count($request->id) . ' Attachment', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural(count($request->id) .
+                ' Attachment', count($request->id)) . ' deleted.');
 
         return redirect()->route('attachments_list');
     }

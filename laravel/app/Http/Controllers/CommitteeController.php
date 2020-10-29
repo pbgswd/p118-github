@@ -24,7 +24,9 @@ class CommitteeController extends Controller
      */
     public function index()
     {
-        $c = Committee::with('creator', 'active_committee_members')->sortable()->paginate(10);
+        $c = Committee::with('creator', 'active_committee_members')
+            ->sortable()
+            ->paginate(10);
 
         /*
          * names and profile links to who are Chair, cochair, Secretary
@@ -46,15 +48,18 @@ class CommitteeController extends Controller
     {
         $committee->load('committee_members');
 
-        $data['isMember'] = $committee->committee_members->contains(function (User $member) {
+        $data['isMember'] = $committee->committee_members
+            ->contains(function (User $member) {
             return Auth::id() == $member->id;
         });
 
         if($data['isMember'] == true) {
-            $committee->committee_members()->updateExistingPivot(Auth::id(), ['role' => 'Member']);
+            $committee->committee_members()
+                ->updateExistingPivot(Auth::id(), ['role' => 'Member']);
         } else
         {
-            $committee->committee_members()->attach(Auth::id(), ['role' => 'Member']);
+            $committee->committee_members()
+                ->attach(Auth::id(), ['role' => 'Member']);
         }
 
         Session::flash('success', 'You have joined ' . $committee->name);
@@ -68,7 +73,8 @@ class CommitteeController extends Controller
      */
     public function leave(Committee $committee)
     {
-        $committee->committee_members()->updateExistingPivot(Auth::id(), ['role' => 'Past-Member']);
+        $committee->committee_members()
+            ->updateExistingPivot(Auth::id(), ['role' => 'Past-Member']);
 
         Session::flash('success', 'You have left' . $committee->name);
 
@@ -95,14 +101,19 @@ class CommitteeController extends Controller
 
         $rank = \array_flip(\array_values(Options::committee_executive_roles()));
 
-        $data['executives'] = $committee->active_committee_members->filter( static function (User $member) {
+        $data['executives'] = $committee
+            ->active_committee_members
+            ->filter( static function (User $member) {
             return \in_array($member->pivot->role, Options::committee_executive_roles());
         })->sort(function ($a, $b) use ($rank) {
             return $rank[$a->pivot->role] > $rank[$b->pivot->role];
         });
 
-        $data['isMember'] = $user->committee_memberships->filter(function (Committee $user_committee) use ($committee) {
-           return $user_committee->slug == $committee->slug && $user_committee->pivot->role != 'Past-Member';
+        $data['isMember'] = $user
+            ->committee_memberships
+            ->filter(function (Committee $user_committee) use ($committee) {
+           return $user_committee->slug == $committee->slug
+               && $user_committee->pivot->role != 'Past-Member';
         })->isNotEmpty();
 
         return view('committee', ['data' => $data]);
