@@ -83,7 +83,8 @@ class AdminCommitteePostCommentController extends Controller
      * @param CommitteePostComment $any_committee_post_comment
      * @return RedirectResponse
      */
-    public function update(UpdateCommitteePostCommentRequest $request, CommitteePost $committeePost, CommitteePostComment $any_committee_post_comment): RedirectResponse
+    public function update(UpdateCommitteePostCommentRequest $request, CommitteePost $committeePost,
+                           CommitteePostComment $any_committee_post_comment): RedirectResponse
     {
         // $this->authorize('update', Auth::user());
         $any_committee_post_comment->fill($request->input('comment'));
@@ -91,7 +92,8 @@ class AdminCommitteePostCommentController extends Controller
 
         Session::flash('success', "You have edited the post");
 
-        return redirect()->route('admin_committee_post_comment_edit', [$committeePost->slug, $any_committee_post_comment->id]);
+        return redirect()->route('admin_committee_post_comment_edit',
+            [$committeePost->slug, $any_committee_post_comment->id]);
     }
 
     /**
@@ -116,6 +118,7 @@ class AdminCommitteePostCommentController extends Controller
 
         Session::flash('success', 'Committee Post ' . Str::plural('Comment', count($request->id)) . ' deleted.');
 
-        return redirect()->route('admin_committee_post_edit', [$committee_post->committee->slug, $committee_post->slug]);
+        return redirect()->route('admin_committee_post_edit',
+            [$committee_post->committee->slug, $committee_post->slug]);
     }
 }

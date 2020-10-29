@@ -25,7 +25,10 @@ class AdminVenueController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $data = [];
-        $data['venues'] = Venue::withoutGlobalScopes()->sortable()->orderBy('name')->paginate(10);
+        $data['venues'] = Venue::withoutGlobalScopes()
+            ->sortable()
+            ->orderBy('name')
+            ->paginate(10);
 
         return view('admin.listvenues', ['data' => ['data' => $data]]);
     }
@@ -138,7 +141,8 @@ class AdminVenueController extends Controller
                 $venue->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' Venue', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural(count($request->id) .
+                ' Venue', count($request->id)) . ' deleted.');
 
         return redirect()->route('venues_list');
     }

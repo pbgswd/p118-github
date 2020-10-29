@@ -28,7 +28,9 @@ class InviteUserController extends Controller
      */
     public function index()
     {
-        $invitations = InviteUser::with('user')->sortable()->paginate(20);
+        $invitations = InviteUser::with('user')
+            ->sortable()
+            ->paginate(20);
         $invitations->each(function ($item) {
             $item->since = $item->updated_at->diffForHumans(Carbon::now());
             $item->remaining = 48 - $item->updated_at->diffInHours(Carbon::now());
@@ -50,7 +52,12 @@ class InviteUserController extends Controller
         $invited = new InviteUser;
         $invited->role = ['member' => 'member'];
 
-        return view('admin.invite_user', ['data' => ['invite' => $invited, 'roles' => Role::get(), 'action' => 'Invite']]);
+        return view('admin.invite_user', ['data' =>
+            ['invite' => $invited,
+                'roles' => Role::get(),
+                'action' => 'Invite'
+            ]
+        ]);
     }
 
 
@@ -66,7 +73,8 @@ class InviteUserController extends Controller
 
         $invitation->save();
 
-        Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]], function ($m) use ($invitation) {
+        Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]],
+            function ($m) use ($invitation) {
             $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME ') . ' Website Signup');
             $m->to($invitation['email'], $invitation['name'])
                 ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
@@ -98,12 +106,14 @@ class InviteUserController extends Controller
         $allowedInvitationTime = 60 * 48; // 2 days
         $interval = $now->diffInMinutes($inviteUser->updated_at);
         if ($interval > $allowedInvitationTime) {
-            Session::flash('error', "The invitation has expired as it is older than 48 hours. Please contact the site to get a new invitation.");
+            Session::flash('error', "The invitation has expired as it is older than 48 hours.
+ * Please contact the site to get a new invitation.");
             return redirect()->route('hello');
         }
  ***/
         if ( null !== User::where('email', $inviteUser->email)->first()) {
-            Session::flash('error', "The invitation is no longer valid because you have been registered. Login to continue.");
+            Session::flash('error',
+                "The invitation is no longer valid because you have been registered. Login to continue.");
             return redirect()->route('hello');
         }
 
@@ -179,7 +189,8 @@ class InviteUserController extends Controller
             InviteUser::destroy($id);
         }
 
-        Session::flash('success',  Str::plural(count($request->id) . ' Invitation', count($request->id) . ' deleted.'));
+        Session::flash('success',  Str::plural(count($request->id) . ' Invitation',
+            count($request->id) . ' deleted.'));
         return redirect()->route('list_invited_users');
     }
 }

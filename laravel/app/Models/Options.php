@@ -29,7 +29,7 @@ class Options
 
     public static function membership_levels()
     {
-        $membership = ['Non-member', 'Permittee', 'Member', 'Office', 'Executive', 'Suspended', 'Retired'];
+        $membership = ['Member', 'Office', 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
         return array_combine($membership, $membership);
     }
 

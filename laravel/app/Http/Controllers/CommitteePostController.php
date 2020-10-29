@@ -78,7 +78,8 @@ class CommitteePostController extends Controller
      * @param CommitteePost $committeePost
      * @return Application|Factory|View
      */
-    public function update(UpdateCommitteePostRequest $request, Committee $committee, CommitteePost $committeePost)
+    public function update(UpdateCommitteePostRequest $request,
+                           Committee $committee, CommitteePost $committeePost)
     {
         $committeePost->fill($request['post']);
         $committeePost->save();
@@ -99,7 +100,8 @@ class CommitteePostController extends Controller
      * @return Response
      * public
      */
-    public function show(Committee $committee, CommitteePost $committeePost, CommitteePostComment $committeePostComments)
+    public function show(Committee $committee, CommitteePost $committeePost,
+                         CommitteePostComment $committeePostComments)
     {
         // $this->authorize('create', Auth::user());
 
@@ -109,7 +111,8 @@ class CommitteePostController extends Controller
         /*
         if($data['committeepost']->allow_comments == 1) {
             $data['committeepost']->load('post_comments');
-            $data['committeepost']->post_comments = $data['committeepost']->post_comments->sortByDesc('created_at');
+            $data['committeepost']->post_comments = $data['committeepost']
+        ->post_comments->sortByDesc('created_at');
         }
         */
 
@@ -124,7 +127,8 @@ class CommitteePostController extends Controller
      * @param Committee $committee
      * @return RedirectResponse
      */
-    public function destroy(DestroyCommitteePostRequest $request, Committee $committee): RedirectResponse
+    public function destroy(DestroyCommitteePostRequest $request,
+                            Committee $committee): RedirectResponse
     {
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
@@ -132,7 +136,8 @@ class CommitteePostController extends Controller
                 $post->delete();
             });
 
-        Session::flash('success', 'Committee ' . Str::plural('post', count($request->id)) . ' deleted.');
+        Session::flash('success', 'Committee ' .
+            Str::plural('post', count($request->id)) . ' deleted.');
 
         return redirect()->route('committee', $committee->slug);
     }

@@ -160,7 +160,8 @@ class AdminUserController extends Controller
                     'committee_memberships'
                     );
 
-        $currentUser = Auth::user(); // the logged in user, perms to edit? // dd(Auth::user()->permissions);
+        $currentUser = Auth::user();
+        // the logged in user, perms to edit? // dd(Auth::user()->permissions);
 
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();

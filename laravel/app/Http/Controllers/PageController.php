@@ -22,7 +22,9 @@ class PageController extends Controller
         }
         else {
             $pages = Page::sortable()
-                ->where('access_level', '=', AccessLevelConstants::PUBLIC)->with('tagged')->paginate(10);
+                ->where('access_level', '=', AccessLevelConstants::PUBLIC)
+                ->with('tagged')
+                ->paginate(10);
         }
 
         return view('pages', ['data' => ['pages' => $pages]]);

@@ -16,7 +16,10 @@ class PolicyController extends Controller
     {
         //$this->authorize('viewAny', Auth::user());
         $data = [];
-        $data['policies'] = Policy::sortable()->with('attachments')->orderBy('date', 'desc')->paginate(20);
+        $data['policies'] = Policy::sortable()
+            ->with('attachments')
+            ->orderBy('date', 'desc')
+            ->paginate(20);
         $data['count'] = Policy::count();
 
         return view('policies_list', ['data' => ['data' => $data]]);

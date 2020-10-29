@@ -10,7 +10,7 @@
             </div>
             <div class="col-6 border border-dark rounded-lg">
                 <h2>
-                  Hi {{Auth::user()->name}}
+                  Hi {{Auth::user()->name}} ********
                 </h2>
                 <h3>
                     <a href="{{route('member', Auth::user()->id)}}" title="My Profile">

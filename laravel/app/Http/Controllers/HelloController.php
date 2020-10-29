@@ -27,7 +27,8 @@ class HelloController extends Controller
 
         $data['birthday'] = '';
         if ($today->isBirthday($data['foundingDate'])) {
-            $data['birthday'] = "Happy Birthday IATSE Local 118! You are " . $data['years'] . " years young today!";
+            $data['birthday'] = "Happy Birthday IATSE Local 118! You are " .
+                $data['years'] . " years young today!";
         }
 
         if (Auth::check()) {
@@ -39,6 +40,8 @@ class HelloController extends Controller
         }
 
 //todo datetime - add time zone management
+
+
 
         return view('hello', ['data' => $data]);
     }

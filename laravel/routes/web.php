@@ -20,9 +20,7 @@ Route::group(['middleware' => 'web'], function () {
     Auth::routes(['verify' => true, 'register' => false, 'reset' => true, 'login' => true]);
     // turn off register route for production, web.
 
-
-
-    Route::get('/', 'HelloController@index')->name('hello');
+    Route::get('/', 'HelloController@index')->name('hello');// front page
 
     Route::get('contact', 'ContactController@show')->name('contact');
     Route::post('contact', 'ContactController@submit');
@@ -64,13 +62,14 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' =>  ['web', 'auth',] ], function () {
 
-    //Route::get('/site', 'SiteController@index')->name('site');
+    Route::get('/site', 'SiteController@index')->name('site');
 //todo a controller? use HomeController?
+    /**
     Route::get('/site', function () {
         return view('site');
     });
-
-    Route::get('/home', 'HomeController@index')->name('home');
+**/
+    Route::get('/home', 'HomeController@index')->name('home');// redirects to home page
 
     Route::get('jobs', 'EmploymentController@index')->name('jobs_list');
     Route::get('job/{employment}', 'EmploymentController@show')->name('job_view');
@@ -170,9 +169,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin']], functi
     //  ->name('admin_executive_destroy');
 
     Route::get('executive_members', 'AdminExecutiveController@index')->name('admin_executives');
-
     Route::delete('executives/delete', 'AdminExecutiveMembershipController@destroy')->name('admin_executive_destroy');
-
 
     Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');
     Route::post('/invite_new_user', 'InviteUserController@store');

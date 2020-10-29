@@ -98,7 +98,8 @@ class AdminPageController extends Controller
             $result = $this->attachmentService->createAttachment($request, $page);
 
             if($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             }
             else
             {
@@ -166,7 +167,8 @@ class AdminPageController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_page);
             if($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
+                Session::flash('success', "You uploaded " .
+                    count($request->file('attachments')) . " files");
             }
             else
             {
