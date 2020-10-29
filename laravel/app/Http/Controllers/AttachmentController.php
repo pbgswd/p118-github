@@ -27,7 +27,6 @@ class AttachmentController extends Controller
         $this->attachmentService = $attachmentService;
     }
 
-
     public function download(string $folder, Attachment $attachment)
     {
         return $this->attachmentService->downloadAttachment($attachment, $folder);
@@ -62,8 +61,9 @@ class AttachmentController extends Controller
         return view('admin.attachment', [
             'data' => [
             'attachment' => $attachment,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),AccessLevelConstants::getConstants()),
-            'action' => 'Add',
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
+                'action' => 'Add',
             ]
         ]);
     }
@@ -142,7 +142,6 @@ class AttachmentController extends Controller
         Session::flash('success', "You have updated " . $attachment->file_name);
 
         return redirect()->route('admin_attachment_edit', $attachment->id);
-
     }
 
     /**
