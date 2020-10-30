@@ -57,6 +57,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        //todo gate stuff
     }
 }

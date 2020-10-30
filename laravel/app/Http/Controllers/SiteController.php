@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Site;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SiteController extends Controller
 {
@@ -14,6 +16,9 @@ class SiteController extends Controller
      */
     public function index()
     {
+        $user = Auth::user(); //->with('roles');
+        //$user->roles');
+        //dd($user->roles);
         //todo anything for site
         return view('site');
     }

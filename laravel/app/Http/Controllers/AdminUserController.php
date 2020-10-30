@@ -167,7 +167,7 @@ class AdminUserController extends Controller
         $roles = Role::get();
         $user_roles = $user->getRoleNames()->toArray();
         $user_roles = array_combine($user_roles, $user_roles);
-
+        
         $data = [
             'user' => $user,
             'executive_roles' => Executive::all(),
