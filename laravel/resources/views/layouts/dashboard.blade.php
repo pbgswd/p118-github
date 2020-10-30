@@ -45,6 +45,7 @@
         <link href="{{ mix('/css/dashboard.css') }}" rel="stylesheet">
     </head>
     <body>
+    <a id="top"></a>
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
             <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ route('admin') }}">{{ config('app.name') }}</a>
             <span class="pl-lg-1 font-weight-bolder" style="color: #999999;">{{ Auth::user()->name }}</span>
@@ -233,8 +234,16 @@
                     </div>
                     @include('flash-messages')
                     @yield('content')
+                </div>
+                <div class="container mb-lg-5">
+                    <div class="col-12 text-right">
+                        <a href="#top" title="Top of page">
+                            <i class="fas fa-angle-up"></i>
+                            Top of page
+                        </a>
+                    </div>
+                </div>
                 </main>
-            </div>
         </div>
     </body>
 </html>
