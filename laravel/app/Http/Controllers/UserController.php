@@ -13,7 +13,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -60,7 +59,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-       $user->load('committee_memberships', 'phone_number',
+        $this->authorize('view', $user);
+
+        $user->load('committee_memberships', 'phone_number',
                     'user_info', 'address', 'membership',
                     'allExecutiveRoles');
 
@@ -77,7 +78,6 @@ class UserController extends Controller
         return view('member', ['data' => $data]);
     }
 
-
     /**
      * @param User $user
      * @return Application|Factory|View
@@ -85,7 +85,10 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $user->load('phone_number', 'user_info', 'address', 'membership');
+        $this->authorize('update', $user);
+
+        $user->load('phone_number', 'user_info', 'address',
+            'membership', 'committee_memberships', 'allExecutiveRoles');
 
         $currentUser = Auth::user();
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
@@ -111,7 +114,6 @@ class UserController extends Controller
      * @param UpdateMember $userRequest
      * @param User $user
      * @return RedirectResponse
-     * @throws AuthorizationException
      */
     public function update(UpdateMember $userRequest, User $user)
     {

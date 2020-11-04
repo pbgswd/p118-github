@@ -5,17 +5,58 @@ $user_roles = $data['user_roles'];
 ?>
 @extends('layouts.jumbo')
 @section('content')
-<div class="jumbotron">
 <div class="container border border-dark rounded-lg  p-5" style="background: rgba(220,220,220,0.8);">
-    <h1>
-        <a href="{{route('members')}}">
-            <i class="far fa-arrow-alt-circle-left"></i>
-            Members /</a>  <a href="{{route('member', Auth::user()->id)}}">{{$user->name}}</a>
-    </h1>
+    <div class="row">
+        <h1>
+            <a href="{{route('members')}}">
+                <i class="far fa-arrow-alt-circle-left"></i>
+                Members /
+            </a>
+            <a href="{{route('member', $user->id)}}">
+                {{$user->name}}
+            </a>
+        </h1>
+    </div>
+    <div class="row p-4">
+        @if( $data['user']->allExecutiveRoles->count() > 0 )
+            <div class="col-5 border border-dark rounded-lg mr-1 p-lg-2">
+                <h4>
+                    Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}
+                </h4>
+                @foreach($data['user']->allExecutiveRoles as $exec)
+                    <h5>{{$exec->title}}
+                        {{ \Carbon\Carbon::parse($exec->pivot->end_date)->isPast() ? '':'(Currently)'}}
+                        <a href="mailto:{{$exec->email}}" title="Email {{$data['user']->name}} {{$exec->title}}
+                            at {{$exec->email}}">
+                            <i class="fas fa-envelope"></i>
+                        </a> <br />
+                        {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('M j Y')}} -
+                        {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('M j Y')}}
+                    </h5>
+                    <br />
+                @endforeach
+            </div>
+            <div class="col-1"></div>
+        @endif
+        @if($data['user']->committee_memberships->count() > 0)
+            <div class="col-5 border border-dark rounded-lg p-lg-2">
+                <h4>Membership in committees</h4>
+                @foreach($data['user']->committee_memberships as $m)
+                    @if($m->pivot->role != 'Past-Member')
+                        <h5>
+                            <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">
+                                {{$m->name}} -  {{$m->pivot->role}}
+                            </a>
+                        </h5>
+                    @endif
+                @endforeach
+            </div>
+        @endif
+    </div>
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row border border-primary rounded-lg border-3 p-4 mt-5">
+        <div class="row border border-primary rounded-lg border-3 p-4">
             <div class="col-lg-12">
                 <h3>Primary Contact Information</h3>
             </div>
@@ -85,7 +126,7 @@ $user_roles = $data['user_roles'];
                     <h4>  <i class="far fa-images"></i>
                         Image preview - Currently: {{ $user->user_info->file_name }}
                     </h4>
-                    <img src="{{ asset('storage/users/'. $user->user_info->image) }}" style="margin: 1em;"/>
+                    <img src="{{ asset('storage/users/'. $user->user_info->image) }}" class="m-1"/>
                     <input type="hidden" name="user_info[image]" value="{{$user->user_info->image}}" />
                 </div>
                 <div class="col-6 mt-2">
@@ -207,5 +248,4 @@ $user_roles = $data['user_roles'];
         </a>
     </h3>
 </div>
-<div class="row mt-5"></div>
 @endsection
