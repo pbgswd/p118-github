@@ -17,7 +17,7 @@ class UserPolicy
      * @param $user
      * @param $ability
      * @return bool
-     */
+*/
     public function before($user, $ability)
     {
         if ($user->can('edit users')) {
@@ -48,6 +48,8 @@ class UserPolicy
      */
     public function view(User $user, User $userRequest)
     {
+        return ($userRequest->user_info->show_profile ?? false) === true;
+
         return $user->id === $userRequest->id;
     }
 

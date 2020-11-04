@@ -65,6 +65,7 @@ class UserController extends Controller
                     'user_info', 'address', 'membership',
                     'allExecutiveRoles');
 
+        //todo do I need all this role shit?
         $roles = Role::get();
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
