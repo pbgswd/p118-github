@@ -16,7 +16,8 @@ $all_agreements = $data['all_agreements'];
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table paste code help wordcount'
             ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify ' +
+            toolbar: 'undo redo | formatselect | bold italic backcolor | ' +
+                'alignleft aligncenter alignright alignjustify ' +
                 '| bullist numlist outdent indent | removeformat | help',
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
@@ -25,7 +26,11 @@ $all_agreements = $data['all_agreements'];
         });
     </script>
 <div class="container">
-    <h3><a href="{{ route('venues_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of venues</a>  </h3>
+    <h3><a href="{{ route('venues_list') }}">
+            <i class="far fa-arrow-alt-circle-left"></i>
+            List of venues
+        </a>
+    </h3>
     <form method="post" name="venue" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
@@ -115,25 +120,27 @@ $all_agreements = $data['all_agreements'];
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($venue->member_agreements as $va)
+                        @foreach($venue->member_agreements as $va)
+                            <tr>
+                                <th scope="row">
+                                    <input type="checkbox" name="id[]" value="{{$va->id}}" />
+                                </th>
+                                <td>
+                                    <a title="{{$va->title}}" href="{{ route('agreement_edit', $va->id) }}">
+                                        {{ $va->title }}
+                                    </a>
+                                    @if(\Carbon\Carbon::parse($va->until)->isPast())
+                                        <i>(Not current)</i>
+                                    @endif
+                                </td>
+                                <td>{{$va->from->format('F j Y')}}</td>
+                                <td>{{$va->until->format('F j Y')}}</td>
+                            </tr>
+                        @endforeach
                         <tr>
-                            <th scope="row">
-                                <input type="checkbox" name="id[]" value="{{$va->id}}" />
-                            </th>
-                            <td>
-                                <a title="{{$va->title}}" href="{{ route('agreement_edit', $va->id) }}">
-                                    {{ $va->title }}
-                                </a>
-                                @if(\Carbon\Carbon::parse($va->until)->isPast())
-                                    <i>(Not current)</i>
-                                @endif
-                            </td>
-                            <td>{{$va->from->format('F j Y')}}</td>
-                            <td>{{$va->until->format('F j Y')}}</td>
+                            <td> <i class="far fa-trash-alt fa"></i></td>
+                            <td colspan="3">Check to remove from Venue</td>
                         </tr>
-                    @endforeach
-                    <td> <i class="far fa-trash-alt fa"></i></td>
-                    <td colspan="3">Check to remove from Venue</td>
                     </tbody>
                 </table>
             </div>
@@ -150,7 +157,6 @@ $all_agreements = $data['all_agreements'];
                 </div>
             </div>
         </div>
-
         <div class="row mt-lg-3">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>

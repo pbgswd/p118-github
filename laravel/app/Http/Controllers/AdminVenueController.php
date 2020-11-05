@@ -24,13 +24,12 @@ class AdminVenueController extends Controller
     {
         $this->authorize('viewAny', Auth::user());
 
-        $data = [];
         $data['venues'] = Venue::withoutGlobalScopes()
             ->sortable()
             ->orderBy('name')
             ->paginate(10);
 
-        return view('admin.listvenues', ['data' => ['data' => $data]]);
+        return view('admin.listvenues', ['data' => $data]);
     }
 
     /**
