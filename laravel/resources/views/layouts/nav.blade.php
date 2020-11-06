@@ -3,13 +3,13 @@
         <img src="/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png"
              alt="{{config('app.name')}}"
              title="{{config('app.name')}}"
-             class="pr-1;" /> ***
+             class="mr-1;" />
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">Menus
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <div class="collapse navbar-collapse ml-2" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
@@ -129,6 +129,13 @@
                         </a>
                     </li>
                 @endrole
+                @can('edit articles')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin')}}" title="Admin">
+                        <i class="fas fa fa-feather fa-w-16"></i>
+                    </a>
+                </li>
+                @endcan
             @endguest
         </ul>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

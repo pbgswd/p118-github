@@ -84,6 +84,8 @@
                                     Admin Dashboard <span class="sr-only">(current)</span>
                                 </a>
                             </li>
+                            @can(['create articles', 'edit articles',
+                                    'delete articles', 'publish articles', 'unpublish articles'])
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     <span data-feather="file"></span>
@@ -120,6 +122,8 @@
                                     Policies
                                 </a>
                             </li>
+                            @endcan
+                            @can(['create users', 'edit users', 'delete users'])
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     <span data-feather="file"></span>
@@ -178,6 +182,10 @@
                                     Posts
                                 </a>
                             </li>
+                            @endcan
+
+                            @can(['create articles', 'edit articles',
+                                     'delete articles', 'publish articles', 'unpublish articles'])
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('attachments_list') }}">
                                     <span data-feather="file"></span>
@@ -208,12 +216,15 @@
                                     Employment
                                 </a>
                             </li>
+                            @endcan
+                            @role('super-admin')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('blank') }}">
                                     <span data-feather="file"></span>
                                     Blank Page
                                 </a>
                             </li>
+                            @endrole
                         </ul>
                         <hr />
                     </div>

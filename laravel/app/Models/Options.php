@@ -35,19 +35,19 @@ class Options
 
     public static function committee_roles()
     {
-        $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Past-Member'];
+        $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Past-Member',];
         return array_combine($membership, $membership);
     }
 
     public static function committee_executive_roles()
     {
-        $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary'];
+        $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary',];
         return array_combine($committee_executive_roles, $committee_executive_roles);
     }
 
     public static function phone_label()
     {
-        $phone_labels = ['cel', 'home', 'work', 'other'];
+        $phone_labels = ['cel', 'home', 'work', 'other',];
         return array_combine($phone_labels, $phone_labels);
     }
 

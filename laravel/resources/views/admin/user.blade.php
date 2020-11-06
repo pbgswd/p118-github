@@ -1,35 +1,38 @@
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i> ' . $data["action"]
             . ' Member ' . ($data["action"] == "Edit" ? $data['user']->name : '') ])
 @section('content')
-    <script>
-        tinymce.init({
-            selector: 'textarea#admin_notes, textarea#about',
-            height: 200,
-            width:800,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor textcolor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify ' +
-                '| bullist numlist outdent indent | removeformat | help',
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tiny.cloud/css/codepen.min.css'
-            ]
-        });
-    </script>
+<script>
+    tinymce.init({
+        selector: 'textarea#admin_notes, textarea#about',
+        height: 200,
+        width:800,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor textcolor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify ' +
+            '| bullist numlist outdent indent | removeformat | help',
+        content_css: [
+            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+            '//www.tiny.cloud/css/codepen.min.css'
+        ]
+    });
+</script>
 <div class="container mb-lg-5">
     <div class="row">
         <div class="col-4">
             <h4>
-                <a href="{{ route('users_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of members</a>
+                <a href="{{ route('users_list') }}">
+                    <i class="far fa-arrow-alt-circle-left"></i> List of members
+                </a>
             </h4>
         </div>
         <div class="col-4">
             <h4>
-                <a title="public profile for {{ $data['user']->name }}" target="_blank" href="{{ route('member', $data['user']->id) }}">
+                <a title="public profile for {{ $data['user']->name }}" target="_blank"
+                   href="{{ route('member', $data['user']->id) }}">
                     <i class="far fa-user-circle"></i> View public profile
                 </a>
             </h4>
@@ -261,8 +264,19 @@
 
         <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
             <div class="col-md-12">
-                <h4>Membership type </h4>
+                <h4>Membership type & details</h4>
                 <p>Member, office, or possibly other types in the future</p>
+                @foreach ($data['membership'] as $k => $v)
+                    {{$k}} => {{$v}} <br />
+                @endforeach
+
+
+                Seniority: {{$data['user']->membership->seniority_number ?? ''}} <br />
+                Since: {{$data['user']->membership->membership_date ?? ''}}<br /><br />
+                Admin notes: <br />
+                <textarea name="membership[admin_notes]" id="membership_admin_notes" class="form-control">
+                    {{ old('membership.admin_notes', $data['user']->membership->admin_notes ?? '') }}
+                </textarea>
             </div>
         </div>
 
@@ -293,7 +307,7 @@
                         @forelse ($role->permissions as $p)
                             <i> {{ $p->name }}, </i> &nbsp;
                         @empty
-                            No advanced permissions
+                            <i>No advanced permissions</i>
                         @endforelse
                     </div>
                 </div>

@@ -5,7 +5,7 @@
            <span class="badge badge-primary badge-pill">
                {!! $data['users']->total()  !!}
            </span>
-            Members. | <a href="{{ route('invite_new_user') }}">Invite new member
+            Members. | <a href="{{ route('invite-new-user') }}">Invite new member
                 <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
