@@ -6,6 +6,7 @@ use App\Models\Agreement;
 use App\Models\Attachment;
 use App\Models\Committee;
 use App\Models\Employment;
+use App\Models\InviteUser;
 use App\Models\Meeting;
 use App\Models\Organization;
 use App\Models\Page;
@@ -17,6 +18,7 @@ use App\Policies\AgreementPolicy;
 use App\Policies\AttachmentPolicy;
 use App\Policies\CommitteePolicy;
 use App\Policies\EmploymentPolicy;
+use App\Policies\InviteUserPolicy;
 use App\Policies\MeetingPolicy;
 use App\Policies\OrganizationPolicy;
 use App\Policies\PagePolicy;
@@ -25,7 +27,6 @@ use App\Policies\TopicPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\VenuePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -35,9 +36,11 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        InviteUser::class => InviteUserPolicy::class,
+       User::class => UserPolicy::class,
+
         Post::class => PostPolicy::class,
         Page::class => PagePolicy::class,
-        User::class => UserPolicy::class,
         Topic::class => TopicPolicy::class,
         Venue::class => VenuePolicy::class,
         Committee::class => CommitteePolicy::class,
@@ -46,6 +49,7 @@ class AuthServiceProvider extends ServiceProvider
         Agreement::class => AgreementPolicy::class,
         Attachment::class => AttachmentPolicy::class,
         Organization::class => OrganizationPolicy::class,
+
     ];
 
     /**

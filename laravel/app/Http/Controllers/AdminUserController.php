@@ -9,16 +9,15 @@ use App\Models\Address;
 use App\Models\Executive;
 use App\Models\ExecutiveMembership;
 use App\Models\Membership;
+use App\Models\Options;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Services\EmailMemberUpdateService;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -52,7 +51,6 @@ class AdminUserController extends Controller
         $this->authorize('viewAny', Auth::user());
 
         $users = User::with(['roles', 'currentExecutiveRoles'])->sortable()->paginate(20);
-        //$users->load('currentExecutiveRoles');
 
         return view('admin.listusers', ['data' => ['users' => $users]]);
     }
@@ -105,10 +103,10 @@ class AdminUserController extends Controller
      */
     public function store(StoreUser $request)
     {
+        $this->authorize('create', Auth::user());
         Session::flash('warning', 'Store method blocked off. Contact admin for support.');
         return redirect()->route('users_list');
         exit();
-        $this->authorize('create', Auth::user());
 
 //todo is password here just encrypting the word 'secret'?
 //todo create default password for new user based on name and other data
@@ -157,22 +155,24 @@ class AdminUserController extends Controller
                     'user_info',
                     'address',
                     'allExecutiveRoles',
-                    'committee_memberships'
+                    'committee_memberships',
+                    'membership'
                     );
 
         $regions = $this->getFormOptions(['countries', 'statesprovs']);
-        $roles = Role::get();
+
         $user_roles = $user->getRoleNames()->toArray();
         $user_roles = array_combine($user_roles, $user_roles);
 
         $data = [
             'user' => $user,
+            'membership' => Options::membership_levels(),
             'executive_roles' => Executive::all(),
             'user_roles' => $user_roles,
-            'roles' => $roles,
-            'action' => 'Edit',
+            'roles' => Role::get(),
             'countries' => $regions['countries'],
             'provinces' => $regions['statesprovs']['Provinces'],
+            'action' => 'Edit',
         ];
 
         return view('admin.user', ['data' => $data]);
@@ -183,40 +183,40 @@ class AdminUserController extends Controller
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(UpdateUser $userRequest, User $user)
+    public function update(UpdateUser $request, User $user)
     {
-        $this->authorize('admin_update', $user);
+        $this->authorize('admin_update', Auth::user());
 
         $user->load('phone_number', 'address');
 
         $message = [];
         $original_name = $user->name;
 
-        if($userRequest->user['name'] != $user->name) {
-            $message['Name'] = $userRequest->user['name'];
+        if($request->user['name'] != $user->name) {
+            $message['Name'] = $request->user['name'];
         }
 
-        if($userRequest->user['email'] != $user->email) {
-            $message['Email'] = $userRequest->user['email'];
+        if($request->user['email'] != $user->email) {
+            $message['Email'] = $request->user['email'];
         }
 
-        $user->fill($userRequest['user']);
+        $user->fill($request['user']);
         $user->save();
 
         if ($user->phone_number instanceof PhoneNumber) {
-            $user->phone_number->fill($userRequest['user_phone']);
+            $user->phone_number->fill($request['user_phone']);
             $user->phone_number->save();
-            if($userRequest->user_phone['phone_number'] != $user->phone_number->phone_number ) {
-                $message['Phone'] = $userRequest->user_phone['phone_number'];
+            if($request->user_phone['phone_number'] != $user->phone_number->phone_number ) {
+                $message['Phone'] = $request->user_phone['phone_number'];
             }
         } else {
-            $phone = new PhoneNumber($userRequest['user_phone']);
+            $phone = new PhoneNumber($request['user_phone']);
             $user->phone_number()->save($phone);
-            $message['Phone'] = $userRequest->user_phone['phone_number'];
+            $message['Phone'] = $request->user_phone['phone_number'];
         }
 
         if ($user->user_info instanceof UserInfo) {
-            $user_info = $userRequest['user_info'];
+            $user_info = $request['user_info'];
 
             if (isset($user_info['delete_image'])) {
                 Storage::disk('users')->delete($user_info['image']);
@@ -225,18 +225,18 @@ class AdminUserController extends Controller
                 $user_info['image'] = null;
                 $user_info['file_name'] = null;
             } else {
-                if (!is_null($userRequest->file('image'))) {
-                    $user_info['image'] = $this->uploadImage($userRequest);
-                    $user_info['file_name'] = $userRequest->image->getClientOriginalName();
+                if (!is_null($request->file('image'))) {
+                    $user_info['image'] = $this->uploadImage($request);
+                    $user_info['file_name'] = $request->image->getClientOriginalName();
                 }
             }
             $user->user_info->fill($user_info);
             $user->user_info->save();
         } else {
-            $user_info = new UserInfo($userRequest->input('user_info'));
+            $user_info = new UserInfo($request->input('user_info'));
 
-            if(null !== $userRequest->file) {
-                $user_info->image = $this->uploadImage($userRequest);
+            if(null !== $request->file) {
+                $user_info->image = $this->uploadImage($request);
             }
             $user->user_info()->save($user_info);
         }
@@ -247,37 +247,41 @@ class AdminUserController extends Controller
 
             foreach($addr as $a)
             {
-                if($userRequest->user_address[$a] != $user->address->$a) {
-                    $message[ucfirst($a)] = $userRequest->user_address[$a];
+                if($request->user_address[$a] != $user->address->$a) {
+                    $message[ucfirst($a)] = $request->user_address[$a];
                 }
             }
 
-            $user->address->fill($userRequest['user_address']);
+            $user->address->fill($request['user_address']);
             $user->address->save();
 
         } else {
-            $address = new Address($userRequest['user_address']);
+            $address = new Address($request['user_address']);
 
             foreach($addr as $a)
             {
-               $message[ucfirst($a)] = $userRequest->user_address[$a];
+               $message[ucfirst($a)] = $request->user_address[$a];
             }
 
             $user->address()->save($address);
         }
 
-        $user->syncRoles($userRequest['user_role']);
+        //todo sync two models roles?  crazy?
+        $user->syncRoles($request['user_role']);
 
-/*
+            $user->membership->syncRoles('office');
+
+//todo review this new chunk -- needs form elements crud
+
+/**
         if ($user->membership instanceof Membership) {
-            $user->membership->fill($userRequest['user_membership']);
+            $user->membership->fill($request['user_membership']);
             $user->membership->save();
         } else {
-            $membership = new Membership($userRequest['user_membership']);
+            $membership = new Membership($request['user_membership']);
             $user->membership()->save($membership);
         }
-*/
-
+**/
         if(!empty($message)) {
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }

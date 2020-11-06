@@ -40,6 +40,9 @@ class User extends Authenticatable implements HasAttachment, Searchable
 
     protected $guard_name = 'web';
 
+    /**
+     * @var string[]
+     */
     protected $policies = [
         User::class => UserPolicy::class,
     ];

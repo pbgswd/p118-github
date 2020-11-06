@@ -8,7 +8,6 @@ use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Services\EmailMemberUpdateService;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
@@ -44,6 +43,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Auth::user());
+
         $users = User::with(['user_info', 'currentExecutiveRoles'])
             ->sortable()
             ->orderBy('name')
@@ -60,20 +61,17 @@ class UserController extends Controller
     public function show(User $user)
     {
         $this->authorize('view', $user);
-
+dd($user);
         $user->load('committee_memberships', 'phone_number',
                     'user_info', 'address', 'membership',
                     'allExecutiveRoles');
 
-        //todo do I need all this role shit?
-        $roles = Role::get();
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
 
         $data = [
             'user' => $user,
             'user_roles' => $member_roles,
-            'roles' => $roles,
         ];
 
         return view('member', ['data' => $data]);

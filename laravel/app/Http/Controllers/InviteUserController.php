@@ -8,11 +8,9 @@ use App\Http\Requests\InviteUser\StoreInviteUserRequest;
 use App\Models\InviteUser;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -28,6 +26,8 @@ class InviteUserController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', InviteUser::class);
+
         $invitations = InviteUser::with('user')
             ->sortable()
             ->paginate(20);
@@ -47,8 +47,8 @@ class InviteUserController extends Controller
      */
     public function create()
     {
-        //invite new user
-        //todo create invite user policy
+        $this->authorize('create', InviteUser::class);
+
         $invited = new InviteUser;
         $invited->role = ['member' => 'member'];
 
@@ -67,6 +67,8 @@ class InviteUserController extends Controller
      */
     public function store(StoreInviteUserRequest  $request)
     {
+        $this->authorize('create', InviteUser::class);
+
         $invitation = new InviteUser($request->invite);
 
         $invitation->password = str_replace ('/', '', hash::make(Str::random(8)));
@@ -95,10 +97,7 @@ class InviteUserController extends Controller
      */
     public function show(InviteUser $inviteUser, $password)
     {
-        if($inviteUser->password != $password) {
-            Session::flash('error', "The invitation is not valid");
-            return redirect()->route('hello');
-        }
+        // method open to whomsoever has the link
 
         //todo 48 hour signup limitation of 48 hours before need to reapply
 /***
@@ -133,6 +132,7 @@ class InviteUserController extends Controller
      */
     public function process_user(ProcessUserRequest $request, InviteUser $inviteUser)
     {
+        // method open to whomsoever has the link
         //todo determine password strength
 
         $data = [
@@ -183,7 +183,8 @@ class InviteUserController extends Controller
      */
     public function destroy(DestroyInviteUserRequest $request)
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', InviteUser::class);
+
         foreach ($request->id as $id)
         {
             InviteUser::destroy($id);

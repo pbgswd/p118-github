@@ -5,8 +5,6 @@ namespace App\Policies;
 use App\Models\User;
 use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\Session;
 
 
 class UserPolicy
@@ -17,15 +15,11 @@ class UserPolicy
      * @param $user
      * @param $ability
      * @return bool
-*/
+    */
     public function before($user, $ability)
     {
-        if ($user->can('edit users')) {
-            return true;
-        }
-        if ($user->hasRole(['super-admin', 'office'])) {
-            return true;
-        }
+        return $user->hasRole(['super-admin', 'office',]) ||
+            $user->hasPermissionTo('create users');
     }
 
     /**
@@ -35,9 +29,8 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        if ($user->can('create users')) {
-            return true;
-        }
+       return $user->hasRole(['super-admin', 'office']) ||
+       $user->hasPermissionTo('create users');
     }
 
     /**
@@ -48,26 +41,18 @@ class UserPolicy
      */
     public function view(User $user, User $userRequest)
     {
-        return ($userRequest->user_info->show_profile ?? false) === true;
-
-        return $user->id === $userRequest->id;
+        return ($userRequest->user_info->show_profile ?? false) === true ||
+            $user->id === $userRequest->id;
     }
 
     /**
-     * Determine whether the user can create models users.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
+     * @param User $user
+     * @return bool
      */
     public function create(User $user)
     {
-        if ($user->hasRole('super-admin')) {
-            return true;
-        }
-
-        if ($user->can('create users')) {
-            return true;
-        }
+        return $user->hasRole(['super-admin', 'office']) ||
+            $user->hasPermissionTo('create users');
     }
 
     /**
@@ -88,13 +73,7 @@ class UserPolicy
      */
     public function admin_update(User $user)
     {
-        if ($user->hasRole('super-admin')) {
-            return true;
-        }
-
-        if ($user->can('edit users')) {
-            return true;
-        }
+        return $user->hasRole(['super-admin', 'office']);
     }
 
     /**
@@ -104,17 +83,9 @@ class UserPolicy
      */
     public function delete(User $user)
     {
-        if ($user->hasRole('super-admin')) {
-            return true;
-        }
-
-        if ($user->can('delete users')) {
-            return true;
-        }
+        return $user->hasRole(['super-admin', 'office']) ||
+            $user->hasPermissionTo('delete users');
     }
-
-
-
 
 
     /**
@@ -124,9 +95,7 @@ class UserPolicy
      */
     public function restore(User $user)
     {
-        if ($user->hasRole('super-admin')) {
-            return true;
-        }
+        return $user->hasRole('super-admin');
     }
 
     /**
@@ -136,8 +105,6 @@ class UserPolicy
      */
     public function forceDelete(User $user)
     {
-        if ($user->hasRole('super-admin')) {
-            return true;
-        }
+        return $user->hasRole('super-admin');
     }
 }

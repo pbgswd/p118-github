@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Policies\InviteUserPolicy;
+
 use DateTime;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
@@ -22,7 +24,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property DateTime  $updated_at
  *
  */
-class InviteUser extends Model
+
+class InviteUser extends Authenticatable
 {
     use Notifiable;
     use Sortable;
@@ -31,9 +34,9 @@ class InviteUser extends Model
     /** @var string  */
     protected $guard_name = 'web';
 
-    /** @var array  */
+    /** @var array */
     protected $policies = [
-       // User::class => UserPolicy::class,
+        InviteUser::class => InviteUserPolicy::class,
     ];
 
     /** @var array  */

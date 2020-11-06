@@ -120,10 +120,10 @@ Route::group(['middleware' =>  ['web', 'auth',] ], function () {
    // Route::get('/{folder}/attachment/{attachment}', 'AttachmentController@download')->name('attachment_download');
 
 });
+//todo handle role super-admin, office, or some such
+Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office']], function () {
 
-Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin']], function () {
-
-//Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth',]], function () {
+//Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth']], function () {
 
     Route::get('/', 'AdminController@index')->name('admin');
     Route::get('/blank', 'AdminController@blank')->name('blank');
@@ -171,8 +171,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin']], functi
     Route::get('executive_members', 'AdminExecutiveController@index')->name('admin_executives');
     Route::delete('executives/delete', 'AdminExecutiveMembershipController@destroy')->name('admin_executive_destroy');
 
-    Route::get('/invite_new_user', 'InviteUserController@create')->name('invite_new_user');
-    Route::post('/invite_new_user', 'InviteUserController@store');
+    Route::get('/invite-new-user', 'InviteUserController@create')->name('invite-new-user');
+    Route::post('/invite-new-user', 'InviteUserController@store');
     Route::post('/invite_user', 'InviteUserController@send');
     Route::get('/invited_users', 'InviteUserController@index')->name('list_invited_users');
     Route::get('/invited_user/{inviteUser}', 'InviteUserController@show')->name('show_invited_user');
