@@ -2,7 +2,9 @@
 @section('content')
 
 <div id="app">App Div </div>
-
+@can('edit articles')
+    can edit articles
+@endcan
     <div class='container m-lg-5'>
         container 1
         <input

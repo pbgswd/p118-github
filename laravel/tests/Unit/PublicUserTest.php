@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Illuminate\Http\Response;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PublicUserTest extends TestCase
 {
@@ -70,7 +71,7 @@ class PublicUserTest extends TestCase
         $response->assertSeeText('Contact IATSE Local 118');
 
         echo "\n Attempting to send a message" . "\n";
-
+/***
         $response = $this->call('POST', '/contact',
                 [
                     'name' => 'test Sender ' . $date,
@@ -81,13 +82,24 @@ class PublicUserTest extends TestCase
                     '_token' => csrf_token(),
                 ]
             );
+***/
 
+        $this->get('contact')
+            ->type('unittesting@test.com ' . $date, 'email')
+            ->type('test Sender 2 ' . $date, 'name')
+            ->type('test contact page submission ' . $date, 'mail_subject')
+            ->type($date . " lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+                        lorem ipsum lorem ipsum lorem ipsum ", 'mail_body')
+            ->press('Send')
+            ->seePageIs('/contact');
+
+/***
         if ($response->assertStatus(Response::HTTP_FOUND)) {
             if($response->assertSeeText("Redirecting to http")) {
                 echo "\n message sent " . "\n";
             }
         }
-
+***/
         echo "\n End " . basename( __FILE__ ) . "\n";
     }
 

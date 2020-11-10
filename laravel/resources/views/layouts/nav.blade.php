@@ -20,11 +20,9 @@
                     <a class="dropdown-item" href="{{route('page_show', 'history')}}" title="History">
                         History
                     </a>
-                    <a class="dropdown-item" href="#">Governance</a>
                     <a class="dropdown-item" href="{{route('executive')}}">Executive</a>
                     <a class="dropdown-item" href="{{route('bylaws_list_public')}}">C & B</a>
                     <a class="dropdown-item" href="{{route('page_show', 'links')}}">Links</a>
-                    <a class="dropdown-item" href="#">Photos</a>
                 </div>
             </div>&nbsp;
             <div class="dropdown">
@@ -43,17 +41,19 @@
                     <a class="dropdown-item" href="#">Leaving Membership</a>
                 </div>
             </div>&nbsp;
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Benefits
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdown">
-                    <a class="dropdown-item" href="{{route('topic_show', 'health-and-welfare-info')}}"
-                       title="Health & Welfare Overview">H & W Overview</a>
-                </div>
-            </div>&nbsp;
-
+            @guest
+            @else
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Benefits
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdown">
+                        <a class="dropdown-item" href="{{route('topic_show', 'health-and-welfare-info')}}"
+                           title="Health & Welfare Overview">H & W Overview</a>
+                    </div>
+                </div>&nbsp;
+            @endguest
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

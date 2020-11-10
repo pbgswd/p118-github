@@ -269,7 +269,7 @@ class AdminUserController extends Controller
         //todo sync two models roles?  crazy?
         $user->syncRoles($request['user_role']);
 
-            $user->membership->syncRoles('office');
+            //$user->membership->syncRoles('office');
 
 //todo review this new chunk -- needs form elements crud
 

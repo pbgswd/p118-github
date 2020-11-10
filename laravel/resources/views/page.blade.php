@@ -1,26 +1,22 @@
-<?php
-$page = $data['page'];
-$tags = join(', ', $page->tagNames());
-?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
         <div class="row mb-lg-5">
             <div  class="col-4">
-                Left Col 
+                Left Col
             </div>
             <div  class="col-8">
                 <div  class="col-12">
-                    <h1 class="display-3">{{$page->title}}</h1>
+                    <h1 class="display-3">{{$data['page']->title}}</h1>
                 </div>
                 <div class="col-12">
-                    <h2>{!! $page->description !!}</h2>
+                    <h2>{!! $data['page']->description !!}</h2>
                 </div>
                 <div class="col-12">
-                    {!! $page->content !!}
+                    {!! $data['page']->content !!}
                  </div>
-                @if(count($page->attachments) > 0)
+                @if(count($data['page']->attachments) > 0)
                     <div class="col-md-12">
                         <h4>Files</h4>
                         <table class="table table-striped table-sm">
@@ -31,13 +27,17 @@ $tags = join(', ', $page->tagNames());
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach ($page->attachments as $pa)
+                                @foreach ($data['page']->attachments as $pa)
                                     <tr>
                                         <td>
-                                            <a href="{{route('attachment_download', [$page->getAttachmentFolder(), $pa->id])}}" title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
+                                            <a href="{{route('attachment_download',
+                                                [$data['page']->getAttachmentFolder(), $pa->id])}}"
+                                                title="Download {{$pa->file_name}}">
+                                                {{$pa->file_name}}
+                                            </a>
                                         </td>
                                         <td>
-                                            {{ $pa->description}}
+                                            {{$pa->description}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -45,9 +45,9 @@ $tags = join(', ', $page->tagNames());
                         </table>
                     </div>
                 @endif
-                @if ($tags != '')
+                @if ($data['page']->tagNames != '')
                     <div class="col-md-12">
-                        Tags: {{$tags}}
+                        Tags: {{join(', ', $data['page']->tagNames())}}
                     </div>
                 @endif
             </div>
@@ -55,7 +55,3 @@ $tags = join(', ', $page->tagNames());
     </div>
 </div>
 @endsection
-
-
-
-

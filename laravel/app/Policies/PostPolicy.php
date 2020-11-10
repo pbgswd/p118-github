@@ -17,6 +17,8 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
+        dd('view any postPolcy');
+
         if ($user->hasRole('super-admin')) {
             return true;
         }

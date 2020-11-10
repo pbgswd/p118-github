@@ -4,6 +4,8 @@ namespace App\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property int       $id
@@ -17,9 +19,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Membership extends Model
 {
+    use HasRoles;
+
     /** @var string  */
     protected $guard_name = 'web';
 
+//todo update properties after migration
     /** @var array  */
     protected $dates = [
         'created_at',

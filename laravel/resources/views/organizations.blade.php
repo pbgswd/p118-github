@@ -11,9 +11,9 @@
             <h2>Where we work</h2>
         </div>
         <!-- Example row of columns -->
-        <div class="row">
+        <div class="row p-3">
             @foreach ( $data['data']['organizations'] as $organization )
-                <div class="col-3 border border-dark rounded-lg mt-3 mr-3 m-1">
+                <div class="col-3 border border-dark rounded-lg mt-3 mr-3">
                     <h2>{{ $organization->name }}</h2>
                     <p>{!! $organization->summary !!} </p>
                     <p>
