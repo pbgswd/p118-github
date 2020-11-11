@@ -20,7 +20,8 @@
                         <th> @sortablelink('id','#') </th>
                         <th> @sortablelink('name', 'Name') </th>
                         <th> @sortablelink('email', 'Email') </th>
-                        <th> Role </th>
+                        <th> Membership Type </th>
+                        <th> Website Role </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -57,8 +58,11 @@
                         </td>
                         <td> {{ $i->email }} </td>
                         <td>
+                             {{ $i->membership['membership_type'] }}
+                        </td>
+                        <td>
                             @foreach ($i->roles as $role)
-                                {{ $role['name'] }}
+                                <i>{{ $role['name'] }}</i>
                             @endforeach
                         </td>
                         <td>
@@ -71,7 +75,7 @@
                     </tr>
                 @endforeach
                     <tr>
-                        <td colspan="6">&nbsp;</td>
+                        <td colspan="7">&nbsp;</td>
                     </tr>
                 </tbody>
             </table>

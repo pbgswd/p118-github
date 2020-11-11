@@ -44,11 +44,12 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Auth::user());
-
-        $users = User::with(['user_info', 'currentExecutiveRoles'])
+//todo count of members, not including office
+        $users = User::with(['user_info', 'currentExecutiveRoles', 'membership'])
             ->sortable()
             ->orderBy('name')
             ->paginate(20);
+
         return view('listusers', ['data' => ['users' => $users]]);
     }
 

@@ -50,7 +50,14 @@ class AdminUserController extends Controller
     {
         $this->authorize('viewAny', Auth::user());
 
-        $users = User::with(['roles', 'currentExecutiveRoles'])->sortable()->paginate(20);
+        $users = User::with(
+            [
+                'roles',
+                'currentExecutiveRoles',
+                'membership',
+            ]
+        )->sortable()
+        ->paginate(20);
 
         return view('admin.listusers', ['data' => ['users' => $users]]);
     }
@@ -63,8 +70,8 @@ class AdminUserController extends Controller
         Session::flash('warning', 'Create method blocked off. Contact admin for support.');
 
         return redirect()->route('users_list');
-        exit();
 
+/***************
         $this->authorize('create', Auth::user());
 
         $user = new User;
@@ -95,6 +102,7 @@ class AdminUserController extends Controller
         ];
 
         return view('admin.user', ['data' => $data]);
+ * **/
     }
 
     /**
@@ -106,7 +114,7 @@ class AdminUserController extends Controller
         $this->authorize('create', Auth::user());
         Session::flash('warning', 'Store method blocked off. Contact admin for support.');
         return redirect()->route('users_list');
-        exit();
+     /*******************
 
 //todo is password here just encrypting the word 'secret'?
 //todo create default password for new user based on name and other data
@@ -140,6 +148,7 @@ class AdminUserController extends Controller
         Session::flash('success', "You have saved a new member");
 
         return redirect()->route('user_edit', [$user->id]);
+      * ***********/
     }
 
     /**
@@ -179,7 +188,7 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @param UpdateUser $userRequest
+     * @param UpdateUser $request
      * @param User $user
      * @return RedirectResponse
      */

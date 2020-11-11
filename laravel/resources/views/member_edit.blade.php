@@ -14,8 +14,12 @@ $user_roles = $data['user_roles'];
             </a>
             <a href="{{route('member', $user->id)}}">
                 {{$user->name}}
+                @if($user->membership->membership_type != 'Mxember')
+                    ({{$user->membership->membership_type}})
+                @endif
             </a>
         </h1>
+
     </div>
     <div class="row p-4">
         @if( $data['user']->allExecutiveRoles->count() > 0 )

@@ -33,6 +33,7 @@
                                 </a>
                             @else
                                 {{ $i->name }}
+                        <i>{{ $i->membership['membership_type'] == 'Office' ? "(Office Team)" : '' }}</i>
                             @endif
                         </h4>
                         @if(count($i->currentExecutiveRoles) > 0)

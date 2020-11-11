@@ -7,6 +7,9 @@
                     <i class="far fa-arrow-alt-circle-left"></i> Members /
                 </a>
                 {{$data['user']->name}}
+                @if($data['user']->membership->membership_type != 'Member')
+                    ({{$data['user']->membership->membership_type}})
+                @endif
             </h1>
             <div class="row">
                 @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
