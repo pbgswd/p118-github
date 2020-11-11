@@ -33,20 +33,23 @@
                                 </a>
                             @else
                                 {{ $i->name }}
-                        <i>{{ $i->membership['membership_type'] == 'Office' ? "(Office Team)" : '' }}</i>
                             @endif
                         </h4>
-                        @if(count($i->currentExecutiveRoles) > 0)
-                            @foreach($i->currentExecutiveRoles as $a)
-                                <a href="mailto:{{$a->email}}" title="email {{$i->name}} at {{$a->email}}">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                                {{$a->title}}
-                                {{\Carbon\Carbon::parse($a->pivot->start_date)->format('M j Y')}}
-                                 - {{\Carbon\Carbon::parse($a->pivot->end_date)->format('M j Y')}}
-                                <br />
-                            @endforeach
+                        @if($i->membership['membership_type'] != 'Member')
+                            <i>
+                                {{$i->membership['membership_type']}}
+                            </i>
                         @endif
+                        @forelse($i->currentExecutiveRoles as $a)
+                            <a href="mailto:{{$a->email}}" title="email {{$i->name}} at {{$a->email}}">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            {{$a->title}}
+                            {{\Carbon\Carbon::parse($a->pivot->start_date)->format('M j Y')}}
+                             - {{\Carbon\Carbon::parse($a->pivot->end_date)->format('M j Y')}}
+                            <br />
+                            @empty
+                        @endforelse
                     </td>
                     <td>
                         @if (!empty($i->user_info->share_email) )

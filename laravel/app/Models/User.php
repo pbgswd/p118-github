@@ -194,8 +194,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
         return $this->belongsToMany(Executive::class, 'executive_user')
            ->withPivot('id', 'start_date', 'end_date', 'current');
     }
-
-
+    
     /**
      * All historical executive roles of the given user
      *
