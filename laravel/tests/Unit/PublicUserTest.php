@@ -13,13 +13,14 @@ class PublicUserTest extends TestCase
      *
      * @return void
      */
+
     public function testPublicAccess()
     {
         echo "\n Begin " . basename(__FILE__) . "\n";
         $this->assertTrue(true);
 
         $response = $this->get('/');
-
+        $response->assertOk();
         if ($response->assertStatus(Response::HTTP_OK)) {
             $response->assertSeeText("since 1904");
         }
@@ -31,7 +32,17 @@ class PublicUserTest extends TestCase
         $response->assertSeeText('Local 118 Constitution and By-Laws');
         $response = $this->get('/bylaws/1');
         $response->assertSeeText('Constitution and By-Laws October 23');
-        //todo download          /bylaws/download/398
+
+        //todo download
+        $response->getContent('/bylaws/download/398');
+
+        $header = $response->headers->get('content-disposition');
+
+        $this->assertEquals($header, "attachment; filename=Permittee Application.pdf");
+
+        //$response->assertContains('attachment', (string)$response);
+        //$this->assertTrue(preg_match('/(error|notice)/i', $response) === false);
+       // $response->assertHeader('content-type', 'text/html; charset=UTF-8');
 
         $response = $this->get('/executive');
         $response->assertSeeText('President');
@@ -41,19 +52,16 @@ class PublicUserTest extends TestCase
 
         $response = $this->get('/organizations');
         $response->assertSeeText('Where we work');
-
         $response = $this->get('/organization/vso');
         $response->assertSeeText('The Vancouver Symphony Orchestra');
 
         $response = $this->get('/venues');
         $response->assertSeeText('Venues');
-
         $response = $this->get('/venue/arts-club-granville-island');
         $response->assertSeeText('Arts Club Granville Island');
 
         $response = $this->get('/agreements');
         $response->assertSeeText('Collective Agreements');
-
         $response = $this->get('/agreement/38');
         $response->assertSeeText('Master Casual Agreement 2019');
 
@@ -71,7 +79,7 @@ class PublicUserTest extends TestCase
         $response->assertSeeText('Contact IATSE Local 118');
 
         echo "\n Attempting to send a message" . "\n";
-/***
+
         $response = $this->call('POST', '/contact',
                 [
                     'name' => 'test Sender ' . $date,
@@ -82,24 +90,13 @@ class PublicUserTest extends TestCase
                     '_token' => csrf_token(),
                 ]
             );
-***/
 
-        $this->get('contact')
-            ->type('unittesting@test.com ' . $date, 'email')
-            ->type('test Sender 2 ' . $date, 'name')
-            ->type('test contact page submission ' . $date, 'mail_subject')
-            ->type($date . " lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-                        lorem ipsum lorem ipsum lorem ipsum ", 'mail_body')
-            ->press('Send')
-            ->seePageIs('/contact');
-
-/***
         if ($response->assertStatus(Response::HTTP_FOUND)) {
             if($response->assertSeeText("Redirecting to http")) {
                 echo "\n message sent " . "\n";
             }
         }
-***/
+
         echo "\n End " . basename( __FILE__ ) . "\n";
     }
 

@@ -6,6 +6,8 @@ use App\Http\Requests\InviteUser\DestroyInviteUserRequest;
 use App\Http\Requests\InviteUser\ProcessUserRequest;
 use App\Http\Requests\InviteUser\StoreInviteUserRequest;
 use App\Models\InviteUser;
+use App\Models\Membership;
+use App\Models\Options;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
@@ -51,10 +53,12 @@ class InviteUserController extends Controller
 
         $invited = new InviteUser;
         $invited->role = ['member' => 'member'];
+        $invited->membership_type = 'Member';
 
         return view('admin.invite_user', ['data' =>
             ['invite' => $invited,
                 'roles' => Role::get(),
+                'membership' => Options::membership_levels(),
                 'action' => 'Invite'
             ]
         ]);
@@ -92,10 +96,9 @@ class InviteUserController extends Controller
 
     /**
      * @param InviteUser $inviteUser
-     * @param $password
      * @return Factory|RedirectResponse|View
      */
-    public function show(InviteUser $inviteUser, $password)
+    public function show(InviteUser $inviteUser)
     {
         // method open to whomsoever has the link
 
@@ -143,12 +146,13 @@ class InviteUserController extends Controller
         ];
 
         $user = new User($data);
-
         $user->save();
-
         $user->assignRole($inviteUser->role);
 
-        InviteUser::destroy($inviteUser->id);
+        $membership = new Membership();
+        $membership->user_id = $user->id;
+        $membership->membership_type = $inviteUser->membership_type;
+        $user->membership()->save($membership);
 
         InviteUser::where('email', $inviteUser->email)->delete();
 

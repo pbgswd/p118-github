@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property DateTime  $membership_expires
  * @property int       $seniority_number
  * @property string    $status
+ * @property string    $membership_type
  * @property string    $admin_notes
  * @property DateTime  $created_at
  * @property DateTime  $updated_at
@@ -39,6 +40,7 @@ class Membership extends Model
      * @var array
      */
     protected $fillable = [
+        'membership_type',
         'membership_date',
         'membership_expires',
         'seniority_number',

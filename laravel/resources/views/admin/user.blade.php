@@ -64,7 +64,8 @@
                     <div class="input-group-text">
                         <input name="user_info[share_email]" type="hidden" value="0" />
                         <input name="user_info[share_email]" type="checkbox" value="1"
-                            {{ checked(old('user_info.share_email', $data['user']->user_info->share_email ?? null)) }} />
+                            {{ checked(old('user_info.share_email',
+                                $data['user']->user_info->share_email ?? null)) }} />
                     </div>
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
@@ -100,7 +101,7 @@
                             Go to Committees Admin
                         </a>
                     </p>
-                    @foreach($data['user']->committee_memberships as $c)
+                    @forelse($data['user']->committee_memberships as $c)
                         <h4>
                             <a href="{{route('admin_committee_show', $c->slug)}}">
                                 {{$c->name}}
@@ -110,7 +111,9 @@
                                 <i class="far fa-edit"></i> Edit
                             </a>
                         </h4>
-                    @endforeach
+                    @empty
+                        No committee roles for {{$data['user']->name}}.
+                    @endforelse
                 </div>
             </div>
             <div class="row border border-primary rounded-lg border-3 mt-lg-1 pb-3">
@@ -122,24 +125,25 @@
                         <h4>Create new Executive Role <i class="far fa-arrow-alt-circle-right"></i></h4>
                     </a>
                 </div>
-                @if($data['user']->allExecutiveRoles->count() > 0)
                     <div class="col-12 pt-3">
-                            @foreach($data['user']->allExecutiveRoles as $e)
-                                <h4>
-                                    {!! $e->pivot->current ? "<b>Currently:</b> "
-                                        : '' !!}
-                                    {{$e->title}},
-                                    from {{\Carbon\Carbon::parse($e->pivot->start_date)->format('F j Y')}},
-                                    until {{\Carbon\Carbon::parse($e->pivot->end_date)->format('F j Y')}}.
-                                    <a href="{{route('admin_executive_edit', $e->pivot->id)}}"
-                                       title="Edit">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                </h4>
-                                <br />
-                            @endforeach
+                        @forelse($data['user']->allExecutiveRoles as $e)
+                            <h4>
+                                {!! $e->pivot->current ? "<b>Currently:</b> "
+                                    : '' !!}
+                                {{$e->title}},
+                                from {{\Carbon\Carbon::parse($e->pivot->start_date)->format('F j Y')}},
+                                until {{\Carbon\Carbon::parse($e->pivot->end_date)->format('F j Y')}}.
+                                <a href="{{route('admin_executive_edit', $e->pivot->id)}}"
+                                   title="Edit">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </h4>
+                            <br />
+                        @empty
+                        No executive roles for {{$data['user']->name}}.
+                        @endforelse
                     </div>
-                @endif
+
             </div>
         @endif
         <div class="row border border-primary rounded-lg border-3 p-lg-3 mt-3 mb-3">
@@ -152,7 +156,8 @@
                         <input name="user_info[show_profile]" type="hidden" value="0" />
                         <input name="user_info[show_profile]" type="checkbox"
                                value="1"
-                                {{ checked(old('user_info.show_profile', $data['user']->user_info->show_profile ?? '')) }} />
+                                {{ checked(old('user_info.show_profile',
+                                       $data['user']->user_info->show_profile ?? '')) }} />
                     </div>
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
@@ -181,7 +186,8 @@
                                 <input name="user_info[show_picture]" type="hidden" value="0" />
                                 <input name="user_info[show_picture]" type="checkbox"
                                        value="1"
-                                    {{ checked(old('user_info.show_picture', $data['user']->user_info->show_picture ?? '')) }}
+                                    {{ checked(old('user_info.show_picture',
+                                        $data['user']->user_info->show_picture ?? '')) }}
                                 />
                             </div>
                         </div>
@@ -249,7 +255,8 @@
                 </div>
                     <input type="text" style="text-transform:uppercase" class="form-control"
                            placeholder="Postal Code" name="user_address[postal_code]"
-                           value="{{ old('user_address.postal_code', strtoupper($data['user']->address->postal_code ?? ''))}}"
+                           value="{{ old('user_address.postal_code',
+                                strtoupper($data['user']->address->postal_code ?? ''))}}"
                            size="60" />
             </div>
             <div class="col-12 input-group mb-3">
@@ -265,21 +272,29 @@
         <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
             <div class="col-md-12">
                 <h4>Membership type & details</h4>
-                <p>Member, office, or possibly other types in the future</p>
-                @foreach ($data['membership'] as $k => $v)
-                    {{$k}} => {{$v}} <br />
+                <p>Member status is for all regular members, and Office is for office administrators.</p>
+                <p>
+                    <i>Note: this section will manage membership date range and member seniority when we
+                        are ready to do so.</i>
+                </p>
+                @foreach ($data['membership'] as $m)
+                    <div class="input-group mb-3 col-12">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input name="user_membership[membership_type]" type="radio" value="{{$m}}"
+                                    {{ checked($m == $data['user']->membership->membership_type) }} />
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox"
+                               value="{{$m}}" size="40" readonly />
+                    </div>
                 @endforeach
-
-
-                Seniority: {{$data['user']->membership->seniority_number ?? ''}} <br />
-                Since: {{$data['user']->membership->membership_date ?? ''}}<br /><br />
-                Admin notes: <br />
-                <textarea name="membership[admin_notes]" id="membership_admin_notes" class="form-control">
+                <h5>Admin notes:</h5>
+                <textarea name="user_membership[admin_notes]" id="membership_admin_notes" class="form-control">
                     {{ old('membership.admin_notes', $data['user']->membership->admin_notes ?? '') }}
                 </textarea>
             </div>
         </div>
-
         <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
             <div class="col-md-12">
                 <h4>User website admin access roles </h4>
@@ -291,9 +306,7 @@
                     <li>An access level of 'office' allows for office staff to manage users.</li>
                     <li>Super-admin access is for full do everything access.</li>
                 </ul>
-
             </div>
-
             @foreach ($data['roles'] as $role)
                 <div class="col-md-12 mb-6">
                     <div class="input-group">
@@ -319,7 +332,7 @@
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-            <div class="col-sm"> &nbsp;
+            <div class="col-sm">
             </div>
                 @if ($data['action'] == 'Edit')
                     @hasanyrole('super-admin|admin')

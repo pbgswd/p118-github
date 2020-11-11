@@ -25,7 +25,13 @@
                         <th> @sortablelink('name', 'Name') </th>
                         <th> Email </th>
                         <th>Invited since</th>
-                        <th> Role </th>
+                        <th>
+                            Membership Type<br />
+                            (Member or Office)
+                        </th>
+                        <th> Website Access <br />
+                            Role
+                        </th>
                         <th> Message Link</th>
                         <th> Added by </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
@@ -48,7 +54,7 @@
                                 </h4>
                             </td>
                             <td>
-                                {{$i->email}}
+                                <a href="{{$i->email}}">{{$i->email}}</a>
                             </td>
                             <td>
                                 @if($i->remaining < 0)
@@ -57,6 +63,9 @@
                                     {{$i->since}} <br />
                                     ({{$i->remaining}} h left)
                                 @endif
+                            </td>
+                            <td>
+                                {{$i->membership_type}}
                             </td>
                             <td>
                                 {{$i->role}}

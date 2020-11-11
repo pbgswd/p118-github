@@ -266,14 +266,8 @@ class AdminUserController extends Controller
             $user->address()->save($address);
         }
 
-        //todo sync two models roles?  crazy?
         $user->syncRoles($request['user_role']);
 
-            //$user->membership->syncRoles('office');
-
-//todo review this new chunk -- needs form elements crud
-
-/**
         if ($user->membership instanceof Membership) {
             $user->membership->fill($request['user_membership']);
             $user->membership->save();
@@ -281,7 +275,7 @@ class AdminUserController extends Controller
             $membership = new Membership($request['user_membership']);
             $user->membership()->save($membership);
         }
-**/
+
         if(!empty($message)) {
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }

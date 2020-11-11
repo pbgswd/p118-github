@@ -62,6 +62,7 @@ class InviteUser extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'membership_type',
         'message',
         'password',
         'role',
