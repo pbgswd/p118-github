@@ -282,7 +282,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input name="user_membership[membership_type]" type="radio" value="{{$m}}"
-                                    {{ checked($m == $data['user']->membership->membership_type) }} />
+                                    {{ checked($m == ($data['user']->membership->membership_type ?? 'Member') ) }} />
                             </div>
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox"
