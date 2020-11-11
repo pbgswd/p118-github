@@ -196,7 +196,7 @@ class AdminUserController extends Controller
     {
         $this->authorize('admin_update', Auth::user());
 
-        $user->load('phone_number', 'address');
+        $user->load('phone_number', 'address', 'membership');
 
         $message = [];
         $original_name = $user->name;
@@ -213,11 +213,11 @@ class AdminUserController extends Controller
         $user->save();
 
         if ($user->phone_number instanceof PhoneNumber) {
-            $user->phone_number->fill($request['user_phone']);
-            $user->phone_number->save();
             if($request->user_phone['phone_number'] != $user->phone_number->phone_number ) {
                 $message['Phone'] = $request->user_phone['phone_number'];
             }
+            $user->phone_number->fill($request['user_phone']);
+            $user->phone_number->save();
         } else {
             $phone = new PhoneNumber($request['user_phone']);
             $user->phone_number()->save($phone);
@@ -275,14 +275,23 @@ class AdminUserController extends Controller
             $user->address()->save($address);
         }
 
+        $user_roles = $user->getRoleNames()->toArray();
+        if($user_roles[0] != $request['user_role']) {
+            $message['Website_Role'] = $request['user_role'];
+        }
         $user->syncRoles($request['user_role']);
 
         if ($user->membership instanceof Membership) {
+            if($request['user_membership']['membership_type'] != $user->membership->membership_type) {
+                $message['Membership_type'] = $request['user_membership']['membership_type'];
+            }
             $user->membership->fill($request['user_membership']);
             $user->membership->save();
+
         } else {
             $membership = new Membership($request['user_membership']);
             $user->membership()->save($membership);
+            $message['Membership'] = $request['user_membership']['membership_type'];
         }
 
         if(!empty($message)) {

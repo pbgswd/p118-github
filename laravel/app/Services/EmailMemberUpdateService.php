@@ -34,13 +34,13 @@ class EmailMemberUpdateService
             $user,
             $recipient,
             $cc) {
-            $m->from('no-reply@iatse118.com', "Local 118 Website profile update for ". $user->name);
+            $m->from(env('MAIL_FROM_ADDRESS'), "Local 118 Website profile update for ". $user->name);
             $m->to($recipient, $recipient);
             if($cc != '') {
                 $m->cc($cc, $cc);
             }
             $m->replyTo($user->email, $message['Name'] ?? $user->name)
-                ->subject("Local 118 - Member Contact Info Update from " . $message['original_name']);
+                ->subject("Local 118 - Member Contact Info Update for " . $message['original_name']);
         });
     }
 
