@@ -4,7 +4,8 @@
 <div class="container">
     <h4>
         <a href="{{route('admin_committee_show', $data['committee']['slug'])}}">
-            <i class="far fa-hand-point-left fa-2x"></i> Back to {{$data['committee']['name']}} page
+            <i class="far fa-hand-point-left fa-2x"></i>
+            Back to {{$data['committee']['name']}} page
         </a>
     </h4>
     <div class="row border border-dark rounded">
@@ -108,8 +109,7 @@
                     <tbody>
                         @forelse ( $data['committee']['active_committee_members'] as $i )
                             <tr>
-                                <td>
-                                    &nbsp;
+                                <td>&nbsp;
                                 </td>
                                 <td>
                                     <h4>

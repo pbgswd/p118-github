@@ -59,7 +59,9 @@ class AdminUserController extends Controller
         )->sortable()
         ->paginate(20);
 
-        return view('admin.listusers', ['data' => ['users' => $users]]);
+        $count = Membership::where('membership_type', 'Member')->count();
+
+        return view('admin.listusers', ['data' => ['users' => $users, 'count' => $count]]);
     }
 
     /**

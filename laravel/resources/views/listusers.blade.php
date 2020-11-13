@@ -3,7 +3,7 @@
 <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
     <h1>
        <span class="badge badge-primary badge-pill">
-           {!! $data['users']->total() ?? 0 !!}
+           {!! $data['count'] ?? 0 !!}
        </span>
         Members.
     </h1>

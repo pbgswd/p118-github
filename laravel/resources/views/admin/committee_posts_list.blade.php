@@ -93,8 +93,10 @@
         </div>
         <div class="row mb-lg-5 mt-lg-5">
             <div class="col">
-                <i class="far fa-trash-alt fa-2x"></i>
-                <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
+                @if( $data['posts']->count() > 0)
+                    <i class="far fa-trash-alt fa-2x"></i>
+                    <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
+                @endif
             </div>
             <div class="col-6">
                 <div class="list-group">

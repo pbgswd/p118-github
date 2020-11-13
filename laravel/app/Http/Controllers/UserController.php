@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Member\UpdateMember;
 use App\Models\Address;
+use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
@@ -50,7 +51,9 @@ class UserController extends Controller
             ->orderBy('name')
             ->paginate(20);
 
-        return view('listusers', ['data' => ['users' => $users]]);
+        $count = Membership::where('membership_type', 'Member')->count();
+
+        return view('listusers', ['data' => ['users' => $users, 'count' => $count]]);
     }
 
     /**

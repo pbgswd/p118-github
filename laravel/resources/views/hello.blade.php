@@ -66,41 +66,6 @@
             </div>
         </div>
     </div>
-    <div class="row mt-3 mb-lg-1">
-        <div class="col-4 p-4 border border-dark rounded-lg mr-1">
-            <h2>
-                <i class="fas fa-hashtag"></i> Social Media
-            </h2>
-        </div>
-        <div class="col-6 border border-dark rounded-lg">
-            <ul>
-                <li>
-                    <a href="https://twitter.com/IATSE_118" target="_blank" title="IATSE Local 118">
-                        <i class="fab fa-twitter"></i>
-                        @IATSE_118
-                    </a>
-                </li>
-                <li>
-                    <a href="https://twitter.com/IATSECANADA" target="_blank" title="IATSE Canada">
-                        <i class="fab fa-twitter"></i>
-                        @IATSECANADA
-                    </a>
-                </li>
-                <li>
-                    <a href="https://twitter.com/IATSEYWC" target="_blank" title="IATSE Young Workers">
-                        <i class="fab fa-twitter"></i>
-                        @IATSEYWC
-                    </a>
-                </li>
-                <li>
-                    <a href="https://twitter.com/IATSE" target="_blank" title="IATSE">
-                        <i class="fab fa-twitter"></i>
-                        @IATSE
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
     <div class="row mt-lg-2">
         <div class="col-12 border border-dark rounded-lg p-lg-4" style="background: rgba(220,220,220,0.8);">
             @if($data['birthday'] != '')

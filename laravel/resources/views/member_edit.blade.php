@@ -19,7 +19,6 @@ $user_roles = $data['user_roles'];
                 @endif
             </a>
         </h1>
-
     </div>
     <div class="row p-4">
         @if( $data['user']->allExecutiveRoles->count() > 0 )

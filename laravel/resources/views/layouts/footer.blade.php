@@ -87,6 +87,43 @@
                     </h3>
                 </div>
             </div>
+
+                <div class="row mt-3 mb-lg-4">
+                    <div class="col-2 p-4 border border-dark rounded-lg mr-1">
+                        <h5>
+                            <i class="fas fa-hashtag"></i> Social Media
+                        </h5>
+                    </div>
+                    <div class="col-2 p-4 border border-dark rounded-lg">
+
+                                <a href="https://twitter.com/IATSE_118" target="_blank" title="IATSE Local 118">
+                                    <i class="fab fa-twitter"></i>
+                                    @IATSE_118
+                                </a>
+                    </div>
+                    <div class="col-2 p-4 border border-dark rounded-lg">
+                                <a href="https://twitter.com/IATSECANADA" target="_blank" title="IATSE Canada">
+                                    <i class="fab fa-twitter"></i>
+                                    @IATSECANADA
+                                </a>
+                    </div>
+                    <div class="col-2 p-4 border border-dark rounded-lg">
+                                <a href="https://twitter.com/IATSEYWC" target="_blank" title="IATSE Young Workers">
+                                    <i class="fab fa-twitter"></i>
+                                    @IATSEYWC
+                                </a>
+                    </div>
+                    <div class="col-2 p-4 border border-dark rounded-lg">
+                                <a href="https://twitter.com/IATSE" target="_blank" title="IATSE">
+                                    <i class="fab fa-twitter"></i>
+                                    @IATSE
+                                </a>
+
+                    </div>
+                </div>
+
+
+
             <div class="row mt-2 mb-lg-2">
                 <div class="col-4 text-left">
                     <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
@@ -111,3 +148,5 @@
                 integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
                 crossorigin="anonymous">
         </script>
+    </body>
+</html>

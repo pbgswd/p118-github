@@ -3,10 +3,12 @@
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! $data['users']->total()  !!}
+               {!! $data['count'] !!}
            </span>
-            Members. | <a href="{{ route('invite-new-user') }}">Invite new member
-                <i class="far fa-arrow-alt-circle-right"></i> </a>
+            Members. |
+            <a href="{{ route('invite-new-user') }}">Invite new member
+                <i class="far fa-arrow-alt-circle-right"></i>
+            </a>
         </h3>
 </div>
 <form name="delete" method="POST" action="{{route('user_destroy')}}">
