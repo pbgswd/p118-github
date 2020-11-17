@@ -6,7 +6,12 @@
     can edit articles
 @endcan
     <div class='container m-lg-5'>
+        <input type="date" id="pick-date" name="date" />
+    </div>
+        <div class='container m-lg-5'>
         container 1
+
+
         <input
             type='text'
             name="date"

@@ -24,49 +24,7 @@
         <!-- Styles -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <style>
-            .bd-placeholder-img {
-                font-size: 1.125rem;
-                text-anchor: middle;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-            .dropcap {
-                font-size: 4rem;
-                color: #903;
-                float: left;
-                line-height: 60px;
-                padding-right: 4px;
-                padding-left: 3px;
-            }
-            @media (min-width: 768px) {
-                .bd-placeholder-img-lg {
-                    font-size: 3.5rem;
-                }
-            }
-            @media (min-width: 577px) {
-                .container {
-                    padding:1.5rem;
-                }
-            }
-            @media (max-width: 576px) {
-                h1.display-3 {
-                  font-size: 16px;
-                    font-weight: bold;
-                }
-                h2 { font-size: 14px;}
-                h3 { font-size: 12px;}
-                h4 { font-size: 11px;}
-                p { font-size: 10px;}
 
-                img {
-                    max-width: 100px;
-                }
-                .container {
-                    padding:0.5em;
-                }
-            }
         </style>
         <!-- Custom styles for this template -->
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
@@ -74,14 +32,9 @@
     <body>
         <a id="top"></a>
         @include('layouts.nav')
-        <main role="main">
-            <div class="jumbotron">
-                @include('flash-messages')
-                @yield('content')
-            </div>
-            <div class="row">
-                    @yield('data')
-            </div> <!-- /container -->
+        <main role="main" class="mt-2 pt-lg-5">
+            @include('flash-messages')
+            @yield('content')
         </main>
         @include('layouts.footer')
     </body>
