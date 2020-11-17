@@ -33,7 +33,7 @@ $roles = $data['roles'];
                         <div class="input-group mb-3 col-12">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input name="invite[membership]" type="radio" value="{{$m}}"
+                                    <input name="invite[membership_type]" type="radio" value="{{$m}}"
                                         {{ checked($m == $data['invite']['membership_type']) }} />
                                 </div>
                             </div>

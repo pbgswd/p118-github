@@ -1,59 +1,56 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="container">
-    <div class="row"  style="background: #fff;">
+    <div class="row" style="background: #fff;">
         <div class="col-12 mb-lg-1">
             <img src="/storage/public/64tsEl26mhTFapH4Rco0QidSjj5yMx9s0cJfePq8.png"
-                 style="padding:1em; display: block; margin-left: auto; margin-right: auto;" alt="BC Federation of Labor" />
+                 style="padding:1em; display: block; margin-left: auto; margin-right: auto;" alt="{{env('APP_NAME')}}" />
         </div>
     </div>
-    <div class="row" style="background: #fff;">
-        <div class="col-12 mb-lg-1 border border-dark rounded-lg" style="height:300px;">
-            <h1>Carousel</h1>
-            <input type="date" id="pick-date" name="date" />
+    <div class="row">
+        <div class="col-12 mb-lg-1 border border-dark rounded-lg  bg-secondary text-white mx-auto" style="height:300px;">
+
         </div>
     </div>
-    <div class="row border border-info rounded-lg mt-3">
-        <div class="col-12 border border-dark rounded-lg p-2 pt-2">
-            <div class="col-12 border border-dark rounded-lg ">
-                <h3>
-                    <a href="{{route('topic_show', 'news')}}" title="news and highlights">
-                        <i class="far fa-newspaper"></i> News & Highlights
-                    </a>
-                </h3>
+    <div class="row border border-dark rounded-lg mt-2 p-2 mb-2">
+        <h3>
+            <a href="{{route('topic_show', 'news')}}" title="news and highlights">
+                <i class="far fa-newspaper"></i> News & Highlights
+            </a>
+        </h3>
+    </div>
+    <div class="row mt-2 mb-lg-4">
+
+        <div class="col-6 p-2 " style="display: flex;">
+
+            <div class="col-12 border border-dark rounded-lg pb-3">
+                @if($data['news']['posts']->count() > 0)
+                    <h3>
+                        <a href="{{route('posts')}}">Posts</a>
+                    </h3>
+                    <ul class="list-group p-0 m-0">
+                        @foreach($data['news']['posts'] as $post)
+                            <li class="list-group-item p-0 m-0">
+                                <a href="{{route('post_show', $post->slug)}}"
+                                    title="{{$post->title}}">
+                                    {{$post->title}}
+                                </a>
+                                {{$post->created_at->format('M j Y')}}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
         </div>
-    </div>
-    <div class="row  border border-info rounded-lg mb-lg-2">
-        <div class="col-6 border border-dark rounded-lg p-2 pt-2" style="display: flex;">
-            <div class="col-12 border border-dark rounded-lg ">
-            @if($data['news']['posts']->count() > 0)
-                <h3>
-                    <a href="{{route('posts')}}">Posts</a>
-                </h3>
-                <ul>
-                    @foreach($data['news']['posts'] as $post)
-                        <li>
-                            <a href="{{route('post_show', $post->slug)}}"
-                                title="{{$post->title}}">
-                                {{$post->title}}
-                            </a>
-                            {{$post->created_at->format('M j Y')}}
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
-            </div>
-        </div>
-        <div class="col-6 border border-dark rounded-lg p-2 pt-2">
-            <div class="col-12 border border-dark rounded-lg ">
+        <div class="col-6 p-2 pt-2">
+            <div class="col-12 border border-dark rounded-lg  pb-3">
             @if($data['news']['pages']->count() > 0)
                 <h3>
                     <a href="{{route('pages')}}">Pages</a>
                 </h3>
-                <ul>
+                <ul class="list-group p-0 m-0">
                     @foreach($data['news']['pages'] as $page)
-                        <li>
+                        <li class="list-group-item p-0 m-0">
                             <a href="{{route('page_show', $page->slug)}}"
                                 title="{{$page->title}}">
                                 {{$page->title}}
@@ -66,7 +63,7 @@
             </div>
         </div>
     </div>
-    <div class="row mt-lg-2">
+    <div class="row mt-lg-4">
         <div class="col-12 border border-dark rounded-lg p-lg-4" style="background: rgba(220,220,220,0.8);">
             @if($data['birthday'] != '')
                 <h2> <i class="fas fa-birthday-cake"></i> {{ $data['birthday'] }}</h2>
