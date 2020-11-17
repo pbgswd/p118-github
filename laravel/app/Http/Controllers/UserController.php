@@ -67,7 +67,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $this->authorize('view', $user);
-        
+
         $user->load('committee_memberships', 'phone_number',
                     'user_info', 'address', 'membership',
                     'allExecutiveRoles');

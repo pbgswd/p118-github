@@ -22,7 +22,7 @@ class UserPolicy
     {
         $test = $user->hasRole(['super-admin', 'office',]) || $user->hasPermissionTo('create users');
         if ($test) {
-       //     return true;
+          return true;
         }
     }
 
