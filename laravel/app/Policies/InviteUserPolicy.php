@@ -11,13 +11,14 @@ class InviteUserPolicy
 
     /**
      * @param $user
-     * @param $ability
      * @return bool
      */
-    public function before($user, $ability)
+    public function before($user)
     {
-        return $user->hasRole(['super-admin', 'office',]) ||
-            $user->hasPermissionTo('create users');
+        $test = $user->hasRole(['super-admin', 'office',]) || $user->hasPermissionTo('create users');
+        if ($test) {
+            return true;
+        }
     }
 
     /**
