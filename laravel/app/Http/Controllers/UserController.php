@@ -15,6 +15,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
@@ -44,8 +45,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
-//todo count of members, not including office
+        // $this->authorize('viewAny', Auth::user());
+
         $users = User::with(['user_info', 'currentExecutiveRoles', 'membership'])
             ->sortable()
             ->orderBy('name')
@@ -60,12 +61,13 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param User $user
+     * @param Request $request
      * @return Response
      */
     public function show(User $user)
     {
         $this->authorize('view', $user);
-
+        
         $user->load('committee_memberships', 'phone_number',
                     'user_info', 'address', 'membership',
                     'allExecutiveRoles');
@@ -109,7 +111,17 @@ class UserController extends Controller
             'provinces' => $regions['statesprovs']['Provinces'],
         ];
 
-        return view('member_edit', ['data' => $data]);
+        //return view('member_edit', ['data' => $data]);
+
+        /**
+         * If it is the user's own profile
+         */
+
+
+
+        if(Auth::user()->id === $user->id ) {
+            return view('member_edit', ['data' => $data]);
+        }
     }
 
 

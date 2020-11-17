@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Request;
 
 
 class UserPolicy
@@ -16,10 +17,13 @@ class UserPolicy
      * @param $ability
      * @return bool
     */
+
     public function before($user, $ability)
     {
-        return $user->hasRole(['super-admin', 'office',]) ||
-            $user->hasPermissionTo('create users');
+        $test = $user->hasRole(['super-admin', 'office',]) || $user->hasPermissionTo('create users');
+        if ($test) {
+       //     return true;
+        }
     }
 
     /**
@@ -35,14 +39,26 @@ class UserPolicy
 
     /**
      * Determine whether the user can view the models user.
-     * @param User $user
-     * @param User $userRequest
+     * @param User $loggedInUser
+     * @param User $targetUser
      * @return bool
      */
-    public function view(User $user, User $userRequest)
+    public function view(User $loggedInUser, User $targetUser)
     {
-        return ($userRequest->user_info->show_profile ?? false) === true ||
-            $user->id === $userRequest->id;
+        $test = ($loggedInUser->id === $targetUser->id) || $loggedInUser->can('edit users') ||
+            ($targetUser->user_info->show_profile ?? 0) == 1;
+
+        if ($test) {
+            return true;
+        }
+
+        $test = ($loggedInUser->id != $targetUser->id) && ($loggedInUser->can('edit users') === false) &&
+            ($targetUser->user_info->show_profile ?? 0) == 0;
+
+        if ($test) {
+            return false;
+        }
+
     }
 
     /**
@@ -56,14 +72,16 @@ class UserPolicy
     }
 
     /**
-     * Determine whether the user can update the models user.
-     * @param User $currentUser
-     * @param User $targetUser
+     * @param User $user
      * @return bool
      */
-    public function update(User $currentUser, User $targetUser)
+    public function update(User $user)
     {
-        return $currentUser->id === $targetUser->id;
+        //public side
+        //owner of user profile can edit
+        $loggedIn = Auth::user();
+        return $user->id === $loggedIn->id;
+
     }
 
     /**

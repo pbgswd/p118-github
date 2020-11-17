@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Agreement;
 use App\Models\Attachment;
 use App\Models\Committee;
+use App\Models\CommitteePost;
 use App\Models\Employment;
 use App\Models\InviteUser;
 use App\Models\Meeting;
@@ -17,6 +18,7 @@ use App\Models\Venue;
 use App\Policies\AgreementPolicy;
 use App\Policies\AttachmentPolicy;
 use App\Policies\CommitteePolicy;
+use App\Policies\CommitteePostPolicy;
 use App\Policies\EmploymentPolicy;
 use App\Policies\InviteUserPolicy;
 use App\Policies\MeetingPolicy;
@@ -37,7 +39,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         InviteUser::class => InviteUserPolicy::class,
-       User::class => UserPolicy::class,
+        User::class => UserPolicy::class,
+        CommitteePost::class => CommitteePostPolicy::class,
 
         Post::class => PostPolicy::class,
         Page::class => PagePolicy::class,
