@@ -72,16 +72,13 @@ class UserPolicy
     }
 
     /**
-     * @param User $user
+     * @param User $loggedInUser
+     * @param User $targetUser
      * @return bool
      */
-    public function update(User $user)
+    public function update(User $loggedInUser, User $targetUser)
     {
-        //public side
-        //owner of user profile can edit
-        $loggedIn = Auth::user();
-        return $user->id === $loggedIn->id;
-
+        return $loggedInUser->id === $targetUser->id;
     }
 
     /**
@@ -91,7 +88,7 @@ class UserPolicy
      */
     public function admin_update(User $user)
     {
-        return $user->hasRole(['super-admin', 'office']);
+        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('update users');;
     }
 
     /**

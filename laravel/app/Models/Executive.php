@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\ExecutivePolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Kyslik\ColumnSortable\Sortable;
@@ -17,6 +18,10 @@ use Kyslik\ColumnSortable\Sortable;
 class Executive extends Model
 {
     use Sortable;
+
+    protected $policies = [
+        Executive::class => ExecutivePolicy::class,
+    ];
 
     protected $table = 'executives';
 

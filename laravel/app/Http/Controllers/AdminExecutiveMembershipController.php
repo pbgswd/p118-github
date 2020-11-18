@@ -23,15 +23,18 @@ class AdminExecutiveMembershipController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', ExecutiveMembership::class);
         //todo index method
         //'admin_executives_list'
         $data = [];
+
  /***
-        $this->authorize('viewAny', Auth::user());
         $data = [];
-        $data['executives'] = Executive::sortable()->with('user')->orderBy('created_at', 'desc')->paginate(20);
+        $data['executives'] = Executive::sortable()
+  * ->with('user')->orderBy('created_at', 'desc')->paginate(20);
         $data['count'] = Executive::count();
 **/
+
         return view('admin.executives_list', ['data' => $data]);
 
     }
@@ -44,6 +47,7 @@ class AdminExecutiveMembershipController extends Controller
      */
     public function create(User $user)
     {
+        $this->authorize('create', ExecutiveMembership::class);
 
         $data = [
             'user' => $user,
@@ -65,6 +69,8 @@ class AdminExecutiveMembershipController extends Controller
      */
     public function store(StoreAdminExecutiveMembership $request, User $user)
     {
+        $this->authorize('create', ExecutiveMembership::class);
+
         $executiveMembership = new ExecutiveMembership($request->input('executive'));
         $executiveMembership->user_id = $user->id;
         $endDate = Carbon::createFromDate($request->end_date);
@@ -87,7 +93,7 @@ class AdminExecutiveMembershipController extends Controller
      */
     public function edit(ExecutiveMembership $executiveMembership)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', ExecutiveMembership::class);
 
         $executiveMembership->load('user');
 
@@ -110,6 +116,8 @@ class AdminExecutiveMembershipController extends Controller
      */
     public function update(UpdateAdminExecutiveMembership $request, ExecutiveMembership $executiveMembership)
     {
+        $this->authorize('update', ExecutiveMembership::class);
+
         $executiveMembership->fill($request->input('executive'));
         $executiveMembership->save();
 
@@ -126,6 +134,8 @@ class AdminExecutiveMembershipController extends Controller
      */
     public function destroy(DestroyAdminExecutiveMembership $request)
     {
+        $this->authorize('delete', ExecutiveMembership::class);
+
         foreach($request->id as $i)
         {
             $e = ExecutiveMembership::find($i);

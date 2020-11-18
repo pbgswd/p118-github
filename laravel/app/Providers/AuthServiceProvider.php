@@ -4,26 +4,34 @@ namespace App\Providers;
 
 use App\Models\Agreement;
 use App\Models\Attachment;
+use App\Models\Bylaw;
 use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\Employment;
+use App\Models\Executive;
+use App\Models\ExecutiveMembership;
 use App\Models\InviteUser;
 use App\Models\Meeting;
 use App\Models\Organization;
 use App\Models\Page;
+use App\Models\Policy;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
 use App\Policies\AgreementPolicy;
 use App\Policies\AttachmentPolicy;
+use App\Policies\BylawPolicy;
 use App\Policies\CommitteePolicy;
 use App\Policies\CommitteePostPolicy;
 use App\Policies\EmploymentPolicy;
+use App\Policies\ExecutiveMembershipPolicy;
+use App\Policies\ExecutivePolicy;
 use App\Policies\InviteUserPolicy;
 use App\Policies\MeetingPolicy;
 use App\Policies\OrganizationPolicy;
 use App\Policies\PagePolicy;
+use App\Policies\PolicyPolicy;
 use App\Policies\PostPolicy;
 use App\Policies\TopicPolicy;
 use App\Policies\UserPolicy;
@@ -40,19 +48,23 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         InviteUser::class => InviteUserPolicy::class,
         User::class => UserPolicy::class,
-        CommitteePost::class => CommitteePostPolicy::class,
-
         Post::class => PostPolicy::class,
         Page::class => PagePolicy::class,
         Topic::class => TopicPolicy::class,
         Venue::class => VenuePolicy::class,
-        Committee::class => CommitteePolicy::class,
         Employment::class => EmploymentPolicy::class,
         Meeting::class => MeetingPolicy::class,
         Agreement::class => AgreementPolicy::class,
-        Attachment::class => AttachmentPolicy::class,
+        Bylaw::class => BylawPolicy::class,
         Organization::class => OrganizationPolicy::class,
+        Executive::class => ExecutivePolicy::class,
+        Policy::class => PolicyPolicy::class,
+        ExecutiveMembership::class => ExecutiveMembershipPolicy::class,
+//  others
 
+        Attachment::class => AttachmentPolicy::class,
+        Committee::class => CommitteePolicy::class,
+        CommitteePost::class => CommitteePostPolicy::class,
     ];
 
     /**

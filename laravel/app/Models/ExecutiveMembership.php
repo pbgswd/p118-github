@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use App\Policies\ExecutiveMembershipPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ExecutiveMembership extends Model
 {
     protected $table = 'executive_user';
+
+    protected $policies = [
+        ExecutiveMembership::class => ExecutiveMembershipPolicy::class,
+    ];
 
     public $sortable = [
         'id',

@@ -14,6 +14,8 @@ class AdminExecutiveController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Executive::class);
+
         $data = [];
         $data['executives'] = Executive::with('user')->get();
 
