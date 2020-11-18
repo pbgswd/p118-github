@@ -18,15 +18,8 @@ class PagePolicy
      */
     public function viewAny(User $user)
     {
-        //todo https://laravel.com/docs/6.x/authorization#policy-responses
-        if ($user->hasRole('super-admin')) {
-            return true;
-        }
-
-        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
-            return true;
-        }
-        return;
+        return $user->hasRole(['super-admin', 'writer']) ||
+            $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
     }
 
     /**
@@ -45,93 +38,43 @@ class PagePolicy
      */
     public function create(User $user)
     {
-        // admin policy
-        if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
-            return true;
-        }
-
-        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles'])) {
-            return true;
-        }
-        return true;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
 
     /**
      * @param User $user
-     * @param Page $page
      * @return bool
-     * @throws Exception
      */
-    public function update(User $user, Page $page)
+    public function update(User $user)
     {
-        if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
-            return true;
-        }
-
-        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
-            return true;
-        }
-
-        return $user->id === $page->user_id;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);
 
     }
 
     /**
      * @param User $user
-     * @param Page $page
      * @return bool
-     * @throws Exception
      */
-    public function delete(User $user, Page $page)
+    public function delete(User $user)
     {
-        // admin moderator
-        if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
-            return true;
-        }
-
-        if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles'])) {
-            return true;
-        }
-
-        return $user->id === $page->user_id;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
 
     /**
      * @param User $user
-     * @param Page $page
      * @return bool
      */
-
-    public function restore(User $user, Page $page)
+    public function restore(User $user)
     {
-        //admin
-        if ($user->hasRole('super-admin')) {
-            return true;
-        }
-
-        if ($user->can('delete articles')) {
-            return true;
-        }
-
-        return $user->id === $page->user_id;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
 
     /**
      * @param User $user
-     * @param Page $page
      * @return bool
      */
-    public function forceDelete(User $user, Page $page)
+    public function forceDelete(User $user)
     {
-        // admin
-        if ($user->hasRole('super-admin')) {
-            return true;
-        }
-
-        if ($user->can('delete articles')) {
-            return true;
-        }
-
-        return $user->id === $page->user_id;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
 }
