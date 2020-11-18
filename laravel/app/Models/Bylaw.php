@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
+use App\Policies\BylawPolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -30,6 +31,10 @@ use Spatie\Searchable\SearchResult;
 class Bylaw extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
+
+    protected $policies = [
+        Bylaw::class => BylawPolicy::class,
+        ];
 
     /**
      * The attributes that are mass assignable.

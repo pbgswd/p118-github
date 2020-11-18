@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
+use App\Policies\PolicyPolicy;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
@@ -32,6 +33,10 @@ class Policy extends LiveableModel implements HasAttachment, Searchable
         'live',
         'date',
         'user_id',
+    ];
+
+    protected $policies = [
+        Policy::class => PolicyPolicy::class,
     ];
 
     protected $dates = [
