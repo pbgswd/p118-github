@@ -24,7 +24,7 @@ class AdminOrganizationController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Organization::class);
         $data = [];
         $data['organizations'] = Organization::withoutGlobalScopes()
             ->sortable()
@@ -40,7 +40,7 @@ class AdminOrganizationController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Organization::class);
 
         $org = new Organization;
         $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
@@ -58,13 +58,12 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreOrganizationRequest $request
      * @return RedirectResponse
-
      */
     public function store(StoreOrganizationRequest $request)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Organization::class);
         $org = new Organization($request->organization);
 
         $org->save();
@@ -83,7 +82,7 @@ class AdminOrganizationController extends Controller
      */
     public function edit(Organization $any_organization)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Organization::class);
 
         $any_organization->load('member_agreements');
 
@@ -116,7 +115,7 @@ class AdminOrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $any_organization)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Organization::class);
         $any_organization->fill($request->organization);
         $any_organization->save();
 
@@ -138,7 +137,7 @@ class AdminOrganizationController extends Controller
      */
     public function destroy(DestroyOrganizationRequest $request)
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Organization::class);
         Organization::withoutGlobalScopes()
             ->find($request->id)
             ->each(static function (Organization $org) {

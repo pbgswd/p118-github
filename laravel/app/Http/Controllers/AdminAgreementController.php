@@ -11,7 +11,6 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -36,7 +35,7 @@ class AdminAgreementController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Agreement::class);
 
         $data = [];
 
@@ -56,7 +55,7 @@ class AdminAgreementController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Agreement::class);
         $agreement = new Agreement;
 
         return view('admin.agreement', ['data' => ['agreement' => $agreement, 'action' => 'Create']]);
@@ -69,7 +68,7 @@ class AdminAgreementController extends Controller
      */
     public function store(StoreAgreementRequest $request): RedirectResponse
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Agreement::class);
 
         $agreement = new Agreement($request->agreement);
 
@@ -100,7 +99,7 @@ class AdminAgreementController extends Controller
      */
     public function edit(Agreement $agreement)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Agreement::class);
 
         $data = [
             'agreement' => $agreement->load('user', 'attachments'),
@@ -118,7 +117,7 @@ class AdminAgreementController extends Controller
      */
     public function update(UpdateAgreementRequest $request, Agreement $any_agreement): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Agreement::class);
 
         $any_agreement->fill($request->agreement);
 
@@ -152,8 +151,7 @@ class AdminAgreementController extends Controller
      */
     public function destroy(DestroyAgreementRequest $request): RedirectResponse
     {
-        //todo permissions for Agreement controller
-        //$this->authorize('delete', Auth::user());
+        $this->authorize('delete',  Agreement::class);
 
         Agreement::withoutGlobalScopes()
             ->find($request->id)

@@ -22,7 +22,7 @@ class AdminVenueController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Venue::class);
 
         $data['venues'] = Venue::withoutGlobalScopes()
             ->sortable()
@@ -37,7 +37,7 @@ class AdminVenueController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Venue::class);
 
         $venue = new Venue;
 
@@ -59,7 +59,7 @@ class AdminVenueController extends Controller
      */
     public function store(StoreVenueRequest $request)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Venue::class);
 
         $venue = new Venue($request->venue);
 
@@ -79,7 +79,7 @@ class AdminVenueController extends Controller
      */
     public function edit(Venue $any_venue)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Venue::class);
 
         $any_venue->load('member_agreements');
 
@@ -109,7 +109,7 @@ class AdminVenueController extends Controller
      */
     public function update(UpdateVenueRequest $request, Venue $any_venue)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Venue::class);
 
         $any_venue->fill($request['venue']);
 
@@ -132,7 +132,7 @@ class AdminVenueController extends Controller
      */
     public function destroy(DestroyVenueRequest $request)
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Venue::class);
 
         Venue::withoutGlobalScopes()
             ->find($request->id)

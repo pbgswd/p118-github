@@ -35,7 +35,7 @@ class AdminMeetingController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Meeting::class);
 
         $data = [];
         $data['meetings'] = Meeting::withoutGlobalScopes()
@@ -54,7 +54,7 @@ class AdminMeetingController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Meeting::class);
         $meeting = new Meeting();
         $meeting->live = $meeting->getDefaultLiveStatus();
 
@@ -77,7 +77,7 @@ class AdminMeetingController extends Controller
      */
     public function store(StoreMeetingRequest $request)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Meeting::class);
 
         $meeting = new Meeting($request->meeting);
 
@@ -105,7 +105,7 @@ class AdminMeetingController extends Controller
      */
     public function edit(Meeting $meeting)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Meeting::class);
 
         $meeting->load('user', 'attachments');
 
@@ -129,7 +129,7 @@ class AdminMeetingController extends Controller
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Meeting::class);
 
         $any_meeting->fill($request->meeting);
         $any_meeting->save();
@@ -159,7 +159,7 @@ class AdminMeetingController extends Controller
      */
     public function destroy(DestroyMeetingRequest $request)
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Meeting::class);
         Meeting::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Meeting $meeting) {

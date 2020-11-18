@@ -32,7 +32,7 @@ class AdminEmploymentController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Employment::class);
 
         $data = [];
         $jobs = Employment::withoutGlobalScopes()
@@ -58,7 +58,7 @@ class AdminEmploymentController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Employment::class);
         $e = new Employment;
         return view('admin.employment', ['data' => ['employment' => $e, 'action' => 'Add']]);
     }
@@ -70,7 +70,7 @@ class AdminEmploymentController extends Controller
      */
     public function store(StoreEmploymentRequest $request)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Employment::class);
         $employment = new Employment($request->employment);
 
         $employment->save();
@@ -99,7 +99,7 @@ class AdminEmploymentController extends Controller
      */
     public function edit(Employment $employment)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Employment::class);
         $employment->load('user', 'attachments');
 
         $employment['jobstatus'] = $employment->deadline->isPast() ? 0 : 1;
@@ -123,7 +123,7 @@ class AdminEmploymentController extends Controller
      */
     public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Employment::class);
 
         $any_employment->fill($request->employment);
 
@@ -154,7 +154,7 @@ class AdminEmploymentController extends Controller
      */
     public function destroy(DestroyEmploymentRequest $request)
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Employment::class);
 
         Employment::withoutGlobalScopes()
             ->find($request->id)

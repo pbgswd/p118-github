@@ -15,7 +15,6 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
@@ -45,7 +44,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        // $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Auth::user());
 
         $users = User::with(['user_info', 'currentExecutiveRoles', 'membership'])
             ->sortable()
@@ -61,7 +60,6 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param User $user
-     * @param Request $request
      * @return Response
      */
     public function show(User $user)
@@ -111,17 +109,8 @@ class UserController extends Controller
             'provinces' => $regions['statesprovs']['Provinces'],
         ];
 
-        //return view('member_edit', ['data' => $data]);
-
-        /**
-         * If it is the user's own profile
-         */
-
-
-
-        if(Auth::user()->id === $user->id ) {
             return view('member_edit', ['data' => $data]);
-        }
+
     }
 
 
@@ -206,7 +195,7 @@ class UserController extends Controller
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
-        Session::flash('success', "You have edited your profile");
+        Session::flash('success', "Profile for ". $user->name . " has been edited.");
 
         return redirect()->route('member_edit', $user->id);
     }

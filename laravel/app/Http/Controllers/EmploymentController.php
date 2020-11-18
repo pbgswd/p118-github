@@ -24,7 +24,6 @@ class EmploymentController extends Controller
      */
     public function index()
     {
-        //todo migration to drop status column
         $data = [];
         $jobs = Employment::sortable()
             ->where('live', '=', 1)

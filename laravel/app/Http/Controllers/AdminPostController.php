@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
+
 class AdminPostController extends Controller
 {
     /**
@@ -35,7 +36,7 @@ class AdminPostController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Post::class);
 
         $posts = Post::withoutGlobalScopes()
             ->sortable()
@@ -51,7 +52,7 @@ class AdminPostController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Post::class);
 
         $post = new Post;
         $post->topics;
@@ -75,7 +76,7 @@ class AdminPostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Post::class);
 
         $post = new Post($request->input('post'), $request->input('tags'));
 
@@ -115,7 +116,7 @@ class AdminPostController extends Controller
      */
     public function edit(Post $post)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Post::class);
 
         $post->load('user', 'attachments', 'topics');
 
@@ -145,7 +146,7 @@ class AdminPostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $any_post): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Post::class);
 
         $any_post->fill($request->post);
         $any_post->save();
@@ -194,7 +195,7 @@ class AdminPostController extends Controller
      */
     public function destroy(DestroyPostRequest $request)
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Post::class);
 
         Post::withoutGlobalScopes()
             ->find($request->id)

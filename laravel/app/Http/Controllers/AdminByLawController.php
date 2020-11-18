@@ -38,7 +38,7 @@ class AdminByLawController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Bylaw::class);
         $data = [];
         $data['bylaws'] = Bylaw::withoutGlobalScopes()
             ->sortable()
@@ -57,7 +57,7 @@ class AdminByLawController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Bylaw::class);
         $data = [
             'bylaw' => new Bylaw,
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
@@ -74,7 +74,7 @@ class AdminByLawController extends Controller
      */
     public function store(StoreBylawRequest $request)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Bylaw::class);
 
         $bylaw = new Bylaw($request->bylaw);
 
@@ -104,7 +104,7 @@ class AdminByLawController extends Controller
      */
     public function edit(Bylaw $bylaw)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Bylaw::class);
         $data = [
             'bylaw' => $bylaw->load('user', 'attachments'),
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
@@ -122,7 +122,7 @@ class AdminByLawController extends Controller
      */
     public function update(UpdateBylawRequest $request, Bylaw $any_bylaw): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Bylaw::class);
 
         $any_bylaw->fill($request->bylaw);
 
@@ -155,7 +155,7 @@ class AdminByLawController extends Controller
      */
     public function destroy(DestroyBylawRequest $request)
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Bylaw::class);
         /** @var Collection $bylaws */
         $bylaws = Bylaw::withoutGlobalScopes()
             ->find($request->id)

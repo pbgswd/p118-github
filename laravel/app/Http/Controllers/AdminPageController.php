@@ -39,7 +39,7 @@ class AdminPageController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Page::class);
         $pages = Page::withoutGlobalScopes()->sortable()->with('tagged', 'user')->paginate(20);
         $count = Page::withoutGlobalScopes()->count();
 
@@ -60,7 +60,7 @@ class AdminPageController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Page::class);
 
         $page = new Page;
         $page['user_id'] = Auth::id();
@@ -88,7 +88,7 @@ class AdminPageController extends Controller
      */
     public function store(StorePageRequest $request)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Page::class);
 
         $page = new Page($request->page, $request->input('tags'));
 
@@ -128,7 +128,7 @@ class AdminPageController extends Controller
      */
     public function edit(Page $page)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Page::class);
 
         $page->load('user', 'attachments', 'topics');
 
@@ -152,7 +152,7 @@ class AdminPageController extends Controller
      */
     public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Page::class);
 
         $user = Auth::user();
         $user->roles;
@@ -207,7 +207,7 @@ class AdminPageController extends Controller
      */
     public function destroy(DestroyPageRequest $request)
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Page::class);
 
         Page::withoutGlobalScopes()
             ->find($request->id)

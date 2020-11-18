@@ -32,7 +32,7 @@ class AdminTopicController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Topic::class);
 
         $topics = Topic::withoutGlobalScopes()
             ->sortable()
@@ -47,7 +47,7 @@ class AdminTopicController extends Controller
  */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Topic::class);
 
         $topic = new Topic;
         $topic['user_id'] = Auth::id();
@@ -67,7 +67,7 @@ class AdminTopicController extends Controller
      */
     public function store(StoreTopicRequest $request)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Topic::class);
 
         $topic = new Topic($request->input('topic'), $request->input('tags'));
         $topic->user_id = Auth::id();
@@ -101,7 +101,7 @@ class AdminTopicController extends Controller
      */
     public function edit(Topic $topic)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Topic::class);
 
         $data = [
             'topic' => $topic->load('user','attachments'),
@@ -122,7 +122,7 @@ class AdminTopicController extends Controller
 
     public function update(UpdateTopicRequest $request, Topic $any_topic): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', Topic::class);
 
         $any_topic->fill($request->topic);
         $any_topic->save();
@@ -160,7 +160,7 @@ class AdminTopicController extends Controller
      */
     public function destroy(DestroyTopicRequest $request)
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Topic::class);
 
         Topic::withoutGlobalScopes()
             ->find($request->id)
