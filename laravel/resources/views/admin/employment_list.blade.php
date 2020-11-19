@@ -1,7 +1,3 @@
-<?php
-//dd($data);
-$employment = $data['employment'];
-?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> Employment postings'])
 @section('content')
 <div class="container">
@@ -9,17 +5,16 @@ $employment = $data['employment'];
            <span class="badge badge-primary badge-pill">
                {!! $data['count']  !!}
            </span>
-            employment postings. | <a href="{{ route('admin_employment_create') }}">Create new Employment Posting <i class="far fa-arrow-alt-circle-right"></i> </a>
+            employment postings. |
+            <a href="{{ route('admin_employment_create') }}">
+                Create new Employment Posting
+                <i class="far fa-arrow-alt-circle-right"></i>
+            </a>
         </h3>
 </div>
-
-    @if(count($employment) < 1)
-    No employment postings defined yet
-    @else
 <form name="delete" method="POST" action="{{route('admin_employment_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
-
     <div class="form-group">
         <div class="table-responsive">
             <table class="table table-striped table-sm">
@@ -37,7 +32,7 @@ $employment = $data['employment'];
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $employment as $e )
+                    @forelse ( $data['employment'] as $e )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -48,19 +43,31 @@ $employment = $data['employment'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{!!  $e->title !!}" href="{{route('admin_employment_edit', $e->id)}}">{{ $e->title }}</a>
+                                    <a title="{!!  $e->title !!}" href="{{route('admin_employment_edit', $e->id)}}">
+                                        {{ $e->title }}
+                                    </a>
                                 </h4>
                             </td>
                             <td>
-                                @foreach ($e->attachments as $ea)
-                                    <a href="{{route('attachment_download', [$e->getAttachmentFolder(), $ea->id])}}" title="Download {{$ea->file_name}} {{$ea->description}}"><i class="fas fa-file-download fa-2x"></i></a>
-                                @endforeach
+                                @forelse ($e->attachments as $ea)
+                                    <a href="{{route('attachment_download', [$e->getAttachmentFolder(), $ea->id])}}"
+                                       title="Download {{$ea->file_name}} {{$ea->description}}">
+                                        <i class="fas fa-file-download fa-2x"></i>
+                                    </a>
+                                @empty
+                                @endforelse
                                 @if ($e->url != '')
-                                    <a href="{{$e->url}}" title="Open {{$e->title}} in new tab" target="_blank"><i class="fas fa-external-link-alt fa-2x"></i></a>
+                                    <a href="{{$e->url}}" title="Open {{$e->title}} in new tab" target="_blank">
+                                        <i class="fas fa-external-link-alt fa-2x"></i>
+                                    </a>
                                 @endif
                             </td>
-                            <td> {!! $e->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
-                            <td> {!! $e->jobstatus ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                            <td> {!! $e->live ? "<i class='fas fa-check'></i>" :
+                                    "<i class='far fa-times-circle'></i>" !!}
+                            </td>
+                            <td> {!! $e->jobstatus ? "<i class='fas fa-check'></i>" :
+                                    "<i class='far fa-times-circle'></i>" !!}
+                            </td>
                             <td>
                                 <a href="{{ route('admin_employment_edit', $e->id) }}" title="Edit {{ $e->title }} ">
                                     <i class="fas fa-edit"></i>
@@ -70,7 +77,11 @@ $employment = $data['employment'];
                             <td> {{ $e->created_at->format('F j Y H:i:s') }} </td>
                             <td> {{ $e->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="9">Nothing posted</td>
+                        </tr>
+                    @endforelse
                     <tr>
                         <td colspan="9">&nbsp;</td>
                     </tr>
@@ -78,7 +89,7 @@ $employment = $data['employment'];
             </table>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-lg-5">
         <div class="col">
             <i class="far fa-trash-alt fa-2x"></i>
             <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
@@ -86,16 +97,11 @@ $employment = $data['employment'];
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                     {{ $employment->links() }}
+                     {{ $data['employment']->links() }}
                 </ul>
             </div>
         </div>
         <div class="col"></div>
     </div>
-
-
-
-    <div class="row" style="margin-top:6em;"></div>
 </form>
-@endif
 @endsection
