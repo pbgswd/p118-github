@@ -23,7 +23,7 @@ class AdminCommitteeController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('viewAny', Committee::class);
         $c = Committee::withoutGlobalScopes()->with('creator')->sortable()->paginate(10);
 
         return view('admin.listcommittees', ['data' => ['committees' => $c]]);
@@ -34,7 +34,7 @@ class AdminCommitteeController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Committee::class);
 
         $data = [
             'user_id' => Auth::id(),
@@ -52,7 +52,7 @@ class AdminCommitteeController extends Controller
      */
     public function store(StoreCommitteeRequest $request): RedirectResponse
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('create', Committee::class);
 
         $committee = New Committee($request->input('committee'));
         $committee->user_id = Auth::id();
@@ -65,12 +65,11 @@ class AdminCommitteeController extends Controller
 
     /**
      * @param Committee $committee
-     * @param User $users
      * @return Factory|View
      */
-    public function show(Committee $committee, User $users)
+    public function show(Committee $committee)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('view', $committee);
 
         $committee->load('creator', 'active_committee_members');
 
@@ -101,9 +100,9 @@ class AdminCommitteeController extends Controller
      */
     public function edit(Committee $any_committee)
     {
-        $this->authorize('create', Auth::user());
-
         $any_committee->load('creator','active_committee_members');
+
+        $this->authorize('update', $any_committee);
 
         return view('admin.committee', [
             'data' => [
@@ -121,7 +120,8 @@ class AdminCommitteeController extends Controller
      */
     public function update(UpdateCommitteeRequest $request, Committee $any_committee): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', $any_committee);
+
         $any_committee->fill($request->committee);
         $any_committee->save();
 
@@ -136,7 +136,7 @@ class AdminCommitteeController extends Controller
      */
     public function destroy(DestroyCommitteeRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Auth::user());
+        $this->authorize('delete', Committee::class);
 
         Committee::withoutGlobalScopes()
             ->find($request->id)
@@ -148,10 +148,8 @@ class AdminCommitteeController extends Controller
                 //todo committee destroy committee relation?
                 //todo committee destroy committee posts?
 
-
                 $committee->delete();
             });
-
 
         Session::flash('success', Str::plural('Committee', count($request->id)) . ' deleted.');
 

@@ -113,9 +113,12 @@
                                 </td>
                                 <td>
                                     <h4>
-                                        <a title="{{ $i['name'] }}" href="{{ route('user_edit', $i['id']) }}">
+                                        <a href="{{route('admin_edit_committee_members',
+                                           [$data['committee']['slug'], $i->id])}}" alt="edit"
+                                           title="Edit {{ $i['name'] }}">
                                             {{ $i['name'] }}
                                         </a>
+
                                     </h4>
                                 </td>
                                 <td>

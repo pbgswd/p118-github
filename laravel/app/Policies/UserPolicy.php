@@ -88,7 +88,7 @@ class UserPolicy
      */
     public function admin_update(User $user)
     {
-        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('update users');;
+        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('edit users');;
     }
 
     /**

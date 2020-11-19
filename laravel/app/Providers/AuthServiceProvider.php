@@ -61,10 +61,11 @@ class AuthServiceProvider extends ServiceProvider
         Policy::class => PolicyPolicy::class,
         ExecutiveMembership::class => ExecutiveMembershipPolicy::class,
 //  others
+        CommitteePost::class => CommitteePostPolicy::class,
 
         Attachment::class => AttachmentPolicy::class,
         Committee::class => CommitteePolicy::class,
-        CommitteePost::class => CommitteePostPolicy::class,
+
     ];
 
     /**

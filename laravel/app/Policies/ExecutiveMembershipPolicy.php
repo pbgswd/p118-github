@@ -54,7 +54,7 @@ class ExecutiveMembershipPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('update users');
+        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('edit users');
     }
 
     /**

@@ -58,7 +58,7 @@ class InviteUserPolicy
     public function update(User $user)
     {
         return $user->hasRole(['super-admin', 'office'])||
-            $user->hasPermissionTo('update users');
+            $user->hasPermissionTo('edit users');
     }
 
     /**
@@ -68,7 +68,7 @@ class InviteUserPolicy
     public function delete(User $user)
     {
         return $user->hasRole(['super-admin', 'office'])||
-            $user->hasPermissionTo('update users');
+            $user->hasPermissionTo('edit users');
     }
 
     /**
@@ -78,7 +78,7 @@ class InviteUserPolicy
     public function restore(User $user)
     {
         return $user->hasRole(['super-admin', 'office'])||
-            $user->hasPermissionTo('update users');
+            $user->hasPermissionTo('edit users');
     }
 
     /**

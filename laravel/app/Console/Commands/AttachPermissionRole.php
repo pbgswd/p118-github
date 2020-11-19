@@ -21,7 +21,7 @@ class AttachPermissionRole extends AccessControl
      *
      * @var string
      */
-    protected $description = 'Attach a given permission to an existing role.';
+    protected $description = 'Attach a given [permission] to an existing [role].';
 
 
     /**

@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="row">
-        @foreach ( $data['committees'] as $c )
+        @forelse ( $data['committees'] as $c )
             <div class="col-12 mt-1">
                 <div class="col border border-dark rounded-lg p-3">
                     <h2>
@@ -24,7 +24,9 @@
                     </p>
                 </div>
             </div>
-        @endforeach
+        @empty
+            No committees created as of yet.
+        @endforelse
     </div>
     <div class="row">
         <div class="col"></div>

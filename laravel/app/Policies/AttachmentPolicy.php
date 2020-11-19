@@ -10,6 +10,11 @@ class AttachmentPolicy
 {
     use HandlesAuthorization;
 
+    public function before()
+    {
+
+    }
+
     /**
      * @param User $user
      * @return bool

@@ -7,12 +7,9 @@ use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
-use App\Models\CommitteePostComment;
-use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -20,14 +17,20 @@ use Illuminate\View\View;
 
 class CommitteePostController extends Controller
 {
-
     /**
      * @param Committee $committee
      * @return Factory|View
      */
     public function create(Committee $committee)
     {
-        // $this->authorize('create', Auth::user());
+        /**
+         * allowed:
+         * member of committee
+         * super-admin
+         * executive of committee
+         */
+// $this->authorize('create', CommitteePost::class);
+
         $post = new CommitteePost;
         $post['committee'] = $committee;
 
@@ -45,7 +48,13 @@ class CommitteePostController extends Controller
      */
     public function store(StoreCommitteePostRequest $request, Committee $committee)
     {
-        //$this->authorize('create', Auth::user());
+        /**
+         * allowed:
+         * member of committee
+         * super-admin
+         * executive of committee
+         */
+        //$this->authorize('create', CommitteePost::class);
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
 
@@ -63,6 +72,14 @@ class CommitteePostController extends Controller
      */
     public function edit(Committee $committee, CommitteePost $committeePost)
     {
+        /**
+         * allowed:
+         * author
+         * super-admin
+         * executive of committee
+         */
+        //$this->authorize('update', $committeePost);
+
         $committeePost->creator;
         return view('committee_post_form', [$committee->slug, $committeePost->slug], [
             'data' => [
@@ -81,6 +98,13 @@ class CommitteePostController extends Controller
     public function update(UpdateCommitteePostRequest $request,
                            Committee $committee, CommitteePost $committeePost)
     {
+        /**
+         * allowed:
+         * author
+         * super-admin
+         * executive of committee
+         */
+//$this->authorize('update', CommitteePost::class);
         $committeePost->fill($request['post']);
         $committeePost->save();
         $committeePost->creator;
@@ -96,16 +120,18 @@ class CommitteePostController extends Controller
      *
      * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @param CommitteePostComment $committeePostComments
      * @return Response
      * public
      */
-    public function show(Committee $committee, CommitteePost $committeePost,
-                         CommitteePostComment $committeePostComments)
+    public function show(Committee $committee, CommitteePost $committeePost)
     {
-        // $this->authorize('create', Auth::user());
+        /**
+         * allowed
+         * logged in user
+         */
+        $this->authorize('view', CommitteePost::class);
 
-        $data =[];
+        $data = [];
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee']);
 
         /*
@@ -116,7 +142,7 @@ class CommitteePostController extends Controller
         }
         */
 
-        $data['action'] = 'Add';
+      //  $data['action'] = 'Add';
 
         return view('committee_post', ['data' => $data]);
     }
@@ -130,6 +156,13 @@ class CommitteePostController extends Controller
     public function destroy(DestroyCommitteePostRequest $request,
                             Committee $committee): RedirectResponse
     {
+        /**
+         * allowed:
+         * author
+         * super-admin
+         * executive of committee
+         */
+
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (CommitteePost $post) {

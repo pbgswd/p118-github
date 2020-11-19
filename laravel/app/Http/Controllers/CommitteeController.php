@@ -32,7 +32,6 @@ class CommitteeController extends Controller
          * names and profile links to who are Chair, cochair, Secretary
          * logged in user is a member or not?
          * count of members
-         * link to members list of this committee
          * list of posts, news
          * subscribe status, or unsubscribe
          */
@@ -46,6 +45,7 @@ class CommitteeController extends Controller
      */
     public function join(Committee $committee)
     {
+        /*****
         $committee->load('committee_members');
 
         $data['isMember'] = $committee->committee_members
@@ -65,6 +65,7 @@ class CommitteeController extends Controller
         Session::flash('success', 'You have joined ' . $committee->name);
 
         return redirect()->route('committee', $committee->slug);
+        ********/
     }
 
     /**
@@ -73,12 +74,14 @@ class CommitteeController extends Controller
      */
     public function leave(Committee $committee)
     {
+        /**********
         $committee->committee_members()
             ->updateExistingPivot(Auth::id(), ['role' => 'Past-Member']);
 
         Session::flash('success', 'You have left' . $committee->name);
 
         return redirect()->route('committee', $committee->slug);
+         * *******/
     }
 
 
@@ -98,6 +101,9 @@ class CommitteeController extends Controller
 
         /** @var  User $user */
         $user = Auth::user();
+        $user->committee_membership;
+
+
 
         $rank = \array_flip(\array_values(Options::committee_executive_roles()));
 
@@ -128,17 +134,15 @@ class CommitteeController extends Controller
     public function show_members(Committee $committee)
     {
         /**
-         *  get sortable thing
-         *  get paginate thing
-         *
          * do we use visibility preferences for users profile?
          * do we say if you are a member you have to show your email
          * do we say if you are a member you have to show your profile?
          * show member status? Chair, Co-chair, Secretary, Member
-         */
+
 
         $committee->load('active_committee_members')->sortable();
 
         return view('committee_list_members', ['data' => ['committee' => $committee]]);
+        */
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\CommitteePostPolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -34,10 +35,10 @@ class CommitteePost extends LiveableModel implements Searchable
     use Sortable;
     use HasRoles;
 
-    protected $guard_name = 'web';  //????
-//todo committeePost policy
+    protected $guard_name = 'web';
+
     protected $policies = [
-        //Committee::class=>CommitteePolicy::class,
+        CommitteePost::class => CommitteePostPolicy::class,
     ];
 
     public $sortable = [

@@ -47,9 +47,10 @@ class AdminCommitteePostController extends Controller
      */
     public function create(Committee $committee)
     {
-        //todo enable permission
 
-        // $this->authorize('create', Auth::user());
+         $this->authorize('create', CommitteePost::class);
+
+
         $post = new CommitteePost;
         $post['committee'] = $committee;
 
@@ -79,8 +80,8 @@ class AdminCommitteePostController extends Controller
      */
     public function edit(Committee $committee, CommitteePost $any_committee_post)
     {
-        // $this->authorize('update', Auth::user());
-
+         $this->authorize('update', CommitteePost::class);
+dd(__METHOD__);
         $any_committee_post->load('creator', 'committee' , 'admin_post_comments');
 
         $data = [

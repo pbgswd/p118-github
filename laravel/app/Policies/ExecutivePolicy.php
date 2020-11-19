@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Executive;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -13,12 +12,11 @@ class ExecutivePolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @return mixed
      */
     public function viewAny(User $user)
     {
-
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasAnyPermission(['create users', 'edit users', 'publish users', 'unpublish users']);
     }
@@ -26,7 +24,7 @@ class ExecutivePolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @param  \App\Executive  $executive
      * @return mixed
      */
@@ -38,7 +36,7 @@ class ExecutivePolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @return mixed
      */
     public function create(User $user)
@@ -47,22 +45,18 @@ class ExecutivePolicy
     }
 
     /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Executive  $executive
-     * @return mixed
+     * @param User $user
+     * @return bool
      */
     public function update(User $user)
     {
-        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('update users');
+        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('edit users');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Executive  $executive
+     * @param User $user
      * @return mixed
      */
     public function delete(User $user)
@@ -73,7 +67,7 @@ class ExecutivePolicy
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @param  \App\Executive  $executive
      * @return mixed
      */
@@ -85,7 +79,7 @@ class ExecutivePolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @param  \App\Executive  $executive
      * @return mixed
      */
