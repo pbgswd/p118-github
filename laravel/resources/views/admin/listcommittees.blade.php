@@ -5,10 +5,13 @@
            <span class="badge badge-primary badge-pill">
                {{$data['committees']->count()}}
            </span>
-            Committees. |
-            <a href="{{ route('committee_create') }}">
-                Create new Committee <i class="far fa-arrow-alt-circle-right"></i>
-            </a>
+            Committees.
+            @can('create committee')
+                |
+                <a href="{{ route('committee_create') }}">
+                    Create new Committee <i class="far fa-arrow-alt-circle-right"></i>
+                </a>
+            @endcan
         </h3>
     </div>
     <form name="delete" method="POST" action="{{route('committee_destroy')}}">
@@ -26,7 +29,11 @@
                             <th> @sortablelink('sort_order', 'Sort Order') </th>
                             <th> @sortablelink('in_menu', 'In Menu?') </th>
                             <th> Created By </th>
-                            <th> Edit </th>
+                            <th>
+                                @can('manage committee')
+                                    Edit
+                                @endcan
+                            </th>
                             <th> @sortablelink('created_at', 'Created At') </th>
                             <th> @sortablelink('updated_at', 'Updated At') </th>
                         </tr>
@@ -59,18 +66,22 @@
                                 </td>
                                 <td>{{ $c->creator->name }}</td>
                                 <td>
-                                    <a href="{{ route('committee_edit', $c->slug) }}"
-                                       title="Edit {{ $c->name }} ">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+                                    @can('manage committee')
+                                        <a href="{{ route('committee_edit', $c->slug) }}"
+                                           title="Edit {{ $c->name }} ">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    @endcan
                                 </td>
                                 <td> {{ $c->created_at->format('F j Y H:i:s') }} </td>
                                 <td> {{ $c->updated_at->format('F j Y H:i:s') }} </td>
                             </tr>
                         @empty
-                        <tr>
-                            <td colspan="10">No committees yet.</td>
-                        </tr>
+                            <tr>
+                                <td colspan="10">
+                                    No committees yet.
+                                </td>
+                            </tr>
                         @endforelse
                         <tr>
                             <td colspan="10">&nbsp;</td>
@@ -81,10 +92,12 @@
         </div>
         <div class="row mb-lg-5">
             <div class="col">
-                @if($data['committees']->count() > 0)
-                    <i class="far fa-trash-alt fa-2x"></i>
-                    <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
-                @endif
+                @can('delete committee')
+                    @if($data['committees']->count() > 0)
+                        <i class="far fa-trash-alt fa-2x"></i>
+                        <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
+                    @endif
+                @endcan
             </div>
             <div class="col-6">
                 <div class="list-group">
