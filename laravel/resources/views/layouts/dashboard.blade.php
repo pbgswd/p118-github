@@ -105,12 +105,6 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('committees_list') }}">
-                                    <span data-feather="file"></span>
-                                    Committees
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('agreements_list') }}">
                                     <span data-feather="file"></span>
                                     Agreements
@@ -120,6 +114,14 @@
                                 <a class="nav-link" href="{{ route('policies_list') }}">
                                     <span data-feather="file"></span>
                                     Policies
+                                </a>
+                            </li>
+                            @endcan
+                            @can('manage committee')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('committees_list') }}">
+                                    <span data-feather="file"></span>
+                                    Committees
                                 </a>
                             </li>
                             @endcan

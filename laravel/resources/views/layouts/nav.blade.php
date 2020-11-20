@@ -120,12 +120,12 @@
             @guest
             @else
             <li class="nav-item">
-                <a class="nav-link" href="/site"><i class="fas fa-industry"></i> Landing Page</a>
+                <a class="nav-link" href="/site"><i class="fas fa-industry fa-2x"></i> Landing Page</a>
             </li>
-                @role('super-admin')
+                @hasanyrole(['super-admin|office|writer|committee'])
                      <li class="nav-item">
                         <a class="nav-link" href="{{route('admin')}}" title="Admin">
-                            <i class="fas fa-tachometer-alt"></i>
+                            <i class="fas fa-2x fa-tachometer-alt"></i> Admin
                         </a>
                     </li>
                 @endrole
