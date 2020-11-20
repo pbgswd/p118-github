@@ -121,7 +121,7 @@ Route::group(['middleware' =>  ['web', 'auth',] ], function () {
 
 });
 //todo handle role super-admin, office, or some such
-Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {
 
 //Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth']], function () {
 
