@@ -129,13 +129,6 @@
                         </a>
                     </li>
                 @endrole
-                @can('edit articles')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('admin')}}" title="Admin">
-                        <i class="fas fa fa-feather fa-w-16"></i>
-                    </a>
-                </li>
-                @endcan
             @endguest
         </ul>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
