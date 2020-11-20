@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\UserPolicy;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -173,6 +174,8 @@ class User extends Authenticatable implements HasAttachment, Searchable
     {
         return AccessLevelConstants::MEMBERS;
     }
+
+
 
     /**
      * Limit to current active role(s) for the given user

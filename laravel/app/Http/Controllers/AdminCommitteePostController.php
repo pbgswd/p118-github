@@ -28,7 +28,8 @@ class AdminCommitteePostController extends Controller
      */
     public function index(CommitteePost $committeePost, Committee $committee)
     {
-        // $this->authorize('list', Auth::user());
+        $this->authorize('update', $committee);
+
         $data = [
             'committee' => $committee,
             'posts' => CommitteePost::withoutGlobalScopes()
@@ -47,9 +48,7 @@ class AdminCommitteePostController extends Controller
      */
     public function create(Committee $committee)
     {
-
-         $this->authorize('create', CommitteePost::class);
-
+        $this->authorize('update', $committee);
 
         $post = new CommitteePost;
         $post['committee'] = $committee;
@@ -60,7 +59,8 @@ class AdminCommitteePostController extends Controller
 
     public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
     {
-        //$this->authorize('create', Auth::user());
+        $this->authorize('update', $committee);
+
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
         $post->user_id = Auth::id();
@@ -80,8 +80,8 @@ class AdminCommitteePostController extends Controller
      */
     public function edit(Committee $committee, CommitteePost $any_committee_post)
     {
-         $this->authorize('update', CommitteePost::class);
-dd(__METHOD__);
+        $this->authorize('update', $committee);
+
         $any_committee_post->load('creator', 'committee' , 'admin_post_comments');
 
         $data = [
@@ -102,7 +102,7 @@ dd(__METHOD__);
     public function update(UpdateCommitteePostRequest $request, Committee $committee,
                            CommitteePost $committeePost): RedirectResponse
     {
-        // $this->authorize('update', Auth::user());
+        $this->authorize('update', $committee);
 
         $committeePost->fill($request->post);
         $committeePost->save();
@@ -123,6 +123,8 @@ dd(__METHOD__);
      */
     public function destroy(DestroyCommitteePostRequest $request, Committee $committee): RedirectResponse
     {
+        $this->authorize('update', $committee);
+
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
             ->each(static function (CommitteePost $post) {

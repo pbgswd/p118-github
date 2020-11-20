@@ -92,17 +92,24 @@
                         View {{$data['committee']->name }} on website.
                     </a>
                 </h4>
-                @can('edit articles')
+                @if($data['canManage'] == 1)
                 <h4>
-                    <a href="{{ route('committee_edit', $data['committee']->slug) }}" title="Edit {{ $data['committee']->name }}">
+                    <a href="{{ route('committee_edit', $data['committee']->slug) }}"
+                       title="Edit {{ $data['committee']->name }}">
                         <i class="fas fa-edit"></i>
                         Edit {{ $data['committee']->name }}
                     </a>
                 </h4>
-                @endcan
+                @endif
             </div>
         </div>
         <hr />
+        <div class="row">
+            @if($data['canManage'] == 1)
+                Can Manage
+                @endif
+        </div>
+
         <div class="row mt-2">
             <div class="col-md">
                 <h4>
@@ -111,14 +118,14 @@
                     {{Str::plural('member', $data['committee']->active_committee_members->count())}}
                     in {{$data['committee']->name}}
                 </h4>
-                @can('edit articles')
+                @if($data['canManage'] == 1)
                 <h4>
                     <a href="{{route('admin-list-committee-members', $data['committee']->slug)}}">
                         <i class="fas fa-users"></i>
                         List, Add, Edit Committee Members & Roles
                     </a>
                 </h4>
-                @endcan
+                @endif
             </div>
                 <div class="col-md">
                 </div>
@@ -133,7 +140,7 @@
                 @endforeach
             </div>
         </div>
-        @can('edit articles')
+        @if($data['canManage'] == 1)
             <div class="row mt-lg-5 mb-lg-5">
                 <h5>
                     <a href="{{route('committee_posts_list', $data['committee']->slug)}}">
@@ -147,6 +154,6 @@
                     </a>
                 </h5>
             </div>
-        @endcan
+        @endif
     </div>
 @endsection

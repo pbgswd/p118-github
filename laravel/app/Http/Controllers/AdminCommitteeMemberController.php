@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\CommitteeConstants;
 use App\Http\Requests\CommitteeMember\DestroyCommitteeMember;
 use App\Http\Requests\CommitteeMember\SearchCommitteeMember;
 use App\Http\Requests\CommitteeMember\StoreCommitteeMember;
 use App\Http\Requests\CommitteeMember\UpdateCommitteeMember;
 use App\Models\Committee;
+use App\Models\Options;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -24,7 +26,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function index(Committee $committee)
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('update', $committee);
         $data = [];
 
         $committee->load('active_committee_members')->sortable();
@@ -44,6 +46,8 @@ class AdminCommitteeMemberController extends Controller
      */
     public function search(SearchCommitteeMember $request, Committee $committee)
     {
+        $this->authorize('update', $committee);
+
         $data = [];
 
         $data['search'] = User::where('name', 'LIKE', '%'. filter_var($request->search, FILTER_SANITIZE_STRING) .'%')
@@ -59,6 +63,7 @@ class AdminCommitteeMemberController extends Controller
         $data['query'] = $request->search;
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
+
         return view('admin.committee_members_list', ['data' => $data]);
     }
 
@@ -70,7 +75,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function create(Committee $committee, User $user)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('update', $committee);
         $data= [];
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
@@ -88,10 +93,15 @@ class AdminCommitteeMemberController extends Controller
      */
     public function store(StoreCommitteeMember $request, Committee $committee, User $user)
     {
-        $this->authorize('create', Auth::user());
+        $this->authorize('update', $committee);
+
         $user->load('committee_memberships');
 
         $committee->committee_members()->attach($user['id'], ['role' => $request['role']]);
+
+        if(in_array($request['role'], Options::committee_executive_roles())) {
+            $user->assignRole(CommitteeConstants::COMMITTEE);
+        }
 
         //todo send email to member
 
@@ -108,11 +118,14 @@ class AdminCommitteeMemberController extends Controller
      */
     public function edit(Committee $committee, User $user)
     {
+        $this->authorize('update', $committee);
+
         $user->load(['committee_memberships' => function ($query) use ($committee) {
             $query->where('committee_id', $committee->id);
         }]);
 
-        $this->authorize('create', Auth::user());
+        $this->authorize('update', $committee);
+
         $data = [];
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
@@ -130,9 +143,23 @@ class AdminCommitteeMemberController extends Controller
      */
     public function update(UpdateCommitteeMember $request, Committee $committee, User $user)
     {
-        $this->authorize('update', Auth::user());
+        $this->authorize('update', $committee);
+
         $user->load('committee_memberships');
         $committee->committee_members()->updateExistingPivot($user['id'], ['role' => $request['role']]);
+
+
+        //todo dont overwrite other role
+
+        if(in_array($request['role'], Options::committee_executive_roles())) {
+           // $user->syncRoles(CommitteeConstants::COMMITTEE);
+            $user->assignRole(CommitteeConstants::COMMITTEE);
+        } else {
+            //$user->removeRole('writer');
+        }
+//todo prevent role loss
+        //todo use permissions if necessary to avoid role loss 
+
 
         //todo send email to member
 
@@ -151,7 +178,7 @@ class AdminCommitteeMemberController extends Controller
     {
 
 //todo do I want to hold a history of membership in committees?
-        $this->authorize('delete', Auth::user());
+        $this->authorize('update', $committee);
 
         $committee->committee_members()->updateExistingPivot($user['id'],
             ['role' => 'Past-Member']);

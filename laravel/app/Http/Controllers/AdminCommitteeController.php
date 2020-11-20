@@ -69,7 +69,7 @@ class AdminCommitteeController extends Controller
      */
     public function show(Committee $committee)
     {
-        $this->authorize('view', $committee);
+        $this->authorize('view',  Committee::class);
 
         $committee->load('creator', 'active_committee_members');
 
@@ -77,6 +77,18 @@ class AdminCommitteeController extends Controller
         $committee['committee_roles'] = Options::committee_roles();
 
         $committee_executive_roles = Options::committee_executive_roles();
+
+        // must be a member of the group
+        $canManage = 0;
+        if(
+            $committee->active_committee_members->find(Auth::user()->id) !== null &&
+                Auth::user()->hasRole('committee') &&
+                Auth::user()->hasPermissionTo('manage committee')
+            ||
+            Auth::user()->hasRole('super-admin')
+        ) {
+            $canManage = 1;
+        }
 
         $committee['executives'] = $committee->committee_members->filter(
             function (User $user) use ($committee_executive_roles) {
@@ -89,6 +101,7 @@ class AdminCommitteeController extends Controller
 
         return view('admin.show_committee', ['data' => [
                 'committee' => $committee,
+                'canManage' => $canManage,
                 'action' => 'View',
             ]
         ]);
@@ -100,7 +113,7 @@ class AdminCommitteeController extends Controller
      */
     public function edit(Committee $any_committee)
     {
-        $any_committee->load('creator','active_committee_members');
+        $any_committee->load('creator','posts');
 
         $this->authorize('update', $any_committee);
 
@@ -125,7 +138,7 @@ class AdminCommitteeController extends Controller
         $any_committee->fill($request->committee);
         $any_committee->save();
 
-        Session::flash('success', "You have updated committee " . $any_committee->name);
+        Session::flash('success', "You have updated " . $any_committee->name);
 
         return redirect()->route('committee_edit', $any_committee->slug);
     }

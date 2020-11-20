@@ -103,8 +103,6 @@ class CommitteeController extends Controller
         $user = Auth::user();
         $user->committee_membership;
 
-
-
         $rank = \array_flip(\array_values(Options::committee_executive_roles()));
 
         $data['executives'] = $committee

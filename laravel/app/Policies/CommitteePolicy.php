@@ -11,24 +11,13 @@ class CommitteePolicy
     use HandlesAuthorization;
 
     /**
-     * @param $user
-     * @param $ability
-     * @return bool
-     */
-    public function before($user, $ability)
-    {
- //
-    }
-
-
-    /**
      * @param User $user
      * @return bool
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyRole(['super-admin', 'writer'])||
-            $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles']);
+        return $user->hasAnyRole(['super-admin', 'writer','committee'])||
+            $user->hasAnyPermission(['create committee', 'manage committee', 'delete committee']);
     }
 
     /**
@@ -37,8 +26,8 @@ class CommitteePolicy
      */
     public function view(User $user)
     {
-        return $user->hasAnyRole(['super-admin', 'writer'])||
-            $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles']);
+        return $user->hasAnyRole(['super-admin', 'writer','committee'])||
+            $user->hasAnyPermission(['create committee', 'manage committee', 'delete committee']);
     }
 
     /**
@@ -47,9 +36,8 @@ class CommitteePolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyRole(['super-admin', 'writer'])||
-            $user->hasAnyPermission(['create articles', 'edit articles',
-                'publish articles']);
+        return $user->hasAnyRole(['super-admin'])||
+            $user->hasPermissionTo('create committee');
     }
 
     /**
@@ -59,48 +47,43 @@ class CommitteePolicy
      */
     public function update(User $user, Committee $committee)
     {
-//either admin or user is member of this admin, and executive
-        return $user->hasAnyRole(['super-admin', 'writer'])||
-            $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles']);
+        return ($user->hasPermissionTo('manage committee') &&
+            ($committee->active_committee_members->find($user->id) !== null)) ||
+            ($user->hasAnyRole(['super-admin']) ||
+            $user->hasPermissionTo('create committee'));
     }
 
     /**
      * @param User $user
-     * @param Committee $committee
      * @return bool
      * @throws \Exception
      */
-    public function delete(User $user, Committee $committee)
+    public function delete(User $user)
     {
         // admin policy
-        return $user->hasAnyRole(['super-admin', 'writer'])||
-            $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles']) ||
-            $user->id === $committee->user_id;
+        return $user->hasAnyRole(['super-admin'])||
+            $user->hasPermissionTo('delete committee');
     }
 
     /**
      * @param User $user
-     * @param Committee $committee
      * @return bool
      * @throws \Exception
      */
-    public function restore(User $user, Committee $committee)
+    public function restore(User $user)
     {
-        return $user->hasAnyRole(['super-admin', 'writer'])||
-            $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles']) ||
-            $user->id === $committee->user_id;
+        return $user->hasAnyRole(['super-admin'])||
+            $user->hasPermissionTo('create committee');
     }
 
     /**
      * @param User $user
-     * @param Committee $committee
      * @return bool
      * @throws \Exception
      */
-    public function forceDelete(User $user, Committee $committee)
+    public function forceDelete(User $user)
     {
-        return $user->hasAnyRole(['super-admin', 'writer'])||
-            $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles']) ||
-            $user->id === $committee->user_id;
+        return $user->hasAnyRole(['super-admin'])||
+            $user->hasPermissionTo('delete committee');
     }
 }

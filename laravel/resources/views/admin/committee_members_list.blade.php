@@ -20,9 +20,9 @@
                         <label for="search">
                             <i class="fas fa-search"></i>
                             Look Up Member to Add or Edit
+                            <input type="text" name="search" value="{{$data['query'] ?? ''}}" size="40" required/>
+                            <button type="submit" class="btn btn-secondary">Submit</button>
                         </label>
-                        <input type="text" name="search" value="{{$data['query'] ?? '' }}" size="40" required/>
-                        <button type="submit" class="btn btn-secondary">Submit</button>
                     </h4>
                 </div>
             </form>
@@ -64,13 +64,13 @@
                                         @if(($s->committee_memberships[0]->id ?? '') != $data['committee']->id)
                                             <a
                                                 href="{{route('admin_create_committee_members',
-                                                    [$data['committee']['slug'], $s->id])}}" alt="Add" title="Add">
+                                                    [$data['committee']['slug'], $s->id])}}" title="Add">
                                                 <i class="fas fa-user-plus"></i> Add to Committee
                                             </a>
                                         @else
                                             <a
                                                 href="{{route('admin_edit_committee_members',
-                                                    [$data['committee']['slug'], $s->id])}}" alt="edit" title="edit">
+                                                    [$data['committee']['slug'], $s->id])}}" title="edit">
                                                 <i class="far fa-edit"></i> Edit
                                             </a>
                                         @endif
@@ -114,7 +114,7 @@
                                 <td>
                                     <h4>
                                         <a href="{{route('admin_edit_committee_members',
-                                           [$data['committee']['slug'], $i->id])}}" alt="edit"
+                                           [$data['committee']['slug'], $i->id])}}"
                                            title="Edit {{ $i['name'] }}">
                                             {{ $i['name'] }}
                                         </a>
@@ -134,7 +134,7 @@
                                 <td>
                                     <a
                                         href="{{route('admin_edit_committee_members',
-                                                [$data['committee']['slug'], $i->id])}}" alt="edit" title="edit">
+                                                [$data['committee']['slug'], $i->id])}}" title="edit">
                                         <i class="far fa-edit"></i> Edit
                                     </a>
                                 </td>

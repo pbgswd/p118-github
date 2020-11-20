@@ -42,11 +42,13 @@
                         @forelse ( $data['committees'] as $c )
                             <tr>
                                 <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="id[]" value="{{$c->id}}" />
-                                        </label>
-                                    </div>
+                                    @can('delete committee')
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="id[]" value="{{$c->id}}" />
+                                            </label>
+                                        </div>
+                                    @endcan
                                 </td>
                                 <td>
                                     <h4>

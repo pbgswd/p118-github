@@ -11,6 +11,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -29,7 +30,7 @@ class CommitteePostController extends Controller
          * super-admin
          * executive of committee
          */
-// $this->authorize('create', CommitteePost::class);
+        $this->authorize('update', $committee);
 
         $post = new CommitteePost;
         $post['committee'] = $committee;
@@ -54,7 +55,8 @@ class CommitteePostController extends Controller
          * super-admin
          * executive of committee
          */
-        //$this->authorize('create', CommitteePost::class);
+        $this->authorize('update', $committee);
+
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
 
@@ -78,7 +80,8 @@ class CommitteePostController extends Controller
          * super-admin
          * executive of committee
          */
-        //$this->authorize('update', $committeePost);
+
+        $this->authorize('update', $committee);
 
         $committeePost->creator;
         return view('committee_post_form', [$committee->slug, $committeePost->slug], [
@@ -104,7 +107,9 @@ class CommitteePostController extends Controller
          * super-admin
          * executive of committee
          */
-//$this->authorize('update', CommitteePost::class);
+
+        $this->authorize('update', $committee);
+
         $committeePost->fill($request['post']);
         $committeePost->save();
         $committeePost->creator;
@@ -125,14 +130,22 @@ class CommitteePostController extends Controller
      */
     public function show(Committee $committee, CommitteePost $committeePost)
     {
-        /**
-         * allowed
-         * logged in user
-         */
-        $this->authorize('view', CommitteePost::class);
-
         $data = [];
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee']);
+
+        // must be a member of the group
+        $data['canManage'] = 0;
+        if(
+            $committee->active_committee_members->find(Auth::user()->id) !== null &&
+            Auth::user()->hasRole('committee') &&
+            Auth::user()->hasPermissionTo('manage committee')
+            ||
+            Auth::user()->hasRole('super-admin')
+           ||
+            Auth::user()->id == $data['committeepost']->user_id
+        ) {
+            $data['canManage'] = 1;
+        }
 
         /*
         if($data['committeepost']->allow_comments == 1) {
@@ -141,7 +154,6 @@ class CommitteePostController extends Controller
         ->post_comments->sortByDesc('created_at');
         }
         */
-
       //  $data['action'] = 'Add';
 
         return view('committee_post', ['data' => $data]);
@@ -162,6 +174,8 @@ class CommitteePostController extends Controller
          * super-admin
          * executive of committee
          */
+
+        $this->authorize('update', $committee);
 
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)

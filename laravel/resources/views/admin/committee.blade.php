@@ -1,173 +1,184 @@
-<?php
-$committee = $data['committee'];
-?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' committee ' .
-($data["action"] == 'Edit' ? $committee->name : '') ])
+($data["action"] == 'Edit' ? $data['committee']->name : '') ])
 @section('content')
-<script>
-    tinymce.init({
-        selector: 'textarea#committee-description',
-        height: 200,
-        width:800,
-        menubar: false,
-        plugins: [
-            'advlist autolink lists link image charmap print preview anchor textcolor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify ' +
-            '| bullist numlist outdent indent | removeformat | help',
-        content_css: [
-            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-            '//www.tiny.cloud/css/codepen.min.css'
-        ]
-    });
-</script>
-<div class="container">
-    <h3>
-        <a href="{{ route('committees_list') }}">
-            <i class="far fa-arrow-alt-circle-left"></i>
-            List of committees
-        </a>
-    </h3>
-    @if ($data['action'] == 'Edit')
+    <script>
+        tinymce.init({
+            selector: 'textarea#committee-description',
+            height: 200,
+            width:800,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor textcolor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify ' +
+                '| bullist numlist outdent indent | removeformat | help',
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tiny.cloud/css/codepen.min.css'
+            ]
+        });
+    </script>
+    <div class="container">
         <div class="row">
-            <div class="col-md border border-dark rounded-lg mt-3 mr-3 pt-4">
-                <h4>
-                    View
-                    <a title="{{ $committee->name }}" href="{{ route('admin_committee_show', $committee->slug) }}">
-                        {{ $committee->name }}
-                    </a>
-                </h4>
+            <div class="col-md border border-dark rounded-lg mr-3 p-1">
+            <h4>
+                <a href="{{ route('committees_list') }}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    List of committees
+                </a>
+            </h4>
             </div>
-            <div class="col-md border border-dark rounded-lg mt-3 mr-3 pt-4">
-                <h4>
-                    <i class="fas fa-users"></i> Committee Membership in {{ $committee->name }}
-                </h4>
-                <h4>{{$committee->active_committee_members->count()}} Active Members.</h4>
-                <h4>
-                    <a href="{{route('admin-list-committee-members', $committee->slug)}}">
-                        Add, manage committee membership.
-                    </a>
-                </h4>
-            </div>
-            <div class="col-md border border-dark rounded-lg mt-3 mr-3 pt-4">
-                <h4>
-                    <a href="{{route('committee_posts_list', $committee->slug)}}">
-                        <i class="far fa-folder-open"></i>
-                        posts in {{ $committee->name }}</a>
-                </h4>
-                <h4>
-                    <a href="{{route('admin_committee_post', $committee->slug)}}">
-                        <i class="fas fa-edit"></i>
-                        Add New Post
-                    </a>
-                </h4>
-            </div>
-        </div>
-    @endif
-    <form method="post" name="committee" action="{{ url()->current() }}" enctype="multipart/form-data"
-          class="needs-validation" novalidate>
-        {!! csrf_field() !!}
-        <div class="row mt-lg-3">
-            <div class="form-group">
-                <div class="col-lg-2"><h4>Name</h4></div>
-                <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Name" name="committee[name]"
-                           value="{{ old('committee.name', $committee->name)}}" size="80" required/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-2">
-                    <h4>Description</h4>
-                </div>
-                <div class="col-lg-10">
-                    <textarea name="committee[description]" id="committee-description"
-                              placeholder="Summary content" class="form-control">
-                        {{old('committee.description', $committee->description)}}
-                    </textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-2"><h4>Email</h4></div>
-                <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Email" name="committee[email]"
-                           value="{{ old('committee.email', $committee->email)}}" size="80" required/>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-lg-5">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
-                    <div class="col-6 col-sm-3">
-                        <div class="form-group">
-                            {{ select_options($data['access_levels'],
-                                old('committee.access_level', $committee->access_level),
-                                ['name' => 'committee[access_level]', 'class' => 'form-control'])
-                            }}
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-3"></div>
-                    <div class="col-6 col-sm-3"></div>
-                    <div class="w-100"></div>
-                    <div class="col-12">&nbsp;</div>
-                    <div class="col-6 col-sm-3">
-                        <h4>Sort Order</h4>
-                    </div>
-                    <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02"
-                               placeholder="e.g.: 1000, 2000" name="committee[sort_order]"
-                               value="{{old('committee.sort_order',$committee->sort_order)}}" size="30" required/>
-                        <p>e.g.: 1000, 2000</p>
-                    </div>
-                    <div class="invalid-feedback">
-                        Please add a numeric sort order {{ @$errors->get('committee.sort_order')[0] }}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="col-lg-2"><h4>Status</h4></div>
-                <div class="col-sm">
-                    <label>
-                        <input name="committee[in_menu]" type="hidden" value="0" />
-                        <input name="committee[in_menu]" type="checkbox" value="1"
-                            {{ checked(old('committee.in_menu',$committee->in_menu)) }} /> In Menu
-                    </label>
-                </div>
-                <div class="col-sm">
-                    <label>
-                         <input name="committee[live]" type="hidden" value="0" />
-                         <input name="committee[live]" type="checkbox" value="1"
-                             {{ checked( old('committee.live', $committee->live)) }} />
-                        Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-lg-5 mb-lg-5">
-            <div class="col-sm">
-                <i class="fas fa-edit fa-2x"></i>
-                <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
-            </div>
-    </form>
-            <div class="col-sm"> &nbsp;</div>
             @if ($data['action'] == 'Edit')
-                <div class="col-sm" style="float:right">
-                    <form name="delete" method="POST" action="{{route('committee_destroy')}}">
-                        {!! csrf_field() !!}
-                        {!! method_field('DELETE') !!}
-                        <i class="far fa-trash-alt fa-2x"></i>
-                        <input type="hidden" name="id[]" value="{{ $committee->id }}">
-                        <input class="btn btn-outline-danger" type="submit" value="Delete">
-                    </form>
+                <div class="col-md border border-dark rounded-lg mr-3 p-1">
+                    <h4>
+                        View
+                        <a title="{{ $data['committee']->name }}" href="{{ route('admin_committee_show', $data['committee']->slug) }}">
+                            {{ $data['committee']->name }}
+                        </a>
+                    </h4>
                 </div>
             @endif
         </div>
-</div>
+        @if ($data['action'] == 'Edit')
+            <div class="row">
+                <div class="col-md border border-dark rounded-lg mt-3 mr-3 pt-4">
+                    <h4>
+                        <i class="fas fa-users"></i> Membership in {{ $data['committee']->name }}
+                    </h4>
+                    <h4>
+                        {{$data['committee']->active_committee_members->count()}} Active
+                        {{Str::plural('Member', $data['committee']->active_committee_members->count())}}.
+                    </h4>
+                    <h4>
+                        <a href="{{route('admin-list-committee-members', $data['committee']->slug)}}">
+                            Add, manage committee membership.
+                        </a>
+                    </h4>
+                </div>
+                <div class="col-md border border-dark rounded-lg mt-3 mr-3 pt-4">
+                    <h4>
+                        <a href="{{route('committee_posts_list', $data['committee']->slug)}}">
+                            <i class="far fa-folder-open"></i>
+                             {{$data['committee']->posts->count()}}
+                            {{Str::plural('post', $data['committee']->posts->count())}} in {{ $data['committee']->name }}
+                        </a>
+                    </h4>
+                    <h4>
+                        <a href="{{route('admin_committee_post', $data['committee']->slug)}}">
+                            <i class="fas fa-edit"></i>
+                            Add New Post
+                        </a>
+                    </h4>
+                </div>
+            </div>
+        @endif
+        <form method="post" name="committee" action="{{ url()->current() }}" enctype="multipart/form-data"
+            class="needs-validation" novalidate>
+            {!! csrf_field() !!}
+            <div class="row mt-lg-3">
+                <div class="form-group">
+                    <div class="col-lg-2"><h4>Name</h4></div>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control"  placeholder="Name" name="committee[name]"
+                               value="{{ old('committee.name', $data['committee']->name)}}" size="80" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-2">
+                        <h4>Description</h4>
+                    </div>
+                    <div class="col-lg-10">
+                        <textarea name="committee[description]" id="committee-description"
+                                  placeholder="Summary content" class="form-control">
+                            {{old('committee.description', $data['committee']->description)}}
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-2"><h4>Email</h4></div>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control"  placeholder="Email" name="committee[email]"
+                               value="{{ old('committee.email', $data['committee']->email)}}" size="80" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-lg-5">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-6 col-sm-3 align-middle"><h4>Access Level</h4></div>
+                        <div class="col-6 col-sm-3">
+                            <div class="form-group">
+                                {{ select_options($data['access_levels'],
+                                    old('committee.access_level', $data['committee']->access_level),
+                                    ['name' => 'committee[access_level]', 'class' => 'form-control'])
+                                }}
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3"></div>
+                        <div class="col-6 col-sm-3"></div>
+                        <div class="w-100"></div>
+                        <div class="col-12">&nbsp;</div>
+                        <div class="col-6 col-sm-3">
+                            <h4>Sort Order</h4>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <input type="text" class="form-control"  id="validationCustom02"
+                                   placeholder="e.g.: 1000, 2000" name="committee[sort_order]"
+                                   value="{{old('committee.sort_order',$data['committee']->sort_order)}}"
+                                   size="30" required/>
+                            <p>e.g.: 1000, 2000</p>
+                        </div>
+                        <div class="invalid-feedback">
+                            Please add a numeric sort order {{ @$errors->get('committee.sort_order')[0] }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-lg-2"><h4>Status</h4></div>
+                    <div class="col-sm">
+                        <label>
+                            <input name="committee[in_menu]" type="hidden" value="0" />
+                            <input name="committee[in_menu]" type="checkbox" value="1"
+                                {{ checked(old('committee.in_menu',$data['committee']->in_menu)) }} /> In Menu
+                        </label>
+                    </div>
+                    <div class="col-sm">
+                        <label>
+                             <input name="committee[live]" type="hidden" value="0" />
+                             <input name="committee[live]" type="checkbox" value="1"
+                                 {{ checked( old('committee.live', $data['committee']->live)) }} />
+                            Check now to make Live
+                        </label>
+                        <p>ie.: Draft or Published.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-lg-5 mb-lg-5">
+                <div class="col-sm">
+                    <i class="fas fa-edit fa-2x"></i>
+                    <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
+                </div>
+        </form>
+                <div class="col-sm"> &nbsp;</div>
+                @if ($data['action'] == 'Edit')
+                    @can('delete committee')
+                        <div class="col-sm" style="float:right">
+                            <form name="delete" method="POST" action="{{route('committee_destroy')}}">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
+                                <i class="far fa-trash-alt fa-2x"></i>
+                                <input type="hidden" name="id[]" value="{{ $data['committee']->id }}">
+                                <input class="btn btn-outline-danger" type="submit" value="Delete">
+                            </form>
+                        </div>
+                    @endcan
+                @endif
+            </div>
+        </div>
 @endsection
