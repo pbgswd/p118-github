@@ -70,12 +70,14 @@
                     </label>
                 </div>
                 <div class="col-sm">
+                    <!--
                     <label>
                         <input name="post[allow_comments]" type="hidden" value="0" />
                         <input name="post[allow_comments]" type="checkbox"
                                value="1" {{ checked(old('post.allow_comments', $data['post']->allow_comments)) }} />
                         Allow Comments
                     </label>
+                    -->
                 </div>
                 <div class="col-sm">
                     <label>
