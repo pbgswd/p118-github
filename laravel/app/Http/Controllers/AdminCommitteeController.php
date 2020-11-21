@@ -26,8 +26,17 @@ class AdminCommitteeController extends Controller
         $this->authorize('viewAny', Committee::class);
         $c = Committee::withoutGlobalScopes()->with('creator')->sortable()->paginate(10);
 
-        return view('admin.listcommittees', ['data' => ['committees' => $c]]);
+        $m = null;
+        $user = Auth::user();
+        if ($user->hasPermissionTo('manage committee')
+        ) {
+            $m = $user->committee_memberships;
+        }
+
+        return view('admin.listcommittees', ['data' => ['committees' => $c, 'manage committees' => $m]]);
     }
+
+
 
     /**
      * @return Application|Factory|View
@@ -75,20 +84,30 @@ class AdminCommitteeController extends Controller
 
         $committee['post_count'] = $committee->posts->count();
         $committee['committee_roles'] = Options::committee_roles();
-
         $committee_executive_roles = Options::committee_executive_roles();
 
-        // must be a member of the group
+        $user = $committee->active_committee_members->find(Auth::user()->id);
         $canManage = 0;
-        if(
-            $committee->active_committee_members->find(Auth::user()->id) !== null &&
-                Auth::user()->hasRole('committee') &&
-                Auth::user()->hasPermissionTo('manage committee')
+        if($user !== null &&
+            $user->hasRole('committee') &&
+            $user->hasPermissionTo('manage committee') &&
+            in_array($user->pivot->role, $committee_executive_roles)
             ||
-            Auth::user()->hasRole('super-admin')
-        ) {
-            $canManage = 1;
+            Auth::user()->hasRole('super-admin')) {
+                $canManage = 1;
         }
+
+        /**
+        //todo a closure instead
+        $canManage = function(User $user) use ($committee, $committee_executive_roles) {
+            return $committee->active_committee_members->find(Auth::user()->id) !== null &&
+            Auth::user()->hasRole('committee') &&
+            Auth::user()->hasPermissionTo('manage committee') &&
+            in_array($user->pivot->role, $committee_executive_roles)
+            ||
+            Auth::user()->hasRole('super-admin');
+        };
+        **/
 
         $committee['executives'] = $committee->committee_members->filter(
             function (User $user) use ($committee_executive_roles) {

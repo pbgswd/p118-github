@@ -176,7 +176,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
     }
 
 
-
     /**
      * Limit to current active role(s) for the given user
      *
