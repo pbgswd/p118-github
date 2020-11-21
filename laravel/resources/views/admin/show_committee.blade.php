@@ -70,10 +70,8 @@
                     @endif
                 </div>
                 <div class="col-sm">
-                    @if($data['committee']->allow_comments == 1)
-                        &nbsp;
-                    @else
-                        &nbsp;
+                    @if($data['committee']->allow_comments == 1)&nbsp;
+                    @else&nbsp;
                     @endif
                 </div>
                 <div class="col-sm">
@@ -88,7 +86,7 @@
                 <h4>
                     <a href="{{ route('committee', $data['committee']->slug) }}"
                        title="View {{$data['committee']->name }} on {{env('APP_NAME')}}" target="_blank">
-                        <i class="fas fa-external-link-alt"></i>
+                        <i class="fas fa-eye"></i>
                         View {{$data['committee']->name }} on website.
                     </a>
                 </h4>
@@ -103,13 +101,6 @@
                 @endif
             </div>
         </div>
-        <hr />
-        <div class="row">
-            @if($data['canManage'] == 1)
-                Can Manage
-                @endif
-        </div>
-
         <div class="row mt-2">
             <div class="col-md">
                 <h4>
@@ -119,25 +110,28 @@
                     in {{$data['committee']->name}}
                 </h4>
                 @if($data['canManage'] == 1)
-                <h4>
-                    <a href="{{route('admin-list-committee-members', $data['committee']->slug)}}">
-                        <i class="fas fa-users"></i>
-                        List, Add, Edit Committee Members & Roles
-                    </a>
-                </h4>
+                    <h4>
+                        <a href="{{route('admin-list-committee-members', $data['committee']->slug)}}">
+                            <i class="fas fa-users"></i>
+                            List, Add, Edit Committee Members & Roles
+                        </a>
+                    </h4>
                 @endif
             </div>
                 <div class="col-md">
                 </div>
             <div class="col-md">
                 <h4>Committee Membership Roles</h4>
-                @foreach ($data['committee']['executives'] as $exec)
-                    <p>  {{$exec->pivot->role}}:
-                        <a href="{{route('user_edit', $exec->id)}}">
-                            {{$exec->name}}
-                        </a>
-                    </p>
-                @endforeach
+                <ul class="list-group">
+                    @foreach ($data['committee']['executives'] as $exec)
+                        <li class="list-group-item">
+                            {{$exec->pivot->role}}:
+                            <a href="{{route('user_edit', $exec->id)}}">
+                                {{$exec->name}}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
         @if($data['canManage'] == 1)

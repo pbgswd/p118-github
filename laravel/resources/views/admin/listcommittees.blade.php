@@ -43,7 +43,7 @@
                                 <td>
                                     <a href="{{route('admin_committee_show', $m->slug)}}"
                                        title="Edit {{ $m->name }}">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-eye"></i>
                                     </a>
                                 </td>
                             </tr>
