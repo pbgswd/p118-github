@@ -42,7 +42,7 @@ class UpdateUser extends FormRequest
             'user_address.province'=> 'string|max:255|nullable',
             'user_address.postal_code'=> 'string|max:255|nullable',
             'user_address.country'=> 'string|max:255|nullable',
-            'user_role' => 'required',
+            'user_roles' => 'array|required',
             /**
             'user_membership.membership_date' => 'date',
             'user_membership.membership_expires' => 'date',

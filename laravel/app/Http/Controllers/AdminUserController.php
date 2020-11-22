@@ -278,10 +278,11 @@ class AdminUserController extends Controller
         }
 
         $user_roles = $user->getRoleNames()->toArray();
-        if($user_roles[0] != $request['user_role']) {
-            $message['Website_Role'] = $request['user_role'];
+
+        if($user_roles !== $request->user_roles) {
+            $message['Website_Roles'] = implode(", ", $request->user_role);
         }
-        $user->syncRoles($request['user_role']);
+        $user->syncRoles([$request->user_roles]);
 
         if ($user->membership instanceof Membership) {
             if($request['user_membership']['membership_type'] != $user->membership->membership_type) {

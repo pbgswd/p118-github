@@ -312,7 +312,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend mr-lg-2">
                             <div class="input-group-text">
-                                <input name="user_role" type="radio" value="{{$role->name}}"
+                                <input name="user_roles[]" type="checkbox" value="{{$role->name}}"
                                     {{ checked(array_key_exists($role->name, $data['user_roles'])) }}
                                 />
                             </div><strong  class="pl-lg-2">{{$role->name}}</strong>
