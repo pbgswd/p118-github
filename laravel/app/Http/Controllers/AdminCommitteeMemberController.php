@@ -153,12 +153,14 @@ class AdminCommitteeMemberController extends Controller
         if ($user->committee_memberships->count() > 1) {
             foreach($user->committee_memberships as $m)
             {
-                if(in_array($m->pivot->role, Options::committee_executive_roles())) {
+                if (in_array($m->pivot->role, Options::committee_executive_roles())) {
                     $keepRole = 1;
                     break;
                 }
             }
         }
+
+        //todo dont lose other roles unnecessarily
 
         if (in_array($request['role'], Options::committee_executive_roles())) {
             $user->assignRole(CommitteeConstants::COMMITTEE);
@@ -167,6 +169,8 @@ class AdminCommitteeMemberController extends Controller
                 $user->removeRole(CommitteeConstants::COMMITTEE);
             }
         }
+        //todo manage where to send member if member is no longer executive in committee. Edge case
+        //Privileges will have changed
 
         //todo send email to member
 
