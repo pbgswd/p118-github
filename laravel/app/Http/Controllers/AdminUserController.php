@@ -280,7 +280,7 @@ class AdminUserController extends Controller
         $user_roles = $user->getRoleNames()->toArray();
 
         if($user_roles !== $request->user_roles) {
-            $message['Website_Roles'] = implode(", ", $request->user_role);
+            $message['Website_Roles'] = implode(", ", $request->user_roles);
         }
         $user->syncRoles([$request->user_roles]);
 
