@@ -160,8 +160,6 @@ class AdminCommitteeMemberController extends Controller
             }
         }
 
-        //todo dont lose other roles unnecessarily
-
         if (in_array($request['role'], Options::committee_executive_roles())) {
             $user->assignRole(CommitteeConstants::COMMITTEE);
         } else {
@@ -169,8 +167,6 @@ class AdminCommitteeMemberController extends Controller
                 $user->removeRole(CommitteeConstants::COMMITTEE);
             }
         }
-        //todo manage where to send member if member is no longer executive in committee. Edge case
-        //Privileges will have changed
 
         //todo send email to member
 

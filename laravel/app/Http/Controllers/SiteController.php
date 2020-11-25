@@ -6,6 +6,7 @@ use App\Models\Site;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class SiteController extends Controller
 {
@@ -16,11 +17,12 @@ class SiteController extends Controller
      */
     public function index()
     {
-        $user = Auth::user(); //->with('roles');
-        //$user->roles');
-        //dd($user->roles);
+        //todo tell user to fill out prifle
+        $user = Auth::user()->load('phone_number', 'user_info', 'address');
+
         //todo anything for site
-        return view('site');
+        return view('site', ['data' => ['user' => $user]]);
+
     }
 
     /**

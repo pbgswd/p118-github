@@ -195,7 +195,7 @@ class UserController extends Controller
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
-        Session::flash('success', "Profile for ". $user->name . " has been edited.");
+        Session::flash('success', "Profile for ". $user->name . " has been edited. The office will be updated.");
 
         return redirect()->route('member_edit', $user->id);
     }

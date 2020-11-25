@@ -15,7 +15,7 @@ class HelloController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * FRONT PAGE INDEX OF WEBSITE
      * @return Response
      */
     public function index()
@@ -40,8 +40,6 @@ class HelloController extends Controller
         }
 
 //todo datetime - add time zone management
-
-
 
         return view('hello', ['data' => $data]);
     }
