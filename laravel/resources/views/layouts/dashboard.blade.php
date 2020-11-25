@@ -84,8 +84,7 @@
                                     Admin Dashboard <span class="sr-only">(current)</span>
                                 </a>
                             </li>
-                            @can(['create articles', 'edit articles',
-                                    'delete articles', 'publish articles', 'unpublish articles'])
+                            @can('create articles')
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     <span data-feather="file"></span>
@@ -158,6 +157,9 @@
                                     Roles
                                 </a>
                             </li>
+                            @endcan
+
+                                @can(['create articles'])
 
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
@@ -182,16 +184,6 @@
                                 <a class="nav-link" href="{{ route('posts_list') }}">
                                     <span data-feather="file"></span>
                                     Posts
-                                </a>
-                            </li>
-                            @endcan
-
-                            @can(['create articles', 'edit articles',
-                                     'delete articles', 'publish articles', 'unpublish articles'])
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('attachments_list') }}">
-                                    <span data-feather="file"></span>
-                                    Images & Attachments
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -219,11 +211,26 @@
                                 </a>
                             </li>
                             @endcan
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('attachments_list') }}">
+                                    <span data-feather="file"></span>
+                                    Images & Attachments
+                                </a>
+                            </li>
+
                             @role('super-admin')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('blank') }}">
                                     <span data-feather="file"></span>
                                     Blank Page
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('developer') }}">
+                                    <span data-feather="file"></span>
+                                    Developer Resources
                                 </a>
                             </li>
                             @endrole

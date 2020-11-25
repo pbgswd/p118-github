@@ -127,6 +127,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
 
     Route::get('/', 'AdminController@index')->name('admin');
     Route::get('/blank', 'AdminController@blank')->name('blank');
+    Route::get('/developer', 'AdminController@developer')->name('developer');
 
     Route::get('/carousel', 'AdminCarouselController@index')->name('admin_carousel');
 
