@@ -7,19 +7,26 @@ use App\Http\Requests\CommitteeMember\DestroyCommitteeMember;
 use App\Http\Requests\CommitteeMember\SearchCommitteeMember;
 use App\Http\Requests\CommitteeMember\StoreCommitteeMember;
 use App\Http\Requests\CommitteeMember\UpdateCommitteeMember;
+use App\Services\EmailCommitteeMembershipService;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 
 class AdminCommitteeMemberController extends Controller
 {
+    private $emailCommitteeMembershipService;
+
+    public function __construct(EmailCommitteeMembershipService $emailCommitteeMembershipService)
+    {
+        $this->emailCommitteeMembershipService = $emailCommitteeMembershipService;
+    }
+
     /**
      * @param Committee $committee
      * @return Application|Factory|View
@@ -103,9 +110,14 @@ class AdminCommitteeMemberController extends Controller
             $user->assignRole(CommitteeConstants::COMMITTEE);
         }
 
-        //todo send email to member
+        $data['role'] = $request['role'];
+        $data['committee'] = $committee;
+        $data['user'] = $user;
 
-        Session::flash('success', "You have added " . $user->name . " to " . $committee->name);
+        $result = $this->emailCommitteeMembershipService->sendMessage($data);
+
+        Session::flash('success', "You have added " . $user->name . " to " . $committee->name .
+            "An email notification has been sent.");
 
         return redirect()->route('admin-list-committee-members', [$committee->slug, $user->id]);
     }
@@ -168,7 +180,13 @@ class AdminCommitteeMemberController extends Controller
             }
         }
 
-        //todo send email to member
+        if ($request['role'] != 'Past Member') {
+            $data['role'] = $request['role'];
+            $data['committee'] = $committee;
+            $data['user'] = $user;
+
+            $result = $this->emailCommitteeMembershipService->sendMessage($data);
+        }
 
         Session::flash('success', "You have updated " . $user->name . " in " . $committee->name);
 
@@ -184,7 +202,6 @@ class AdminCommitteeMemberController extends Controller
     public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user)
     {
 
-//todo do I want to hold a history of membership in committees?
         $this->authorize('update', $committee);
 
         $committee->committee_members()->updateExistingPivot($user['id'],
