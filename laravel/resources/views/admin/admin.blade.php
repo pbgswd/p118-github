@@ -28,7 +28,10 @@
                 sections of content on the website.
             </h3>
         @endrole
-        <h3> Use the links in the menu on the left.</h3>
+
+        <h3> Use the links in the menu on the left for available sections and the <strong>Search</strong> input
+            field above to find records.
+        </h3>
     </div>
 </div>
 @endsection
