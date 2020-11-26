@@ -11,6 +11,7 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use App\Models\Employment;
+use App\Models\Executive;
 use App\Models\ExecutiveMembership;
 use App\Models\Meeting;
 use App\Models\Organization;
@@ -59,7 +60,7 @@ class LocalSearchController extends Controller
                 ->registerModel(CommitteePost::class, ['title', 'content'])
                 ->registerModel(CommitteePostComment::class, ['content'])
                 ->registerModel(User::class, 'name')
-                ->registerModel(ExecutiveMembership::class, ['user_id', 'role', 'title'])
+                ->registerModel(Executive::class, ['title', 'email'])
                 ->registerModel(UserInfo::class, 'about')
                 ->registerModel(PhoneNumber::class, 'phone_number')
                 ->registerModel(Address::class, ['street','city','province', 'postal_code', 'country'])
@@ -129,11 +130,10 @@ class LocalSearchController extends Controller
                 })->registerModel(User::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('name')
                         ->withoutGlobalScope(LiveScope::class);
-                /**
-                })->registerModel(ExecutiveMembership::class, static function (ModelSearchAspect $aspect) {
+                })->registerModel(Executive::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
+                        ->addExactSearchableAttribute('email')
                         ->withoutGlobalScope(LiveScope::class);
-               **/
                 })->registerModel(UserInfo::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('about')
                         ->withoutGlobalScope(LiveScope::class);

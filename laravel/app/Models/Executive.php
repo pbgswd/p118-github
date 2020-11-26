@@ -6,6 +6,8 @@ use App\Policies\ExecutivePolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * Class Executive
@@ -15,7 +17,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string         $email
  * @property User           $user
  */
-class Executive extends Model
+class Executive extends Model  implements Searchable
 {
     use Sortable;
 
@@ -45,6 +47,29 @@ class Executive extends Model
         'start_date',
         'end_date',
     ];
+
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                env('APP_NAME'). " Executive",
+                \route('admin_executives')
+            );
+        }
+
+        return new SearchResult(
+            $this,
+            env('APP_NAME'). " Executive",
+            \route('executive')
+        );
+
+    }
 
     /**
      * @return BelongsToMany
