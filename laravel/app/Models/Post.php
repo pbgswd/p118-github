@@ -81,7 +81,6 @@ class Post extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-
         if(request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
@@ -95,8 +94,6 @@ class Post extends LiveableModel implements HasAttachment, Searchable
             $this->title,
             \route('post_show', $this->slug)
         );
-
-
     }
 
 
