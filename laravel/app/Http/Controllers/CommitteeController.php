@@ -93,10 +93,12 @@ class CommitteeController extends Controller
     {
         $data = [];
         $data['committee'] = $committee->load('creator', 'active_committee_members');
-
+//todo check sticky posts
         $data['sticky_posts'] = $committee->posts()
             ->with('creator')->where('sticky', 1)
             ->orderByDesc('updated_at');
+
+        dd($data['sticky_posts']);
 
         $data['posts'] = $committee->posts()
             ->with('creator')->where('sticky', '!=', 1)
@@ -123,6 +125,8 @@ class CommitteeController extends Controller
            return $user_committee->slug == $committee->slug
                && $user_committee->pivot->role != 'Past-Member';
         })->isNotEmpty();
+
+
 
         return view('committee', ['data' => $data]);
     }

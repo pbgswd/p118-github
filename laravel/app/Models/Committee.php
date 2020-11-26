@@ -92,11 +92,20 @@ class Committee extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                $this->name,
+                \route('admin_committee_show', $this->slug)
+            );
+        }
          return new SearchResult(
             $this,
             $this->name,
-            route(request()->route()->getName(), $this->slug)
+            \route('committee', $this->slug)
         );
+
+
     }
 
     /**

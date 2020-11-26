@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Search\LocalSearchResult;
+use App\Models\Address;
 use App\Models\Agreement;
 use App\Models\Attachment;
 use App\Models\Bylaw;
@@ -10,9 +11,11 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use App\Models\Employment;
+use App\Models\ExecutiveMembership;
 use App\Models\Meeting;
 use App\Models\Organization;
 use App\Models\Page;
+use App\Models\PhoneNumber;
 use App\Models\Policy;
 use App\Models\Post;
 use App\Models\Topic;
@@ -56,7 +59,10 @@ class LocalSearchController extends Controller
                 ->registerModel(CommitteePost::class, ['title', 'content'])
                 ->registerModel(CommitteePostComment::class, ['content'])
                 ->registerModel(User::class, 'name')
+                ->registerModel(ExecutiveMembership::class, ['user_id', 'role', 'title'])
                 ->registerModel(UserInfo::class, 'about')
+                ->registerModel(PhoneNumber::class, 'phone_number')
+                ->registerModel(Address::class, ['street','city','province', 'postal_code', 'country'])
                 ->search($request->search),
         ];
 
@@ -123,8 +129,23 @@ class LocalSearchController extends Controller
                 })->registerModel(User::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('name')
                         ->withoutGlobalScope(LiveScope::class);
+                /**
+                })->registerModel(ExecutiveMembership::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->withoutGlobalScope(LiveScope::class);
+               **/
                 })->registerModel(UserInfo::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('about')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(PhoneNumber::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('phone_number')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(Address::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('street')
+                        ->addSearchableAttribute('city')
+                        ->addSearchableAttribute('province')
+                        ->addSearchableAttribute('postal_code')
+                        ->addSearchableAttribute('country')
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(Policy::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\SearchResult;
+use Spatie\Searchable\Searchable;
+
 
 /**
  * @property int $id
@@ -13,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property DateTime created_at
  * @property DateTime updated_at
  */
-class PhoneNumber extends Model
+class PhoneNumber extends Model implements Searchable
 {
 
     protected $guard_name = 'web';
@@ -28,6 +31,29 @@ class PhoneNumber extends Model
         [
             'primary' => 'boolean',
         ];
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        $user = User::where('id', $this->user_id)->first();
+
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $user,
+                $user->name,
+                \route('user_edit', $this->user_id)
+            );
+        }
+
+        return new SearchResult(
+            $user,
+            $user->name,
+            \route('member', $this->user_id)
+        );
+    }
+
 
     /**
      * The attributes that are mass assignable.

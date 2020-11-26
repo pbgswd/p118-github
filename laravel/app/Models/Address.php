@@ -4,6 +4,8 @@ namespace App\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int       $id
@@ -16,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property DateTime  $created_at
  * @property DateTime  $updated_at
  */
-class Address extends Model
+class Address extends Model implements Searchable
 {
     /** @var string  */
     protected $guard_name = 'web';
@@ -40,4 +42,27 @@ class Address extends Model
         'postal_code',
         'country',
     ];
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        $user = User::where('id', $this->user_id)->first();
+
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $user,
+                $user->name,
+                \route('user_edit', $user->id)
+            );
+        }
+
+        return new SearchResult(
+            $user,
+            $user->name,
+            \route('member', $user->id)
+        );
+
+    }
 }
