@@ -21,7 +21,6 @@ use App\Models\UserInfo;
 use App\Models\Venue;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Kyslik\ColumnSortable\Sortable;
@@ -76,7 +75,7 @@ class LocalSearchController extends Controller
      * @param LocalSearchResult $request
      * @return Application|Factory|View
      */
-
+//todo review results of local search controller admin_search method
     public function admin_search(LocalSearchResult $request)
     {
 

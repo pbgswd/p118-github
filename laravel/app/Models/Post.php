@@ -81,12 +81,24 @@ class Post extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
+
+        if(request()->route()->getName() == 'admin_search') {
+            return new SearchResult(
+                $this,
+                $this->title,
+                \route('post_edit', $this->slug)
+            );
+        }
+
         return new SearchResult(
             $this,
             $this->title,
-            \route(request()->route()->getName(), $this->slug)
+            \route('post_show', $this->slug)
         );
+
+
     }
+
 
     /**
      * @return string
