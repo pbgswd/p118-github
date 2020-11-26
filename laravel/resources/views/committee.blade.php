@@ -9,6 +9,9 @@
                     {{$data['committee']->name}}
                 </h2>
             </div>
+
+            <!-- image -->
+
             <div class="col-12">
                 <h2>
                     {!! $data['committee']->description !!}
@@ -35,8 +38,23 @@
             </div>
         </div>
         <div class="row">
+            @forelse($data['sticky_posts'] as $p)
+                <div class="col-6 border border-dark rounded-lg p-4">
+                    <h3>
+                        <a href="{{route('public_committee_post_show', [$data['committee']->slug, $p->slug])}}"
+                           title="{{$p->title}}">
+                            {{$p->title}}
+                        </a>
+                    </h3>
+                    Posted by: {{$p->creator->name}}
+                    {{ \Carbon\Carbon::parse($p->updated_at)->format(' F j, Y') }}
+                </div>
+            @empty
+            @endforelse
+        </div>
+        <div class="row">
             @forelse($data['posts'] as $p)
-                <div class="col-12 border border-dark rounded-lg m-1 p-4">
+                <div class="col-12 border border-dark rounded-lg mt-1 p-4">
                     <h3>
                         <a href="{{route('public_committee_post_show', [$data['committee']->slug, $p->slug])}}"
                            title="{{$p->title}}">

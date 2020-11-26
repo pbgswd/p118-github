@@ -161,7 +161,7 @@ class AdminCommitteeMemberController extends Controller
         $committee->committee_members()->updateExistingPivot($user['id'], ['role' => $request['role']]);
 
         $keepRole = 0;
-
+//todo look at this with rtl
         if ($user->committee_memberships->count() > 1) {
             foreach($user->committee_memberships as $m)
             {

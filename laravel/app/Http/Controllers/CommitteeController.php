@@ -94,8 +94,12 @@ class CommitteeController extends Controller
         $data = [];
         $data['committee'] = $committee->load('creator', 'active_committee_members');
 
+        $data['sticky_posts'] = $committee->posts()
+            ->with('creator')->where('sticky', 1)
+            ->orderByDesc('updated_at');
+
         $data['posts'] = $committee->posts()
-            ->with('creator')
+            ->with('creator')->where('sticky', '!=', 1)
             ->orderByDesc('updated_at')
             ->paginate(5);
 

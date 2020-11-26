@@ -132,17 +132,15 @@ class CommitteePostController extends Controller
     {
         $data = [];
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee']);
-
+        $user = Auth::user();
         // must be a member of the group
+        //todo is this well written enough, canManage property is a boolean
         $data['canManage'] = 0;
-        if(
-            $committee->active_committee_members->find(Auth::user()->id) !== null &&
-            Auth::user()->hasRole('committee') &&
-            Auth::user()->hasPermissionTo('manage committee')
-            ||
-            Auth::user()->hasRole('super-admin')
-           ||
-            Auth::user()->id == $data['committeepost']->user_id
+        if( $committee->active_committee_members->find($user->id) !== null &&
+            $user->hasRole('committee') &&
+            $user->hasPermissionTo('manage committee') ||
+            $user->hasRole('super-admin') ||
+            $user->id == $data['committeepost']->user_id
         ) {
             $data['canManage'] = 1;
         }
