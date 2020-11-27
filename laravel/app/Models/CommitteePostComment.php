@@ -34,7 +34,6 @@ class CommitteePostComment extends LiveableModel  implements Searchable
     protected $guard_name = 'web';
 
     protected $policies = [
-        //todo enable CommitteePolicy
         //Committee::class=>CommitteePolicy::class,
     ];
 

@@ -25,7 +25,6 @@ class Membership extends Model
     /** @var string  */
     protected $guard_name = 'web';
 
-//todo update properties after migration
     /** @var array  */
     protected $dates = [
         'created_at',

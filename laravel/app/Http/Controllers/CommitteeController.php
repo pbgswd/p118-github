@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Committee;
-use App\Models\CommitteePost;
 use App\Models\Options;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class CommitteeController extends Controller
@@ -94,19 +91,16 @@ class CommitteeController extends Controller
         $data = [];
         $data['committee'] = $committee->load('creator', 'active_committee_members');
 
-
-      //  dd($data['sticky_posts']);
-
         $data['posts'] = $committee->posts()
-            ->with('creator')->where('sticky', '!=', 1)
+            ->with('creator')
+            ->where('sticky', '=', 0)
             ->orderByDesc('updated_at')
             ->paginate(5);
 
-//todo check sticky posts
         $data['sticky_posts'] = $committee->posts()
-            ->with('creator')->where('sticky', '=', 1)
-            ->orderByDesc('updated_at');
-       // dd($data);
+            ->with('creator')
+            ->where('sticky', '=', 1)
+            ->orderByDesc('updated_at')->get();
 
         /** @var  User $user */
         $user = Auth::user();
@@ -128,8 +122,6 @@ class CommitteeController extends Controller
            return $user_committee->slug == $committee->slug
                && $user_committee->pivot->role != 'Past-Member';
         })->isNotEmpty();
-
-
 
         return view('committee', ['data' => $data]);
     }

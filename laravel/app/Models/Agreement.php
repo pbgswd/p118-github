@@ -48,7 +48,6 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    //todo remove agreement.access_level in migration
     /**
      * The attributes that are mass assignable.
      */

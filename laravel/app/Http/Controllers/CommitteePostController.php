@@ -134,6 +134,7 @@ class CommitteePostController extends Controller
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee']);
         $user = Auth::user();
         // must be a member of the group
+
         //todo is this well written enough, canManage property is a boolean
         $data['canManage'] = 0;
         if( $committee->active_committee_members->find($user->id) !== null &&

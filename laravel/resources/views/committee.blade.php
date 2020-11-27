@@ -42,7 +42,7 @@
             @forelse($data['sticky_posts'] as $sp)
                 <div class="col-6 border border-dark rounded-lg p-4">
                     <h3>
-                        <a href="{{route('public_committee_post_show', [$data['committee']->slug, $p->slug])}}"
+                        <a href="{{route('public_committee_post_show', [$data['committee']->slug, $sp->slug])}}"
                            title="{{$sp->title}}">
                             {{$sp->title}}
                         </a>

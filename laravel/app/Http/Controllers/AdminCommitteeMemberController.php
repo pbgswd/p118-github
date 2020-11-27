@@ -160,6 +160,7 @@ class AdminCommitteeMemberController extends Controller
         $user->load('committee_memberships');
         $committee->committee_members()->updateExistingPivot($user['id'], ['role' => $request['role']]);
 
+
         $keepRole = 0;
 //todo look at this with rtl
         if ($user->committee_memberships->count() > 1) {
@@ -171,6 +172,8 @@ class AdminCommitteeMemberController extends Controller
                 }
             }
         }
+
+
 
         if (in_array($request['role'], Options::committee_executive_roles())) {
             $user->assignRole(CommitteeConstants::COMMITTEE);
