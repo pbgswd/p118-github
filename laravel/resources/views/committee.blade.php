@@ -37,21 +37,23 @@
                 @endif
             </div>
         </div>
+
         <div class="row">
-            @forelse($data['sticky_posts'] as $p)
+            @forelse($data['sticky_posts'] as $sp)
                 <div class="col-6 border border-dark rounded-lg p-4">
                     <h3>
                         <a href="{{route('public_committee_post_show', [$data['committee']->slug, $p->slug])}}"
-                           title="{{$p->title}}">
-                            {{$p->title}}
+                           title="{{$sp->title}}">
+                            {{$sp->title}}
                         </a>
                     </h3>
-                    Posted by: {{$p->creator->name}}
-                    {{ \Carbon\Carbon::parse($p->updated_at)->format(' F j, Y') }}
+                    Posted by: {{$sp->creator->name}}
+                    {{ \Carbon\Carbon::parse($sp->updated_at)->format(' F j, Y') }}
                 </div>
             @empty
             @endforelse
         </div>
+
         <div class="row">
             @forelse($data['posts'] as $p)
                 <div class="col-12 border border-dark rounded-lg mt-1 p-4">
@@ -69,14 +71,14 @@
                     <h4>No posts yet, but there will be soon!</h4>
                 </div>
             @endforelse
-            @if($data['posts']->count() > 5)
-                <div class="row mt-lg-4">
-                    <div class="col-3 text-center">
-                        {!! $data['posts']->links() !!}
-                    </div>
-                </div>
-            @endif
         </div>
+        @if($data['posts']->count() > 5)
+            <div class="row mt-lg-4">
+                <div class="col-3 text-center">
+                    {!! $data['posts']->links() !!}
+                </div>
+            </div>
+        @endif
         <div class="row mt-3">
             <div class="col-12 m-1 p-4 border border-dark rounded-lg">
                 <h5>{{$data['committee']->name}} Executive</h5>
