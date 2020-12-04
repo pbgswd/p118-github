@@ -158,27 +158,29 @@ class AdminCommitteeMemberController extends Controller
         $this->authorize('update', $committee);
 
         $user->load('committee_memberships');
+
         $committee->committee_members()->updateExistingPivot($user['id'], ['role' => $request['role']]);
 
+        /**
+         * get all roles of user
+         * assign user to committee, add admin role if role assigned is executive
+         * if user is exec in another committee, user may keep that role
+         */
 
         $keepRole = 0;
-//todo look at this with rtl
-        if ($user->committee_memberships->count() > 1) {
-            foreach($user->committee_memberships as $m)
-            {
-                if (in_array($m->pivot->role, Options::committee_executive_roles())) {
-                    $keepRole = 1;
-                    break;
-                }
+
+        foreach($user->committee_memberships as $m)
+        {
+            if (in_array($m->pivot->role, Options::committee_executive_roles()) &&
+                    $committee->id != $m->pivot->committee_id) {
+                $keepRole = 1;
             }
         }
-
-
 
         if (in_array($request['role'], Options::committee_executive_roles())) {
             $user->assignRole(CommitteeConstants::COMMITTEE);
         } else {
-            if ($keepRole == 0) {
+            if ($keepRole == 0 && !in_array($request['role'], Options::committee_executive_roles())) {
                 $user->removeRole(CommitteeConstants::COMMITTEE);
             }
         }
