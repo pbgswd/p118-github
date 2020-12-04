@@ -36,8 +36,6 @@ class AdminCommitteeController extends Controller
         return view('admin.listcommittees', ['data' => ['committees' => $c, 'manage committees' => $m]]);
     }
 
-
-
     /**
      * @return Application|Factory|View
      */
@@ -78,7 +76,7 @@ class AdminCommitteeController extends Controller
      */
     public function show(Committee $committee)
     {
-        $this->authorize('view',  Committee::class);
+        $this->authorize('view', $committee);
 
         $committee->load('creator', 'active_committee_members');
 
@@ -87,6 +85,7 @@ class AdminCommitteeController extends Controller
         $committee_executive_roles = Options::committee_executive_roles();
 
         $user = $committee->active_committee_members->find(Auth::user()->id);
+
         $canManage = 0;
         if($user !== null &&
             $user->hasRole('committee') &&
@@ -96,18 +95,6 @@ class AdminCommitteeController extends Controller
             Auth::user()->hasRole('super-admin')) {
                 $canManage = 1;
         }
-
-        /**
-        //todo a closure instead
-        $canManage = function(User $user) use ($committee, $committee_executive_roles) {
-            return $committee->active_committee_members->find(Auth::user()->id) !== null &&
-            Auth::user()->hasRole('committee') &&
-            Auth::user()->hasPermissionTo('manage committee') &&
-            in_array($user->pivot->role, $committee_executive_roles)
-            ||
-            Auth::user()->hasRole('super-admin');
-        };
-        **/
 
         $committee['executives'] = $committee->committee_members->filter(
             function (User $user) use ($committee_executive_roles) {

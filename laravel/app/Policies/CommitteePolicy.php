@@ -16,17 +16,18 @@ class CommitteePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyRole(['super-admin', 'writer','committee'])||
+        return $user->hasAnyRole(['super-admin', 'writer','committee']) ||
             $user->hasAnyPermission(['create committee', 'manage committee', 'delete committee']);
     }
 
     /**
      * @param User $user
+     * @param Committee $committee
      * @return bool
      */
-    public function view(User $user)
+    public function view(User $user, Committee $committee)
     {
-        return $user->hasAnyRole(['super-admin', 'writer','committee'])||
+        return $user->hasAnyRole(['super-admin', 'writer','committee']) ||
             $user->hasAnyPermission(['create committee', 'manage committee', 'delete committee']);
     }
 
@@ -36,7 +37,7 @@ class CommitteePolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyRole(['super-admin'])||
+        return $user->hasAnyRole(['super-admin']) ||
             $user->hasPermissionTo('create committee');
     }
 
@@ -61,7 +62,7 @@ class CommitteePolicy
     public function delete(User $user)
     {
         // admin policy
-        return $user->hasAnyRole(['super-admin'])||
+        return $user->hasAnyRole(['super-admin']) ||
             $user->hasPermissionTo('delete committee');
     }
 
@@ -72,7 +73,7 @@ class CommitteePolicy
      */
     public function restore(User $user)
     {
-        return $user->hasAnyRole(['super-admin'])||
+        return $user->hasAnyRole(['super-admin']) ||
             $user->hasPermissionTo('create committee');
     }
 
@@ -83,7 +84,7 @@ class CommitteePolicy
      */
     public function forceDelete(User $user)
     {
-        return $user->hasAnyRole(['super-admin'])||
+        return $user->hasAnyRole(['super-admin']) ||
             $user->hasPermissionTo('delete committee');
     }
 }

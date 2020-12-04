@@ -19,14 +19,15 @@
                 </h5>
                 {!! $data['committeepost']->content !!}
                 <br clear="all" />
-                @hasanyrole('super-admin|committee')
+
+                @if($data['canManage'] == 1)
                 <h5>
                     <a href="{{route('committee_post_edit_form', [$data['committeepost']->committee->slug,
                         $data['committeepost']->slug])}}">
                         <i class="far fa-edit"></i> Edit Post
                     </a>
                 </h5>
-                @endhasanyrole
+                @endif
             </div>
         </div>
     </div>

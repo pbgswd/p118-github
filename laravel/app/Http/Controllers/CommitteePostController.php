@@ -30,7 +30,12 @@ class CommitteePostController extends Controller
          * super-admin
          * executive of committee
          */
-        $this->authorize('update', $committee);
+
+        if($committee->active_committee_members->find(Auth::user()->id) !== null) {
+
+        } else {
+            $this->authorize('create', CommitteePost::class);
+        }
 
         $post = new CommitteePost;
         $post['committee'] = $committee;
@@ -55,7 +60,12 @@ class CommitteePostController extends Controller
          * super-admin
          * executive of committee
          */
-        $this->authorize('update', $committee);
+
+        if($committee->active_committee_members->find(Auth::user()->id) !== null) {
+
+        } else {
+            $this->authorize('create', CommitteePost::class);
+        }
 
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
@@ -81,7 +91,11 @@ class CommitteePostController extends Controller
          * executive of committee
          */
 
-        $this->authorize('update', $committee);
+       // $this->authorize('update', $committee);
+
+        if($committee->active_committee_members->find(Auth::user()->id)) {
+
+        }
 
         $committeePost->creator;
         return view('committee_post_form', [$committee->slug, $committeePost->slug], [
@@ -108,7 +122,17 @@ class CommitteePostController extends Controller
          * executive of committee
          */
 
-        $this->authorize('update', $committee);
+        $user = Auth::user();
+        if( $user->hasRole('committee') &&
+            $user->hasPermissionTo('manage committee') ||
+            $user->hasRole('super-admin') ||
+            $user->id == $committeePost->user_id
+        ) {
+            //
+        } else {
+            $this->authorize('update', $committee);
+        }
+
 
         $committeePost->fill($request['post']);
         $committeePost->save();
@@ -133,12 +157,9 @@ class CommitteePostController extends Controller
         $data = [];
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee']);
         $user = Auth::user();
-        // must be a member of the group
 
-        //todo is this well written enough, canManage property is a boolean
         $data['canManage'] = 0;
-        if( $committee->active_committee_members->find($user->id) !== null &&
-            $user->hasRole('committee') &&
+        if( $user->hasRole('committee') &&
             $user->hasPermissionTo('manage committee') ||
             $user->hasRole('super-admin') ||
             $user->id == $data['committeepost']->user_id
@@ -154,6 +175,8 @@ class CommitteePostController extends Controller
         }
         */
       //  $data['action'] = 'Add';
+
+
 
         return view('committee_post', ['data' => $data]);
     }

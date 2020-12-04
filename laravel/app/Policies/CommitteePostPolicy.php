@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\CommitteePost;
 use App\Models\Committee;
-use App\Models\Options;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -20,7 +19,7 @@ class CommitteePostPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user;
     }
 
     /**
@@ -34,30 +33,36 @@ class CommitteePostPolicy
 
     /**
      * @param User $user
+     * @return bool
      */
     public function create(User $user)
     {
-
-
         /**
          * allow committee member to create content
-         * -- must be active member of THIS COMMITTEE
-         *
+         * must be active member of THIS COMMITTEE
          * allow super-admin to create content
          */
-
-       // return $user->hasRole(['super-admin', 'office']);
         //todo filter the committee membership for user
-      //  dd([__METHOD__, $user->committee_memberships[0]->pivot,
-      //      Options::committee_executive_roles()]);
+       // dd(['func_get_args' => func_get_args()]);
+
+        return
+            $user !== null ||
+            $user->hasPermissionTo('manage committee') ||
+            $user->hasAnyRole(['super-admin']) ||
+            $user->hasPermissionTo('create committee');
     }
 
     /**
-     * @param CommitteePost $user
+     * @param User $user
+     * @param Committee $committee
+     * @param CommitteePost $committeePost
+     * @return bool
      */
-    public function update(CommitteePost $user)
+    public function update(User $user, Committee $committee, CommitteePost $committeePost)
     {
-
+        return ($committee->active_committee_members->find($user->id) !== null) ||
+            ($user->hasAnyRole(['super-admin']) ||
+                $user->hasPermissionTo('create committee'));
     }
 
     /**
@@ -69,7 +74,7 @@ class CommitteePostPolicy
      */
     public function delete(User $user, CommitteePost $committeePost)
     {
-        //
+        //todo delete method
     }
 
     /**

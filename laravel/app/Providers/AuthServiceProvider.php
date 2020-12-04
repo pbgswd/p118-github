@@ -60,8 +60,9 @@ class AuthServiceProvider extends ServiceProvider
         Executive::class => ExecutivePolicy::class,
         Policy::class => PolicyPolicy::class,
         ExecutiveMembership::class => ExecutiveMembershipPolicy::class,
-
         Committee::class => CommitteePolicy::class,
+
+        CommitteePost::class => CommitteePostPolicy::class,
 
 
         Attachment::class => AttachmentPolicy::class,

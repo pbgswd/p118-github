@@ -39,8 +39,8 @@ class CommitteePost extends LiveableModel implements Searchable
     protected $guard_name = 'web';
 
     protected $policies = [
-     //   CommitteePost::class => CommitteePostPolicy::class,
-        Committee::class => CommitteePolicy::class,
+     CommitteePost::class => CommitteePostPolicy::class,
+        //Committee::class => CommitteePolicy::class,
     ];
 
     public $sortable = [

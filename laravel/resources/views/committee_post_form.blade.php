@@ -19,15 +19,15 @@
             ]
         });
     </script>
-
 <div class="container  border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.8);">
     <h3>
         <a href="{{ route('committee', $data['post']['committee']->slug) }}">{{$data['post']['committee']->name}}</a>
-     / {{$data['action']}} Post
+     <br /> {{$data['action']}} Post
         @if($data['action'] == "Edit")
             <a href="{{route('public_committee_post_show', [$data['post']['committee']->slug, $data['post']->slug])}}">
                 {{$data['post']->title}}
             </a>
+        <br />
             <a href="{{ route('committee', $data['post']['committee']->slug) }}">
                 <i class="far fa-arrow-alt-circle-left"></i>
                 List of posts
