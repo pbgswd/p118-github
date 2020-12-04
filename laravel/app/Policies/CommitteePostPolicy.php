@@ -33,20 +33,12 @@ class CommitteePostPolicy
 
     /**
      * @param User $user
+     * @param $committee
      * @return bool
      */
-    public function create(User $user)
+    public function create(User $user, $committee)
     {
-        /**
-         * allow committee member to create content
-         * must be active member of THIS COMMITTEE
-         * allow super-admin to create content
-         */
-        //todo filter the committee membership for user
-       // dd(['func_get_args' => func_get_args()]);
-
-        return
-            $user !== null ||
+        return $committee->active_committee_members->find($user->id) !== null ||
             $user->hasPermissionTo('manage committee') ||
             $user->hasAnyRole(['super-admin']) ||
             $user->hasPermissionTo('create committee');
@@ -54,13 +46,13 @@ class CommitteePostPolicy
 
     /**
      * @param User $user
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
+     * @param $committeePost
      * @return bool
      */
-    public function update(User $user, Committee $committee, CommitteePost $committeePost)
+    public function update(User $user, $committeePost)
     {
-        return ($committee->active_committee_members->find($user->id) !== null) ||
+        return ($user->id == $committeePost->user_id) ||
+            $user->hasPermissionTo('manage committee') ||
             ($user->hasAnyRole(['super-admin']) ||
                 $user->hasPermissionTo('create committee'));
     }
@@ -72,9 +64,12 @@ class CommitteePostPolicy
      * @param CommitteePost $committeePost
      * @return mixed
      */
-    public function delete(User $user, CommitteePost $committeePost)
+    public function delete(User $user, $committeePost)
     {
-        //todo delete method
+        return ($user->id == $committeePost->user_id) ||
+            $user->hasPermissionTo('manage committee') ||
+            ($user->hasAnyRole(['super-admin']) ||
+                $user->hasPermissionTo('create committee'));
     }
 
     /**
@@ -86,7 +81,10 @@ class CommitteePostPolicy
      */
     public function restore(User $user, CommitteePost $committeePost)
     {
-        //
+        return $committee->active_committee_members->find($user->id) !== null ||
+            $user->hasPermissionTo('manage committee') ||
+            $user->hasAnyRole(['super-admin']) ||
+            $user->hasPermissionTo('create committee');
     }
 
     /**
@@ -98,6 +96,9 @@ class CommitteePostPolicy
      */
     public function forceDelete(User $user, CommitteePost $committeePost)
     {
-        //
+        return $committee->active_committee_members->find($user->id) !== null ||
+            $user->hasPermissionTo('manage committee') ||
+            $user->hasAnyRole(['super-admin']) ||
+            $user->hasPermissionTo('create committee');
     }
 }

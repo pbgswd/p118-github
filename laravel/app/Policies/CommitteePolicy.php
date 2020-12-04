@@ -46,7 +46,7 @@ class CommitteePolicy
      * @param Committee $committee
      * @return bool
      */
-    public function update(User $user, Committee $committee)
+    public function update(User $user, Committee $committee): bool
     {
         return ($user->hasPermissionTo('manage committee') &&
             ($committee->active_committee_members->find($user->id) !== null)) ||

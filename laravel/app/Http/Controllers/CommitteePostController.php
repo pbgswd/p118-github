@@ -24,18 +24,7 @@ class CommitteePostController extends Controller
      */
     public function create(Committee $committee)
     {
-        /**
-         * allowed:
-         * member of committee
-         * super-admin
-         * executive of committee
-         */
-
-        if($committee->active_committee_members->find(Auth::user()->id) !== null) {
-
-        } else {
-            $this->authorize('create', CommitteePost::class);
-        }
+        $this->authorize('create', [CommitteePost::class, $committee]);
 
         $post = new CommitteePost;
         $post['committee'] = $committee;
@@ -54,18 +43,7 @@ class CommitteePostController extends Controller
      */
     public function store(StoreCommitteePostRequest $request, Committee $committee)
     {
-        /**
-         * allowed:
-         * member of committee
-         * super-admin
-         * executive of committee
-         */
-
-        if($committee->active_committee_members->find(Auth::user()->id) !== null) {
-
-        } else {
-            $this->authorize('create', CommitteePost::class);
-        }
+        $this->authorize('create', [CommitteePost::class, $committee]);
 
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
@@ -84,18 +62,8 @@ class CommitteePostController extends Controller
      */
     public function edit(Committee $committee, CommitteePost $committeePost)
     {
-        /**
-         * allowed:
-         * author
-         * super-admin
-         * executive of committee
-         */
 
-       // $this->authorize('update', $committee);
-
-        if($committee->active_committee_members->find(Auth::user()->id)) {
-
-        }
+       $this->authorize('update', [CommitteePost::class, $committeePost]);
 
         $committeePost->creator;
         return view('committee_post_form', [$committee->slug, $committeePost->slug], [
@@ -115,24 +83,7 @@ class CommitteePostController extends Controller
     public function update(UpdateCommitteePostRequest $request,
                            Committee $committee, CommitteePost $committeePost)
     {
-        /**
-         * allowed:
-         * author
-         * super-admin
-         * executive of committee
-         */
-
-        $user = Auth::user();
-        if( $user->hasRole('committee') &&
-            $user->hasPermissionTo('manage committee') ||
-            $user->hasRole('super-admin') ||
-            $user->id == $committeePost->user_id
-        ) {
-            //
-        } else {
-            $this->authorize('update', $committee);
-        }
-
+        $this->authorize('update', [CommitteePost::class, $committeePost]);
 
         $committeePost->fill($request['post']);
         $committeePost->save();
@@ -188,16 +139,10 @@ class CommitteePostController extends Controller
      * @return RedirectResponse
      */
     public function destroy(DestroyCommitteePostRequest $request,
-                            Committee $committee): RedirectResponse
+                            Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
-        /**
-         * allowed:
-         * author
-         * super-admin
-         * executive of committee
-         */
 
-        $this->authorize('update', $committee);
+        $this->authorize('delete', [CommitteePost::class, $committeePost]);
 
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
