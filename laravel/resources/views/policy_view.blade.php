@@ -1,45 +1,46 @@
-<?php
-$policy = $data['policy'];
-?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
         <div class="col-12">
-            <h4><a href="{{route('policies_list_public')}}"><i class="far fa-arrow-alt-circle-left"></i> Policies</a></h4>
+            <h4>
+                <a href="{{route('policies_list_public')}}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    Policies
+                </a>
+            </h4>
         </div>
         <div class="row">
             <div  class="col-12">
-                <h1 class="display-8"><i class="fas fa-scroll"></i>  {{$policy->title}}</h1>
+                <h1 class="display-8"><i class="fas fa-scroll"></i>  {{$data['policy']->title}}</h1>
             </div>
         </div>
         <div class="row mb-lg-2">
             <div class="col-md-12">
-                <h4>From: {{$policy->date->format('F j Y')}} </h4>
+                <h4>From: {{$data['policy']->date->format('F j Y')}} </h4>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                {!! $policy->description !!}
+                {!! $data['policy']->description !!}
             </div>
         </div>
         <div class="row mt-lg-2">
             <div class="col-12">
-                @if(count($policy->attachments) > 0)
-                    <ul>
-                        @foreach($policy->attachments as $att)
-                            <li>
+                    <ul class="list-group">
+                        @forelse($data['policy']->attachments as $att)
+                            <li class="list-group-item">
                                 <h4>
-                                    <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->description}}" target="_blank">
+                                    <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                       title="Download {{$att->description}}" target="_blank">
                                         <i class="fas fa-file-download fa-1x"></i>
-                                    {{$att->file_name}}
+                                        {{$att->description}}
                                     </a>
-                                    {{$att->description}}
                                 </h4>
                             </li>
-                        @endforeach
+                        @empty
+                        @endforelse
                     </ul>
-                @endif
             </div>
         </div>
     </div>
