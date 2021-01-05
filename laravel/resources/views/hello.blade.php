@@ -27,7 +27,7 @@
                         <a href="{{route('posts')}}">Posts</a>
                     </h3>
                     <ul class="list-group p-0 m-0">
-                        @foreach($data['news']['posts'] as $post)
+                        @forelse($data['news']['posts'] as $post)
                             <li class="list-group-item pr-1 m-0">
                                 <a href="{{route('post_show', $post->slug)}}"
                                     title="{{$post->title}}">
@@ -35,7 +35,9 @@
                                 </a>
                                 {{$post->created_at->format('M j Y')}}
                             </li>
-                        @endforeach
+                            @empty
+                            No posts yet
+                        @endforelse
                     </ul>
                 @endif
             </div>
@@ -47,7 +49,7 @@
                     <a href="{{route('pages')}}">Pages</a>
                 </h3>
                 <ul class="list-group p-0 m-0">
-                    @foreach($data['news']['pages'] as $page)
+                    @forelse($data['news']['pages'] as $page)
                         <li class="list-group-item pr-1 m-0">
                             <a href="{{route('page_show', $page->slug)}}"
                                 title="{{$page->title}}">
@@ -55,27 +57,35 @@
                             </a>
                             {{$page->created_at->format('M j Y')}}
                         </li>
-                    @endforeach
+                    @empty
+                        No pages yet
+                    @endforelse
                 </ul>
             @endif
             </div>
         </div>
     </div>
     <div class="row mt-lg-4">
-        <div class="col-12 border border-dark rounded-lg p-lg-4" style="background: rgba(220,220,220,0.8);">
+        <div class="col-12 border border-dark rounded-lg p-lg-4">
             @if($data['birthday'] != '')
-                <h2> <i class="fas fa-birthday-cake"></i> {{ $data['birthday'] }}</h2>
+                <h2>
+                    <i class="fas fa-birthday-cake"></i> {{ $data['birthday'] }}
+                </h2>
             @endif
-            <h3>{{$data['years']}} years, since {{$data['foundingYear']}}.</h3>
+                <h3>
+                    {{$data['years']}} years, since {{$data['foundingYear']}}.
+                </h3>
             <p>
                 <span class="dropcap">F</span>ounded on September 13, 1904,
                 IATSE Local 118 (International Alliance of Theatrical Stage Employees of the United States and Canada)
-                is the labour union supplying technicians, stagehands, artisans and craftspeople to the Greater Vancouver
-                entertainment industry, including live theatre, rock and roll, trade shows, and conventions.
+                is the labour union supplying technicians, stagehands, artisans and craftspeople to the Greater
+                Vancouver entertainment industry, including live theatre, rock and roll, trade shows, and conventions.
                 Local 118 has a large, skilled and experienced workforce ready to meet the needs of your production.
             </p>
             <p>
-                <a class="btn btn-primary btn-lg" href="/page/history" role="button">Learn more &raquo;</a>
+                <a class="btn btn-primary btn-lg" href="/page/history" role="button">
+                    Learn more &raquo;
+                </a>
             </p>
         </div>
     </div>
