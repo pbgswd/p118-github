@@ -3,10 +3,6 @@
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
         <div class="row mb-lg-5">
-            <div  class="col-4">
-                Left Col
-            </div>
-            <div  class="col-8">
                 <div  class="col-12">
                     <h1 class="display-3">{{$data['page']->title}}</h1>
                 </div>
@@ -33,6 +29,7 @@
                                             <a href="{{route('attachment_download',
                                                 [$data['page']->getAttachmentFolder(), $pa->id])}}"
                                                 title="Download {{$pa->file_name}}">
+                                                <i class="far fa-file"></i>
                                                 {{$pa->file_name}}
                                             </a>
                                         </td>
@@ -50,7 +47,7 @@
                         Tags: {{join(', ', $data['page']->tagNames())}}
                     </div>
                 @endif
-            </div>
+
         </div>
     </div>
 </div>
