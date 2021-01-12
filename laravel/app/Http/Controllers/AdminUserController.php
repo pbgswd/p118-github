@@ -164,7 +164,6 @@ class AdminUserController extends Controller
 
         $user->load('phone_number',
                     'user_info',
-                    'address',
                     'allExecutiveRoles',
                     'committee_memberships',
                     'membership'
@@ -181,8 +180,6 @@ class AdminUserController extends Controller
             'executive_roles' => Executive::all(),
             'user_roles' => $user_roles,
             'roles' => Role::get(),
-            'countries' => $regions['countries'],
-            'provinces' => $regions['statesprovs']['Provinces'],
             'action' => 'Edit',
         ];
 
@@ -198,7 +195,7 @@ class AdminUserController extends Controller
     {
         $this->authorize('admin_update', Auth::user());
 
-        $user->load('phone_number', 'address', 'membership');
+        $user->load('phone_number', 'membership');
 
         $message = [];
         $original_name = $user->name;
@@ -245,36 +242,10 @@ class AdminUserController extends Controller
             $user->user_info->save();
         } else {
             $user_info = new UserInfo($request->input('user_info'));
-
             if(null !== $request->file) {
                 $user_info->image = $this->uploadImage($request);
             }
             $user->user_info()->save($user_info);
-        }
-
-        $addr = ['unit','street','city','province','postal_code','country'];
-
-        if ($user->address instanceof Address) {
-
-            foreach($addr as $a)
-            {
-                if($request->user_address[$a] != $user->address->$a) {
-                    $message[ucfirst($a)] = $request->user_address[$a];
-                }
-            }
-
-            $user->address->fill($request['user_address']);
-            $user->address->save();
-
-        } else {
-            $address = new Address($request['user_address']);
-
-            foreach($addr as $a)
-            {
-               $message[ucfirst($a)] = $request->user_address[$a];
-            }
-
-            $user->address()->save($address);
         }
 
         $user_roles = $user->getRoleNames()->toArray();
@@ -332,7 +303,6 @@ class AdminUserController extends Controller
             }
 
             PhoneNumber::where('user_id', $user->id)->delete();
-            Address::where('user_id', $user->id)->delete();
             Membership::where('user_id', $user->id)->delete();
 
             $user_info = UserInfo::where('user_id', $user->id)->first();

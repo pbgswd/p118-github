@@ -36,12 +36,6 @@ class UpdateUser extends FormRequest
             'user_info.share_phone'=> 'boolean',
             'user_info.image'=> 'string|nullable',
             'user_info.about'=> 'string|nullable|max:2000',
-            'user_address.unit' => 'max:255|nullable',
-            'user_address.street'=> 'string|max:255|nullable',
-            'user_address.city'=> 'string|max:255|nullable',
-            'user_address.province'=> 'string|max:255|nullable',
-            'user_address.postal_code'=> 'string|max:255|nullable',
-            'user_address.country'=> 'string|max:255|nullable',
             'user_roles' => 'array|required',
             /**
             'user_membership.membership_date' => 'date',

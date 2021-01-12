@@ -218,57 +218,7 @@
                 </textarea>
             </div>
         </div>
-        <div class="row border border-primary rounded-lg border-3 mt-lg-1 p-lg-1">
-            <div class="col-12"><h3>Primary Mailing Address</h3></div>
-            <div class="col-12 input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Apt#</span>
-                </div>
-                <input type="text" class="form-control" placeholder="Apt #" name="user_address[unit]"
-                       value="{{ old('user_address.unit', $data['user']->address->unit ?? '') }}" size="60" />
-            </div>
-            <div class="col-12 input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Street</span>
-                </div>
-                <input type="text" class="form-control" placeholder="Street" name="user_address[street]"
-                       value="{{ old('user_address.street', $data['user']->address->street ?? '') }}" size="60"/>
-            </div>
-            <div class="col-12 input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">City</span>
-                </div>
-                <input type="text" class="form-control" placeholder="City" name="user_address[city]"
-                       value="{{ old('user_address.city', $data['user']->address->city ?? '')}}" size="40"/>
-            </div>
-            <div class="col-12 input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Province</span>
-                </div>
-            {{ select_options($data['provinces'],
-                old('user_address.province', $data['user']->address->province ?? ''),
-                ['name' => 'user_address[province]', 'class' => 'form-control', 'placeholder' => 'Province']) }}
-            </div>
-            <div class="col-12 input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default"> Postal Code</span>
-                </div>
-                    <input type="text" style="text-transform:uppercase" class="form-control"
-                           placeholder="Postal Code" name="user_address[postal_code]"
-                           value="{{ old('user_address.postal_code',
-                                strtoupper($data['user']->address->postal_code ?? ''))}}"
-                           size="60" />
-            </div>
-            <div class="col-12 input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
-                </div>
-                 {{ select_options($data['countries'],
-                    old('user_address.country', $data['user']->address->country ?? ''),
-                    ['name' => 'user_address[country]', 'class' => 'form-control', 'placeholder' => 'Country']) }}
-            </div>
-        </div>
-
+        
         <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
             <div class="col-md-12">
                 <h4>Membership type & details</h4>
