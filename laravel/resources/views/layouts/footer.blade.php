@@ -1,5 +1,5 @@
         <footer class="container border border-dark rounded-lg mt-2 mb-lg-5">
-            <div class="row mb-5">
+            <div class="row mb-5 mr-2 p-lg-5">
                 <div class="col-3">
                     <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
                         <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png"
@@ -25,8 +25,8 @@
                     </a>
                 </div>
             </div>
-            <div class="row">
-                <ul class="list-group list-group-horizontal">
+            <div class="row flex-row">
+                <ul class="list-group list-group-horizontal flex-grow-0">
                     <li class="list-group-item"><a href="/page/terms-of-use">Terms of Use</a> </li>
                     <li class="list-group-item"><a href="/page/privacy-policy">Privacy Policy</a> </li>
                     <li class="list-group-item"><a href="/page/disclaimer">Disclaimer</a> </li>
@@ -44,43 +44,43 @@
                     @endguest
                 </ul>
             </div>
-            <div class="row mt-2">
-            @guest
-                <div class="col-12 mb-4">
-                    <a href="/login">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-                    </a>
-                </div>
-            @else
-                <div class="col-6 mb-4">
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
-                            Logout
-                        </button>
-                    </form>
-                </div>
-                <div class="col-6 mb-5">
-                    <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
-                        {!! csrf_field() !!}
-                        <i class="fas fa-search"></i> &nbsp;
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search"
-                               aria-label="Search" name="search">
-                        <button type="submit" name="Submit" value="Submit"
-                                class="btn btn-outline-success my-2 my-sm-0">
-                            Search
-                        </button>
-                    </form>
-                </div>
-            @endguest
+            <div class="row mt-2 flex-grow-0">
+                @guest
+                    <div class="col-12 mb-4">
+                        <a href="/login">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                        </a>
+                    </div>
+                @else
+                    <div class="col-6 mb-4">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
+                            {!! csrf_field() !!}
+                            <i class="fas fa-search"></i> &nbsp;
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search"
+                                   aria-label="Search" name="search">
+                            <button type="submit" name="Submit" value="Submit"
+                                    class="btn btn-outline-success my-2 my-sm-0">
+                                Search
+                            </button>
+                        </form>
+                    </div>
+                @endguest
             </div>
-            <div class="row mb-6">
-                <div class="col-4">
+            <div class="row mb-6 ">
+                <div class="col-4 flex-column">
                     <h3>IATSE Local 118</h3>
                     <h4>#206 - 2940 Main Street<br />
                     Vancouver, BC, V5T 3G3</h4>
                 </div>
-                <div class="col-4">
+                <div class="col-4 flex-column">
                     <h3>
                         <a href="https://goo.gl/maps/pXb7Bv8n1jHGykjh8" target="_blank" title="IATSE Local 118 Office">
                             <i class="fas fa-map-marked-alt"></i> Maps
@@ -97,7 +97,7 @@
                         </a>
                     </h3>
                 </div>
-                <div class="col-4">
+                <div class="col-4 flex-column">
                     <h5>
                         <i class="fas fa-hashtag"></i>
                         Social Media

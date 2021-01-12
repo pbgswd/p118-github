@@ -218,7 +218,7 @@
                 </textarea>
             </div>
         </div>
-        
+
         <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
             <div class="col-md-12">
                 <h4>Membership type & details</h4>
