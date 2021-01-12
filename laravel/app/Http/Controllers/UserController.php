@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Member\UpdateMember;
-use App\Models\Address;
+use App\Http\Requests\User\UpdateMemberAddress;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Services\EmailMemberUpdateService;
+use App\Services\EmailMemberUpdateAddressService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
@@ -30,7 +32,7 @@ class UserController extends Controller
      * @var EmailMemberUpdateService
      */
 
-    private $emailMemberUpdateService;
+    private $emailMemberUpdateService, $emailMemberUpdateAddressService;
 
     public function __construct(EmailMemberUpdateService $emailMemberUpdateService)
     {
@@ -38,9 +40,8 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return Application|Factory|View
+     * @throws AuthorizationException
      */
     public function index()
     {
@@ -57,17 +58,16 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param User $user
-     * @return Response
+     * @return Application|Factory|View
+     * @throws AuthorizationException
      */
     public function show(User $user)
     {
         $this->authorize('view', $user);
 
         $user->load('committee_memberships', 'phone_number',
-                    'user_info', 'address', 'membership',
+                    'user_info', 'membership',
                     'allExecutiveRoles');
 
         $member_roles = $user->getRoleNames()->toArray();
@@ -84,17 +84,15 @@ class UserController extends Controller
     /**
      * @param User $user
      * @return Application|Factory|View
+     * @throws AuthorizationException
      */
-
     public function edit(User $user)
     {
         $this->authorize('update', $user);
 
-        $user->load('phone_number', 'user_info', 'address',
-            'membership', 'committee_memberships', 'allExecutiveRoles');
+        $user->load('phone_number', 'user_info', 'membership', 'committee_memberships', 'allExecutiveRoles');
 
         $currentUser = Auth::user();
-        $regions = $this->getFormOptions(['countries', 'statesprovs']);
         $roles = Role::get();
         $user_roles = $user->getRoleNames()->toArray();
         $user_roles = array_combine($user_roles, $user_roles);
@@ -105,12 +103,9 @@ class UserController extends Controller
             'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,
-            'countries' => $regions['countries'],
-            'provinces' => $regions['statesprovs']['Provinces'],
         ];
 
-            return view('member_edit', ['data' => $data]);
-
+        return view('member_edit', ['data' => $data]);
     }
 
 
@@ -118,13 +113,15 @@ class UserController extends Controller
      * @param UpdateMember $userRequest
      * @param User $user
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(UpdateMember $userRequest, User $user)
+    public function update(UpdateMember $userRequest, User $user): RedirectResponse
     {
         $this->authorize('update', $user);
 
-        $user->load('phone_number', 'address');
+        $user->load('phone_number');
 
+        /** @var array $message */
         $message = [];
         $original_name = $user->name;
 
@@ -140,12 +137,11 @@ class UserController extends Controller
         $user->save();
 
         if ($user->phone_number instanceof PhoneNumber) {
-            $user->phone_number->fill($userRequest['user_phone']);
-            $user->phone_number->save();
-            if($userRequest->user_phone['phone_number'] != $user->phone_number->phone_number) {
+            if($userRequest->user_phone['phone_number'] != $user->phone_number['phone_number']) {
                 $message['Phone'] = $userRequest->user_phone['phone_number'];
             }
-
+            $user->phone_number->fill($userRequest->user_phone);
+            $user->phone_number->save();
         } else {
             $phone = new PhoneNumber($userRequest['user_phone']);
             $user->phone_number()->save($phone);
@@ -174,30 +170,70 @@ class UserController extends Controller
             $user->user_info()->save($user_info);
         }
 
-        $addr = ['unit','street','city','province','postal_code','country'];
-
-        foreach($addr as $a)
-        {
-            if(($userRequest->user_address[$a] ?? '') != ($user->address->$a ?? '')) {
-                $message[ucfirst($a)] = $userRequest->user_address[$a];
-            }
-        }
-
-        if ($user->address instanceof Address) {
-            $user->address->fill($userRequest->user_address);
-            $user->address->save();
-        } else {
-            $address = new Address($userRequest->user_address);
-            $user->address()->save($address);
-        }
-
         if(!empty($message)) {
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
+//todo ONLY trigger update email when change in name or email or phone
+
         Session::flash('success', "Profile for ". $user->name . " has been edited. The office will be updated.");
 
         return redirect()->route('member_edit', $user->id);
+    }
+
+
+    public function edit_address(User $user)
+    {
+        $this->authorize('update', $user);
+
+        $currentUser = Auth::user();
+        $regions = $this->getFormOptions(['statesprovs']);
+
+        $data = [
+            'user' => $user,
+            'action' => 'Edit',
+            'currentUserPermissions' => $currentUser->permissions,
+            'provinces' => $regions['statesprovs']['Provinces'],
+        ];
+
+        return view('member_address_edit', ['data' => $data]);
+    }
+
+    /**
+     * @param UpdateMemberAddress $userRequest
+     * @param User $user
+     * @param EmailMemberUpdateAddressService $service
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function update_address(
+       UpdateMemberAddress $userRequest,
+       EmailMemberUpdateAddressService $service,
+       User $user
+    ): RedirectResponse {
+        $this->authorize('update', $user);
+        $message = [];
+
+        $addr = ['unit','street','city','province','postal_code','message'];
+
+        foreach($addr as $k => $a)
+        {
+            if($userRequest->$a) {
+                if($a == 'postal_code') {
+                    $userRequest->$a = strtoupper($userRequest->$a);
+                }
+                $message[ucfirst($a)] = $userRequest->$a;
+            }
+        }
+
+        if(!empty($message)) {
+            $result = $service->sendMessage($message, $user);
+        }
+
+        Session::flash('success', "Address update for ". $user->name ." has been emailed to the office.");
+
+        return redirect()->route('member_edit', $user->id);
+
     }
 
     protected function uploadImage(FormRequest $request)

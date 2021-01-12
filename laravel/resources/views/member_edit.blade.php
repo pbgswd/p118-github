@@ -187,56 +187,22 @@ $user_roles = $data['user_roles'];
                 </div>
             </div>
         </div>
+
         <div class="row border border-primary rounded-lg border-3 mt-4 p-4">
-            <div class="col-12"><h3>Primary Mailing Address</h3></div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Apt #</span>
-                </div>
-                <input type="text" class="form-control" name="user_address[unit]"
-                       value="{{ old('user_address.unit', $user->address->unit ?? '') }}" size="40" />
+            <div class="col-12">
+                <h3>Update My Mailing Address</h3>
+                <h3>
+                    <a href="{{route('member_address_edit', $user->id)}}">
+                    <i class="fas fa-info-circle"></i>
+                    Do you need to update your mailing address? Do it here.
+                    </a>
+                </h3>
+
             </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Street</span>
-                </div>
-                <input type="text" class="form-control" name="user_address[street]"
-                       value="{{ old('user_address.street', $user->address->street ?? '') }}" size="40" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">City</span>
-                </div>
-                <input type="text" class="form-control" name="user_address[city]"
-                       value="{{ old('user_address.city', $user->address->city ?? '') }}" size="40" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Province</span>
-                </div>
-                {{ select_options($data['provinces'], old('user_address.province', $user->address->province ?? ''),
-                    ['name' => 'user_address[province]', 'class' => 'form-control', 'placeholder' => 'Province']) }}
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Postal Code</span>
-                </div>
-                <input
-                    type="text"
-                    class="form-control"
-                    style="text-transform:uppercase"
-                    name="user_address[postal_code]"
-                    value="{{ old('user_address.postal_code',
-                    strtoupper($user->address->postal_code ?? '')) }}"
-                    size="40" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
-                </div>
-                {{ select_options($data['countries'], old('user_address.country', $user->address->country ?? ''),
-                    ['name' => 'user_address[country]', 'class' => 'form-control', 'placeholder' => 'Country']) }}
-            </div>
+        </div>
+
+        <div class="row border border-primary rounded-lg border-3 mt-4 p-4">
+
             <div class="col-12 mt-lg-5">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-primary" type="submit" value="{{ $data['action'] }} My Profile" />

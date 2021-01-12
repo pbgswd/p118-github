@@ -77,6 +77,10 @@ Route::group(['middleware' =>  ['web', 'auth',] ], function () {
     Route::get('/members', 'UserController@index')->name('members');
     Route::get('/member/{user}', 'UserController@show')->name('member');
     Route::get('/member/{user}/edit', 'UserController@edit')->name('member_edit');
+
+    Route::get('/member/{user}/address/edit', 'UserController@edit_address')->name('member_address_edit');
+    Route::post('/member/{user}/address/edit', 'UserController@update_address');
+
     Route::post('/member/{user}/edit', 'UserController@update');
 
     Route::get('/invited/{user}/{hash}', 'InviteUserController@process')->name('process_user');

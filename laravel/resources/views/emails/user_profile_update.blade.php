@@ -32,6 +32,7 @@
               </td>
             </tr>
           </table>
+
           <table class="container">
             <tr>
               <td>
@@ -41,9 +42,9 @@
                       <table class="twelve columns">
                         <tr>
                           <td>
-                            <h1>
+                            <h3>
                                 Contact info update for {{$data['original_name']}}
-                            </h1>
+                            </h3>
 			                <p class="lead">
                                 Email: <a href="mailto:{{$data['original_email']}}">
                                             {{$data['original_email']}}
@@ -53,17 +54,17 @@
                                 The following contact information has been updated in the
                                 {{env('APP_NAME')}} Web site database:
                             </p>
-                          <div style="background: #cce5ff; margin: 5px; padding:15px;">
-                              <ul>
-                                  @foreach($data as $k => $v)
-                                      @if($k != 'original_email' and $k != 'id' and $k != 'original_name')
-                                          <li style="margin: 5px; padding:5px;">
-                                              {{$k}}: {{$v}}
-                                          </li>
-                                      @endif
-                                  @endforeach
-                              </ul>
-                          </div>
+                              <div style="background: #cce5ff; margin: 5px; padding:15px;">
+                                  <ul>
+                                      @foreach($data as $k => $v)
+                                          @if($k != 'original_email' and $k != 'id' and $k != 'original_name')
+                                              <li style="margin: 5px; padding:5px; list-style-type:none;">
+                                                  {{$k}}: {{$v}}
+                                              </li>
+                                          @endif
+                                      @endforeach
+                                  </ul>
+                              </div>
 
                               @if(Route::currentRouteName() == 'user_edit_update')
                                   <p style="margin-top: 2em;">This ADMIN update for
@@ -78,14 +79,14 @@
                               <td>
                                  <p>
                                      <a title="{{ $data['Name'] ?? $data['original_name']}}"
-                                                              href="{{ route('user_edit', $data['id'])}}">
+                                          href="{{ route('user_edit', $data['id'])}}">
                                          Admin Profile page for
                                          {{ $data['Name'] ?? $data['original_name'] }}
                                     </a>
                                  </p>
                                   <p>
                                       <a title="{{ $data['Name'] ?? $data['original_name']}}"
-                                                                href="{{ route('member', $data['id'])}}">
+                                            href="{{ route('member', $data['id'])}}">
                                           Member Profile page for
                                           {{ $data['Name'] ?? $data['original_name'] }}
                                       </a>
