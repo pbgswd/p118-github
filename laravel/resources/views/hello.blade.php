@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div class="row mt-lg-4">
+    <div class="row mt-4 mb-3">
         <div class="col-12 border border-dark rounded-lg p-lg-4">
             @if($data['birthday'] != '')
                 <h2>
