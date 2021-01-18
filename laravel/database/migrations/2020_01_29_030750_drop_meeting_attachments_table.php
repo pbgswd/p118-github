@@ -17,13 +17,11 @@ class DropMeetingAttachmentsTable extends Migration
 
         Schema::table('meeting_attachments', function (Blueprint $table) {
             $table->dropForeign('meeting_attachments_meeting_id_foreign');
-
         });
 
         Schema::dropIfExists('meeting_attachments');
         Schema::enableForeignKeyConstraints();
     }
-
 
     /**
      * Reverse the migrations.

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTopicsTable extends Migration
 {
@@ -21,11 +21,11 @@ class CreateTopicsTable extends Migration
             $table->string('content');
             $table->string('image');
             $table->string('scope');
-            $table->enum('live',['yes','no']);
+            $table->enum('live', ['yes', 'no']);
             $table->integer('sort_order')->unsigned();
-            $table->enum('in_menu',['yes','no']);
-            $table->enum('topic_type',['page','entry']);
-            $table->enum('allow_comments',['yes','no']);
+            $table->enum('in_menu', ['yes', 'no']);
+            $table->enum('topic_type', ['page', 'entry']);
+            $table->enum('allow_comments', ['yes', 'no']);
             $table->timestamps();
         });
     }

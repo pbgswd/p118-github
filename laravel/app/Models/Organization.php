@@ -20,7 +20,7 @@ use Spatie\Searchable\SearchResult;
  * @property string     $description
  * @property string     $url
  * @property string     $access_level
- * @property boolean    $live
+ * @property bool    $live
  * @property int        $sort_order
  * @property User       $user
  * @property DateTime   $created_at
@@ -31,7 +31,7 @@ class Organization extends LiveableModel implements Searchable
     use Sortable;
 
     protected $policies = [
-        Organization::class => OrganizationPolicy::class,
+        self::class => OrganizationPolicy::class,
     ];
 
     /**
@@ -59,7 +59,7 @@ class Organization extends LiveableModel implements Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
@@ -77,8 +77,7 @@ class Organization extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->name,
@@ -109,6 +108,7 @@ class Organization extends LiveableModel implements Searchable
     public function setNameAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['name'] = $value;
     }
 
@@ -131,6 +131,5 @@ class Organization extends LiveableModel implements Searchable
     {
         return $this->belongsToMany(Agreement::class)
             ->orderBy('until', 'desc');
-
     }
 }

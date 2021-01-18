@@ -42,7 +42,7 @@ class StoreVenueRequest extends FormRequest
         $venue = \array_merge(
             $this->input('venue'),
             [
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
             ]
         );
 

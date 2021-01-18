@@ -52,7 +52,8 @@ class PostController extends Controller
     public function show(Post $post)
     {
         if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
-            Session::flash('warning', "Login to view this post.");
+            Session::flash('warning', 'Login to view this post.');
+
             return redirect('login');
         }
 
@@ -60,6 +61,5 @@ class PostController extends Controller
         $data = ['post' => $post];
 
         return view('post', ['data' => $data]);
-
     }
 }

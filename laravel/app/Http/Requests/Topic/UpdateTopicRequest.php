@@ -25,7 +25,7 @@ class UpdateTopicRequest extends FormRequest
     {
         return [
  //unique:table,column,except,idColumn
-            'topic.name' => 'required|max:255|unique:topics,name,' . $this->route('any_topic')->slug . ',slug',
+            'topic.name' => 'required|max:255|unique:topics,name,'.$this->route('any_topic')->slug.',slug',
             'topic.access_level' => 'required|string|max:255',
             'topic.sort_order' =>  'required|numeric',
             'topic.in_menu' => 'boolean',

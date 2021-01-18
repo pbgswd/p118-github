@@ -55,41 +55,39 @@ class InviteUserController extends Controller
         $invited->role = ['member' => 'member'];
         $invited->membership_type = 'Member';
 
-        return view('admin.invite_user', ['data' =>
-            ['invite' => $invited,
+        return view('admin.invite_user', ['data' => ['invite' => $invited,
                 'roles' => Role::get(),
                 'membership' => Options::membership_levels(),
-                'action' => 'Invite'
-            ]
+                'action' => 'Invite',
+            ],
         ]);
     }
-
 
     /**
      * @param StoreInviteUserRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreInviteUserRequest  $request)
+    public function store(StoreInviteUserRequest $request)
     {
         $this->authorize('create', InviteUser::class);
 
         $invitation = new InviteUser($request->invite);
 
-        $invitation->password = str_replace ('/', '', hash::make(Str::random(8)));
+        $invitation->password = str_replace('/', '', hash::make(Str::random(8)));
 
         $invitation->save();
 
         Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]],
             function ($m) use ($invitation) {
-            $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME ') . ' Website Signup');
-            $m->to($invitation['email'], $invitation['name'])
+                $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME ').' Website Signup');
+                $m->to($invitation['email'], $invitation['name'])
                 ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
                 ->subject('IATSE Local 118 Website Signup Invitation');
-        });
+            });
 
 //       return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
 
-      Session::flash('success', "Invitation for access sent to " . $invitation['name']);
+        Session::flash('success', 'Invitation for access sent to '.$invitation['name']);
 
         return redirect()->route('list_invited_users');
     }
@@ -103,19 +101,20 @@ class InviteUserController extends Controller
         // method open to whomsoever has the link
 
         //todo 48 hour signup limitation of 48 hours before need to reapply
-/***
-        $now = Carbon::now();
-        $allowedInvitationTime = 60 * 48; // 2 days
-        $interval = $now->diffInMinutes($inviteUser->updated_at);
-        if ($interval > $allowedInvitationTime) {
-            Session::flash('error', "The invitation has expired as it is older than 48 hours.
- * Please contact the site to get a new invitation.");
-            return redirect()->route('hello');
-        }
- ***/
-        if ( null !== User::where('email', $inviteUser->email)->first()) {
+        /***
+                $now = Carbon::now();
+                $allowedInvitationTime = 60 * 48; // 2 days
+                $interval = $now->diffInMinutes($inviteUser->updated_at);
+                if ($interval > $allowedInvitationTime) {
+                    Session::flash('error', "The invitation has expired as it is older than 48 hours.
+         * Please contact the site to get a new invitation.");
+                    return redirect()->route('hello');
+                }
+         ***/
+        if (null !== User::where('email', $inviteUser->email)->first()) {
             Session::flash('error',
-                "The invitation is no longer valid because you have been registered. Login to continue.");
+                'The invitation is no longer valid because you have been registered. Login to continue.');
+
             return redirect()->route('hello');
         }
 
@@ -173,11 +172,11 @@ class InviteUserController extends Controller
             }
             });
          */
-
-        Session::flash('success', "Thank you! Your password has now been securely stored.
-                                    You may now login with your email and password");
+        Session::flash('success', 'Thank you! Your password has now been securely stored.
+                                    You may now login with your email and password');
 
         Auth::logout();
+
         return redirect()->route('login');
     }
 
@@ -189,13 +188,13 @@ class InviteUserController extends Controller
     {
         $this->authorize('delete', InviteUser::class);
 
-        foreach ($request->id as $id)
-        {
+        foreach ($request->id as $id) {
             InviteUser::destroy($id);
         }
 
-        Session::flash('success',  Str::plural(count($request->id) . ' Invitation',
-            count($request->id) . ' deleted.'));
+        Session::flash('success', Str::plural(count($request->id).' Invitation',
+            count($request->id).' deleted.'));
+
         return redirect()->route('list_invited_users');
     }
 }

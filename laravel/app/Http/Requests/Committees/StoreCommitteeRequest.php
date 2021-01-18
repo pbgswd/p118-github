@@ -5,7 +5,7 @@ namespace App\Http\Requests\Committees;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class StoreCommitteeRequest
+ * Class StoreCommitteeRequest.
  *
  * @property mixed[] $committee
  */

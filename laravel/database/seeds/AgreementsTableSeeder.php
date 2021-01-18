@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use App\Models\Attachment;
 use App\Models\Agreement;
+use App\Models\Attachment;
+use Illuminate\Database\Seeder;
 
 // php artisan db:seed --class=AgreementsTableSeeder
 
@@ -20,17 +20,15 @@ class AgreementsTableSeeder extends Seeder
 
         $data = []; // data emptied to prevent multi run without looking
 
-        foreach ($data as $d)
-        {
-
+        foreach ($data as $d) {
             $path = trim($d['path']);
-            $file = md5($d['file'] . time()).".pdf";
+            $file = md5($d['file'].time()).'.pdf';
 
-            echo $path . "\n";
+            echo $path."\n";
 
-            if($d['type'] == 'pdf'){
-                $curl = "curl --request GET --user pgordon:05042018 '" . str_replace(' ', '%20', $path) . "' -o storage/app/agreements/" . str_replace(' ', '\ ', $file);
-                echo  $curl . "\n";
+            if ($d['type'] == 'pdf') {
+                $curl = "curl --request GET --user pgordon:05042018 '".str_replace(' ', '%20', $path)."' -o storage/app/agreements/".str_replace(' ', '\ ', $file);
+                echo  $curl."\n";
                 `$curl`;
                 // could also do this for a hashed file name Storage::move('old/file.jpg', 'new/file.jpg');
             }
@@ -59,7 +57,7 @@ class AgreementsTableSeeder extends Seeder
             unset($d['path']);
             unset($d['file']);
 
-            echo "done with " . $d['title'] . "\n";
+            echo 'done with '.$d['title']."\n";
         }
         echo "\n completely done  \n";
     }

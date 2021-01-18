@@ -26,6 +26,5 @@ class UpdateAgreementsInAttachmentsTable extends Migration
      */
     public function down()
     {
-
     }
 }

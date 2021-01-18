@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-
 use Spatie\Permission\Models\Role;
 
 class DeleteRole extends AccessControl
@@ -14,14 +13,12 @@ class DeleteRole extends AccessControl
      */
     protected $signature = 'role:delete {role_name? : The name of the existing role.}';
 
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Delete an existing role.';
-
 
     /**
      * Execute the console command.
@@ -30,15 +27,11 @@ class DeleteRole extends AccessControl
      */
     public function handle()
     {
-        if ($this->argument('role_name'))
-        {
+        if ($this->argument('role_name')) {
             $role = Role::where('name', $this->argument('role_name'))->first();
-            if (!$role)
-            {
+            if (! $role) {
                 $this->error('Invalid role name.');
-            }
-            else
-            {
+            } else {
                 $role->delete();
             }
         }

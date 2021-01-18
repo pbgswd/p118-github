@@ -17,7 +17,7 @@ use Spatie\Searchable\SearchResult;
  * @property int       $post_id
  * @property int       $parent_id
  * @property string    $content
- * @property boolean   $live
+ * @property bool   $live
  * @property DateTime  $created_at
  * @property DateTime  $updated_at
  * @property User      $comment_author
@@ -25,7 +25,7 @@ use Spatie\Searchable\SearchResult;
  * @property Committee $committee
  * @method static withoutGlobalScopes()
  */
-class CommitteePostComment extends LiveableModel  implements Searchable
+class CommitteePostComment extends LiveableModel implements Searchable
 {
     use Notifiable;
     use Sortable;
@@ -70,7 +70,7 @@ class CommitteePostComment extends LiveableModel  implements Searchable
         $committee = Committee::where('id', $this->committee_id)->first('slug');
         $committeePost = CommitteePost::where('id', $this->post_id)->first();
 
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $committeePost->title,
@@ -84,7 +84,6 @@ class CommitteePostComment extends LiveableModel  implements Searchable
             \route('public_committee_post_show', [$committee->slug, $committeePost->slug])
         );
     }
-
 
     /**
      * @return HasOne

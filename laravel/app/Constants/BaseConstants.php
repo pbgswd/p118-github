@@ -5,7 +5,7 @@ namespace App\Constants;
 use ReflectionClass;
 
 /**
- * Class BaseConstants
+ * Class BaseConstants.
  */
 abstract class BaseConstants
 {

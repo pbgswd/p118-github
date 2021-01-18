@@ -13,13 +13,13 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * Class Bylaw
+ * Class Bylaw.
  *
  * @property int          $id
  * @property string       $title
  * @property string       $description
  * @property string       $access_level
- * @property boolean      $live
+ * @property bool      $live
  * @property int          $user_id
  * @property User         $user
  * @property Attachment[] $attachments
@@ -33,7 +33,7 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
     use Sortable;
 
     protected $policies = [
-        Bylaw::class => BylawPolicy::class,
+        self::class => BylawPolicy::class,
         ];
 
     /**
@@ -69,7 +69,7 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,

@@ -6,8 +6,7 @@ use App\Venue;
 use Faker\Generator as Faker;
 
 $factory->define(Venue::class, function (Faker $faker) {
-
-    $name = $faker->company . " hall";
+    $name = $faker->company.' hall';
     $slug = strtolower($name);
 
     return [

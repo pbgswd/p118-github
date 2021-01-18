@@ -4,10 +4,8 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
 class UpdateMemberAddress extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *

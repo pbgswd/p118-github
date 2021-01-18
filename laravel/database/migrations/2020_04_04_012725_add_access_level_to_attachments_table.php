@@ -13,7 +13,6 @@ class AddAccessLevelToAttachmentsTable extends Migration
      */
     public function up()
     {
-
         Schema::table('attachments', function (Blueprint $table) {
             $table->string('access_level')->default(\App\Constants\AccessLevelConstants::MEMBERS)->after('file');
             $table->foreign('access_level')->references('access_level')->on('access_level_constants');

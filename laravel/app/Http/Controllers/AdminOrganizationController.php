@@ -20,7 +20,6 @@ class AdminOrganizationController extends Controller
 {
     /**
      * @return Factory|View
-
      */
     public function index()
     {
@@ -36,7 +35,6 @@ class AdminOrganizationController extends Controller
 
     /**
      * @return Factory|View
-
      */
     public function create()
     {
@@ -70,7 +68,7 @@ class AdminOrganizationController extends Controller
 
         $org->agreements()->sync($request->all_agreements);
 
-        Session::flash('success', "You have saved a new venue");
+        Session::flash('success', 'You have saved a new venue');
 
         return redirect()->route('organization_edit', [$org->slug]);
     }
@@ -78,7 +76,6 @@ class AdminOrganizationController extends Controller
     /**
      * @param Organization $any_organization
      * @return Factory|View
-
      */
     public function edit(Organization $any_organization)
     {
@@ -111,7 +108,6 @@ class AdminOrganizationController extends Controller
      * @param UpdateOrganizationRequest $request
      * @param Organization $any_organization
      * @return RedirectResponse
-
      */
     public function update(UpdateOrganizationRequest $request, Organization $any_organization)
     {
@@ -119,13 +115,13 @@ class AdminOrganizationController extends Controller
         $any_organization->fill($request->organization);
         $any_organization->save();
 
-        if(null !== $request->id) {
+        if (null !== $request->id) {
             $any_organization->agreements()->detach($request->id);
         }
 
         $any_organization->agreements()->attach($request->all_agreements);
 
-        Session::flash('success', "You have edited the organization");
+        Session::flash('success', 'You have edited the organization');
 
         return redirect()->route('organization_edit', [$any_organization->slug]);
     }
@@ -133,7 +129,6 @@ class AdminOrganizationController extends Controller
     /**
      * @param DestroyOrganizationRequest $request
      * @return RedirectResponse
-
      */
     public function destroy(DestroyOrganizationRequest $request)
     {
@@ -145,7 +140,7 @@ class AdminOrganizationController extends Controller
             }
         );
 
-        Session::flash('success', Str::plural(count($request->id) . ' Organization', count($request->id)) .
+        Session::flash('success', Str::plural(count($request->id).' Organization', count($request->id)).
             ' deleted.');
 
         return redirect()->route('organizations_list');

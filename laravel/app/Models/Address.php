@@ -20,13 +20,13 @@ use Spatie\Searchable\SearchResult;
  */
 class Address extends Model implements Searchable
 {
-    /** @var string  */
+    /** @var string */
     protected $guard_name = 'web';
 
-    /** @var array  */
+    /** @var array */
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
@@ -50,7 +50,7 @@ class Address extends Model implements Searchable
     {
         $user = User::where('id', $this->user_id)->first();
 
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $user,
                 $user->name,
@@ -63,6 +63,5 @@ class Address extends Model implements Searchable
             $user->name,
             \route('member', $user->id)
         );
-
     }
 }

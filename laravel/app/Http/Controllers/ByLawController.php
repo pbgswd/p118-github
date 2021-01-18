@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ByLawController extends Controller
 {
-    /** @var AttachmentService  */
+    /** @var AttachmentService */
     private $attachmentService;
 
     /**
@@ -25,15 +25,14 @@ class ByLawController extends Controller
     public function list()
     {
         $data = [];
-        if(Auth::check()) {
+        if (Auth::check()) {
             $data['bylaws'] = Bylaw::sortable()
                 ->with('attachments')
                 ->orderBy('date', 'desc')
                 ->paginate(20);
 
             $data['count'] = Bylaw::count();
-        }
-        else {
+        } else {
             $data['bylaws'] = Bylaw::sortable()
                 ->where('access_level', 'public')
                 ->with('attachments')
@@ -54,7 +53,6 @@ class ByLawController extends Controller
      */
     public function show(Bylaw $bylaw)
     {
-
         $bylaw->load('user', 'attachments');
 
         return view('bylaw_view', ['data' => ['bylaw' => $bylaw]]);

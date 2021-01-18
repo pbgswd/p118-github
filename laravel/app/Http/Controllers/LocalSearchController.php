@@ -39,10 +39,8 @@ class LocalSearchController extends Controller
      * @param LocalSearchResult $request
      * @return Application|Factory|View
      */
-
     public function index(LocalSearchResult $request)
     {
-
         $data = [
             'search' => $request->search,
             'results' => (new Search())
@@ -63,7 +61,7 @@ class LocalSearchController extends Controller
                 ->registerModel(Executive::class, ['title', 'email'])
                 ->registerModel(UserInfo::class, 'about')
                 ->registerModel(PhoneNumber::class, 'phone_number')
-                ->registerModel(Address::class, ['street','city','province', 'postal_code', 'country'])
+                ->registerModel(Address::class, ['street', 'city', 'province', 'postal_code', 'country'])
                 ->search($request->search),
         ];
 
@@ -82,10 +80,9 @@ class LocalSearchController extends Controller
      * @param LocalSearchResult $request
      * @return Application|Factory|View
      */
-//todo review results of local search controller admin_search method
+    //todo review results of local search controller admin_search method
     public function admin_search(LocalSearchResult $request)
     {
-
         $data = [
             'search' => $request->search,
             'results' => (new Search())
@@ -163,7 +160,7 @@ class LocalSearchController extends Controller
                     $aspect->addSearchableAttribute('content')
                         ->withoutGlobalScope(LiveScope::class);
                 })
-                ->search($request->search)
+                ->search($request->search),
         ];
 
         $data['plural'] = Str::plural('Result', count($data['results']));
@@ -185,5 +182,4 @@ class LocalSearchController extends Controller
 
         return view('admin.list_attachments_search_result', ['data' => $data]);
     }
-
 }

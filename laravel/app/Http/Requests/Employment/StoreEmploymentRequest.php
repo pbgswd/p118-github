@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class StoreEmploymentRequest
+ * Class StoreEmploymentRequest.
  * @property mixed[] $employment
  */
 class StoreEmploymentRequest extends FormRequest
@@ -49,6 +49,6 @@ class StoreEmploymentRequest extends FormRequest
             ]
         );
         $this->merge([
-            'employment' => $employment]);
+            'employment' => $employment, ]);
     }
 }

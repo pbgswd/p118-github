@@ -18,13 +18,11 @@ class MeetingPolicy
     {
         return $user->hasRole(['super-admin', 'writer']) ||
             $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
-
     }
 
     /**
      * @param User $user
      */
-
     public function view(User $user)
     {
         //

@@ -64,7 +64,6 @@ class AuthServiceProvider extends ServiceProvider
 
         CommitteePost::class => CommitteePostPolicy::class,
 
-
         Attachment::class => AttachmentPolicy::class,
     ];
 

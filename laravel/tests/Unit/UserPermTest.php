@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;//motherfucker
+use PHPUnit\Framework\TestCase; //motherfucker
 
 class UserPermTest extends TestCase
 {
@@ -13,8 +13,8 @@ class UserPermTest extends TestCase
      */
     public function testExample()
     {
-        echo "\n Begin " . __FILE__ . "\n";
+        echo "\n Begin ".__FILE__."\n";
         $this->assertTrue(true);
-        echo "\n End " . __FILE__ . "\n";
+        echo "\n End ".__FILE__."\n";
     }
 }

@@ -81,7 +81,6 @@ class CommitteeController extends Controller
          * *******/
     }
 
-
     /**
      * @param Committee $committee
      * @return Application|Factory|View
@@ -102,7 +101,7 @@ class CommitteeController extends Controller
             ->where('sticky', '=', 1)
             ->orderByDesc('updated_at')->get();
 
-        /** @var  User $user */
+        /** @var User $user */
         $user = Auth::user();
         $user->committee_membership;
 
@@ -110,18 +109,18 @@ class CommitteeController extends Controller
 
         $data['executives'] = $committee
             ->active_committee_members
-            ->filter( static function (User $member) {
-            return \in_array($member->pivot->role, Options::committee_executive_roles());
-        })->sort(function ($a, $b) use ($rank) {
-            return $rank[$a->pivot->role] > $rank[$b->pivot->role];
-        });
+            ->filter(static function (User $member) {
+                return \in_array($member->pivot->role, Options::committee_executive_roles());
+            })->sort(function ($a, $b) use ($rank) {
+                return $rank[$a->pivot->role] > $rank[$b->pivot->role];
+            });
 
         $data['isMember'] = $user
             ->committee_memberships
             ->filter(function (Committee $user_committee) use ($committee) {
-           return $user_committee->slug == $committee->slug
+                return $user_committee->slug == $committee->slug
                && $user_committee->pivot->role != 'Past-Member';
-        })->isNotEmpty();
+            })->isNotEmpty();
 
         return view('committee', ['data' => $data]);
     }
@@ -138,9 +137,7 @@ class CommitteeController extends Controller
          * do we use visibility preferences for users profile?
          * do we say if you are a member you have to show your email
          * do we say if you are a member you have to show your profile?
-         * show member status? Chair, Co-chair, Secretary, Member
-
-
+         * show member status? Chair, Co-chair, Secretary, Member.
         $committee->load('active_committee_members')->sortable();
 
         return view('committee_list_members', ['data' => ['committee' => $committee]]);

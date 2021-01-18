@@ -16,7 +16,7 @@ class CommitteePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyRole(['super-admin', 'writer','committee']) ||
+        return $user->hasAnyRole(['super-admin', 'writer', 'committee']) ||
             $user->hasAnyPermission(['create committee', 'manage committee', 'delete committee']);
     }
 
@@ -27,7 +27,7 @@ class CommitteePolicy
      */
     public function view(User $user, Committee $committee)
     {
-        return $user->hasAnyRole(['super-admin', 'writer','committee']) ||
+        return $user->hasAnyRole(['super-admin', 'writer', 'committee']) ||
             $user->hasAnyPermission(['create committee', 'manage committee', 'delete committee']);
     }
 

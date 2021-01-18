@@ -18,7 +18,7 @@ class AgreementController extends Controller
         //todo member/public for attachments
         $data = [];
 
-        if(Auth::check() == false) {
+        if (Auth::check() == false) {
             $data['agreements'] = Agreement::sortable()
                 ->with('attachments')
                 ->whereRaw('NOW() < until')
@@ -27,9 +27,7 @@ class AgreementController extends Controller
 
             $data['count'] = Agreement::with('attachments')
                 ->whereRaw('NOW() < until')->count();
-
-        }
-        else {
+        } else {
             $data['agreements'] = Agreement::sortable()
                 ->with('attachments')
                 ->orderBy('until', 'desc')
@@ -40,7 +38,6 @@ class AgreementController extends Controller
 
         return view('agreements_list', ['data' => ['data' => $data]]);
     }
-
 
     /**
      * Display the specified resource.

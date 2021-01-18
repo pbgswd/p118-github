@@ -25,7 +25,8 @@ class AdminController extends Controller
         return view('admin.admin', ['data' => $data]);
     }
 
-    public function developer() {
+    public function developer()
+    {
         return view('admin.developer_admin');
     }
 
@@ -34,8 +35,6 @@ class AdminController extends Controller
      */
     public function blank(User $user)
     {
-
         return view('admin.admin-blank');
     }
-
 }

@@ -30,6 +30,7 @@ class CommitteePostCommentController extends Controller
         $data['committee'] = $committeePost->committee;
 
         $data['action'] = 'Create';
+
         return view('admin.committee_post_comment', ['data' => $data]);
     }
 
@@ -77,12 +78,11 @@ class CommitteePostCommentController extends Controller
 
         $postComment->save();
 
-        Session::flash('success', "You have added your comment to " . $committeePost->title);
+        Session::flash('success', 'You have added your comment to '.$committeePost->title);
 
         return redirect()->route('public_committee_post_show',
             [$committee->slug, $committeePost->slug]);
     }
-
 
     /**
      * @param UpdateCommitteePostCommentRequest $request

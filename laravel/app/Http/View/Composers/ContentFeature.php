@@ -10,7 +10,7 @@ use DB;
 use Illuminate\View\View;
 
 /**
- * Class ContentFeature
+ * Class ContentFeature.
  * @property $compose
  * @property View
  * @param View $view
@@ -19,7 +19,6 @@ class ContentFeature
 {
     public function __construct()
     {
-
     }
 
     public function compose(View $view)
@@ -38,11 +37,10 @@ class ContentFeature
             'pages' => $pages,
             ];
 
-       // $posts->short_body = substr($posts->content, 0, 60) . '...';
-            // dangerous! body is in html -- truncation could split a tag
+        // $posts->short_body = substr($posts->content, 0, 60) . '...';
+        // dangerous! body is in html -- truncation could split a tag
 
         //dd($data);
         $view->with('data', $data);
     }
-
 }

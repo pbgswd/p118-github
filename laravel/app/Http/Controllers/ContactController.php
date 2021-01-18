@@ -24,9 +24,9 @@ class ContactController extends Controller
     {
         $data = [];
 
-        if(Auth::user()) {
+        if (Auth::user()) {
             $data = ['contactPage' => Page::withoutGlobalScopes()
-                ->where('slug', 'local-118-contacts')->get()];
+                ->where('slug', 'local-118-contacts')->get(), ];
         }
 
         return view('contact', ['data' => $data]);
@@ -38,13 +38,12 @@ class ContactController extends Controller
      */
     public function submit(SubmitContact $request)
     {
-
         Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request) {
-            $m->from(env('MAIL_FROM_ADDRESS'), "Local 118 Contact Page Message from "
-                . $request['name']);
+            $m->from(env('MAIL_FROM_ADDRESS'), 'Local 118 Contact Page Message from '
+                .$request['name']);
             $m->to(env('ADMIN_EMAIL'), env('ADMIN_EMAIL_NAME'))
                 ->replyTo($request['email'], $request['name'])
-                ->subject('Contact Page ' . $request['subject']);
+                ->subject('Contact Page '.$request['subject']);
         });
 
         Session::flash('success', 'Your message was sent.');

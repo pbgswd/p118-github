@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-
 class AdminPostController extends Controller
 {
     /**
@@ -48,7 +47,6 @@ class AdminPostController extends Controller
 
     /**
      * @return Factory|View
-
      */
     public function create()
     {
@@ -65,14 +63,13 @@ class AdminPostController extends Controller
                 'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                     AccessLevelConstants::getConstants()),
                 'action' => 'Create',
-            ]
+            ],
         ]);
     }
 
     /**
      * @param StorePostRequest $request
      * @return RedirectResponse
-
      */
     public function store(StorePostRequest $request)
     {
@@ -86,25 +83,23 @@ class AdminPostController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $post);
 
-            if($result) {
-                Session::flash('success', "You uploaded "
-                    . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        if (!empty($request->input('post.topic_id'))) {
+        if (! empty($request->input('post.topic_id'))) {
             $post->topics()->sync($request->input('post.topic_id'));
         }
 
-        if (!empty($request->tags)) {
+        if (! empty($request->tags)) {
             $post->tag(trim($request->tags, ','));
         }
 
-        Session::flash('success', "You have saved a new post");
+        Session::flash('success', 'You have saved a new post');
 
         return redirect()->route('post_edit', [$post->slug]);
     }
@@ -112,7 +107,6 @@ class AdminPostController extends Controller
     /**
      * @param Post $post
      * @return Factory|View
-
      */
     public function edit(Post $post)
     {
@@ -121,8 +115,7 @@ class AdminPostController extends Controller
         $post->load('user', 'attachments', 'topics');
 
         $assignedTopics = [];
-        foreach ($post->topics as $topic)
-        {
+        foreach ($post->topics as $topic) {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
 
@@ -130,8 +123,7 @@ class AdminPostController extends Controller
             'post' => $post,
             'topics' => Topic::all(),
             'assignedTopics' => $assignedTopics,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants()
-                ,AccessLevelConstants::getConstants()),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             ];
 
@@ -142,7 +134,6 @@ class AdminPostController extends Controller
      * @param UpdatePostRequest $request
      * @param Post $any_post
      * @return RedirectResponse
-
      */
     public function update(UpdatePostRequest $request, Post $any_post): RedirectResponse
     {
@@ -156,25 +147,23 @@ class AdminPostController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_post);
 
-            if($result) {
-                Session::flash('success', "You uploaded "
-                    . count($request->file('attachments')) . " files");
+            if ($result) {
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
             } else {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        if (!empty($request->post['topic_id'])) {
-
+        if (! empty($request->post['topic_id'])) {
             $assignedTopics = [];
 
-            foreach ($request->post['topic_id'] as $id)
-            {
+            foreach ($request->post['topic_id'] as $id) {
                 $assignedTopics[] = $id;
             }
             $any_post->topics()->sync($request->post['topic_id']);
         } else {
-           $any_post->topics()->detach();//no topics selected
+            $any_post->topics()->detach(); //no topics selected
         }
 
         if (empty($request->tags)) {
@@ -183,7 +172,7 @@ class AdminPostController extends Controller
             $any_post->retag(trim($request->tags, ','));
         }
 
-        Session::flash('success', "You have edited the post");
+        Session::flash('success', 'You have edited the post');
 
         return redirect()->route('post_edit', [$any_post->slug]);
     }
@@ -191,7 +180,6 @@ class AdminPostController extends Controller
     /**
      * @param DestroyPostRequest $request
      * @return RedirectResponse
-
      */
     public function destroy(DestroyPostRequest $request)
     {
@@ -206,7 +194,7 @@ class AdminPostController extends Controller
                 $post->delete();
             });
 
-        Session::flash('success', Str::plural('post', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural('post', count($request->id)).' deleted.');
 
         return redirect()->route('posts_list');
     }

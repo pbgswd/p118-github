@@ -6,10 +6,10 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 
-
 class HomeController extends Controller
 {
     //todo does the site need HomeController any more?
+
     /**
      * Create a new controller instance.
      *
@@ -22,7 +22,6 @@ class HomeController extends Controller
 
     /**
      * @return Application|RedirectResponse|Redirector
-     *
      */
     public function index()
     {

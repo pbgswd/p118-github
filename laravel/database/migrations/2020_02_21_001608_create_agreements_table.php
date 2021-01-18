@@ -11,7 +11,6 @@ class CreateAgreementsTable extends Migration
      *
      * @return void
      */
-
     public function up()
     {
         Schema::create('agreements', function (Blueprint $table) {

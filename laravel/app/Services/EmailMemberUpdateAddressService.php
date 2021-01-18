@@ -7,10 +7,8 @@ use Illuminate\Support\Facades\Mail;
 /**
  * @param Request $request
  */
-
 class EmailMemberUpdateAddressService
 {
-
     public function sendMessage($message, $user)
     {
         $recipient = env('ADMIN_EMAIL');
@@ -30,14 +28,13 @@ class EmailMemberUpdateAddressService
             $user,
             $recipient,
             $cc) {
-            $m->from(env('MAIL_FROM_ADDRESS'), "Local 118 Website");
+            $m->from(env('MAIL_FROM_ADDRESS'), 'Local 118 Website');
             $m->to($recipient, $recipient);
-            if($cc != '') {
+            if ($cc != '') {
                 $m->cc($cc, $cc);
             }
             $m->replyTo($user->email, $user->name)
-                ->subject("Local 118 - Address Update for " . $user->name);
+                ->subject('Local 118 - Address Update for '.$user->name);
         });
     }
-
 }

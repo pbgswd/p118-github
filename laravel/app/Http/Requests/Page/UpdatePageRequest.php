@@ -5,8 +5,7 @@ namespace App\Http\Requests\Page;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UpdatePageRequest
- * @package App\Http\Requests\Page
+ * Class UpdatePageRequest.
  *
  * @property mixed[] $page
  */
@@ -30,7 +29,7 @@ class UpdatePageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page.title' => 'required|max:255|unique:pages,title,' . $this->route('any_page')->slug . ',slug',
+            'page.title' => 'required|max:255|unique:pages,title,'.$this->route('any_page')->slug.',slug',
             'page.description' => 'required',
             'page.content' => 'required',
             'page.access_level' => 'required|string|max:255',

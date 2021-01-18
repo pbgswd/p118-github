@@ -17,7 +17,7 @@ use Spatie\Searchable\SearchResult;
  * @property string         $title
  * @property string         $description
  * @property string         $access_level
- * @property boolean        $live
+ * @property bool        $live
  * @property int            $user_id
  * @property User           $user
  * @property Attachment[]   $attachments
@@ -30,13 +30,12 @@ use Spatie\Searchable\SearchResult;
  * @method static withoutGlobalScopes()
  * @method static whereNotIn(string $string, $map)
  */
-
 class Agreement extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
 
     protected $policies = [
-        Agreement::class => AgreementPolicy::class,
+        self::class => AgreementPolicy::class,
     ];
 
     public $sortable = [
@@ -82,7 +81,7 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,

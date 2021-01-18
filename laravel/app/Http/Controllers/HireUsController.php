@@ -7,7 +7,7 @@ class HireUsController extends Controller
     public function show()
     {
         $data = [];
+
         return view('hire-us', ['data' => $data]);
     }
-
 }

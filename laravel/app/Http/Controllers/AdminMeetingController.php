@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-
 class AdminMeetingController extends Controller
 {
     /**
@@ -31,7 +30,6 @@ class AdminMeetingController extends Controller
 
     /**
      * @return Factory|View
-
      */
     public function index()
     {
@@ -50,7 +48,6 @@ class AdminMeetingController extends Controller
 
     /**
      * @return Factory|View
-
      */
     public function create()
     {
@@ -69,11 +66,9 @@ class AdminMeetingController extends Controller
         );
     }
 
-
     /**
      * @param StoreMeetingRequest $request
      * @return RedirectResponse
-
      */
     public function store(StoreMeetingRequest $request)
     {
@@ -83,25 +78,25 @@ class AdminMeetingController extends Controller
 
         $meeting->save();
 
-        Session::flash('success', "Meeting saved");
+        Session::flash('success', 'Meeting saved');
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $meeting);
 
             if ($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
             } else {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('error', 'You have an upload problem');
             }
         }
+
         return redirect()->route('meeting_edit', [$meeting->id]);
     }
 
     /**
      * @param Meeting $meeting
      * @return Factory|View
-
      */
     public function edit(Meeting $meeting)
     {
@@ -120,12 +115,10 @@ class AdminMeetingController extends Controller
         );
     }
 
-
     /**
      * @param UpdateMeetingRequest $request
      * @param Meeting $any_meeting
      * @return RedirectResponse
-
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
@@ -140,14 +133,14 @@ class AdminMeetingController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_meeting);
 
             if ($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
             } else {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "You have edited the meeting information");
+        Session::flash('success', 'You have edited the meeting information');
 
         return redirect()->route('meeting_edit', [$any_meeting->id]);
     }
@@ -155,7 +148,6 @@ class AdminMeetingController extends Controller
     /**
      * @param Request $request
      * @return RedirectResponse
-
      */
     public function destroy(DestroyMeetingRequest $request)
     {
@@ -167,7 +159,7 @@ class AdminMeetingController extends Controller
                 $meeting->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' Meeting', count($request->id)) .
+        Session::flash('success', Str::plural(count($request->id).' Meeting', count($request->id)).
             ' and any related files deleted.');
 
         return redirect()->route('meetings_list');

@@ -61,11 +61,11 @@ class AdminCommitteeController extends Controller
     {
         $this->authorize('create', Committee::class);
 
-        $committee = New Committee($request->input('committee'));
+        $committee = new Committee($request->input('committee'));
         $committee->user_id = Auth::id();
         $committee->save();
 
-        Session::flash('success', "You have created a new committee, " . $committee->name);
+        Session::flash('success', 'You have created a new committee, '.$committee->name);
 
         return redirect()->route('admin_committee_show', $committee->slug);
     }
@@ -87,13 +87,13 @@ class AdminCommitteeController extends Controller
         $user = $committee->active_committee_members->find(Auth::user()->id);
 
         $canManage = 0;
-        if($user !== null &&
+        if ($user !== null &&
             $user->hasRole('committee') &&
             $user->hasPermissionTo('manage committee') &&
             in_array($user->pivot->role, $committee_executive_roles)
             ||
             Auth::user()->hasRole('super-admin')) {
-                $canManage = 1;
+            $canManage = 1;
         }
 
         $committee['executives'] = $committee->committee_members->filter(
@@ -109,7 +109,7 @@ class AdminCommitteeController extends Controller
                 'committee' => $committee,
                 'canManage' => $canManage,
                 'action' => 'View',
-            ]
+            ],
         ]);
     }
 
@@ -119,7 +119,7 @@ class AdminCommitteeController extends Controller
      */
     public function edit(Committee $any_committee)
     {
-        $any_committee->load('creator','posts');
+        $any_committee->load('creator', 'posts');
 
         $this->authorize('update', $any_committee);
 
@@ -144,7 +144,7 @@ class AdminCommitteeController extends Controller
         $any_committee->fill($request->committee);
         $any_committee->save();
 
-        Session::flash('success', "You have updated " . $any_committee->name);
+        Session::flash('success', 'You have updated '.$any_committee->name);
 
         return redirect()->route('committee_edit', $any_committee->slug);
     }
@@ -160,7 +160,6 @@ class AdminCommitteeController extends Controller
         Committee::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Committee $committee) {
-
                 $committee->committee_members()->detach();
 
                 //todo committee set to... archive?
@@ -170,7 +169,7 @@ class AdminCommitteeController extends Controller
                 $committee->delete();
             });
 
-        Session::flash('success', Str::plural('Committee', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural('Committee', count($request->id)).' deleted.');
 
         return redirect()->route('committees_list');
     }

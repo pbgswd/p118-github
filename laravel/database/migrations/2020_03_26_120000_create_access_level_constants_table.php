@@ -39,14 +39,30 @@ class CreateAccessLevelConstantsTable extends Migration
                 WHERE levels.access_level = alc.access_level
             )");
 
-        Schema::table('agreements',    static function (Blueprint $table) { $table->foreign('access_level')->references('access_level')->on('access_level_constants'); });
-        Schema::table('bylaws',        static function (Blueprint $table) { $table->foreign('access_level')->references('access_level')->on('access_level_constants'); });
-        Schema::table('committees',    static function (Blueprint $table) { $table->foreign('access_level')->references('access_level')->on('access_level_constants'); });
-        Schema::table('organizations', static function (Blueprint $table) { $table->foreign('access_level')->references('access_level')->on('access_level_constants'); });
-        Schema::table('pages',         static function (Blueprint $table) { $table->foreign('access_level')->references('access_level')->on('access_level_constants'); });
-        Schema::table('posts',         static function (Blueprint $table) { $table->foreign('access_level')->references('access_level')->on('access_level_constants'); });
-        Schema::table('topics',        static function (Blueprint $table) { $table->foreign('access_level')->references('access_level')->on('access_level_constants'); });
-        Schema::table('venues',        static function (Blueprint $table) { $table->foreign('access_level')->references('access_level')->on('access_level_constants'); });
+        Schema::table('agreements', static function (Blueprint $table) {
+            $table->foreign('access_level')->references('access_level')->on('access_level_constants');
+        });
+        Schema::table('bylaws', static function (Blueprint $table) {
+            $table->foreign('access_level')->references('access_level')->on('access_level_constants');
+        });
+        Schema::table('committees', static function (Blueprint $table) {
+            $table->foreign('access_level')->references('access_level')->on('access_level_constants');
+        });
+        Schema::table('organizations', static function (Blueprint $table) {
+            $table->foreign('access_level')->references('access_level')->on('access_level_constants');
+        });
+        Schema::table('pages', static function (Blueprint $table) {
+            $table->foreign('access_level')->references('access_level')->on('access_level_constants');
+        });
+        Schema::table('posts', static function (Blueprint $table) {
+            $table->foreign('access_level')->references('access_level')->on('access_level_constants');
+        });
+        Schema::table('topics', static function (Blueprint $table) {
+            $table->foreign('access_level')->references('access_level')->on('access_level_constants');
+        });
+        Schema::table('venues', static function (Blueprint $table) {
+            $table->foreign('access_level')->references('access_level')->on('access_level_constants');
+        });
     }
 
     /**

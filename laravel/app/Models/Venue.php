@@ -19,9 +19,9 @@ use Spatie\Searchable\SearchResult;
  * @property string     $description
  * @property string     $url
  * @property string     $access_level
- * @property boolean    $live
+ * @property bool    $live
  * @property int        $sort_order
- * @property boolean    $in_menu
+ * @property bool    $in_menu
  * @property User       $user
  * @property DateTime   $created_at
  * @property DateTime   $updated_at
@@ -32,7 +32,7 @@ class Venue extends LiveableModel implements Searchable
     use Sortable;
 
     protected $policies = [
-        Venue::class => VenuePolicy::class,
+        self::class => VenuePolicy::class,
     ];
 
     /**
@@ -61,7 +61,7 @@ class Venue extends LiveableModel implements Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
@@ -85,7 +85,7 @@ class Venue extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->name,
@@ -116,6 +116,7 @@ class Venue extends LiveableModel implements Searchable
     public function setNameAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['name'] = $value;
     }
 
@@ -129,15 +130,14 @@ class Venue extends LiveableModel implements Searchable
 
     public function agreements(): BelongsToMany
     {
-            return $this->belongsToMany(Agreement::class)
+        return $this->belongsToMany(Agreement::class)
                 ->whereRaw('NOW() < until')
                 ->orderBy('until', 'desc');
     }
 
     public function member_agreements(): BelongsToMany
     {
-            return $this->belongsToMany(Agreement::class)
+        return $this->belongsToMany(Agreement::class)
                 ->orderBy('until', 'desc');
     }
-
 }

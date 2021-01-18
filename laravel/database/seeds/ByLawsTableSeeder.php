@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use App\Models\Bylaw;
 use App\Models\Attachment;
+use App\Models\Bylaw;
+use Illuminate\Database\Seeder;
+
 // php artisan db:seed --class=ByLawsTableSeeder
 
 class ByLawsTableSeeder extends Seeder
@@ -19,15 +20,14 @@ class ByLawsTableSeeder extends Seeder
 
         $data = []; //data emptied to prevent multi run without looking
 
-        foreach ($data as $d)
-        {
+        foreach ($data as $d) {
             $path = trim($d['path']);
-            $file = md5($d['file'] . time()).".pdf";
+            $file = md5($d['file'].time()).'.pdf';
 
-            echo $path . "\n";
+            echo $path."\n";
 
-            $curl = "curl --request GET --user pgordon:05042018 '" . str_replace(' ', '%20', $path) . "' -o storage/app/bylaws/" . str_replace(' ', '\ ', $file);
-            echo  $curl . "\n";
+            $curl = "curl --request GET --user pgordon:05042018 '".str_replace(' ', '%20', $path)."' -o storage/app/bylaws/".str_replace(' ', '\ ', $file);
+            echo  $curl."\n";
             `$curl`;
             // could also do this for a hashed file name Storage::move('old/file.jpg', 'new/file.jpg');
 
@@ -55,8 +55,7 @@ class ByLawsTableSeeder extends Seeder
             unset($d['path']);
             unset($d['file']);
 
-            echo "done with " . $d['title'] . "\n";
-
+            echo 'done with '.$d['title']."\n";
         }
         echo "\n completely done  \n";
     }

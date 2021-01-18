@@ -13,16 +13,15 @@ use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-
 /**
  * @property int           $id
  * @property string        $slug
  * @property string        $title
  * @property string        $access_level
- * @property boolean       $live
+ * @property bool       $live
  * @property int           $sort_order
- * @property boolean       $in_menu
- * @property boolean       $allow_comments
+ * @property bool       $in_menu
+ * @property bool       $allow_comments
  * @property User          $user
  * @property Topic[]       $topics
  * @property Attachment[]  $attachments
@@ -36,7 +35,7 @@ class Post extends LiveableModel implements HasAttachment, Searchable
     use Taggable;
 
     protected $policies = [
-        Post::class => PostPolicy::class,
+        self::class => PostPolicy::class,
     ];
 
     public $sortable = [
@@ -52,7 +51,7 @@ class Post extends LiveableModel implements HasAttachment, Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
@@ -81,7 +80,7 @@ class Post extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
@@ -95,7 +94,6 @@ class Post extends LiveableModel implements HasAttachment, Searchable
             \route('post_show', $this->slug)
         );
     }
-
 
     /**
      * @return string

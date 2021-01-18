@@ -12,8 +12,7 @@ use Illuminate\View\View;
 
 class AdminCarouselController extends Controller
 {
-
-    /** @var AttachmentService  */
+    /** @var AttachmentService */
     private $attachmentService;
 
     /**
@@ -43,7 +42,6 @@ class AdminCarouselController extends Controller
      */
     public function create()
     {
-
     }
 
     /**

@@ -14,13 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::group(['middleware' => 'web'], function () {
-
     Auth::routes(['verify' => true, 'register' => false, 'reset' => true, 'login' => true]);
     // turn off register route for production, web.
 
-    Route::get('/', 'HelloController@index')->name('hello');// front page
+    Route::get('/', 'HelloController@index')->name('hello'); // front page
 
     Route::get('contact', 'ContactController@show')->name('contact');
     Route::post('contact', 'ContactController@submit');
@@ -55,21 +53,18 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('bylaws', 'ByLawController@list')->name('bylaws_list_public');
     Route::get('/bylaws/{bylaw}', 'ByLawController@show')->name('bylaw_show');
 
-
     Route::get('/{folder}/download/{attachment}', 'AttachmentController@download')->name('attachment_download');
 });
 
-
-Route::group(['middleware' =>  ['web', 'auth',] ], function () {
-
+Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('/site', 'SiteController@index')->name('site');
-//todo a controller? use HomeController?
+    //todo a controller? use HomeController?
     /**
     Route::get('/site', function () {
         return view('site');
     });
-**/
-    Route::get('/home', 'HomeController@index')->name('home');// redirects to home page
+     **/
+    Route::get('/home', 'HomeController@index')->name('home'); // redirects to home page
 
     Route::get('jobs', 'EmploymentController@index')->name('jobs_list');
     Route::get('job/{employment}', 'EmploymentController@show')->name('job_view');
@@ -121,8 +116,7 @@ Route::group(['middleware' =>  ['web', 'auth',] ], function () {
     Route::post('/search', 'LocalSearchController@index')->name('search');
     Route::get('/search/{search}', 'LocalSearchController@show')->name('search_show');
 
-   // Route::get('/{folder}/attachment/{attachment}', 'AttachmentController@download')->name('attachment_download');
-
+    // Route::get('/{folder}/attachment/{attachment}', 'AttachmentController@download')->name('attachment_download');
 });
 //todo handle role super-admin, office, or some such
 Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {

@@ -7,13 +7,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class StoreAgreementRequest
+ * Class StoreAgreementRequest.
  *
  * @property mixed[] $agreement
  */
 class StoreAgreementRequest extends FormRequest
 {
     use ModifiesInputTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *

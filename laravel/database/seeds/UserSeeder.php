@@ -18,11 +18,10 @@ class UserSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
-        $roleIds = [1,2,3,4,6];
+        $roleIds = [1, 2, 3, 4, 6];
         shuffle($roleIds);
 
         for ($i = 0; $i < 20; $i++) {
-
             shuffle($roleIds);
             $date = date('Y-m-d H:i:s');
 
@@ -35,7 +34,7 @@ class UserSeeder extends Seeder
                 'updated_at' => $date,
             ]);
 
-            $userId =  DB::getPdo()->lastInsertId();
+            $userId = DB::getPdo()->lastInsertId();
 
             DB::table('phone_numbers')->insert([
                'user_id' => $userId,

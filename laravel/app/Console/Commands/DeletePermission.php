@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-
 use Spatie\Permission\Models\Permission;
 
 class DeletePermission extends AccessControl
@@ -14,14 +13,12 @@ class DeletePermission extends AccessControl
      */
     protected $signature = 'permission:delete {permission_name? : The name of the existing permission.}';
 
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Delete an existing permission.';
-
 
     /**
      * Execute the console command.
@@ -30,15 +27,11 @@ class DeletePermission extends AccessControl
      */
     public function handle()
     {
-        if ($this->argument('permission_name'))
-        {
+        if ($this->argument('permission_name')) {
             $perm = Permission::where('name', $this->argument('permission_name'))->first();
-            if (!$perm)
-            {
+            if (! $perm) {
                 $this->error('Invalid permission name.');
-            }
-            else
-            {
+            } else {
                 $perm->delete();
             }
         }

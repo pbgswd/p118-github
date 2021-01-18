@@ -31,8 +31,8 @@ class CommitteePostController extends Controller
 
         return view('committee_post_form', [
             'data' => [
-                'post' => $post, 'action' => 'Create'
-            ]
+                'post' => $post, 'action' => 'Create',
+            ],
         ]);
     }
 
@@ -50,7 +50,7 @@ class CommitteePostController extends Controller
 
         $post->save();
 
-        Session::flash('success', "You have saved a new post in " . $committee->name);
+        Session::flash('success', 'You have saved a new post in '.$committee->name);
 
         return redirect()->route('committee_post_edit_form', [$committee->slug, $post->slug]);
     }
@@ -62,15 +62,15 @@ class CommitteePostController extends Controller
      */
     public function edit(Committee $committee, CommitteePost $committeePost)
     {
-
-       $this->authorize('update', [CommitteePost::class, $committeePost]);
+        $this->authorize('update', [CommitteePost::class, $committeePost]);
 
         $committeePost->creator;
+
         return view('committee_post_form', [$committee->slug, $committeePost->slug], [
             'data' => [
                 'post' => $committeePost,
                 'action' => 'Edit',
-            ]
+            ],
         ]);
     }
 
@@ -90,8 +90,8 @@ class CommitteePostController extends Controller
         $committeePost->creator;
 
         return view('committee_post_form', [
-            $committee->slug, $committeePost->slug], [
-            'data' => ['post' => $committeePost, 'action' => 'Edit']
+            $committee->slug, $committeePost->slug, ], [
+            'data' => ['post' => $committeePost, 'action' => 'Edit'],
         ]);
     }
 
@@ -110,7 +110,7 @@ class CommitteePostController extends Controller
         $user = Auth::user();
 
         $data['canManage'] = 0;
-        if( $user->hasRole('committee') &&
+        if ($user->hasRole('committee') &&
             $user->hasPermissionTo('manage committee') ||
             $user->hasRole('super-admin') ||
             $user->id == $data['committeepost']->user_id
@@ -125,13 +125,10 @@ class CommitteePostController extends Controller
         ->post_comments->sortByDesc('created_at');
         }
         */
-      //  $data['action'] = 'Add';
-
-
+        //  $data['action'] = 'Add';
 
         return view('committee_post', ['data' => $data]);
     }
-
 
     /**
      * @param DestroyCommitteePostRequest $request
@@ -141,7 +138,6 @@ class CommitteePostController extends Controller
     public function destroy(DestroyCommitteePostRequest $request,
                             Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
-
         $this->authorize('delete', [CommitteePost::class, $committeePost]);
 
         CommitteePost::withoutGlobalScopes()
@@ -150,8 +146,8 @@ class CommitteePostController extends Controller
                 $post->delete();
             });
 
-        Session::flash('success', 'Committee ' .
-            Str::plural('post', count($request->id)) . ' deleted.');
+        Session::flash('success', 'Committee '.
+            Str::plural('post', count($request->id)).' deleted.');
 
         return redirect()->route('committee', $committee->slug);
     }

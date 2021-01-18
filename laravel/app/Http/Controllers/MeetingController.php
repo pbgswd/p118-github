@@ -7,7 +7,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
-
 class MeetingController extends Controller
 {
     /**
@@ -25,7 +24,6 @@ class MeetingController extends Controller
 
         return view('list_meetings_minutes', ['data' => $data]);
     }
-
 
     /**
      * @param Meeting $meeting

@@ -11,15 +11,13 @@ use Illuminate\Routing\Controller as BaseController;
 /**
  * @property Controller $getFormOptions
  */
-
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected function getFormOptions(array $options, $data = [])
     {
-        foreach ($options as $option)
-        {
+        foreach ($options as $option) {
             switch ($option) {
                 case 'date':
                     $data['years'] = Options::years();
@@ -52,7 +50,7 @@ class Controller extends BaseController
                     break;
             }
         }
+
         return $data;
     }
-
 }

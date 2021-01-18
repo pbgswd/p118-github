@@ -24,7 +24,7 @@ class UpdateVenueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'venue.name' => 'required|max:255|unique:venues,name,' . $this->route('any_venue')->slug . ',slug',
+            'venue.name' => 'required|max:255|unique:venues,name,'.$this->route('any_venue')->slug.',slug',
             'venue.description' => 'required|string',
             'venue.url' => 'url|nullable',
             'venue.sort_order' =>  'required|numeric',
@@ -33,4 +33,3 @@ class UpdateVenueRequest extends FormRequest
         ];
     }
 }
-

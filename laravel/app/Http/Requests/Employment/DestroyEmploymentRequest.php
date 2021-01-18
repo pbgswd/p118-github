@@ -5,7 +5,7 @@ namespace App\Http\Requests\Employment;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class DestroyEmploymentRequest
+ * Class DestroyEmploymentRequest.
  *
  * @property int[] $id
  */

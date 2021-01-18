@@ -19,9 +19,9 @@ use Spatie\Searchable\SearchResult;
  * @property string                  $title
  * @property string                  $slug
  * @property string                  $content
- * @property boolean                 $sticky
- * @property boolean                 $live
- * @property boolean                 $allow_comments
+ * @property bool                 $sticky
+ * @property bool                 $live
+ * @property bool                 $allow_comments
  * @property DateTime                $created_at
  * @property DateTime                $updated_at
  * @property User                    $creator
@@ -39,7 +39,7 @@ class CommitteePost extends LiveableModel implements Searchable
     protected $guard_name = 'web';
 
     protected $policies = [
-     CommitteePost::class => CommitteePostPolicy::class,
+     self::class => CommitteePostPolicy::class,
         //Committee::class => CommitteePolicy::class,
     ];
 
@@ -52,7 +52,7 @@ class CommitteePost extends LiveableModel implements Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
@@ -68,7 +68,7 @@ class CommitteePost extends LiveableModel implements Searchable
     {
         $committee = Committee::where('id', $this->committee_id)->first('slug');
 
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
@@ -82,7 +82,6 @@ class CommitteePost extends LiveableModel implements Searchable
             \route('public_committee_post_show', [$committee->slug, $this->slug])
         );
     }
-
 
     /**
      * The attributes that are mass assignable.
@@ -112,6 +111,7 @@ class CommitteePost extends LiveableModel implements Searchable
     public function setTitleAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['title'] = $value;
     }
 

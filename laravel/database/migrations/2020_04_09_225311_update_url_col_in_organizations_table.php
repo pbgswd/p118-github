@@ -16,7 +16,7 @@ class UpdateUrlColInOrganizationsTable extends Migration
         Schema::table('organizations', function (Blueprint $table) {
             $table->string('url')->nullable()->change();
             $table->string('access_level')->default(\App\Constants\AccessLevelConstants::MEMBERS)->change();
-            $table->foreign('access_level')->references('access_level')->on('access_level_constants');//disabled to run migration. not needed.
+            $table->foreign('access_level')->references('access_level')->on('access_level_constants'); //disabled to run migration. not needed.
         });
     }
 

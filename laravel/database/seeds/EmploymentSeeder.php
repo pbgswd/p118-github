@@ -20,15 +20,14 @@ class EmploymentSeeder extends Seeder
         $data = []; // data emptied to prevent multi run without looking
 
         foreach ($data as $d) {
-
             $path = trim($d['path']);
-            $file = md5($d['file'] . time()).".pdf";
+            $file = md5($d['file'].time()).'.pdf';
 
-            echo $path . "\n";
+            echo $path."\n";
 
-            if($d['type'] == 'pdf'){
-                $curl = "curl --request GET --user pgordon:05042018 '" . str_replace(' ', '%20', $path) . "' -o storage/app/employment/" . str_replace(' ', '\ ', $file);
-                echo  $curl . "\n";
+            if ($d['type'] == 'pdf') {
+                $curl = "curl --request GET --user pgordon:05042018 '".str_replace(' ', '%20', $path)."' -o storage/app/employment/".str_replace(' ', '\ ', $file);
+                echo  $curl."\n";
 
                 `$curl`;
 
@@ -53,15 +52,14 @@ class EmploymentSeeder extends Seeder
             $attachment['subfolder'] = $employment->getAttachmentFolder();
             $attachment->save();
 
-         /**   DB::table('attachment_employment')
+            /**   DB::table('attachment_employment').
                 ->insert(['attachment_id' => $attachment->id, 'employment_id' => $employment->id]);
-*/
+             */
             $attachment->employment_id = $employment->id;
             $employment->attachments()->attach($attachment);
 
             unset($d['path']);
             unset($d['file']);
-
         }
     }
 }

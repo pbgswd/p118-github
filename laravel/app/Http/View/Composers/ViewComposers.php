@@ -2,15 +2,14 @@
 
 namespace App\Http;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Models\Topic;
 use App\Models\Post;
+use App\Models\Topic;
 use DB;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 /**
- * Class ViewComposers
- * @package App\Http
+ * Class ViewComposers.
  */
 class ViewComposers
 {
@@ -22,7 +21,6 @@ class ViewComposers
         $view->with('topics', $topics);
     }
 
-
     /**
      * get the main feature article, latest post.
      */
@@ -30,19 +28,17 @@ class ViewComposers
     {
         $topicFilter = function ($query) {
             $query->where('slug', 'news');
-
         };
         $post = Post::published()->whereHas('topic', $topicFilter)
             ->with('topic')
             ->orderBy('id', 'desc')
             ->first();
         //todo clean post->body so markup doesnt break
-        $post->short_body = substr($post->body, 0, 3000) . '...';
-            // dangerous! body is in html -- truncation could split a tag
+        $post->short_body = substr($post->body, 0, 3000).'...';
+        // dangerous! body is in html -- truncation could split a tag
 
         $view->with('cont', $post);
     }
-
 
     public function postsPreviousNext(View $view)
     {
@@ -54,9 +50,7 @@ class ViewComposers
         */
         $prevNext = 1;
         $view->with('prevNext', $prevNext);
-
     }
-
 
     public function adminTopicsMenu(View $view)
     {

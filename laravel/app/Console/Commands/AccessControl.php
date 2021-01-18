@@ -17,14 +17,12 @@ class AccessControl extends Command
      */
     protected $signature = 'access_control';
 
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = "Show the site's access permissions and roles for users.";
-
 
     /**
      * Execute the console command.
@@ -34,43 +32,36 @@ class AccessControl extends Command
         $this->listArgumentOptions();
     }
 
-
     protected function listArgumentOptions($showPermissions = true, $showRoles = true, $showUsers = true)
     {
-        if ($showPermissions)
-        {
-            $permissionsData = array();
+        if ($showPermissions) {
+            $permissionsData = [];
             $permissions = Permission::with('roles')->get(['id', 'name', 'guard_name'])->toArray();
-            foreach ($permissions as $key => $perm)
-            {
+            foreach ($permissions as $key => $perm) {
                 $roles = Arr::pluck($perm['roles'], 'name');
-                $permissionsData[$key] = [$perm['name'], $perm['guard_name'], join(', ', $roles)];
+                $permissionsData[$key] = [$perm['name'], $perm['guard_name'], implode(', ', $roles)];
             }
             $this->info("\nPermissions");
             $this->table(['Name', 'Guard Name', 'Roles'], $permissionsData);
         }
 
-        if ($showRoles)
-        {
-            $rolesData = array();
+        if ($showRoles) {
+            $rolesData = [];
             $roles = Role::with('users')->get(['id', 'name', 'guard_name'])->toArray();
-            foreach ($roles as $key => $role)
-            {
+            foreach ($roles as $key => $role) {
                 $users = Arr::pluck($role['users'], 'email');
-                $rolesData[$key] = [$role['name'],  $role['guard_name'], join(", \n", $users) ];
+                $rolesData[$key] = [$role['name'],  $role['guard_name'], implode(", \n", $users)];
             }
             $this->info("\nRoles");
             $this->table(['Name', 'Guard Name', 'Users'], $rolesData);
         }
 
-        if ($showUsers)
-        {
-            $usersData = array();
+        if ($showUsers) {
+            $usersData = [];
             $users = User::has('roles')->with('roles')->get(['id', 'email'])->toArray();
-            foreach ($users as $key => $user)
-            {
+            foreach ($users as $key => $user) {
                 $roles = Arr::pluck($user['roles'], 'name');
-                $usersData[$key] = [$user['email'], join(', ', $roles)];
+                $usersData[$key] = [$user['email'], implode(', ', $roles)];
             }
             $this->info("\nUsers");
             $this->table(['Email', 'Roles'], $usersData);

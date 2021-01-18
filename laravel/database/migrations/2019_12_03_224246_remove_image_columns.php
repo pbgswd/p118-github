@@ -21,7 +21,7 @@ class RemoveImageColumns extends Migration
         });
 
         Schema::table('pages', function (Blueprint $table) {
-        $table->dropColumn('image');
+            $table->dropColumn('image');
         });
 
         Schema::table('posts', function (Blueprint $table) {
@@ -44,8 +44,8 @@ class RemoveImageColumns extends Migration
         });
 
         Schema::table('pages', function (Blueprint $table) {
-        $table->string('image')->nullable()->after('content');
-    });
+            $table->string('image')->nullable()->after('content');
+        });
         Schema::table('posts', function (Blueprint $table) {
             $table->string('image')->nullable()->after('content');
         });

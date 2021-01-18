@@ -21,9 +21,9 @@ use Spatie\Searchable\SearchResult;
  * @property string       $content
  * @property string       $access_level
  * @property int          $sort_order
- * @property boolean      $live
- * @property boolean      $in_menu
- * @property boolean      $allow_comments
+ * @property bool      $live
+ * @property bool      $in_menu
+ * @property bool      $allow_comments
  * @property User         $user
  * @property int          $user_id
  * @property Topic[]      $topics
@@ -52,7 +52,7 @@ class Page extends LiveableModel implements HasAttachment, Searchable
     ];
 
     protected $policies = [
-        Page::class => PagePolicy::class,
+        self::class => PagePolicy::class,
     ];
 
     public $sortable = [
@@ -69,7 +69,7 @@ class Page extends LiveableModel implements HasAttachment, Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
@@ -83,7 +83,7 @@ class Page extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
@@ -97,7 +97,6 @@ class Page extends LiveableModel implements HasAttachment, Searchable
             \route('page_show', $this->slug)
         );
     }
-
 
     /**
      * in urls, what field value is used to identify a Page record?
