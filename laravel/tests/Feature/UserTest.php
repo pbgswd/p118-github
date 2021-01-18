@@ -33,7 +33,7 @@ class UserTest extends TestCase
 
         echo "\n public register new user page \n";
 
-        $users = factory(User::class, 1)->make();
+        $users = User::factory()->count(1)->make();
 
         foreach ($users as $user) {
             echo 'attempting to insert '.$user['name']."\n";

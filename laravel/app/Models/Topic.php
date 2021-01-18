@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Constants\AccessLevelConstants;
 use App\Constants\TopicConstants;
 use App\Models\Interfaces\HasAttachment;
@@ -38,6 +39,8 @@ use Spatie\Searchable\SearchResult;
  */
 class Topic extends LiveableModel implements HasAttachment, Searchable
 {
+    use HasFactory;
+
     use Sortable;
     use Taggable;
 

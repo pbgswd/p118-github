@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\UserPolicy;
@@ -34,6 +35,8 @@ use Spatie\Searchable\SearchResult;
  */
 class User extends Authenticatable implements HasAttachment, Searchable
 {
+    use HasFactory;
+
     use Notifiable;
     use Sortable;
     use HasRoles;

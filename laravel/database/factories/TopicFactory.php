@@ -1,7 +1,9 @@
 <?php
 
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Topic;
-use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 /*
@@ -15,19 +17,35 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(Topic::class, function (Faker $faker) {
-    $title = $faker->text(20);
-    $slug = strtolower($title);
+class TopicFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Topic::class;
 
-    return [
-        'name' => $title,
-        'slug' => $slug,
-        'description' => $faker->text(50),
-        'image' => strtolower($faker->text(5)).'.jpg',
-        'scope' => 'public',
-        'live' => 'yes',
-        'sort_order' => '1000',
-        'in_menu' => 'yes',
-        'allow_comments' => 'yes',
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $title = $this->faker->text(20);
+        $slug = strtolower($title);
+
+        return [
+            'name' => $title,
+            'slug' => $slug,
+            'description' => $this->faker->text(50),
+            'image' => strtolower($this->faker->text(5)).'.jpg',
+            'scope' => 'public',
+            'live' => 'yes',
+            'sort_order' => '1000',
+            'in_menu' => 'yes',
+            'allow_comments' => 'yes',
         ];
-});
+    }
+}

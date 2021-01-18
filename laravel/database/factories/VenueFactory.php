@@ -1,23 +1,41 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Venue;
-use Faker\Generator as Faker;
 
-$factory->define(Venue::class, function (Faker $faker) {
-    $name = $faker->company.' hall';
-    $slug = strtolower($name);
+class VenueFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Venue::class;
 
-    return [
-        'name' => $name,
-        'slug' => $slug,
-        'description' => $faker->text(50),
-        'image' => strtolower($faker->text(5)).'.jpg',
-        'scope' => 'public',
-        'live' => 'yes',
-        'sort_order' => '1000',
-        'in_menu' => 'yes',
-        'allow_comments' => 'yes',
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $name = $this->faker->company.' hall';
+        $slug = strtolower($name);
+
+        return [
+            'name' => $name,
+            'slug' => $slug,
+            'description' => $this->faker->text(50),
+            'image' => strtolower($this->faker->text(5)).'.jpg',
+            'scope' => 'public',
+            'live' => 'yes',
+            'sort_order' => '1000',
+            'in_menu' => 'yes',
+            'allow_comments' => 'yes',
+        ];
+    }
+}

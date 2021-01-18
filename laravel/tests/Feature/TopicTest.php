@@ -29,7 +29,7 @@ class TopicTest extends TestCase
 
         echo "\n Admin create topics page \n";
 
-        $topics = factory(Topic::class, 20)->make();
+        $topics = Topic::factory()->count(20)->make();
 
         foreach ($topics as $topic) {
             echo 'attempting to insert '.$topic['name']."\n";
