@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Attachment;
 use App\Models\Employment;
 use Illuminate\Database\Seeder;
