@@ -67,7 +67,7 @@ class UserSeeder extends Seeder
 
             DB::table('model_has_roles')->insert([
                 'role_id' => $roleIds[0],
-                'model_type' => 'App\Models\User',
+                'model_type' => \App\Models\User::class,
                 'model_id' => $userId,
             ]);
 

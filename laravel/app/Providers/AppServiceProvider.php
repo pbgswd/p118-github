@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
     {
         require app_path('Http/view_helpers.php');
 
-        View::composer('content_feature', 'App\Http\View\Composers\ContentFeature');
+        View::composer('content_feature', \App\Http\View\Composers\ContentFeature::class);
 
         /*
         view()->composer('page_parts.topics', 'App\Http\View\Composers\ViewComposers@topics');
