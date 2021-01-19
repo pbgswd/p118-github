@@ -26,8 +26,9 @@ class ContactController extends Controller
 
         if (Auth::user()) {
             $data = ['contactPage' => Page::withoutGlobalScopes()
-                ->where('slug', 'local-118-contacts')->get(), ];
+                ->where('slug', 'local-118-contacts')->get()];
         }
+dd($data);
 
         return view('contact', ['data' => $data]);
     }

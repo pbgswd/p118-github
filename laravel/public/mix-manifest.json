@@ -1,11 +1,10 @@
 {
-    "/js/app.js": "/js/app.js?id=1f877d0b0e231634f94a",
-    "/css/app.css": "/css/app.css?id=4de40f09fb167d90c093",
-    "/css/email.css": "/css/email.css?id=614c5c32a21bfc3545b2",
-    "/css/dashboard.css": "/css/dashboard.css?id=d0ff8775104cb604129b",
-    "/css/jumbotron.css": "/css/jumbotron.css?id=a1459ec71769fd1a9255",
-    "/css/skeleton.css": "/css/skeleton.css?id=7a8a0a9120f7731d3772",
-    "/css/normalize.css": "/css/normalize.css?id=4da0bdffc62b067f657e",
-    "/js/dashboard.js": "/js/dashboard.js?id=6a0eb12d1b82aa020f6f",
-    "/js/tinymce.js": "/js/tinymce.js?id=670dd797714e1cbd4eac"
+    "/js/app.js": "/js/app.js?id=6af8dd3d8b0847f94bba",
+    "/js/dashboard.js": "/js/dashboard.js?id=54e1d4da87b6046ce6ee",
+    "/js/tinymce.js": "/js/tinymce.js?id=1187556288a0eee34d8a",
+    "/css/skeleton.css": "/css/skeleton.css?id=93155b25327adf07f26b",
+    "/css/jumbotron.css": "/css/jumbotron.css?id=eb5fe5d9c2ed421cd471",
+    "/css/dashboard.css": "/css/dashboard.css?id=5bc928ceb9784bd651e3",
+    "/css/email.css": "/css/email.css?id=3905bf5e3e08517d6f94",
+    "/css/normalize.css": "/css/normalize.css?id=8fdb29560a7019b109be"
 }

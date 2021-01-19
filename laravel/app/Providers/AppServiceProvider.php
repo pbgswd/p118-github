@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
     {
         require app_path('Http/view_helpers.php');
 
+        \Illuminate\Pagination\Paginator::useBootstrap();
+
         View::composer('content_feature', \App\Http\View\Composers\ContentFeature::class);
 
         /*
