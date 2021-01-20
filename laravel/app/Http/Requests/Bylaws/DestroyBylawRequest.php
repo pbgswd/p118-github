@@ -5,7 +5,7 @@ namespace App\Http\Requests\Bylaws;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class DestroyBylawRequest
+ * Class DestroyBylawRequest.
  * @property int[] $id
  */
 class DestroyBylawRequest extends FormRequest

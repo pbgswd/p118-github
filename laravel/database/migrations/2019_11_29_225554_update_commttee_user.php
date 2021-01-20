@@ -21,7 +21,7 @@ class UpdateCommtteeUser extends Migration
             $table->softDeletes();
         });
 
-        Schema::rename('users_committees_pivot',  'committee_user');
+        Schema::rename('users_committees_pivot', 'committee_user');
     }
 
     /**
@@ -33,7 +33,6 @@ class UpdateCommtteeUser extends Migration
     {
         //drop role
         Schema::table('committee_user', function (Blueprint $table) {
-
             $table->dropColumn('created_at');
             $table->dropColumn('updated_at');
             $table->dropColumn('deleted_at');
@@ -43,8 +42,3 @@ class UpdateCommtteeUser extends Migration
         Schema::rename('committee_user', 'users_committees_pivot');
     }
 }
-
-
-
-
-

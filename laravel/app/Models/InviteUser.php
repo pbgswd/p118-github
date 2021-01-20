@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Policies\InviteUserPolicy;
-
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +11,7 @@ use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * Class InviteUser
+ * Class InviteUser.
  *
  * @property int       $id
  * @property int       $user_id
@@ -22,24 +21,22 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string    $role
  * @property DateTime  $created_at
  * @property DateTime  $updated_at
- *
  */
-
 class InviteUser extends Authenticatable
 {
     use Notifiable;
     use Sortable;
     use HasRoles;
 
-    /** @var string  */
+    /** @var string */
     protected $guard_name = 'web';
 
     /** @var array */
     protected $policies = [
-        InviteUser::class => InviteUserPolicy::class,
+        self::class => InviteUserPolicy::class,
     ];
 
-    /** @var array  */
+    /** @var array */
     public $sortable = [
         'id',
         'name',
@@ -48,7 +45,7 @@ class InviteUser extends Authenticatable
         'updated_at',
     ];
 
-    /** @var array  */
+    /** @var array */
     protected $dates = [
         'created_at',
         'updated_at',

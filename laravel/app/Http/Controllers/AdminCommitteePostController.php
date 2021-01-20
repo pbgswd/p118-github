@@ -56,7 +56,6 @@ class AdminCommitteePostController extends Controller
         return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create']]);
     }
 
-
     public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
     {
         $this->authorize('update', $committee);
@@ -67,11 +66,10 @@ class AdminCommitteePostController extends Controller
 
         $post->save();
 
-        Session::flash('success', "You have saved a new post in " . $committee->name);
+        Session::flash('success', 'You have saved a new post in '.$committee->name);
 
         return redirect()->route('admin_committee_post_edit', [$committee->slug, $post->slug]);
     }
-
 
     /**
      * @param Committee $committee
@@ -82,7 +80,7 @@ class AdminCommitteePostController extends Controller
     {
         $this->authorize('update', $committee);
 
-        $any_committee_post->load('creator', 'committee' , 'admin_post_comments');
+        $any_committee_post->load('creator', 'committee', 'admin_post_comments');
 
         $data = [
             'post' => $any_committee_post,
@@ -98,7 +96,6 @@ class AdminCommitteePostController extends Controller
      * @param CommitteePost $committeePost
      * @return RedirectResponse
      */
-
     public function update(UpdateCommitteePostRequest $request, Committee $committee,
                            CommitteePost $committeePost): RedirectResponse
     {
@@ -107,7 +104,7 @@ class AdminCommitteePostController extends Controller
         $committeePost->fill($request->post);
         $committeePost->save();
 
-        Session::flash('success', "You have edited the post");
+        Session::flash('success', 'You have edited the post');
 
         $committeePost->committee;
 
@@ -132,7 +129,7 @@ class AdminCommitteePostController extends Controller
                 $post->delete();
             });
 
-        Session::flash('success', 'Committee ' . Str::plural('post', count($request->id)) . ' deleted.');
+        Session::flash('success', 'Committee '.Str::plural('post', count($request->id)).' deleted.');
 
         return redirect()->route('committee_posts_list', $committee->slug);
     }

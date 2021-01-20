@@ -1,9 +1,11 @@
 <?php
 
-use Illuminate\Database\Seeder;
+namespace Database\Seeders;
+
 use App\Models\Attachment;
 use App\Models\Meeting;
 use App\Models\MeetingAttachment;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class MeetingsToAttachmentsSeeder extends Seeder
@@ -24,9 +26,7 @@ class MeetingsToAttachmentsSeeder extends Seeder
         $data = DB::table('meetings')
             ->join('meeting_attachments', 'meetings.id', '=', 'meeting_attachments.meeting_id')->get();
 
-        foreach ($data as $m)
-        {
-
+        foreach ($data as $m) {
             $attachment = new Attachment;
 
             $attachment->user_id = $m->user_id;
@@ -45,7 +45,6 @@ class MeetingsToAttachmentsSeeder extends Seeder
 
             DB::table('attachment_meeting')
                 ->insert(['attachment_id' => $attachment->id, 'meeting_id' => $m->id]);
-
         }
         echo "\n ****** done ****** \n";
     }

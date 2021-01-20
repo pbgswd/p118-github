@@ -15,7 +15,7 @@ class HelloController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * FRONT PAGE INDEX OF WEBSITE
+     * FRONT PAGE INDEX OF WEBSITE.
      * @return Response
      */
     public function index()
@@ -27,8 +27,8 @@ class HelloController extends Controller
 
         $data['birthday'] = '';
         if ($today->isBirthday($data['foundingDate'])) {
-            $data['birthday'] = "Happy Birthday IATSE Local 118! You are " .
-                $data['years'] . " years young today!";
+            $data['birthday'] = 'Happy Birthday IATSE Local 118! You are '.
+                $data['years'].' years young today!';
         }
 
         if (Auth::check()) {
@@ -39,9 +39,8 @@ class HelloController extends Controller
             $data['news']['pages'] = Topic::find(TopicConstants::NEWS)->public_pages;
         }
 
-//todo datetime - add time zone management
+        //todo datetime - add time zone management
 
         return view('hello', ['data' => $data]);
     }
-
 }

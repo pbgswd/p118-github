@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 
 class AdminPolicyController extends Controller
 {
-    /** @var AttachmentService  */
+    /** @var AttachmentService */
     private $attachmentService;
 
     /**
@@ -74,20 +74,19 @@ class AdminPolicyController extends Controller
 
         $policy->save();
 
-        Session::flash('success', "policy posting saved");
+        Session::flash('success', 'policy posting saved');
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $policy);
 
             if ($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
+
         return redirect()->route('admin_policy_edit', [$policy->id]);
     }
 
@@ -122,21 +121,18 @@ class AdminPolicyController extends Controller
 
         $result = $this->attachmentService->updateAttachment($request, $any_policy);
 
-        if (null !== ($request->file('attachments')))
-        {
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_policy);
 
-            if($result){
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "You have edited the policy");
+        Session::flash('success', 'You have edited the policy');
 
         return redirect()->route('admin_policy_edit', [$any_policy->id]);
     }
@@ -154,15 +150,14 @@ class AdminPolicyController extends Controller
         //$this->authorize('delete', Auth::user());
 
         /** @var Collection $policy */
-
         Policy::withoutGlobalScopes()
             ->find($request->id)
-            ->each(function(Policy $policy) {
+            ->each(function (Policy $policy) {
                 $this->attachmentService->destroyAttachments($policy);
                 $policy->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) .
+        Session::flash('success', Str::plural(count($request->id).' posting', count($request->id)).
             ' and any related files deleted.');
 
         return redirect()->route('policies_list');

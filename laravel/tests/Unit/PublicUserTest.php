@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Http\Response;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PublicUserTest extends TestCase
 {
@@ -13,16 +13,15 @@ class PublicUserTest extends TestCase
      *
      * @return void
      */
-
     public function testPublicAccess()
     {
-        echo "\n Begin " . basename(__FILE__) . "\n";
+        echo "\n Begin ".basename(__FILE__)."\n";
         $this->assertTrue(true);
 
         $response = $this->get('/');
         $response->assertOk();
         if ($response->assertStatus(Response::HTTP_OK)) {
-            $response->assertSeeText("since 1904");
+            $response->assertSeeText('since 1904');
         }
 
         $response = $this->get('/page/history');
@@ -38,11 +37,11 @@ class PublicUserTest extends TestCase
 
         $header = $response->headers->get('content-disposition');
 
-        $this->assertEquals($header, "attachment; filename=Permittee Application.pdf");
+        $this->assertEquals($header, 'attachment; filename=Permittee Application.pdf');
 
         //$response->assertContains('attachment', (string)$response);
         //$this->assertTrue(preg_match('/(error|notice)/i', $response) === false);
-       // $response->assertHeader('content-type', 'text/html; charset=UTF-8');
+        // $response->assertHeader('content-type', 'text/html; charset=UTF-8');
 
         $response = $this->get('/executive');
         $response->assertSeeText('President');
@@ -78,34 +77,34 @@ class PublicUserTest extends TestCase
         $response = $this->get('/contact');
         $response->assertSeeText('Contact IATSE Local 118');
 
-        echo "\n Attempting to send a message" . "\n";
+        echo "\n Attempting to send a message"."\n";
 
         $response = $this->call('POST', '/contact',
                 [
-                    'name' => 'test Sender ' . $date,
+                    'name' => 'test Sender '.$date,
                     'email' => 'unittesting@test.com',
-                    'mail_subject' => 'test contact page submission ' . $date,
-                    'mail_body' => $date . " lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-                        lorem ipsum lorem ipsum lorem ipsum ",
+                    'mail_subject' => 'test contact page submission '.$date,
+                    'mail_body' => $date.' lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+                        lorem ipsum lorem ipsum lorem ipsum ',
                     '_token' => csrf_token(),
                 ]
             );
 
         if ($response->assertStatus(Response::HTTP_FOUND)) {
-            if($response->assertSeeText("Redirecting to http")) {
-                echo "\n message sent " . "\n";
+            if ($response->assertSeeText('Redirecting to http')) {
+                echo "\n message sent "."\n";
             }
         }
 
-        echo "\n End " . basename( __FILE__ ) . "\n";
+        echo "\n End ".basename(__FILE__)."\n";
     }
 
     public function testPublicToPrivate()
     {
-        echo "\n begin testPublicToPrivate method in " . basename( __FILE__ ) . "\n";
+        echo "\n begin testPublicToPrivate method in ".basename(__FILE__)."\n";
         $response = $this->get('/');
         if ($response->assertStatus(Response::HTTP_OK)) {
-            $response->assertSeeText("since 1904");
+            $response->assertSeeText('since 1904');
         }
     }
 }

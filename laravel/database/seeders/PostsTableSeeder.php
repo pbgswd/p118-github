@@ -1,7 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades;
+use Illuminate\Support\Facades\DB;
 
 class PostsTableSeeder extends Seeder
 {
@@ -19,15 +22,13 @@ class PostsTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         for ($i = 0; $i < 2; $i++) {
-
             $title = $faker->text(20);
-            $slug  = strtolower($title);
-            $date  = date('Y-m-d H:i:s');
+            $slug = strtolower($title);
+            $date = date('Y-m-d H:i:s');
             $userIdKey = array_rand($userIds, 1);
             $pageIdsKey = array_rand($pageIds, 1);
 
             $topicIdKey = array_rand($topicIds, 1);
-
 
             DB::table('posts')->insert([
                 'user_id' => $userIds[$userIdKey],
@@ -45,7 +46,7 @@ class PostsTableSeeder extends Seeder
                 'updated_at' => $date,
             ]);
 
-            $postId =  DB::getPdo()->lastInsertId();
+            $postId = DB::getPdo()->lastInsertId();
 
             // constraint violation
             DB::table('post_topic')->insert([
@@ -60,7 +61,6 @@ class PostsTableSeeder extends Seeder
 
             // insert a bunch of rows of Posts with relationships
             // to topics, pages, as well as topics and pages together
-
         }
     }
 }

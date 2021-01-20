@@ -25,7 +25,6 @@ class PolicyController extends Controller
         return view('policies_list', ['data' => ['data' => $data]]);
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -38,5 +37,4 @@ class PolicyController extends Controller
 
         return view('policy_view', ['data' => ['policy' => $policy]]);
     }
-
 }

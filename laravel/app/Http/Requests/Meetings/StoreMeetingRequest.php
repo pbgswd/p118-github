@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class StoreMeetingRequest
+ * Class StoreMeetingRequest.
  *
  * @property mixed[] $meeting
  */

@@ -17,7 +17,7 @@ use Spatie\Searchable\SearchResult;
  * @property string       $title
  * @property string       $description
  * @property int          $user_id
- * @property boolean      $live
+ * @property bool      $live
  * @property User         $user
  * @property Attachment[] $attachments
  * @property DateTime     $date
@@ -29,7 +29,7 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
     use Sortable;
 
     protected $policies = [
-        Meeting::class => MeetingPolicy::class,
+        self::class => MeetingPolicy::class,
     ];
 
     /**
@@ -55,7 +55,7 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
     protected $dates = [
         'date',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
@@ -67,7 +67,7 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
@@ -120,5 +120,4 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
     {
         return true;
     }
-
 }

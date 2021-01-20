@@ -12,8 +12,7 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * Class Policy
- * @package App\Models
+ * Class Policy.
  * @property int       $id
  * @property int       $user_id
  * @property string    $title
@@ -36,7 +35,7 @@ class Policy extends LiveableModel implements HasAttachment, Searchable
     ];
 
     protected $policies = [
-        Policy::class => PolicyPolicy::class,
+        self::class => PolicyPolicy::class,
     ];
 
     protected $dates = [
@@ -54,8 +53,7 @@ class Policy extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
@@ -103,5 +101,4 @@ class Policy extends LiveableModel implements HasAttachment, Searchable
     {
         return AccessLevelConstants::MEMBERS;
     }
-
 }

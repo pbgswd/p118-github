@@ -8,8 +8,8 @@ use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
-use App\Services\EmailMemberUpdateService;
 use App\Services\EmailMemberUpdateAddressService;
+use App\Services\EmailMemberUpdateService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -18,21 +18,20 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Storage;
 
 /**
- * Class UserController
- * @package App\Http\Controllers
+ * Class UserController.
  */
 class UserController extends Controller
 {
     /**
      * @var EmailMemberUpdateService
      */
-
-    private $emailMemberUpdateService, $emailMemberUpdateAddressService;
+    private $emailMemberUpdateService;
+    private $emailMemberUpdateAddressService;
 
     public function __construct(EmailMemberUpdateService $emailMemberUpdateService)
     {
@@ -108,7 +107,6 @@ class UserController extends Controller
         return view('member_edit', ['data' => $data]);
     }
 
-
     /**
      * @param UpdateMember $userRequest
      * @param User $user
@@ -125,11 +123,11 @@ class UserController extends Controller
         $message = [];
         $original_name = $user->name;
 
-        if($userRequest->user['name'] != $user->name) {
+        if ($userRequest->user['name'] != $user->name) {
             $message['Name'] = $userRequest->user['name'];
         }
 
-        if($userRequest->user['email'] != $user->email) {
+        if ($userRequest->user['email'] != $user->email) {
             $message['Email'] = $userRequest->user['email'];
         }
 
@@ -137,7 +135,7 @@ class UserController extends Controller
         $user->save();
 
         if ($user->phone_number instanceof PhoneNumber) {
-            if($userRequest->user_phone['phone_number'] != $user->phone_number['phone_number']) {
+            if ($userRequest->user_phone['phone_number'] != $user->phone_number['phone_number']) {
                 $message['Phone'] = $userRequest->user_phone['phone_number'];
             }
             $user->phone_number->fill($userRequest->user_phone);
@@ -153,11 +151,11 @@ class UserController extends Controller
 
             if (isset($user_info['delete_image'])) {
                 Storage::disk('users')->delete($user_info['image']);
-                Session::flash('info', "You have deleted " . $user_info['image']);
+                Session::flash('info', 'You have deleted '.$user_info['image']);
                 $user_info['image'] = null;
                 $user_info['file_name'] = null;
             } else {
-                if (!is_null($userRequest->file('image'))) {
+                if (! is_null($userRequest->file('image'))) {
                     $user_info['image'] = $this->uploadImage($userRequest);
                     $user_info['file_name'] = $userRequest->image->getClientOriginalName();
                 }
@@ -170,17 +168,16 @@ class UserController extends Controller
             $user->user_info()->save($user_info);
         }
 
-        if(!empty($message)) {
+        if (! empty($message)) {
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
-//todo ONLY trigger update email when change in name or email or phone
+        //todo ONLY trigger update email when change in name or email or phone
 
-        Session::flash('success', "Profile for ". $user->name . " has been edited. The office will be updated.");
+        Session::flash('success', 'Profile for '.$user->name.' has been edited. The office will be updated.');
 
         return redirect()->route('member_edit', $user->id);
     }
-
 
     public function edit_address(User $user)
     {
@@ -214,26 +211,24 @@ class UserController extends Controller
         $this->authorize('update', $user);
         $message = [];
 
-        $addr = ['unit','street','city','province','postal_code','message'];
+        $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
 
-        foreach($addr as $k => $a)
-        {
-            if($userRequest->$a) {
-                if($a == 'postal_code') {
+        foreach ($addr as $k => $a) {
+            if ($userRequest->$a) {
+                if ($a == 'postal_code') {
                     $userRequest->$a = strtoupper($userRequest->$a);
                 }
                 $message[ucfirst($a)] = $userRequest->$a;
             }
         }
 
-        if(!empty($message)) {
+        if (! empty($message)) {
             $result = $service->sendMessage($message, $user);
         }
 
-        Session::flash('success', "Address update for ". $user->name ." has been emailed to the office.");
+        Session::flash('success', 'Address update for '.$user->name.' has been emailed to the office.');
 
         return redirect()->route('member_edit', $user->id);
-
     }
 
     protected function uploadImage(FormRequest $request)

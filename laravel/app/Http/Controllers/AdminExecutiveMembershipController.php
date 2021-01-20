@@ -13,7 +13,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-
 class AdminExecutiveMembershipController extends Controller
 {
     /**
@@ -28,15 +27,14 @@ class AdminExecutiveMembershipController extends Controller
         //'admin_executives_list'
         $data = [];
 
- /***
-        $data = [];
-        $data['executives'] = Executive::sortable()
-  * ->with('user')->orderBy('created_at', 'desc')->paginate(20);
-        $data['count'] = Executive::count();
+        /***
+               $data = [];
+               $data['executives'] = Executive::sortable()
+         * ->with('user')->orderBy('created_at', 'desc')->paginate(20);
+               $data['count'] = Executive::count();
 **/
 
         return view('admin.executives_list', ['data' => $data]);
-
     }
 
     /**
@@ -57,7 +55,6 @@ class AdminExecutiveMembershipController extends Controller
         ];
 
         return view('admin.executive', ['data' => $data]);
-
     }
 
     /**
@@ -79,11 +76,10 @@ class AdminExecutiveMembershipController extends Controller
 
         //todo msg member that he she has a role.
 
-        Session::flash('success', "You have created a member executive role");
+        Session::flash('success', 'You have created a member executive role');
 
         return redirect()->route('admin_executive_edit', $executiveMembership->id);
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -104,7 +100,7 @@ class AdminExecutiveMembershipController extends Controller
             'action' => 'Edit',
         ];
 
-        return view('admin.executive', [$executiveMembership->id], ['data' => $data] );
+        return view('admin.executive', [$executiveMembership->id], ['data' => $data]);
     }
 
     /**
@@ -121,7 +117,7 @@ class AdminExecutiveMembershipController extends Controller
         $executiveMembership->fill($request->input('executive'));
         $executiveMembership->save();
 
-        Session::flash('success', "Role has been updated");
+        Session::flash('success', 'Role has been updated');
 
         return redirect()->route('admin_executive_edit', $executiveMembership->id);
     }
@@ -136,8 +132,7 @@ class AdminExecutiveMembershipController extends Controller
     {
         $this->authorize('delete', ExecutiveMembership::class);
 
-        foreach($request->id as $i)
-        {
+        foreach ($request->id as $i) {
             $e = ExecutiveMembership::find($i);
             $e->delete();
         }

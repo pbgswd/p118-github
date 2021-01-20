@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class StorePageRequest
+ * Class StorePageRequest.
  *
  * @property mixed[] $page
  */
@@ -49,7 +49,7 @@ class StorePageRequest extends FormRequest
         $page = \array_merge(
             $this->input('page'),
             [
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
             ]
         );
 

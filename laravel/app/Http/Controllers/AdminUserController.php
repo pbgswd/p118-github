@@ -25,17 +25,14 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
-
 /**
- * Class AdminUserController
- * @package App\Http\Controllers
+ * Class AdminUserController.
  */
 class AdminUserController extends Controller
 {
     /**
      * @var EmailMemberUpdateService
      */
-
     private $emailMemberUpdateService;
 
     public function __construct(EmailMemberUpdateService $emailMemberUpdateService)
@@ -73,38 +70,38 @@ class AdminUserController extends Controller
 
         return redirect()->route('users_list');
 
-/***************
-        $this->authorize('create', Auth::user());
+        /***************
+                $this->authorize('create', Auth::user());
 
-        $user = new User;
-        $phone = new PhoneNumber;
-        $user_info = new UserInfo;
-        $address = new Address;
-       // $membership = new Membership;
+                $user = new User;
+                $phone = new PhoneNumber;
+                $user_info = new UserInfo;
+                $address = new Address;
+               // $membership = new Membership;
 
-        $regions = $this->getFormOptions(['countries', 'statesprovs']);
-        $currentUser = Auth::user();
+                $regions = $this->getFormOptions(['countries', 'statesprovs']);
+                $currentUser = Auth::user();
 
-        $roles = Role::get();
+                $roles = Role::get();
 
-        $user_roles = ['member' => 'member'];
+                $user_roles = ['member' => 'member'];
 
-        $data = [
-            'user' => $user,
-            'user_roles' => $user_roles,
-            'roles' => $roles,
-            'action' => 'Create',
-            'currentUserPermissions' => $currentUser->permissions,
-            'user_info' => $user_info,
-            'user_phone' => $phone,
-            'user_address' => $address,
-            //'user_membership' => $membership,
-            'countries' => $regions['countries'],
-            'provinces' => $regions['statesprovs']['Provinces'],
-        ];
+                $data = [
+                    'user' => $user,
+                    'user_roles' => $user_roles,
+                    'roles' => $roles,
+                    'action' => 'Create',
+                    'currentUserPermissions' => $currentUser->permissions,
+                    'user_info' => $user_info,
+                    'user_phone' => $phone,
+                    'user_address' => $address,
+                    //'user_membership' => $membership,
+                    'countries' => $regions['countries'],
+                    'provinces' => $regions['statesprovs']['Provinces'],
+                ];
 
-        return view('admin.user', ['data' => $data]);
- * **/
+                return view('admin.user', ['data' => $data]);
+         * **/
     }
 
     /**
@@ -115,49 +112,49 @@ class AdminUserController extends Controller
     {
         $this->authorize('create', Auth::user());
         Session::flash('warning', 'Store method blocked off. Contact admin for support.');
+
         return redirect()->route('users_list');
-     /*******************
+        /*******************
 
 //todo is password here just encrypting the word 'secret'?
 //todo create default password for new user based on name and other data
 //todo do not allow user to keep first password on signup.
 //todo a fake password, then leverage password reset to send out login access
 
-        $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]));
-        $user->save();
+           $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]));
+           $user->save();
 
-        $phone = new PhoneNumber($request->input('user_phone'));
-        $user->phone_number()->save($phone);
+           $phone = new PhoneNumber($request->input('user_phone'));
+           $user->phone_number()->save($phone);
 
-        $user_info = new UserInfo($request->input('user_info'));
-        $user_info->image = $this->uploadImage($request);
+           $user_info = new UserInfo($request->input('user_info'));
+           $user_info->image = $this->uploadImage($request);
 
-        if(null !== $request->file) {
-            $user_info['file_name'] = $request->image->getClientOriginalName() ?? '';
-        }
+           if(null !== $request->file) {
+               $user_info['file_name'] = $request->image->getClientOriginalName() ?? '';
+           }
 
-        $user->user_info()->save($user_info);
+           $user->user_info()->save($user_info);
 
-        $address = new Address($request->input('user_address'));
-        $user->address()->save($address);
+           $address = new Address($request->input('user_address'));
+           $user->address()->save($address);
 
-        //$membership = new Membership($request->input('user_membership'));
-        //$user->membership()->save($membership);
+           //$membership = new Membership($request->input('user_membership'));
+           //$user->membership()->save($membership);
 
-        $user_roles = new Role($request->input('user_roles'));
-        $user_roles->save();
+           $user_roles = new Role($request->input('user_roles'));
+           $user_roles->save();
 
-        Session::flash('success', "You have saved a new member");
+           Session::flash('success', "You have saved a new member");
 
-        return redirect()->route('user_edit', [$user->id]);
-      * ***********/
+           return redirect()->route('user_edit', [$user->id]);
+         * ***********/
     }
 
     /**
      * @param User $user
      * @return Factory|View
      */
-
     public function edit(User $user)
     {
         $this->authorize('admin_update', Auth::user());
@@ -200,11 +197,11 @@ class AdminUserController extends Controller
         $message = [];
         $original_name = $user->name;
 
-        if($request->user['name'] != $user->name) {
+        if ($request->user['name'] != $user->name) {
             $message['Name'] = $request->user['name'];
         }
 
-        if($request->user['email'] != $user->email) {
+        if ($request->user['email'] != $user->email) {
             $message['Email'] = $request->user['email'];
         }
 
@@ -212,7 +209,7 @@ class AdminUserController extends Controller
         $user->save();
 
         if ($user->phone_number instanceof PhoneNumber) {
-            if($request->user_phone['phone_number'] != $user->phone_number->phone_number ) {
+            if ($request->user_phone['phone_number'] != $user->phone_number->phone_number) {
                 $message['Phone'] = $request->user_phone['phone_number'];
             }
             $user->phone_number->fill($request['user_phone']);
@@ -229,11 +226,11 @@ class AdminUserController extends Controller
             if (isset($user_info['delete_image'])) {
                 Storage::disk('users')->delete($user_info['image']);
 
-                Session::flash('info', "You have deleted " . $user_info['image']);
+                Session::flash('info', 'You have deleted '.$user_info['image']);
                 $user_info['image'] = null;
                 $user_info['file_name'] = null;
             } else {
-                if (!is_null($request->file('image'))) {
+                if (! is_null($request->file('image'))) {
                     $user_info['image'] = $this->uploadImage($request);
                     $user_info['file_name'] = $request->image->getClientOriginalName();
                 }
@@ -242,7 +239,7 @@ class AdminUserController extends Controller
             $user->user_info->save();
         } else {
             $user_info = new UserInfo($request->input('user_info'));
-            if(null !== $request->file) {
+            if (null !== $request->file) {
                 $user_info->image = $this->uploadImage($request);
             }
             $user->user_info()->save($user_info);
@@ -250,29 +247,28 @@ class AdminUserController extends Controller
 
         $user_roles = $user->getRoleNames()->toArray();
 
-        if($user_roles !== $request->user_roles) {
-            $message['Website_Roles'] = implode(", ", $request->user_roles);
+        if ($user_roles !== $request->user_roles) {
+            $message['Website_Roles'] = implode(', ', $request->user_roles);
         }
         $user->syncRoles([$request->user_roles]);
 
         if ($user->membership instanceof Membership) {
-            if($request['user_membership']['membership_type'] != $user->membership->membership_type) {
+            if ($request['user_membership']['membership_type'] != $user->membership->membership_type) {
                 $message['Membership_type'] = $request['user_membership']['membership_type'];
             }
             $user->membership->fill($request['user_membership']);
             $user->membership->save();
-
         } else {
             $membership = new Membership($request['user_membership']);
             $user->membership()->save($membership);
             $message['Membership'] = $request['user_membership']['membership_type'];
         }
 
-        if(!empty($message)) {
+        if (! empty($message)) {
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
-        Session::flash('success', "You have edited a member profile");
+        Session::flash('success', 'You have edited a member profile');
 
         return redirect()->route('user_edit', [$user->id]);
     }
@@ -280,7 +276,6 @@ class AdminUserController extends Controller
     /**
      * @param DestroyUser $request
      * @return RedirectResponse
-
      */
     public function destroy(DestroyUser $request)
     {
@@ -288,17 +283,15 @@ class AdminUserController extends Controller
 
         $users = User::find($request->id);
 
-//todo cannot delete user when user has a post, page, topic, or is a member of a committee.
-// Deal with this
-//todo user soft delete
+        //todo cannot delete user when user has a post, page, topic, or is a member of a committee.
+        // Deal with this
+        //todo user soft delete
 
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             $user_roles = $user->getRoleNames()->toArray();
             $user_roles = array_combine($user_roles, $user_roles);
 
-            foreach ($user_roles as $r)
-            {
+            foreach ($user_roles as $r) {
                 $user->removeRole($r);
             }
 
@@ -313,7 +306,7 @@ class AdminUserController extends Controller
             UserInfo::destroy($user_info['id']);
 
             $e = ExecutiveMembership::find($user->id);
-            if(null != $e) {
+            if (null != $e) {
                 $e->delete();
             }
 
@@ -322,7 +315,7 @@ class AdminUserController extends Controller
             User::destroy($user->id);
         }
 
-        Session::flash('success', Str::plural('Member', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural('Member', count($request->id)).' deleted.');
 
         return redirect()->route('users_list');
     }

@@ -8,6 +8,7 @@ use App\Models\Interfaces\HasAttachment;
 use App\Policies\TopicPolicy;
 use Conner\Tagging\Taggable;
 use DateTime;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
@@ -16,7 +17,6 @@ use phpDocumentor\Reflection\Types\Boolean;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-
 /**
  * @property int           $id
  * @property string        $slug
@@ -24,10 +24,10 @@ use Spatie\Searchable\SearchResult;
  * @property string        $description
  * @property string        $content
  * @property string        $access_level
- * @property boolean       $live
+ * @property bool       $live
  * @property int           $sort_order
- * @property boolean       $in_menu
- * @property boolean       $allow_comments
+ * @property bool       $in_menu
+ * @property bool       $allow_comments
  * @property DateTime      $created_at
  * @property DateTime      $updated_at
  * @property User          $user
@@ -39,6 +39,7 @@ use Spatie\Searchable\SearchResult;
  */
 class Topic extends LiveableModel implements HasAttachment, Searchable
 {
+    use HasFactory;
     use Sortable;
     use Taggable;
 
@@ -57,7 +58,7 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     ];
 
     protected $policies = [
-        Topic::class => TopicPolicy::class,
+        self::class => TopicPolicy::class,
     ];
 
     public $sortable = [
@@ -74,7 +75,7 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
@@ -88,7 +89,7 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->name,
@@ -119,6 +120,7 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     public function setNameAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['name'] = $value;
     }
 
@@ -136,7 +138,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class);
-
     }
 
     /**
@@ -171,7 +172,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     {
         return $this->belongsToMany(Post::class);
     }
-
 
     /**
      * @return BelongsToMany

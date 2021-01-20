@@ -14,14 +14,12 @@ class AssignRoleUser extends AccessControl
      */
     protected $signature = 'role:assign {role_name? : The name of an existing role to assign.} {email? : The email of an existing user.}';
 
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Assign a given role to a user.';
-
 
     /**
      * Execute the console command.
@@ -30,16 +28,12 @@ class AssignRoleUser extends AccessControl
      */
     public function handle()
     {
-        if ($this->argument('email') || $this->argument('role_name'))
-        {
+        if ($this->argument('email') || $this->argument('role_name')) {
             $user = User::where('email', $this->argument('email'))->first();
             $role = Role::where('name', $this->argument('role_name'))->first();
-            if (!$user || !$role)
-            {
+            if (! $user || ! $role) {
                 $this->error('Invalid role name or email.');
-            }
-            else
-            {
+            } else {
                 $user->assignRole($role);
             }
         }

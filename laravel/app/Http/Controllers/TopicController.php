@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-
 class TopicController extends Controller
 {
     /**
@@ -24,8 +23,7 @@ class TopicController extends Controller
                 ->with('tagged')
                 ->orderBy('sort_order', 'desc')
                 ->paginate(10);
-        }
-        else {
+        } else {
             $topics = Topic::sortable()
                 ->where('access_level', '=', AccessLevelConstants::PUBLIC)
                 ->with('tagged')
@@ -42,7 +40,8 @@ class TopicController extends Controller
     public function show(Topic $topic)
     {
         if (false === Auth::check() && $topic->access_level != AccessLevelConstants::PUBLIC) {
-            Session::flash('warning', "Login to view this topic.");
+            Session::flash('warning', 'Login to view this topic.');
+
             return redirect('login');
         }
 

@@ -17,7 +17,7 @@ use Illuminate\View\View;
 
 class AdminAgreementController extends Controller
 {
-    /** @var AttachmentService  */
+    /** @var AttachmentService */
     private $attachmentService;
 
     /**
@@ -31,7 +31,6 @@ class AdminAgreementController extends Controller
 
     /**
      * @return Application|Factory|View
-
      */
     public function index()
     {
@@ -51,7 +50,6 @@ class AdminAgreementController extends Controller
 
     /**
      * @return Application|Factory|View
-
      */
     public function create()
     {
@@ -64,7 +62,6 @@ class AdminAgreementController extends Controller
     /**
      * @param StoreAgreementRequest $request
      * @return RedirectResponse
-
      */
     public function store(StoreAgreementRequest $request): RedirectResponse
     {
@@ -74,28 +71,25 @@ class AdminAgreementController extends Controller
 
         $agreement->save();
 
-        Session::flash('success', "agreement posting saved");
+        Session::flash('success', 'agreement posting saved');
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $agreement);
 
             if ($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
+
         return redirect()->route('agreement_edit', [$agreement->id]);
     }
-
 
     /**
      * @param Agreement $agreement
      * @return Application|Factory|View
-
      */
     public function edit(Agreement $agreement)
     {
@@ -113,7 +107,6 @@ class AdminAgreementController extends Controller
      * @param UpdateAgreementRequest $request
      * @param Agreement $any_agreement
      * @return RedirectResponse
-
      */
     public function update(UpdateAgreementRequest $request, Agreement $any_agreement): RedirectResponse
     {
@@ -125,21 +118,18 @@ class AdminAgreementController extends Controller
 
         $result = $this->attachmentService->updateAttachment($request, $any_agreement);
 
-        if (null !== ($request->file('attachments')))
-        {
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_agreement);
 
-            if($result){
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "You have edited the agreement information");
+        Session::flash('success', 'You have edited the agreement information');
 
         return redirect()->route('agreement_edit', [$any_agreement->id]);
     }
@@ -151,16 +141,16 @@ class AdminAgreementController extends Controller
      */
     public function destroy(DestroyAgreementRequest $request): RedirectResponse
     {
-        $this->authorize('delete',  Agreement::class);
+        $this->authorize('delete', Agreement::class);
 
         Agreement::withoutGlobalScopes()
             ->find($request->id)
-            ->each(function(Agreement $agreement) {
+            ->each(function (Agreement $agreement) {
                 $this->attachmentService->destroyAttachments($agreement);
                 $agreement->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) .
+        Session::flash('success', Str::plural(count($request->id).' posting', count($request->id)).
             ' and any related files deleted.');
 
         return redirect()->route('agreements_list');

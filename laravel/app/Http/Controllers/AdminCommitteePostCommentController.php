@@ -42,7 +42,6 @@ class AdminCommitteePostCommentController extends Controller
      */
     public function edit(CommitteePostComment $any_committee_post_comment)
     {
-
         $any_committee_post_comment->loadWithoutGlobalScopes(['comment_author', 'committee_post', 'committee']);
 
         $data = [
@@ -62,7 +61,6 @@ class AdminCommitteePostCommentController extends Controller
      */
     public function store(StoreCommitteePostCommentRequest $request, CommitteePost $committeePost)
     {
-
         $postComment = new CommitteePostComment($request->input('comment'));
 
         $postComment->committee_id = $committeePost->committee_id;
@@ -72,7 +70,7 @@ class AdminCommitteePostCommentController extends Controller
 
         $postComment->save();
 
-        Session::flash('success', "You have added your comment to " . $committeePost->title);
+        Session::flash('success', 'You have added your comment to '.$committeePost->title);
 
         return redirect()->route('admin_committee_post_comment_edit', [$committeePost->slug, $postComment->id]);
     }
@@ -90,7 +88,7 @@ class AdminCommitteePostCommentController extends Controller
         $any_committee_post_comment->fill($request->input('comment'));
         $any_committee_post_comment->save();
 
-        Session::flash('success', "You have edited the post");
+        Session::flash('success', 'You have edited the post');
 
         return redirect()->route('admin_committee_post_comment_edit',
             [$committeePost->slug, $any_committee_post_comment->id]);
@@ -116,7 +114,7 @@ class AdminCommitteePostCommentController extends Controller
 
         $committee_post = CommitteePost::withoutGlobalScopes()->where('id', $post_id)->first();
 
-        Session::flash('success', 'Committee Post ' . Str::plural('Comment', count($request->id)) . ' deleted.');
+        Session::flash('success', 'Committee Post '.Str::plural('Comment', count($request->id)).' deleted.');
 
         return redirect()->route('admin_committee_post_edit',
             [$committee_post->committee->slug, $committee_post->slug]);

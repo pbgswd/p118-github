@@ -8,29 +8,30 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.3",
-        "doctrine/dbal": "^2.10",
-        "fideloper/proxy": "^4.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "php": "^7.3|^8.0",
+        "doctrine/dbal": "^2.11",
+        "fideloper/proxy": "^4.4",
+        "guzzlehttp/guzzle": "^7.0.1",
         "kyslik/column-sortable": "^6.0",
-        "laravel/framework": "^7.0",
-        "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.0",
+        "laravel/framework": "^8.18",
+        "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.0",
         "league/flysystem": "^1.0.55",
         "nesbot/carbon": "^2.24",
         "rtconner/laravel-tagging": "^3.2.3",
         "spatie/image": "^1.7.4",
-        "spatie/laravel-permission": "^3.0",
-        "spatie/laravel-searchable": "^1.6",
-        "unicodeveloper/laravel-password": "^1.0"
+        "spatie/laravel-permission": "^3.17",
+        "spatie/laravel-searchable": "^1.7",
+        "unicodeveloper/laravel-password": "^1.0",
+        "fruitcake/laravel-cors": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",
-        "facade/ignition": "^2.0",
-        "fzaninotto/faker": "^1.4",
-        "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^4.1",
-        "phpunit/phpunit": "^8.5"
+        "facade/ignition": "^2.5",
+        "mockery/mockery": "^1.4.2",
+        "nunomaduro/collision": "^5.0",
+        "phpunit/phpunit": "^9.3.3",
+        "fakerphp/faker": "^1.9.1"
     },
     "config": {
         "optimize-autoloader": true,
@@ -46,12 +47,10 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "App\\Http\\View\\": "app/Http/View"
-        },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ]
+            "App\\Http\\View\\": "app/Http/View",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
     },
     "autoload-dev": {
         "psr-4": {

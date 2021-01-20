@@ -33,7 +33,6 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-
         $data = [];
 
         $data['agreements'] = Auth::check() ? $organization->member_agreements :

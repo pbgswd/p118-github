@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Executive;
 use Illuminate\Http\Response;
 
@@ -21,5 +20,4 @@ class AdminExecutiveController extends Controller
 
         return view('admin.executives_list', ['data' => $data]);
     }
-
 }

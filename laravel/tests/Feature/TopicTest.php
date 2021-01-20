@@ -2,19 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Models\Topic;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Http\Response;
 use Session;
 use Tests\TestCase;
-use App\Models\Topic;
-use Illuminate\Http\Response;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-
 
 class TopicTest extends TestCase
 {
     /**
-     * Insert topics into topics table
+     * Insert topics into topics table.
      *
      * @return void
      */
@@ -30,11 +29,10 @@ class TopicTest extends TestCase
 
         echo "\n Admin create topics page \n";
 
-        $topics = factory(Topic::class, 20)->make();
+        $topics = Topic::factory()->count(20)->make();
 
         foreach ($topics as $topic) {
-
-            echo "attempting to insert ". $topic['name'] . "\n";
+            echo 'attempting to insert '.$topic['name']."\n";
 
             $response = $this->post(
                 '/admin/topic',
@@ -53,19 +51,18 @@ class TopicTest extends TestCase
                 ]
             );
 
-            echo  $topic['name'] . " has been posted. \n";
+            echo  $topic['name']." has been posted. \n";
 
-/*            if ($response->assertStatus(Response::HTTP_OK)) {
-                echo $topic['name'] . " has been stored in db. \n";
-            }*/
-
+            /*            if ($response->assertStatus(Response::HTTP_OK)) {
+                            echo $topic['name'] . " has been stored in db. \n";
+                        }*/
         }
 
-/*        $response = $this->get(route('topics_list'));
+        /*        $response = $this->get(route('topics_list'));
 
-        if ($response->assertStatus(Response::HTTP_OK)) {
-            $response->assertSeeText("List Topics");
-            echo "\n Admin List topics page \n";
-        }*/
+                if ($response->assertStatus(Response::HTTP_OK)) {
+                    $response->assertSeeText("List Topics");
+                    echo "\n Admin List topics page \n";
+                }*/
     }
 }

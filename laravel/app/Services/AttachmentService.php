@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AttachmentService
 {
-
     /**
      * @param Request $request
      * @param HasAttachment $model
@@ -19,12 +18,10 @@ class AttachmentService
      */
     public function createAttachment(Request $request, HasAttachment $model): bool
     {
-
-        foreach ($request->file('attachments') as $file)
-        {
-        //todo what about max file size, number of files uploaded at a time,
-        //resizing images generate thumb $file
-        //todo wp image thumb style is a settings page
+        foreach ($request->file('attachments') as $file) {
+            //todo what about max file size, number of files uploaded at a time,
+            //resizing images generate thumb $file
+            //todo wp image thumb style is a settings page
 
             $attachment = new Attachment;
             $attachment->user_id = Auth::id();
@@ -38,6 +35,7 @@ class AttachmentService
 
             $model->attachments()->attach($attachment);
         }
+
         return true;
     }
 
@@ -49,15 +47,13 @@ class AttachmentService
     public function updateAttachment(Request $request, HasAttachment $model): bool
     {
         if (isset($request->attachment)) {
-            foreach ($request->attachment as $k => $v )
-            {
+            foreach ($request->attachment as $k => $v) {
                 $attachment = Attachment::find($k);
                 //todo do I ever want to detach files from a post instead of delete ?
                 if (isset($v['id'])) {
                     if ($model->keepDissociatedAttachments()) {
                         //dissociate file,
                         $model->attachments()->detach($attachment);
-
                     } else {
                         // delete the file
                         Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
@@ -71,8 +67,10 @@ class AttachmentService
                 $attachment->description = \trim($v['description']);
                 $attachment->save();
             }
+
             return true;
         }
+
         return false;
     }
 
@@ -84,12 +82,12 @@ class AttachmentService
     {
         $model->attachments;
 
-        foreach ($model->attachments as $attachment)
-        {
+        foreach ($model->attachments as $attachment) {
             Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
             //todo delete attachment relation if exists?
             Attachment::destroy($attachment['id']);
         }
+
         return true;
     }
 
@@ -100,12 +98,12 @@ class AttachmentService
      */
     public function downloadAttachment(Attachment $attachment, string $folder)
     {
-        if(false === Auth::check() && $attachment->access_level != AccessLevelConstants::PUBLIC) {
+        if (false === Auth::check() && $attachment->access_level != AccessLevelConstants::PUBLIC) {
             abort(403, 'Unauthorized action.');
-
         }
-        return Storage::download( $folder . '/' . $attachment['file'],
-            $attachment['file_name'], [], 'inline' );
+
+        return Storage::download($folder.'/'.$attachment['file'],
+            $attachment['file_name'], [], 'inline');
     }
 
     public static function human_filesize($bytes, $decimals = 2)
@@ -116,6 +114,6 @@ class AttachmentService
             $sz = 'KMGT';
         }
 
-        return \sprintf("%.{$decimals}f", $bytes / (1024 ** $factor)) . @$sz[$factor - 1] . 'B';
+        return \sprintf("%.{$decimals}f", $bytes / (1024 ** $factor)).@$sz[$factor - 1].'B';
     }
 }

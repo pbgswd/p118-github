@@ -1,6 +1,9 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PageSeeder extends Seeder
 {
@@ -14,10 +17,9 @@ class PageSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         for ($i = 0; $i < 2; $i++) {
-
             $title = $faker->text(20);
-            $slug  = strtolower($title);
-            $date  = date('Y-m-d H:i:s');
+            $slug = strtolower($title);
+            $date = date('Y-m-d H:i:s');
 
             DB::table('pages')->insert([
                 'user_id' => 1,
@@ -37,4 +39,3 @@ class PageSeeder extends Seeder
         }
     }
 }
-

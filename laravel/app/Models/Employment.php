@@ -17,8 +17,8 @@ use Spatie\Searchable\SearchResult;
  * @property string       $title
  * @property string       $description
  * @property string       $url
- * @property boolean      $live
- * @property boolean      $status
+ * @property bool      $live
+ * @property bool      $status
  * @property User         $user
  * @property int          $user_id
  * @property Attachment[] $attachments
@@ -26,7 +26,6 @@ use Spatie\Searchable\SearchResult;
  * @property DateTime     $created_at
  * @property DateTime     $updated_at
  */
-
 class Employment extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
@@ -34,7 +33,7 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
     protected $table = 'employment';
 
     protected $policies = [
-        Employment::class => EmploymentPolicy::class,
+        self::class => EmploymentPolicy::class,
     ];
 
     protected $fillable = [
@@ -70,8 +69,7 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,

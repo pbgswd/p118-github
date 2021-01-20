@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 /**
- * Trait ModifiesInputTrait
+ * Trait ModifiesInputTrait.
  */
 trait ModifiesInputTrait
 {
@@ -22,7 +22,7 @@ trait ModifiesInputTrait
     public function all($keys = null): array
     {
         // $this->all() can be called many times, but we only want to modify the data once.
-        if (!$this->isInputModified) {
+        if (! $this->isInputModified) {
             $this->modifyInput();
             $this->isInputModified = true;
         }
@@ -31,7 +31,7 @@ trait ModifiesInputTrait
     }
 
     /**
-     * Overwrite the input parameters for this Request
+     * Overwrite the input parameters for this Request.
      */
     protected function modifyInput(): void
     {

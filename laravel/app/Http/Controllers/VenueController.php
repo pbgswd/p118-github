@@ -9,10 +9,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
-
 class VenueController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +23,6 @@ class VenueController extends Controller
 
         return view('venues', ['data' => ['data' => $data]]);
     }
-
 
     /**
      * @param Venue $venue

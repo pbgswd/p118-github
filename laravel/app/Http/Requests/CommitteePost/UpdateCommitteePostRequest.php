@@ -5,7 +5,7 @@ namespace App\Http\Requests\CommitteePost;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UpdateCommitteePostRequest
+ * Class UpdateCommitteePostRequest.
  *
  * @property mixed[] $post
  */

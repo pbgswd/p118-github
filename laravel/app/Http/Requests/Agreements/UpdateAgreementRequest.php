@@ -5,7 +5,7 @@ namespace App\Http\Requests\Agreements;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UpdateAgreementRequest
+ * Class UpdateAgreementRequest.
  *
  * @property mixed[] $agreement
  */

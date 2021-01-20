@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-
 class PageController extends Controller
 {
     /**
@@ -19,8 +18,7 @@ class PageController extends Controller
     {
         if (Auth::check()) {
             $pages = Page::sortable()->with('tagged')->paginate(10);
-        }
-        else {
+        } else {
             $pages = Page::sortable()
                 ->where('access_level', '=', AccessLevelConstants::PUBLIC)
                 ->with('tagged')
@@ -37,7 +35,8 @@ class PageController extends Controller
     public function show(Page $page)
     {
         if (false === Auth::check() && $page->access_level != AccessLevelConstants::PUBLIC) {
-            Session::flash('warning', "Login to view this page.");
+            Session::flash('warning', 'Login to view this page.');
+
             return redirect('login');
         }
 

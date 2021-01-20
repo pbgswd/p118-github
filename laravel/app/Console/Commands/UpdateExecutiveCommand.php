@@ -43,9 +43,8 @@ class UpdateExecutiveCommand extends Command
 
         $data = DB::select('SELECT * FROM executives WHERE end_date < now()');
         //todo closure
-        foreach($data as $d)
-        {
-            if($d->current == 1){
+        foreach ($data as $d) {
+            if ($d->current == 1) {
                 $result = DB::update('UPDATE executives SET current=0 WHERE id='.$d->id);
             }
         }

@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-
 class AdminPageController extends Controller
 {
     /**
@@ -35,7 +34,6 @@ class AdminPageController extends Controller
      * @param Request $request
      *
      * @return Factory|View
-
      */
     public function index(Request $request)
     {
@@ -56,7 +54,6 @@ class AdminPageController extends Controller
 
     /**
      * @return Factory|View
-
      */
     public function create()
     {
@@ -84,7 +81,6 @@ class AdminPageController extends Controller
      * @param StorePageRequest $request
      *
      * @return RedirectResponse
-
      */
     public function store(StorePageRequest $request)
     {
@@ -97,25 +93,23 @@ class AdminPageController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $page);
 
-            if($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        if (!empty($request->input('page.topic_id'))) {
+        if (! empty($request->input('page.topic_id'))) {
             $page->topics()->sync($request->input('page.topic_id'));
         }
 
-        if (!empty($request->tags)) {
+        if (! empty($request->tags)) {
             $page->tag(trim($request->tags, ','));
         }
 
-        Session::flash('success', "You have saved a new page");
+        Session::flash('success', 'You have saved a new page');
 
         return redirect()->route('page_edit', [$page->slug]);
     }
@@ -124,7 +118,6 @@ class AdminPageController extends Controller
      * @param Page $page
      *
      * @return Factory|View
-
      */
     public function edit(Page $page)
     {
@@ -148,7 +141,6 @@ class AdminPageController extends Controller
      * @param Page $any_page
      *
      * @return RedirectResponse
-
      */
     public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
     {
@@ -166,20 +158,17 @@ class AdminPageController extends Controller
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_page);
-            if($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
         if (empty($request->input('page.topic_id'))) {
             $assignedTopics = [];
-            foreach ($request->input('page.topics') as $topic)
-            {
+            foreach ($request->input('page.topics') as $topic) {
                 $assignedTopics[] = $topic->pivot->topic_id;
             }
             $any_page->topics()->detach($assignedTopics);
@@ -194,7 +183,7 @@ class AdminPageController extends Controller
             $any_page->retag(trim($request->tags, ','));
         }
 
-        Session::flash('success', "You have edited the page");
+        Session::flash('success', 'You have edited the page');
 
         return redirect()->route('page_edit', [$any_page->slug]);
     }
@@ -203,7 +192,6 @@ class AdminPageController extends Controller
      * @param DestroyPageRequest $request
      *
      * @return RedirectResponse
-
      */
     public function destroy(DestroyPageRequest $request)
     {
@@ -218,7 +206,7 @@ class AdminPageController extends Controller
                 $page->delete();
             });
 
-        Session::flash('success', Str::plural('Page', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural('Page', count($request->id)).' deleted.');
 
         return redirect()->route('pages_list');
     }

@@ -19,7 +19,7 @@ use Illuminate\View\View;
 
 class AdminByLawController extends Controller
 {
-    /** @var AttachmentService  */
+    /** @var AttachmentService */
     private $attachmentService;
 
     /**
@@ -35,7 +35,6 @@ class AdminByLawController extends Controller
     /**
      * @return Application|Factory|View
      */
-
     public function index()
     {
         $this->authorize('viewAny', Bylaw::class);
@@ -50,7 +49,6 @@ class AdminByLawController extends Controller
 
         return view('admin.bylaws_list', ['data' => $data]);
     }
-
 
     /**
      * @return Factory|View
@@ -80,20 +78,19 @@ class AdminByLawController extends Controller
 
         $bylaw->save();
 
-        Session::flash('success', "bylaw posting saved");
+        Session::flash('success', 'bylaw posting saved');
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $bylaw);
 
             if ($result) {
-                Session::flash('success', "You uploaded "
-                    . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
+
         return redirect()->route('admin_bylaw_edit', [$bylaw->id]);
     }
 
@@ -130,21 +127,18 @@ class AdminByLawController extends Controller
 
         $result = $this->attachmentService->updateAttachment($request, $any_bylaw);
 
-        if (null !== ($request->file('attachments')))
-        {
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_bylaw);
 
-            if ($result){
-                Session::flash('success', "You uploaded "
-                    . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "You have edited the bylaw information");
+        Session::flash('success', 'You have edited the bylaw information');
 
         return redirect()->route('admin_bylaw_edit', [$any_bylaw->id]);
     }
@@ -165,7 +159,7 @@ class AdminByLawController extends Controller
             });
 
         Session::flash('success', Str::plural($bylaws->count()
-                . ' bylaw', $bylaws->count()) . ' and any related files deleted.');
+                .' bylaw', $bylaws->count()).' and any related files deleted.');
 
         return redirect()->route('admin_bylaws_list');
     }

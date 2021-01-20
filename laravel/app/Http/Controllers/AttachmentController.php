@@ -19,7 +19,7 @@ use Illuminate\View\View;
 
 class AttachmentController extends Controller
 {
-    /** @var AttachmentService*/
+    /** @var AttachmentService */
     private $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
@@ -64,7 +64,7 @@ class AttachmentController extends Controller
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
                 'action' => 'Add',
-            ]
+            ],
         ]);
     }
 
@@ -78,9 +78,7 @@ class AttachmentController extends Controller
         $this->authorize('create', Auth::user());
 
         /** @var UploadedFile $image */
-
-        foreach ($request->file('images') as $image)
-        {
+        foreach ($request->file('images') as $image) {
             //todo analyse attachment file size, resize, create thumb when it is an image -- A SERVICE
             $file = $image->store('', 'public');
             $imageName = $image->getClientOriginalName();
@@ -92,12 +90,13 @@ class AttachmentController extends Controller
             $attachment->save();
         }
 
-        Session::flash('success', Str::plural(count($request->images) .
-                ' Attachment', count($request->images)) . ' uploaded.');
+        Session::flash('success', Str::plural(count($request->images).
+                ' Attachment', count($request->images)).' uploaded.');
 
-        if (count($request->file('images')) == 1 ) {
+        if (count($request->file('images')) == 1) {
             return redirect()->route('admin_attachment_edit', $attachment->id);
         }
+
         return redirect()->route('attachments_list');
     }
 
@@ -110,9 +109,9 @@ class AttachmentController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        if (!\file_exists(\storage_path('app/' . $attachment->subfolder) . '/' . $attachment->file))
-        {
-            Session::flash('error',  $attachment->file_name . " was not found on the server");
+        if (! \file_exists(\storage_path('app/'.$attachment->subfolder).'/'.$attachment->file)) {
+            Session::flash('error', $attachment->file_name.' was not found on the server');
+
             return \redirect()->route('attachments_list');
         }
 
@@ -122,8 +121,8 @@ class AttachmentController extends Controller
             'attachment' => $attachment,
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
-            'action' => 'Edit'
-            ]
+            'action' => 'Edit',
+            ],
         ]);
     }
 
@@ -139,7 +138,7 @@ class AttachmentController extends Controller
         $attachment->fill($request->attachment);
         $attachment->save();
 
-        Session::flash('success', "You have updated " . $attachment->file_name);
+        Session::flash('success', 'You have updated '.$attachment->file_name);
 
         return redirect()->route('admin_attachment_edit', $attachment->id);
     }
@@ -154,14 +153,13 @@ class AttachmentController extends Controller
         $this->authorize('delete', Auth::user());
 
         $attachments = Attachment::find($request->id);
-        foreach ($attachments as $a)
-        {
+        foreach ($attachments as $a) {
             Storage::disk($a->subfolder)->delete($a->file);
             Attachment::destroy($a->id);
         }
 
-        Session::flash('success', Str::plural(count($request->id) .
-                ' Attachment', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural(count($request->id).
+                ' Attachment', count($request->id)).' deleted.');
 
         return redirect()->route('attachments_list');
     }

@@ -10,11 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
-use Spatie\Permission\Traits\HasRoles;
-use Spatie\Searchable\SearchResult;
-use Spatie\Searchable\Searchable;
 use function route;
-
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int              $id
@@ -24,9 +23,9 @@ use function route;
  * @property string           $access_level
  * @property string           $email
  * @property User             $creator
- * @property boolean          $in_menu
- * @property boolean          $live
- * @property boolean          $allow_comments
+ * @property bool          $in_menu
+ * @property bool          $live
+ * @property bool          $allow_comments
  * @property DateTime         $created_at
  * @property DateTime         $updated_at
  * @property User[]           $committee_members
@@ -43,7 +42,7 @@ class Committee extends LiveableModel implements Searchable
     protected $guard_name = 'web';
 
     protected $policies = [
-        Committee::class => CommitteePolicy::class,
+        self::class => CommitteePolicy::class,
     ];
 
     public $sortable = [
@@ -56,7 +55,7 @@ class Committee extends LiveableModel implements Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
@@ -92,20 +91,19 @@ class Committee extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->name,
                 \route('admin_committee_show', $this->slug)
             );
         }
-         return new SearchResult(
+
+        return new SearchResult(
             $this,
             $this->name,
             \route('committee', $this->slug)
         );
-
-
     }
 
     /**
@@ -116,6 +114,7 @@ class Committee extends LiveableModel implements Searchable
     public function setNameAttribute(string $value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['name'] = $value;
     }
 

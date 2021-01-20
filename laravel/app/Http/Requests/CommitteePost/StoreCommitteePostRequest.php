@@ -7,13 +7,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class StoreCommitteePostRequest
+ * Class StoreCommitteePostRequest.
  *
  * @property mixed[] $post
  */
 class StoreCommitteePostRequest extends FormRequest
 {
     use ModifiesInputTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *

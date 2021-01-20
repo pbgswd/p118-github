@@ -13,8 +13,7 @@ class RemoveAllowcommentsCommitteesTable extends Migration
      */
     public function up()
     {
-        Schema::table('committees', function (Blueprint $table)
-        {
+        Schema::table('committees', function (Blueprint $table) {
             $table->dropColumn('allow_comments');
         });
     }

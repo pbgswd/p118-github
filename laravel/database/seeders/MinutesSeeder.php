@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
+namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
 
 class MinutesSeeder extends Seeder
 {
@@ -14,9 +15,9 @@ class MinutesSeeder extends Seeder
     public function run()
     {
         // php artisan db:seed --class=MinutesSeeder
-     set_time_limit(0);
-       // require_once '../scratch/archivemeetingsLocal118.php';
-       // $result = $archive_result;
+        set_time_limit(0);
+        // require_once '../scratch/archivemeetingsLocal118.php';
+        // $result = $archive_result;
 
         //require_once '../scratch/meetings1-118.php';  // result
 
@@ -28,7 +29,6 @@ class MinutesSeeder extends Seeder
         $limit = 500000;
 
         foreach ($result as $r) {
-
             $path = $r['path'];
             $file = $r['file'];
 
@@ -42,7 +42,7 @@ class MinutesSeeder extends Seeder
             */
 
             $meeting = new \App\Models\Meeting($r);
-            $meeting->description = $r['title'] . ". See attached document.";
+            $meeting->description = $r['title'].'. See attached document.';
             $meeting->user_id = 1;
             $meeting->live = 1;
             $meeting->save();
@@ -60,20 +60,17 @@ class MinutesSeeder extends Seeder
             } else {
                 $i++;
             }
-
         }
 
         echo "---------------done \n";
-
     }
 
-       /* foreach ($files as $file)
-        {
-            $doc = explode('/', $file['path']);
-            $result = explode('-', $file['title']);
-            $title = trim($result[0]);
-            $date = date_format(new DateTime(trim($result[1])),  'Y-m-d H:i:s');
-            $data[] = ['path' => $file['path'], 'file' => $doc[1], 'title' => $title, 'date' => $date];
-        }*/
-
+    /* foreach ($files as $file)
+     {
+         $doc = explode('/', $file['path']);
+         $result = explode('-', $file['title']);
+         $title = trim($result[0]);
+         $date = date_format(new DateTime(trim($result[1])),  'Y-m-d H:i:s');
+         $data[] = ['path' => $file['path'], 'file' => $doc[1], 'title' => $title, 'date' => $date];
+     }*/
 }

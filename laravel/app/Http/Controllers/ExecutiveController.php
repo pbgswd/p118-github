@@ -19,5 +19,4 @@ class ExecutiveController extends Controller
 
         return view('executive_list', ['data' => $data]);
     }
-
 }

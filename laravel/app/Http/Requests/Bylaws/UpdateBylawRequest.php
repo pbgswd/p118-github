@@ -5,7 +5,7 @@ namespace App\Http\Requests\Bylaws;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UpdateBylawRequest
+ * Class UpdateBylawRequest.
  *
  * @property array $bylaw
  */

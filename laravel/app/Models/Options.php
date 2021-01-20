@@ -18,36 +18,40 @@ use App\Constants\AccessLevelConstants;
  * @property Options $days
  * @property Options $fetchOptionTypes
  */
-
 class Options
 {
     public static function access_levels()
     {
         $levels = AccessLevelConstants::getConstants();
+
         return \array_combine($levels, $levels);
     }
 
     public static function membership_levels()
     {
-        $membership = ['Member', 'Office',]; // 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
+        $membership = ['Member', 'Office']; // 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
+
         return array_combine($membership, $membership);
     }
 
     public static function committee_roles()
     {
-        $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Past-Member',];
+        $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Past-Member'];
+
         return array_combine($membership, $membership);
     }
 
     public static function committee_executive_roles()
     {
-        $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary',];
+        $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary'];
+
         return array_combine($committee_executive_roles, $committee_executive_roles);
     }
 
     public static function phone_label()
     {
-        $phone_labels = ['cel', 'home', 'work', 'other',];
+        $phone_labels = ['cel', 'home', 'work', 'other'];
+
         return array_combine($phone_labels, $phone_labels);
     }
 
@@ -127,7 +131,6 @@ class Options
 
         return ['States' => $states, 'Provinces' => $provinces, null => 'Other (See next field)'];
     }
-
 
     public static function countries()
     {
@@ -418,14 +421,13 @@ class Options
         return array_combine($countries, $countries);
     }
 
-
     public static function years()
     {
         $currentYear = date('Y');
         $years = range(($currentYear - 2), ($currentYear + 10));
+
         return array_combine($years, $years);
     }
-
 
     public static function months()
     {
@@ -446,13 +448,12 @@ class Options
         return $months;
     }
 
-
     public static function days()
     {
         $days = \range(1, 31);
+
         return \array_combine($days, $days);
     }
-
 
     public static function fetchOptionTypes($class)
     {
@@ -461,6 +462,7 @@ class Options
         $sorted->map(function ($item) use (&$data) {
             $data[$item->code] = $item->display_text;
         });
+
         return $data;
     }
 }

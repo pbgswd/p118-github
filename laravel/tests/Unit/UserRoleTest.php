@@ -10,15 +10,14 @@ use Tests\TestCase;
 
 class UserRoleTest extends TestCase
 {
-
     public function testBasicTest()
     {
-        echo "\n Begin " . basename(__FILE__) . "\n";
+        echo "\n Begin ".basename(__FILE__)."\n";
 
         $response = $this->get('/');
 
         if ($response->assertStatus(Response::HTTP_OK)) {
-            $response->assertSeeText("since 1904");
+            $response->assertSeeText('since 1904');
             echo "\n since 1904 seen \n";
         }
 
@@ -48,17 +47,16 @@ class UserRoleTest extends TestCase
             ],
         ];
 
-        foreach ($users as $u)
-        {
+        foreach ($users as $u) {
             Session::start();
             $response = $this->get('/login');
 
             if ($response->assertStatus(Response::HTTP_OK)) {
-                $response->assertSeeText("Login");
+                $response->assertSeeText('Login');
                 echo "\n Login page \n";
             }
 
-            echo "\n Attempting to log in ". $u['email'] . "\n";
+            echo "\n Attempting to log in ".$u['email']."\n";
 
             $response = $this->call('POST', '/login',
                 [
@@ -69,11 +67,10 @@ class UserRoleTest extends TestCase
             );
 
             if ($response->assertStatus(Response::HTTP_FOUND)) {
-                if($response->assertSeeText("Redirecting to http")) {
+                if ($response->assertSeeText('Redirecting to http')) {
                     echo "\n Redirecting to http ... \n";
                 }
-            }
-            else {
+            } else {
                 die(" \n stopping after login attempt \n");
             }
 
@@ -87,26 +84,25 @@ class UserRoleTest extends TestCase
 
             $response = $this->get('/site');
 
-            if($response->assertStatus(Response::HTTP_OK)) {
-                if($response->assertSeeText("Hi ". $user->name)) {
-                    echo "\n logged in as " . $user->name . "\n";
+            if ($response->assertStatus(Response::HTTP_OK)) {
+                if ($response->assertSeeText('Hi '.$user->name)) {
+                    echo "\n logged in as ".$user->name."\n";
                 }
-                if($response->assertDontSeeText('monkey')) {
+                if ($response->assertDontSeeText('monkey')) {
                     echo "\n I dont see monkey \n";
                 }
-
             }
 
-            if($u->role == 'super-admin'){
+            if ($u->role == 'super-admin') {
                 //test
             }
-            if($u->role == 'writer'){
+            if ($u->role == 'writer') {
                 //test
             }
-            if($u->role == 'office'){
+            if ($u->role == 'office') {
                 //test
             }
-          if($u->role == 'member'){
+            if ($u->role == 'member') {
                 //test
             }
 
@@ -125,27 +121,17 @@ class UserRoleTest extends TestCase
 
             //user admin manage models
 
-
-
             //todo member hits routes
 
-
-
-
             //todo as above, higher roles and privileges, also admin section, user, and other models
-
-
-
-
 
             $response = $this->call('POST', '/logout',
                 [
                     '_token' => csrf_token(),
                 ]
             );
-
         }
 
-        echo "\n End " . basename(__FILE__) . "\n";
+        echo "\n End ".basename(__FILE__)."\n";
     }
 }

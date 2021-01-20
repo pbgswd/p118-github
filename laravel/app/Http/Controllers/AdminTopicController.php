@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View as ViewAlias;
 
-
 class AdminTopicController extends Controller
 {
     /** @var AttachmentService */
@@ -44,7 +43,7 @@ class AdminTopicController extends Controller
 
     /**
      * @return Factory|ViewAlias
- */
+     */
     public function create()
     {
         $this->authorize('create', Topic::class);
@@ -57,13 +56,12 @@ class AdminTopicController extends Controller
                 'topic' => $topic,
                 'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                     AccessLevelConstants::getConstants()),
-                'action' => 'Create']]);
+                'action' => 'Create', ], ]);
     }
 
     /**
      * @param StoreTopicRequest $request
      * @return RedirectResponse
-
      */
     public function store(StoreTopicRequest $request)
     {
@@ -77,20 +75,18 @@ class AdminTopicController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $topic);
 
-            if($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        if (!empty($request->tags)) {
+        if (! empty($request->tags)) {
             $topic->tag(trim($request->tags, ','));
         }
-        Session::flash('success', "You have saved a new topic");
+        Session::flash('success', 'You have saved a new topic');
 
         return redirect()->route('topic_edit', [$topic->slug]);
     }
@@ -104,7 +100,7 @@ class AdminTopicController extends Controller
         $this->authorize('update', Topic::class);
 
         $data = [
-            'topic' => $topic->load('user','attachments'),
+            'topic' => $topic->load('user', 'attachments'),
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
             'action' => 'Edit',
@@ -117,9 +113,7 @@ class AdminTopicController extends Controller
      * @param UpdateTopicRequest $request
      * @param Topic $any_topic
      * @return RedirectResponse
-
      */
-
     public function update(UpdateTopicRequest $request, Topic $any_topic): RedirectResponse
     {
         $this->authorize('update', Topic::class);
@@ -132,13 +126,11 @@ class AdminTopicController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_topic);
 
-            if($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
@@ -148,7 +140,7 @@ class AdminTopicController extends Controller
             $any_topic->retag(trim($request->tags, ','));
         }
 
-        Session::flash('success', "You have edited the topic");
+        Session::flash('success', 'You have edited the topic');
 
         return redirect()->route('topic_edit', [$any_topic->slug]);
     }
@@ -156,7 +148,6 @@ class AdminTopicController extends Controller
     /**
      * @param DestroyTopicRequest $request
      * @return RedirectResponse
-
      */
     public function destroy(DestroyTopicRequest $request)
     {
@@ -170,9 +161,9 @@ class AdminTopicController extends Controller
                 $topic->posts()->detach();
                 $this->attachmentService->destroyAttachments($topic);
                 $topic->delete();
-        });
+            });
 
-        Session::flash('success', Str::plural('Topic', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural('Topic', count($request->id)).' deleted.');
 
         return redirect()->route('topics_list');
     }

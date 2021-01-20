@@ -29,7 +29,7 @@ class StoreAttachmentRequest extends FormRequest
             'images' => 'required',
           //'mage.*' => 'unique:attachments,name|max:255|distinct',
         ];
-//todo image store attachment validation completion
+        //todo image store attachment validation completion
         /* https://www.itsolutionstuff.com/post/laravel-validation-for-multiple-files-in-arrayexample.html
          * [
         'images.*' => 'required|mimes:jpg,jpeg,png,bmp|max:2000'

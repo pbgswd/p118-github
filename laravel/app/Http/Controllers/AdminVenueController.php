@@ -7,13 +7,12 @@ use App\Http\Requests\Venues\StoreVenueRequest;
 use App\Http\Requests\Venues\UpdateVenueRequest;
 use App\Models\Agreement;
 use App\Models\Venue;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-
 
 class AdminVenueController extends Controller
 {
@@ -48,14 +47,13 @@ class AdminVenueController extends Controller
                 'venue' => $venue,
                 'all_agreements' => $all_agreements,
                 'action' => 'Create',
-            ]
+            ],
         ]);
     }
 
     /**
      * @param StoreVenueRequest $request
      * @return RedirectResponse
-
      */
     public function store(StoreVenueRequest $request)
     {
@@ -67,7 +65,7 @@ class AdminVenueController extends Controller
 
         $venue->agreements()->sync($request->all_agreements);
 
-        Session::flash('success', "You have saved a new venue");
+        Session::flash('success', 'You have saved a new venue');
 
         return redirect()->route('venue_edit', [$venue->slug]);
     }
@@ -75,7 +73,6 @@ class AdminVenueController extends Controller
     /**
      * @param Venue $any_venue
      * @return Factory|View
-
      */
     public function edit(Venue $any_venue)
     {
@@ -97,7 +94,7 @@ class AdminVenueController extends Controller
                 'venue' => $any_venue,
                 'all_agreements' => $all_agreements,
                 'action' => 'Edit',
-            ]
+            ],
         ]);
     }
 
@@ -105,7 +102,6 @@ class AdminVenueController extends Controller
      * @param UpdateVenueRequest $request
      * @param Venue $any_venue
      * @return RedirectResponse
-
      */
     public function update(UpdateVenueRequest $request, Venue $any_venue)
     {
@@ -115,13 +111,13 @@ class AdminVenueController extends Controller
 
         $any_venue->save();
 
-        if(null !== $request->id) {
+        if (null !== $request->id) {
             $any_venue->member_agreements()->detach($request->id);
         }
 
         $any_venue->agreements()->attach($request->all_agreements);
 
-        Session::flash('success', "You have edited the venue");
+        Session::flash('success', 'You have edited the venue');
 
         return redirect()->route('venue_edit', [$any_venue->slug]);
     }
@@ -140,8 +136,8 @@ class AdminVenueController extends Controller
                 $venue->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) .
-                ' Venue', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural(count($request->id).
+                ' Venue', count($request->id)).' deleted.');
 
         return redirect()->route('venues_list');
     }

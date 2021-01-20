@@ -2,44 +2,41 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Http\Response;
 use Session;
 use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Http\Response;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-
 
 class UserTest extends TestCase
 {
     /**
-     * Insert users into users table
+     * Insert users into users table.
      *
      * @return void
      */
     //    use RefreshDatabase; // deletes all data
     public function testBasicTest()
     {
-
         $response = $this->get('/');
         if ($response->assertStatus(Response::HTTP_OK)) {
-            $response->assertSeeText("Laravel");
+            $response->assertSeeText('Laravel');
         }
 
         $response = $this->get('/register');
 
-                if ($response->assertStatus(Response::HTTP_OK)) {
-                    $response->assertSeeText("Register");
-                }
+        if ($response->assertStatus(Response::HTTP_OK)) {
+            $response->assertSeeText('Register');
+        }
 
         echo "\n public register new user page \n";
 
-        $users = factory(User::class, 1)->make();
+        $users = User::factory()->count(1)->make();
 
-        foreach ($users as $user)
-        {
-            echo "attempting to insert ". $user['name'] . "\n";
+        foreach ($users as $user) {
+            echo 'attempting to insert '.$user['name']."\n";
 
             $response = $this->post(
                 '/register',
@@ -53,7 +50,7 @@ class UserTest extends TestCase
                     '_token' => Session::token(),
                 ]
             );
-            echo  $user['name'] . " has been posted. \n";
+            echo  $user['name']." has been posted. \n";
         }
     }
 }

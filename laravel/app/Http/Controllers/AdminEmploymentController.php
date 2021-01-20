@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-
 class AdminEmploymentController extends Controller
 {
     /** @var AttachmentService */
@@ -28,7 +27,6 @@ class AdminEmploymentController extends Controller
 
     /**
      * @return Factory|View
-
      */
     public function index()
     {
@@ -41,8 +39,7 @@ class AdminEmploymentController extends Controller
             ->orderBy('deadline', 'desc')
             ->paginate(20);
 
-        foreach($jobs as $job)
-        {
+        foreach ($jobs as $job) {
             $job['jobstatus'] = $job->deadline->isPast() ? 0 : 1;
         }
 
@@ -54,19 +51,18 @@ class AdminEmploymentController extends Controller
 
     /**
      * @return Factory|View
-
      */
     public function create()
     {
         $this->authorize('create', Employment::class);
         $e = new Employment;
+
         return view('admin.employment', ['data' => ['employment' => $e, 'action' => 'Add']]);
     }
 
     /**
      * @param StoreEmploymentRequest $request
      * @return RedirectResponse
-
      */
     public function store(StoreEmploymentRequest $request)
     {
@@ -75,27 +71,24 @@ class AdminEmploymentController extends Controller
 
         $employment->save();
 
-        if (null !== ($request->file('attachments'))){
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $employment);
 
-            if($result){
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "employment posting saved");
-        return redirect()->route('admin_employment_edit', [$employment->id]);
+        Session::flash('success', 'employment posting saved');
 
+        return redirect()->route('admin_employment_edit', [$employment->id]);
     }
 
     /**
      * @param Employment $employment
      * @return Factory|View
-
      */
     public function edit(Employment $employment)
     {
@@ -119,7 +112,6 @@ class AdminEmploymentController extends Controller
      * @param UpdateEmploymentRequest $request
      * @param Employment $any_employment
      * @return RedirectResponse
-
      */
     public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
     {
@@ -134,16 +126,14 @@ class AdminEmploymentController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_employment);
 
-            if($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "You have edited the employment information");
+        Session::flash('success', 'You have edited the employment information');
 
         return redirect()->route('admin_employment_edit', [$any_employment->id]);
     }
@@ -159,11 +149,11 @@ class AdminEmploymentController extends Controller
         Employment::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Employment $employment) {
-               $this->attachmentService->destroyAttachments($employment);
-               $employment->delete();
+                $this->attachmentService->destroyAttachments($employment);
+                $employment->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) .
+        Session::flash('success', Str::plural(count($request->id).' posting', count($request->id)).
             ' and any related files deleted.');
 
         return redirect()->route('employment_list');

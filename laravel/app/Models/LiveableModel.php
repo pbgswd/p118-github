@@ -6,15 +6,15 @@ use App\Scopes\LiveScope;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Extend this class for models that have a boolean `$live` field
+ * Extend this class for models that have a boolean `$live` field.
  *
- * @property boolean $live
+ * @property bool $live
  * @method static withoutGlobalScope() Builder
  */
 class LiveableModel extends Model
 {
     /**
-     * Override boot method
+     * Override boot method.
      */
     protected static function boot(): void
     {

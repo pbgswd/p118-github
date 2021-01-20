@@ -6,7 +6,6 @@ use App\Models\Employment;
 use App\Services\AttachmentService;
 use Illuminate\Http\Response;
 
-
 class EmploymentController extends Controller
 {
     /** @var AttachmentService */
@@ -31,8 +30,7 @@ class EmploymentController extends Controller
             ->orderBy('deadline', 'desc')
             ->paginate(20);
 
-        foreach($jobs as $job)
-        {
+        foreach ($jobs as $job) {
             $job['jobstatus'] = $job->deadline->isPast() ? 0 : 1;
         }
 
@@ -41,7 +39,6 @@ class EmploymentController extends Controller
 
         return view('employment_list', ['data' => $data]);
     }
-
 
     /**
      * Display the specified resource.
@@ -57,5 +54,4 @@ class EmploymentController extends Controller
 
         return view('employment', ['data' => ['employment' => $employment]]);
     }
-
 }
