@@ -51,6 +51,8 @@ class UserController extends Controller
             ->orderBy('name')
             ->paginate(20);
 
+        //dd($users[0]);
+
         $count = Membership::where('membership_type', 'Member')->count();
 
         return view('listusers', ['data' => ['users' => $users, 'count' => $count]]);
@@ -133,6 +135,7 @@ class UserController extends Controller
 
         $user->fill($userRequest['user']);
         $user->save();
+        $user->touch();
 
         if ($user->phone_number instanceof PhoneNumber) {
             if ($userRequest->user_phone['phone_number'] != $user->phone_number['phone_number']) {

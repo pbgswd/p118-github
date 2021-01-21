@@ -35,11 +35,11 @@
                                 {{ $i->name }}
                             @endif
                         </h4>
-                        @if($i->membership['membership_type'] != 'Member')
+
                             <i>
-                                {{$i->membership['membership_type']}}
+                                {{$i->membership['membership_type'] ?? 'no type'}}
                             </i>
-                        @endif
+
                         @forelse($i->currentExecutiveRoles as $a)
                             <a href="mailto:{{$a->email}}" title="email {{$i->name}} at {{$a->email}}">
                                 <i class="fas fa-envelope"></i>

@@ -207,6 +207,7 @@ class AdminUserController extends Controller
 
         $user->fill($request['user']);
         $user->save();
+        $user->touch();
 
         if ($user->phone_number instanceof PhoneNumber) {
             if ($request->user_phone['phone_number'] != $user->phone_number->phone_number) {
