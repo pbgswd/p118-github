@@ -77,7 +77,7 @@
             @else
                 <div class="col-12 border mt-lg-4 pt-4">
                     <?php //dd($data['contactPage'][0]->content); ?>
-                    {!! $data['contactPage'][0]->content !!}
+                    {!! $data['contactPage'][0]->content ?? '' !!}
                 </div>
 
             @endguest
