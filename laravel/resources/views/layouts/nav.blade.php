@@ -3,7 +3,7 @@
         <img src="/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png"
              alt="{{config('app.name')}}"
              title="{{config('app.name')}}"
-             class="mr-1;" />
+             class="mr-1 rounded" />
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">Menus
