@@ -1,5 +1,5 @@
-        <footer class="container border border-dark rounded-lg mt-2 mb-lg-5 flex">
-            <div class="row mb-5 mr-2 p-lg-5 flex">
+        <footer class="container border border-dark rounded-lg my-lg-5 flex">
+            <div class="row mb-5 mr-2 p-lg-5 d-flex justify-content-around">
                 <div class="col-3">
                     <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
                         <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png"
@@ -29,7 +29,7 @@
 
             @guest
                 <div class="row mb-3">
-                    <div class="col-12">
+                    <div class="col-10">
                         <a href="/login">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
                         </a>
@@ -62,29 +62,29 @@
 
 
 
-            <div class="row flex">
+            <div class="row mb-lg-5 flex">
                 <div class="col-6 flex-col">
                     <h5>
                         <i class="fas fa-hashtag"></i>
                         To Read
                     </h5>
-                <ul class="list-group list-group">
-                    <li class="list-group-item"><a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a></li>
-                    <li class="list-group-item"><a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a></li>
-                    <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
-                    <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
-                    <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a></li>
-                    @guest
-                    @else
-                        @role('super-admin')
-                            <li class="list-group-item">
-                                <a href="{{route('admin')}}" title="Admin">
-                                    <i class="fas fa-tachometer-alt"></i>
-                                </a>
-                            </li>
-                        @endrole
-                    @endguest
-                </ul>
+                    <ul class="list-group list-group">
+                        <li class="list-group-item"><a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a></li>
+                        <li class="list-group-item"><a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a></li>
+                        <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
+                        <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
+                        <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a></li>
+                        @guest
+                        @else
+                            @role('super-admin')
+                                <li class="list-group-item">
+                                    <a href="{{route('admin')}}" title="Admin">
+                                        <i class="fas fa-tachometer-alt"></i>
+                                    </a>
+                                </li>
+                            @endrole
+                        @endguest
+                    </ul>
                 </div>
                 <div class="col-6 flex-col">
                     <h5>
