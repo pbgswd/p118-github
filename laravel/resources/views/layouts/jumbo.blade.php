@@ -21,18 +21,13 @@
         <link rel="canonical" href="http://{{env('APP_URL')}}/">
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-        <!-- Styles -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-        <style>
-
-        </style>
-        <!-- Custom styles for this template -->
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
     </head>
     <body>
         <a id="top"></a>
         @include('layouts.nav')
-        <main role="main" class="mt-2 pt-lg-5">
+        <main role="main" class="">
             @include('flash-messages')
             @yield('content')
         </main>

@@ -7,7 +7,7 @@
 </div>
 <div class="row mt-2 mb-lg-4">
     <div class="col-6 m-0" style="display: flex;">
-        <div class="col-12 border border-dark rounded-lg pt-2 pb-3">
+        <div class="col-12 border border-dark rounded-lg pt-2 pb-3 flex-row">
             @if($data['news']['posts']->count() > 0)
                 <h3>
                     <a href="{{route('posts')}}">Posts</a>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="col-12 border border-dark rounded-lg pt-2 pb-3">
+        <div class="col-12 border border-dark rounded-lg pt-2 pb- flex-row">
             @if($data['news']['pages']->count() > 0)
                 <h3>
                     <a href="{{route('pages')}}">Pages</a>
