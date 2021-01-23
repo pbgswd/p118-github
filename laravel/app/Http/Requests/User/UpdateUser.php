@@ -27,7 +27,7 @@ class UpdateUser extends FormRequest
             //unique:table,column,except,idColumn
             'user.name' => 'required|string|max:255',
             'user.email' => 'required|max:255|unique:users,email,'.$this->route('user')->id.',id',
-            'user_phone.phone_number' => 'required|max:255',
+            'user_phone.phone_number' => 'max:20',
             'user_phone.label' => 'string|nullable',
             'user_phone.primary' => 'boolean',
             'user_info.share_email'=> 'boolean',

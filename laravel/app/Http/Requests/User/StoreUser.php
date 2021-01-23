@@ -26,7 +26,7 @@ class StoreUser extends FormRequest
         return [
             'user.name' => 'required|max:255',
             'user.email' => 'required|unique:users,email|max:255',
-            'user_phone.phone_number' => 'required|max:255',
+            'user_phone.phone_number' => 'max:20',
             'user_phone.label' => 'string|nullable',
             'user_phone.primary' => 'boolean',
             'user_info.share_email'=> 'boolean',
