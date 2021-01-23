@@ -1,108 +1,97 @@
-        <footer class="container border border-dark rounded-lg mt-2 mb-lg-5">
-            <div class="row mb-5 mr-2 p-lg-5">
+        <footer class="container border border-dark rounded-lg mt-2 mb-lg-5 flex">
+            <div class="row mb-5 mr-2 p-lg-5 flex">
                 <div class="col-3">
                     <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
                         <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png"
-                             alt="BC Federation of Labor" class="p-1" />
+                             alt="BC Federation of Labor" class="p-1 flex-fill img-fluid" />
                     </a>
                 </div>
                 <div class="col-3">
                     <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
                         <img src="/storage/public/E9psVVljWX9afHmiwfyeTCuXEU6WnKHUIoevll6Y.jpeg"
-                             alt="IATSE International" class="p-1" />
+                             alt="IATSE International" class="p-1 img-fluid" />
                     </a>
                 </div>
                 <div class="col-3">
                     <a href="https://canadianlabour.ca/" title="Canadian labour Congress" target="_blank">
                         <img src="/storage/public/KKVqVfiv4hU4ayxNukvYJsN5EKgIqnYfx5mssuT7.png"
-                             alt="Canadian Labour Congress" class="p-1" />
+                             alt="Canadian Labour Congress" class="p-1  flex-fill img-fluid" />
                     </a>
                 </div>
                 <div class="col-3">
                     <a href="http://www.vdlc.ca/" title="Vancouver & District Labour Congress" target="_blank">
                         <img src="/storage/public/mlL21yHivsR7ztxYh3hRB2Y8j9rcFzY5BfXtSLE1.jpeg"
-                             alt="Vancouver & District Labour Congress" class="p-1" />
+                             alt="Vancouver & District Labour Congress" class="p-1  flex-fill img-fluid" />
                     </a>
                 </div>
             </div>
-            <div class="row flex-row">
-                <ul class="list-group list-group-horizontal flex-grow-0">
-                    <li class="list-group-item"><a href="/page/terms-of-use">Terms of Use</a> </li>
-                    <li class="list-group-item"><a href="/page/privacy-policy">Privacy Policy</a> </li>
-                    <li class="list-group-item"><a href="/page/disclaimer">Disclaimer</a> </li>
-                    <li class="list-group-item"><a href="/page/links">Links</a> </li>
-                    <li class="list-group-item"><a href="/page/apply-for-work">Apply for work</a></li>
-                    @guest
-                    @else
-                        @role('super-admin')
-                        <li class="list-group-item">
-                            <a href="{{route('admin')}}" title="Admin">
-                                <i class="fas fa-tachometer-alt"></i>
-                            </a>
-                        </li>
-                        @endrole
-                    @endguest
-                </ul>
-            </div>
-            <div class="row mt-2 flex-grow-0">
-                @guest
-                    <div class="col-12 mb-4">
+
+
+            @guest
+                <div class="row mb-3">
+                    <div class="col-12">
                         <a href="/login">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
                         </a>
                     </div>
+                </div>
                 @else
-                    <div class="col-6 mb-4">
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
-                                Logout
-                            </button>
-                        </form>
+                    <div class="row">
+                        <div class="col-6">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-6">
+                            <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
+                                {!! csrf_field() !!}
+                                <i class="fas fa-search"></i> &nbsp;
+                                <input class="form-control mr-sm-2" type="text" placeholder="Search"
+                                       aria-label="Search" name="search">
+                                <button type="submit" name="Submit" value="Submit"
+                                        class="btn btn-outline-success my-2 my-sm-0">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-6 mb-5">
-                        <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
-                            {!! csrf_field() !!}
-                            <i class="fas fa-search"></i> &nbsp;
-                            <input class="form-control mr-sm-2" type="text" placeholder="Search"
-                                   aria-label="Search" name="search">
-                            <button type="submit" name="Submit" value="Submit"
-                                    class="btn btn-outline-success my-2 my-sm-0">
-                                Search
-                            </button>
-                        </form>
-                    </div>
-                @endguest
-            </div>
-            <div class="row mb-6 ">
-                <div class="col-4 flex-column">
-                    <h3>IATSE Local 118</h3>
-                    <h4>#206 - 2940 Main Street<br />
-                    Vancouver, BC, V5T 3G3</h4>
+            @endguest
+
+
+
+            <div class="row flex">
+                <div class="col-6 flex-col">
+                    <h5>
+                        <i class="fas fa-hashtag"></i>
+                        To Read
+                    </h5>
+                <ul class="list-group list-group">
+                    <li class="list-group-item"><a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a></li>
+                    <li class="list-group-item"><a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a></li>
+                    <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
+                    <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
+                    <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a></li>
+                    @guest
+                    @else
+                        @role('super-admin')
+                            <li class="list-group-item">
+                                <a href="{{route('admin')}}" title="Admin">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                </a>
+                            </li>
+                        @endrole
+                    @endguest
+                </ul>
                 </div>
-                <div class="col-4 flex-column">
-                    <h3>
-                        <a href="https://goo.gl/maps/pXb7Bv8n1jHGykjh8" target="_blank" title="IATSE Local 118 Office">
-                            <i class="fas fa-map-marked-alt"></i> Maps
-                        </a>
-                    </h3>
-                    <h3>
-                        <a href="tel:604-685-9553">
-                            <i class="fas fa-phone-square"></i> 604-685-9553
-                        </a>
-                    </h3>
-                    <h3>
-                        <a href="mailto:office@iatse118.com">
-                            <i class="fas fa-envelope"></i> office@iatse118.com
-                        </a>
-                    </h3>
-                </div>
-                <div class="col-4 flex-column">
+                <div class="col-6 flex-col">
                     <h5>
                         <i class="fas fa-hashtag"></i>
                         Social Media
                     </h5>
-                    <ul class="list-group list-group-flush">
+                    <ul class="list-group list-group-flush flex">
                         <li class="list-group-item p-0 m-0">
                             <a class="list-group-item" href="https://twitter.com/IATSE_118" target="_blank"
                                title="IATSE Local 118">
@@ -133,7 +122,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="row mt-2 mb-lg-2">
+            <div class="row mt-lg-5 mb-lg-5">
                 <div class="col-4 text-left">
                     <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
                 </div>
@@ -147,6 +136,7 @@
                     </a>
                 </div>
             </div>
+
         </footer>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
               integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
