@@ -1,5 +1,5 @@
-        <footer class="container border border-dark rounded-lg my-lg-5 flex">
-            <div class="row mb-5 mr-2 p-lg-5 d-flex justify-content-around">
+        <footer class="border border-dark rounded-lg">
+            <div class="row mb-5 mr-2 p-lg-5 d-flex justify-content-around p-2">
                 <div class="col-3">
                     <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
                         <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png"
@@ -25,27 +25,27 @@
                     </a>
                 </div>
             </div>
-
-
             @guest
                 <div class="row mb-3">
-                    <div class="col-10">
+                    <div class="col-12 pl-2 d-flex justify-content-center">
                         <a href="/login">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                            <button class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
                         </a>
                     </div>
                 </div>
                 @else
-                    <div class="row">
-                        <div class="col-6">
+                    <div class="row mb-3">
+                        <div class="col-12 pl-2 d-flex justify-content-center">
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
+                                <button class="btn btn-success my-2 my-sm-0 float-left pl-2" type="submit">
                                     Logout
                                 </button>
                             </form>
                         </div>
-                        <div class="col-6">
+                    </div>
+                <div class="row mb-3">
+                        <div class="col-12 m-lg-2 d-flex justify-content-center">
                             <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
                                 {!! csrf_field() !!}
                                 <i class="fas fa-search"></i> &nbsp;
@@ -58,11 +58,9 @@
                             </form>
                         </div>
                     </div>
+                    </div>
             @endguest
-
-
-
-            <div class="row mb-lg-5 flex">
+            <div class="row mt-lg-5 ml-2 mr-2 flex socialmedia">
                 <div class="col-6 flex-col">
                     <h5>
                         <i class="fas fa-hashtag"></i>
@@ -74,16 +72,6 @@
                         <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
                         <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
                         <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a></li>
-                        @guest
-                        @else
-                            @role('super-admin')
-                                <li class="list-group-item">
-                                    <a href="{{route('admin')}}" title="Admin">
-                                        <i class="fas fa-tachometer-alt"></i>
-                                    </a>
-                                </li>
-                            @endrole
-                        @endguest
                     </ul>
                 </div>
                 <div class="col-6 flex-col">
@@ -122,14 +110,14 @@
                     </ul>
                 </div>
             </div>
-            <div class="row mt-lg-5 mb-lg-5">
-                <div class="col-4 text-left">
+            <div class="row mt-lg-5 mb-lg-5 d-flex justify-content-around">
+                <div>
                     <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
                 </div>
-                <div class="col-4 text-left">
+                <div>
                     <h6>Site by IATSE 118 Members</h6>
                 </div>
-                <div class="col-4 text-right">
+                <div>
                     <a href="#top" title="Top of page">
                         <i class="fas fa-angle-up"></i>
                         Top of page
@@ -138,15 +126,16 @@
             </div>
 
         </footer>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-              integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-              crossorigin="anonymous">
-        <script src="/js/jquery-3.4.1.slim.min.js"
-                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-                crossorigin="anonymous">
-        </script>
-        <script>window.jQuery || document.write('<script src="/js/jquery.slim.min.js"><\/script>')</script>
-        <script src="/js/bootstrap.bundle.min.js"
-                integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-                crossorigin="anonymous">
-        </script>
+        <div class="m-lg-5">&nbsp;</div>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+          crossorigin="anonymous">
+    <script src="/js/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous">
+    </script>
+    <script>window.jQuery || document.write('<script src="/js/jquery.slim.min.js"><\/script>')</script>
+    <script src="/js/bootstrap.bundle.min.js"
+            integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+            crossorigin="anonymous">
+    </script>
