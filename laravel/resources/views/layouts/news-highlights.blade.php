@@ -18,7 +18,7 @@
             @endforelse
         </ul>
     @endif
- 
+
     @if($data['news']['pages']->count() > 0)
         <ul class="list-group p-0 m-0">
             @forelse($data['news']['pages'] as $page)
@@ -34,8 +34,4 @@
             @endforelse
         </ul>
     @endif
-</div>
-
-<div class="row mt-2 mb-lg-4">
-    &nbsp;
 </div>
