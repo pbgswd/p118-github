@@ -1,32 +1,31 @@
 @extends('layouts.jumbo')
 @section('content')
-
-    <div class="container border border-dark rounded-lg pt-lg-2 mb-3 mt-5" style="background: rgba(220,220,220,0.8);">
-
-        <div class="row">
-            @foreach ($data['post']->topics as $topic)
-                <div class="col-12">
-                    <a href="{{route('topics')}}">Topics/</a>
-                    <a href="{{ route('topic_show', $topic->slug)}}">{{$topic->name}}/</a>
-                </div>
-            @endforeach
-        </div>
-
-
+    <div class="container border border-dark rounded-lg pt-lg-2 mb-3 mt-3" style="background: rgba(220,220,220,0.8);">
+        @foreach ($data['post']->topics as $topic)
+            <div class="col-12">
+                <a href="{{ route('topic_show', $topic->slug)}}">{{$topic->name}}</a>
+            </div>
+        @endforeach
         <div class="col-12">
-            <h1 class="display-5">{{$data['post']->title}}</h1>
-        </div>
-        <div class="col-12">
+            <h1>{{$data['post']->title}}</h1>
             <h3>{!! $data['post']->description !!}</h3>
         </div>
         <div class="col-12">
             {!! $data['post']->content !!}
-
-
-            @if(count($data['post']->attachments) > 0)
-                <div class="col-12">
-                    <h4>Files</h4>
-                    <table class="table table-striped table-sm">
+        </div>
+        @if(!empty($data['post']->tagNames()))
+            <div class="col-12 p-2">
+                Tags: {{join(', ', $data['post']->tagNames())}}
+            </div>
+        @endif
+        @if(count($data['post']->attachments) > 0)
+            <div class="col-12 mt-3">
+                <h4>
+                    <i class="far fa-folder-open"></i>
+                    Files for {{$data['post']->title}}
+                </h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th> File </th>
@@ -39,31 +38,22 @@
                                     <td>
                                         <a href="{{route('attachment_download',
                                             [$data['post']->getAttachmentFolder(), $pa->id])}}"
-                                           title="Download {{$pa->file_name}}">
+                                           title="Download {{ $pa->description ?? $pa->file_name}}">
                                             <i class="far fa-file"></i>
-                                            {{$pa->file_name}}
+                                            {{$pa->description ?? $pa->file_name}}
                                         </a>
                                     </td>
                                     <td>
-                                        {{ $pa->description}}
+                                        {{ $pa->description ?? ''}}
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-
                 </div>
-            @endif
-        </div>
-                @if(!empty($data['post']->tagNames()))
-                    <div class="row p-2">
-                        Tags: {{join(', ', $data['post']->tagNames())}}
-                    </div>
-                @endif
-
-
-
-
+            </div>
+        @endif
+    </div>
 @endsection
 
 

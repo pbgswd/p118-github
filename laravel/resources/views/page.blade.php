@@ -1,20 +1,28 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container mt-2 mb-3 pt-2 border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
-        <div class="row mb-lg-5">
-                <div  class="col-12">
-                    <h1>{{$data['page']->title}}</h1>
-                </div>
+    <div class="container mt-3 mb-3 pt-2 border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
+
+            <div  class="col-12">
+                <h1>{{$data['page']->title}}</h1>
+                <h2>{!! $data['page']->description !!}</h2>
+            </div>
+            <div class="col-12">
+                {!! $data['page']->content !!}
+            </div>
+            @if ($data['page']->tagNames != '')
                 <div class="col-12">
-                    <h2>{!! $data['page']->description !!}</h2>
+                    Tags: {{join(', ', $data['page']->tagNames())}}
                 </div>
-                <div class="col-12">
-                    {!! $data['page']->content !!}
-                 </div>
-                @if(count($data['page']->attachments) > 0)
-                    <div class="col-md-12">
-                        <h4>Files</h4>
-                        <table class="table table-striped table-sm">
+            @endif
+
+            @if(count($data['page']->attachments) > 0)
+                <div class="col-12 mt-3">
+                    <h4>
+                        <i class="far fa-folder-open"></i>
+                        Files for {{$data['page']->title}}
+                    </h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th> File </th>
@@ -29,25 +37,19 @@
                                                 [$data['page']->getAttachmentFolder(), $pa->id])}}"
                                                 title="Download {{$pa->file_name}}">
                                                 <i class="far fa-file"></i>
-                                                {{$pa->file_name}}
+                                                {{$pa->description ?? $pa->file_name}}
                                             </a>
                                         </td>
                                         <td>
-                                            {{$pa->description}}
+                                            {{$pa->description ?? ''}}
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                @endif
-                @if ($data['page']->tagNames != '')
-                    <div class="col-md-12">
-                        Tags: {{join(', ', $data['page']->tagNames())}}
-                    </div>
-                @endif
-
+                </div>
+            @endif
         </div>
 
-</div>
 @endsection

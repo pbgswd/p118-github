@@ -1,32 +1,38 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container border border-dark rounded-lg mt-2 mb-3" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded-lg mt-3 mb-3 pt-2" style="background: rgba(220,220,220,0.8);">
         <div class="col-12">
             <h1>{{$data['topic']->name}}</h1>
-            <a href="{{route('topics')}}">Topics /</a> {{$data['topic']->name}}
-
-            {!! $data['topic']->description !!}
+           <p>{!! $data['topic']->description !!}</p>
         </div>
         @if ($data['topic']->pages->count() > 0)
-            <div class="col-12 border border-dark rounded-lg p-1 mr-1" style="background: rgba(220,220,220,0.8);">
+            <div class="row border border-dark rounded-lg p-2" style="background: rgba(220,220,220,0.8);">
                 <h4>Pages in {{$data['topic']->name}}</h4>
             </div>
-            @forelse($data['topic']->pages as $page)
-                <a href="{{ route('page_show', $page->slug) }}">{{$page['title']}}</a>
-                {!! $page['description'] !!}
-            @empty
-                No pages yet
-            @endforelse
+            <div class="row">
+                @forelse($data['topic']->pages as $page)
+                    <div class="col-md-4 col-sm-12 justify-content-around p-2">
+                        <div class="col border border-dark rounded-lg p-2">
+                            <a href="{{ route('page_show', $page->slug) }}">{{$page['title']}}</a>
+                            {!! $page['description'] !!}
+                        </div>
+                    </div>
+                @empty
+                    No pages yet
+                @endforelse
+            </div>
         @endif
         @if ($data['topic']->posts->count() > 0)
-            <div class="col-12">
+            <div class="row">
                 <div class="col-12 border border-dark rounded-lg p-1">
                     <h4>Posts in {{$data['topic']->name}}</h4>
                 </div>
                 @forelse($data['topic']->posts as $post)
-                    <div class=" border border-dark rounded-lg p-1 mr-1 mt-1" style="background: rgba(220,220,220,0.8);">
-                        <a href="{{ route('post_show', $post->slug) }}">{{$post['title']}}</a>
-                        {!! $post['description'] !!}
+                    <div class="col-md-4 col-sm-12 justify-content-around p-2">
+                        <div class="col border border-dark rounded-lg p-2">
+                            <a href="{{ route('post_show', $post->slug) }}">{{$post['title']}}</a>
+                            {!! $post['description'] !!}
+                        </div>
                     </div>
                 @empty
                     No posts
@@ -34,32 +40,40 @@
             </div>
         @endif
         @if(count($data['topic']->attachments) > 0)
-            <div class="col-12">
-                <h4>Files</h4>
-                <table class="table table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th> File </th>
-                            <th> Description </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data['topic']->attachments as $ta)
+            <div class="col-12 border border-dark rounded-lg pt-2 mb-2 mb-lg-3">
+                <h4>
+                    <i class="far fa-folder-open"></i>
+                    Files for {{$data['topic']->name}}
+                </h4>
+                <div class="table-responsive">
+                    <table class="table-striped table">
+                        <thead>
                             <tr>
-                                <td>
-                                    <a href="{{route('attachment_download',
-                                        [$data['topic']->getAttachmentFolder(), $ta->id])}}"
-                                       title="Download {{$ta->file_name}}">{{$ta->file_name}}
-                                    </a>
-                                </td>
-                                <td>
-                                    {{ $ta->description}}
-                                </td>
+                                <th> File </th>
+                                <th> Description </th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($data['topic']->attachments as $ta)
+                                <tr>
+                                    <td>
+                                        <a href="{{route('attachment_download',
+                                            [$data['topic']->getAttachmentFolder(), $ta->id])}}"
+                                           title="Download {{$ta->description ?? $ta->file_name}}">
+                                            {{$ta->description ?? $ta->file_name}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{$ta->description}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         @endif
+
+
     </div>
 @endsection

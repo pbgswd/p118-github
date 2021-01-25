@@ -15,7 +15,7 @@
                     </button>
                 </form>
             </div>
-            <div class="col-12 m-lg-2 d-flex justify-content-center">
+            <div class="col-12 m-md-3 d-flex justify-content-center">
                 <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
                     {!! csrf_field() !!}
                     <i class="fas fa-search"></i> &nbsp;
@@ -28,59 +28,59 @@
                 </form>
             </div>
         @endguest
-        <div class="row mt-sm-2 p-0">
-        <div class="col-md-6 col-sm-12 mb-lg-3 flex-column">
-            <h5>
-                <i class="fas fa-hashtag"></i>
-                To Read
-            </h5>
-            <ul class="list-group list-group">
-                <li class="list-group-item"><a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a></li>
-                <li class="list-group-item"><a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a></li>
-                <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
-                <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
-                <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a></li>
-            </ul>
-        </div>
-        <div class="col-md-4 col-sm-6 mb-lg-3 flex-column">
-            <h5>
-                <i class="fas fa-hashtag"></i>
-                Social Media
-            </h5>
-            <ul class="list-group list-group-flush flex">
-                <li class="list-group-item p-0 m-0">
-                    <a class="list-group-item" href="https://twitter.com/iatse118" target="_blank"
-                       title="IATSE Local 118">
-                        <i class="fab fa-twitter"></i>
-                        @iatse118
-                    </a>
-                </li>
-                <li class="list-group-item p-0 m-0">
-                    <a class="list-group-item" href="https://twitter.com/IATSECANADA" target="_blank"
-                       title="IATSE Canada">
-                        <i class="fab fa-twitter"></i>
-                        @IATSECANADA
-                    </a>
-                </li>
-                <li class="list-group-item p-0 m-0">
-                    <a class="list-group-item" href="https://twitter.com/IATSEYWC" target="_blank"
-                       title="IATSE Young Workers">
-                        <i class="fab fa-twitter"></i>
-                        @IATSEYWC
-                    </a>
-                </li>
-                <li class="list-group-item p-0 m-0">
-                    <a class="list-group-item" href="https://twitter.com/IATSE" target="_blank" title="IATSE">
-                        <i class="fab fa-twitter"></i>
-                        @IATSE
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <div class="row mt-sm-2 mt-md-5 p-0 d-flex justify-content-around">
+            <div class="col-md-6 col-sm-12 mb-lg-3">
+                <h5>
+                    <i class="fas fa-hashtag"></i>
+                    To Read
+                </h5>
+                <ul class="list-group list-group">
+                    <li class="list-group-item"><a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a></li>
+                    <li class="list-group-item"><a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a></li>
+                    <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
+                    <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
+                    <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-lg-3 mt-sm-5 mt-md-0">
+                <h5>
+                    <i class="fas fa-hashtag"></i>
+                    Social Media
+                </h5>
+                <ul class="list-group list-group-flush flex">
+                    <li class="list-group-item p-0 m-0">
+                        <a class="list-group-item" href="https://twitter.com/iatse118" target="_blank"
+                           title="IATSE Local 118">
+                            <i class="fab fa-twitter"></i>
+                            @iatse118
+                        </a>
+                    </li>
+                    <li class="list-group-item p-0 m-0">
+                        <a class="list-group-item" href="https://twitter.com/IATSECANADA" target="_blank"
+                           title="IATSE Canada">
+                            <i class="fab fa-twitter"></i>
+                            @IATSECANADA
+                        </a>
+                    </li>
+                    <li class="list-group-item p-0 m-0">
+                        <a class="list-group-item" href="https://twitter.com/IATSEYWC" target="_blank"
+                           title="IATSE Young Workers">
+                            <i class="fab fa-twitter"></i>
+                            @IATSEYWC
+                        </a>
+                    </li>
+                    <li class="list-group-item p-0 m-0">
+                        <a class="list-group-item" href="https://twitter.com/IATSE" target="_blank" title="IATSE">
+                            <i class="fab fa-twitter"></i>
+                            @IATSE
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-            <div class="col-12">
-                <h2>Our Affiliations</h2>
+            <div class="col-12 mt-3">
+                <h3>Our Affiliations</h3>
             </div>
             <div class="pb-md-3 d-flex justify-content-md-center">
                 <div class="col pl-md-5">
@@ -109,12 +109,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 mt-lg-5 mb-lg-5 d-flex justify-content-around">
+        <div class="col-12 mt-5 mb-5 mt-md-5 mb-md-5 d-flex justify-content-around">
             <div>
                 <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
             </div>
             <div>
-                <h6>Site by IATSE 118 Members</h6>
+                <h6 align="center">Site by <br />IATSE 118 <br /> Members</h6>
             </div>
             <div>
                 <a href="#top" title="Top of page">
@@ -123,7 +123,7 @@
                 </a>
             </div>
         </div>
-    </div>
+
 </footer>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
