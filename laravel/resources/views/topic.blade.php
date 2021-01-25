@@ -1,6 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container border border-dark rounded-lg mt-4 mb-3" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded-lg mt-2 mb-3" style="background: rgba(220,220,220,0.8);">
         <div class="col-12">
             <h1>{{$data['topic']->name}}</h1>
             <a href="{{route('topics')}}">Topics /</a> {{$data['topic']->name}}

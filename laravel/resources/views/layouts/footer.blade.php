@@ -28,7 +28,8 @@
                 </form>
             </div>
         @endguest
-        <div class="col-12 mt-sm-5 mt-lg-5 mb-lg-3 flex-wrap ">
+        <div class="row mt-sm-2 p-0">
+        <div class="col-md-6 col-sm-12 mb-lg-3 flex-column">
             <h5>
                 <i class="fas fa-hashtag"></i>
                 To Read
@@ -41,41 +42,43 @@
                 <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a></li>
             </ul>
         </div>
-            <div class="col-12 mb-lg-3 flex-wrap">
-                <h5>
-                    <i class="fas fa-hashtag"></i>
-                    Social Media
-                </h5>
-                <ul class="list-group list-group-flush flex">
-                    <li class="list-group-item p-0 m-0">
-                        <a class="list-group-item" href="https://twitter.com/iatse118" target="_blank"
-                           title="IATSE Local 118">
-                            <i class="fab fa-twitter"></i>
-                            @iatse118
-                        </a>
-                    </li>
-                    <li class="list-group-item p-0 m-0">
-                        <a class="list-group-item" href="https://twitter.com/IATSECANADA" target="_blank"
-                           title="IATSE Canada">
-                            <i class="fab fa-twitter"></i>
-                            @IATSECANADA
-                        </a>
-                    </li>
-                    <li class="list-group-item p-0 m-0">
-                        <a class="list-group-item" href="https://twitter.com/IATSEYWC" target="_blank"
-                           title="IATSE Young Workers">
-                            <i class="fab fa-twitter"></i>
-                            @IATSEYWC
-                        </a>
-                    </li>
-                    <li class="list-group-item p-0 m-0">
-                        <a class="list-group-item" href="https://twitter.com/IATSE" target="_blank" title="IATSE">
-                            <i class="fab fa-twitter"></i>
-                            @IATSE
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <div class="col-md-4 col-sm-6 mb-lg-3 flex-column">
+            <h5>
+                <i class="fas fa-hashtag"></i>
+                Social Media
+            </h5>
+            <ul class="list-group list-group-flush flex">
+                <li class="list-group-item p-0 m-0">
+                    <a class="list-group-item" href="https://twitter.com/iatse118" target="_blank"
+                       title="IATSE Local 118">
+                        <i class="fab fa-twitter"></i>
+                        @iatse118
+                    </a>
+                </li>
+                <li class="list-group-item p-0 m-0">
+                    <a class="list-group-item" href="https://twitter.com/IATSECANADA" target="_blank"
+                       title="IATSE Canada">
+                        <i class="fab fa-twitter"></i>
+                        @IATSECANADA
+                    </a>
+                </li>
+                <li class="list-group-item p-0 m-0">
+                    <a class="list-group-item" href="https://twitter.com/IATSEYWC" target="_blank"
+                       title="IATSE Young Workers">
+                        <i class="fab fa-twitter"></i>
+                        @IATSEYWC
+                    </a>
+                </li>
+                <li class="list-group-item p-0 m-0">
+                    <a class="list-group-item" href="https://twitter.com/IATSE" target="_blank" title="IATSE">
+                        <i class="fab fa-twitter"></i>
+                        @IATSE
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+
             <div class="col-12">
                 <h2>Our Affiliations</h2>
             </div>

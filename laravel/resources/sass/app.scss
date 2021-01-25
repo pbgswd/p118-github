@@ -45,6 +45,12 @@ img {
     img {
         max-width: 200px;
     }
+
+    img.member-profile-pic {
+        max-width: 250px;
+    }
+
+
 }
 
 @include media-breakpoint-up(sm) {
@@ -63,6 +69,10 @@ img {
 
     .association-img {
         max-width:70%;
+    }
+
+    img.member-profile-pic {
+        max-width: 250px;
     }
 
 }
