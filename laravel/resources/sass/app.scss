@@ -33,10 +33,17 @@ a {
     padding-left: 3px;
 }
 
+img {
+    max-width: 200px;
+}
+
 @include media-breakpoint-down(sm) {
     .socialmedia {
         font-size: 10px;
         font-weight: bold;
+    }
+    img {
+        max-width: 200px;
     }
 }
 
@@ -44,20 +51,18 @@ a {
     body {
         padding-top: 3.5rem;
     }
-    h1 {
-        font-size: 16px;
-        font-weight: bold;
-    }
+
     h2 { font-size: 14px;}
     h3 { font-size: 12px;}
     h4 { font-size: 11px;}
     p { font-size: 16px;}
 
-    img {
-        max-width: 100px;
-    }
     .container {
         padding:0.5em;
+    }
+
+    .association-img {
+        max-width:70%;
     }
 
 }
@@ -72,14 +77,26 @@ a {
         font-size: 32px;
         font-weight: bold;
     }
-    .jumbotron {
-        padding:0;
+    h3 { font-size: 1.5rem;}
+    h4 {font-size: 1.5rem;}
+
+    .association-img {
+        max-width:30%;
     }
 }
 
 @include media-breakpoint-up(lg) {
+
+    h1 {
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .association-img {
+        max-width:30%;
+    }
     img {
-        max-width: 100%;
+        max-width: 80%;
     }
 }
 @include media-breakpoint-up(xl) { }

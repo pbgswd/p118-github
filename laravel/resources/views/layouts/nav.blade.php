@@ -37,8 +37,8 @@
                         Skills Update Procedure
                     </a>
                     <a class="dropdown-item" href="#">Availability & Dispatch</a>
-                    <a class="dropdown-item" href="#">Dues</a>
-                    <a class="dropdown-item" href="#">Leaving Membership</a>
+                    <a class="dropdown-item" href="{{route('page_show', 'dues-public')}}">Dues</a>
+                    <a class="dropdown-item" href={{route('page_show', 'leaving-membership')}}>Leaving Membership</a>
                 </div>
             </div>&nbsp;
             @guest
@@ -49,7 +49,7 @@
                         Benefits
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdown">
-                        <a class="dropdown-item" href="{{route('topic_show', 'health-and-welfare-info')}}"
+                        <a class="dropdown-item" href="{{route('topic_show', 'health-and-welfare')}}"
                            title="Health & Welfare Overview">H & W Overview</a>
                     </div>
                 </div>&nbsp;
