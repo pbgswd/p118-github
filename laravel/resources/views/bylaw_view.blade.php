@@ -1,48 +1,46 @@
-<?php
-$bylaw = $data['bylaw'];
-?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
         <div class="col-12">
-            <h4><a href="{{url()->previous()}}"><i class="far fa-arrow-alt-circle-left"></i>  bylaw postings</a></h4>
+            <h4>
+                <a href="{{url()->previous()}}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    Bylaws
+                </a>
+            </h4>
         </div>
-        <div class="row">
-            <div  class="col-12">
-                <h1 class="display-8"><i class="fas fa-gavel"></i>
-                    {{$bylaw->title}}
-                    <span class="small text-muted">
-                    @if(Auth::check())
-                            ({{$bylaw->access_level}})
-                        @endif
-                </span>
-                </h1>
-
-            </div>
+        <div  class="col-12">
+            <h1>
+                <i class="fas fa-gavel"></i>
+                {{$data['bylaw']->title}}
+            </h1>
         </div>
-        <div class="row mb-lg-2">
-            <div class="col-md-12">
-                <h4>From: {{$bylaw->date->format('F j Y')}}</h4>
-            </div>
+        <div class="col-12">
+            <h4>
+                From: {{$data['bylaw']->date->format('F j Y')}}
+            </h4>
         </div>
-        <div class="row">
-            <div class="col-12">
-                {!! $bylaw->description !!}
-            </div>
+        <div class="col-12">
+            {!! $data['bylaw']->description !!}
         </div>
         <div class="row mt-lg-2">
             <div class="col-12">
-                @if(count($bylaw->attachments) > 0)
-                    <ul>
-                        @foreach($bylaw->attachments as $att)
-                            <li>
+                @if(count($data['bylaw']->attachments) > 0)
+                    <h4>
+                        <i class="far fa-folder-open"></i>
+                        Files for {{$data['bylaw']->title}}
+                    </h4>
+                    <ul class="list-group">
+                        @foreach($data['bylaw']->attachments as $att)
+                            <li class="list-group-item">
                                 <h4>
-                                    <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->description}}" target="_blank">
+                                    <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                       title="Download {{$att->description}}" target="_blank">
                                         <i class="fas fa-file-download fa-1x"></i>
-                                    {{$att->file_name}}
+                                    {{$att->description ?? $att->file_name}}
                                     </a>
-                                    {{$att->description}}
+                                    {{$att->description ?? '' }}
                                 </h4>
                             </li>
                         @endforeach
@@ -51,7 +49,6 @@ $bylaw = $data['bylaw'];
             </div>
         </div>
     </div>
-    <div class="row mt-lg-5"></div>
 </div>
 @endsection
 

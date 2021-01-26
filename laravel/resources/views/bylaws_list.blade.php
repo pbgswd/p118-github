@@ -3,10 +3,11 @@ $bylaws = $data['data']['bylaws'];
 ?>
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> bylaw Postings'])
 @section('content')
-<div class="container border border-dark rounded-lg mt-3" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row p-2">
         <h1>
-            <i class="fas fa-gavel"></i> Local 118 Constitution and By-Laws
+            <i class="fas fa-gavel"></i>
+            Local 118 Constitution and By-Laws
         </h1>
         <h5 class="font-italic">Please remember, we have pledged to keep
             confidential the work of this body and
@@ -22,9 +23,9 @@ $bylaws = $data['data']['bylaws'];
            </span>
         </h3>
     </div>
-    <div class="table-responsive-md border border-dark rounded-lg p-1"
+    <div class="table-responsive border border-dark rounded-lg p-1 mb-3"
          style="background: rgba(220,220,220,0.8); margin-left:auto; margin-right:auto;">
-        <table class="table table-sm" style="margin-left:auto; margin-right:auto;">
+        <table class="table" style="margin-left:auto; margin-right:auto;">
             <thead>
             <tr>
                 <th> @sortablelink('title', 'Title') </th>
@@ -32,42 +33,32 @@ $bylaws = $data['data']['bylaws'];
             </tr>
             </thead>
             <tbody>
-            @foreach ( $bylaws as $bylaw )
+                @foreach ($bylaws as $bylaw)
+                    <tr>
+                        <td>
+                            <p>
+                                <a title="{{ $bylaw->title }}" href="{{route('bylaw_show', $bylaw->id)}}">
+                                    {{ $bylaw->title }}
+                                </a>
+                            </p>
+                        </td>
+                        <td>
+                            {{$bylaw->date->format('F j Y')}}
+                        </td>
+                    </tr>
+                @endforeach
                 <tr>
-                    <td>
-                        <p class="h5">
-                            <a title="{{ $bylaw->title }}" href="{{route('bylaw_show', $bylaw->id)}}">
-                                {{ $bylaw->title }}
-                            </a>
-                            <span class="small text-muted">
-                            @if(Auth::check())
-                                ({{$bylaw->access_level}})
-                            @endif
-                        </span>
-                        </p>
-
-                    </td>
-                    <td>
-                        {{ $bylaw->date->format('F j Y') }}
-                    </td>
+                    <td colspan="3">&nbsp;</td>
                 </tr>
-            @endforeach
-            <tr>
-                <td colspan="3">&nbsp;</td>
-            </tr>
             </tbody>
         </table>
     </div>
-    <div class="row mt-lg-2 mb-lg-3">
-        <div class="col-5"></div>
-        <div class="col-3">
-            <div class="list-group">
-                <ul class="pagination">
-                    {{$bylaws->links()}}
-                </ul>
-            </div>
+    <div class="d-flex justify-content-center">
+        <div class="list-group">
+            <ul class="pagination">
+                {{$bylaws->links()}}
+            </ul>
         </div>
-        <div class="col-3"></div>
     </div>
 </div>
 @endsection
