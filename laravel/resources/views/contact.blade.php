@@ -1,8 +1,8 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container mt-2 mb-3 p-1 pt-2" style="background: rgba(220,220,220,0.8);">
-        <div class="row mb-lg-5 border border-dark rounded-lg">
-            <div class="col-12">
+    <div class="container mb-3" style="background: rgba(220,220,220,0.8);">
+        <div class="row mb-5 mt-3 border border-dark rounded-lg">
+            <div class="col-12 pt-4">
                 <h2>Contact IATSE Local 118</h2>
             </div>
             <div class="col-12 mb-5">
