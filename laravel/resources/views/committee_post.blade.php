@@ -9,7 +9,6 @@
                        {{$data['committeepost']->committee->name}}
                    </a>
                </h4>
-
                 <h1>{{$data['committeepost']->title}}</h1>
                 <h5>
                     By {{$data['committeepost']->creator->name}},
