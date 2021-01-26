@@ -19,57 +19,59 @@
             ]
         });
     </script>
-<div class="container  border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.8);">
-    <h3>
-        <a href="{{ route('committee', $data['post']['committee']->slug) }}">{{$data['post']['committee']->name}}</a>
-     <br /> {{$data['action']}} Post
-        @if($data['action'] == "Edit")
-            <a href="{{route('public_committee_post_show', [$data['post']['committee']->slug, $data['post']->slug])}}">
-                {{$data['post']->title}}
-            </a>
-        <br />
-            <a href="{{ route('committee', $data['post']['committee']->slug) }}">
-                <i class="far fa-arrow-alt-circle-left"></i>
-                List of posts
-            </a>
-        @endif
-    </h3>
+<div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
+    <div class="row d-flex justify-content-around">
+
+        <div class="col-12 col-md-6">
+            <h3>
+                <a href="{{ route('committee', $data['post']['committee']->slug) }}">
+                    {{$data['post']['committee']->name}}
+                </a>
+            </h3>
+        </div>
+        <div class="col-12 col-md-6">
+            <h3>
+                {{$data['action']}} Post
+                @if($data['action'] == "Edit")
+                    <a href="{{route('public_committee_post_show',
+                        [$data['post']['committee']->slug, $data['post']->slug])}}">
+                        {{$data['post']->title}}
+                    </a>
+                @endif
+            </h3>
+        </div>
+    </div>
+
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
-                        <input type="text" class="form-control"  placeholder="Title" name="post[title]"
-                               value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
-                    </div>
-                </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                <input type="text" class="form-control"  placeholder="Title" name="post[title]"
+                       value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
             </div>
+
+
+            <label for="post-content" class="control-label">
+                <h4>Content</h4>
+            </label>
+
+        <div class="col-12 mb-3 input-group">
+            <textarea name="post[content]" id="post-content" placeholder="Content" class="form-control">
+                {{old('post.content', $data['post']->content)}}
+            </textarea>
         </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-12">
-                    <h4>Content</h4>
-                </div>
-                <div class="col-12">
-                    <textarea name="post[content]" id="post-content" placeholder="Content" class="form-control">
-                        {{old('post.content', $data['post']->content)}}
-                    </textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-lg-3"> &nbsp;</div>
-        <div class="row mb-lg-5">
-            <div class="col-sm">
+
+        <div class="row d-flex justify-content-between">
+            <div class="col-md-6 col-sm-12 mb-lg-3">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-    <div class="col-sm"> &nbsp;</div>
+
     @if ($data['action'] == 'Edit')
-         <div class="col-sm" style="float:right">
+        <div class="col-md-6 col-sm-12 mb-lg-3">
              @can('manage committee')
                  <form name="delete" method="POST" action="{{route('public_committee_post_destroy',
                     [$data['post']['committee']->slug, $data['post']->slug])}}">
@@ -84,6 +86,10 @@
     @endif
 </div>
     @if ( $data['action'] == 'Edit')
-        <div class="row mt-lg-3 mb-lg-3"> post added by {{$data['post']->creator->name}}</div>
+        <div class="row mt-3 mb-3">
+            Post added by {{$data['post']->creator->name}}
+        </div>
     @endif
+</div>
+
 @endsection

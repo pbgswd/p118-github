@@ -49,7 +49,7 @@ class UserController extends Controller
         $users = User::with(['user_info', 'currentExecutiveRoles', 'membership'])
             ->sortable()
             ->orderBy('name')
-            ->paginate(20);
+            ->paginate(10);
 
         //dd($users[0]);
 

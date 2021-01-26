@@ -1,27 +1,32 @@
-<?php
-$meeting = $data['meeting'];
-?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
+        <div class="col-12 pt-2">
+            <h4>
+                <a href="{{url()->previous()}}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    Meetings & Minutes
+                </a>
+            </h4>
+        </div>
         <div class="col-12">
-            <h4><a href="{{url()->previous()}}"><i class="far fa-arrow-alt-circle-left"></i>  Meetings & Minutes</a></h4>
-        </div>
-        <div  class="col-12">
-            <h1 class="display-4">{{$meeting->title}}</h1>
+            <h1>
+                {{$data['meeting']->title}}
+            </h1>
         </div>
         <div class="col-12">
-            <p>{{$meeting->date->format('F j Y')}}</p>
-            <p>{!! $meeting->description !!}</p>
+            <p>{{$data['meeting']->date->format('F j Y')}}</p>
+            <p>{!! $data['meeting']->description !!}</p>
         </div>
-        <div class="row mb-lg-5">
-            @if(count($meeting->attachments) > 0)
-                <ul style="list-style-type:none;">
-                    @foreach($meeting->attachments as $att)
-                        <li>
+        <div class="col-12 mb-lg-5">
+            @if(count($data['meeting']->attachments) > 0)
+                <ul class="list-group">
+                    @foreach($data['meeting']->attachments as $att)
+                        <li class="list-group-item">
                             <h4>
-                                <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->description}}" target="_blank">
+                                <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                   title="Download {{$att->description}}" target="_blank">
                                     <i class="fas fa-file-download fa-1x"></i>
                                     {{$att->file_name}}
                                 </a> &nbsp;
