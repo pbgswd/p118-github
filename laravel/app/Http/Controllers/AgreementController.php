@@ -23,7 +23,7 @@ class AgreementController extends Controller
                 ->with('attachments')
                 ->whereRaw('NOW() < until')
                 ->orderBy('until', 'desc')
-                ->paginate(20);
+                ->paginate(10);
 
             $data['count'] = Agreement::with('attachments')
                 ->whereRaw('NOW() < until')->count();
@@ -31,7 +31,7 @@ class AgreementController extends Controller
             $data['agreements'] = Agreement::sortable()
                 ->with('attachments')
                 ->orderBy('until', 'desc')
-                ->paginate(20);
+                ->paginate(10);
 
             $data['count'] = Agreement::with('attachments')->count();
         }

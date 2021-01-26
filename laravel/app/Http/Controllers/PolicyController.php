@@ -19,7 +19,7 @@ class PolicyController extends Controller
         $data['policies'] = Policy::sortable()
             ->with('attachments')
             ->orderBy('date', 'desc')
-            ->paginate(20);
+            ->paginate(10);
         $data['count'] = Policy::count();
 
         return view('policies_list', ['data' => ['data' => $data]]);

@@ -19,8 +19,7 @@ class VenueController extends Controller
     public function list()
     {
         $data = [];
-        $data['venues'] = Venue::paginate(20);
-
+        $data['venues'] = Venue::paginate(8);
         return view('venues', ['data' => ['data' => $data]]);
     }
 
