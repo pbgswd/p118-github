@@ -297,14 +297,17 @@ class AdminUserController extends Controller
             }
 
             PhoneNumber::where('user_id', $user->id)->delete();
+
             Membership::where('user_id', $user->id)->delete();
 
             $user_info = UserInfo::where('user_id', $user->id)->first();
-            if ($user_info['image']) {
-                Storage::disk('users')->delete($user_info['image']);
-            }
 
-            UserInfo::destroy($user_info['id']);
+            if(null != $user_info) {
+                if ($user_info['image']) {
+                    Storage::disk('users')->delete($user_info['image']);
+                }
+                UserInfo::destroy($user_info['id']);
+            }
 
             $e = ExecutiveMembership::find($user->id);
             if (null != $e) {
