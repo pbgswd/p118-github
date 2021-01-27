@@ -10,12 +10,18 @@
                 </a>
             </h4>
         </div>
+        <div class="row d-flex justify-content-end">
+            <div class="col-12 col-md-6">
+                <h1>
+                    <i class="fas fa-scroll"></i>
+                    {{$data['policy']->title}}
+                </h1>
+            </div>
+            <div class="col-12 col-md-6 text-md-right">
+                <h4>From: {{$data['policy']->date->format('F j Y')}}</h4>
+            </div>
+        </div>
         <div class="col-12">
-            <h1>
-                <i class="fas fa-scroll"></i>
-                {{$data['policy']->title}}
-            </h1>
-            <h4>From: {{$data['policy']->date->format('F j Y')}}</h4>
             {!! $data['policy']->description !!}
         </div>
         @if($data['policy']->attachments->count() > 0)

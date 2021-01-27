@@ -2,25 +2,30 @@
 @section('content')
     <div class="jumbotron">
         <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
-            <div class="col-12 m-0">
-
-                <p>
-                    <a href="{{route('organizations')}}">
-                        Organizations
-                    </a>
-                </p>
-                <h1>
-                    {{$data['organization']->name}}
-                </h1>
-                <p>
-                    <a href="{{$data['organization']->url}}" title="{{$data['organization']->name}}" target="_blank">
-                        <i class="fas fa-external-link-alt"></i>
-                        {{$data['organization']->url}}
-                    </a>
-                </p>
+            <div class="col-12 pl-2">
+                <a href="{{route('organizations')}}">
+                    Organizations
+                </a>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 col-md-6">
+                    <h1>
+                        {{$data['organization']->name}}
+                    </h1>
+                </div>
+                <div class="col-12 col-md-6 text-md-right">
+                    <p>
+                        <a href="{{$data['organization']->url}}" title="{{$data['organization']->name}}" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            {{$data['organization']->url}}
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-12">
                 <p>{!! $data['organization']->description !!}</p>
             </div>
-            <div class="col-12 col-12 border border-dark rounded-lg mb-3 pt-2">
+            <div class="col-12 border border-dark rounded-lg mb-3 pt-2">
                 @if ($data['agreements']->count() > 0)
                     <h4>Agreements attached to {{$data['organization']->name}}</h4>
                     <div class="table-responsive">

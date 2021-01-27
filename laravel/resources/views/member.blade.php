@@ -1,15 +1,17 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container border border-dark rounded-lg pt-2 pb-2 mb-3 mt-3" style="background: rgba(220,220,220,0.8);">
-        <h2>
-            <a href="{{route('members')}}">
-                <i class="far fa-arrow-alt-circle-left"></i> Members /
-            </a>
-            {{$data['user']->name}}
-            @if($data['user']->membership->membership_type != 'Member')
-                ({{$data['user']->membership->membership_type}})
-            @endif
-        </h2>
+    <div class="container border border-dark rounded-lg pt-2 pb-3 my-3" style="background: rgba(220,220,220,0.8);">
+        <div class="row p-2">
+            <h3>
+                <a href="{{route('members')}}">
+                    <i class="far fa-arrow-alt-circle-left"></i> Members /
+                </a>
+                {{$data['user']->name}}
+                @if($data['user']->membership->membership_type != 'Member')
+                    ({{$data['user']->membership->membership_type}})
+                @endif
+            </h3>
+        </div>
         <div class="row">
             @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
                 <div class="col-6 col-md-12 mb-3">
@@ -51,7 +53,7 @@
         <div class="col-12 pt-2">
             {!! $data['user']->user_info->about  ?? '' !!}
         </div>
-        <div class="row d-flex justify-content-md-around">
+        <div class="row d-flex justify-content-md-around px-2 mb-2">
             @if( $data['user']->allExecutiveRoles->count() > 0 )
                 <div class="col-12 col-md-5 mb-2 p-2 border border-dark rounded-lg">
                     <h5>

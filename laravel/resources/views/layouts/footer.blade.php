@@ -16,7 +16,7 @@
                     </button>
                 </form>
             </div>
-            <div class="row border border-secondary rounded-lg mx-auto mt-2 my-3 pt-4 pb-2 pb-md-3
+            <div class="row border border-secondary rounded-lg mx-auto mt-2 my-3 pt-4 pb-2 pb-md-3 mb-4
                     d-flex justify-content-center">
                 <form class="form-inline" action="{{route('search')}}" method="POST">
                     {!! csrf_field() !!}
