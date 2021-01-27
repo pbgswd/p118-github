@@ -4,6 +4,9 @@
             <h4> Menu </h4>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
+            <a href="#search"><i class="fas fa-search"></i> Search</a>
+        </div>
+        <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
@@ -49,7 +52,7 @@
             </div>
         @endforeach
     </div>
-    <div class="col-md-9 pt-2">
+    <div class="col col-md-9 pt-2">
         <div class="col col-12 border border-dark rounded-lg pt-2 pb-2 mb-2 bg-dark text-white">
             <h3>Important Announcements</h3>
         </div>

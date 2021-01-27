@@ -1,4 +1,4 @@
-<footer class="container flex">
+<footer class="container">
     <div class="col-12 border border-dark rounded-lg pt-2 pb-2 mb-4">
         @guest
             <div class="col-12 p-lg-3 d-flex justify-content-center">
@@ -16,16 +16,27 @@
                     </button>
                 </form>
             </div>
-            <div class="col-12 m-md-3 d-flex justify-content-center">
-                <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="POST">
+            <div class="row border border-secondary rounded-lg mx-auto mt-2 my-3 pt-4 pb-2 pb-md-3
+                    d-flex justify-content-center">
+                <form class="form-inline" action="{{route('search')}}" method="POST">
                     {!! csrf_field() !!}
-                    <i class="fas fa-search"></i> &nbsp;
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search"
-                           aria-label="Search" name="search">
-                    <button type="submit" name="Submit" value="Submit"
-                            class="btn btn-outline-success my-2 my-sm-0">
-                        Search
-                    </button>
+                    <div class="col-12 mt-md-3 mb-md-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text d-none d-md-block" id="basic-addon1">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" placeholder="Search"
+                                   aria-label="Search" name="search" size="80" required>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2 d-flex justify-content-end">
+                        <button type="submit" name="Submit" value="Submit"
+                                class="btn btn-success">
+                            Search
+                        </button>
+                    </div>
                 </form>
             </div>
         @endguest
