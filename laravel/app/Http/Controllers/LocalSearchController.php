@@ -12,7 +12,6 @@ use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use App\Models\Employment;
 use App\Models\Executive;
-use App\Models\ExecutiveMembership;
 use App\Models\Meeting;
 use App\Models\Organization;
 use App\Models\Page;
@@ -30,10 +29,16 @@ use Illuminate\View\View;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
+use Illuminate\Http\Request;
 
 class LocalSearchController extends Controller
 {
     use Sortable;
+
+    public function show($search)
+    {
+        dd($search);
+    }
 
     /**
      * @param LocalSearchResult $request
@@ -41,6 +46,7 @@ class LocalSearchController extends Controller
      */
     public function index(LocalSearchResult $request)
     {
+
         $data = [
             'search' => $request->search,
             'results' => (new Search())

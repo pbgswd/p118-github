@@ -2,13 +2,18 @@
 @section('content')
     <div class="jumbotron">
         <div class="container border border-dark rounded-lg mb-3" style="background: rgba(220,220,220,0.8);">
-            <h1>Meetings & Minutes</h1>
-            <h3>
-               <span class="badge badge-primary badge-pill">
-                   {{ $data['count'] }} Meetings & Minutes
-               </span>
-            </h3>
-
+            <div class="row d-flex justify-content-around mb-2 mb-md-3">
+                <div class="col-12 col-md-6">
+                    <h1>Meetings & Minutes</h1>
+                </div>
+                <div class="col-12 col-md-6 text-md-right">
+                    <h3>
+                       <span class="badge badge-primary badge-pill">
+                           {{ $data['count'] }} Meetings & Minutes
+                       </span>
+                    </h3>
+                </div>
+            </div>
             <div class="table-responsive border border-dark rounded-lg">
                 <table class="table">
                     <thead>

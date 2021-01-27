@@ -4,13 +4,21 @@ $employment = $data['employment'];
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> Employment Postings'])
 @section('content')
 <div class="container border border-dark rounded-lg mt-3 pt-2 mb-3" style="background: rgba(220,220,220,0.8);">
-    <div class="col-12">
-        <h1>
-            <span class="badge badge-primary badge-pill">
-                {{ $data['count'] }}
-            </span>
-            Employment Postings
-        </h1>
+    <div class="row pt-2 pb-2">
+        <div class="col-12 col-md-6">
+            <h1>
+                Employment Postings
+            </h1>
+        </div>
+        <div class="col-12 col-md-6 text-md-right">
+            <h3>
+                <span class="badge badge-primary badge-pill">
+                    {{ $data['count'] }}
+                </span>
+                Postings
+            </h3>
+        </div>
+
     </div>
     <div class="row">
         <div class="col-sm-12 mb-3 col-md-6">

@@ -115,14 +115,15 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('/meeting/{meeting}', [CNS\MeetingController::class, 'show'])->name('meeting');
 
     Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
-    Route::get('/search/{search}', [CNS\LocalSearchController::class, 'show'])->name('search_show');
+
+   // Route::get('/search/{search}', [CNS\LocalSearchController::class, 'show'])->name('search_show');
 
     // Route::get('/{folder}/attachment/{attachment[', 'CNS\AttachmentController::class, 'download'])->name('attachment_download');
 });
+
+
 //todo handle role super-admin, office, or some such
 Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {
-
-//Route::group(['prefix' => 'admin', 'middleware' =>  ['web', 'auth']], function () {
 
     Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
     Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');

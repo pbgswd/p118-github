@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateUser;
-use App\Models\Address;
 use App\Models\Executive;
 use App\Models\ExecutiveMembership;
 use App\Models\Membership;

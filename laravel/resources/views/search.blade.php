@@ -2,12 +2,21 @@
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg pt-2" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12">
-            <h1>
-                {{ $data['results']->count() }}
-                Search  {{ Str::plural('Result', $data['results']->count()) }}
-                for "{{$data['search']}}"
-            </h1>
+        <div class="row mb-3">
+            <div class="col-12 col-md-10 pt-2">
+                <h3>
+                    {{ $data['results']->count() }}
+                    Search  {{ Str::plural('Result', $data['results']->count()) }}
+                    for "{{$data['search']}}"
+                </h3>
+            </div>
+            <div class="col-12 col-md-2">
+                <a href="#search" class="btn btn-primary btn-lg active" title="search"
+                   role="button" aria-pressed="true">
+                    <i class="fas fa-search"></i>
+                    Another Search
+                </a>
+            </div>
         </div>
         <div class="row">
             @if($data['results']->count() < 1)
