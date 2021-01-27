@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
+use function array_combine;
+use function range;
 
 /**
  * @property Options $access_levels
@@ -20,42 +22,56 @@ use App\Constants\AccessLevelConstants;
  */
 class Options
 {
-    public static function access_levels()
+    public static function address_update_contacts(): array
+    {
+        $contacts = ['dispatch@iatse118.com', 'payroll@iatse118.com',
+            'healthandwelfare@iatse118.com', 'returningofficer@iatse118.com'];
+
+        return $contacts;
+    }
+    public static function testing_address_update_contacts(): array
+    {
+        $contacts = ['pbgswd@gmail.com', 'humyum@hotmail.com'];
+
+        return $contacts;
+    }
+
+    public static function access_levels(): array
     {
         $levels = AccessLevelConstants::getConstants();
 
-        return \array_combine($levels, $levels);
+        return array_combine($levels, $levels);
     }
 
-    public static function membership_levels()
+    public static function membership_levels(): array
     {
         $membership = ['Member', 'Office']; // 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
 
         return array_combine($membership, $membership);
     }
 
-    public static function committee_roles()
+    public static function committee_roles(): array
     {
         $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Past-Member'];
 
         return array_combine($membership, $membership);
     }
 
-    public static function committee_executive_roles()
+    public static function committee_executive_roles(): array
     {
         $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary'];
 
         return array_combine($committee_executive_roles, $committee_executive_roles);
     }
 
-    public static function phone_label()
+    public static function phone_label(): array
     {
         $phone_labels = ['cel', 'home', 'work', 'other'];
 
         return array_combine($phone_labels, $phone_labels);
     }
 
-    public static function state_prov()
+    public static function state_prov(): array
     {
         $provinces = [];
         $provinces['AB'] = 'Alberta';
@@ -132,7 +148,7 @@ class Options
         return ['States' => $states, 'Provinces' => $provinces, null => 'Other (See next field)'];
     }
 
-    public static function countries()
+    public static function countries(): array
     {
         $countries = [];
         $countries[] = 'USA';
@@ -421,7 +437,7 @@ class Options
         return array_combine($countries, $countries);
     }
 
-    public static function years()
+    public static function years(): array
     {
         $currentYear = date('Y');
         $years = range(($currentYear - 2), ($currentYear + 10));
@@ -429,7 +445,7 @@ class Options
         return array_combine($years, $years);
     }
 
-    public static function months()
+    public static function months(): array
     {
         $months = [];
         $months[1] = 'January';
@@ -448,14 +464,14 @@ class Options
         return $months;
     }
 
-    public static function days()
+    public static function days(): array
     {
-        $days = \range(1, 31);
+        $days = range(1, 31);
 
-        return \array_combine($days, $days);
+        return array_combine($days, $days);
     }
 
-    public static function fetchOptionTypes($class)
+    public static function fetchOptionTypes($class): array
     {
         $sorted = $class::orderBy('sort_order')->get();
         $data = [];

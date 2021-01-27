@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Options;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -19,13 +20,13 @@ class EmailMemberUpdateService
 
         if (env('APP_ENV') == 'local') {
             $recipient = env('ADMIN_EMAIL');
-            $cc = '';
+            $cc = Options::testing_address_update_contacts();
         }
 
         if (env('APP_ENV') == 'production') {
             //todo admin email in .env, somewhere other than here
             $recipient = 'admin@iatse118.com';
-            $cc = 'healthandwelfare@iatse118.com';
+            $cc = Options::address_update_contacts();
         }
 
         Mail::send('emails.user_profile_update', ['data' => $message], function ($m) use ($message,
