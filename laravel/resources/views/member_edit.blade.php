@@ -20,7 +20,7 @@
 
     <div class="row d-flex justify-content-md-around">
         @if( $data['user']->allExecutiveRoles->count() > 0 )
-            <div class="col-sm-12 col-lg-5 border border-dark rounded-lg m-2 pt-2">
+            <div class="col-12 col-lg-5 border border-dark rounded-lg m-2 pt-2">
                 <h4>
                     Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}
                 </h4>
@@ -40,18 +40,19 @@
             </div>
         @endif
         @if($data['user']->committee_memberships->count() > 0)
-            <div class="col-sm-12 col-lg-5 border border-dark rounded-lg m-2 p-2">
+            <div class="col-12 col-lg-5 border border-dark rounded-lg m-2 p-2">
                 <h4>Membership in committees</h4>
                 <ul class="list-group">
-                @foreach($data['user']->committee_memberships as $m)
-                    @if($m->pivot->role != 'Past-Member')
-                        <li class="list-group-item">
-                            <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">
-                                {{$m->name}} - {{$m->pivot->role}}
-                            </a>
-                        </li>
-                    @endif
-                @endforeach
+                    @foreach($data['user']->committee_memberships as $m)
+                        @if($m->pivot->role != 'Past-Member')
+                            <li class="list-group-item">
+                                <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">
+                                    {{$m->name}} - {{$m->pivot->role}}
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
             </div>
         @endif
     </div>

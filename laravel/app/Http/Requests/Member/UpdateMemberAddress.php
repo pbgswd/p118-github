@@ -30,6 +30,8 @@ class UpdateMemberAddress extends FormRequest
             'city'=> 'max:255|required',
             'province'=> 'max:255|required',
             'postal_code'=> 'max:255|required',
+            'emergency_contact_name' => 'max:255',
+            'emergency_contact_phone' => 'max:20',
             'message' => 'max:2000',
 
         ];

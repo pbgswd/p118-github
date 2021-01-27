@@ -1,6 +1,3 @@
-<?php
-$user = $data['user'];
-?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="container border border-dark rounded-lg  p-4 mb-3" style="background: rgba(220,220,220,0.8);">
@@ -10,8 +7,8 @@ $user = $data['user'];
                 <i class="far fa-arrow-alt-circle-left"></i>
                 Members /
             </a>
-            <a href="{{route('member', $user->id)}}">
-                {{$user->name}}
+            <a href="{{route('member', $data['user']->id)}}">
+                {{$data['user']->name}}
             </a>
         </h3>
     </div>
@@ -74,9 +71,26 @@ $user = $data['user'];
                         strtoupper($postal_code ?? '')) }}"
                         size="40" />
                 </div>
+                <div class="col-lg-12">
+                    <h3>Update Your Emergency Contact</h3>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Emergency Contact Name</span>
+                    </div>
+                    <input type="text" class="form-control" name="emergency_contact_name"
+                           value="{{ old('emergency_contact_name', $emergency_contact_name ?? '') }}" size="40" />
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Emergency Contact Phone</span>
+                    </div>
+                    <input type="text" class="form-control" name="emergency_contact_phone"
+                           value="{{ old('emergency_contact_phone', $emergency_contact_phone ?? '') }}" size="40" />
+                </div>
                 <div class="input-group mt-lg-5 mb-3">
                     <h4>
-                        Additional info to share with the office about this change.
+                        Add any additional info for the office about this change.
                     </h4>
                     <textarea name="message" id="message" class="form-control">
                         {{ old('message', $message ?? '') }}
