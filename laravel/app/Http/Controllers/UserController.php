@@ -214,7 +214,8 @@ class UserController extends Controller
         $this->authorize('update', $user);
         $message = [];
 
-        $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
+        $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message',
+            'emergency_contact_name', 'emergency_contact_phone'];
 
         foreach ($addr as $k => $a) {
             if ($userRequest->$a) {
