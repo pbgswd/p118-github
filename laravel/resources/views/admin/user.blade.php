@@ -73,8 +73,8 @@
             </div>
             <div class="col-12 input-group mb-3 mt-1">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
-                   <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]"
+                   <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
+                   <input type="tel" class="form-control"  placeholder="Phone" name="user_phone[phone_number]"
                           value="{{ old('user_phone.phone_number', $data['user']->phone_number->phone_number ?? '')}}"
                           size="80" required/>
                 </div>

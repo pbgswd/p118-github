@@ -10,6 +10,7 @@ use App\Models\Membership;
 use App\Models\Options;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -24,9 +25,10 @@ use Spatie\Permission\Models\Role;
 class InviteUserController extends Controller
 {
     /**
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', InviteUser::class);
 
@@ -45,9 +47,10 @@ class InviteUserController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', InviteUser::class);
 
@@ -66,8 +69,9 @@ class InviteUserController extends Controller
     /**
      * @param StoreInviteUserRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreInviteUserRequest $request)
+    public function store(StoreInviteUserRequest $request): RedirectResponse
     {
         $this->authorize('create', InviteUser::class);
 
@@ -132,7 +136,7 @@ class InviteUserController extends Controller
      * @param InviteUser $inviteUser
      * @return RedirectResponse
      */
-    public function process_user(ProcessUserRequest $request, InviteUser $inviteUser)
+    public function process_user(ProcessUserRequest $request, InviteUser $inviteUser): RedirectResponse
     {
         // method open to whomsoever has the link
         //todo determine password strength
@@ -183,8 +187,9 @@ class InviteUserController extends Controller
     /**
      * @param DestroyInviteUserRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyInviteUserRequest $request)
+    public function destroy(DestroyInviteUserRequest $request): RedirectResponse
     {
         $this->authorize('delete', InviteUser::class);
 

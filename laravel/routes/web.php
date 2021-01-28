@@ -79,7 +79,9 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('/member/{user}/address/edit', [CNS\UserController::class, 'edit_address'])->name('member_address_edit');
     Route::post('/member/{user}/address/edit', [CNS\UserController::class, 'update_address']);
 
-    //todo member update emergency contact
+    Route::get('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'edit_emergency_contact'])
+        ->name('edit_emergency_contact');
+    Route::post('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'update_emergency_contact']);
 
     Route::post('/member/{user}/edit', [CNS\UserController::class, 'update']);
 

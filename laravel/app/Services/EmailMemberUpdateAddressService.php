@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class EmailMemberUpdateAddressService
 {
-    public function sendMessage($message, $user)
+    public function sendMessage($update_type, $message, $user)
     {
         $recipient = env('ADMIN_EMAIL');
         $cc = '';
@@ -26,7 +26,9 @@ class EmailMemberUpdateAddressService
             $cc = Options::address_update_contacts();
         }
 
-        Mail::send('emails.user_address_update', ['data' => $message, 'user' => $user], function ($m) use ($message,
+        Mail::send('emails.user_address_update', ['update_type' => $update_type, 'data' => $message, 'user' => $user],
+            function ($m) use ($update_type,
+            $message,
             $user,
             $recipient,
             $cc) {
@@ -36,7 +38,7 @@ class EmailMemberUpdateAddressService
                 $m->cc($cc, $cc);
             }
             $m->replyTo($user->email, $user->name)
-                ->subject('Local 118 - Address Update for '.$user->name);
+                ->subject(env('APP_NAME') . ' Website ' . $update_type . 'Update For ' . $user->name);
         });
     }
 }

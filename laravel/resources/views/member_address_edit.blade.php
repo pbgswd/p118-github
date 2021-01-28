@@ -13,7 +13,7 @@
         </h3>
     </div>
 
-    <div class="row">
+    <div class="row pb-2">
         <div class="col-12 m-3">
             <p>
                 <i>Please note: the website does not store your address online for matters of efficiency sake.
@@ -22,11 +22,34 @@
             </p>
         </div>
     </div>
-    <div class="row">
+    <div class="row d-flex justify-content-around">
+        <div class="col-12 col-md-5 mt-md-3">
+            <h4>
+                <a href="{{route('edit_emergency_contact', $data['user']->id)}}">
+                    <i class="fas fa-first-aid text-danger"></i>
+                    <span class="font-weight-bold">
+                        Update emergency contact info.
+                    </span>
+                </a>
+            </h4>
+        </div>
+        <div class="col-12 col-md-5 mt-md-3">
+            <h4>
+                <a href="{{route('member_edit', $data['user']->id)}}">
+                    <i class="fas fa-user"></i>
+                    <span class="font-weight-bold">
+                        Update profile info.
+                    </span>
+                </a>
+            </h4>
+        </div>
+    </div>
+    <div class="row mt-5">
         <div class="col-12">
             <form method="post" name="user_address" action="{{ url()->current() }}" enctype="multipart/form-data"
               class="needs-validation" novalidate>
             {!! csrf_field() !!}
+                <input type="hidden" name="update_type" value="Address" />
                 <div class="col-lg-12">
                     <h3>Update Your Address With The Office</h3>
                 </div>
@@ -42,14 +65,14 @@
                         <span class="input-group-text" id="basic-addon1">Street</span>
                     </div>
                     <input type="text" class="form-control" name="street"
-                           value="{{ old('street', $street ?? '') }}" size="40" />
+                           value="{{ old('street', $street ?? '') }}" size="40" required/>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">City</span>
                     </div>
                     <input type="text" class="form-control" name="city"
-                           value="{{ old('city', $city ?? '') }}" size="40" />
+                           value="{{ old('city', $city ?? '') }}" size="40" required/>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -69,24 +92,7 @@
                         name="postal_code"
                         value="{{ old('postal_code',
                         strtoupper($postal_code ?? '')) }}"
-                        size="40" />
-                </div>
-                <div class="col-lg-12">
-                    <h3>Update Your Emergency Contact</h3>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Emergency Contact Name</span>
-                    </div>
-                    <input type="text" class="form-control" name="emergency_contact_name"
-                           value="{{ old('emergency_contact_name', $emergency_contact_name ?? '') }}" size="40" />
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Emergency Contact Phone</span>
-                    </div>
-                    <input type="text" class="form-control" name="emergency_contact_phone"
-                           value="{{ old('emergency_contact_phone', $emergency_contact_phone ?? '') }}" size="40" />
+                        size="40" required/>
                 </div>
                 <div class="input-group mt-lg-5 mb-3">
                     <h4>

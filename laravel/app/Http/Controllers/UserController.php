@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Member\UpdateMember;
+use App\Http\Requests\Member\UpdateMemberEmergencyContact;
 use App\Http\Requests\User\UpdateMemberAddress;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
@@ -31,7 +32,6 @@ class UserController extends Controller
      * @var EmailMemberUpdateService
      */
     private $emailMemberUpdateService;
-    private $emailMemberUpdateAddressService;
 
     public function __construct(EmailMemberUpdateService $emailMemberUpdateService)
     {
@@ -210,12 +210,12 @@ class UserController extends Controller
        UpdateMemberAddress $userRequest,
        EmailMemberUpdateAddressService $service,
        User $user
-    ): RedirectResponse {
+    ): RedirectResponse
+    {
         $this->authorize('update', $user);
         $message = [];
 
-        $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message',
-            'emergency_contact_name', 'emergency_contact_phone'];
+        $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
 
         foreach ($addr as $k => $a) {
             if ($userRequest->$a) {
@@ -227,13 +227,58 @@ class UserController extends Controller
         }
 
         if (! empty($message)) {
-            $result = $service->sendMessage($message, $user);
+            $result = $service->sendMessage($userRequest->update_type, $message, $user);
         }
 
-        Session::flash('success', 'Address update for '.$user->name.' has been emailed to the office.');
+        Session::flash('success', 'The address update has been emailed to the office.');
 
         return redirect()->route('member_edit', $user->id);
     }
+
+
+    public function edit_emergency_contact(User $user)
+    {
+        $this->authorize('update', $user);
+
+        $currentUser = Auth::user();
+
+        $data = [
+            'user' => $user,
+            'action' => 'Edit',
+            'currentUserPermissions' => $currentUser->permissions,
+        ];
+
+        return view('member_emergency_edit', ['data' => $data]);
+    }
+
+
+    public function update_emergency_contact(
+        UpdateMemberEmergencyContact $userRequest,
+        EmailMemberUpdateAddressService $service,
+        User $user
+    ): RedirectResponse
+    {
+
+        $this->authorize('update', $user);
+        $message = [];
+
+        $fields = ['emergency_contact_name', 'emergency_contact_relationship', 'emergency_contact_phone', 'message'];
+
+        foreach ($fields as $k => $a) {
+            if ($userRequest->$a) {
+                $message[ucfirst($a)] = $userRequest->$a;
+            }
+        }
+
+        if (! empty($message)) {
+            $result = $service->sendMessage($userRequest->update_type, $message, $user);
+        }
+
+        Session::flash('success', 'The emergency contact update has been emailed to the office.');
+
+        return redirect()->route('edit_emergency_contact', $user->id);
+    }
+
 
     protected function uploadImage(FormRequest $request)
     {
