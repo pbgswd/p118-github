@@ -2,7 +2,6 @@
     <h2>
       News & Highlights
     </h2>
-
     @if($data['news']['posts']->count() > 0)
         <ul class="list-group p-0 m-0">
             @forelse($data['news']['posts'] as $post)
@@ -18,7 +17,6 @@
             @endforelse
         </ul>
     @endif
-
     @if($data['news']['pages']->count() > 0)
         <ul class="list-group p-0 m-0">
             @forelse($data['news']['pages'] as $page)
