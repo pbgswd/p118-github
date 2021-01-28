@@ -39,7 +39,7 @@
             </div>
         @endif
         @if($data['user']->committee_memberships->count() > 0)
-            <div class="col-12 col-lg-5 border border-dark rounded-lg m-2 p-2">
+            <div class="col-12 col-lg-5 border border-dark rounded-lg mt-2 mb-2 p-2">
                 <h4>Membership in committees</h4>
                 <ul class="list-group">
                     @foreach($data['user']->committee_memberships as $m)
@@ -62,7 +62,8 @@
         <div class="row">
             <div class="col-12">
 
-                <h3 class="p-lg-2 fw-bold">
+                <h3 class="mt-3 mb-3 fw-bold">
+                    <i class="fas fa-user text-primary"></i>
                     Primary Contact Information
                 </h3>
                 <div class="input-group mb-3">
@@ -146,8 +147,11 @@
                     </a>
                 </h4>
             </div>
-        <div class="col-12">
-            <h2 class="mt-lg-5 p-lg-2 fw-bold">Member Info</h2>
+        <div class="col-12 pt-2">
+            <h3 class="mt-3 p-lg-2 fw-bold">
+                <i class="fas fa-user text-primary"></i>
+                Member Info
+            </h3>
             <div class="input-group mb-6">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
@@ -158,7 +162,7 @@
                     </div>
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
-                       value="Check to share profile with other members." size="40" readonly>
+                       value="Share profile with other members?" size="40" readonly>
             </div>
             @if( isset($data['user']->user_info->image) )
                 <div class="col-6 mt-2">
@@ -181,7 +185,7 @@
                         </div>
                     </div>
                     <input type="text" class="form-control" aria-label="Text input with checkbox"
-                           value="Check to delete image." size="40" readonly>
+                           value=" Check to delete image." size="40" readonly>
                 </div>
             @else
                 <div class="form-group">
@@ -204,9 +208,12 @@
                     </div>
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
-                       value="Check to show picture in your profile." size="40" readonly>
+                       value="Show picture in your profile?" size="40" readonly>
             </div>
-            <h2 class="mt-lg-5 p-lg-2 fw-bold">About Me</h2>
+            <h3 class="mt-lg-5 p-lg-2 fw-bold">
+                <i class="fas fa-user text-primary"></i>
+                About Me
+            </h3>
             <div class="col-12 input-group mb-3">
                 @if (!optional($data['user']->user_info)->about || empty(optional($data['user']->user_info)->about))
                     <p class="font-italic">

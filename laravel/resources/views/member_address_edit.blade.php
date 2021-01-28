@@ -28,7 +28,7 @@
                 <a href="{{route('edit_emergency_contact', $data['user']->id)}}">
                     <i class="fas fa-first-aid text-danger"></i>
                     <span class="font-weight-bold">
-                        Update emergency contact info.
+                        Update emergency contact
                     </span>
                 </a>
             </h4>
@@ -38,7 +38,7 @@
                 <a href="{{route('member_edit', $data['user']->id)}}">
                     <i class="fas fa-user"></i>
                     <span class="font-weight-bold">
-                        Update profile info.
+                        Update profile
                     </span>
                 </a>
             </h4>

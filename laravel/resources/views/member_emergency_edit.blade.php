@@ -29,7 +29,7 @@
             <h4>
                 <a href="{{route('member_address_edit', $data['user']->id)}}">
                     <i class="fas fa-address-card text-success"></i>
-                    <span class="font-weight-bold">Update address.</span>
+                    <span class="font-weight-bold">Update address</span>
                 </a>
             </h4>
         </div>
@@ -38,7 +38,7 @@
                 <a href="{{route('member_edit', $data['user']->id)}}">
                     <i class="fas fa-user"></i>
                     <span class="font-weight-bold">
-                        Update profile info.
+                        Update profile
                     </span>
                 </a>
             </h4>
@@ -50,22 +50,30 @@
         <input type="hidden" name="update_type" value="Emergency Contact" />
         <div class="row mt-md-3 pt-2">
             <div class="col-12">
-                <div class="col-lg-12">
-                    <h3>
+                <div class="col-lg-12 mb-3">
+                    <h3 class="">
                         <i class="fas fa-first-aid text-danger"></i>
                         Update Your Emergency Contact Information
                     </h3>
                 </div>
+
+
                 <div class="input-group mb-3">
+                    <div class="col-12 d-block d-md-none font-weight-bold">
+                        Emergency Contact Name
+                    </div>
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Emergency Contact Name</span>
+                        <span class="input-group-text d-none d-md-block" id="basic-addon1">Emergency Contact Name</span>
                     </div>
                     <input type="text" class="form-control" name="emergency_contact_name"
                            value="{{ old('emergency_contact_name', $emergency_contact_name ?? '') }}" size="40" />
                 </div>
                 <div class="input-group mb-3">
+                    <div class="col-12 d-block d-md-none font-weight-bold">
+                        Emergency Contact Phone
+                    </div>
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Emergency Contact Phone</span>
+                        <span class="input-group-text d-none d-md-block" id="basic-addon1">Emergency Contact Phone</span>
                     </div>
                     <input type="tel" class="form-control" name="emergency_contact_phone"
                            value="{{ old('emergency_contact_phone', $emergency_contact_phone ?? '') }}"
@@ -73,8 +81,11 @@
                            size="40" />
                 </div>
                 <div class="input-group mb-3">
+                    <div class="col-12 d-block d-md-none font-weight-bold">
+                        Emergency Contact Relationship
+                    </div>
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Emergency Contact Relationship</span>
+                        <span class="input-group-text d-none d-md-block" id="basic-addon1">Emergency Contact Relationship</span>
                     </div>
                     <input type="text" class="form-control" name="emergency_contact_relationship"
                            value="{{ old('emergency_contact_relationship', $emergency_contact_relationship ?? '') }}"
