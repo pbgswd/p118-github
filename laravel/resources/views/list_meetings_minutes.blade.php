@@ -4,7 +4,7 @@
         <div class="container border border-dark rounded-lg mb-3" style="background: rgba(220,220,220,0.8);">
             <div class="row d-flex justify-content-around mb-2 mb-md-3">
                 <div class="col-12 col-md-6">
-                    <h1>Meetings & Minutes</h1>
+                    <h1>Meeting Minutes</h1>
                 </div>
                 <div class="col-12 col-md-6 text-md-right">
                     <h3>
@@ -14,6 +14,24 @@
                     </h3>
                 </div>
             </div>
+            <div class="row d-fle justify-content-around border border-dark rounded-lg m-2 mb-md-3">
+                @foreach($data['years'] as $year)
+                    <div class="col-3 col-md-1 p-2 text-center
+                        @if($data['year'] == $year->year)
+                            bg-info font-weight-bolder
+                        @endif
+                        ">
+                        <a href="{{route('list_meetings_year', $year->year)}}" title="{{$year->year}}">
+                            {{$year->year}}
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+            @if($data['year'])
+                <div class="col-12 mb-md-3">
+                    <h4>Meeting Minutes for {{$data['year']}}</h4>
+                </div>
+            @endif
             <div class="table-responsive border border-dark rounded-lg">
                 <table class="table">
                     <thead>
@@ -35,16 +53,13 @@
                                 <td> {{ $a->date->format('F j Y') }} </td>
                             </tr>
                         @endforeach
-                        <tr>
-                            <td colspan="2">&nbsp;</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-center mt-3">
                 <div class="list-group">
                     <ul class="pagination">
-                        {{$data['meetings']->links()}}
+                        {!! $data['meetings']->links() !!}
                     </ul>
                 </div>
             </div>

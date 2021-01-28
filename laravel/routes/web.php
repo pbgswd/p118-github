@@ -39,7 +39,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/posts', [CNS\PostController::class, 'list'])->name('posts');
     Route::get('/post/{post}', [CNS\PostController::class, 'show'])->name('post_show');
 
-    Route::get('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'show'])->name('invite_user_signup');
+    Route::get('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'show'])
+        ->name('invite_user_signup');
     Route::post('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'process_user']);
 
     Route::get('/venues', [CNS\VenueController::class, 'list'])->name('venues');
@@ -54,7 +55,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('bylaws', [CNS\ByLawController::class, 'list'])->name('bylaws_list_public');
     Route::get('/bylaws/{bylaw}', [CNS\ByLawController::class, 'show'])->name('bylaw_show');
 
-    Route::get('/{folder}/download/{attachment}', [CNS\AttachmentController::class, 'download'])->name('attachment_download');
+    Route::get('/{folder}/download/{attachment}', [CNS\AttachmentController::class, 'download'])
+        ->name('attachment_download');
 });
 
 Route::group(['middleware' =>  ['web', 'auth']], function () {
@@ -76,6 +78,8 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
 
     Route::get('/member/{user}/address/edit', [CNS\UserController::class, 'edit_address'])->name('member_address_edit');
     Route::post('/member/{user}/address/edit', [CNS\UserController::class, 'update_address']);
+
+    //todo member update emergency contact
 
     Route::post('/member/{user}/edit', [CNS\UserController::class, 'update']);
 
@@ -108,21 +112,21 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::delete('committee/{committee}/post/{committeePost}/destroy', [CNS\CommitteePostController::class, 'destroy'])
         ->name('public_committee_post_destroy');
 
-    // Route::post('committee/{committee}/post/{committeePost}/comment/create', [CNS\CommitteePostCommentController::class, 'store'])
-    //    ->name('public_committee_post_comment');
+//Route::post('committee/{committee}/post/{committeePost}/comment/create',
+// [CNS\CommitteePostCommentController::class, 'store'])
+//    ->name('public_committee_post_comment');
 
+    Route::get('meetings_minutes/{year}', [CNS\MeetingController::class, 'index_by_year'])->name('list_meetings_year');
     Route::get('meetings_minutes', [CNS\MeetingController::class, 'index'])->name('list_meetings');
     Route::get('/meeting/{meeting}', [CNS\MeetingController::class, 'show'])->name('meeting');
 
     Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
 
    // Route::get('/search/{search}', [CNS\LocalSearchController::class, 'show'])->name('search_show');
-
-    // Route::get('/{folder}/attachment/{attachment[', 'CNS\AttachmentController::class, 'download'])->name('attachment_download');
+    // Route::get('/{folder}/attachment/{attachment[', 'CNS\AttachmentController::class, 'download'])
+    //->name('attachment_download');
 });
 
-
-//todo handle role super-admin, office, or some such
 Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {
 
     Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
@@ -157,7 +161,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::post('/user/{user}/edit', [CNS\AdminUserController::class, 'update'])->name('user_edit_update');
     Route::delete('/user/delete', [CNS\AdminUserController::class, 'destroy'])->name('user_destroy');
 
-    Route::get('/executives', [CNS\AdminExecutiveMembershipController::class, 'index'])->name('admin_executives_list');
+    Route::get('/executives', [CNS\AdminExecutiveMembershipController::class, 'index'])
+        ->name('admin_executives_list');
 
     Route::get('/user/{user}/executiveMembership/create', [CNS\AdminExecutiveMembershipController::class, 'create'])
         ->name('admin_executive_create');
@@ -167,7 +172,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::post('/executiveMembership/{executiveMembership}/edit', [CNS\AdminExecutiveMembershipController::class, 'update']);
 
     Route::get('executive_members', [CNS\AdminExecutiveController::class, 'index'])->name('admin_executives');
-    Route::delete('executives/delete', [CNS\AdminExecutiveMembershipController::class, 'destroy'])->name('admin_executive_destroy');
+    Route::delete('executives/delete', [CNS\AdminExecutiveMembershipController::class, 'destroy'])
+        ->name('admin_executive_destroy');
 
     Route::get('/invite-new-user', [CNS\InviteUserController::class, 'create'])->name('invite-new-user');
     Route::post('/invite-new-user', [CNS\InviteUserController::class, 'store']);
@@ -196,7 +202,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('/attachments', [CNS\AttachmentController::class, 'index'])->name('attachments_list');
     Route::get('/attachment/create', [CNS\AttachmentController::class, 'create'])->name('attachment_create');
     Route::post('/attachment/create', [CNS\AttachmentController::class, 'store']);
-    Route::get('/attachment/{attachment}/edit', [CNS\AttachmentController::class, 'edit'])->name('admin_attachment_edit');
+    Route::get('/attachment/{attachment}/edit', [CNS\AttachmentController::class, 'edit'])
+        ->name('admin_attachment_edit');
     Route::post('/attachment/{attachment}/edit', [CNS\AttachmentController::class, 'update']);
     Route::delete('/attachment/delete', [CNS\AttachmentController::class, 'destroy'])->name('attachment_destroy');
 
@@ -212,8 +219,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('committees', [CNS\AdminCommitteeController::class, 'index'])->name('committees_list');
     Route::get('committee/create', [CNS\AdminCommitteeController::class, 'create'])->name('committee_create');
     Route::post('committee/create', [CNS\AdminCommitteeController::class, 'store']);
-    Route::get('committee/{any_committee}/show', [CNS\AdminCommitteeController::class, 'show'])->name('admin_committee_show');
-    Route::get('committee/{any_committee}/edit', [CNS\AdminCommitteeController::class, 'edit'])->name('committee_edit');
+    Route::get('committee/{any_committee}/show', [CNS\AdminCommitteeController::class, 'show'])
+        ->name('admin_committee_show');
+    Route::get('committee/{any_committee}/edit', [CNS\AdminCommitteeController::class, 'edit'])
+        ->name('committee_edit');
     Route::post('committee/{any_committee}/edit', [CNS\AdminCommitteeController::class, 'update']);
     Route::delete('committee/delete', [CNS\AdminCommitteeController::class, 'destroy'])->name('committee_destroy');
 
@@ -231,7 +240,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::delete('committee/{committee}/admin-manage-committee-members/user/{user}/delete',
         [CNS\AdminCommitteeMemberController::class, 'destroy'])->name('admin_delete-committee_member');
 
-    Route::get('committee/{committee}/posts', [CNS\AdminCommitteePostController::class, 'index'])->name('committee_posts_list');
+    Route::get('committee/{committee}/posts', [CNS\AdminCommitteePostController::class, 'index'])
+        ->name('committee_posts_list');
     Route::get('committee/{committee}/post/create', [CNS\AdminCommitteePostController::class, 'create'])
         ->name('admin_committee_post');
     Route::post('committee/{committee}/post/create', [CNS\AdminCommitteePostController::class, 'store']);
@@ -256,15 +266,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('agreement/create', [CNS\AdminAgreementController::class, 'create'])->name('agreement_create');
     Route::post('agreement/create', [CNS\AdminAgreementController::class, 'store']);
     Route::delete('/agreement/delete', [CNS\AdminAgreementController::class, 'destroy'])->name('agreement_destroy');
-    Route::get('/agreement/{any_agreement}/edit', [CNS\AdminAgreementController::class, 'edit'])->name('agreement_edit');
+    Route::get('/agreement/{any_agreement}/edit', [CNS\AdminAgreementController::class, 'edit'])
+        ->name('agreement_edit');
     Route::post('/agreement/{any_agreement}/edit', [CNS\AdminAgreementController::class, 'update']);
 
     Route::get('/organizations', [CNS\AdminOrganizationController::class, 'index'])->name('organizations_list');
     Route::get('/organization/create', [CNS\AdminOrganizationController::class, 'create'])->name('organization_create');
     Route::post('/organization/create', [CNS\AdminOrganizationController::class, 'store']);
-    Route::get('/organization/{any_organization}/edit', [CNS\AdminOrganizationController::class, 'edit'])->name('organization_edit');
+    Route::get('/organization/{any_organization}/edit', [CNS\AdminOrganizationController::class, 'edit'])
+        ->name('organization_edit');
     Route::post('/organization/{any_organization}/edit', [CNS\AdminOrganizationController::class, 'update']);
-    Route::delete('/organization/delete', [CNS\AdminOrganizationController::class, 'destroy'])->name('organization_destroy');
+    Route::delete('/organization/delete', [CNS\AdminOrganizationController::class, 'destroy'])
+        ->name('organization_destroy');
 
     Route::get('/meetings', [CNS\AdminMeetingController::class, 'index'])->name('meetings_list');
     Route::get('/meeting/create', [CNS\AdminMeetingController::class, 'create'])->name('meeting_create');
@@ -276,9 +289,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('employment-list/', [CNS\AdminEmploymentController::class, 'index'])->name('admin_employment_list');
     Route::get('employment/create', [CNS\AdminEmploymentController::class, 'create'])->name('admin_employment_create');
     Route::post('employment/create', [CNS\AdminEmploymentController::class, 'store']);
-    Route::get('/employment/{any_employment}/edit', [CNS\AdminEmploymentController::class, 'edit'])->name('admin_employment_edit');
+    Route::get('/employment/{any_employment}/edit', [CNS\AdminEmploymentController::class, 'edit'])
+        ->name('admin_employment_edit');
     Route::post('employment/{any_employment}/edit', [CNS\AdminEmploymentController::class, 'update']);
-    Route::delete('/employment/delete', [CNS\AdminEmploymentController::class, 'destroy'])->name('admin_employment_destroy');
+    Route::delete('/employment/delete', [CNS\AdminEmploymentController::class, 'destroy'])
+        ->name('admin_employment_destroy');
 
     Route::get('bylaws/', [CNS\AdminByLawController::class, 'index'])->name('admin_bylaws_list');
     Route::get('bylaw/create', [CNS\AdminByLawController::class, 'create'])->name('admin_bylaw_create');

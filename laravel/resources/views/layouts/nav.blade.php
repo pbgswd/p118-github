@@ -94,11 +94,15 @@
                         <a class="dropdown-item" href="{{route('list_meetings')}}">
                             <i class="far fa-folder"></i>
                             Meetings & Minutes</a>
-                        <a class="dropdown-item" href="#"><i class="far fa-folder"></i> Budgets & Audits</a>
-                        <a class="dropdown-item" href="{{route('committees')}}"><i class="fas fa-users"></i>
+                        <a class="dropdown-item" href="{{route('topic_show','Financial')}}">
+                            <i class="far fa-folder"></i> Financial</a>
+                        <a class="dropdown-item" href="{{route('committees')}}">
+                            <i class="fas fa-users"></i>
                             Committees</a>
-                        <a class="dropdown-item" href="#"><i class="fas fa-users"></i> elections</a>
-                        <a class="dropdown-item" href="{{route('jobs_list')}}"><i class="fas fa-hard-hat"></i>
+                        <a class="dropdown-item" href="{{route('topic_show','elections')}}">
+                            <i class="fas fa-users"></i> Elections</a>
+                        <a class="dropdown-item" href="{{route('jobs_list')}}">
+                            <i class="fas fa-hard-hat"></i>
                             Jobs</a>
                         <a class="dropdown-item" href="https://login.callsteward.ca/" target="_blank"
                            title="Link to CallSteward">
