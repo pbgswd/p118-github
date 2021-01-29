@@ -26,7 +26,7 @@ class UpdateMemberEmergencyContact extends FormRequest
         return [
             'emergency_contact_name' => 'max:255',
             'emergency_contact_relationship' => 'max:255',
-            'emergency_contact_phone' => 'max:20',
+            'emergency_contact_phone' => 'required|min:10',
             'message' => 'max:2000',
         ];
     }

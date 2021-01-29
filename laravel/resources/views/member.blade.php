@@ -19,17 +19,10 @@
                          class="member-profile-pic" />
                 </div>
             @endif
-            <div class="col-6 col-md-12">
-                @if ( Auth::user()->id == $data['user']->id)
-                    <a href="{{route('member_edit', Auth::user()->id )}}" title="Edit my profile">
-                        <button type="button" class="btn btn-primary">Edit My Profile</button>
-                    </a>
-                @endif
-            </div>
         </div>
         <div class="row d-flex justify-content-between pt-2">
             @if (($data['user']->user_info->share_email ?? '' ) == 1)
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-5 text-md-left">
                     <h5>
                         <a href="mailto:{{$data['user']->email}}" title="Email {{$data['user']->name}}">
                             <i class="fas fa-envelope"></i>
@@ -40,7 +33,7 @@
             @endif
             @if (($data['user']->user_info->share_phone  ?? '' )  == 1 &&
                 !empty($data['user']->phone_number->phone_number))
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-5 text-md-right">
                     <h5>
                         <a href="tel:{{$data['user']->phone_number->phone_number ?? '' }}">
                             <i class="fas fa-phone-square"></i>
@@ -93,5 +86,39 @@
                 </div>
             @endif
         </div>
+        @if ( Auth::user()->id == $data['user']->id)
+            <div class="row d-flex justify-content-between pt-3">
+                <div class="col-12 col-md-4 text-md-left">
+                    <h5>
+                        <a href="{{route('edit_emergency_contact', $data['user']->id)}}">
+                            <i class="fas fa-first-aid text-danger"></i>
+                            <span class="font-weight-bold">
+                            Update emergency contact
+                        </span>
+                        </a>
+                    </h5>
+                </div>
+                <div class="col-12 col-md-3 text-md-center">
+                    <h5>
+                        <a href="{{route('member_edit', $data['user']->id)}}">
+                            <i class="fas fa-user"></i>
+                            <span class="font-weight-bold">
+                            Update profile
+                        </span>
+                        </a>
+                    </h5>
+                </div>
+                <div class="col-12 col-md-4 text-md-right">
+                    <h5>
+                        <a href="{{route('member_address_edit', $data['user']->id)}}">
+                            <i class="fas fa-address-card text-success"></i>
+                            <span class="font-weight-bold">
+                                Update address
+                            </span>
+                        </a>
+                    </h5>
+                </div>
+            </div>
+        @endif
     </div>
 @endsection

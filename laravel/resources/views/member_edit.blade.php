@@ -99,8 +99,7 @@
                     <input type="tel" class="form-control"  placeholder="Phone" name="user_phone[phone_number]"
                            value="{{ old('user_phone.phone_number',
                            $data['user']->phone_number->phone_number ?? '') }}"
-                           size="80"
-                           required />
+                           size="80" maxlength="20" />
                 </div>
                 <div class="input-group mb-4 mb-lg-4">
                     <div class="input-group-prepend">

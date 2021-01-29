@@ -17,6 +17,7 @@ class EmailMemberUpdateService
         $message['original_email'] = $user->email;
 
         $recipient = env('ADMIN_EMAIL');
+        $cc = '';
 
         if (env('APP_ENV') == 'local') {
             $recipient = env('ADMIN_EMAIL');

@@ -31,7 +31,7 @@ class Options
     }
     public static function testing_address_update_contacts(): array
     {
-        $contacts = ['pbgswd@gmail.com', 'humyum@hotmail.com'];
+        $contacts = ['pbgswd@gmail.com', 'financialsecretary@iatse118.com'];
 
         return $contacts;
     }

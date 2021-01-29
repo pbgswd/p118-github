@@ -51,7 +51,10 @@
             {!! csrf_field() !!}
                 <input type="hidden" name="update_type" value="Address" />
                 <div class="col-lg-12">
-                    <h3>Update Your Address With The Office</h3>
+                    <h3>
+                        <i class="fas fa-address-card text-success"></i>
+                        Update Your Address With The Office
+                    </h3>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">

@@ -9,6 +9,7 @@ use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Rules\Phone;
 use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -16,7 +17,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -137,17 +137,31 @@ class UserController extends Controller
         $user->save();
         $user->touch();
 
-        if ($user->phone_number instanceof PhoneNumber) {
-            if ($userRequest->user_phone['phone_number'] != $user->phone_number['phone_number']) {
-                $message['Phone'] = $userRequest->user_phone['phone_number'];
-            }
-            $user->phone_number->fill($userRequest->user_phone);
-            $user->phone_number->save();
-        } else {
-            $phone = new PhoneNumber($userRequest['user_phone']);
-            $user->phone_number()->save($phone);
-            $message['Phone'] = $userRequest->user_phone['phone_number'];
+        if($userRequest->user_phone['phone_number'] != '') {
+            $userRequest->validate([
+                'user_phone.phone_number' => [new Phone()]
+            ]);
         }
+
+        $user_phone_info = $userRequest->user_phone;
+        $user_phone_info['phone_number'] = $userRequest->user_phone['phone_number'] ?? '';
+
+            if ($user->phone_number instanceof PhoneNumber) {
+                if ($user_phone_info['phone_number'] != $user->phone_number['phone_number']) {
+                    $message['Phone'] = trim($user_phone_info['phone_number']) != ''
+                        ? $user_phone_info['phone_number'] : 'number deleted';
+                }
+
+                $user->phone_number->fill($user_phone_info);
+                $user->phone_number->save();
+            } else {
+                $phone = new PhoneNumber($userRequest['user_phone']);
+                $user->phone_number()->save($phone);
+                $message['Phone'] = $user_phone_info['phone_number'] == '' ?: 'number deleted 2';
+            }
+
+
+
 
         if ($user->user_info instanceof UserInfo) {
             $user_info = $userRequest['user_info'];
@@ -260,6 +274,13 @@ class UserController extends Controller
     {
 
         $this->authorize('update', $user);
+
+        $userRequest->validate([
+            'emergency_contact_phone' => ['required',
+                new Phone()
+            ]
+        ]);
+
         $message = [];
 
         $fields = ['emergency_contact_name', 'emergency_contact_relationship', 'emergency_contact_phone', 'message'];
