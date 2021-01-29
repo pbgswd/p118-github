@@ -48,13 +48,13 @@
                 {!! $data['employment']->description !!}
             </div>
         </div>
-        <div class="row mt-lg-2 mb-3">
-            <div class="col-12">
-                <h4>
-                    <i class="far fa-folder-open"></i>
-                    Files for {{$data['employment']->title}}
-                </h4>
-                @if(count($data['employment']->attachments) > 0)
+        @if(count($data['employment']->attachments) > 0)
+            <div class="row mt-lg-2 mb-3">
+                <div class="col-12">
+                    <h4>
+                        <i class="far fa-folder-open"></i>
+                        Files
+                    </h4>
                     <ul class="list-group">
                         @foreach($data['employment']->attachments as $att)
                             <li class="list-group-item">
@@ -66,9 +66,9 @@
                             </li>
                         @endforeach
                     </ul>
-                @endif
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 @endsection
