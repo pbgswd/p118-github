@@ -237,7 +237,7 @@ class UserController extends Controller
 
         Session::flash('success', 'The address update has been emailed to the office.');
 
-        return redirect()->route('member_edit', $user->id);
+        return redirect()->route('member_address_edit', $user->id);
     }
 
 
