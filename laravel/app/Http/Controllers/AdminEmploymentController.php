@@ -26,9 +26,10 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Employment::class);
 
@@ -50,9 +51,10 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Employment::class);
         $e = new Employment;
@@ -63,8 +65,9 @@ class AdminEmploymentController extends Controller
     /**
      * @param StoreEmploymentRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreEmploymentRequest $request)
+    public function store(StoreEmploymentRequest $request): RedirectResponse
     {
         $this->authorize('create', Employment::class);
         $employment = new Employment($request->employment);
@@ -88,9 +91,10 @@ class AdminEmploymentController extends Controller
 
     /**
      * @param Employment $employment
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Employment $employment)
+    public function edit(Employment $employment): View
     {
         $this->authorize('update', Employment::class);
         $employment->load('user', 'attachments');
@@ -112,6 +116,7 @@ class AdminEmploymentController extends Controller
      * @param UpdateEmploymentRequest $request
      * @param Employment $any_employment
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
     {
@@ -141,8 +146,9 @@ class AdminEmploymentController extends Controller
     /**
      * @param DestroyEmploymentRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyEmploymentRequest $request)
+    public function destroy(DestroyEmploymentRequest $request): RedirectResponse
     {
         $this->authorize('delete', Employment::class);
 

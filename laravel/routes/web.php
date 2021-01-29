@@ -69,6 +69,10 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
      **/
     Route::get('/home', [CNS\HomeController::class, 'index'])->name('home'); // redirects to home page
 
+
+    Route::post('jobs', [CNS\EmploymentController::class, 'jobs_year'])->name('jobs_year');
+    Route::get('jobs/{deadline}', [CNS\EmploymentController::class, 'index_by_year'])->name('list_jobs_year');
+
     Route::get('jobs', [CNS\EmploymentController::class, 'index'])->name('jobs_list');
     Route::get('job/{employment}', [CNS\EmploymentController::class, 'show'])->name('job_view');
 

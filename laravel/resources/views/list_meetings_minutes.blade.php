@@ -9,7 +9,7 @@
                 <div class="col-12 col-md-6 text-md-right">
                     <h3>
                        <span class="badge badge-primary badge-pill">
-                           {{ $data['count'] }} Meetings & Minutes
+                           {{ $data['count'] }} Meeting {{ Str::plural('Minute', $data['count']) }}
                        </span>
                     </h3>
                 </div>
