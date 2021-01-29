@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Member\UpdateMember;
 use App\Http\Requests\Member\UpdateMemberEmergencyContact;
-use App\Http\Requests\Member\UpdateMemberAddress;
+use App\Http\Requests\User\UpdateMemberAddress;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
@@ -146,22 +146,19 @@ class UserController extends Controller
         $user_phone_info = $userRequest->user_phone;
         $user_phone_info['phone_number'] = $userRequest->user_phone['phone_number'] ?? '';
 
-            if ($user->phone_number instanceof PhoneNumber) {
-                if ($user_phone_info['phone_number'] != $user->phone_number['phone_number']) {
-                    $message['Phone'] = trim($user_phone_info['phone_number']) != ''
-                        ? $user_phone_info['phone_number'] : 'number deleted';
-                }
-
-                $user->phone_number->fill($user_phone_info);
-                $user->phone_number->save();
-            } else {
-                $phone = new PhoneNumber($userRequest['user_phone']);
-                $user->phone_number()->save($phone);
-                $message['Phone'] = $user_phone_info['phone_number'] == '' ?: 'number deleted 2';
+        if ($user->phone_number instanceof PhoneNumber) {
+            if ($user_phone_info['phone_number'] != $user->phone_number['phone_number']) {
+                $message['Phone'] = trim($user_phone_info['phone_number']) != ''
+                    ? $user_phone_info['phone_number'] : 'number deleted';
             }
-
-
-
+            $user->phone_number->fill($user_phone_info);
+            $user->phone_number->save();
+        } else {
+            $phone = new PhoneNumber($userRequest['user_phone']);
+            $user->phone_number()->save($phone);
+            $message['Phone'] = $user_phone_info['phone_number'] == ''
+                ? $user_phone_info['phone_number'] : 'number deleted';
+        }
 
         if ($user->user_info instanceof UserInfo) {
             $user_info = $userRequest['user_info'];
@@ -213,15 +210,9 @@ class UserController extends Controller
         return view('member_address_edit', ['data' => $data]);
     }
 
-    /**
-     * @param UpdateMemberAddress $userRequest
-     * @param User $user
-     * @param EmailMemberUpdateAddressService $service
-     * @return RedirectResponse
-     * @throws AuthorizationException
-     */
+
     public function update_address(
-       UpdateMemberAddress $userRequest,
+        UpdateMemberAddress $userRequest,
        EmailMemberUpdateAddressService $service,
        User $user
     ): RedirectResponse

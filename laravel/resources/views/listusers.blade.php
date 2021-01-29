@@ -13,7 +13,7 @@
         <div class="col-12 col-md-6 text-md-right">
             <h5>
                 <a href="{{route('member', Auth::user()->id)}}">
-                    View my profile
+                    <i class="fas fa-user text-primary"></i>View my profile
                     <i class="far fa-arrow-alt-circle-right"></i>
                 </a>
             </h5>
