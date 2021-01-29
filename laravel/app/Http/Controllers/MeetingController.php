@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Meetings\QueryMeetingYearRequest;
 use App\Models\Meeting;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\View\View;
 
 class MeetingController extends Controller
@@ -39,9 +43,8 @@ class MeetingController extends Controller
     {
         $years = DB::table('meetings')
             ->select(DB::raw('DISTINCT YEAR(date) as year'))
-            ->orderBy('year', 'asc')
+            ->orderBy('year', 'desc')
             ->get();
-
 
         $meetings = Meeting::withoutGlobalScopes()
             ->sortable()
@@ -59,6 +62,16 @@ class MeetingController extends Controller
 
         return view('list_meetings_minutes', ['data' => $data]);
     }
+
+    /**
+     * @param QueryMeetingYearRequest $request
+     * @return RedirectResponse
+     */
+    public function post_year(QueryMeetingYearRequest $request): RedirectResponse
+    {
+        return redirect()->route('list_meetings_year', $request->year);
+    }
+
 
     /**
      * @param Meeting $meeting

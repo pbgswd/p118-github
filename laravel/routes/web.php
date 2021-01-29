@@ -118,9 +118,10 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
 // [CNS\CommitteePostCommentController::class, 'store'])
 //    ->name('public_committee_post_comment');
 
-    Route::get('meetings_minutes/{year}', [CNS\MeetingController::class, 'index_by_year'])->name('list_meetings_year');
-    Route::get('meetings_minutes', [CNS\MeetingController::class, 'index'])->name('list_meetings');
-    Route::get('/meeting/{meeting}', [CNS\MeetingController::class, 'show'])->name('meeting');
+    Route::post('minutes', [CNS\MeetingController::class, 'post_year'])->name('post_year');
+    Route::get('minutes/{year}', [CNS\MeetingController::class, 'index_by_year'])->name('list_meetings_year');
+    Route::get('minutes', [CNS\MeetingController::class, 'index'])->name('list_meetings');
+    Route::get('minutes/{meeting}', [CNS\MeetingController::class, 'show'])->name('meeting');
 
     Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
 

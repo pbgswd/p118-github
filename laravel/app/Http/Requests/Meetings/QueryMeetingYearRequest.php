@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Member;
+namespace App\Http\Requests\Meetings;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMemberEmergencyContact extends FormRequest
+class QueryMeetingYearRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class UpdateMemberEmergencyContact extends FormRequest
     public function rules(): array
     {
         return [
-            'emergency_contact_name' => 'max:255',
-            'emergency_contact_relationship' => 'max:255',
-            'emergency_contact_phone' => 'max:20',
-            'message' => 'max:2000',
+            'year' => 'integer|required|digits:4',
         ];
     }
 }

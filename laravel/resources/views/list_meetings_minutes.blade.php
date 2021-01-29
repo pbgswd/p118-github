@@ -14,22 +14,38 @@
                     </h3>
                 </div>
             </div>
-            <div class="row d-fle justify-content-around border border-dark rounded-lg m-2 mb-md-3">
-                @foreach($data['years'] as $year)
-                    <div class="col-3 col-md-1 p-2 text-center
-                        @if($data['year'] == $year->year)
-                            bg-info font-weight-bolder
-                        @endif
-                        ">
-                        <a href="{{route('list_meetings_year', $year->year)}}" title="{{$year->year}}">
-                            {{$year->year}}
-                        </a>
+            <form method="post" action="{{route('post_year')}}">
+                @csrf
+                <div class="row d-fle justify-content-around border border-dark rounded-lg pb-2 m-2 mb-3 mb-md-3">
+                    <div class="col-12 pt-2">
+                        <h5>
+                            <label for="validationDefault04">
+                                View Minutes By Year
+                            </label>
+                        </h5>
                     </div>
-                @endforeach
-            </div>
+                    <div class="col-12 col-md-9 mb-2">
+                        <select class="custom-select" name="year" id="validationDefault04" required>
+                            <option selected disabled value="">Choose Year</option>
+                            @foreach($data['years'] as $year)
+                                <option value="{{$year->year}}">{{$year->year}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+
             @if($data['year'])
-                <div class="col-12 mb-md-3">
-                    <h4>Meeting Minutes for {{$data['year']}}</h4>
+                <div class="col-12 mt-3 mb-3 mb-md-3">
+                    <h4>
+                        Meeting Minutes for
+                        <span class="font-weight-bold">
+                            {{$data['year']}}
+                        </span>
+                    </h4>
                 </div>
             @endif
             <div class="table-responsive border border-dark rounded-lg">
