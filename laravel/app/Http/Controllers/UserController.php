@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Member\UpdateMember;
 use App\Http\Requests\Member\UpdateMemberEmergencyContact;
-use App\Http\Requests\User\UpdateMemberAddress;
+use App\Http\Requests\Member\UpdateMemberAddress;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
