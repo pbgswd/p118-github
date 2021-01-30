@@ -186,9 +186,8 @@ class UserController extends Controller
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
-        //todo ONLY trigger update email when change in name or email or phone
-
-        Session::flash('success', 'Profile for '.$user->name.' has been edited. The office will be updated.');
+        Session::flash('success', 'Profile for '.$user->name.' has been edited. The office
+            will be updated with any changes.');
 
         return redirect()->route('member_edit', $user->id);
     }
