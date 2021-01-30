@@ -27,25 +27,7 @@ $topics = $data['topics'];
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
-            <h4>Select topics for this content</h4>
-        </div>
-        <div class="row mt-lg-1"> &nbsp;
-            <div class="form-group">
-            @foreach ($topics as $topic)
-                <div class="form-check">
-                    <input class="form-check-input" name="page[topic_id][]" type="checkbox" value="{{$topic->id}}" id="{{$topic->name}}{{$topic->id}}"
-                        @if ( in_array($topic->id, $data['assignedTopics']) )
-                            checked
-                        @endif
-                    />
-                    <label class="form-check-label" for="{{$topic->name}}{{$topic->id}}">
-                        {{$topic->name}}
-                    </label>
-                </div>
-            @endforeach
-            </div>
-        </div>
+        @include('layouts.admin-select-topics')
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2">
