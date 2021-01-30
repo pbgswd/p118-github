@@ -10,7 +10,6 @@
                     <div class="col border border-dark rounded-lg p-2">
                         <a href="{{ route('post_show', $i->slug) }}">
                             <h3>{{ $i->title }}</h3>
-                            <p>{!! $i->description !!} </p>
                         </a>
                     </div>
                 </div>

@@ -25,7 +25,6 @@ class StorePostRequest extends FormRequest
     {
         return [
             'post.title' => 'required|unique:posts,title|max:255',
-            'post.description' => 'required',
             'post.content' => 'required',
             'post.access_level' => 'required|string|max:255',
             'post.sort_order' =>  'required|numeric',

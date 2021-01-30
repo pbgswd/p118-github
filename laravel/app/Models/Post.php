@@ -66,7 +66,6 @@ class Post extends LiveableModel implements HasAttachment, Searchable
     protected $fillable = [
         'user_id',
         'title',
-        'description',
         'content',
         'access_level',
         'sort_order',

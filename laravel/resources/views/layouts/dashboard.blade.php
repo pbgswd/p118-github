@@ -45,7 +45,7 @@
         <link href="{{ mix('/css/dashboard.css') }}" rel="stylesheet">
     </head>
     <body>
-    <a id="top"></a>
+        <a id="top"></a>
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
             <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ route('admin') }}">{{ config('app.name') }}</a>
             <span class="pl-lg-1 font-weight-bolder" style="color: #999999;">{{ Auth::user()->name }}</span>
@@ -211,8 +211,6 @@
                                 </a>
                             </li>
                             @endcan
-
-
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('attachments_list') }}">
                                     <span data-feather="file"></span>
@@ -239,8 +237,11 @@
                     </div>
                 </nav>
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">{!! $title ?? '' !!}</h1>
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2
+                        mb-3 border-bottom">
+                        <h1 class="h2">
+                            {!! $title ?? '' !!}
+                        </h1>
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group mr-2">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -254,16 +255,16 @@
                     </div>
                     @include('flash-messages')
                     @yield('content')
-                </div>
-                <div class="container mb-lg-5">
-                    <div class="col-12 text-right">
-                        <a href="#top" title="Top of page">
-                            <i class="fas fa-angle-up"></i>
-                            Top of page
-                        </a>
+                    <div class="row mt-5 mb-5 pb-5">
+                        <div class="col-12 text-center">
+                            <a href="#top" title="Top of page">
+                                <i class="fas fa-angle-up"></i>
+                                Top of page
+                            </a>
+                        </div>
                     </div>
-                </div>
                 </main>
+            </div>
         </div>
     </body>
 </html>

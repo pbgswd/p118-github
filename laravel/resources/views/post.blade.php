@@ -8,7 +8,6 @@
         @endforeach
         <div class="col-12">
             <h1>{{$data['post']->title}}</h1>
-            <h3>{!! $data['post']->description !!}</h3>
         </div>
         <div class="col-12">
             {!! $data['post']->content !!}
@@ -22,35 +21,20 @@
             <div class="col-12 mt-3">
                 <h4>
                     <i class="far fa-folder-open"></i>
-                    Files for {{$data['post']->title}}
+                    Files
                 </h4>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th> File </th>
-                                <th> Description </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data['post']->attachments as $pa)
-                                <tr>
-                                    <td>
-                                        <a href="{{route('attachment_download',
-                                            [$data['post']->getAttachmentFolder(), $pa->id])}}"
-                                           title="Download {{ $pa->description ?? $pa->file_name}}">
-                                            <i class="far fa-file"></i>
-                                            {{$pa->description ?? $pa->file_name}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        {{ $pa->description ?? ''}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                <ul class="list-group">
+                    @foreach ($data['post']->attachments as $pa)
+                        <ul class="list-group-item">
+                            <a href="{{route('attachment_download',
+                                [$data['post']->getAttachmentFolder(), $pa->id])}}"
+                               title="Download {{ $pa->description ?? $pa->file_name}}">
+                                <i class="far fa-file"></i>
+                                {{ $pa->description != '' ? $pa->description : $pa->file_name}}
+                            </a>
+                        </ul>
+                    @endforeach
+                </ul>
             </div>
         @endif
     </div>

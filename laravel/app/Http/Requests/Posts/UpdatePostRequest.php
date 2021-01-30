@@ -25,7 +25,6 @@ class UpdatePostRequest extends FormRequest
     {
         return [
             'post.title' => 'required|max:255|unique:posts,title,'.$this->route('any_post')->slug.',slug',
-            'post.description' => 'required',
             'post.content' => 'required',
             'post.access_level' => 'required|string|max:255',
             'post.sort_order' =>  'required|numeric',

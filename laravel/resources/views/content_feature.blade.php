@@ -61,32 +61,39 @@
                 <a class="text-white" href="{{route('posts')}}">Posts</a>
             </h4>
         </div>
+        <div class="row">
         @foreach ($data['posts'] as $post)
-            <div class="col-12 border border-dark rounded-lg pt-2 mb-2">
+            <div class="col-12 col-md-6 mb-2">
+             <div class="border border-dark rounded-lg p-2">
                 <h4>
                     <a href="{{ route('post_show', $post->slug) }}">
                         {{ $post->title }}
                     </a>
                 </h4>
-                {!! $post->description !!}
                 <h6 class="font-weight-bold text-md-right">
                     {{$post->updated_at->format('F j Y')}}
                 </h6>
             </div>
+            </div>
         @endforeach
+        </div>
         <div class="col col-12 border border-dark rounded-lg bg-secondary pt-2 pb-2 mb-2">
             <h4>
                 <a class="text-white" href="{{route('pages')}}">Pages</a>
             </h4>
         </div>
-        @foreach ($data['pages'] as $page)
-            <div class="col-12 border border-dark rounded-lg pt-2 mb-2">
-                <h4>
-                    <a href="{{ route('page_show', $page->slug) }}">
-                        {{ $page->title }}
-                    </a>
-                </h4>
-            </div>
-        @endforeach
+        <div class="row">
+            @foreach ($data['pages'] as $page)
+                <div class="col-12 col-md-6 mb-2">
+                    <div class="border border-dark rounded-lg p-2">
+                        <h4>
+                            <a href="{{ route('page_show', $page->slug) }}">
+                                {{ $page->title }}
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 </div>

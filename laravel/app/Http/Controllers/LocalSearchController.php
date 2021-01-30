@@ -50,8 +50,8 @@ class LocalSearchController extends Controller
         $data = [
             'search' => $request->search,
             'results' => (new Search())
-                ->registerModel(Post::class, ['title', 'description', 'content'])
-                ->registerModel(Page::class, ['title', 'description', 'content'])
+                ->registerModel(Post::class, ['title', 'content'])
+                ->registerModel(Page::class, ['title', 'content'])
                 ->registerModel(Topic::class, ['name', 'description'])
                 ->registerModel(Agreement::class, ['title', 'description'])
                 ->registerModel(Bylaw::class, ['title', 'description'])
@@ -94,12 +94,10 @@ class LocalSearchController extends Controller
             'results' => (new Search())
                 ->registerModel(Post::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('description')
                         ->addSearchableAttribute('content')
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(Page::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('description')
                         ->addSearchableAttribute('content')
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(Topic::class, static function (ModelSearchAspect $aspect) {

@@ -5,28 +5,25 @@
             <div class="col-12 pt-4">
                 <h2>Contact IATSE Local 118</h2>
             </div>
-            <div class="col-12 mb-5">
-                <form class="form-horizontal" role="form" action="{{route('contact')}}" method="post">
-                    {!! csrf_field() !!}
+            <form class="form-horizontal" role="form" action="{{route('contact')}}" method="post">
+                {!! csrf_field() !!}
+                <div class="col-12 mb-5">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                        <input type="text" class="form-control" placeholder="Name" name="name"
+                               value="{{ old('name')}}" size="80" required/>
+                    </div>
 
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
-                            <input type="text" class="form-control" placeholder="Name" name="name"
-                                   value="{{ old('name')}}" size="80" required/>
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
-                            <input type="text" class="form-control" placeholder="you@email.com" name="email"
-                                   value="{{ old('email')}}" size="80" required/>
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="inputGroup-sizing-default">Subject</span>
-                            <input type="text" class="form-control" placeholder="Subject" name="mail_subject"
-                                   value="{{ old('mail_subject')}}" size="80" required/>
-                        </div>
-
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                        <input type="text" class="form-control" placeholder="you@email.com" name="email"
+                               value="{{ old('email')}}" size="80" required/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Subject</span>
+                        <input type="text" class="form-control" placeholder="Subject" name="mail_subject"
+                               value="{{ old('mail_subject')}}" size="80" required/>
+                    </div>
                     <div class="col-12 input-group mt-4">
                         <label for="mail_body" class="col-sm-2 control-label">
                             <h3>Message</h3>
@@ -36,7 +33,6 @@
                         <textarea name="mail_body" placeholder="Message" form-control input-lg" rows="3"
                         cols="100">{{old('mail_body')}}</textarea>
                     </div>
-
                     <div class="row mt-2 justify-content-center">
                         <div class="col-4">
                             <button
@@ -56,10 +52,9 @@
                             </button>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
-
         <div class="row mt-2 p-2 mb-lg-5 border border-dark rounded-lg">
             <div class="col-sm-12 col-md-6 p-sm-4 p-2">
                 <h3>
@@ -97,7 +92,6 @@
                     </h3>
                 </div>
             @endguest
-
         @guest
         @else
             <div class="d-sm-block d-md-none col-12 mt-4 mb-3">
