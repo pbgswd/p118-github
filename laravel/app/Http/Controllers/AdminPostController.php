@@ -63,6 +63,7 @@ class AdminPostController extends Controller
                 'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                     AccessLevelConstants::getConstants()),
                 'action' => 'Create',
+                'model_name' => 'post',
             ],
         ]);
     }
@@ -125,6 +126,7 @@ class AdminPostController extends Controller
             'assignedTopics' => $assignedTopics,
             'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
             'action' => 'Edit',
+            'model_name' => 'post',
             ];
 
         return view('admin.post', ['data' => $data]);

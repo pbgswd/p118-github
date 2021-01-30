@@ -72,6 +72,7 @@ class AdminPageController extends Controller
                     'access_levels' => Options::access_levels(),
                     'topics' => Topic::all(),
                     'action' => 'Create',
+                    'model_name' => 'page',
                 ],
             ]
         );
@@ -131,6 +132,7 @@ class AdminPageController extends Controller
             'assignedTopics' => $page->topics->pluck('id')->toArray(),
             'access_levels' => Options::access_levels(),
             'action' => 'Edit',
+            'model_name' => 'page',
         ];
 
         return view('admin.page', ['data' => $data]);
