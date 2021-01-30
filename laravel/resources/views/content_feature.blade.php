@@ -72,7 +72,7 @@
                                 {{ $post->title }}
                             </a>
                         </h5>
-                        <h6 class="font-weight-bold text-md-right">
+                        <h6 class="font-weight-bold text-md-right align-self-end">
                             {{$post->updated_at->format('F j Y')}}
                         </h6>
                     </div>

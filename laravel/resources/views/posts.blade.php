@@ -6,8 +6,8 @@
         </div>
         <div class="row mb-2 mb-lg-3">
             @foreach ( $data['posts'] as $i )
-                <div class="col-md-4 col-sm-12 justify-content-around p-2">
-                    <div class="col border border-dark rounded-lg p-2">
+                <div class="col-12 col-md-4 p-2">
+                    <div class="col border border-dark rounded-lg w-100 h-100 p-2">
                         <a href="{{ route('post_show', $i->slug) }}">
                             <h3>{{ $i->title }}</h3>
                         </a>

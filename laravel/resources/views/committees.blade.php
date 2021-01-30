@@ -11,7 +11,7 @@
     <div class="row">
         @forelse ( $data['committees'] as $c )
             <div class="col-12 col-md-6 p-2">
-                <div class="col border border-dark rounded-lg p-3">
+                <div class="col border border-dark rounded-lg w-100 h-100 p-3">
                     <h3>
                         <a href="{{ route('committee', $c->slug) }}">
                             {{ $c->name }}

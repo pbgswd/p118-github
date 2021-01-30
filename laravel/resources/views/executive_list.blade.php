@@ -5,9 +5,10 @@
         <div class="col-12">
             <h1>Local 118 Executive</h1>
         </div>
+        <div class="row mb-2 p-2">
         @forelse($data as $e)
-        <div class="col-12 col-md-4 p-2">
-            <div class="border border-dark rounded-lg p-2">
+                <div class="col-12 col-md-4 p-1">
+            <div class="border border-dark rounded-lg w-100 h-100 p-2">
                 <h4>{{$e->title}}</h4>
                 @forelse($e->current_executive_user as $exec)
                     <div class="col mt-3">

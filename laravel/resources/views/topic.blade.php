@@ -9,10 +9,10 @@
             <div class="row border border-dark rounded-lg p-2" style="background: rgba(220,220,220,0.8);">
                 <h4>Pages in {{$data['topic']->name}}</h4>
             </div>
-            <div class="row">
+            <div class="row mb-3">
                 @forelse($data['topic']->pages as $page)
-                    <div class="col-md-4 col-sm-12 justify-content-around p-2">
-                        <div class="col border border-dark rounded-lg p-2">
+                    <div class="col-12 col-md-4  p-2">
+                        <div class="col border border-dark rounded-lg  w-100 h-100 p-2">
                             <a href="{{ route('page_show', $page->slug) }}">{{$page['title']}}</a>
                             {!! $page['description'] !!}
                         </div>
@@ -26,10 +26,10 @@
             <div class="col-12 border border-dark rounded-lg pt-2">
                 <h4>Posts in {{$data['topic']->name}}</h4>
             </div>
-            <div class="row">
+            <div class="row mb-3">
                 @forelse($data['topic']->posts as $post)
-                    <div class="col-sm-12 col-md-4 mb-2 mt-2 justify-content-around">
-                        <div class="border border-dark rounded-lg p-2">
+                    <div class="col-12 col-md-4 p-2">
+                        <div class="border border-dark rounded-lg w-100 h-100 p-2">
                             <h4>
                                 <a href="{{ route('post_show', $post->slug) }}">
                                     {{$post['title']}}

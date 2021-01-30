@@ -6,8 +6,8 @@
     </div>
     <div class="row mb-2 mb-lg-3">
         @foreach ( $data['topics'] as $i )
-            <div class="col-md-4 col-sm-12 justify-content-around p-2">
-                <div class="col border border-dark rounded-lg p-2">
+            <div class="col-12 col-md-4 p-1">
+                <div class="col border border-dark rounded-lg  w-100 h-100 p-2">
                     <a class="" href="{{ route('topic_show', $i->slug) }}" title="{{ $i->name }}">
                         <h3>{{ $i->name }}</h3>
                         <p>{!! $i->description !!} </p>
