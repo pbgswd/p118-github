@@ -67,6 +67,12 @@
             @foreach ($data['posts'] as $post)
                 <div class="col-12 col-md-6 pt-1 pb-1">
                     <div class="border border-dark rounded-lg w-100 h-100 p-2">
+                        <h6><i>
+                                @foreach($post->topics as $pt)
+                                    <a href="{{route('topic_show', $pt->slug)}}"
+                                       title="{{$pt->name}}">{{$pt->name}}</a>,
+                                @endforeach
+                            </i></h6>
                         <h5>
                             <a href="{{ route('post_show', $post->slug) }}">
                                 {{ $post->title }}
@@ -90,6 +96,13 @@
             @foreach ($data['pages'] as $page)
                 <div class="col-12 col-md-6 pt-1 pb-1">
                     <div class="border border-dark rounded-lg p- w-100 h-100 p-2">
+                        <p><i>
+                        @foreach($page->topics as $pt)
+
+                            <a href="{{route('topic_show', $pt->slug)}}"
+                                title="{{$pt->name}}">{{$pt->name}}</a>,
+                        @endforeach
+                        </i></p>
                         <h4>
                             <a href="{{ route('page_show', $page->slug) }}">
                                 {{ $page->title }}

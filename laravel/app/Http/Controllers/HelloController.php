@@ -39,8 +39,6 @@ class HelloController extends Controller
             $data['news']['pages'] = Topic::find(TopicConstants::NEWS)->public_pages;
         }
 
-        //todo datetime - add time zone management
-
         return view('hello', ['data' => $data]);
     }
 }

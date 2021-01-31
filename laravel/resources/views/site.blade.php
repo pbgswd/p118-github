@@ -9,7 +9,6 @@
             </div>
             <div class="col-12 col-md-6 text-md-right">
                 <h5 class="font-weight-bolder">
-
                     <a href="{{route('member', $data['user']->id)}}" title="My Profile">
                         <i class="fas fa-user"></i>
                         View your profile.
