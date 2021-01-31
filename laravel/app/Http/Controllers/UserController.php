@@ -44,14 +44,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Auth::user());
+        $this->authorize('view', Auth::user());
 
         $users = User::with(['user_info', 'currentExecutiveRoles', 'membership'])
             ->sortable()
             ->orderBy('name')
             ->paginate(10);
-
-        //dd($users[0]);
 
         $count = Membership::where('membership_type', 'Member')->count();
 
@@ -182,12 +180,12 @@ class UserController extends Controller
             $user->user_info()->save($user_info);
         }
 
-        if (! empty($message)) {
+        if (!empty($message)) {
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
-        Session::flash('success', 'Profile for '.$user->name.' has been edited. The office
-            will be updated with any changes.');
+        Session::flash('success', 'Profile for '.$user->name.
+            ' has been edited. The office will be updated with any changes.');
 
         return redirect()->route('member_edit', $user->id);
     }
@@ -211,7 +209,7 @@ class UserController extends Controller
 
 
     public function update_address(
-        UpdateMemberAddress $userRequest,
+       UpdateMemberAddress $userRequest,
        EmailMemberUpdateAddressService $service,
        User $user
     ): RedirectResponse
@@ -234,7 +232,7 @@ class UserController extends Controller
             $result = $service->sendMessage($userRequest->update_type, $message, $user);
         }
 
-        Session::flash('success', 'The address update has been emailed to the office.');
+        Session::flash('success', 'Your address update has been emailed to the office.');
 
         return redirect()->route('member_address_edit', $user->id);
     }
@@ -262,7 +260,6 @@ class UserController extends Controller
         User $user
     ): RedirectResponse
     {
-
         $this->authorize('update', $user);
 
         $userRequest->validate([
@@ -285,7 +282,7 @@ class UserController extends Controller
             $result = $service->sendMessage($userRequest->update_type, $message, $user);
         }
 
-        Session::flash('success', 'The emergency contact update has been emailed to the office.');
+        Session::flash('success', 'Your emergency contact update has been emailed to the office.');
 
         return redirect()->route('edit_emergency_contact', $user->id);
     }
