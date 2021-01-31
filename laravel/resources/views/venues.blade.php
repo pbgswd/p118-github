@@ -6,10 +6,10 @@
             <h1>Venues</h1>
             <h4>Where we work</h4>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             @foreach ( $data['data']['venues'] as $venue )
-                <div class="col-md-4 col-sm-12 justify-content-around p-2">
-                    <div class="col border border-dark rounded-lg p-2">
+                <div class="col-md-4 col-12 p-2">
+                    <div class="col border border-dark rounded-lg h-100 w-100 p-2">
                         <a href="{{ route('venue', $venue->slug) }}">
                             <h3>{{ $venue->name }}</h3>
                             <p>{!! $venue->summary !!}</p>

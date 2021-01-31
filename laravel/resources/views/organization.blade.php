@@ -25,38 +25,26 @@
             <div class="col-12">
                 <p>{!! $data['organization']->description !!}</p>
             </div>
-            <div class="col-12 border border-dark rounded-lg mb-3 pt-2">
-                @if ($data['agreements']->count() > 0)
-                    <h4>Agreements attached to {{$data['organization']->name}}</h4>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">From</th>
-                                    <th scope="col">Until</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($data['agreements'] as $va)
-                                    <tr>
-                                        <td>
-                                            @if(\Carbon\Carbon::parse($va->until)->isPast())
-                                                <i>(Not current)</i>
-                                            @endif
-                                            <a title="View {{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
-                                                {{ $va->title }}
-                                            </a>
-                                        </td>
-                                        <td>{{$va->from->format('F j Y')}}</td>
-                                        <td>{{$va->until->format('F j Y')}}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @endif
-            </div>
+            @if ($data['agreements']->count() > 0)
+                <div class="col-12 border border-dark rounded-lg mb-3 pt-2">
+                    <h4>
+                        Agreements with {{$data['organization']->name}}
+                    </h4>
+                    <ul class="list-group">
+                        @foreach($data['agreements'] as $va)
+                            <li class="list-group-item">
+                                {!! (\Carbon\Carbon::parse($va->until)->isPast()) ? '' :
+                                    "<i>(Not current)</i>" !!}
+                                <a title="View {{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
+                                    {{ $va->title }}
+                                </a>
+                                {{$va->from->format('F j Y')}} - {{$va->until->format('F j Y')}}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
         </div>
     </div>
 @endsection

@@ -29,14 +29,13 @@ $bylaws = $data['data']['bylaws'];
             </h5>
         </div>
     </div>
-    <div class="table-responsive border border-dark rounded-lg p-1 mb-3"
-         style="background: rgba(220,220,220,0.8); margin-left:auto; margin-right:auto;">
-        <table class="table" style="margin-left:auto; margin-right:auto;">
+    <div class="table-responsive  border border-dark rounded-lg mb-4">
+        <table class="table p-1" style="background: rgba(220,220,220,0.8);">
             <thead>
-            <tr>
-                <th> @sortablelink('title', 'Title') </th>
-                <th> @sortablelink('date', 'Date') </th>
-            </tr>
+                <tr>
+                    <th> @sortablelink('title', 'Title') </th>
+                    <th> @sortablelink('date', 'Date') </th>
+                </tr>
             </thead>
             <tbody>
                 @foreach ($bylaws as $bylaw)
@@ -53,9 +52,6 @@ $bylaws = $data['data']['bylaws'];
                         </td>
                     </tr>
                 @endforeach
-                <tr>
-                    <td colspan="3">&nbsp;</td>
-                </tr>
             </tbody>
         </table>
     </div>

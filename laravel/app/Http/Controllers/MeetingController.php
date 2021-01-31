@@ -19,7 +19,7 @@ class MeetingController extends Controller
         // gets the years in this table  $table $date_column
         $years = DB::table('meetings')
             ->select(DB::raw('DISTINCT YEAR(date) as year'))
-            ->orderBy('year', 'asc')
+            ->orderBy('year', 'desc')
             ->get();
 
         $data = [

@@ -32,7 +32,7 @@
             <div class="col-12">
                 <h4>
                     <i class="far fa-folder-open"></i>
-                    Files for this agreement
+                    Files
                 </h4>
                 <ul class="list-group">
                     @foreach($data['agreement']->attachments as $att)

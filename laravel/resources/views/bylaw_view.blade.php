@@ -29,19 +29,16 @@
                 @if(count($data['bylaw']->attachments) > 0)
                     <h4>
                         <i class="far fa-folder-open"></i>
-                        Files for {{$data['bylaw']->title}}
+                        Files
                     </h4>
                     <ul class="list-group">
                         @foreach($data['bylaw']->attachments as $att)
                             <li class="list-group-item">
-                                <h4>
-                                    <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
-                                       title="Download {{$att->description}}" target="_blank">
-                                        <i class="fas fa-file-download fa-1x"></i>
-                                    {{$att->description ?? $att->file_name}}
-                                    </a>
-                                    {{$att->description ?? '' }}
-                                </h4>
+                                <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                   title="Download {{$att->file_name}}" target="_blank">
+                                    <i class="fas fa-file-download fa-1x"></i>
+                                    {{$att->description == '' ? $att->description : $att->file_name}}
+                                </a>
                             </li>
                         @endforeach
                     </ul>
