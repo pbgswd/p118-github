@@ -12,10 +12,6 @@
                         <h3>{{ $i->name }}</h3>
                         <p>{!! $i->description !!} </p>
                     </a>
-                    <p>
-                        <?php $tags = join(', ', $i->tagNames()); ?>
-                        <i>Tags: {{$tags ?? ''}}</i>
-                    </p>
                 </div>
             </div>
         @endforeach

@@ -1,12 +1,12 @@
 @extends('layouts.jumbo')
-@section('content')
-    <div class="container border border-dark rounded-lg pt-lg-2 mb-3 mt-3" style="background: rgba(220,220,220,0.8);">
+    @section('content')
+        <div class="container border border-dark rounded-lg pt-lg-2 mb-3 mt-3" style="background: rgba(220,220,220,0.8);">
         <div class="col-12 mb-2">
             <p>
                 <i>
                     @foreach ($data['post']->topics as $topic)
                         <a href="{{ route('topic_show', $topic->slug)}}">
-                            {{$topic->name}},
+                            {{$topic->name}}{{$loop->last ? '' : ','}}
                         </a>
                     @endforeach
                 </i>
@@ -44,7 +44,7 @@
             </div>
         @endif
     </div>
-@endsection
+    @endsection
 
 
 

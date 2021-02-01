@@ -8,9 +8,21 @@
             @foreach ( $data['posts'] as $i )
                 <div class="col-12 col-md-4 p-2">
                     <div class="col border border-dark rounded-lg w-100 h-100 p-2">
+                        <h6>
+                            <i>
+                                @foreach($i->topics as $pt)
+                                    <a href="{{route('topic_show', $pt->slug)}}"
+                                       title="{{$pt->name}}">{{$pt->name}}{{$loop->last ? '' : ','}}
+                                    </a>
+                                @endforeach
+                            </i>
+                        </h6>
                         <a href="{{ route('post_show', $i->slug) }}">
                             <h3>{{ $i->title }}</h3>
                         </a>
+                        <h6 class="font-weight-bold text-md-right align-self-end">
+                            {{$i->updated_at->format('F j Y')}}
+                        </h6>
                     </div>
                 </div>
             @endforeach
