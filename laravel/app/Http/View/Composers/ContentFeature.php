@@ -28,7 +28,7 @@ class ContentFeature
         };
 
         $topics = Topic::orderBy('sort_order', 'desc')->get();
-        $posts = Post::where('in_menu', 1)->orderBy('updated_at', 'desc')->with('topics')->take(10)->get();
+        $posts = Post::where('landing_page', 1)->orderBy('updated_at', 'desc')->with('topics')->take(10)->get();
         $pages = Page::where('in_menu', 1)->orderBy('updated_at', 'desc')->with('topics')->take(10)->get();
 
        // dd($pages[0]->topics[0]->name);

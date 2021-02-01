@@ -9,6 +9,7 @@ use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Services\AttachmentService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,24 +32,26 @@ class AdminPostController extends Controller
 
     /**
      * @param Request $request
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $this->authorize('viewAny', Post::class);
 
         $posts = Post::withoutGlobalScopes()
             ->sortable()
-            ->with('tagged')
+            ->with('topics', 'tagged')
             ->paginate(20);
 
         return view('admin.listposts', ['data' => ['posts' => $posts]]);
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Post::class);
 
@@ -71,8 +74,9 @@ class AdminPostController extends Controller
     /**
      * @param StorePostRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request): RedirectResponse
     {
         $this->authorize('create', Post::class);
 
@@ -107,9 +111,10 @@ class AdminPostController extends Controller
 
     /**
      * @param Post $post
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Post $post)
+    public function edit(Post $post):View
     {
         $this->authorize('update', Post::class);
 
@@ -124,7 +129,8 @@ class AdminPostController extends Controller
             'post' => $post,
             'topics' => Topic::all(),
             'assignedTopics' => $assignedTopics,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             'model_name' => 'post',
             ];
@@ -136,6 +142,7 @@ class AdminPostController extends Controller
      * @param UpdatePostRequest $request
      * @param Post $any_post
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdatePostRequest $request, Post $any_post): RedirectResponse
     {
@@ -165,7 +172,7 @@ class AdminPostController extends Controller
             }
             $any_post->topics()->sync($request->post['topic_id']);
         } else {
-            $any_post->topics()->detach(); //no topics selected
+            $any_post->topics()->detach();
         }
 
         if (empty($request->tags)) {
@@ -182,8 +189,9 @@ class AdminPostController extends Controller
     /**
      * @param DestroyPostRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyPostRequest $request)
+    public function destroy(DestroyPostRequest $request): RedirectResponse
     {
         $this->authorize('delete', Post::class);
 

@@ -75,7 +75,9 @@
                 <h4>Sort Order</h4>
             </div>
             <div class="col-6 col-sm-3">
-                <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000" name="post[sort_order]" value="{{old('post.sort_order',$data['post']->sort_order)}}" size="30" required/>
+                <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000"
+                       name="post[sort_order]" value="{{old('post.sort_order',$data['post']->sort_order)}}" size="30"
+                       required/>
                 <p>e.g.: 1000, 2000</p>
             </div>
             <div class="invalid-feedback">
@@ -90,20 +92,24 @@
             <div class="d-flex flex-row pl-2 pr-2 mr-2">
                 <div class="p-2">
                     <label>
-                        <input name="post[in_menu]" type="hidden" value="0" />
-                        <input name="post[in_menu]" type="checkbox" value="1" {{ checked(old('post.in_menu',$data['post']->in_menu)) }} /> In Menu
+                        <input name="post[front_page]" type="hidden" value="0" />
+                        <input name="post[front_page]" type="checkbox" value="1"
+                            {{ checked(old('post.front_page',$data['post']->front_page)) }} /> Front Page
                     </label>
                 </div>
                 <div class="p-2">
                     <label>
-                        <input name="post[allow_comments]" type="hidden" value="0" />
-                        <input name="post[allow_comments]" type="checkbox" value="1" {{ checked(old('post.allow_comments', $data['post']->allow_comments)) }} /> Allow Comments
+                        <input name="post[landing_page]" type="hidden" value="0" />
+                        <input name="post[landing_page]" type="checkbox" value="1"
+                            {{ checked(old('post.landing_page', $data['post']->landing_page)) }} />
+                        Landing Page
                     </label>
                 </div>
                 <div class="p-2">
                     <label>
                          <input name="post[live]" type="hidden" value="0" />
-                         <input name="post[live]" type="checkbox" value="1" {{ checked( old('post.live', $data['post']->live)) }} /> Check now to make Live
+                         <input name="post[live]" type="checkbox" value="1"
+                             {{ checked( old('post.live', $data['post']->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>

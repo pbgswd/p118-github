@@ -43,8 +43,8 @@ class Post extends LiveableModel implements HasAttachment, Searchable
         'access_level',
         'live',
         'sort_order',
-        'in_menu',
-        'allow_comments',
+        'front_page',
+        'landing_page',
         'created_at',
         'updated_at',
     ];
@@ -55,8 +55,8 @@ class Post extends LiveableModel implements HasAttachment, Searchable
     ];
 
     protected $casts = [
-        'in_menu' => 'boolean',
-        'allow_comments' => 'boolean',
+        'front_page' => 'boolean',
+        'landing_page' => 'boolean',
         'live' => 'boolean',
     ];
 
@@ -70,8 +70,8 @@ class Post extends LiveableModel implements HasAttachment, Searchable
         'access_level',
         'sort_order',
         'live',
-        'in_menu',
-        'allow_comments',
+        'front_page',
+        'landing_page',
     ];
 
     /**
