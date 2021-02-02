@@ -5,8 +5,6 @@ namespace App\Http\View\Composers;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Topic;
-use App\Repositories\UserRepository;
-use DB;
 use Illuminate\View\View;
 
 /**
@@ -17,7 +15,6 @@ use Illuminate\View\View;
  */
 class ContentFeature
 {
-
     /**
      * @param View $view
      */
@@ -27,9 +24,15 @@ class ContentFeature
             $query->where('slug', 'news');
         };
 
-        $topics = Topic::orderBy('sort_order', 'desc')->get();
-        $posts = Post::where('landing_page', 1)->orderBy('updated_at', 'desc')->with('topics')->get();
-        $pages = Page::where('landing_page', 1)->orderBy('updated_at', 'desc')->with('topics')->get();
+        $topics = Topic::where('landing_page', 1)
+            ->orderBy('sort_order', 'desc')
+            ->get();
+        $posts = Post::where('landing_page', 1)
+            ->orderBy('updated_at', 'desc')
+            ->with('topics')->get();
+        $pages = Page::where('landing_page', 1)
+            ->orderBy('updated_at', 'desc')
+            ->with('topics')->get();
 
         $data = [
             'topics' => $topics,
