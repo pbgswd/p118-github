@@ -5,7 +5,6 @@
            <span class="badge badge-primary badge-pill">
                {!! $data['results']->count()  !!} Search Results for "{{$data['search']}}"
            </span>
-
         </h3>
 </div>
     <div class="form-group">
@@ -17,7 +16,8 @@
                         <th> @sortablelink('access_level', 'Access Level') </th>
                         <th> @sortablelink('live', 'Is Live?') </th>
                         <th> @sortablelink('sort_order', 'Sort Order') </th>
-                        <th> @sortablelink('in_menu', 'In Menu?') </th>
+                        <th> @sortablelink('front_page', 'Front Page') </th>
+                        <th> @sortablelink('landing_page', 'Landing Page') </th>
 
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
@@ -29,16 +29,28 @@
                     <tr>
                         <td>
                             <h4>
-                                <a title="{{ $i->title }}" href="{{ $i->url }}">{{ $i->title }}</a>
+                                <a title="{{ $i->title }}" href="{{ $i->url }}">
+                                    {{ $i->title }}
+                                </a>
                             </h4>
                         </td>
                         <td> {{ $i->searchable->access_level }} </td>
-                        <td> {!! $i->searchable->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                        <td>
+                            {!! $i->searchable->live ? "<i class='fas fa-check'></i>" :
+                                "<i class='far fa-times-circle'></i>" !!}
+                        </td>
                         <td> {{ $i->searchable->sort_order }} </td>
-                        <td> {!! $i->searchable->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
+                        <td>
+                            {!! $i->searchable->front_page ? '<i class="fas fa-check"></i>' :
+                                '<i class="far fa-times-circle"></i>' !!}
+                        </td>
+                        <td>
+                            {!! $i->searchable->landing_page ? '<i class="fas fa-check"></i>' :
+                                '<i class="far fa-times-circle"></i>' !!}
+                        </td>
 
                         <td>
-                            <a href="{{ $i->url }}" title="Edit {{ $i->title }} ">
+                            <a href="{{ $i->url }}" title="Edit {{ $i->title }}">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>
@@ -47,7 +59,7 @@
                     </tr>
                 @endforeach
                     <tr>
-                        <td colspan="9">&nbsp;</td>
+                        <td colspan="10">&nbsp;</td>
                     </tr>
                 </tbody>
             </table>

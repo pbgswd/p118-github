@@ -21,7 +21,7 @@ class ContentFeature
     /**
      * @param View $view
      */
-    public function compose(View $view) 
+    public function compose(View $view)
     {
         $topicFilter = function ($query) {
             $query->where('slug', 'news');

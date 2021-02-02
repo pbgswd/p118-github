@@ -22,14 +22,11 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Models\Venue;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
-use Illuminate\Http\Request;
 
 class LocalSearchController extends Controller
 {
@@ -56,12 +53,10 @@ class LocalSearchController extends Controller
                 ->registerModel(Venue::class, ['name', 'description'])
                 ->registerModel(Committee::class, ['name', 'description'])
                 ->registerModel(CommitteePost::class, ['title', 'content'])
-                ->registerModel(CommitteePostComment::class, ['content'])
                 ->registerModel(User::class, 'name')
                 ->registerModel(Executive::class, ['title', 'email'])
                 ->registerModel(UserInfo::class, 'about')
                 ->registerModel(PhoneNumber::class, 'phone_number')
-                ->registerModel(Address::class, ['street', 'city', 'province', 'postal_code', 'country'])
                 ->search($request->search),
         ];
 
@@ -134,13 +129,6 @@ class LocalSearchController extends Controller
                 })->registerModel(PhoneNumber::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('phone_number')
                         ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Address::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('street')
-                        ->addSearchableAttribute('city')
-                        ->addSearchableAttribute('province')
-                        ->addSearchableAttribute('postal_code')
-                        ->addSearchableAttribute('country')
-                        ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(Policy::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
                         ->addExactSearchableAttribute('description')
@@ -153,11 +141,7 @@ class LocalSearchController extends Controller
                     $aspect->addSearchableAttribute('title')
                         ->addSearchableAttribute('content')
                         ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(CommitteePostComment::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('content')
-                        ->withoutGlobalScope(LiveScope::class);
-                })
-                ->search($request->search),
+                })->search($request->search),
         ];
 
         $data['plural'] = Str::plural('Result', count($data['results']));

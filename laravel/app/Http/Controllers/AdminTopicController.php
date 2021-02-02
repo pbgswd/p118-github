@@ -9,8 +9,6 @@ use App\Http\Requests\Topic\UpdateTopicRequest;
 use App\Models\Topic;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;

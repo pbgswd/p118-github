@@ -24,10 +24,10 @@ use Spatie\Searchable\SearchResult;
  * @property string        $description
  * @property string        $content
  * @property string        $access_level
- * @property bool       $live
+ * @property bool          $live
  * @property int           $sort_order
- * @property bool       $in_menu
- * @property bool       $allow_comments
+ * @property bool          $front_page
+ * @property bool          $landing_page
  * @property DateTime      $created_at
  * @property DateTime      $updated_at
  * @property User          $user
@@ -53,8 +53,8 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
         'access_level',
         'sort_order',
         'live',
-        'in_menu',
-        'allow_comments',
+        'front_page',
+        'landing_page',
     ];
 
     protected $policies = [
@@ -67,8 +67,8 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
         'access_level',
         'live',
         'sort_order',
-        'in_menu',
-        'allow_comments',
+        'front_page',
+        'landing_page',
         'created_at',
         'updated_at',
     ];
@@ -79,8 +79,8 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     ];
 
     protected $casts = [
-        'in_menu' => 'boolean',
-        'allow_comments' => 'boolean',
+        'front_page' => 'boolean',
+        'landing_page' => 'boolean',
         'live' => 'boolean',
     ];
 
