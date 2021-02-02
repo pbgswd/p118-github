@@ -7,6 +7,7 @@ use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -20,9 +21,10 @@ class CommitteePostController extends Controller
 {
     /**
      * @param Committee $committee
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create(Committee $committee)
+    public function create(Committee $committee): View
     {
         $this->authorize('create', [CommitteePost::class, $committee]);
 
@@ -40,8 +42,9 @@ class CommitteePostController extends Controller
      * @param StoreCommitteePostRequest $request
      * @param Committee $committee
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreCommitteePostRequest $request, Committee $committee)
+    public function store(StoreCommitteePostRequest $request, Committee $committee): RedirectResponse
     {
         $this->authorize('create', [CommitteePost::class, $committee]);
 
@@ -58,9 +61,10 @@ class CommitteePostController extends Controller
     /**
      * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Committee $committee, CommitteePost $committeePost)
+    public function edit(Committee $committee, CommitteePost $committeePost): View
     {
         $this->authorize('update', [CommitteePost::class, $committeePost]);
 
@@ -78,10 +82,11 @@ class CommitteePostController extends Controller
      * @param UpdateCommitteePostRequest $request
      * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
     public function update(UpdateCommitteePostRequest $request,
-                           Committee $committee, CommitteePost $committeePost)
+                           Committee $committee, CommitteePost $committeePost): View
     {
         $this->authorize('update', [CommitteePost::class, $committeePost]);
 
@@ -96,14 +101,11 @@ class CommitteePostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @return Response
-     * public
+     * @return View
      */
-    public function show(Committee $committee, CommitteePost $committeePost)
+    public function show(Committee $committee, CommitteePost $committeePost): View
     {
         $data = [];
         $data['committeepost'] = $committeePost->loadWithoutGlobalScopes(['creator', 'committee']);
@@ -133,7 +135,9 @@ class CommitteePostController extends Controller
     /**
      * @param DestroyCommitteePostRequest $request
      * @param Committee $committee
+     * @param CommitteePost $committeePost
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(DestroyCommitteePostRequest $request,
                             Committee $committee, CommitteePost $committeePost): RedirectResponse

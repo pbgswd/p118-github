@@ -10,15 +10,14 @@ use App\Services\PublicNewsContentService;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class HelloController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * FRONT PAGE INDEX OF WEBSITE.
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $data['foundingYear'] = 1904;
         $today = Carbon::today();

@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+
 class HireUsController extends Controller
 {
-    public function show()
+    /**
+     * @return View
+     */
+    public function show(): View
     {
         $data = [];
 

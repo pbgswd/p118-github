@@ -27,9 +27,9 @@ class PostController extends Controller
 
     /**
      * @param Request $request
-     * @return Application|Factory|View
+     * @return View
      */
-    public function list(Request $request)
+    public function list(Request $request): View
     {
         if (Auth::check()) {
             $posts = Post::sortable()->with('topics', 'tagged')->paginate(10);
@@ -44,12 +44,10 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Post $post
-     * @return Response
+     * @return View
      */
-    public function show(Post $post)
+    public function show(Post $post): View
     {
         if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this post.');

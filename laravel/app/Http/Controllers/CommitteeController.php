@@ -15,11 +15,9 @@ use Illuminate\View\View;
 class CommitteeController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $c = Committee::with('creator', 'active_committee_members')
             ->sortable()
@@ -40,7 +38,7 @@ class CommitteeController extends Controller
      * @param Committee $committee
      * @return RedirectResponse
      */
-    public function join(Committee $committee)
+    public function join(Committee $committee): RedirectResponse
     {
         /*****
         $committee->load('committee_members');
@@ -69,7 +67,7 @@ class CommitteeController extends Controller
      * @param Committee $committee
      * @return RedirectResponse
      */
-    public function leave(Committee $committee)
+    public function leave(Committee $committee): RedirectResponse
     {
         /**********
         $committee->committee_members()
@@ -83,9 +81,9 @@ class CommitteeController extends Controller
 
     /**
      * @param Committee $committee
-     * @return Application|Factory|View
+     * @return View
      */
-    public function show(Committee $committee)
+    public function show(Committee $committee): View
     {
         $data = [];
         $data['committee'] = $committee->load('creator', 'active_committee_members');
@@ -126,12 +124,10 @@ class CommitteeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Committee $committee
-     * @return Response
+     * @return View
      */
-    public function show_members(Committee $committee)
+    public function show_members(Committee $committee): View
     {
         /**
          * do we use visibility preferences for users profile?

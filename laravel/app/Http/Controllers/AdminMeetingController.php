@@ -29,9 +29,10 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Meeting::class);
 
@@ -47,9 +48,10 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Meeting::class);
         $meeting = new Meeting();
@@ -69,8 +71,9 @@ class AdminMeetingController extends Controller
     /**
      * @param StoreMeetingRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreMeetingRequest $request)
+    public function store(StoreMeetingRequest $request): RedirectResponse
     {
         $this->authorize('create', Meeting::class);
 
@@ -96,9 +99,10 @@ class AdminMeetingController extends Controller
 
     /**
      * @param Meeting $meeting
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Meeting $meeting)
+    public function edit(Meeting $meeting): View
     {
         $this->authorize('update', Meeting::class);
 
@@ -119,6 +123,7 @@ class AdminMeetingController extends Controller
      * @param UpdateMeetingRequest $request
      * @param Meeting $any_meeting
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
@@ -146,10 +151,11 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param DestroyMeetingRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyMeetingRequest $request)
+    public function destroy(DestroyMeetingRequest $request): RedirectResponse
     {
         $this->authorize('delete', Meeting::class);
         Meeting::withoutGlobalScopes()

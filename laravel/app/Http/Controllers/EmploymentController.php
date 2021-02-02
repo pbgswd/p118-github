@@ -22,11 +22,9 @@ class EmploymentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         //todo update job status on page load
 
@@ -46,6 +44,7 @@ class EmploymentController extends Controller
             ->paginate(20);
 
         foreach ($jobs as $job) {
+            //todo update job status on page load
             $job['jobstatus'] = $job->deadline->isPast() ? 0 : 1;
         }
 
@@ -96,7 +95,7 @@ class EmploymentController extends Controller
      * @param QueryJobYearRequest $request
      * @return RedirectResponse
      */
-    public function jobs_year(QueryJobYearRequest $request)
+    public function jobs_year(QueryJobYearRequest $request): RedirectResponse
     {
         return redirect()->route('list_jobs_year', $request->deadline);
     }

@@ -21,7 +21,7 @@ class AdminCommitteePostCommentController extends Controller
      * @param CommitteePost $committeePost
      * @return Application|Factory|View
      */
-    public function create(CommitteePost $committeePost)
+    public function create(CommitteePost $committeePost): View
     {
         //todo enable permission
         //$this->authorize('create', Auth::user());
@@ -40,7 +40,7 @@ class AdminCommitteePostCommentController extends Controller
      * @param CommitteePostComment $any_committee_post_comment
      * @return Application|Factory|View
      */
-    public function edit(CommitteePostComment $any_committee_post_comment)
+    public function edit(CommitteePostComment $any_committee_post_comment): View
     {
         $any_committee_post_comment->loadWithoutGlobalScopes(['comment_author', 'committee_post', 'committee']);
 
@@ -59,7 +59,7 @@ class AdminCommitteePostCommentController extends Controller
      * @param CommitteePost $committeePost
      * @return RedirectResponse
      */
-    public function store(StoreCommitteePostCommentRequest $request, CommitteePost $committeePost)
+    public function store(StoreCommitteePostCommentRequest $request, CommitteePost $committeePost): RedirectResponse
     {
         $postComment = new CommitteePostComment($request->input('comment'));
 

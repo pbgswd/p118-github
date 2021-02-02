@@ -21,9 +21,9 @@ class HomeController extends Controller
     }
 
     /**
-     * @return Application|RedirectResponse|Redirector
+     * @return RedirectResponse
      */
-    public function index()
+    public function index(): RedirectResponse
     {
         //todo anything for the front page.
         return redirect('/'); //view('home');

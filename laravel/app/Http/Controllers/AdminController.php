@@ -12,28 +12,29 @@ use Illuminate\View\View;
 class AdminController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-
         //Land on the home page of admin. Could have data later.
         $data = [['user' => Auth::user()]];
 
         return view('admin.admin', ['data' => $data]);
     }
 
-    public function developer()
+    /**
+     * @return View
+     */
+    public function developer(): View
     {
         return view('admin.developer_admin');
     }
 
     /**
-     * @return Application|Factory|View
+     * @param User $user
+     * @return View
      */
-    public function blank(User $user)
+    public function blank(User $user): View
     {
         return view('admin.admin-blank');
     }

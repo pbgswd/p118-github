@@ -11,9 +11,9 @@ use Illuminate\View\View;
 class AgreementController extends Controller
 {
     /**
-     * @return Factory|View
+     * @return View
      */
-    public function list()
+    public function list(): View
     {
         //todo member/public for attachments
         $data = [];
@@ -40,12 +40,10 @@ class AgreementController extends Controller
     }
 
     /**
-     * Display the specified resource.
      * @param Agreement $agreement
-     *
-     * @return Response
+     * @return View
      */
-    public function show(Agreement $agreement)
+    public function show(Agreement $agreement): View
     {
         $agreement->load('user', 'attachments');
 

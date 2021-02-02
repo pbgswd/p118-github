@@ -21,7 +21,7 @@ class AdminOrganizationController extends Controller
     /**
      * @return Factory|View
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Organization::class);
         $data = [];
@@ -36,7 +36,7 @@ class AdminOrganizationController extends Controller
     /**
      * @return Factory|View
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Organization::class);
 
@@ -59,7 +59,7 @@ class AdminOrganizationController extends Controller
      * @param StoreOrganizationRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreOrganizationRequest $request)
+    public function store(StoreOrganizationRequest $request): RedirectResponse
     {
         $this->authorize('create', Organization::class);
         $org = new Organization($request->organization);
@@ -77,7 +77,7 @@ class AdminOrganizationController extends Controller
      * @param Organization $any_organization
      * @return Factory|View
      */
-    public function edit(Organization $any_organization)
+    public function edit(Organization $any_organization): View
     {
         $this->authorize('update', Organization::class);
 
@@ -109,7 +109,7 @@ class AdminOrganizationController extends Controller
      * @param Organization $any_organization
      * @return RedirectResponse
      */
-    public function update(UpdateOrganizationRequest $request, Organization $any_organization)
+    public function update(UpdateOrganizationRequest $request, Organization $any_organization): RedirectResponse
     {
         $this->authorize('update', Organization::class);
         $any_organization->fill($request->organization);
@@ -130,7 +130,7 @@ class AdminOrganizationController extends Controller
      * @param DestroyOrganizationRequest $request
      * @return RedirectResponse
      */
-    public function destroy(DestroyOrganizationRequest $request)
+    public function destroy(DestroyOrganizationRequest $request): RedirectResponse
     {
         $this->authorize('delete', Organization::class);
         Organization::withoutGlobalScopes()

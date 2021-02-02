@@ -6,6 +6,7 @@ use App\Models\Bylaw;
 use App\Services\AttachmentService;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class ByLawController extends Controller
 {
@@ -22,7 +23,10 @@ class ByLawController extends Controller
         $this->attachmentService = $attachmentService;
     }
 
-    public function list()
+    /**
+     * @return View
+     */
+    public function list(): View
     {
         $data = [];
         if (Auth::check()) {
@@ -51,7 +55,7 @@ class ByLawController extends Controller
      * @param Bylaw $bylaw
      * @return Response
      */
-    public function show(Bylaw $bylaw)
+    public function show(Bylaw $bylaw): View
     {
         $bylaw->load('user', 'attachments');
 

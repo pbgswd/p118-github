@@ -19,7 +19,7 @@ class CommitteePostCommentController extends Controller
      * @param CommitteePost $committeePost
      * @return Factory|View
      */
-    public function create(CommitteePost $committeePost)
+    public function create(CommitteePost $committeePost): View
     {
         //todo enable permission
         //$this->authorize('create', Auth::user());
@@ -38,7 +38,7 @@ class CommitteePostCommentController extends Controller
      * @param CommitteePostComment $any_committee_post_comment
      * @return Factory|View
      */
-    public function edit(CommitteePostComment $any_committee_post_comment)
+    public function edit(CommitteePostComment $any_committee_post_comment): View
     {
         //todo no need for perms under admin
 
@@ -65,7 +65,7 @@ class CommitteePostCommentController extends Controller
      * @return RedirectResponse
      */
     public function store(StoreCommitteePostCommentRequest $request,
-                          Committee $committee, CommitteePost $committeePost)
+                          Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
         //$this->authorize('create', Auth::user());
 

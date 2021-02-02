@@ -9,6 +9,7 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\User;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -20,13 +21,12 @@ use Illuminate\View\View;
 class AdminCommitteePostController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @return Response
+     * @param Committee $committee
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index(CommitteePost $committeePost, Committee $committee)
+    public function index(CommitteePost $committeePost, Committee $committee): View
     {
         $this->authorize('update', $committee);
 
@@ -44,9 +44,10 @@ class AdminCommitteePostController extends Controller
 
     /**
      * @param Committee $committee
-     * @return Factory|View
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function create(Committee $committee)
+    public function create(Committee $committee): RedirectResponse
     {
         $this->authorize('update', $committee);
 
@@ -56,7 +57,14 @@ class AdminCommitteePostController extends Controller
         return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create']]);
     }
 
-    public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
+    /**
+     * @param StoreCommitteePostRequest $request
+     * @param Committee $committee
+     * @param User $user
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function store(StoreCommitteePostRequest $request, Committee $committee, User $user): RedirectResponse
     {
         $this->authorize('update', $committee);
 
@@ -74,9 +82,10 @@ class AdminCommitteePostController extends Controller
     /**
      * @param Committee $committee
      * @param CommitteePost $any_committee_post
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Committee $committee, CommitteePost $any_committee_post)
+    public function edit(Committee $committee, CommitteePost $any_committee_post): View
     {
         $this->authorize('update', $committee);
 
@@ -95,6 +104,7 @@ class AdminCommitteePostController extends Controller
      * @param Committee $committee
      * @param CommitteePost $committeePost
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateCommitteePostRequest $request, Committee $committee,
                            CommitteePost $committeePost): RedirectResponse

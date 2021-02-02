@@ -12,10 +12,9 @@ use Illuminate\View\View;
 class OrganizationController extends Controller
 {
     /**
-     * @return Factory|View
-     * @throws AuthorizationException
+     * @return View
      */
-    public function list()
+    public function list(): View
     {
         $data = [];
         $data['organizations'] = Organization::sortable()
@@ -26,12 +25,10 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Organization $organization
-     * @return Response
+     * @return View
      */
-    public function show(Organization $organization)
+    public function show(Organization $organization): View
     {
         $data = [];
 

@@ -35,18 +35,12 @@ class LocalSearchController extends Controller
 {
     use Sortable;
 
-    public function show($search)
-    {
-        dd($search);
-    }
-
     /**
      * @param LocalSearchResult $request
-     * @return Application|Factory|View
+     * @return View
      */
-    public function index(LocalSearchResult $request)
+    public function index(LocalSearchResult $request): View
     {
-
         $data = [
             'search' => $request->search,
             'results' => (new Search())
@@ -84,10 +78,9 @@ class LocalSearchController extends Controller
 
     /**
      * @param LocalSearchResult $request
-     * @return Application|Factory|View
+     * @return View
      */
-    //todo review results of local search controller admin_search method
-    public function admin_search(LocalSearchResult $request)
+    public function admin_search(LocalSearchResult $request): View
     {
         $data = [
             'search' => $request->search,
@@ -172,7 +165,11 @@ class LocalSearchController extends Controller
         return view('admin.search_admin', ['data' => $data]);
     }
 
-    public function admin_attachment_search(LocalSearchResult $request)
+    /**
+     * @param LocalSearchResult $request
+     * @return View
+     */
+    public function admin_attachment_search(LocalSearchResult $request): View
     {
         //todo dont crash search when file is not on host
         $data = [

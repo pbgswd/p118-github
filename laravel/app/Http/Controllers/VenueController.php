@@ -12,11 +12,9 @@ use Illuminate\View\View;
 class VenueController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function list()
+    public function list(): View
     {
         $data = [];
         $data['venues'] = Venue::paginate(8);
@@ -25,9 +23,9 @@ class VenueController extends Controller
 
     /**
      * @param Venue $venue
-     * @return Factory|View
+     * @return View
      */
-    public function show(Venue $venue)
+    public function show(Venue $venue): View
     {
         $data['venue'] = $venue;
         $data['agreements'] = Auth::check() ? $venue->member_agreements : $venue->agreements;

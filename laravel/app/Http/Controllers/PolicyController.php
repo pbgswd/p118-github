@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Policy;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class PolicyController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         //$this->authorize('viewAny', Auth::user());
         $data = [];
@@ -26,12 +25,10 @@ class PolicyController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Policy $policy
-     * @return Response
+     * @return View
      */
-    public function show(Policy $policy)
+    public function show(Policy $policy): View
     {
         $policy->load('user', 'attachments');
 

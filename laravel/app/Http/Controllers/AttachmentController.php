@@ -8,6 +8,7 @@ use App\Http\Requests\Attachments\StoreAttachmentRequest;
 use App\Http\Requests\Attachments\UpdateAttachmentRequest;
 use App\Models\Attachment;
 use App\Services\AttachmentService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
@@ -27,17 +28,22 @@ class AttachmentController extends Controller
         $this->attachmentService = $attachmentService;
     }
 
-    public function download(string $folder, Attachment $attachment)
+    /**
+     * @param string $folder
+     * @param Attachment $attachment
+     * @return RedirectResponse
+     */
+    public function download(string $folder, Attachment $attachment): RedirectResponse
     {
         return $this->attachmentService->downloadAttachment($attachment, $folder);
     }
 
     /**
      * @param Attachment $attachment
-     *
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index(Attachment $attachment)
+    public function index(Attachment $attachment): View
     {
         $this->authorize('viewAny', Auth::user());
 
@@ -50,9 +56,10 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Auth::user());
 
@@ -70,8 +77,8 @@ class AttachmentController extends Controller
 
     /**
      * @param StoreAttachmentRequest $request
-     *
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function store(StoreAttachmentRequest $request): RedirectResponse
     {
@@ -79,7 +86,10 @@ class AttachmentController extends Controller
 
         /** @var UploadedFile $image */
         foreach ($request->file('images') as $image) {
-            //todo analyse attachment file size, resize, create thumb when it is an image -- A SERVICE
+
+            //todo analyse attachment file size, resize,
+            // create thumb when it is an image -- A SERVICE
+
             $file = $image->store('', 'public');
             $imageName = $image->getClientOriginalName();
             $attachment = new Attachment();
@@ -102,10 +112,10 @@ class AttachmentController extends Controller
 
     /**
      * @param Attachment $attachment
-     *
-     * @return Factory|RedirectResponse|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Attachment $attachment)
+    public function edit(Attachment $attachment): View
     {
         $this->authorize('update', Auth::user());
 
@@ -129,10 +139,10 @@ class AttachmentController extends Controller
     /**
      * @param UpdateAttachmentRequest $request
      * @param Attachment $attachment
-     *
-     * @return Factory|View
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(UpdateAttachmentRequest $request, Attachment $attachment)
+    public function update(UpdateAttachmentRequest $request, Attachment $attachment): RedirectResponse
     {
         $this->authorize('update', Auth::user());
         $attachment->fill($request->attachment);
@@ -145,8 +155,8 @@ class AttachmentController extends Controller
 
     /**
      * @param DestroyAttachmentRequest $request
-     *
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(DestroyAttachmentRequest $request): RedirectResponse
     {

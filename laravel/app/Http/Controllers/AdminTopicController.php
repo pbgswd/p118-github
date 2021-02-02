@@ -8,13 +8,14 @@ use App\Http\Requests\Topic\StoreTopicRequest;
 use App\Http\Requests\Topic\UpdateTopicRequest;
 use App\Models\Topic;
 use App\Services\AttachmentService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Illuminate\View\View as ViewAlias;
+use Illuminate\View\View;
 
 class AdminTopicController extends Controller
 {
@@ -27,9 +28,10 @@ class AdminTopicController extends Controller
     }
 
     /**
-     * @return Application|Factory|ViewAlias
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Topic::class);
 
@@ -41,9 +43,7 @@ class AdminTopicController extends Controller
         return view('admin.listtopics', ['data' => ['topics' => $topics]]);
     }
 
-    /**
-     * @return Factory|ViewAlias
-     */
+
     public function create()
     {
         $this->authorize('create', Topic::class);
@@ -62,8 +62,9 @@ class AdminTopicController extends Controller
     /**
      * @param StoreTopicRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreTopicRequest $request)
+    public function store(StoreTopicRequest $request): RedirectResponse
     {
         $this->authorize('create', Topic::class);
 
@@ -93,9 +94,10 @@ class AdminTopicController extends Controller
 
     /**
      * @param Topic $topic
-     * @return Factory|ViewAlias
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Topic $topic)
+    public function edit(Topic $topic): View
     {
         $this->authorize('update', Topic::class);
 
@@ -113,6 +115,7 @@ class AdminTopicController extends Controller
      * @param UpdateTopicRequest $request
      * @param Topic $any_topic
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateTopicRequest $request, Topic $any_topic): RedirectResponse
     {
@@ -148,8 +151,9 @@ class AdminTopicController extends Controller
     /**
      * @param DestroyTopicRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyTopicRequest $request)
+    public function destroy(DestroyTopicRequest $request): RedirectResponse
     {
         $this->authorize('delete', Topic::class);
 

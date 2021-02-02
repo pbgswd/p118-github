@@ -12,9 +12,9 @@ use Illuminate\View\View;
 class PageController extends Controller
 {
     /**
-     * @return Factory|View
+     * @return View
      */
-    public function list()
+    public function list(): View
     {
         if (Auth::check()) {
             $pages = Page::sortable()->with('topics','tagged')->paginate(10);
@@ -30,9 +30,9 @@ class PageController extends Controller
 
     /**
      * @param Page $page
-     * @return Factory|View
+     * @return View
      */
-    public function show(Page $page)
+    public function show(Page $page): View
     {
         if (false === Auth::check() && $page->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this page.');

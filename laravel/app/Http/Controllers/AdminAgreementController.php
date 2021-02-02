@@ -8,6 +8,7 @@ use App\Http\Requests\Agreements\UpdateAgreementRequest;
 use App\Models\Agreement;
 use App\Services\AttachmentService;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -30,9 +31,10 @@ class AdminAgreementController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Agreement::class);
 
@@ -49,9 +51,10 @@ class AdminAgreementController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Agreement::class);
         $agreement = new Agreement;
@@ -62,6 +65,7 @@ class AdminAgreementController extends Controller
     /**
      * @param StoreAgreementRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function store(StoreAgreementRequest $request): RedirectResponse
     {
@@ -89,9 +93,10 @@ class AdminAgreementController extends Controller
 
     /**
      * @param Agreement $agreement
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Agreement $agreement)
+    public function edit(Agreement $agreement): View
     {
         $this->authorize('update', Agreement::class);
 
@@ -107,6 +112,7 @@ class AdminAgreementController extends Controller
      * @param UpdateAgreementRequest $request
      * @param Agreement $any_agreement
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateAgreementRequest $request, Agreement $any_agreement): RedirectResponse
     {

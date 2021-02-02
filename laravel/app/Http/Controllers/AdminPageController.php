@@ -32,10 +32,10 @@ class AdminPageController extends Controller
 
     /**
      * @param Request $request
-     *
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $this->authorize('viewAny', Page::class);
         $pages = Page::withoutGlobalScopes()->sortable()->with('tagged', 'user')->paginate(20);
@@ -53,9 +53,10 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Page::class);
 
@@ -80,10 +81,10 @@ class AdminPageController extends Controller
 
     /**
      * @param StorePageRequest $request
-     *
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StorePageRequest $request)
+    public function store(StorePageRequest $request): RedirectResponse
     {
         $this->authorize('create', Page::class);
 
@@ -117,10 +118,10 @@ class AdminPageController extends Controller
 
     /**
      * @param Page $page
-     *
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Page $page)
+    public function edit(Page $page): View
     {
         $this->authorize('update', Page::class);
 
@@ -141,8 +142,8 @@ class AdminPageController extends Controller
     /**
      * @param UpdatePageRequest $request
      * @param Page $any_page
-     *
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
     {
@@ -192,10 +193,10 @@ class AdminPageController extends Controller
 
     /**
      * @param DestroyPageRequest $request
-     *
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyPageRequest $request)
+    public function destroy(DestroyPageRequest $request): RedirectResponse
     {
         $this->authorize('delete', Page::class);
 

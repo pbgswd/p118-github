@@ -14,6 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class AdminPolicyController extends Controller
 {
@@ -30,11 +31,9 @@ class AdminPolicyController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $data = [];
         $data['policies'] = Policy::withoutGlobalScopes()
@@ -48,11 +47,9 @@ class AdminPolicyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $data = [
             'policy' => new Policy,
@@ -63,12 +60,10 @@ class AdminPolicyController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
+     * @param AdminStorePolicy $request
+     * @return RedirectResponse
      */
-    public function store(AdminStorePolicy $request)
+    public function store(AdminStorePolicy $request): RedirectResponse
     {
         $policy = new Policy($request->policy);
 
@@ -86,17 +81,14 @@ class AdminPolicyController extends Controller
                 Session::flash('error', 'You have an upload problem');
             }
         }
-
         return redirect()->route('admin_policy_edit', [$policy->id]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Policy $any_policy
-     * @return Response
+     * @return View
      */
-    public function edit(Policy $any_policy)
+    public function edit(Policy $any_policy): View
     {
         $data = [
             'policy' => $any_policy->loadWithoutGlobalScopes('user', 'attachments'),

@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Executive;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class ExecutiveController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $data = [];
         $data = Executive::with('current_executive_user')->get();

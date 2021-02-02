@@ -9,18 +9,20 @@ use App\Models\Executive;
 use App\Models\ExecutiveMembership;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class AdminExecutiveMembershipController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', ExecutiveMembership::class);
         //todo index method
@@ -38,12 +40,11 @@ class AdminExecutiveMembershipController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
      * @param User $user
-     * @return Response
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create(User $user)
+    public function create(User $user): View
     {
         $this->authorize('create', ExecutiveMembership::class);
 
@@ -58,13 +59,12 @@ class AdminExecutiveMembershipController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param StoreAdminExecutiveMembership $request
      * @param User $user
-     * @return Response
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreAdminExecutiveMembership $request, User $user)
+    public function store(StoreAdminExecutiveMembership $request, User $user): RedirectResponse
     {
         $this->authorize('create', ExecutiveMembership::class);
 
@@ -82,12 +82,11 @@ class AdminExecutiveMembershipController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param ExecutiveMembership $executiveMembership
-     * @return Response
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(ExecutiveMembership $executiveMembership)
+    public function edit(ExecutiveMembership $executiveMembership): View
     {
         $this->authorize('update', ExecutiveMembership::class);
 
@@ -104,13 +103,13 @@ class AdminExecutiveMembershipController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param UpdateAdminExecutiveMembership $request
      * @param ExecutiveMembership $executiveMembership
-     * @return Response
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(UpdateAdminExecutiveMembership $request, ExecutiveMembership $executiveMembership)
+    public function update(UpdateAdminExecutiveMembership $request,
+                           ExecutiveMembership $executiveMembership): RedirectResponse
     {
         $this->authorize('update', ExecutiveMembership::class);
 

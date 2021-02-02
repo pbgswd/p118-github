@@ -11,6 +11,7 @@ use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
 use App\Services\EmailCommitteeMembershipService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -28,9 +29,10 @@ class AdminCommitteeMemberController extends Controller
 
     /**
      * @param Committee $committee
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index(Committee $committee)
+    public function index(Committee $committee): View
     {
         $this->authorize('update', $committee);
         $data = [];
@@ -48,9 +50,10 @@ class AdminCommitteeMemberController extends Controller
     /**
      * @param SearchCommitteeMember $request
      * @param Committee $committee
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function search(SearchCommitteeMember $request, Committee $committee)
+    public function search(SearchCommitteeMember $request, Committee $committee): View
     {
         $this->authorize('update', $committee);
 
@@ -76,9 +79,10 @@ class AdminCommitteeMemberController extends Controller
     /**
      * @param Committee $committee
      * @param User $user
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create(Committee $committee, User $user)
+    public function create(Committee $committee, User $user): View
     {
         $this->authorize('update', $committee);
         $data = [];
@@ -95,8 +99,9 @@ class AdminCommitteeMemberController extends Controller
      * @param Committee $committee
      * @param User $user
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreCommitteeMember $request, Committee $committee, User $user)
+    public function store(StoreCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
         $this->authorize('update', $committee);
 
@@ -123,9 +128,10 @@ class AdminCommitteeMemberController extends Controller
     /**
      * @param Committee $committee
      * @param User $user
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Committee $committee, User $user)
+    public function edit(Committee $committee, User $user): View
     {
         $this->authorize('update', $committee);
 
@@ -149,8 +155,9 @@ class AdminCommitteeMemberController extends Controller
      * @param Committee $committee
      * @param User $user
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(UpdateCommitteeMember $request, Committee $committee, User $user)
+    public function update(UpdateCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
         $this->authorize('update', $committee);
 
@@ -198,8 +205,9 @@ class AdminCommitteeMemberController extends Controller
      * @param Committee $committee
      * @param User $user
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user)
+    public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
         $this->authorize('update', $committee);
 

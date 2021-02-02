@@ -10,7 +10,9 @@
     "require": {
         "php": "^7.3|^8.0",
         "doctrine/dbal": "^2.11",
+        "enlightn/enlightn": "^1.8",
         "fideloper/proxy": "^4.4",
+        "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "kyslik/column-sortable": "^6.0",
         "laravel/framework": "^8.18",
@@ -22,8 +24,7 @@
         "spatie/image": "^1.7.4",
         "spatie/laravel-permission": "^3.17",
         "spatie/laravel-searchable": "^1.7",
-        "unicodeveloper/laravel-password": "^1.0",
-        "fruitcake/laravel-cors": "^2.0"
+        "unicodeveloper/laravel-password": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",

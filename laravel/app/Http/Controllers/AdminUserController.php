@@ -13,6 +13,7 @@ use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Services\EmailMemberUpdateService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
@@ -40,9 +41,10 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Auth::user());
 
@@ -61,9 +63,9 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return RedirectResponse
      */
-    public function create()
+    public function create(): RedirectResponse
     {
         Session::flash('warning', 'Create method blocked off. Contact admin for support.');
 
@@ -106,8 +108,9 @@ class AdminUserController extends Controller
     /**
      * @param StoreUser $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreUser $request)
+    public function store(StoreUser $request): RedirectResponse
     {
         $this->authorize('create', Auth::user());
         Session::flash('warning', 'Store method blocked off. Contact admin for support.');
@@ -152,9 +155,10 @@ class AdminUserController extends Controller
 
     /**
      * @param User $user
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         $this->authorize('admin_update', Auth::user());
 
@@ -186,8 +190,9 @@ class AdminUserController extends Controller
      * @param UpdateUser $request
      * @param User $user
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(UpdateUser $request, User $user)
+    public function update(UpdateUser $request, User $user): RedirectResponse
     {
         $this->authorize('admin_update', Auth::user());
 
@@ -276,8 +281,9 @@ class AdminUserController extends Controller
     /**
      * @param DestroyUser $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyUser $request)
+    public function destroy(DestroyUser $request): RedirectResponse
     {
         $this->authorize('delete', Auth::user());
 
@@ -323,12 +329,17 @@ class AdminUserController extends Controller
         return redirect()->route('users_list');
     }
 
-    protected function uploadImage(FormRequest $request)
+    /**
+     * @param FormRequest $request
+     * @return String|null
+     */
+    protected function uploadImage(FormRequest $request): ?String
     {
         if (null !== $request->file('image')) {
             return $request->file('image')->store('', 'users');
         }
-
-        return null;
+        else {
+            return null;
+        }
     }
 }

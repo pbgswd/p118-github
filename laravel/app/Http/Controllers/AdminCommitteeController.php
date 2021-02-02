@@ -8,6 +8,7 @@ use App\Http\Requests\Committees\UpdateCommitteeRequest;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -19,9 +20,10 @@ use Illuminate\View\View;
 class AdminCommitteeController extends Controller
 {
     /**
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Committee::class);
         $c = Committee::withoutGlobalScopes()->with('creator')->sortable()->paginate(10);
@@ -37,9 +39,10 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Committee::class);
 
@@ -56,6 +59,7 @@ class AdminCommitteeController extends Controller
     /**
      * @param StoreCommitteeRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function store(StoreCommitteeRequest $request): RedirectResponse
     {
@@ -72,9 +76,10 @@ class AdminCommitteeController extends Controller
 
     /**
      * @param Committee $committee
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function show(Committee $committee)
+    public function show(Committee $committee): View
     {
         $this->authorize('view', $committee);
 
@@ -115,9 +120,10 @@ class AdminCommitteeController extends Controller
 
     /**
      * @param Committee $any_committee
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Committee $any_committee)
+    public function edit(Committee $any_committee): View
     {
         $any_committee->load('creator', 'posts');
 
@@ -136,6 +142,7 @@ class AdminCommitteeController extends Controller
      * @param UpdateCommitteeRequest $request
      * @param Committee $any_committee
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateCommitteeRequest $request, Committee $any_committee): RedirectResponse
     {
@@ -152,6 +159,7 @@ class AdminCommitteeController extends Controller
     /**
      * @param DestroyCommitteeRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(DestroyCommitteeRequest $request): RedirectResponse
     {

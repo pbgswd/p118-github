@@ -12,6 +12,7 @@ use App\Models\UserInfo;
 use App\Rules\Phone;
 use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
+use http\Client\Request;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -39,10 +40,10 @@ class UserController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
      * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('view', Auth::user());
 
@@ -58,10 +59,10 @@ class UserController extends Controller
 
     /**
      * @param User $user
-     * @return Application|Factory|View
+     * @return View
      * @throws AuthorizationException
      */
-    public function show(User $user)
+    public function show(User $user): View
     {
         $this->authorize('view', $user);
 
@@ -82,10 +83,10 @@ class UserController extends Controller
 
     /**
      * @param User $user
-     * @return Application|Factory|View
+     * @return View
      * @throws AuthorizationException
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         $this->authorize('update', $user);
 
@@ -190,7 +191,12 @@ class UserController extends Controller
         return redirect()->route('member_edit', $user->id);
     }
 
-    public function edit_address(User $user)
+    /**
+     * @param User $user
+     * @return View
+     * @throws AuthorizationException
+     */
+    public function edit_address(User $user): View
     {
         $this->authorize('update', $user);
 
@@ -207,7 +213,13 @@ class UserController extends Controller
         return view('member_address_edit', ['data' => $data]);
     }
 
-
+    /**
+     * @param UpdateMemberAddress $userRequest
+     * @param EmailMemberUpdateAddressService $service
+     * @param User $user
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
     public function update_address(
        UpdateMemberAddress $userRequest,
        EmailMemberUpdateAddressService $service,
@@ -237,8 +249,12 @@ class UserController extends Controller
         return redirect()->route('member_address_edit', $user->id);
     }
 
-
-    public function edit_emergency_contact(User $user)
+    /**
+     * @param User $user
+     * @return View
+     * @throws AuthorizationException
+     */
+    public function edit_emergency_contact(User $user): View
     {
         $this->authorize('update', $user);
 
@@ -253,7 +269,13 @@ class UserController extends Controller
         return view('member_emergency_edit', ['data' => $data]);
     }
 
-
+    /**
+     * @param UpdateMemberEmergencyContact $userRequest
+     * @param EmailMemberUpdateAddressService $service
+     * @param User $user
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
     public function update_emergency_contact(
         UpdateMemberEmergencyContact $userRequest,
         EmailMemberUpdateAddressService $service,
@@ -287,8 +309,11 @@ class UserController extends Controller
         return redirect()->route('edit_emergency_contact', $user->id);
     }
 
-
-    protected function uploadImage(FormRequest $request)
+    /**
+     * @param FormRequest $request
+     * @return String
+     */
+    protected function uploadImage(FormRequest $request): String
     {
         if (null !== $request->file('image')) {
             return $request->file('image')->store('', 'users');

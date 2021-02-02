@@ -7,6 +7,7 @@ use App\Http\Requests\Venues\StoreVenueRequest;
 use App\Http\Requests\Venues\UpdateVenueRequest;
 use App\Models\Agreement;
 use App\Models\Venue;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,10 @@ use Illuminate\View\View;
 class AdminVenueController extends Controller
 {
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Venue::class);
 
@@ -32,9 +34,10 @@ class AdminVenueController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Venue::class);
 
@@ -54,8 +57,9 @@ class AdminVenueController extends Controller
     /**
      * @param StoreVenueRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreVenueRequest $request)
+    public function store(StoreVenueRequest $request): RedirectResponse
     {
         $this->authorize('create', Venue::class);
 
@@ -72,9 +76,10 @@ class AdminVenueController extends Controller
 
     /**
      * @param Venue $any_venue
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Venue $any_venue)
+    public function edit(Venue $any_venue): View
     {
         $this->authorize('update', Venue::class);
 
@@ -102,8 +107,9 @@ class AdminVenueController extends Controller
      * @param UpdateVenueRequest $request
      * @param Venue $any_venue
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(UpdateVenueRequest $request, Venue $any_venue)
+    public function update(UpdateVenueRequest $request, Venue $any_venue): RedirectResponse
     {
         $this->authorize('update', Venue::class);
 
@@ -125,8 +131,9 @@ class AdminVenueController extends Controller
     /**
      * @param DestroyVenueRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyVenueRequest $request)
+    public function destroy(DestroyVenueRequest $request): RedirectResponse
     {
         $this->authorize('delete', Venue::class);
 

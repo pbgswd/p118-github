@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use voku\helper\ASCII;
 
 class AdminByLawController extends Controller
 {
@@ -33,9 +34,10 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Bylaw::class);
         $data = [];
@@ -51,9 +53,10 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Bylaw::class);
         $data = [
@@ -69,8 +72,9 @@ class AdminByLawController extends Controller
     /**
      * @param StoreBylawRequest $request
      * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(StoreBylawRequest $request)
+    public function store(StoreBylawRequest $request): RedirectResponse
     {
         $this->authorize('create', Bylaw::class);
 
@@ -96,10 +100,10 @@ class AdminByLawController extends Controller
 
     /**
      * @param Bylaw $bylaw
-     *
-     * @return Factory|View
+     * @return View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(Bylaw $bylaw)
+    public function edit(Bylaw $bylaw): View
     {
         $this->authorize('update', Bylaw::class);
         $data = [
@@ -116,6 +120,7 @@ class AdminByLawController extends Controller
      * @param UpdateBylawRequest $request
      * @param Bylaw $any_bylaw
      * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateBylawRequest $request, Bylaw $any_bylaw): RedirectResponse
     {
@@ -146,8 +151,9 @@ class AdminByLawController extends Controller
     /**
      * @param DestroyBylawRequest $request
      * @return RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(DestroyBylawRequest $request)
+    public function destroy(DestroyBylawRequest $request): RedirectResponse
     {
         $this->authorize('delete', Bylaw::class);
         /** @var Collection $bylaws */

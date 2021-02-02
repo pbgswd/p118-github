@@ -13,9 +13,9 @@ use Illuminate\View\View;
 class TopicController extends Controller
 {
     /**
-     * @return Factory|View
+     * @return View
      */
-    public function list()
+    public function list(): View
     {
         // public
         if (Auth::check()) {
@@ -35,9 +35,9 @@ class TopicController extends Controller
 
     /**
      * @param Topic $topic
-     * @return Factory|RedirectResponse|View
+     * @return View
      */
-    public function show(Topic $topic)
+    public function show(Topic $topic): View
     {
         if (false === Auth::check() && $topic->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this topic.');

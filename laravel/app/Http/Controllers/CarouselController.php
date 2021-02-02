@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Carousel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class CarouselController extends Controller
 {
@@ -45,7 +46,7 @@ class CarouselController extends Controller
      * @param Carousel $carousel
      * @return Response
      */
-    public function show(Carousel $carousel)
+    public function show(Carousel $carousel): View
     {
         return view('carousel');
     }
