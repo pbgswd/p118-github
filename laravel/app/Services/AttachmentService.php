@@ -49,7 +49,9 @@ class AttachmentService
         if (isset($request->attachment)) {
             foreach ($request->attachment as $k => $v) {
                 $attachment = Attachment::find($k);
+
                 //todo do I ever want to detach files from a post instead of delete ?
+
                 if (isset($v['id'])) {
                     if ($model->keepDissociatedAttachments()) {
                         //dissociate file,
@@ -110,6 +112,7 @@ class AttachmentService
     {
         $factor = \floor((\strlen($bytes) - 1) / 3);
 
+        $sz = '';
         if ($factor > 0) {
             $sz = 'KMGT';
         }

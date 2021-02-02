@@ -44,10 +44,10 @@ class AdminCommitteePostController extends Controller
 
     /**
      * @param Committee $committee
-     * @return RedirectResponse
+     * @return View
      * @throws AuthorizationException
      */
-    public function create(Committee $committee): RedirectResponse
+    public function create(Committee $committee): View
     {
         $this->authorize('update', $committee);
 

@@ -122,12 +122,11 @@ class AdminExecutiveMembershipController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param DestroyAdminExecutiveMembership $request
-     * @return Response
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyAdminExecutiveMembership $request)
+    public function destroy(DestroyAdminExecutiveMembership $request): RedirectResponse
     {
         $this->authorize('delete', ExecutiveMembership::class);
 

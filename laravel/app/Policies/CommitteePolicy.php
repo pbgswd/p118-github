@@ -14,7 +14,7 @@ class CommitteePolicy
      * @param User $user
      * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->hasAnyRole(['super-admin', 'writer', 'committee']) ||
             $user->hasAnyPermission(['create committee', 'manage committee', 'delete committee']);
