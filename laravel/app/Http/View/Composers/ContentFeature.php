@@ -17,10 +17,10 @@ use Illuminate\View\View;
  */
 class ContentFeature
 {
-    public function __construct()
-    {
-    }
 
+    /**
+     * @param View $view
+     */
     public function compose(View $view)
     {
         $topicFilter = function ($query) {
@@ -28,10 +28,8 @@ class ContentFeature
         };
 
         $topics = Topic::orderBy('sort_order', 'desc')->get();
-        $posts = Post::where('landing_page', 1)->orderBy('updated_at', 'desc')->with('topics')->take(10)->get();
-        $pages = Page::where('in_menu', 1)->orderBy('updated_at', 'desc')->with('topics')->take(10)->get();
-
-       // dd($pages[0]->topics[0]->name);
+        $posts = Post::where('landing_page', 1)->orderBy('updated_at', 'desc')->with('topics')->get();
+        $pages = Page::where('landing_page', 1)->orderBy('updated_at', 'desc')->with('topics')->get();
 
         $data = [
             'topics' => $topics,
@@ -39,10 +37,6 @@ class ContentFeature
             'pages' => $pages,
             ];
 
-        // $posts->short_body = substr($posts->content, 0, 60) . '...';
-        // dangerous! body is in html -- truncation could split a tag
-
-        //dd($data);
         $view->with('data', $data);
     }
 }

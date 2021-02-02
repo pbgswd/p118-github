@@ -38,7 +38,10 @@ class AdminPageController extends Controller
     public function index(Request $request): View
     {
         $this->authorize('viewAny', Page::class);
-        $pages = Page::withoutGlobalScopes()->sortable()->with('tagged', 'user')->paginate(20);
+        $pages = Page::withoutGlobalScopes()
+            ->sortable()
+            ->with('topics', 'tagged', 'user')
+            ->paginate(20);
         $count = Page::withoutGlobalScopes()->count();
 
         return view(

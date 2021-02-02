@@ -18,10 +18,10 @@ use Spatie\Searchable\SearchResult;
  * @property string        $slug
  * @property string        $title
  * @property string        $access_level
- * @property bool       $live
+ * @property bool          $live
  * @property int           $sort_order
- * @property bool       $in_menu
- * @property bool       $allow_comments
+ * @property bool          $front_page
+ * @property bool          $landing_page
  * @property User          $user
  * @property Topic[]       $topics
  * @property Attachment[]  $attachments
