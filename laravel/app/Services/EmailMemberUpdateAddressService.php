@@ -38,7 +38,7 @@ class EmailMemberUpdateAddressService
                 $m->cc($cc, $cc);
             }
             $m->replyTo($user->email, $user->name)
-                ->subject(env('APP_NAME') . ' Website ' . $update_type . 'Update For ' . $user->name);
+                ->subject(env('APP_NAME') . ' Website ' . $update_type . ' Update For ' . $user->name);
         });
     }
 }

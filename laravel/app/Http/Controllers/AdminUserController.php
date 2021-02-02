@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Member\UpdateMemberEmergencyContact;
 use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
+use App\Http\Requests\User\UpdateMemberAddress;
 use App\Http\Requests\User\UpdateUser;
 use App\Models\Executive;
 use App\Models\ExecutiveMembership;
@@ -12,6 +14,8 @@ use App\Models\Options;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Rules\Phone;
+use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
@@ -278,6 +282,126 @@ class AdminUserController extends Controller
         return redirect()->route('user_edit', [$user->id]);
     }
 
+
+    /**
+     * @param User $user
+     * @return View
+     * @throws AuthorizationException
+     */
+    public function admin_edit_address(User $user): View
+    {
+        $this->authorize('update', $user);
+
+        $currentUser = Auth::user();
+        $regions = $this->getFormOptions(['statesprovs']);
+
+        $data = [
+            'user' => $user,
+            'action' => 'Edit',
+            'currentUserPermissions' => $currentUser->permissions,
+            'provinces' => $regions['statesprovs']['Provinces'],
+        ];
+
+        return view('admin.user-edit-address', ['data' => $data]);
+    }
+
+    /**
+     * @param UpdateMemberAddress $userRequest
+     * @param EmailMemberUpdateAddressService $service
+     * @param User $user
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function admin_update_address(
+        UpdateMemberAddress $userRequest,
+        EmailMemberUpdateAddressService $service,
+        User $user
+    ): RedirectResponse
+    {
+        $this->authorize('update', $user);
+        $message = [];
+
+        $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
+
+        foreach ($addr as $k => $a) {
+            if ($userRequest->$a) {
+                if ($a == 'postal_code') {
+                    $userRequest->$a = strtoupper($userRequest->$a);
+                }
+                $message[ucfirst($a)] = $userRequest->$a;
+            }
+        }
+
+        if (! empty($message)) {
+            $result = $service->sendMessage('Admin Address', $message, $user);
+        }
+
+        Session::flash('success', 'The member address update has been emailed to the office contacts.');
+
+        return redirect()->route('admin_edit_address', $user->id);
+    }
+
+    /**
+     * @param User $user
+     * @return View
+     * @throws AuthorizationException
+     */
+    public function admin_edit_emergency_contact(User $user): View
+    {
+        $this->authorize('update', $user);
+
+        $currentUser = Auth::user();
+
+        $data = [
+            'user' => $user,
+            'action' => 'Edit',
+            'currentUserPermissions' => $currentUser->permissions,
+        ];
+
+        return view('admin.user-edit-emergency-contact', ['data' => $data]);
+    }
+
+    /**
+     * @param UpdateMemberEmergencyContact $userRequest
+     * @param EmailMemberUpdateAddressService $service
+     * @param User $user
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function admin_update_emergency_contact(
+        UpdateMemberEmergencyContact $userRequest,
+        EmailMemberUpdateAddressService $service,
+        User $user
+    ): RedirectResponse
+    {
+        $this->authorize('update', $user);
+
+        $userRequest->validate([
+            'emergency_contact_phone' => ['required',
+                new Phone()
+            ]
+        ]);
+
+        $message = [];
+
+        $fields = ['emergency_contact_name', 'emergency_contact_relationship', 'emergency_contact_phone', 'message'];
+
+        foreach ($fields as $k => $a) {
+            if ($userRequest->$a) {
+                $message[ucfirst($a)] = $userRequest->$a;
+            }
+        }
+
+        if (! empty($message)) {
+            $result = $service->sendMessage('Admin Emergency Contact', $message, $user);
+        }
+
+        Session::flash('success', 'The emergency contact update has been emailed to the office recipients.');
+
+        return redirect()->route('admin_edit_emergency_contact', $user->id);
+    }
+
+
     /**
      * @param DestroyUser $request
      * @return RedirectResponse
@@ -333,7 +457,7 @@ class AdminUserController extends Controller
      * @param FormRequest $request
      * @return String|null
      */
-    protected function uploadImage(FormRequest $request): ?String
+    protected function uploadImage(FormRequest $request): ?string
     {
         if (null !== $request->file('image')) {
             return $request->file('image')->store('', 'users');

@@ -241,7 +241,7 @@ class UserController extends Controller
         }
 
         if (! empty($message)) {
-            $result = $service->sendMessage($userRequest->update_type, $message, $user);
+            $result = $service->sendMessage('Member Address', $message, $user);
         }
 
         Session::flash('success', 'Your address update has been emailed to the office.');
@@ -301,7 +301,7 @@ class UserController extends Controller
         }
 
         if (! empty($message)) {
-            $result = $service->sendMessage($userRequest->update_type, $message, $user);
+            $result = $service->sendMessage('Member Emergency Contact Info', $message, $user);
         }
 
         Session::flash('success', 'Your emergency contact update has been emailed to the office.');

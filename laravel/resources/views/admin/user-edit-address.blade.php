@@ -1,13 +1,14 @@
-@extends('layouts.jumbo')
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-address-card text-success"></i> ' . $data["action"]
+            . ' Address for ' . ($data["action"] == "Edit" ? $data['user']->name : '') ])
 @section('content')
-<div class="container border border-dark rounded-lg  p-4 mb-3" style="background: rgba(220,220,220,0.8);">
+    @include('admin.admin_partials.admin_tinymce')
     <div class="row">
         <h3>
-            <a href="{{route('members')}}">
+            <a href="{{route('users_list')}}">
                 <i class="far fa-arrow-alt-circle-left"></i>
                 Members /
             </a>
-            <a href="{{route('member', $data['user']->id)}}">
+            <a href="{{route('user_edit', $data['user']->id)}}">
                 {{$data['user']->name}}
             </a>
         </h3>
@@ -16,8 +17,9 @@
     <div class="row pb-2">
         <div class="col-12 m-3">
             <p>
-                <i>Please note: the website does not store your address online for matters of efficiency sake.
-                    This form will email the office contacts to update your address.
+                <i>Please note: the website does not store address information
+                    for matters of efficiency sake.
+                    This form will email the office contacts to update the address.
                 </i>
             </p>
         </div>
@@ -25,7 +27,7 @@
     <div class="row d-flex justify-content-around">
         <div class="col-12 col-md-5 mt-md-3">
             <h4>
-                <a href="{{route('edit_emergency_contact', $data['user']->id)}}">
+                <a href="{{route('admin_edit_emergency_contact', $data['user']->id)}}">
                     <i class="fas fa-first-aid text-danger"></i>
                     <span class="font-weight-bold">
                         Update emergency contact
@@ -35,7 +37,7 @@
         </div>
         <div class="col-12 col-md-5 mt-md-3">
             <h4>
-                <a href="{{route('member_edit', $data['user']->id)}}">
+                <a href="{{route('user_edit', $data['user']->id)}}">
                     <i class="fas fa-user"></i>
                     <span class="font-weight-bold">
                         Update profile
@@ -47,12 +49,12 @@
     <div class="row mt-5">
         <div class="col-12">
             <form method="post" name="user_address" action="{{ url()->current() }}" enctype="multipart/form-data"
-              class="needs-validation" novalidate>
+                  class="needs-validation" novalidate>
                 {!! csrf_field() !!}
                 <div class="col-lg-12">
                     <h3>
                         <i class="fas fa-address-card text-success"></i>
-                        Update Your Address With The Office
+                        Update Member Address With The Office
                     </h3>
                 </div>
                 <div class="input-group mb-3">
@@ -106,10 +108,9 @@
                 </div>
                 <div class="col-12 mt-lg-5">
                     <i class="fas fa-edit fa-2x"></i>
-                    <input class="btn btn-primary" type="submit" value="{{ $data['action'] }} My Address" />
+                    <input class="btn btn-primary" type="submit" value="{{ $data['action'] }} Member Address" />
                 </div>
             </form>
         </div>
     </div>
-</div>
 @endsection

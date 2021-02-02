@@ -164,6 +164,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('/users', [CNS\AdminUserController::class, 'index'])->name('users_list');
     Route::get('/user/create', [CNS\AdminUserController::class, 'create'])->name('user_create');
     Route::post('/user/create', [CNS\AdminUserController::class, 'store']);
+
+
+    Route::get('/user/{user}/address/edit', [CNS\AdminUserController::class, 'admin_edit_address'])
+        ->name('admin_edit_address');
+    Route::post('/user/{user}/address/edit', [CNS\AdminUserController::class, 'admin_update_address']);
+
+    Route::get('/user/{user}/emergency_contact/edit', [CNS\AdminUserController::class, 'admin_edit_emergency_contact'])
+        ->name('admin_edit_emergency_contact');
+    Route::post('/user/{user}/emergency_contact/edit', [CNS\AdminUserController::class, 'admin_update_emergency_contact']);
+
+
+
+
     Route::get('/user/{user}/edit', [CNS\AdminUserController::class, 'edit'])->name('user_edit');
     Route::post('/user/{user}/edit', [CNS\AdminUserController::class, 'update'])->name('user_edit_update');
     Route::delete('/user/delete', [CNS\AdminUserController::class, 'destroy'])->name('user_destroy');

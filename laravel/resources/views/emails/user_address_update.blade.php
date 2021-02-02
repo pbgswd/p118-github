@@ -45,12 +45,13 @@
                                 {{$update_type}} update for {{$user['name']}}
                             </h3>
 			                <p class="lead">
-                                Email: <a href="mailto:{{$user['email']}}">
-                                            {{$user['email']}}
-                                       </a>
+                                Email:
+                                <a href="mailto:{{$user['email']}}">
+                                    {{$user['email']}}
+                               </a>
                             </p>
                             <p style="margin-bottom: 2em;">
-                                {{$user['name']}} has submitted a change to personal {{$update_type}} info.
+                                {{$user['name']}} has made a change to personal {{$update_type}} info.
                                 Could the administration please update this information.
                             </p>
                               <div style="background: #cce5ff; margin: 5px; padding:15px;">
