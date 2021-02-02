@@ -16,7 +16,7 @@
             @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
                 <div class="col-6 col-md-12 mb-3">
                     <img src="{{ asset('storage/users/' . $data['user']->user_info->image) }}"
-                         class="member-profile-pic" />
+                         class="member-profile-pic border rounded-lg" />
                 </div>
             @endif
         </div>

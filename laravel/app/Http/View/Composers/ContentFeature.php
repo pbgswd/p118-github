@@ -29,10 +29,12 @@ class ContentFeature
             ->get();
         $posts = Post::where('landing_page', 1)
             ->orderBy('updated_at', 'desc')
-            ->with('topics')->get();
+            ->with('topics')
+            ->get();
         $pages = Page::where('landing_page', 1)
             ->orderBy('updated_at', 'desc')
-            ->with('topics')->get();
+            ->with('topics')
+            ->get();
 
         $data = [
             'topics' => $topics,
