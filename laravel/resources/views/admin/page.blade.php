@@ -87,12 +87,15 @@ $topics = $data['topics'];
             </div>
         </div>
         <div class="col-md-4">
-            <div class="col-lg-2"><h4>Status</h4></div>
+            <div class="col-lg-2">
+                <h4>Status</h4>
+            </div>
             <div class="col-sm">
                 <label>
                     <input name="page[front_page]" type="hidden" value="0" />
                     <input name="page[front_page]" type="checkbox" value="1"
-                        {{ checked(old('page.front_page',$page->front_page)) }} /> In Menu
+                        {{ checked(old('page.front_page',$page->front_page)) }} />
+                    Front Page
                 </label>
             </div>
             <div class="col-sm">
@@ -100,7 +103,7 @@ $topics = $data['topics'];
                     <input name="page[landing_page]" type="hidden" value="0" />
                     <input name="page[landing_page]" type="checkbox" value="1"
                         {{ checked(old('page.landing_page', $page->landing_page)) }} />
-                    Allow Comments
+                    Landing Page
                 </label>
             </div>
             <div class="col-sm">
@@ -116,7 +119,9 @@ $topics = $data['topics'];
         <div class="row mt-lg-3"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2"><h4>Tags</h4></div>
+                <div class="col-lg-2">
+                    <h4>Tags</h4>
+                </div>
                 <div class="col-lg-10">
                     <label><input type="text" name="tags"
                                   value="<?php echo htmlentities(old('tags', join(', ', $page->tagNames()))); ?>"
