@@ -34,9 +34,9 @@
                         <ul class="list-group-item">
                             <a href="{{route('attachment_download',
                                 [$data['post']->getAttachmentFolder(), $pa->id])}}"
-                               title="Download {{ $pa->description ?? $pa->file_name}}">
+                                title="Download {{$pa->file_name}}">
                                 <i class="far fa-file"></i>
-                                {{ $pa->description != '' ? $pa->description : $pa->file_name}}
+                                {{ $pa->description ?: $pa->file_name}}
                             </a>
                         </ul>
                     @endforeach

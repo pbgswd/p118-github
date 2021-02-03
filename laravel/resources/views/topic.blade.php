@@ -51,40 +51,25 @@
             </div>
         @endif
         @if(count($data['topic']->attachments) > 0)
-            <div class="col-12 border border-dark rounded-lg pt-2 mb-2 mb-lg-3">
+            <div class="col-12 border border-dark rounded-lg pt-2 pb-2 mb-2 mb-lg-3">
                 <h4>
                     <i class="far fa-folder-open"></i>
-                    Files for {{$data['topic']->name}}
+                    Files
                 </h4>
-                <div class="table-responsive">
-                    <table class="table-striped table">
-                        <thead>
-                            <tr>
-                                <th> File </th>
-                                <th> Description </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data['topic']->attachments as $ta)
-                                <tr>
-                                    <td>
-                                        <a href="{{route('attachment_download',
-                                            [$data['topic']->getAttachmentFolder(), $ta->id])}}"
-                                           title="Download {{$ta->description ?? $ta->file_name}}">
-                                            {{$ta->description ?? $ta->file_name}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        {{$ta->description}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                 <ul class="list-group">
+                     @forelse ($data['topic']->attachments as $ta)
+                         <li class="list-group-item">
+                             <a href="{{route('attachment_download',
+                                [$data['topic']->getAttachmentFolder(), $ta->id])}}"
+                                title="Download {{$ta->file_name}}">
+                                 <i class="fas fa-file-download fa-1x"></i>
+                                {{$ta->description ?: $ta->file_name}}
+                             </a>
+                         </li>
+                     @empty
+                     @endforelse
+                 </ul>
             </div>
         @endif
-
-
     </div>
 @endsection

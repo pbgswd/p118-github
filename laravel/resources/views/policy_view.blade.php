@@ -18,7 +18,9 @@
                 </h1>
             </div>
             <div class="col-12 col-md-6 text-md-right">
-                <h4>From: {{$data['policy']->date->format('F j Y')}}</h4>
+                <h4>
+                    From: {{$data['policy']->date->format('F j Y')}}
+                </h4>
             </div>
         </div>
         <div class="col-12">
@@ -37,10 +39,11 @@
                                 <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
                                    title="Download {{$att->file_name}}" target="_blank">
                                     <i class="fas fa-file-download fa-1x"></i>
-                                    {{$att->description != '' ? $att->description : $att->file_name}}
+                                    {{$att->description ? : $att->file_name}}
                                 </a>
                             </li>
                         @empty
+                            <li class="list-group-item"> No file </li>
                         @endforelse
                     </ul>
                 </div>

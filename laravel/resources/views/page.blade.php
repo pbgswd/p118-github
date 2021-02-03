@@ -33,10 +33,10 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <a href="{{route('attachment_download',
-                                            [$data['page']->getAttachmentFolder(), $pa->id])}}"
+                                        [$data['page']->getAttachmentFolder(), $pa->id])}}"
                                title="Download {{$pa->file_name}}">
                                 <i class="far fa-file"></i>
-                                {{$pa->description == '' ? $pa->file_name : $pa->description}}
+                                {{$pa->description ? : $pa->file_name}}
                             </a>
                         </li>
                     </ul>

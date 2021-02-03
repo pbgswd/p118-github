@@ -35,18 +35,19 @@
                     Files
                 </h4>
                 <ul class="list-group">
-                    @foreach($data['agreement']->attachments as $att)
+                    @forelse($data['agreement']->attachments as $att)
                         <li class="list-group-item">
-                            <h4>
-                                <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
-                                   title="Download {{$att->file_name}}" target="_blank">
-                                    <i class="fas fa-file-download fa-1x"></i>
-                                    {{$att->description}}
-                                </a>
-                                {{$att->description ?? $att->file_name}}
-                            </h4>
+                            <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                               title="Download {{$att->file_name}}" target="_blank">
+                                <i class="fas fa-file-download fa-1x"></i>
+                                {{$att->description ? : $att->file_name}}
+                            </a>
                         </li>
-                    @endforeach
+                    @empty
+                        <li class="list-group-item">
+                            No files
+                        </li>
+                    @endforelse
                 </ul>
             </div>
         @endif

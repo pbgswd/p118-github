@@ -37,7 +37,7 @@
                                 <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
                                    title="Download {{$att->file_name}}" target="_blank">
                                     <i class="fas fa-file-download fa-1x"></i>
-                                    {{$att->description == '' ? $att->description : $att->file_name}}
+                                    {{$att->description ? : $att->file_name}}
                                 </a>
                             </li>
                         @endforeach

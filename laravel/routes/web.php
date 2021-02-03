@@ -123,7 +123,7 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
 //    ->name('public_committee_post_comment');
 
     Route::post('minutes', [CNS\MeetingController::class, 'post_year'])->name('post_year');
-    Route::get('minutes/{year}', [CNS\MeetingController::class, 'index_by_year'])->name('list_meetings_year');
+    Route::get('minutes/year/{year}', [CNS\MeetingController::class, 'index_by_year'])->name('list_meetings_year');
     Route::get('minutes', [CNS\MeetingController::class, 'index'])->name('list_meetings');
     Route::get('minutes/{meeting}', [CNS\MeetingController::class, 'show'])->name('meeting');
 
