@@ -2,7 +2,7 @@
 @section('content')
 <div class="container border border-dark rounded-lg pl-lg-5 pr-lg-5 mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row">
-        <div class="col-12 pt-2">
+        <div class="col-12 p-2">
             <h3>
                 <a href="{{route('members')}}">
                     <i class="far fa-arrow-alt-circle-left"></i>
@@ -17,9 +17,9 @@
             </h3>
         </div>
     </div>
-    <div class="row d-flex justify-content-md-around">
+    <div class="row d-flex justify-content-md-around mt-3 mb-2">
         @if( $data['user']->allExecutiveRoles->count() > 0 )
-            <div class="col-12 col-lg-5 border border-dark rounded-lg m-2 pt-2">
+            <div class="col-12 col-lg-5 border border-dark rounded-lg p-2">
                 <h4>
                     Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}
                 </h4>
@@ -39,8 +39,10 @@
             </div>
         @endif
         @if($data['user']->committee_memberships->count() > 0)
-            <div class="col-12 col-lg-5 border border-dark rounded-lg mt-2 mb-2 p-2">
-                <h4>Membership in committees</h4>
+            <div class="col-12 col-lg-5 border border-dark rounded-lg p-2">
+                <h4>
+                    Membership in committees
+                </h4>
                 <ul class="list-group">
                     @foreach($data['user']->committee_memberships as $m)
                         @if($m->pivot->role != 'Past-Member')
@@ -60,12 +62,13 @@
         {!! csrf_field() !!}
         <input type="hidden" name="update_type" value="Profile" />
         <div class="row">
-            <div class="col-12">
-
-                <h3 class="mt-3 mb-3 fw-bold">
+            <div class="col-12 mt-5 mb-3">
+                <h3 class="fw-bold">
                     <i class="fas fa-user text-primary"></i>
                     Primary Contact Information
                 </h3>
+            </div>
+            <div class="col-12">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">Name</span>
@@ -125,7 +128,7 @@
                </h5>
             </div>
         </div>
-        <div class="row d-flex justify-content-around mt-2 pt-2 mb-md-3">
+        <div class="row d-flex justify-content-around mt-3 pt-2 mb-3">
             <div class="col-12 col-md-5 mt-md-3">
                 <h4>
                     <a href="{{route('member_address_edit', $data['user']->id)}}">
@@ -164,16 +167,19 @@
                        value="Share profile with other members?" size="40" readonly>
             </div>
             @if( isset($data['user']->user_info->image) )
-                <div class="col-6 mt-2">
+                <div class="col-12 mt-5 mb-5">
                     <h4>
                         <i class="far fa-images"></i>
                         Image preview - Currently: {{ $data['user']->user_info->file_name }}
                     </h4>
                     <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}"
-                         class="m-1 member-profile-pic"/>
+                         class="m-1 member-profile-pic border rounded-lg"/>
                     <input type="hidden" name="user_info[image]" value="{{$data['user']->user_info->image}}" />
+                    <h5>
+                        {{"File Size: " . $data['filesize'] ?? ''}}
+                    </h5>
                 </div>
-                <div class="col-6 mt-2">
+                <div class="col-12 mt-3">
                     <i class="fas fa-info-circle"></i>
                     Image help: use an image ideally no wider than 250px.
                 </div>
@@ -198,7 +204,7 @@
                     </p>
                 </div>
             @endif
-            <div class="input-group mb-lg-3 mt-2 pb-3">
+            <div class="input-group mb-3 mt-2 pb-3">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[show_picture]" type="hidden" value="0" />
@@ -209,7 +215,7 @@
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
                        value="Show picture in your profile?" size="40" readonly>
             </div>
-            <h3 class="mt-lg-5 p-lg-2 fw-bold">
+            <h3 class="mt-5 p-lg-2 fw-bold">
                 <i class="fas fa-user text-primary"></i>
                 About Me
             </h3>
@@ -232,5 +238,6 @@
             </div>
         </div>
     </form>
+</div>
 </div>
 @endsection

@@ -170,13 +170,19 @@
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
                        value="Check to share profile with other members." size="80" readonly>
             </div>
-            <div class="row mt-lg-3">
+            <div class="row mt-3">
                 @if( isset($data['user']->user_info->image) )
-                    <div class="col-4 mt-lg-1 mb-3">
-                        <h4><i class="far fa-images"></i> Profile Image</h4>
-                        <h5>Currently: {{ $data['user']->user_info->file_name }}</h5>
-                        <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}" width="150px" />
+                    <div class="col-12 mt-3 mb-3">
+                        <h4>
+                            <i class="far fa-images"></i>
+                            Profile Image Currently:
+                            {{ $data['user']->user_info->file_name }}
+                        </h4>
+                        <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}"
+                             width="150px"
+                            class="border rounded-lg" />
                         <input type="hidden"  name="user_info[image]" value="{{$data['user']->user_info->image}}" />
+                        <h5>{{$data['filesize'] ?? ''}}</h5>
                     </div>
                     <div class="input-group mb-3 col-12">
                         <div class="input-group-prepend">

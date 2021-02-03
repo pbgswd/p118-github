@@ -10,6 +10,7 @@ use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Rules\Phone;
+use App\Services\AttachmentService;
 use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
 use http\Client\Request;
@@ -92,6 +93,9 @@ class UserController extends Controller
 
         $user->load('phone_number', 'user_info', 'membership', 'committee_memberships', 'allExecutiveRoles');
 
+        $filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/users'.'/'.$user->user_info->image)))
+            ? : null;
+
         $currentUser = Auth::user();
         $roles = Role::get();
         $user_roles = $user->getRoleNames()->toArray();
@@ -99,6 +103,7 @@ class UserController extends Controller
 
         $data = [
             'user' => $user,
+            'filesize' => $filesize,
             'user_roles' => $user_roles,
             'roles' => $roles,
             'action' => 'Edit',
@@ -164,7 +169,7 @@ class UserController extends Controller
 
             if (isset($user_info['delete_image'])) {
                 Storage::disk('users')->delete($user_info['image']);
-                Session::flash('info', 'You have deleted '.$user_info['image']);
+                Session::flash('info', 'You have deleted '. $user_info['image']);
                 $user_info['image'] = null;
                 $user_info['file_name'] = null;
             } else {
@@ -311,9 +316,9 @@ class UserController extends Controller
 
     /**
      * @param FormRequest $request
-     * @return String
+     * @return string
      */
-    protected function uploadImage(FormRequest $request): String
+    protected function uploadImage(FormRequest $request): string
     {
         if (null !== $request->file('image')) {
             return $request->file('image')->store('', 'users');

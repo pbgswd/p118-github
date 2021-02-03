@@ -15,6 +15,7 @@ use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Rules\Phone;
+use App\Services\AttachmentService;
 use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -173,16 +174,17 @@ class AdminUserController extends Controller
                     'membership'
                     );
 
-        $regions = $this->getFormOptions(['countries', 'statesprovs']);
+        $filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/users'.'/'.$user->user_info->image)))
+            ? : null;
 
         $user_roles = $user->getRoleNames()->toArray();
-        $user_roles = array_combine($user_roles, $user_roles);
 
         $data = [
             'user' => $user,
             'membership' => Options::membership_levels(),
+            'filesize' => $filesize,
             'executive_roles' => Executive::all(),
-            'user_roles' => $user_roles,
+            'user_roles' => array_combine($user_roles, $user_roles),
             'roles' => Role::get(),
             'action' => 'Edit',
         ];

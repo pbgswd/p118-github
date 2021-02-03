@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AttachmentController extends Controller
 {
@@ -31,9 +32,9 @@ class AttachmentController extends Controller
     /**
      * @param string $folder
      * @param Attachment $attachment
-     * @return RedirectResponse
+     * @return StreamedResponse
      */
-    public function download(string $folder, Attachment $attachment): RedirectResponse
+    public function download(string $folder, Attachment $attachment): StreamedResponse
     {
         return $this->attachmentService->downloadAttachment($attachment, $folder);
     }

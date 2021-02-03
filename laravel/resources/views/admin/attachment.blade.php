@@ -102,8 +102,9 @@ $attachment = $data['attachment'];
             @else
                 <div class="row">
                     <div class="col-md-6 mb-lg-1">
-                        <img src="{{ asset('storage/' . $attachment->subfolder . "/" . $attachment['file']) }}"
-                            {{$attachment['imageData'][3]}} />
+                        <img src="{!! asset('storage/' . $attachment->subfolder . "/" . $attachment['file']) . '"' !!}}
+                            {!! $attachment->imagedata[3] ?? '' !!}}"/>
+
                     </div>
                     <div class="col-md-12 mt-lg-3 ml-lg-2">
                         <h3><i class="far fa-file-image"></i> Image Info</h3>
