@@ -1,6 +1,3 @@
-<?php
-$agreements = $data['agreements'];
-?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List agreements'])
 @section('content')
 <div class="container">
@@ -35,7 +32,7 @@ $agreements = $data['agreements'];
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $agreements as $a )
+                    @foreach ( $data['agreements'] as $a )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -85,7 +82,7 @@ $agreements = $data['agreements'];
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                     {{ $agreements->links() }}
+                     {{ $data['agreements']->links() }}
                 </ul>
             </div>
         </div>

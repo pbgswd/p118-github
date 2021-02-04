@@ -1,7 +1,5 @@
-<?php
-$attachments = $data['results'];
-?>
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> Search result List Attachements and Images'])
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i>
+                                    Search result for Attachements and Images'])
 @section('content')
     <div class="container">
         <div class="row">
@@ -11,7 +9,7 @@ $attachments = $data['results'];
                         <i class="far fa-arrow-alt-circle-left"></i>
                     </a>
                     <span class="badge badge-primary badge-pill">
-                       {{ $attachments->count() }} Search Results for "{{$data['search']}}"
+                       {{ $data['results']->count() }} Search Results for "{{$data['search']}}"
                     </span>
                     | <a href="{{ route('attachment_create') }}">Add new file
                         <i class="far fa-arrow-alt-circle-right"></i>
@@ -19,16 +17,9 @@ $attachments = $data['results'];
                 </h3>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <form id="search-form" action="{{ route('list_attachments_search_result') }}" method="POST">
-                    @csrf
-                    <input class="form-control form-control-dark w-100" type="text" name="search" style="background-color:#aaaaaa;" placeholder="Attachment Search" aria-label="Search">
-                </form>
-            </div>
-        </div>
+        @include('admin.admin_partials.attachment_search_form')
     </div>
-    @if ($attachments->count() > 0)
+    @if ($data['results']->count() > 0)
         <form name="delete" method="POST" action="{{ route('attachment_destroy') }}">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}
@@ -47,7 +38,7 @@ $attachments = $data['results'];
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $attachments as $a )
+                            @foreach ( $data['results'] as $a )
                                 <tr>
                                     <td>
                                         <div class="checkbox">
@@ -58,7 +49,8 @@ $attachments = $data['results'];
                                     </td>
                                     <td>
                                         {{$a->searchable->description}}<br />
-                                        <a href="{{ route('admin_attachment_edit', $a->searchable->id) }}" title="Edit {{ $a->searchable->file_name }} ">
+                                        <a href="{{ route('admin_attachment_edit', $a->searchable->id) }}" title="Edit
+                                            {{ $a->searchable->file_name }}">
                                             @if(!in_array($a->searchable->extension, ['jpg', 'jpeg', 'png', 'gif']))
                                                 @if($a->searchable->extension == 'pdf')
                                                     <i class="far fa-file-pdf fa-8x"></i>
@@ -66,15 +58,17 @@ $attachments = $data['results'];
                                                     <i class="far fa-file fa-8x"></i>
                                                 @endif
                                             @else
-                                                @if($a->searchable->imagedata[0] > 400)
-                                                    <img src="{{ asset('storage/' . $a->searchable->subfolder . "/" . $a->searchable['file']) }}" width="400" />
-                                                @else
-                                                    <img src="{{ asset('storage/' . $a->searchable->subfolder . "/" . $a->searchable['file']) }}" />
-                                                @endif
+                                                <img class="border rounded-lg"
+                                                     src="{{ asset('storage/' . $a->searchable->subfolder . "/" .
+                                                    $a->searchable['file']) }}" {!! $a->searchable->imagedata[0] > 400 ?
+                                                    'width="400"' : '' !!} />
                                             @endif
                                         </a>
                                         <h4>
-                                            <a title="{{ $a->searchable->name }}" href="{{ route('admin_attachment_edit', $a->searchable->id) }}">{{ $a->searchable->file_name }}</a>
+                                            <a title="{{ $a->searchable->name }}"
+                                               href="{{ route('admin_attachment_edit', $a->searchable->id) }}">
+                                                {{ $a->searchable->file_name }}
+                                            </a>
                                         </h4>
                                         <h5>Size: {{ $a->searchable->filesize }}</h5>
                                     </td>
@@ -83,7 +77,8 @@ $attachments = $data['results'];
                                     </td>
                                     <td> {{ $a->searchable->user->name }} </td>
                                     <td>
-                                        <a href="{{ route('admin_attachment_edit', $a->searchable->id) }}" title="Edit {{ $a->searchable->file_name }} ">
+                                        <a href="{{ route('admin_attachment_edit', $a->searchable->id) }}"
+                                           title="Edit {{ $a->searchable->file_name }}">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>
@@ -111,7 +106,6 @@ $attachments = $data['results'];
     @if (!empty($images))
         <h3>Files not in db </h3>
         @foreach ($images as $img)
-
         @endforeach
     @endif
     <div class="row mt-lg-5"></div>

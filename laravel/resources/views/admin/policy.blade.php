@@ -3,24 +3,7 @@ $policy = $data['policy'];
 ?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-gavel"></i> <i class="fas fa-edit"></i>' . $data["action"] . ' Policy ' . ($data["action"] == 'Edit' ? $policy->name : '') ])
 @section('content')
-<script>
-    tinymce.init({
-        selector: 'textarea#policy-description',
-        height: 200,
-        width:800,
-        menubar: false,
-        plugins: [
-            'advlist autolink lists link image charmap print preview anchor textcolor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-        content_css: [
-            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-            '//www.tiny.cloud/css/codepen.min.css'
-        ]
-    });
-</script>
+@include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <h3>  <a href="{{ route('policies_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of Policies</a>  </h3>
     <form method="post" name="policy" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>

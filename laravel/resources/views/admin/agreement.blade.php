@@ -1,37 +1,22 @@
-<?php
-
-$agreement = $data['agreement'];
-
-?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' agreement ' . ($data["action"] == 'Edit' ? $agreement->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' agreement ' . ($data["action"] == 'Edit' ? $data['agreement']->name : '') ])
 @section('content')
-<script>
-    tinymce.init({
-        selector: 'textarea#agreement-description',
-        height: 200,
-        width:800,
-        menubar: false,
-        plugins: [
-            'advlist autolink lists link image charmap print preview anchor textcolor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-        content_css: [
-            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-            '//www.tiny.cloud/css/codepen.min.css'
-        ]
-    });
-</script>
+ @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3>  <a href="{{ route('agreements_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of agreements</a>  </h3>
-    <form method="post" name="agreement" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <h3>
+        <a href="{{ route('agreements_list') }}">
+            <i class="far fa-arrow-alt-circle-left"></i>
+            List of agreements
+        </a>
+    </h3>
+    <form method="post" name="agreement" action="{{ url()->current() }}" enctype="multipart/form-data"
+          class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="agreement[title]" value="{{ old('agreement.title', $agreement->title)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Title" name="agreement[title]"
+                           value="{{ old('agreement.title', $data['agreement']->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -41,7 +26,10 @@ $agreement = $data['agreement'];
                     <h4>Description</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="agreement[description]" id="agreement-description" placeholder="Information about the agreement, or pasted from the pdf." class="form-control">{{old('agreement.description', $agreement->description)}}</textarea>
+                    <textarea name="agreement[description]" id="agreement-description"
+                              placeholder="Information about the agreement, or pasted from the pdf."
+                              class="form-control">{{old('agreement.description', $data['agreement']->description)}}
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -54,7 +42,7 @@ $agreement = $data['agreement'];
                             class="form-control"
                             placeholder="YYYY-MM-DD"
                             name="agreement[from]"
-                            value="{{ old('agreement.from', \optional($agreement->from)->toDateString())}}"
+                            value="{{ old('agreement.from', \optional($data['agreement']->from)->toDateString())}}"
                             size="10"
                             data-provide="datepicker"
                             data-date-format="yyyy-mm-dd"
@@ -69,7 +57,7 @@ $agreement = $data['agreement'];
                             class="form-control"
                             placeholder="YYYY-MM-DD"
                             name="agreement[until]"
-                            value="{{ old('agreement.until', \optional($agreement->until)->toDateString())}}"
+                            value="{{ old('agreement.until', \optional($data['agreement']->until)->toDateString())}}"
                             size="10"
                             data-provide="datepicker"
                             data-date-format="yyyy-mm-dd"
@@ -85,7 +73,9 @@ $agreement = $data['agreement'];
                 <div class="col-sm">
                     <label>
                          <input name="agreement[live]" type="hidden" value="0" />
-                         <input name="agreement[live]" type="checkbox" value="1" {{ checked( old('agreement.live', $agreement->live)) }} /> Check now to make Live
+                         <input name="agreement[live]" type="checkbox" value="1"
+                                checked( old('agreement.live', $data['agreement']->live)) }} />
+                        Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>
@@ -104,10 +94,11 @@ $agreement = $data['agreement'];
         </div>
         <div class="row mt-lg-3">
             @if ($data['action'] == 'Edit')
-                @if(count($agreement->attachments) > 0)
+                @if(count($data['agreement']->attachments) > 0)
                     <div class="col-md-12">
                         <h2>Files</h2>
-                        <table class="table table-striped table-sm">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th> # </th>
@@ -120,30 +111,44 @@ $agreement = $data['agreement'];
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($agreement->attachments as $agreement_attachment)
+                            @foreach ($data['agreement']->attachments as $attachment)
                                 <tr>
                                     <td>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="attachment[{{$agreement_attachment->id}}][id]" value="{{$agreement_attachment->id}}" />
+                                                <input type="checkbox"
+                                                       name="attachment[{{$attachment->id}}][id]"
+                                                       value="{{$attachment->id}}" />
                                             </label>
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', [$agreement->getAttachmentFolder(), $agreement_attachment->id])}}" title="Download {{$agreement_attachment->file_name}}">{{$agreement_attachment->file_name}}</a>
+                                        <a href="{{route('attachment_download',
+                                                    [$data['agreement']->getAttachmentFolder(),
+                                                    $attachment->id])}}"
+                                           title="Download {{$attachment->file_name}}">
+                                            {{$attachment->file_name}}
+                                        </a>
                                     </td>
-                                    <td>{{$agreement_attachment->access_level}}</td>
+                                    <td>{{$attachment->access_level}}</td>
                                     <td>
-                                        <a title="Edit page for {{ $agreement_attachment->file_name }}" href="{{ route('admin_attachment_edit', $agreement_attachment->id) }}"><i class="far fa-edit"></i></a>
+                                        <a title="Edit page for {{ $attachment->file_name }}"
+                                           href="{{route('admin_attachment_edit', $attachment->id) }}">
+                                            <i class="far fa-edit"></i>
+                                        </a>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$agreement_attachment->id}}][description]" value="{{ old('attachments.description', $agreement_attachment->description)}}" size="40"/>
+                                        <input type="text" class="form-control"
+                                               placeholder="Add a description for this file"
+                                               name="attachment[{{$attachment->id}}][description]"
+                                               value="{{ old('attachments.description',
+                                                    $attachment->description)}}" size="40"/>
                                     </td>
                                     <td>
-                                        {{ \optional($agreement_attachment->created_at)->toDateString() }}
+                                        {{ \optional($attachment->created_at)->toDateString() }}
                                     </td>
                                     <td>
-                                        {{ \optional($agreement_attachment->updated_at)->toDateString() }}
+                                        {{ \optional($attachment->updated_at)->toDateString() }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -154,6 +159,7 @@ $agreement = $data['agreement'];
                             </tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 @endif
             @endif
@@ -172,7 +178,7 @@ $agreement = $data['agreement'];
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $agreement->id }}">
+                <input type="hidden" name="id[]" value="{{ $data['agreement']->id }}">
                 <input class="btn btn-outline-danger" type="submit" value="Delete">
             </form>
          </div>

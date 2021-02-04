@@ -5,7 +5,7 @@ $topics = $data['topics'];
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Page ' .
     ($data["action"] == 'Edit' ? $page->name : '') ])
 @section('content')
-
+    @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <h3>
         <a href="{{ route('pages_list') }}">

@@ -1,32 +1,14 @@
-<?php
-$employment = $data['employment'];
-?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Employment Posting ' . ($data["action"] == 'Edit' ? $employment->title : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Employment Posting ' .
+($data["action"] == 'Edit' ? $data['employment']->title : '') ])
 @section('content')
-    <script>
-        tinymce.init({
-            selector: 'textarea#employment-description',
-            height: 200,
-            width:800,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor textcolor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tiny.cloud/css/codepen.min.css'
-            ]
-        });
-    </script>
+    @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <h3><a href="{{ route('admin_employment_list') }}">
             <i class="far fa-arrow-alt-circle-left"></i> List of employment postings
         </a>
     </h3>
-    <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data"
+          class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-lg-3"> &nbsp;</div>
         <div class="row">
@@ -35,7 +17,8 @@ $employment = $data['employment'];
                     <h4>Title</h4>
                 </div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="employment[title]" value="{{ old('employment.title', $employment->title)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Title" name="employment[title]"
+                           value="{{ old('employment.title', $data['employment']->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -58,14 +41,15 @@ $employment = $data['employment'];
                         data-date-format="yyyy-mm-dd"
                         data-date-startDate="-3d"
                         style='width: 300px;'
-                        value="{{ old('employment.date', $employment->deadline->format('Y-m-d') )}}"
+                        value="{{ old('employment.date', $data['employment']->deadline->format('Y-m-d') )}}"
                     >
                 </div>
             </div>
             @if ($data['action'] == 'Edit')
                 <div class="col-12 mt-2 mb-2">
                     <h4>
-                        Status: {!! $employment->jobstatus ? "<i class='fas fa-check'></i> Open" : "<i class='far fa-times-circle'></i> Closed" !!}
+                        Status: {!! $data['employment']->jobstatus ? "<i class='fas fa-check'></i> Open" :
+                            "<i class='far fa-times-circle'></i> Closed" !!}
                     </h4>
                 </div>
             @endif
@@ -76,7 +60,9 @@ $employment = $data['employment'];
                     <h4>Description</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="employment[description]" id="employment-description" placeholder="Summary content" class="form-control">{{old('employment.description', $employment->description)}}</textarea>
+                    <textarea name="employment[description]" id="employment-description" placeholder="Summary content"
+                              class="form-control">{{old('employment.description', $data['employment']->description)}}
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -84,7 +70,8 @@ $employment = $data['employment'];
             <div class="form-group">
                 <div class="col-lg-2"><h4>Url</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="https://....." name="employment[url]" value="{{ old('employment.url', $employment->url)}}" size="80" />
+                    <input type="text" class="form-control"  placeholder="https://....." name="employment[url]"
+                           value="{{ old('employment.url', $data['employment']->url)}}" size="80" />
                 </div>
             </div>
         </div>
@@ -95,7 +82,9 @@ $employment = $data['employment'];
             <div class="col-sm">
                 <label>
                     <input name="employment[live]" type="hidden" value="0" />
-                    <input name="employment[live]" type="checkbox" value="1" {{ checked( old('employment.live', $employment->live)) }} /> Check now to make Live
+                    <input name="employment[live]" type="checkbox" value="1"
+                        {{ checked( old('employment.live', $data['employment']->live)) }} />
+                    Check now to make Live
                 </label>
                 <p>ie.: Draft or Published.</p>
             </div>
@@ -111,7 +100,7 @@ $employment = $data['employment'];
                 </div>
             </div>
         @if ($data['action'] == 'Edit')
-            @if(count($employment->attachments) > 0)
+            @if(count($data['employment']->attachments) > 0)
                 <div class="col-md-12">
                     <h2>Files</h2>
                     <table class="table table-striped table-sm">
@@ -125,20 +114,28 @@ $employment = $data['employment'];
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($employment->attachments as $ma)
+                            @foreach ($data['employment']->attachments as $ma)
                                 <tr>
                                     <td>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="attachment[{{$ma->id}}][id]" value="{{$ma->id}}" />
+                                                <input type="checkbox" name="attachment[{{$ma->id}}][id]"
+                                                       value="{{$ma->id}}" />
                                             </label>
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', [$employment->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
+                                        <a href="{{route('attachment_download',
+                                            [$data['employment']->getAttachmentFolder(), $ma->id])}}"
+                                           title="Download {{$ma->file_name}}">{{$ma->file_name}}
+                                        </a>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$ma->id}}][description]" value="{{ old('attachments.description', $ma->description)}}" size="40"/>
+                                        <input type="text" class="form-control"
+                                               placeholder="Add a description for this file"
+                                               name="attachment[{{$ma->id}}][description]"
+                                               value="{{ old('attachments.description', $ma->description)}}"
+                                               size="40"/>
                                     </td>
                                     <td>
                                         {{$ma->created_at}}
@@ -172,11 +169,10 @@ $employment = $data['employment'];
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $employment->id }}">
+                <input type="hidden" name="id[]" value="{{ $data['employment']->id }}">
                 <input class="btn btn-outline-danger" type="submit" value="Delete Employment Posting">
             </form>
          </div>
     @endif
-    <div class="row" style="margin-top:100px;"> &nbsp;</div>
 </div>
 @endsection

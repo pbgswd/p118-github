@@ -182,7 +182,9 @@
                              width="150px"
                             class="border rounded-lg" />
                         <input type="hidden"  name="user_info[image]" value="{{$data['user']->user_info->image}}" />
-                        <h5>{{$data['filesize'] ?? ''}}</h5>
+                        <h5>
+                            {{$data['filesize'] ?? ''}}
+                        </h5>
                     </div>
                     <div class="input-group mb-3 col-12">
                         <div class="input-group-prepend">
@@ -231,7 +233,6 @@
                 </textarea>
             </div>
         </div>
-
         <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
             <div class="col-12 mt-2 mb-2">
                 <h4>
