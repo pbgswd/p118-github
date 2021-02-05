@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Search\LocalSearchResult;
-use App\Models\Address;
 use App\Models\Agreement;
 use App\Models\Attachment;
 use App\Models\Bylaw;
 use App\Models\Committee;
 use App\Models\CommitteePost;
-use App\Models\CommitteePostComment;
 use App\Models\Employment;
 use App\Models\Executive;
 use App\Models\Meeting;

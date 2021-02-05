@@ -9,7 +9,6 @@ use App\Http\Requests\Attachments\UpdateAttachmentRequest;
 use App\Models\Attachment;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;

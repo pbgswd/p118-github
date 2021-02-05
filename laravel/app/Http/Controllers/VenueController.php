@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Venue;
 use Auth;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class VenueController extends Controller

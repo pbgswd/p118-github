@@ -24,14 +24,14 @@ class ContentFeature
             $query->where('slug', 'news');
         };
 
-        $topics = Topic::where('landing_page', 1)
+        $topics = Topic::where([['live', 1],['landing_page', 1]])
             ->orderBy('sort_order', 'desc')
             ->get();
-        $posts = Post::where('landing_page', 1)
+        $posts = Post::where([['live', 1],['landing_page', 1]])
             ->orderBy('updated_at', 'desc')
             ->with('topics')
             ->get();
-        $pages = Page::where('landing_page', 1)
+        $pages = Page::where([['live', 1],['landing_page', 1]])
             ->orderBy('updated_at', 'desc')
             ->with('topics')
             ->get();

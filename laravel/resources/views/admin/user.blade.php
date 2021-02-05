@@ -40,7 +40,7 @@
     </div>
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
-        {!! csrf_field() !!}
+        @csrf
         <div class="row border border-primary rounded-lg border-3 mt-lg-4 p-lg-1 mb-lg-3">
             <div class="col-12 mt-2 mb-2">
                 <h3>Primary Contact Information</h3>
@@ -179,8 +179,8 @@
                             {{ $data['user']->user_info->file_name }}
                         </h4>
                         <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}"
-                             width="150px"
-                            class="border rounded-lg" />
+
+                            class="border rounded-lg img-fluid" />
                         <input type="hidden"  name="user_info[image]" value="{{$data['user']->user_info->image}}" />
                         <h5>
                             {{$data['filesize'] ?? ''}}
@@ -189,7 +189,7 @@
                     <div class="input-group mb-3 col-12">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input name="user_info[show_profile]" type="checkbox" value="1" />
+                                <input name="user_info[delete_image]" type="checkbox" value="1" />
                             </div>
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox"

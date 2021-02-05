@@ -3,15 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Constants\AccessLevelConstants;
-use App\Constants\TopicConstants;
-use App\Models\Hello;
 use App\Models\Page;
 use App\Models\Post;
-use App\Models\Topic;
-use App\Services\AllNewsContentService;
-use App\Services\PublicNewsContentService;
 use Carbon\Carbon;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 

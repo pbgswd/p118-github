@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\HasAttachment;
 use App\Policies\CommitteePolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,7 +21,6 @@ use Spatie\Searchable\SearchResult;
  * @property string           $name
  * @property string           $slug
  * @property string           $description
- * @property string           $access_level
  * @property string           $email
  * @property User             $creator
  * @property bool          $in_menu
@@ -33,7 +33,7 @@ use Spatie\Searchable\SearchResult;
  * @property CommitteePost[]  $posts
  * @method static withoutGlobalScopes()
  */
-class Committee extends LiveableModel implements Searchable
+class Committee extends LiveableModel implements HasAttachment, Searchable
 {
     use Notifiable;
     use Sortable;
@@ -59,7 +59,6 @@ class Committee extends LiveableModel implements Searchable
     ];
 
     protected $casts = [
-        'in_menu' => 'boolean',
         'allow_comments' => 'boolean',
         'live' => 'boolean',
     ];
@@ -70,12 +69,10 @@ class Committee extends LiveableModel implements Searchable
     protected $fillable = [
         'name',
         'description',
+        'file_name',
+        'image',
         'email',
-        'access_level',
         'live',
-        'sort_order',
-        'in_menu',
-        'allow_comments',
     ];
 
     /**
@@ -155,4 +152,31 @@ class Committee extends LiveableModel implements Searchable
         //->with(User::class);
         //todo with associated author   return $this->belongsTo(User::class);
     }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
+    {
+        return $this->belongsToMany(Attachment::class, 'attachment_committee');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentFolder(): string
+    {
+        return 'public';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return $this->access_level;
+    }
+
 }

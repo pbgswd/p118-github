@@ -12,8 +12,6 @@ use App\Models\Options;
 use App\Models\User;
 use App\Services\EmailCommitteeMembershipService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;

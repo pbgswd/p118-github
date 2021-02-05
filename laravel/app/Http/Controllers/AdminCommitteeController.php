@@ -8,17 +8,28 @@ use App\Http\Requests\Committees\UpdateCommitteeRequest;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
+use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AdminCommitteeController extends Controller
 {
+    /**
+     * @var AttachmentService
+     */
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * @return View
      * @throws AuthorizationException
@@ -67,8 +78,26 @@ class AdminCommitteeController extends Controller
 
         $committee = new Committee($request->input('committee'));
         $committee->user_id = Auth::id();
+
+        if (!is_null($request->file('committee.image'))) {
+            $committee['image'] = $this->uploadImage($request);
+            $committee['file_name'] = $request->file('committee.image')->getClientOriginalName();
+        }
+
         $committee->save();
 
+        /***
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $committee);
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+***/
+        
         Session::flash('success', 'You have created a new committee, '.$committee->name);
 
         return redirect()->route('admin_committee_show', $committee->slug);
@@ -95,8 +124,7 @@ class AdminCommitteeController extends Controller
         if ($user !== null &&
             $user->hasRole('committee') &&
             $user->hasPermissionTo('manage committee') &&
-            in_array($user->pivot->role, $committee_executive_roles)
-            ||
+            in_array($user->pivot->role, $committee_executive_roles) ||
             Auth::user()->hasRole('super-admin')) {
             $canManage = 1;
         }
@@ -129,9 +157,20 @@ class AdminCommitteeController extends Controller
 
         $this->authorize('update', $any_committee);
 
+        $file_info = null;
+
+        if(null !== $any_committee['image']) {
+            $file_info['file_size'] = AttachmentService::human_filesize(\filesize(\storage_path('app/committees' .
+                '/' . $any_committee['image'])));
+
+            $file_info['dimensions'] = \getimagesize(\storage_path('app/committees') . '/' .
+                $any_committee['image']);
+        }
+
         return view('admin.committee', [
             'data' => [
                 'committee' => $any_committee,
+                'file_info' => $file_info,
                 'access_levels' => Options::access_levels(),
                 'action' => 'Edit',
             ],
@@ -149,7 +188,37 @@ class AdminCommitteeController extends Controller
         $this->authorize('update', $any_committee);
 
         $any_committee->fill($request->committee);
+
+        if (isset($request->committee['delete_image'])) {
+            Storage::disk('committees')->delete($any_committee['image']);
+
+            Session::flash('info', 'You have deleted '.$any_committee['image']);
+            $any_committee['image'] = null;
+            $any_committee['file_name'] = null;
+        } else {
+            if (!is_null($request->file('committee.image'))) {
+                $any_committee['image'] = $this->uploadImage($request);
+                $any_committee['file_name'] = $request->file('committee.image')->getClientOriginalName();
+            }
+        }
+/**
+        if (null !== $request->file('committee.image')) {
+            $any_committee['image'] = $this->uploadImage($request);
+            $any_committee['file_name'] = $request->file('committee.image')->getClientOriginalName();
+        }
+**/
+
         $any_committee->save();
+
+            //todo update file
+/**
+            if ($result) {
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        **/
 
         Session::flash('success', 'You have updated '.$any_committee->name);
 
@@ -170,6 +239,10 @@ class AdminCommitteeController extends Controller
             ->each(function (Committee $committee) {
                 $committee->committee_members()->detach();
 
+
+                if ($committee['image']) {
+                    Storage::disk('committees')->delete($committee['image']);
+                }
                 //todo committee set to... archive?
                 //todo committee destroy committee relation?
                 //todo committee destroy committee posts?
@@ -180,5 +253,17 @@ class AdminCommitteeController extends Controller
         Session::flash('success', Str::plural('Committee', count($request->id)).' deleted.');
 
         return redirect()->route('committees_list');
+    }
+
+    /**
+     * @param FormRequest $request
+     * @return string
+     */
+    protected function uploadImage(FormRequest $request): string
+    {
+        if (null !== $request->file('committee.image')) {
+            return $request->file('committee.image')->store('', 'committees');
+        }
+        return false;
     }
 }

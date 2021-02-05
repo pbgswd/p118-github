@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Topic;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;

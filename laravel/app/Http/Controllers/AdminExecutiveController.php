@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Executive;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class AdminExecutiveController extends Controller

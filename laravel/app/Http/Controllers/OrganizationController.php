@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 

@@ -13,10 +13,7 @@ use App\Rules\Phone;
 use App\Services\AttachmentService;
 use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
-use http\Client\Request;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -169,7 +166,7 @@ class UserController extends Controller
 
             if (isset($user_info['delete_image'])) {
                 Storage::disk('users')->delete($user_info['image']);
-                Session::flash('info', 'You have deleted '. $user_info['image']);
+                Session::flash('info', 'You have deleted ' . $user_info['file_name']);
                 $user_info['image'] = null;
                 $user_info['file_name'] = null;
             } else {
@@ -323,5 +320,6 @@ class UserController extends Controller
         if (null !== $request->file('image')) {
             return $request->file('image')->store('', 'users');
         }
+        return false;
     }
 }

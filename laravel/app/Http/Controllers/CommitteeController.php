@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -20,6 +17,7 @@ class CommitteeController extends Controller
     public function index(): View
     {
         $c = Committee::with('creator', 'active_committee_members')
+            ->where('live',1)
             ->sortable()
             ->paginate(10);
 

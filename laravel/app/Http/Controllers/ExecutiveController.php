@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Executive;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class ExecutiveController extends Controller

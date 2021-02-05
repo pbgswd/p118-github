@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agreement;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 

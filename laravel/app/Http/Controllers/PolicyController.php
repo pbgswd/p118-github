@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Policy;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class PolicyController extends Controller

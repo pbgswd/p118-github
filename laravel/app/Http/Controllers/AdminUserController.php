@@ -19,8 +19,6 @@ use App\Services\AttachmentService;
 use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;

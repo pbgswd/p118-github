@@ -51,13 +51,13 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h4>
+                                    <h5>
                                         <a title="{{ $p->title}}"
                                            href="{{ route('admin_committee_post_edit',
                                                     [$data['committee']->slug, $p->slug]) }}">
                                             {{ $p->title}}
                                         </a>
-                                    </h4>
+                                    </h5>
                                 </td>
                                 <td>
                                     {!! $p->live ? "<i class='fas fa-check'></i>" :

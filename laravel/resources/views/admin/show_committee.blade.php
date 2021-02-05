@@ -9,133 +9,116 @@
             </a>
         </h5>
         <div class="row">
-            <div class="col-lg-10">
-               <h4>{{$data['committee']->name}}</h4>
+            @if(null !== $data['committee']->image)
+                <div class="col-12 mt-3 mb-3">
+                    <img src="{{ asset('storage/committees/'.$data['committee']->image)}}"
+                         class="border rounded-lg img-fluid" />
+                </div>
+            @endif
+            <div class="col-12 col-md-4">
+               <h4 class="font-weight-bold">{{$data['committee']->name}}</h4>
+            </div>
+            <div class="col-12 col-md-4 text-md-center">
+                @if($data['canManage'] == 1)
+                    <h5>
+                        <a href="{{ route('committee_edit', $data['committee']->slug) }}"
+                           title="Edit {{ $data['committee']->name }}">
+                            <i class="fas fa-edit"></i>
+                            Edit {{ $data['committee']->name }}
+                        </a>
+                    </h5>
+                @endif
+            </div>
+            <div class="col-12 col-md-4 text-md-right">
+                <h5>
+                    <a href="{{ route('committee', $data['committee']->slug) }}"
+                       title="View {{$data['committee']->name }} on {{env('APP_NAME')}}" target="_blank">
+                        <i class="fas fa-eye"></i>
+                        View {{$data['committee']->name }} on website.
+                    </a>
+                </h5>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-10">
+            <div class="col-12 mt-4 mb-4">
                 {!! $data['committee']->description !!}
             </div>
         </div>
-        <hr />
-        <div class="row">
-            <div class="col-lg-2">
-                <i class="far fa-envelope"></i> &nbsp;
+        <div class="row mt-2 mb-5">
+            <div class="col-12 col-md-6">
+                Primary Committee Email:
                 <a href="mailto:{{$data['committee']->email }}">
+                    <i class="far fa-envelope"></i> &nbsp;
                     {{$data['committee']->email}}
                 </a>
             </div>
-             <div class="col-lg-2">
-                 Created by:
+             <div class="col-12 col-md-6 text-md-right">
+                 Committee OrCreated by:
                  <i class="far fa-user"></i>
                  <a href="{{route('user_edit', $data['committee']->creator->id)}}">
                      {{$data['committee']->creator->name }}
                  </a>
             </div>
         </div>
-        <div class="row mt-lg-5">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-6 col-sm-3 align-middle">
-                        <h4>Access Level</h4>
-                    </div>
-                    <div class="col-6 col-sm-3">
-                       Visible by: {{ $data['committee']->access_level }}
-                    </div>
-                    <div class="col-6 col-sm-3"></div>
-                    <div class="col-6 col-sm-3"></div>
-                    <!-- Force next columns to break to new line -->
-                    <div class="w-100"></div>
-                    <div class="col-6 col-sm-3">
-                        <h4>Sort Order</h4>
-                    </div>
-                    <div class="col-6 col-sm-3">
-                      {{ $data['committee']->sort_order }}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="col-lg-6">
-                    <h4>
-                        Status
-                        <i class="fas fa-toggle-on"></i>
-                    </h4>
-                </div>
-                <div class="col-sm">
-                    @if($data['committee']->in_menu == 1)
-                        In Menu
-                    @else
-                        Not seen in menu
-                    @endif
-                </div>
-                <div class="col-sm">
-                    @if($data['committee']->allow_comments == 1)&nbsp;
-                    @else&nbsp;
-                    @endif
-                </div>
-                <div class="col-sm">
+        <div class="row mt-2 mb-5">
+            <div class="col-12 col-md-6">
+                <h5>
+                    Committee Status:
                     @if($data['committee']->live == 1)
-                        This committee is live
+                        this committee is live
                     @else
-                        Not enabled live.
+                        not enabled live.
                     @endif
-                </div>
+                </h5>
             </div>
-            <div class="col-sm">
-                <h4>
-                    <a href="{{ route('committee', $data['committee']->slug) }}"
-                       title="View {{$data['committee']->name }} on {{env('APP_NAME')}}" target="_blank">
-                        <i class="fas fa-eye"></i>
-                        View {{$data['committee']->name }} on website.
-                    </a>
-                </h4>
+            <div class="col-12 col-md-6 text-md-right">
                 @if($data['canManage'] == 1)
-                <h4>
-                    <a href="{{ route('committee_edit', $data['committee']->slug) }}"
-                       title="Edit {{ $data['committee']->name }}">
-                        <i class="fas fa-edit"></i>
-                        Edit {{ $data['committee']->name }}
-                    </a>
-                </h4>
+                    <h5>
+                        <a href="{{ route('committee_edit', $data['committee']->slug) }}"
+                           title="Edit {{ $data['committee']->name }}">
+                            <i class="fas fa-edit"></i>
+                            Edit {{ $data['committee']->name }}
+                        </a>
+                    </h5>
                 @endif
             </div>
         </div>
-        <div class="row mt-2">
-            <div class="col-md">
-                <h4>
+        <div class="row mt-5">
+            <div class="col-12">
+                <h5 class="pb-3">
                     <i class="fas fa-users"></i>
                     {{$data['committee']->active_committee_members->count()}} active
                     {{Str::plural('member', $data['committee']->active_committee_members->count())}}
                     in {{$data['committee']->name}}
-                </h4>
+                </h5>
                 @if($data['canManage'] == 1)
-                    <h4>
+                    <h5>
                         <a href="{{route('admin-list-committee-members', $data['committee']->slug)}}">
                             <i class="fas fa-users"></i>
                             List, Add, Edit Committee Members & Roles
                         </a>
-                    </h4>
+                    </h5>
                 @endif
             </div>
-                <div class="col-md">
-                </div>
-            <div class="col-md">
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-6">
                 <h4>Committee Membership Roles</h4>
                 <ul class="list-group">
-                    @foreach ($data['committee']['executives'] as $exec)
+                    @forelse ($data['committee']['executives'] as $exec)
                         <li class="list-group-item">
                             {{$exec->pivot->role}}:
                             <a href="{{route('user_edit', $exec->id)}}">
                                 {{$exec->name}}
                             </a>
                         </li>
-                    @endforeach
+                    @empty
+                        <li class="list-group-item">No roles defined yet</li>
+                    @endforelse
                 </ul>
             </div>
-        </div>
         @if($data['canManage'] == 1)
-            <div class="row mt-lg-5 mb-lg-5">
+            <div class="col-12 col-md-6 text-md-right">
                 <h5>
                     <a href="{{route('committee_posts_list', $data['committee']->slug)}}">
                         <i class="far fa-folder-open"></i>
@@ -150,4 +133,5 @@
             </div>
         @endif
     </div>
+</div>
 @endsection

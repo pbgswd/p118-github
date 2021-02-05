@@ -73,7 +73,6 @@ class AdminTopicController extends Controller
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $topic);
-
             if ($result) {
                 Session::flash('success', 'You uploaded '.
                     count($request->file('attachments')).' files');
