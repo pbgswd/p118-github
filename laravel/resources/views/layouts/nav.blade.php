@@ -21,7 +21,9 @@
                         History
                     </a>
                     <a class="dropdown-item" href="{{route('executive')}}">Executive</a>
-                    <a class="dropdown-item" href="{{route('bylaws_list_public')}}">C & B</a>
+                    <a class="dropdown-item" href="{{route('bylaws_list_public')}}">
+                        Constitution & Bylaws
+                    </a>
                     <a class="dropdown-item" href="{{route('page_show', 'links')}}">Links</a>
                 </div>
             </div>&nbsp;
@@ -39,6 +41,9 @@
                     <a class="dropdown-item" href="#">Availability & Dispatch</a>
                     <a class="dropdown-item" href="{{route('page_show', 'dues-public')}}">Dues</a>
                     <a class="dropdown-item" href={{route('page_show', 'leaving-membership')}}>Leaving Membership</a>
+                    <a class="dropdown-item" href={{route('page_show', 'request-representation')}}>
+                        Request Representation
+                    </a>
                 </div>
             </div>&nbsp;
             @guest
@@ -70,7 +75,7 @@
                         Master Rate Sheet</a>
                     <a class="dropdown-item" href="{{route('agreements_list_public')}}">
                         <i class="far fa-handshake"></i>
-                        Agreements</a>
+                        Collective Agreements</a>
                 </div>
             </div>
             <div class="dropdown">
@@ -81,6 +86,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown">
                     <a class="dropdown-item" href="{{route('hire-us')}}">Why Hire Union</a>
                     <a class="dropdown-item" href="{{route('contact')}}">Contact</a>
+                    <a class="dropdown-item" href="{{route('page_show','payroll-trust-account')}}">Payroll</a>
                 </div>
             </div>
             @guest
@@ -93,7 +99,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown">
                         <a class="dropdown-item" href="{{route('list_meetings')}}">
                             <i class="far fa-folder"></i>
-                            Meetings & Minutes</a>
+                            Meeting Minutes</a>
                         <a class="dropdown-item" href="{{route('topic_show','Financial')}}">
                             <i class="far fa-folder"></i> Financial</a>
                         <a class="dropdown-item" href="{{route('committees')}}">
@@ -103,17 +109,19 @@
                             <i class="fas fa-users"></i> Elections</a>
                         <a class="dropdown-item" href="{{route('jobs_list')}}">
                             <i class="fas fa-hard-hat"></i>
-                            Jobs</a>
+                            Job Postings</a>
                         <a class="dropdown-item" href="https://login.callsteward.ca/" target="_blank"
                            title="Link to CallSteward">
-                            <i class="fas fa-headset"></i> CS</a>
+                            <i class="fas fa-headset"></i>
+                            Call Steward <i class="fas fa-headset"></i>
+                        </a>
                         <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}"
                            title="My Profile">
                             <i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
                         <a class="dropdown-item" href="{{route('members')}}">
-                            <i class="fas fa-user-friends"></i> Members</a>
+                            <i class="fas fa-user-friends"></i> Members List</a>
                         <a class="dropdown-item" href="{{route('bylaws_list_public')}}">
-                            <i class="fas fa-gavel"></i> By-Laws</a>
+                            <i class="fas fa-gavel"></i> Constitution & By-Laws</a>
                         <a class="dropdown-item" href="{{route('policies_list_public')}}">
                             <i class="fas fa-scroll"></i>  Policies</a>
                         <a class="dropdown-item" href="/site"><i class="fas fa-industry">
@@ -124,7 +132,8 @@
             @guest
             @else
             <li class="nav-item">
-                <a class="nav-link" href="/site"><i class="fas fa-industry fa-2x"></i> Landing Page</a>
+                <a class="nav-link" href="{{route('landing_page')}}">
+                    <i class="fas fa-industry fa-2x"></i> Landing Page</a>
             </li>
                 @hasanyrole(['super-admin|office|writer|committee'])
                      <li class="nav-item">

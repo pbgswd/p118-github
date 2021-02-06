@@ -1,7 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-<div class="jumbotron">
-    <div class="container border border-dark rounded-lg p-4" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded-lg mt-3 p-4" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-12">
                 <h6>
@@ -12,7 +11,7 @@
             </div>
         </div>
         <div class="row mb-lg-5">
-            <div class="col-12 mt-3 mb-3 pt-2">
+            <div class="col-12 mb-3 pt-2">
                 @if(null !== $data['committee']->image)
                     <img src="{{ asset('storage/committees/'.$data['committee']->image)}}"
                          class="border rounded-lg img-fluid mb-2" />
@@ -122,5 +121,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

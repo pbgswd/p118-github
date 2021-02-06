@@ -60,7 +60,7 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 Route::group(['middleware' =>  ['web', 'auth']], function () {
-    Route::get('/site', [CNS\SiteController::class, 'index'])->name('site');
+    Route::get('/site', [CNS\SiteController::class, 'index'])->name('landing_page');
     //todo a controller? use HomeController?
     /**
     Route::get('/site', function () {

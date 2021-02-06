@@ -76,28 +76,31 @@
                     <div class="sidebar-sticky">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('hello') }}">
+                                <a class="nav-link" href="{{ route('hello') }}">
                                     <span data-feather="home"></span>
+                                    <i class="fas fa-home"></i>
                                     Home Page
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('admin') }}">
+                                <a class="nav-link" href="{{ route('landing_page') }}">
+                                    <i class="fas fa-industry"></i>
+                                    Landing Page
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin') }}">
                                     <span data-feather="home"></span>
+                                    <i class="fas fa-tachometer-alt"></i>
                                     Admin Dashboard <span class="sr-only">(current)</span>
                                 </a>
                             </li>
-                            @can('create articles')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <span data-feather="file"></span>
-                                        <h5>Governance</h5>
-                                    </a>
-                                </li>
+                                @can('create articles')
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('meetings_list') }}">
                                         <span data-feather="file"></span>
-                                        Meetings & Minutes
+                                        Meeting Minutes
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -109,7 +112,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('agreements_list') }}">
                                         <span data-feather="file"></span>
-                                        Agreements
+                                        Collective Agreements
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -143,7 +146,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('users_list') }}">
                                         <span data-feather="file"></span>
-                                        Members
+                                        Members List
                                     </a>
                                 </li>
                                 <li class="nav-item">

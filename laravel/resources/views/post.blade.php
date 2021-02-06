@@ -1,17 +1,25 @@
 @extends('layouts.jumbo')
     @section('content')
-        <div class="container border border-dark rounded-lg pt-lg-2 mb-3 mt-3" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12 mb-2">
-            <p>
-                <i>
-                    @foreach ($data['post']->topics as $topic)
-                        <a href="{{ route('topic_show', $topic->slug)}}">
-                            {{$topic->name}}{{$loop->last ? '' : ','}}
-                        </a>
-                    @endforeach
-                </i>
-            </p>
+    <div class="container border border-dark rounded-lg pt-lg-2 mb-3 mt-3" style="background: rgba(220,220,220,0.8);">
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <p>
+                    <i>
+                        @foreach ($data['post']->topics as $topic)
+                            <a href="{{ route('topic_show', $topic->slug)}}">
+                                {{$topic->name}}{{$loop->last ? '' : ','}}
+                            </a>
+                        @endforeach
+                    </i>
+                </p>
+            </div>
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('post_show', $data['post']->slug)}}" title="Edit {{$data['post']->title}}">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+            </div>
         </div>
+
         <div class="col-12">
             <h1>{{$data['post']->title}}</h1>
         </div>

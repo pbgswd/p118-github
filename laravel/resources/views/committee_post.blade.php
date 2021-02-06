@@ -1,8 +1,11 @@
 @extends('layouts.jumbo')
 @section('content')
-<div class="jumbotron">
-    <div class="container border border-dark rounded-lg p-2" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded-lg p-2 mt-3" style="background: rgba(220,220,220,0.8);">
         <div class="row">
+            <div class="col-12">
+                <img src="{{ asset('storage/committees/'.$data['committeepost']->committee->image)}}"
+                     class="border rounded-lg img-fluid mb-2" />
+            </div>
             <div class="col-12">
                <h4>
                    <a href="{{ route('committee', $data['committeepost']->committee->slug) }}">
@@ -28,5 +31,4 @@
             @endif
         </div>
     </div>
-</div>
 @endsection

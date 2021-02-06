@@ -5,7 +5,11 @@
            <span class="badge badge-primary badge-pill">
                {{ $data['count'] }}
            </span>
-            Pages. | <a href="{{ route('page_create') }}">Create new page <i class="far fa-arrow-alt-circle-right"></i> </a>
+            Pages. |
+            <a href="{{ route('page_create') }}">
+                Create new page
+                <i class="far fa-arrow-alt-circle-right"></i>
+            </a>
         </h3>
 </div>
 

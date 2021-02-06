@@ -7,7 +7,7 @@
                 <h4>
                     <a href="{{route('list_meetings')}}">
                         <i class="far fa-arrow-alt-circle-left"></i>
-                        Meetings Minutes
+                        Meeting Minutes
                     </a>
                 </h4>
             </div>

@@ -1,16 +1,25 @@
 <div class="row border border-dark rounded-lg my-3 py-1" style="background: rgba(220,220,220,0.8);">
     <div class="col col-md-3 pt-2">
-        <div class="col col-12 border border-dark rounded-lg pt-3 pb-2 mb-2 bg-dark text-white">
-            <h4> Menu </h4>
+        <div class="col col-12 border border-dark rounded-lg pt-1 mb-2 bg-dark text-white">
+            <h5> Menu </h5>
+        </div>
+
+        <div class="col-12 border border-dark rounded-lg mb-2 bg-secondary font-weight-bold">
+            <a href="https://login.callsteward.ca/" class="text-white font-weight-bold" target="_blank"
+               title="Link to CallSteward">
+                <i class="fas fa-headset"></i>
+                Call Steward
+                <i class="fas fa-headset"></i>
+            </a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="#search"><i class="fas fa-search"></i> Search</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members</a>
+            <a href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members List</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="{{route('jobs_list')}}"><i class="fas fa-hard-hat"></i> Jobs</a>
+            <a href="{{route('jobs_list')}}"><i class="fas fa-hard-hat"></i> Job Postings</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('venues')}}"><i class="far fa-building"></i> Venues</a>
@@ -19,31 +28,24 @@
             <a href="{{route('organizations')}}"><i class="fas fa-user-tie"></i> Organizations</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            Governance
-        </div>
-        <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('committees')}}"><i class="fas fa-users"></i> Committees</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('executive')}}"><i class="fas fa-users"></i> Executive</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meetings & Minutes</a>
+            <a href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meeting Minutes</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="{{route('agreements_list_public')}}"><i class="far fa-handshake"></i> Agreements</a>
+            <a href="{{route('agreements_list_public')}}"><i class="far fa-handshake"></i> Collective Agreements</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="{{route('bylaws_list_public')}}"><i class="fas fa-gavel"></i> By-Laws</a>
+            <a href="{{route('bylaws_list_public')}}"><i class="fas fa-gavel"></i> Constition & By-Laws</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('policies_list_public')}}"><i class="fas fa-scroll"></i>  Policies</a>
         </div>
-        <div class="col col-12 border border-dark rounded-lg pt-3 pb-2 mb-2 bg-dark text-white">
-            <h4>
-                <a class="text-white" href="{{route('topics')}}">Topics</a>
-            </h4>
-        </div>
+<hr />
         @foreach ($data['topics'] as $t)
             <div class="col-12 border border-dark rounded-lg pt-1 mb-2">
                 <h5>
@@ -56,7 +58,7 @@
         <div class="col col-12 border border-dark rounded-lg pt-2 pb-2 mb-2 bg-dark text-white">
             <h3>Important Announcements</h3>
         </div>
-        <div class="col col-12 border border-dark rounded-lg bg-secondary pt-2 pb-2 mb-2">
+        <div class="col-12 border border-dark rounded-lg bg-secondary pt-2 mb-2">
             <h4>
                 <a class="text-white" href="{{route('posts')}}">
                     Posts
@@ -81,14 +83,11 @@
                                 {{ $post->title }}
                             </a>
                         </h5>
-                        <h6 class="font-weight-bold text-md-right align-self-end">
-                            {{$post->updated_at->format('F j Y')}}
-                        </h6>
                     </div>
                 </div>
             @endforeach
         </div>
-        <div class="col col-12 border border-dark rounded-lg bg-secondary pt-2 pb-2 mb-2">
+        <div class="col col-12 border border-dark rounded-lg bg-secondary pt-2 mb-2">
             <h4>
                 <a class="text-white" href="{{route('pages')}}">
                     Pages
@@ -98,22 +97,21 @@
         <div class="row mb-2">
             @foreach ($data['pages'] as $page)
                 <div class="col-12 col-md-6 pt-1 pb-1">
-                    <div class="border border-dark rounded-lg p- w-100 h-100 p-2">
-                        <p>
+                    <div class="border border-dark rounded-lg w-100 h-100 p-2">
+                        <h6>
                             <i>
                                 @foreach($page->topics as $pt)
                                     <a href="{{route('topic_show', $pt->slug)}}"
                                         title="{{$pt->name}}">{{$pt->name}}{{$loop->last ? '' : ','}}
                                     </a>
-
                                 @endforeach
                             </i>
-                        </p>
-                        <h4>
+                        </h6>
+                        <h5>
                             <a href="{{route('page_show', $page->slug)}}">
                                 {{ $page->title }}
                             </a>
-                        </h4>
+                        </h5>
                     </div>
                 </div>
             @endforeach

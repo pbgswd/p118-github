@@ -1,14 +1,21 @@
 @extends('layouts.jumbo')
 @section('content')
     <div class="container border border-dark rounded-lg mt-3 mb-3 pt-2" style="background: rgba(220,220,220,0.8);">
-
-        <div class="col-12">
-            <p>
-                <a href="{{route('topics')}}" title="All Topics">
-                    Topics/
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <p>
+                    <a href="{{route('topics')}}" title="All Topics">
+                        Topics/
+                    </a>
+                </p>
+            </div>
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('topic_edit', $data['topic']->slug)}}" title="Edit {{$data['topic']->title}}">
+                    <i class="fas fa-edit"></i> Edit
                 </a>
-            </p>
+            </div>
         </div>
+
         <div class="col-12">
             <h1>{{$data['topic']->name}}</h1>
            <p>{!! $data['topic']->description !!}</p>

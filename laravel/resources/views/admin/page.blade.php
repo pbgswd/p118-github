@@ -1,18 +1,26 @@
-<?php
-$page = $data['page'];
-$topics = $data['topics'];
-?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Page ' .
-    ($data["action"] == 'Edit' ? $page->name : '') ])
+    ($data["action"] == 'Edit' ? $data['page']->name : '') ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3>
-        <a href="{{ route('pages_list') }}">
-            <i class="far fa-arrow-alt-circle-left"></i>
-            List of pages
-        </a>
-    </h3>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h3>
+                <a href="{{ route('pages_list') }}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    List of pages
+                </a>
+            </h3>
+        </div>
+        @if ($data['action'] == 'Edit')
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('page_show', $data['page']->slug)}}"
+                   title="View {{$data['page']->title}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
+    </div>
     <form method="post" name="page" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
@@ -21,7 +29,7 @@ $topics = $data['topics'];
                 <div class="col-lg-2"><h4>Title</h4></div>
                 <div class="col-lg-10">
                     <input type="text" class="form-control"  placeholder="Title" name="page[title]"
-                           value="{{ old('page.title', $page->title)}}" size="80" required/>
+                           value="{{ old('page.title', $data['page']->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -33,7 +41,7 @@ $topics = $data['topics'];
                 <div class="col-lg-10">
                     <textarea name="page[description]" id="page-description" placeholder="Summary content"
                               class="form-control">
-                        {{old('page.description', $page->description)}}
+                        {{old('page.description', $data['page']->description)}}
                     </textarea>
                 </div>
             </div>
@@ -46,7 +54,7 @@ $topics = $data['topics'];
                 </div>
                 <div class="col-lg-10">
                     <textarea name="page[content]" id="page-content" placeholder="Content" class="form-control">
-                        {{old('page.content', $page->content)}}
+                        {{old('page.content', $data['page']->content)}}
                     </textarea>
                 </div>
             </div>
@@ -61,7 +69,7 @@ $topics = $data['topics'];
                     <div class="col-6 col-sm-3">
                         <p>Access Level for content:</p>
                         <div class="form-group">
-                            {{ select_options($data['access_levels'], old('page.access_level', $page->access_level),
+                            {{ select_options($data['access_levels'], old('page.access_level', $data['page']->access_level),
                                 ['name' => 'page[access_level]', 'class' => 'form-control']) }}
                         </div>
                     </div>
@@ -76,7 +84,7 @@ $topics = $data['topics'];
                 </div>
                 <div class="col-6 col-sm-3">
                     <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000"
-                           name="page[sort_order]" value="{{old('page.sort_order',$page->sort_order)}}" size="30"
+                           name="page[sort_order]" value="{{old('page.sort_order',$data['page']->sort_order)}}" size="30"
                            required/>
                     <p>e.g.: 1000, 2000</p>
                 </div>
@@ -94,7 +102,7 @@ $topics = $data['topics'];
                 <label>
                     <input name="page[front_page]" type="hidden" value="0" />
                     <input name="page[front_page]" type="checkbox" value="1"
-                        {{ checked(old('page.front_page',$page->front_page)) }} />
+                        {{ checked(old('page.front_page',$data['page']->front_page)) }} />
                     Front Page
                 </label>
             </div>
@@ -102,7 +110,7 @@ $topics = $data['topics'];
                 <label>
                     <input name="page[landing_page]" type="hidden" value="0" />
                     <input name="page[landing_page]" type="checkbox" value="1"
-                        {{ checked(old('page.landing_page', $page->landing_page)) }} />
+                        {{ checked(old('page.landing_page', $data['page']->landing_page)) }} />
                     Landing Page
                 </label>
             </div>
@@ -110,7 +118,7 @@ $topics = $data['topics'];
                 <label>
                      <input name="page[live]" type="hidden" value="0" />
                      <input name="page[live]" type="checkbox" value="1"
-                         {{ checked( old('page.live', $page->live)) }} />
+                         {{ checked( old('page.live', $data['page']->live)) }} />
                     Check now to make Live
                 </label>
                 <p>ie.: Draft or Published.</p>
@@ -124,7 +132,7 @@ $topics = $data['topics'];
                 </div>
                 <div class="col-lg-10">
                     <label><input type="text" name="tags"
-                                  value="<?php echo htmlentities(old('tags', join(', ', $page->tagNames()))); ?>"
+                                  value="<?php echo htmlentities(old('tags', join(', ', $data['page']->tagNames()))); ?>"
                                   size="40" />
                         <br />
                         Add tags related to page, comma separated.
@@ -146,7 +154,7 @@ $topics = $data['topics'];
 
 
         @if ($data['action'] == 'Edit')
-            @if(count($page->attachments) > 0)
+            @if(count($data['page']->attachments) > 0)
                 <div class="col-md-12">
                     <h2>Files</h2>
                     <table class="table table-striped table-sm">
@@ -162,7 +170,7 @@ $topics = $data['topics'];
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($page->attachments as $pa)
+                        @foreach ($data['page']->attachments as $pa)
                             <tr>
                                 <td>
                                     <div class="checkbox">
@@ -173,11 +181,11 @@ $topics = $data['topics'];
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="{{route('attachment_download', [$page->getAttachmentFolder(), $pa->id])}}"
+                                    <a href="{{route('attachment_download', [$data['page']->getAttachmentFolder(), $pa->id])}}"
                                        title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
                                 </td>
                                 <td>
-                                    {{$page->access_level}}
+                                    {{$data['page']->access_level}}
                                 </td>
                                 <td>
                                     <a href="{{route('admin_attachment_edit', $pa->id)}}"
@@ -225,7 +233,7 @@ $topics = $data['topics'];
                      {!! csrf_field() !!}
                      {!! method_field('DELETE') !!}
                     <i class="far fa-trash-alt fa-2x"></i>
-                    <input type="hidden" name="id[]" value="{{ $page->id }}">
+                    <input type="hidden" name="id[]" value="{{ $data['page']->id }}">
                     <input class="btn btn-outline-danger" type="submit" value="Delete">
                 </form>
              </div>
@@ -234,8 +242,8 @@ $topics = $data['topics'];
     @if($data['action'] == 'Edit')
         <div class="row mt-lg-3 mb-lg-5">
             Page added by
-            <a href="{{route('user_edit', $page->user->id)}}">
-                {{$page->user->name}}
+            <a href="{{route('user_edit', $data['page']->user->id)}}">
+                {{$data['page']->user->name}}
             </a>
         </div>
     @endif
