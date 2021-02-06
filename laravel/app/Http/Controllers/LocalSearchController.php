@@ -13,7 +13,6 @@ use App\Models\Executive;
 use App\Models\Meeting;
 use App\Models\Organization;
 use App\Models\Page;
-use App\Models\PhoneNumber;
 use App\Models\Policy;
 use App\Models\Post;
 use App\Models\Topic;
@@ -54,7 +53,6 @@ class LocalSearchController extends Controller
                 ->registerModel(User::class, 'name')
                 ->registerModel(Executive::class, ['title', 'email'])
                 ->registerModel(UserInfo::class, 'about')
-                ->registerModel(PhoneNumber::class, 'phone_number')
                 ->search($request->search),
         ];
 
@@ -123,9 +121,6 @@ class LocalSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(UserInfo::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('about')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(PhoneNumber::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('phone_number')
                         ->withoutGlobalScope(LiveScope::class);
                 })->registerModel(Policy::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')

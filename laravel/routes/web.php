@@ -53,7 +53,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/agreement/{agreement}', [CNS\AgreementController::class, 'show'])->name('agreement_show');
 
     Route::get('bylaws', [CNS\ByLawController::class, 'list'])->name('bylaws_list_public');
-    Route::get('/bylaws/{bylaw}', [CNS\ByLawController::class, 'show'])->name('bylaw_show');
+    Route::get('/bylaw/{bylaw}', [CNS\ByLawController::class, 'show'])->name('bylaw_show');
 
     Route::get('/{folder}/download/{attachment}', [CNS\AttachmentController::class, 'download'])
         ->name('attachment_download');

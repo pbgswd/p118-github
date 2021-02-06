@@ -61,9 +61,7 @@ class AuthServiceProvider extends ServiceProvider
         Policy::class => PolicyPolicy::class,
         ExecutiveMembership::class => ExecutiveMembershipPolicy::class,
         Committee::class => CommitteePolicy::class,
-
         CommitteePost::class => CommitteePostPolicy::class,
-
         Attachment::class => AttachmentPolicy::class,
     ];
 
@@ -75,7 +73,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //todo gate stuff
     }
 }

@@ -80,7 +80,7 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
         return new SearchResult(
             $this,
             $this->title,
-            \route(request()->route()->getName(), $this->id)
+            \route('bylaw_show', $this->id)
         );
     }
 
