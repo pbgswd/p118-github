@@ -40,7 +40,7 @@
             <a href="{{route('agreements_list_public')}}"><i class="far fa-handshake"></i> Collective Agreements</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="{{route('bylaws_list_public')}}"><i class="fas fa-gavel"></i> Constition & By-Laws</a>
+            <a href="{{route('bylaws_list_public')}}"><i class="fas fa-gavel"></i> Constitution & By-Laws</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('policies_list_public')}}"><i class="fas fa-scroll"></i>  Policies</a>
