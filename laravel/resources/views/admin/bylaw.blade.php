@@ -3,10 +3,23 @@
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
     <div class="container">
-    <h3>  <a href="{{ route('admin_bylaws_list') }}"> <i class="far fa-arrow-alt-circle-left"></i>
-            List of By-laws
-        </a>
-    </h3>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <h3>
+                    <a href="{{ route('admin_bylaws_list') }}"> <i class="far fa-arrow-alt-circle-left"></i>
+                        List of By-laws
+                    </a>
+                </h3>
+            </div>
+            @if($data['action'] == 'Edit')
+                <a href="{{route('bylaw_show', $data['bylaw']->id)}}"
+                   title="View {{$data['bylaw']->title}}">
+                    <i class="fas fa-eye"></i>
+                    View on website
+                </a>
+            @endif
+        </div>
+
     <form method="post" name="bylaw" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}

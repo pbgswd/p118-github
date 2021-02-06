@@ -13,6 +13,11 @@
             </div>
             <div class="col-12 col-md-6 text-md-right">
                 <p>{{$data['meeting']->date->format('F j Y')}}</p>
+                @can('edit articles')
+                    <a href="{{route('meeting_edit', $data['meeting']->id)}}" title="Edit {{$data['meeting']->title}}">
+                        <i class="fas fa-edit"></i> Admin Edit
+                    </a>
+                @endcan
             </div>
         </div>
         <div class="col-12">

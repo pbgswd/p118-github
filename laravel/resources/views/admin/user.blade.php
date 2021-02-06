@@ -12,15 +12,17 @@
                 </a>
             </h4>
         </div>
-        <div class="col-6 text-md-right">
-            <h4>
-                <a title="public profile for {{ $data['user']->name }}" target="_blank"
-                   href="{{ route('member', $data['user']->id) }}">
-                    <i class="far fa-user-circle"></i>
-                    View public profile
-                </a>
-            </h4>
-        </div>
+        @if($data['action'] == 'Edit')
+            <div class="col-6 text-md-right">
+                <h4>
+                    <a title="public profile for {{ $data['user']->name }}" target="_blank"
+                       href="{{ route('member', $data['user']->id) }}">
+                        <i class="far fa-user-circle"></i>
+                        View public profile
+                    </a>
+                </h4>
+            </div>
+        @endif
     </div>
     <div class="row">
         <div class="col-12">

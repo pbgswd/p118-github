@@ -1,13 +1,27 @@
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' agreement ' . ($data["action"] == 'Edit' ? $data['agreement']->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] .
+    ' agreement ' . ($data["action"] == 'Edit' ? $data['agreement']->name : '') ])
 @section('content')
  @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3>
-        <a href="{{ route('agreements_list') }}">
-            <i class="far fa-arrow-alt-circle-left"></i>
-            List of agreements
-        </a>
-    </h3>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h3>
+                <a href="{{ route('agreements_list') }}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    List of agreements
+                </a>
+            </h3>
+        </div>
+        @if($data['action'] == 'Edit')
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('agreement_show', $data['agreement']->id)}}"
+                   title="View {{$data['agreement']->title}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
+    </div>
+
     <form method="post" name="agreement" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
@@ -74,7 +88,7 @@
                     <label>
                          <input name="agreement[live]" type="hidden" value="0" />
                          <input name="agreement[live]" type="checkbox" value="1"
-                                checked( old('agreement.live', $data['agreement']->live)) }} />
+                                {{ checked(old('agreement.live', $data['agreement']->live)) }} />
                         Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
@@ -165,24 +179,23 @@
             @endif
         </div>
         <div class="row">
-            <div class="col-sm">
+            <div class="col-6 w-100">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
-        </div>
     </form>
-    <div class="col-sm"> &nbsp;</div>
-    @if ($data['action'] == 'Edit')
-         <div class="col-sm" style="float:right">
-             <form name="delete" method="POST" action="{{route('agreement_destroy')}}">
-                 {!! csrf_field() !!}
-                 {!! method_field('DELETE') !!}
-                <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $data['agreement']->id }}">
-                <input class="btn btn-outline-danger" type="submit" value="Delete">
-            </form>
-         </div>
-    @endif
-    <div class="row" style="margin-top:100px;"> &nbsp;</div>
-</div>
+
+        @if ($data['action'] == 'Edit')
+             <div class="col-6 text-right">
+                 <form name="delete" method="POST" action="{{route('agreement_destroy')}}">
+                     {!! csrf_field() !!}
+                     {!! method_field('DELETE') !!}
+                    <i class="far fa-trash-alt fa-2x"></i>
+                    <input type="hidden" name="id[]" value="{{ $data['agreement']->id }}">
+                    <input class="btn btn-outline-danger" type="submit" value="Delete">
+                </form>
+             </div>
+        @endif
+        </div>
+    </div>
 @endsection

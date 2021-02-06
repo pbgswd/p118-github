@@ -3,7 +3,6 @@
         <div class="col col-12 border border-dark rounded-lg pt-1 mb-2 bg-dark text-white">
             <h5> Menu </h5>
         </div>
-
         <div class="col-12 border border-dark rounded-lg mb-2 bg-secondary font-weight-bold">
             <a href="https://login.callsteward.ca/" class="text-white font-weight-bold" target="_blank"
                title="Link to CallSteward">
@@ -45,7 +44,7 @@
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('policies_list_public')}}"><i class="fas fa-scroll"></i>  Policies</a>
         </div>
-<hr />
+        <hr />
         @foreach ($data['topics'] as $t)
             <div class="col-12 border border-dark rounded-lg pt-1 mb-2">
                 <h5>

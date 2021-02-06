@@ -2,14 +2,24 @@
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12">
-            <h4>
-                <a href="{{route('policies_list_public')}}">
-                    <i class="far fa-arrow-alt-circle-left"></i>
-                    Policies
-                </a>
-            </h4>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <h4>
+                    <a href="{{route('policies_list_public')}}">
+                        <i class="far fa-arrow-alt-circle-left"></i>
+                        Policies
+                    </a>
+                </h4>
+            </div>
+            @can('edit articles')
+                <div class="col-12 col-md-6 text-md-right">
+                    <a href="{{route('admin_policy_edit', $data['policy']->id)}}" title="Edit {{$data['policy']->title}}">
+                        <i class="fas fa-edit"></i> Admin Edit
+                    </a>
+                </div>
+            @endcan
         </div>
+
         <div class="row d-flex justify-content-end">
             <div class="col-12 col-md-6">
                 <h1>

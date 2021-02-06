@@ -3,20 +3,33 @@
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3>
-        <a href="{{route('admin_committee_show', $data['post']['committee']->slug)}}">
-            <i class="far fa-arrow-alt-circle-left"></i>
-            {{$data['post']['committee']->name}} Committee Page
-        </a> |
-        <a href="{{ route('committee_posts_list', $data['post']['committee']->slug) }}">
-            <i class="far fa-arrow-alt-circle-left"></i>
-            List of posts
-        </a>
-    </h3>
+    <div class="row mb-5">
+        <div class="col-12 col-md-6">
+            <h4>
+                <a href="{{route('admin_committee_show', $data['post']['committee']->slug)}}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    {{$data['post']['committee']->name}} Page
+                </a> |
+                <a href="{{ route('committee_posts_list', $data['post']['committee']->slug) }}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    List of posts
+                </a>
+            </h4>
+        </div>
+        @if($data['action'] == 'Edit')
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('public_committee_post_show',
+                    [$data['post']['committee']->slug, $data['post']->slug])}}"
+                    title="View {{$data['post']->title}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
+    </div>
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row">
+        <div class="row mt-3">
             <div class="form-group">
                 <div class="col-lg-2">
                     <h4>Title</h4>
@@ -27,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="form-group">
                 <div class="col-lg-2">
                     <h4>Content</h4>

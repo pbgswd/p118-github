@@ -1,18 +1,36 @@
-<?php
-$policy = $data['policy'];
-?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-gavel"></i> <i class="fas fa-edit"></i>' . $data["action"] . ' Policy ' . ($data["action"] == 'Edit' ? $policy->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-gavel"></i> <i class="fas fa-edit"></i>' .
+    $data["action"] . ' Policy ' . ($data["action"] == 'Edit' ? $data['policy']->name : '') ])
 @section('content')
 @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3>  <a href="{{ route('policies_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of Policies</a>  </h3>
-    <form method="post" name="policy" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h3>
+                <a href="{{ route('policies_list') }}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    List of Policies
+                </a>
+            </h3>
+        </div>
+        @if($data['action'] == 'Edit')
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('policy_show_public', $data['policy']->id)}}"
+                   title="View {{$data['policy']->title}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
+    </div>
+
+    <form method="post" name="policy" action="{{ url()->current() }}" enctype="multipart/form-data"
+          class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="policy[title]" value="{{ old('policy.title', $policy->title)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Title" name="policy[title]"
+                           value="{{ old('policy.title', $data['policy']->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -22,7 +40,10 @@ $policy = $data['policy'];
                     <h4>Description</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="policy[description]" id="policy-description" placeholder="Information about the policy, or pasted from the pdf." class="form-control">{{old('policy.description', $policy->description)}}</textarea>
+                    <textarea name="policy[description]" id="policy-description"
+                              placeholder="Information about the policy, or pasted from the pdf." class="form-control">
+                        {{old('policy.description', $data['policy']->description)}}
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -35,7 +56,7 @@ $policy = $data['policy'];
                             class="form-control"
                             placeholder="YYYY-MM-DD"
                             name="policy[date]"
-                            value="{{ old('policy.date', \optional($policy->date)->toDateString())}}"
+                            value="{{ old('policy.date', \optional($data['policy']->date)->toDateString())}}"
                             size="10"
                             data-provide="datepicker"
                             data-date-format="yyyy-mm-dd"
@@ -44,15 +65,17 @@ $policy = $data['policy'];
             </div>
         </div>
         <div class="row mt-lg-3">
-            <div class="col-md-4">
-                <div class="col-lg-2"><h4>Status</h4></div>
-                <div class="col-sm">
-                    <label>
-                         <input name="policy[live]" type="hidden" value="0" />
-                         <input name="policy[live]" type="checkbox" value="1" {{ checked( old('policy.live', $policy->live)) }} /> Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
-                </div>
+            <div class="col-12 col-md-2">
+                <h4>Status</h4>
+            </div>
+            <div class="col-12 col-md-6 text-left">
+                <label>
+                     <input name="policy[live]" type="hidden" value="0" />
+                     <input name="policy[live]" type="checkbox" value="1"
+                         {{ checked( old('policy.live', $data['policy']->live)) }} />
+                    Check now to make Live
+                </label>
+                <p>ie.: Draft or Published.</p>
             </div>
         </div>
         <div class="row mt-lg-3">
@@ -68,7 +91,7 @@ $policy = $data['policy'];
         </div>
         <div class="row mt-lg-3">
             @if ($data['action'] == 'Edit')
-                @if(count($policy->attachments) > 0)
+                @if(count($data['policy']->attachments) > 0)
                     <div class="col-md-12">
                         <h2>Files</h2>
                         <table class="table table-striped table-sm">
@@ -84,30 +107,41 @@ $policy = $data['policy'];
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($policy->attachments as $policy_attachment)
+                            @foreach ($data['policy']->attachments as $attachment)
                                 <tr>
                                     <td>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="attachment[{{$policy_attachment->id}}][id]" value="{{$policy_attachment->id}}" />
+                                                <input type="checkbox" name="attachment[{{$attachment->id}}][id]"
+                                                       value="{{$attachment->id}}" />
                                             </label>
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', [$policy->getAttachmentFolder(), $policy_attachment->id])}}" title="Download {{$policy_attachment->file_name}}">{{$policy_attachment->file_name}}</a>
+                                        <a href="{{route('attachment_download', [$data['policy']->getAttachmentFolder(),
+                                            $attachment->id])}}" title="Download {{$attachment->file_name}}">
+                                            {{$attachment->file_name}}
+                                        </a>
                                     </td>
-                                    <td>{{$policy_attachment->access_level}}</td>
+                                    <td>{{$attachment->access_level}}</td>
                                     <td>
-                                        <a title="Edit page for {{ $policy_attachment->file_name }}" href="{{ route('admin_attachment_edit', $policy_attachment->id) }}"><i class="far fa-edit"></i></a>
+                                        <a title="Edit page for {{ $attachment->file_name }}"
+                                           href="{{ route('admin_attachment_edit', $attachment->id) }}">
+                                            <i class="far fa-edit"></i>
+                                        </a>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$policy_attachment->id}}][description]" value="{{ old('attachments.description', $policy_attachment->description)}}" size="40"/>
+                                        <input type="text" class="form-control"
+                                               placeholder="Add a description for this file"
+                                               name="attachment[{{$attachment->id}}][description]"
+                                               value="{{ old('attachments.description', $attachment->description)}}"
+                                               size="40"/>
                                     </td>
                                     <td>
-                                        {{$policy_attachment->created_at}}
+                                        {{$attachment->created_at}}
                                     </td>
                                     <td>
-                                        {{$policy_attachment->updated_at}}
+                                        {{$attachment->updated_at}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -135,7 +169,7 @@ $policy = $data['policy'];
                          {!! csrf_field() !!}
                          {!! method_field('DELETE') !!}
                         <i class="far fa-trash-alt fa-2x"></i>
-                        <input type="hidden" name="id[]" value="{{ $policy->id }}">
+                        <input type="hidden" name="id[]" value="{{ $data['policy']->id }}">
                         <input class="btn btn-outline-danger" type="submit" value="Delete">
                     </form>
                  </div>

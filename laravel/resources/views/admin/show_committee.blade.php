@@ -53,7 +53,7 @@
                 </a>
             </div>
              <div class="col-12 col-md-6 text-md-right">
-                 Committee OrCreated by:
+                 Committee entry created by:
                  <i class="far fa-user"></i>
                  <a href="{{route('user_edit', $data['committee']->creator->id)}}">
                      {{$data['committee']->creator->name }}
@@ -70,17 +70,6 @@
                         not enabled live.
                     @endif
                 </h5>
-            </div>
-            <div class="col-12 col-md-6 text-md-right">
-                @if($data['canManage'] == 1)
-                    <h5>
-                        <a href="{{ route('committee_edit', $data['committee']->slug) }}"
-                           title="Edit {{ $data['committee']->name }}">
-                            <i class="fas fa-edit"></i>
-                            Edit {{ $data['committee']->name }}
-                        </a>
-                    </h5>
-                @endif
             </div>
         </div>
         <div class="row mt-5">

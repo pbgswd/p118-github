@@ -2,11 +2,20 @@
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg pb-2" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12 p-2 mb-2">
-            <a href="{{route('agreements_list_public')}}">
-                <i class="far fa-arrow-alt-circle-left"></i>
-                Agreements
-            </a>
+        <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+                <a href="{{route('agreements_list_public')}}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    Agreements
+                </a>
+            </div>
+            @can('edit articles')
+                <div class="col-12 col-md-6 text-right">
+                    <a href="{{route('agreement_edit', $data['agreement']->id)}}" title="Edit {{$data['agreement']->title}}">
+                        <i class="fas fa-edit"></i> Admin Edit
+                    </a>
+                </div>
+            @endcan
         </div>
         <div class="row d-flex justify-content-end">
             <div class="col-12 col-md-6">

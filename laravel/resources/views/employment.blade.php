@@ -2,14 +2,25 @@
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg mb-3" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12 pt-2">
-            <h4>
-                <a href="{{url()->previous()}}">
-                    <i class="far fa-arrow-alt-circle-left"></i>
-                    Employment postings
-                </a>
-            </h4>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <h4>
+                    <a href="{{url()->previous()}}">
+                        <i class="far fa-arrow-alt-circle-left"></i>
+                        Employment postings
+                    </a>
+                </h4>
+            </div>
+            @can(['edit articles'])
+                <div class="col-12 col-md-6 text-md-right">
+                    <a href="{{route('admin_employment_edit', $data['employment']->id)}}"
+                       title="Edit {{$data['employment']->title}}">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                </div>
+            @endcan
         </div>
+
         <div class="row">
             <div  class="col-12">
                 <h1>{{$data['employment']->title}}</h1>

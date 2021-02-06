@@ -2,13 +2,21 @@
 @section('content')
     <div class="container border border-dark rounded-lg mt-3 p-4" style="background: rgba(220,220,220,0.8);">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 col-md-6">
                 <h6>
                     <a href="{{route('committees')}}">
                         Committees
                     </a>
                 </h6>
             </div>
+            @can(['manage committee'])
+                <div class="col-12 col-md-6 text-md-right">
+                    <a href="{{route('committee_edit', $data['committee']->slug)}}"
+                       title="Edit {{$data['committee']->name}}">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                </div>
+            @endcan
         </div>
         <div class="row mb-lg-5">
             <div class="col-12 mb-3 pt-2">

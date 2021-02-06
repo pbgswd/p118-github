@@ -1,17 +1,28 @@
-<?php
-$organization = $data['organization'];
-$all_agreements = $data['all_agreements'];
-?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' organization '
-        . ($data["action"] == 'Edit' ? $organization->name : '') ])
+        . ($data["action"] == 'Edit' ? $data['organization']->name : '') ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3>
-        <a href="{{ route('organizations_list') }}"> <i class="far fa-arrow-alt-circle-left"></i>
-            List of organizations
-        </a>
-    </h3>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h3>
+                <a href="{{ route('organizations_list') }}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    List of organizations
+                </a>
+            </h3>
+        </div>
+        @if($data['action'] == 'Edit')
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('organization', $data['organization']->slug)}}"
+                   title="View {{$data['organization']->name}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
+
+    </div>
+
     <form method="post" name="organization" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
@@ -20,7 +31,7 @@ $all_agreements = $data['all_agreements'];
                 <div class="col-lg-2"><h4>Name</h4></div>
                 <div class="col-lg-10">
                     <input type="text" class="form-control"  placeholder="Name" name="organization[name]"
-                           value="{{ old('organization.name', $organization->name)}}" size="80" required/>
+                           value="{{ old('organization.name', $data['organization']->name)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -32,7 +43,7 @@ $all_agreements = $data['all_agreements'];
                 <div class="col-lg-10">
                     <textarea name="organization[description]" id="organization-description"
                               placeholder="Summary content" class="form-control">
-                        {{old('organization.description', $organization->description)}}
+                        {{old('organization.description', $data['organization']->description)}}
                     </textarea>
                 </div>
             </div>
@@ -43,7 +54,7 @@ $all_agreements = $data['all_agreements'];
                 <div class="col-lg-10">
                     <input type="text" class="form-control"
                            placeholder="Website Address - http://...." name="organization[url]"
-                           value="{{ old('organization.url', $organization->url)}}" size="80" />
+                           value="{{ old('organization.url', $data['organization']->url)}}" size="80" />
                 </div>
             </div>
         </div>
@@ -59,7 +70,7 @@ $all_agreements = $data['all_agreements'];
                     <div class="col-6 col-sm-3">
                         <input type="text" class="form-control"  id="validationCustom02"
                                placeholder="e.g.: 1000, 2000" name="organization[sort_order]"
-                               value="{{old('organization.sort_order',$organization->sort_order)}}"
+                               value="{{old('organization.sort_order',$data['organization']->sort_order)}}"
                                size="30" required/>
                         <p>e.g.: 1000, 2000</p>
                     </div>
@@ -74,7 +85,7 @@ $all_agreements = $data['all_agreements'];
                     <label>
                          <input name="organization[live]" type="hidden" value="0" />
                          <input name="organization[live]" type="checkbox" value="1"
-                             {{ checked( old('organization.live', $organization->live)) }} />
+                             {{ checked( old('organization.live', $data['organization']->live)) }} />
                         Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
@@ -87,7 +98,7 @@ $all_agreements = $data['all_agreements'];
         <div class="row m-t-5 mb-lg-5">
             @if ($data['action'] == 'Edit')
                 <div class="col-5 m-1">
-                    <h4>Agreements attached to {{$organization->name}}</h4>
+                    <h4>Agreements attached to {{$data['organization']->name}}</h4>
                     <table class="table">
                         <thead>
                         <tr>
@@ -98,7 +109,7 @@ $all_agreements = $data['all_agreements'];
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($organization->member_agreements as $oa)
+                        @foreach($data['organization']->member_agreements as $oa)
                             <tr>
                                 <th scope="row">
                                     <input type="checkbox" name="id[]" value="{{$oa->id}}" />
@@ -129,7 +140,7 @@ $all_agreements = $data['all_agreements'];
                         Select and submit to attach.</label>
                     </h4>
                     <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
-                        @foreach($all_agreements as $agr)
+                        @foreach($data['all_agreements'] as $agr)
                             <option value="{{$agr->id}}">{{$agr->title}}</option>
                         @endforeach
                             <option value=""></option>
@@ -150,7 +161,7 @@ $all_agreements = $data['all_agreements'];
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $organization->id }}">
+                <input type="hidden" name="id[]" value="{{ $data['organization']->id }}">
                 <input class="btn btn-outline-danger" type="submit" value="Delete">
             </form>
          </div>

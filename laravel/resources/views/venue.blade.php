@@ -2,8 +2,18 @@
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg pb-2" style="background: rgba(220,220,220,0.8);">
-        <div class="row pl-2">
-            <a href="{{route('venues')}}">Venues</a>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <a href="{{route('venues')}}">Venues</a>
+            </div>
+            @can('edit articles')
+                <div class="col-12 col-md-6 text-md-right">
+                    <a href="{{route('venue_edit', $data['venue']->slug)}}"
+                       title="Edit {{$data['venue']->name}}">
+                        <i class="fas fa-edit"></i> Admin Edit
+                    </a>
+                </div>
+            @endcan
         </div>
         <div class="row d-flex justify-content-around mb-2 mb-md-3">
             <div class="col-12 col-md-6">

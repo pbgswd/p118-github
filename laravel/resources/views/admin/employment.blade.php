@@ -3,10 +3,24 @@
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3><a href="{{ route('admin_employment_list') }}">
-            <i class="far fa-arrow-alt-circle-left"></i> List of employment postings
-        </a>
-    </h3>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h3>
+                <a href="{{ route('admin_employment_list') }}">
+                    <i class="far fa-arrow-alt-circle-left"></i> List of employment postings
+                </a>
+            </h3>
+        </div>
+        @if($data['action'] == 'Edit')
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('job_view', $data['employment']->id)}}"
+                   title="View {{$data['employment']->title}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
+    </div>
+
     <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}

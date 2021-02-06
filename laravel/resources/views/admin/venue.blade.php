@@ -7,12 +7,25 @@ $all_agreements = $data['all_agreements'];
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3>
-        <a href="{{ route('venues_list') }}">
-            <i class="far fa-arrow-alt-circle-left"></i>
-            List of venues
-        </a>
-    </h3>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h3>
+                <a href="{{ route('venues_list') }}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    List of venues
+                </a>
+            </h3>
+        </div>
+        @if($data['action'] == 'Edit')
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('venue', $data['venue']->slug)}}"
+                   title="View {{$data['venue']->name}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
+    </div>
+
     <form method="post" name="venue" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}

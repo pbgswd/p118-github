@@ -69,7 +69,6 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
      **/
     Route::get('/home', [CNS\HomeController::class, 'index'])->name('home'); // redirects to home page
 
-
     Route::post('jobs', [CNS\EmploymentController::class, 'jobs_year'])->name('jobs_year');
     Route::get('jobs/{deadline}', [CNS\EmploymentController::class, 'index_by_year'])->name('list_jobs_year');
 
@@ -134,6 +133,8 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     //->name('attachment_download');
 });
 
+
+
 Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {
 
     Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
@@ -165,7 +166,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('/user/create', [CNS\AdminUserController::class, 'create'])->name('user_create');
     Route::post('/user/create', [CNS\AdminUserController::class, 'store']);
 
-
     Route::get('/user/{user}/address/edit', [CNS\AdminUserController::class, 'admin_edit_address'])
         ->name('admin_edit_address');
     Route::post('/user/{user}/address/edit', [CNS\AdminUserController::class, 'admin_update_address']);
@@ -173,9 +173,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('/user/{user}/emergency_contact/edit', [CNS\AdminUserController::class, 'admin_edit_emergency_contact'])
         ->name('admin_edit_emergency_contact');
     Route::post('/user/{user}/emergency_contact/edit', [CNS\AdminUserController::class, 'admin_update_emergency_contact']);
-
-
-
 
     Route::get('/user/{user}/edit', [CNS\AdminUserController::class, 'edit'])->name('user_edit');
     Route::post('/user/{user}/edit', [CNS\AdminUserController::class, 'update'])->name('user_edit_update');

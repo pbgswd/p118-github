@@ -2,16 +2,28 @@
 @section('content')
     <div class="container border border-dark rounded-lg pt-2 pb-3 my-3" style="background: rgba(220,220,220,0.8);">
         <div class="row p-2">
-            <h3>
-                <a href="{{route('members')}}">
-                    <i class="far fa-arrow-alt-circle-left"></i> Members /
-                </a>
-                {{$data['user']->name}}
-                @if($data['user']->membership->membership_type != 'Member')
-                    ({{$data['user']->membership->membership_type}})
-                @endif
-            </h3>
+            <div class="col-12 col-md-6 w-100">
+                <h3>
+                    <a href="{{route('members')}}">
+                        <i class="far fa-arrow-alt-circle-left"></i> Members /
+                    </a>
+                    {{$data['user']->name}}
+                    @if($data['user']->membership->membership_type != 'Member')
+                        ({{$data['user']->membership->membership_type}})
+                    @endif
+                </h3>
+            </div>
+            @can(['edit users'])
+                <div class="col-12 col-md-6 text-md-right">
+                    <a href="{{route('user_edit', $data['user']->id)}}"
+                       title="Edit {{$data['user']->name}}">
+                        <i class="fas fa-edit"></i> Admin Edit
+                    </a>
+                </div>
+            @endcan
         </div>
+
+
         <div class="row">
             @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
                 <div class="col-6 col-md-12 mb-3">
