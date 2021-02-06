@@ -27,24 +27,22 @@ class HelloController extends Controller
                 $data['years'] . ' years young today!';
         }
 
-        if (Auth::check()) {
-            //$data['news']['posts'] = Topic::find(TopicConstants::NEWS)->front_page_posts;
-            // $data['news']['pages'] = Topic::find(TopicConstants::NEWS)->pages;
+        /**
+         *  // $data['news']['posts'] = Topic::find(TopicConstants::NEWS)->front_page_posts;
+         *  // $data['news']['pages'] = Topic::find(TopicConstants::NEWS)->pages;
+         *  // $data['news']['posts'] = Topic::find(TopicConstants::NEWS)->public_posts;
+         *  // $data['news']['pages'] = Topic::find(TopicConstants::NEWS)->public_pages;
+         */
 
+        if (Auth::check()) {
             $data['news']['posts'] = Post::where([
                 ['front_page', 1], ['live', 1]])->get();
-
             $data['news']['pages'] = Page::where([
                 ['front_page', 1], ['live', 1]])->get();
-
         } else {
-            //$data['news']['posts'] = Topic::find(TopicConstants::NEWS)->public_posts;
-            //$data['news']['pages'] = Topic::find(TopicConstants::NEWS)->public_pages;
-
             $data['news']['posts'] = Post::where([
                 ['front_page', 1], ['live', 1], ['access_level', AccessLevelConstants::PUBLIC]
             ])->get();
-
             $data['news']['pages'] = Page::where([
                 ['front_page', 1], ['live', 1], ['access_level', AccessLevelConstants::PUBLIC]
             ])->get();
