@@ -1,11 +1,11 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="container">
-    <div class="row border border-dark rounded-lg mt-3 pt-2" style="background: rgba(220,220,220,0.8);">
+    <div class="row border border-dark rounded-lg mt-3 p-2" style="background: rgba(220,220,220,0.8);">
         <div class="col-12">
             <h1>Local 118 Executive</h1>
         </div>
-        <div class="row mb-2 p-2">
+
         @forelse($data as $e)
                 <div class="col-12 col-md-4 p-1">
             <div class="border border-dark rounded-lg w-100 h-100 p-2">
@@ -36,6 +36,6 @@
         @empty
            No entry
         @endforelse
-    </div>
+    
 </div>
 @endsection

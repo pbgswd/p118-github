@@ -1,137 +1,146 @@
-<footer class="container">
-    <div class="col-12 border border-dark rounded-lg pt-2 pb-2 mb-4">
-        @guest
-            <div class="col-12 p-lg-3 d-flex justify-content-center">
+<footer class="container mt-3">
+    <div class="row mb-2 p-2">
+        <div class="col-12 border border-dark rounded-lg d-flex justify-content-center pt-2 pb-2 mb-2">
+            @guest
                 <a href="/login">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">
+                        Login
+                    </button>
                 </a>
-            </div>
-        @else
-            <a id="search"></a>
-            <div class="col-12 p-lg-3 d-flex justify-content-center">
+            @else
+                <a id="search"></a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button class="btn btn-success my-2 my-sm-0 float-left pl-2" type="submit">
                         Logout
                     </button>
                 </form>
-            </div>
-            <div class="row border border-secondary rounded-lg mx-auto mt-2 my-3 pt-4 pb-2 pb-md-3 mb-4
-                    d-flex justify-content-center">
-                <form class="form-inline" action="{{route('search')}}" method="POST">
-                    {!! csrf_field() !!}
-                    <div class="col-12 mt-md-3 mb-md-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text d-none d-md-block" id="basic-addon1">
-                                    <i class="fas fa-search"></i>
-                                </span>
-                            </div>
-                            <input class="form-control" type="text" placeholder="Search"
-                                   aria-label="Search" name="search" size="80" required>
-                        </div>
-                    </div>
-                    <div class="col-12 mt-2 d-flex justify-content-end">
-                        <button type="submit" name="Submit" value="Submit"
-                                class="btn btn-success">
-                            Search
-                        </button>
-                    </div>
-                </form>
-            </div>
-        @endguest
-        <div class="row mt-sm-2 mt-md-5 p-0 d-flex justify-content-around">
-            <div class="col-12 col-md-4 mb-3">
-                <h5>
-                    <i class="fas fa-hashtag"></i>
-                    To Read
-                </h5>
-                <ul class="list-group list-group">
-                    <li class="list-group-item"><a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a></li>
-                    <li class="list-group-item"><a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a></li>
-                    <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
-                    <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
-                    <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a></li>
-                </ul>
-            </div>
-            <div class="col-12 col-md-4 mb-lg-3 mt-sm-5 mt-md-0">
-                <h5>
-                    <i class="fas fa-hashtag"></i>
-                    Social Media
-                </h5>
-                <ul class="list-group list-group-flush flex">
-                    <li class="list-group-item p-0 m-0">
-                        <a class="list-group-item" href="https://twitter.com/iatse118" target="_blank"
-                           title="IATSE Local 118">
-                            <i class="fab fa-twitter"></i>
-                            @iatse118
-                        </a>
-                    </li>
-                    <li class="list-group-item p-0 m-0">
-                        <a class="list-group-item" href="https://twitter.com/IATSECANADA" target="_blank"
-                           title="IATSE Canada">
-                            <i class="fab fa-twitter"></i>
-                            @IATSECANADA
-                        </a>
-                    </li>
-                    <li class="list-group-item p-0 m-0">
-                        <a class="list-group-item" href="https://twitter.com/IATSEYWC" target="_blank"
-                           title="IATSE Young Workers">
-                            <i class="fab fa-twitter"></i>
-                            @IATSEYWC
-                        </a>
-                    </li>
-                    <li class="list-group-item p-0 m-0">
-                        <a class="list-group-item" href="https://twitter.com/IATSE" target="_blank" title="IATSE">
-                            <i class="fab fa-twitter"></i>
-                            @IATSE
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <h3>Our Affiliations</h3>
-        </div>
-        <div class="pb-md-3 d-flex justify-content-md-center">
-            <div class="col pl-md-5">
-                <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
-                    <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png"
-                         alt="BC Federation of Labor" class="flex-fill img-fluid association-img" />
-                </a>
-            </div>
-            <div class="col pl-md-5">
-                <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
-                    <img src="/storage/public/3qm1aQMeYkDEl30q8gh0iMiyorfRz6sqemdf0Skp.jpg"
-                         alt="IATSE International" class="p-1 img-fluid association-img" />
-                </a>
-            </div>
-            <div class="col pl-md-5">
-                <a href="https://canadianlabour.ca/" title="Canadian labour Congress" target="_blank">
-                    <img src="/storage/public/KKVqVfiv4hU4ayxNukvYJsN5EKgIqnYfx5mssuT7.png"
-                         alt="Canadian Labour Congress" class="p-1 flex-fill img-fluid  association-img" />
-                </a>
-            </div>
-            <div class="col pl-md-5">
-                <a href="http://www.vdlc.ca/" title="Vancouver & District Labour Congress" target="_blank">
-                    <img src="/storage/public/mlL21yHivsR7ztxYh3hRB2Y8j9rcFzY5BfXtSLE1.jpeg"
-                         alt="Vancouver & District Labour Congress" class="p-1 flex-fill img-fluid  association-img" />
-                </a>
-            </div>
+            @endguest
         </div>
     </div>
-    <div class="col-12 mt-5 mb-5 mt-md-5 mb-md-5 d-flex justify-content-around">
-        <div>
-            <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
+    @auth
+        <div class="row border border-secondary rounded-lg mx-auto mt-2 pt-4 pb-2 pb-md-3 mb-4
+                d-flex justify-content-center">
+            <form class="form-inline" action="{{route('search')}}" method="POST">
+                {!! csrf_field() !!}
+                <div class="col-12 mb-0 mt-md-3 mb-md-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text d-none d-md-block" id="basic-addon1">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" placeholder="Search"
+                               aria-label="Search" name="search" size="80" required>
+                    </div>
+                </div>
+                <div class="col-12 mt-2 d-flex justify-content-end">
+                    <button type="submit" name="Submit" value="Submit"
+                            class="btn btn-success">
+                        Search
+                    </button>
+                </div>
+            </form>
         </div>
-        <div>
-            <h6 align="center">Site by <br />IATSE 118 <br /> Members</h6>
+    @endauth
+    <div class="row mt-1 mt-md-5 px-2 d-flex justify-content-around">
+        <div class="col-12 col-md-4 mb-3 border border-secondary border-lg rounded pt-3">
+            <h5>
+                <i class="fas fa-hashtag"></i>
+                To Read
+            </h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a>
+                </li>
+                <li class="list-group-item"><a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a>
+                </li>
+                <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
+                <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
+                <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a>
+                </li>
+            </ul>
         </div>
-        <div>
-            <a href="#top" title="Top of page">
-                <i class="fas fa-angle-up"></i>
-                Top of page
+        <div class="col-12 col-md-4 mb-3 mt-sm-5 mt-md-0 border border-secondary border-lg rounded pt-3">
+            <h5>
+                <i class="fas fa-hashtag"></i>
+                Social Media
+            </h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a href="https://twitter.com/iatse118" target="_blank"
+                       title="IATSE Local 118">
+                        <i class="fab fa-twitter"></i>
+                        @iatse118
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://twitter.com/IATSECANADA" target="_blank"
+                       title="IATSE Canada">
+                        <i class="fab fa-twitter"></i>
+                        @IATSECANADA
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://twitter.com/IATSEYWC" target="_blank"
+                       title="IATSE Young Workers">
+                        <i class="fab fa-twitter"></i>
+                        @IATSEYWC
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://twitter.com/IATSE" target="_blank" title="IATSE">
+                        <i class="fab fa-twitter"></i>
+                        @IATSE
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-12 mt-3 text-center">
+        <h3>Our Affiliations</h3>
+    </div>
+    <div class="pb-md-3 d-flex justify-content-md-center">
+        <div class="col pl-md-5">
+            <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
+                <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png"
+                     alt="BC Federation of Labor" class="flex-fill img-fluid association-img" />
             </a>
+        </div>
+        <div class="col pl-md-5">
+            <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
+                <img src="/storage/public/3qm1aQMeYkDEl30q8gh0iMiyorfRz6sqemdf0Skp.jpg"
+                     alt="IATSE International" class="p-1 img-fluid association-img" />
+            </a>
+        </div>
+        <div class="col pl-md-5">
+            <a href="https://canadianlabour.ca/" title="Canadian labour Congress" target="_blank">
+                <img src="/storage/public/KKVqVfiv4hU4ayxNukvYJsN5EKgIqnYfx5mssuT7.png"
+                     alt="Canadian Labour Congress" class="p-1 flex-fill img-fluid  association-img" />
+            </a>
+        </div>
+        <div class="col pl-md-5">
+            <a href="http://www.vdlc.ca/" title="Vancouver & District Labour Congress" target="_blank">
+                <img src="/storage/public/mlL21yHivsR7ztxYh3hRB2Y8j9rcFzY5BfXtSLE1.jpeg"
+                     alt="Vancouver & District Labour Congress" class="p-1 flex-fill img-fluid  association-img" />
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-5 mb-5 mt-md-5 mb-md-5 d-flex">
+            <div class="p-2 flex-fill text-left">
+                <i class="far fa-copyright"></i> <?php echo date('Y'); ?>
+                <br />
+                {{ config('app.name')}}
+            </div>
+            <div class="p-2 flex-fill text-center">
+                <h6 align="center">Site by <br />IATSE 118 <br /> Members</h6>
+            </div>
+            <div class="p-2 flex-fill text-right">
+                <a href="#top" title="Top of page">
+                    <i class="fas fa-angle-up"></i>
+                    Top of page
+                </a>
+            </div>
         </div>
     </div>
 </footer>
