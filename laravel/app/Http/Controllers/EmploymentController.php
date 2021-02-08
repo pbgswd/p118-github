@@ -40,7 +40,7 @@ class EmploymentController extends Controller
             ->where('live', '=', 1)
             ->with('attachments')
             ->orderBy('deadline', 'desc')
-            ->paginate(20);
+            ->paginate(10);
 
         foreach ($jobs as $job) {
             //todo update job status on page load

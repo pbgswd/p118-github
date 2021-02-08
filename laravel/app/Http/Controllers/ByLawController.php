@@ -33,7 +33,7 @@ class ByLawController extends Controller
             $data['bylaws'] = Bylaw::sortable()
                 ->with('attachments')
                 ->orderBy('date', 'desc')
-                ->paginate(20);
+                ->paginate(10);
 
             $data['count'] = Bylaw::count();
         } else {
@@ -41,7 +41,7 @@ class ByLawController extends Controller
                 ->where('access_level', 'public')
                 ->with('attachments')
                 ->orderBy('date', 'desc')
-                ->paginate(20);
+                ->paginate(10);
 
             $data['count'] = Bylaw::where('access_level', 'public')->count();
         }

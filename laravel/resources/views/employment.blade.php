@@ -71,7 +71,7 @@
                                    title="Download {{$att->file_name}}" target="_blank">
                                     <i class="fas fa-file-download fa-1x"></i>
                                     {{$att->description ?? $att->file_name}}
-                                </a> &nbsp;
+                                </a>
                             </li>
                         @endforeach
                     </ul>

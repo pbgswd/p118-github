@@ -90,7 +90,7 @@ class CommitteeController extends Controller
             ->with('creator')
             ->where('sticky', '=', 0)
             ->orderByDesc('updated_at')
-            ->paginate(5);
+            ->paginate(10);
 
         $data['sticky_posts'] = $committee->posts()
             ->with('creator')

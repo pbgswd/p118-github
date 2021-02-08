@@ -24,7 +24,7 @@ class MeetingController extends Controller
 
         $data = [
             'meetings' => Meeting::withoutGlobalScopes()
-                ->sortable()->with('user')->orderBy('date', 'desc')->paginate(20),
+                ->sortable()->with('user')->orderBy('date', 'desc')->paginate(10),
             'count' => Meeting::withoutGlobalScopes()->count(),
             'years' => $years,
             'year' => '',
