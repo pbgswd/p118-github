@@ -13,7 +13,8 @@
             </div>
             @can('edit articles')
                 <div class="col-12 col-md-6 text-md-right">
-                    <a href="{{route('admin_policy_edit', $data['policy']->id)}}" title="Edit {{$data['policy']->title}}">
+                    <a href="{{route('admin_policy_edit', $data['policy']->id)}}"
+                       title="Edit {{$data['policy']->title}}">
                         <i class="fas fa-edit"></i> Admin Edit
                     </a>
                 </div>
@@ -21,13 +22,14 @@
         </div>
 
         <div class="row d-flex justify-content-end">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4"></div>
+            <div class="col-12 col-md-4 text-center">
                 <h1>
                     <i class="fas fa-scroll"></i>
                     {{$data['policy']->title}}
                 </h1>
             </div>
-            <div class="col-12 col-md-6 text-md-right">
+            <div class="col-12 col-md-4 text-md-right">
                 <h4>
                     From: {{$data['policy']->date->format('F j Y')}}
                 </h4>

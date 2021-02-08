@@ -19,13 +19,11 @@
                 </div>
             @endcan
         </div>
-        <div  class="col-12">
+        <div  class="col-12 text-center">
             <h1>
                 <i class="fas fa-gavel"></i>
                 {{$data['bylaw']->title}}
             </h1>
-        </div>
-        <div class="col-12">
             <h4>
                 From: {{$data['bylaw']->date->format('F j Y')}}
             </h4>

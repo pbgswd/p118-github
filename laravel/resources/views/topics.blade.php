@@ -1,14 +1,14 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="container border border-dark rounded-lg mb-1 mb-lg-3" style="background: rgba(220,220,220,0.8); padding:2em;">
-    <div class="col-12">
+    <div class="col-12 text-center">
         <h1>Topics</h1>
     </div>
     <div class="row mb-2 mb-lg-3">
         @foreach ( $data['topics'] as $i )
             <div class="col-12 col-md-4 p-1">
                 <div class="col border border-dark rounded-lg  w-100 h-100 p-2">
-                    <a class="" href="{{ route('topic_show', $i->slug) }}" title="{{ $i->name }}">
+                    <a href="{{ route('topic_show', $i->slug) }}" title="{{ $i->name }}">
                         <h3>{{ $i->name }}</h3>
                         <p>{!! $i->description !!} </p>
                     </a>

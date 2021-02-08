@@ -17,17 +17,17 @@
                     </div>
                 @endcan
             </div>
-
-
             <div class="row mt-2">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-4"></div>
+                <div class="col-12 col-md-4 text-center">
                     <h1>
                         {{$data['organization']->name}}
                     </h1>
                 </div>
-                <div class="col-12 col-md-6 text-md-right">
+                <div class="col-12 col-md-4 text-md-right">
                     <p>
-                        <a href="{{$data['organization']->url}}" title="{{$data['organization']->name}}" target="_blank">
+                        <a href="{{$data['organization']->url}}" title="{{$data['organization']->name}}"
+                           target="_blank">
                             <i class="fas fa-external-link-alt"></i>
                             {{$data['organization']->url}}
                         </a>
@@ -42,7 +42,7 @@
                     <h4>
                         Agreements with {{$data['organization']->name}}
                     </h4>
-                    <ul class="list-group">
+                    <ul class="list-group list-group-flush">
                         @foreach($data['agreements'] as $va)
                             <li class="list-group-item">
                                 {!! (\Carbon\Carbon::parse($va->until)->isPast()) ? '' :
@@ -56,7 +56,6 @@
                     </ul>
                 </div>
             @endif
-
         </div>
     </div>
 @endsection

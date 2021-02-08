@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="row border border-dark rounded-lg mt-3 p-2" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12">
+        <div class="col-12 text-center">
             <h1>Local 118 Executive</h1>
         </div>
 

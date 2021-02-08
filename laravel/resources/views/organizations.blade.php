@@ -1,11 +1,9 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg p-lg-2" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12">
+    <div class="container border border-dark rounded-lg p-2" style="background: rgba(220,220,220,0.8);">
+        <div class="col-12 text-center">
             <h1>Organizations</h1>
-        </div>
-        <div class="col-12">
             <h4>Where we work</h4>
         </div>
         <div class="row p-3">

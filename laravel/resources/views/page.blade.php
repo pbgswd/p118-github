@@ -21,7 +21,7 @@
             @endcan
         </div>
         <div  class="col-12">
-            <h1>{{$data['page']->title}}</h1>
+            <h1 class="text-center">{{$data['page']->title}}</h1>
             <h2>{!! $data['page']->description !!}</h2>
         </div>
         <div class="col-12">

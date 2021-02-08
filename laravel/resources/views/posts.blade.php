@@ -1,7 +1,7 @@
 @extends('layouts.jumbo')
 @section('content')
     <div class="container border border-dark rounded-lg mt-3" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12 pt-2">
+        <div class="col-12 text-center">
             <h1>Posts</h1>
         </div>
         <div class="row mb-2 mb-lg-3">
@@ -12,7 +12,8 @@
                             <i>
                                 @foreach($i->topics as $pt)
                                     <a href="{{route('topic_show', $pt->slug)}}"
-                                       title="{{$pt->name}}">{{$pt->name}}{{$loop->last ? '' : ','}}
+                                       title="{{$pt->name}}">
+                                        {{$pt->name}}{{$loop->last ? '' : ','}}
                                     </a>
                                 @endforeach
                             </i>

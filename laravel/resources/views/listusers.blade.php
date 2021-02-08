@@ -2,15 +2,14 @@
 @section('content')
 <div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row d-flex justify-content-around pb-md-3">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
+        </div>
+        <div class="col-12 col-md-4 text-center">
             <h1>
-               <span class="badge badge-primary badge-pill">
-                   {!! $data['count'] ?? 0 !!}
-               </span>
-                Members
+                Member List
             </h1>
         </div>
-        <div class="col-12 col-md-6 text-md-right">
+        <div class="col-12 col-md-4 text-center text-md-right">
             <h5>
                 <a href="{{route('member', Auth::user()->id)}}">
                     <i class="fas fa-user text-primary"></i>View my profile
@@ -18,7 +17,16 @@
                 </a>
             </h5>
         </div>
+        <div class="col-12 text-center">
+            <h6>
+               <span class="badge badge-primary badge-pill">
+                   {!! $data['count'] ?? 0 !!}
+               </span>
+                Members
+            </h6>
+        </div>
     </div>
+
     <div class="table-responsive-md border border-dark rounded-lg">
         <table class="table">
             <thead>

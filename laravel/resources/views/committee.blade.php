@@ -19,15 +19,19 @@
             @endcan
         </div>
         <div class="row mb-lg-5">
-            <div class="col-12 mb-3 pt-2">
-                @if(null !== $data['committee']->image)
+            @if(null !== $data['committee']->image)
+                <div class="col-12 mb-3 pt-2">
                     <img src="{{ asset('storage/committees/'.$data['committee']->image)}}"
                          class="border rounded-lg img-fluid mb-2" />
-                @endif
-                <h1 class="mb-2 pt-2">
+                </div>
+            @endif
+            <div class="col-12 pt-2 text-center">
+                <h1>
                     {{$data['committee']->name}}
                 </h1>
-                <h4 class="mt-2 mb-2">
+            </div>
+            <div class="col-12">
+                <h4>
                     {!! $data['committee']->description !!}
                 </h4>
             </div>
@@ -40,7 +44,7 @@
                     {{Str::plural('Post', $data['posts']->count() + $data['sticky_posts']->count())}}
                 </h4>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 text-md-right">
                 @if($data['isMember'] == 1)
                     <h4>
                         <i class="far fa-edit"></i>

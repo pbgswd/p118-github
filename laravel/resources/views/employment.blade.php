@@ -22,7 +22,7 @@
         </div>
 
         <div class="row">
-            <div  class="col-12">
+            <div  class="col-12 text-center">
                 <h1>{{$data['employment']->title}}</h1>
             </div>
         </div>
@@ -46,7 +46,8 @@
             <div class="row mt-3 mb-lg-2">
                 <div class="col-12">
                     <h4>
-                        <a href="{{$data['employment']->url}}" title="External link to {{$data['employment']->title}}" target="_blank">
+                        <a href="{{$data['employment']->url}}"
+                           title="External link to {{$data['employment']->title}}" target="_blank">
                             <i class="fas fa-external-link-alt fa-2x"></i>
                             {{ $data['employment']->url }}
                         </a>

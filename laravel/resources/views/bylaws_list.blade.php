@@ -5,13 +5,14 @@ $bylaws = $data['data']['bylaws'];
 @section('content')
 <div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row p-2">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4"></div>
+        <div class="col-12 col-md-4 text-center">
             <h2>
                 <i class="fas fa-gavel"></i>
                 Constitution and By-Laws
             </h2>
         </div>
-        <div class="col-12 col-md-6 text-md-right">
+        <div class="col-12 col-md-4 text-md-right">
         <h3>
            <span class="badge badge-primary badge-pill">
                {{ $data['data']['count'] }}

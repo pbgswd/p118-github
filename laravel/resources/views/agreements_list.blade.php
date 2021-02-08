@@ -2,21 +2,22 @@
 @section('content')
 <div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row mb-3 pt-2">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4"></div>
+        <div class="col-12 col-md-4 text-center">
             <h1>
                 <i class="far fa-handshake"></i>
                 Collective Agreements
             </h1>
         </div>
-        <div class="col-12 col-md-6 text-md-right">
+        <div class="col-12 col-md-4 text-md-right">
             <h3>
                <span class="badge badge-primary badge-pill">
-                   {{ $data['data']['count'] }} agreement postings
+                   {{$data['data']['count']}}
+                   {{Str::plural( 'agreement', $data['data']['count'])}}
                </span>
             </h3>
         </div>
     </div>
-
     <div class="col-12 p-0 border border-dark rounded-lg mb-3" style="background: rgba(220,220,220,0.8);">
         <div class="table-responsive">
             <table class="table">

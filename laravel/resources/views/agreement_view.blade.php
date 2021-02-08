@@ -2,29 +2,28 @@
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg pb-2" style="background: rgba(220,220,220,0.8);">
-        <div class="row">
-            <div class="col-12 col-md-6 mb-3">
+        <div class="row mb-2">
+            <div class="col-6">
                 <a href="{{route('agreements_list_public')}}">
                     <i class="far fa-arrow-alt-circle-left"></i>
                     Agreements
                 </a>
             </div>
             @can('edit articles')
-                <div class="col-12 col-md-6 text-right">
-                    <a href="{{route('agreement_edit', $data['agreement']->id)}}" title="Edit {{$data['agreement']->title}}">
+                <div class="col-6 text-md-right">
+                    <a href="{{route('agreement_edit', $data['agreement']->id)}}"
+                       title="Edit {{$data['agreement']->title}}">
                         <i class="fas fa-edit"></i> Admin Edit
                     </a>
                 </div>
             @endcan
         </div>
-        <div class="row d-flex justify-content-end">
-            <div class="col-12 col-md-6">
+        <div class="row">
+            <div class="col-12 text-center">
                 <h1>
                     <i class="far fa-handshake"></i>
                     {{$data['agreement']->title}}
                 </h1>
-            </div>
-            <div class="col-12 col-md-6 text-md-right">
                 <h4>
                     {{$data['agreement']->from->format('F j Y')}} -
                     {{$data['agreement']->until->format('F j Y')}}
@@ -38,7 +37,7 @@
             {!! $data['agreement']->description !!}
         </div>
         @if(count($data['agreement']->attachments) > 0)
-            <div class="col-12">
+            <div class="col-12 mt-3">
                 <h4>
                     <i class="far fa-folder-open"></i>
                     Files

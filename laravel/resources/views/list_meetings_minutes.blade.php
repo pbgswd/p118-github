@@ -3,10 +3,11 @@
     <div class="jumbotron">
         <div class="container border border-dark rounded-lg mb-3" style="background: rgba(220,220,220,0.8);">
             <div class="row d-flex justify-content-around mb-2 mb-md-3">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-4"></div>
+                <div class="col-12 col-md-4 text-center">
                     <h1>Meeting Minutes</h1>
                 </div>
-                <div class="col-12 col-md-6 text-md-right">
+                <div class="col-12 col-md-4 text-md-right">
                     <h3>
                        <span class="badge badge-primary badge-pill">
                            {{ $data['count'] }} Meeting {{ Str::plural('Minute', $data['count']) }}

@@ -16,10 +16,11 @@
             @endcan
         </div>
         <div class="row d-flex justify-content-around mb-2 mb-md-3">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4"></div>
+            <div class="col-12 col-md-4 text-center">
                 <h1>{{$data['venue']->name}}</h1>
             </div>
-            <div class="col-12 col-md-6 text-md-right">
+            <div class="col-12 col-md-4 text-md-right">
                 <p>
                     <a href="{{$data['venue']->url}}" title="{{$data['venue']->name}}" target="_blank">
                         <i class="fas fa-external-link-alt"></i>
@@ -40,7 +41,7 @@
                         Agreements with {{$data['venue']->name}}
                     </h4>
                 </div>
-                <ul class="list-group">
+                <ul class="list-group list-group-flush">
                     @foreach($data['agreements'] as $va)
                         <li class="list-group-item w-100">
                             {{ (\Carbon\Carbon::parse($va->until)->isPast()) ? '' : "<i>(Not current)</i>" }}

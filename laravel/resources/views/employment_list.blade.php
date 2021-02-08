@@ -2,12 +2,13 @@
 @section('content')
 <div class="container border border-dark rounded-lg mt-3 pt-2 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row pt-2 pb-2">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4"></div>
+        <div class="col-12 col-md-4 text-center">
             <h1>
                 Employment Postings
             </h1>
         </div>
-        <div class="col-12 col-md-6 text-md-right">
+        <div class="col-12 col-md-4 text-md-right">
             <h3>
                 <span class="badge badge-primary badge-pill">
                     {{ $data['count'] }}

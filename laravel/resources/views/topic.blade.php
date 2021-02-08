@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="col-12">
+        <div class="col-12 text-center">
             <h1>{{$data['topic']->name}}</h1>
            <p>{!! $data['topic']->description !!}</p>
         </div>

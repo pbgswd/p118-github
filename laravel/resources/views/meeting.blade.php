@@ -20,7 +20,7 @@
                 @endcan
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 text-center">
             <h1>
                 {{$data['meeting']->title}}
             </h1>
