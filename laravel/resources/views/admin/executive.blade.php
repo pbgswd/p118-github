@@ -1,5 +1,4 @@
 <?php
-$user = $data['user'];
 $assigned_role = $data['assigned_role'];
 $roles = $data['roles'];
 ?>
@@ -12,8 +11,7 @@ $roles = $data['roles'];
     <form method="post" name="executive" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row mt-lg-3">
-
+        <div class="row mt-3">
             <div class="col-3 text-left">
                 <h5>
                     <a href="{{route('admin_executives')}}">
@@ -24,31 +22,29 @@ $roles = $data['roles'];
             @if($data['action'] == 'Edit')
                 <div class="col-4 text-right">
                     <h5>
-                        <a href="{{route('admin_executive_create', $user->id)}}">
+                        <a href="{{route('admin_executive_create', $data['user']->id)}}">
                             Assign new Executive Role <i class="far fa-arrow-alt-circle-right"></i>
                         </a>
                     </h5>
                 </div>
             @endif
         </div>
-
         <div class="row mt-lg-3">
             <div class="col-4  text-left">
                 <h3>
-                    <a title="admin edit page for {{ $user->name }}"
-                       href="{{ route('user_edit', $user->id) }}">
-                        {{$user->name}}
+                    <a title="admin edit page for {{ $data['user']->name }}"
+                       href="{{ route('user_edit', $data['user']->id) }}">
+                        {{$data['user']->name}}
                     </a>
                 </h3>
             </div>
         </div>
-        <div class="row">
+        <div class="row my-3">
             <div class="form-group">
                 <div class="col-12">
                     <label for="exampleFormControlSelect1">
                         <h4>Title & Email</h4>
                     </label>
-
                     <select class="form-control" id="exampleFormControlSelect1" name="executive[executive_id]" required>
                         @if($data['action'] == 'Create')
                             <option value="">Select Executive Role</option>
@@ -66,15 +62,15 @@ $roles = $data['roles'];
                 </div>
             </div>
         </div>
-        <div class="row mb-2">
+        <div class="row my-3">
             <div class="form-group">
-                <div class="col-lg-12">
+                <div class="col-12">
                     <h4>
                         <i class="fas fa-calendar-alt"></i>
                         Start date of Term
                     </h4>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-12">
                     <input
                         type='text'
                         name="executive[start_date]"
@@ -95,13 +91,13 @@ $roles = $data['roles'];
         </div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-8">
+                <div class="col-12">
                     <h4>
                         <i class="fas fa-calendar-alt"></i>
                         End date of Term
                     </h4>
                 </div>
-                <div class="col-lg-10">
+                <div class="col-12">
                     <input
                         type='text'
                         name="executive[end_date]"
@@ -121,7 +117,7 @@ $roles = $data['roles'];
             </div>
         </div>
         <div class="row">Todo: notify user?</div>
-        <div class="row mt-lg-3 mb-lg-5">
+        <div class="row my-3">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />

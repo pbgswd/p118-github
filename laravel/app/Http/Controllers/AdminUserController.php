@@ -172,15 +172,19 @@ class AdminUserController extends Controller
                     'membership'
                     );
 
-        $filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/users'.'/'.$user->user_info->image)))
-            ? : null;
+        //dd($user->user_info);
+        if($user->user_info) {
+            $filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/users' . '/' .
+                $user->user_info->image)))
+                ? : null;
+        }
 
         $user_roles = $user->getRoleNames()->toArray();
 
         $data = [
             'user' => $user,
             'membership' => Options::membership_levels(),
-            'filesize' => $filesize,
+            'filesize' => $filesize ?? '',
             'executive_roles' => Executive::all(),
             'user_roles' => array_combine($user_roles, $user_roles),
             'roles' => Role::get(),

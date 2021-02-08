@@ -25,13 +25,15 @@
         @endif
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-md-6">
             <h4>
                 <a href="{{route('admin_edit_address', $data['user']->id)}}">
                     <i class="fas fa-address-card text-success"></i>
                     Update address
                 </a>
             </h4>
+        </div>
+        <div class="col-12 col-md-6 text-md-right">
             <h4>
                 <a href="{{route('admin_edit_emergency_contact', $data['user']->id)}}">
                     <i class="fas fa-first-aid text-danger"></i>

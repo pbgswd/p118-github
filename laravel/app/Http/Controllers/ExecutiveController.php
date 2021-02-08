@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Committee;
 use App\Models\Executive;
 use Illuminate\View\View;
 
@@ -13,7 +14,13 @@ class ExecutiveController extends Controller
     public function index(): View
     {
         $data = [];
-        $data = Executive::with('current_executive_user')->get();
+       // dd(Committee::all());
+
+        $data = [
+            'executive' => Executive::with('current_executive_user')->get(),
+            'committees' => Committee::all(),
+            'trustees' => [],
+        ];
 
         return view('executive_list', ['data' => $data]);
     }
