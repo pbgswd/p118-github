@@ -36,6 +36,6 @@
         @empty
            No entry
         @endforelse
-    
+
 </div>
 @endsection

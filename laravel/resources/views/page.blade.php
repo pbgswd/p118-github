@@ -27,11 +27,6 @@
         <div class="col-12">
             {!! $data['page']->content !!}
         </div>
-        @if ($data['page']->tagNames != '')
-            <div class="col-12">
-                Tags: {{join(', ', $data['page']->tagNames())}}
-            </div>
-        @endif
         @if(count($data['page']->attachments) > 0)
             <div class="col-12 mt-3">
                 <h4>
@@ -39,7 +34,7 @@
                     Files
                 </h4>
                 @foreach ($data['page']->attachments as $pa)
-                    <ul class="list-group">
+                    <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <a href="{{route('attachment_download',
                                         [$data['page']->getAttachmentFolder(), $pa->id])}}"
