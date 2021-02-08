@@ -74,7 +74,7 @@
             No entry
         @endforelse
     </div>
-    
+
     @auth
         <div class="row border border-dark rounded-lg mt-2 p-2" style="background: rgba(220,220,220,0.8);">
             <div class="col-12 text-center">

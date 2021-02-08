@@ -15,19 +15,27 @@ class MeetingController extends Controller
      */
     public function index(): View
     {
-        //todo turn years data for menu into service using year, table name
-        // gets the years in this table  $table $date_column
+        $pagination = 10;
+
         $years = DB::table('meetings')
             ->select(DB::raw('DISTINCT YEAR(date) as year'))
             ->orderBy('year', 'desc')
             ->get();
 
+        $meetings = Meeting::withoutGlobalScopes()
+            ->sortable()
+            ->with('user')
+            ->orderBy('date', 'desc')
+            ->paginate($pagination);
+
+        $count = Meeting::withoutGlobalScopes()->count();
+
         $data = [
-            'meetings' => Meeting::withoutGlobalScopes()
-                ->sortable()->with('user')->orderBy('date', 'desc')->paginate(10),
-            'count' => Meeting::withoutGlobalScopes()->count(),
+            'meetings' => $meetings,
+            'count' => $count,
             'years' => $years,
             'year' => '',
+            'pagination' => $pagination,
         ];
 
         return view('list_meetings_minutes', ['data' => $data]);
@@ -51,9 +59,11 @@ class MeetingController extends Controller
             ->orderBy('date', 'desc')
             ->paginate(10);
 
+        $count = Meeting::withoutGlobalScopes()->whereBetween('date', [$year.'-01-01', $year.'-12-31'])->count();
+
         $data = [
             'meetings' => $meetings,
-            'count' => $meetings->count(),
+            'count' => $count,
             'years' => $years,
             'year' => $year,
         ];

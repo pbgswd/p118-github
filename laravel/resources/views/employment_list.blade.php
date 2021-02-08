@@ -41,7 +41,7 @@
         </div>
     </form>
     @if($data['year'])
-        <div class="row mt-3 mb-3 mb-md-3">
+        <div class="row mt-3 mb-3 mb-md-3 p-2">
             <h4>
                 Jobs by Year (deadline)
                 <span class="font-weight-bold">
@@ -50,7 +50,7 @@
             </h4>
         </div>
     @endif
-    <div class="row">
+    <div class="row p-2">
         <div class="table-responsive border border-dark rounded-lg p-1"
          style="background: rgba(220,220,220,0.8);">
             <table class="table table-sm ml-auto mr-auto">

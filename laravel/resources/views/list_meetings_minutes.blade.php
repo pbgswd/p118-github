@@ -1,7 +1,7 @@
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Members'])
 @section('content')
     <div class="jumbotron">
-        <div class="container border border-dark rounded-lg mb-3" style="background: rgba(220,220,220,0.8);">
+        <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
             <div class="row d-flex justify-content-around mb-2 mb-md-3">
                 <div class="col-12 col-md-4"></div>
                 <div class="col-12 col-md-4 text-center">
@@ -39,17 +39,20 @@
                 </div>
             </form>
 
-            @if($data['year'])
                 <div class="col-12 mt-3 mb-3 mb-md-3">
                     <h4>
-                        Meeting Minutes for
-                        <span class="font-weight-bold">
-                            {{$data['year']}}
-                        </span>
+                        @if($data['year'] !='')
+                            Meeting Minutes for
+                            <span class="font-weight-bold">
+                                {{$data['year']}}
+                            </span>
+                        @else
+                            Most recent {{$data['pagination']}} meetings
+                        @endif
                     </h4>
                 </div>
-            @endif
-            <div class="table-responsive border border-dark rounded-lg">
+
+            <div class="table-responsive border border-dark rounded-lg mb-2">
                 <table class="table">
                     <thead>
                         <tr>
@@ -73,13 +76,17 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-center mt-3">
-                <div class="list-group">
-                    <ul class="pagination">
-                        {!! $data['meetings']->links() !!}
-                    </ul>
+
+                <div class="{{$data['year'] == '' ? 'd-none d-md-block':''}}">
+                    <div class="d-flex justify-content-center mt-3">
+                        <div class="list-group">
+                            <ul class="pagination">
+                                {!! $data['meetings']->links() !!}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            
         </div>
     </div>
 @endsection
