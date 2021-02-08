@@ -20,19 +20,16 @@
                 </div>
             @endcan
         </div>
-
         <div class="row">
-            <div  class="col-12 text-center">
+            <div class="col-12 text-center">
                 <h1>{{$data['employment']->title}}</h1>
             </div>
-        </div>
-        <div class="row d-flex justify-content-between mb-3">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-6">
                 <h4>
                     Deadline: {{$data['employment']->deadline->format('F j Y')}}
                 </h4>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-6 text-md-right">
                 <h4>Status:
                     @if($data['employment']->jobstatus == 1)
                         <i class="fas fa-check"></i> Open

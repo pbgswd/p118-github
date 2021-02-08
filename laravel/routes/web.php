@@ -15,6 +15,9 @@ use App\Http\Controllers as CNS; //Controller Name Space
 |
 */
 
+/**
+ * PUBLIC ACCESS
+ */
 Route::group(['middleware' => 'web'], function () {
     Auth::routes(['verify' => true, 'register' => false, 'reset' => true, 'login' => true]);
     // turn off register route for production, web.
@@ -59,6 +62,9 @@ Route::group(['middleware' => 'web'], function () {
         ->name('attachment_download');
 });
 
+/**
+ * MEMBERS LOGGED IN
+ */
 Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('/site', [CNS\SiteController::class, 'index'])->name('landing_page');
     //todo a controller? use HomeController?
@@ -134,7 +140,9 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
 });
 
 
-
+/**
+ * ADMIN SECTION
+ */
 Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {
 
     Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
