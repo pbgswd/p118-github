@@ -6,6 +6,7 @@ use App\Http\Requests\Agreements\DestroyAgreementRequest;
 use App\Http\Requests\Agreements\StoreAgreementRequest;
 use App\Http\Requests\Agreements\UpdateAgreementRequest;
 use App\Models\Agreement;
+use App\Models\Options;
 use App\Services\AttachmentService;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -57,7 +58,13 @@ class AdminAgreementController extends Controller
         $this->authorize('create', Agreement::class);
         $agreement = new Agreement;
 
-        return view('admin.agreement', ['data' => ['agreement' => $agreement, 'action' => 'Create']]);
+        $data = [
+            'agreement' => $agreement,
+            'access_levels' => Options::access_levels(),
+            'action' => 'Create',
+        ];
+
+        return view('admin.agreement', ['data' => $data]);
     }
 
     /**
@@ -100,6 +107,7 @@ class AdminAgreementController extends Controller
 
         $data = [
             'agreement' => $agreement->load('user', 'attachments'),
+            'access_levels' => Options::access_levels(),
             'action' => 'Edit',
         ];
 

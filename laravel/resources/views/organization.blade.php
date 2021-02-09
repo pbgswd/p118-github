@@ -38,15 +38,14 @@
                 <p>{!! $data['organization']->description !!}</p>
             </div>
             @if ($data['agreements']->count() > 0)
-                <div class="col-12 border border-dark rounded-lg mb-3 pt-2">
+                <div class="col-12 border border-dark rounded-lg mb-3 p-2">
                     <h4>
                         Agreements with {{$data['organization']->name}}
                     </h4>
                     <ul class="list-group list-group-flush">
                         @foreach($data['agreements'] as $va)
                             <li class="list-group-item">
-                                {!! (\Carbon\Carbon::parse($va->until)->isPast()) ? '' :
-                                    "<i>(Not current)</i>" !!}
+                                {!! (\Carbon\Carbon::parse($va->until)->isPast()) ? "<i>(Not current)</i>" : '' !!}
                                 <a title="View {{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
                                     {{ $va->title }}
                                 </a>

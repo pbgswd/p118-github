@@ -35,24 +35,25 @@
             </div>
         </div>
         @if (0 < $data['agreements']->count())
-            <div class="row border border-dark rounded-lg">
+            <div class="row border border-dark rounded-lg p-2">
                 <div class="col-12 pt-2">
                     <h4>
                         Agreements with {{$data['venue']->name}}
                     </h4>
+
+                    <ul class="list-group list-group-flush">
+                        @foreach($data['agreements'] as $va)
+                            <li class="list-group-item">
+                                {!! (\Carbon\Carbon::parse($va->until)->isPast()) ? "<i>(Not current)</i>" : '' !!}
+                                <a title="{{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
+                                    {{ $va->title }}
+                                </a>
+                                {{$va->from->format('F j Y')}} -
+                                {{$va->until->format('F j Y')}}
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-                <ul class="list-group list-group-flush">
-                    @foreach($data['agreements'] as $va)
-                        <li class="list-group-item w-100">
-                            {{ (\Carbon\Carbon::parse($va->until)->isPast()) ? '' : "<i>(Not current)</i>" }}
-                            <a title="{{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
-                                {{ $va->title }}
-                            </a>
-                            {{$va->from->format('F j Y')}} -
-                            {{$va->until->format('F j Y')}}
-                        </li>
-                    @endforeach
-                </ul>
             </div>
         @endif
     </div>

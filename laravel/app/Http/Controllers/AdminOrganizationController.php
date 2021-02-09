@@ -6,6 +6,7 @@ use App\Http\Requests\Organization\DestroyOrganizationRequest;
 use App\Http\Requests\Organization\StoreOrganizationRequest;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Models\Agreement;
+use App\Models\Options;
 use App\Models\Organization;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -40,16 +41,14 @@ class AdminOrganizationController extends Controller
         $org = new Organization;
         $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
 
-        return view(
-            'admin.organization',
-            [
-                'data' => [
-                    'organization' => $org,
-                    'all_agreements' => $all_agreements,
-                    'action' => 'Create',
-                ],
-            ]
-        );
+        $data = [
+            'organization' => $org,
+            'all_agreements' => $all_agreements,
+            'action' => 'Create',
+            'access_levels' => Options::access_levels(),
+        ];
+
+        return view('admin.organization', ['data' => $data]);
     }
 
     /**
@@ -89,16 +88,14 @@ class AdminOrganizationController extends Controller
 
         $any_organization->setRelation('all_agreements', $all_agreements);
 
-        return view(
-            'admin.organization',
-            [
-                'data' => [
-                    'organization' => $any_organization,
-                    'all_agreements' => $all_agreements,
-                    'action' => 'Edit',
-                ],
-            ]
-        );
+        $data = [
+            'organization' => $any_organization,
+            'all_agreements' => $all_agreements,
+            'action' => 'Edit',
+            'access_levels' => Options::access_levels(),
+        ];
+
+        return view('admin.organization', ['data' => $data]);
     }
 
     /**

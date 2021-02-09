@@ -17,16 +17,19 @@ class AgreementController extends Controller
         $data = [];
 
         if (Auth::check() == false) {
-            $data['agreements'] = Agreement::sortable()
+            $data['agreements'] = Agreement::where([['live', 1],['access_level', 'public']])
                 ->with('attachments')
                 ->whereRaw('NOW() < until')
                 ->orderBy('until', 'desc')
+                ->sortable()
                 ->paginate(10);
 
-            $data['count'] = Agreement::with('attachments')
-                ->whereRaw('NOW() < until')->count();
+            $data['count'] = Agreement::where([['live', 1],['access_level', 'public']])
+                ->whereRaw('NOW() < until')
+                ->count();
         } else {
-            $data['agreements'] = Agreement::sortable()
+            $data['agreements'] = Agreement::where('live', 1)
+                ->sortable()
                 ->with('attachments')
                 ->orderBy('until', 'desc')
                 ->paginate(10);

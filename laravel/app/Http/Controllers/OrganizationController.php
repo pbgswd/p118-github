@@ -14,8 +14,15 @@ class OrganizationController extends Controller
     public function list(): View
     {
         $data = [];
-        $data['organizations'] = Organization::sortable()
-            ->orderBy('name')
+
+        $access = Auth::check() ? 'members' : 'public';
+
+        $data['organizations'] = Organization::where([
+                ['live', 1],
+                ['access_level', $access],
+            ])
+            ->sortable()
+            ->orderBy('sort_order')
             ->paginate(10);
 
         return view('organizations', ['data' => ['data' => $data]]);
@@ -33,6 +40,8 @@ class OrganizationController extends Controller
             $organization->agreements;
 
         $data['organization'] = $organization;
+
+       // dd($data);
 
         return view('organization', ['data' => $data]);
     }

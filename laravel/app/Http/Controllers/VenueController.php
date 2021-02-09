@@ -14,7 +14,14 @@ class VenueController extends Controller
     public function list(): View
     {
         $data = [];
-        $data['venues'] = Venue::paginate(10);
+        $access = Auth::check() ? 'members' : 'public';
+
+        $data['venues'] = Venue::where('live', 1)
+            ->whereIn('access_level', ['public', $access])
+            ->sortable()
+            ->orderBy('sort_order')
+            ->paginate(10);
+
         return view('venues', ['data' => ['data' => $data]]);
     }
 
@@ -24,8 +31,12 @@ class VenueController extends Controller
      */
     public function show(Venue $venue): View
     {
-        $data['venue'] = $venue;
-        $data['agreements'] = Auth::check() ? $venue->member_agreements : $venue->agreements;
+        $agreements = Auth::check() ? $venue->member_agreements : $venue->agreements;
+
+        $data = [
+            'venue' => $venue,
+            'agreements' => $agreements,
+            ];
 
         return view('venue', ['data' => $data]);
     }

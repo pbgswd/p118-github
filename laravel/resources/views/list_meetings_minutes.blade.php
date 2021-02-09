@@ -76,17 +76,15 @@
                     </tbody>
                 </table>
             </div>
-
-                <div class="{{$data['year'] == '' ? 'd-none d-md-block':''}}">
-                    <div class="d-flex justify-content-center mt-3">
-                        <div class="list-group">
-                            <ul class="pagination">
-                                {!! $data['meetings']->links() !!}
-                            </ul>
-                        </div>
+            <div class="{{$data['year'] == '' ? 'd-none d-md-block' : ''}}">
+                <div class="d-flex justify-content-center mt-3">
+                    <div class="list-group">
+                        <ul class="pagination">
+                            {!! $data['meetings']->links() !!}
+                        </ul>
                     </div>
                 </div>
-            
+            </div>
         </div>
     </div>
 @endsection

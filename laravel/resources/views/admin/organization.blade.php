@@ -61,11 +61,18 @@
         <div class="row mt-lg-3">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-6 col-sm-3"></div>
-                    <div class="col-6 col-sm-3"></div>
-                    <!-- Force next columns to break to new line -->
-                    <div class="w-100"></div>
-                    <div class="col-12">&nbsp;</div>
+
+                    <div class="col-12 pt-3">
+
+                        <h4>Access Level</h4>
+                        <div class="form-group">
+                            {{ select_options($data['access_levels'],
+                                old('organization.access_level', $data['organization']->access_level),
+                                ['name' => 'organization[access_level]', 'class' => 'form-control']) }}
+                        </div>
+
+                        &nbsp;</div>
+
                     <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
                     <div class="col-6 col-sm-3">
                         <input type="text" class="form-control"  id="validationCustom02"
@@ -93,9 +100,11 @@
             </div>
         </div>
 <div class="row mt-lg-5">
-    <h3>Agreements for Organization</h3>
+    <div class="col-12 text-center">
+        <h3>Agreements for Organization</h3>
+    </div>
 </div>
-        <div class="row m-t-5 mb-lg-5">
+        <div class="row mt-5 mb-lg-5">
             @if ($data['action'] == 'Edit')
                 <div class="col-5 m-1">
                     <h4>Agreements attached to {{$data['organization']->name}}</h4>
@@ -127,7 +136,7 @@
                             </tr>
                         @endforeach
                         <td> <i class="far fa-trash-alt fa"></i></td>
-                        <td colspan="3">Check to remove from Venue</td>
+                        <td colspan="3">Check to remove</td>
                         </tbody>
                     </table>
                 </div>
@@ -167,6 +176,4 @@
          </div>
     @endif
 </div>
-<div class="row mt-lg-5">&nbsp;</div>
-
 @endsection

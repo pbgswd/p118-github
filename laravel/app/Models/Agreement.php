@@ -54,6 +54,7 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         'title',
         'description',
         'live',
+        'access_level',
         'from',
         'until',
         'user_id',
@@ -109,8 +110,10 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
      */
     public function attachments(): BelongsToMany
     {
+        //'access_level', 'public'
         return $this->belongsToMany(Attachment::class, 'attachment_agreement');
     }
+
 
     public function venues(): BelongsToMany
     {

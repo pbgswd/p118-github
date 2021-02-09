@@ -1,6 +1,3 @@
-<?php
-$bylaws = $data['data']['bylaws'];
-?>
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> bylaw Postings'])
 @section('content')
 <div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
@@ -9,7 +6,7 @@ $bylaws = $data['data']['bylaws'];
         <div class="col-12 col-md-4 text-center">
             <h2>
                 <i class="fas fa-gavel"></i>
-                Constitution and By-Laws
+                Constitution <br />& By-Laws
             </h2>
         </div>
         <div class="col-12 col-md-4 text-md-right">
@@ -39,7 +36,7 @@ $bylaws = $data['data']['bylaws'];
                 </tr>
             </thead>
             <tbody>
-                @foreach ($bylaws as $bylaw)
+                @foreach ($data['data']['bylaws'] as $bylaw)
                     <tr>
                         <td>
                             <p>
@@ -59,7 +56,7 @@ $bylaws = $data['data']['bylaws'];
     <div class="d-flex justify-content-center">
         <div class="list-group">
             <ul class="pagination">
-                {{$bylaws->links()}}
+                {{$data['data']['bylaws']->links()}}
             </ul>
         </div>
     </div>

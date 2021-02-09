@@ -54,7 +54,6 @@ class Venue extends LiveableModel implements Searchable
         'access_level',
         'live',
         'sort_order',
-        'in_menu',
         'created_at',
         'updated_at',
     ];
@@ -131,13 +130,17 @@ class Venue extends LiveableModel implements Searchable
     public function agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
-                ->whereRaw('NOW() < until')
+                ->whereRaw('until > NOW()')
+                ->where([['live', 1],
+                     ['access_level', 'public']
+                ])
                 ->orderBy('until', 'desc');
     }
 
     public function member_agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
-                ->orderBy('until', 'desc');
+            ->where('live', 1)
+            ->orderBy('title', 'desc');
     }
 }
