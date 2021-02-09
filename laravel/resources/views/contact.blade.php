@@ -9,7 +9,7 @@
 
         <form class="form-horizontal" role="form" action="{{route('contact')}}" method="post">
             {!! csrf_field() !!}
-            <div class="row p-2 mb-2">
+            <div class="row p-2 mb-3">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
                     <input type="text" class="form-control" placeholder="Name" name="name"
