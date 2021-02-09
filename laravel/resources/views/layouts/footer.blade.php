@@ -19,8 +19,8 @@
         </div>
     </div>
     @auth
-        <div class="row border border-secondary rounded-lg mx-auto mt-2 pt-4 pb-2 pb-md-3 mb-4
-                d-flex justify-content-center">
+        <div class="row p-2">
+            <div class="col-12 border border-secondary rounded-lg p-2 pt-3">
             <form class="form-inline" action="{{route('search')}}" method="POST">
                 {!! csrf_field() !!}
                 <div class="col-12 mb-0 mt-md-3 mb-md-3">
@@ -41,6 +41,7 @@
                     </button>
                 </div>
             </form>
+            </div>
         </div>
     @endauth
     <div class="row mt-1 mt-md-5 px-2 d-flex justify-content-around">
