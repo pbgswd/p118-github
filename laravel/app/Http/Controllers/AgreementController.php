@@ -34,7 +34,7 @@ class AgreementController extends Controller
                 ->orderBy('until', 'desc')
                 ->paginate(10);
 
-            $data['count'] = Agreement::with('attachments')->count();
+            $data['count'] = Agreement::where('live', 1)->count();
         }
 
         return view('agreements_list', ['data' => ['data' => $data]]);

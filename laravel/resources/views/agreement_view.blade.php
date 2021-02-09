@@ -42,15 +42,32 @@
                     <i class="far fa-folder-open"></i>
                     Files
                 </h4>
+
                 <ul class="list-group">
                     @forelse($data['agreement']->attachments as $att)
-                        <li class="list-group-item">
-                            <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
-                               title="Download {{$att->file_name}}" target="_blank">
-                                <i class="fas fa-file-download fa-1x"></i>
-                                {{$att->description ? : $att->file_name}}
-                            </a>
-                        </li>
+                        @if(false === Auth::check()
+                                && $att->access_level == App\Constants\AccessLevelConstants::PUBLIC
+                                && false === \Carbon\Carbon::parse($data['agreement']->until)->isPast())
+                            <li class="list-group-item">
+                                <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                   title="Download {{$att->file_name}}" target="_blank">
+                                    <i class="fas fa-file-download fa-1x"></i>
+                                    {{$att->description ? : $att->file_name}}
+                                </a>
+                            </li>
+                        @elseif(Auth::user())
+                            <li class="list-group-item">
+                                <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                   title="Download {{$att->file_name}}" target="_blank">
+                                    <i class="fas fa-file-download fa-1x"></i>
+                                    {{$att->description ? : $att->file_name}}
+                                </a>
+                            </li>
+                        @else
+                            <li class="list-group-item">
+                                Login to see additional resources.
+                            </li>
+                        @endif
                     @empty
                         <li class="list-group-item">
                             No files
