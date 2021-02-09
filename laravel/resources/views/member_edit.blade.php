@@ -154,7 +154,7 @@
                 <i class="fas fa-user text-primary"></i>
                 Member Info
             </h3>
-            <div class="input-group mb-6">
+            <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[show_profile]" type="hidden" value="0" />
@@ -175,6 +175,7 @@
                     <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}"
                          class="m-1 member-profile-pic border rounded-lg"/>
                     <input type="hidden" name="user_info[image]" value="{{$data['user']->user_info->image}}" />
+                    <input type="hidden" name="user_info[file_name]" value="{{$data['user']->user_info->file_name}}" />
                     <h5>
                         {{"File Size: " . $data['filesize'] ?? ''}}
                     </h5>
@@ -193,6 +194,7 @@
                            value=" Check to delete image." size="40" readonly>
                 </div>
             @else
+                <input name="user_info[delete_image]" type="hidden" value="" />
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
@@ -204,7 +206,7 @@
                     </p>
                 </div>
             @endif
-            <div class="input-group mb-3 mt-2 pb-3">
+            <div class="input-group mb-3 mt-3 pb-3">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[show_picture]" type="hidden" value="0" />
