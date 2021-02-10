@@ -239,7 +239,8 @@ class AdminUserController extends Controller
             if (isset($user_info['delete_image'])) {
                 Storage::disk('users')->delete($user_info['image']);
 
-                Session::flash('info', 'You have deleted '.$user_info['image']);
+                Session::flash('info', 'You have deleted '
+                    . $user_info['image'] . " (" . $user_info['file_name'] . ")");
                 $user_info['image'] = null;
                 $user_info['file_name'] = null;
             } else {

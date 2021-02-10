@@ -15,15 +15,25 @@ class OrganizationController extends Controller
     {
         $data = [];
 
-        $access = Auth::check() ? 'members' : 'public';
-
-        $data['organizations'] = Organization::where([
+        if(Auth::user()) {
+            $data['organizations'] = Organization::where([
                 ['live', 1],
-                ['access_level', $access],
+                ])
+                ->sortable()
+                ->orderBy('sort_order')
+                ->paginate(10);
+        }
+        else {
+            $data['organizations'] = Organization::where([
+                ['live', 1],
+                ['access_level', 'public'],
             ])
-            ->sortable()
-            ->orderBy('sort_order')
-            ->paginate(10);
+                ->sortable()
+                ->orderBy('sort_order')
+                ->paginate(10);
+        }
+
+
 
         return view('organizations', ['data' => ['data' => $data]]);
     }
