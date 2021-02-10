@@ -325,7 +325,6 @@ class UserController extends Controller
      */
     protected function uploadImage(FormRequest $request): string
     {
-//todo optimize image upload
         if (null !== $request->file('image')) {
 
             $file = $request->file('image')->store('', 'users');

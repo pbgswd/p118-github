@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Spatie\Permission\Models\Role;
 
 /**
@@ -465,10 +466,13 @@ class AdminUserController extends Controller
     protected function uploadImage(FormRequest $request): ?string
     {
         if (null !== $request->file('image')) {
-            return $request->file('image')->store('', 'users');
+
+            $file = $request->file('image')->store('', 'users');
+
+            ImageOptimizer::optimize(storage_path() . '/app/users/' . $file);
+
+            return $file;
         }
-        else {
-            return null;
-        }
+        return false;
     }
 }
