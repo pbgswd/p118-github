@@ -192,11 +192,6 @@
                         {{"File Size: " . $data['filesize'] ?? ''}}
                     </h5>
                 </div>
-
-                <div class="col-12 mt-3">
-                    <i class="fas fa-info-circle"></i>
-                    Image help: use an image ideally no wider than 250px.
-                </div>
                 <div class="input-group mb-6">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -215,7 +210,8 @@
                     </label>
                     <input type="file" id="inputFile" name="image" />
                     <p class="help-block">
-                        Upload image for your profile if you wish.
+                        <i>Upload an image for your profile if you wish.
+                            Use something you have permission to use.</i>
                     </p>
                 </div>
             @endif

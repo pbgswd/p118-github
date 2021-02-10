@@ -183,9 +183,10 @@
                             {{ $data['user']->user_info->file_name }}
                         </h4>
                         <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}"
-
                             class="border rounded-lg img-fluid" />
-                        <input type="hidden"  name="user_info[image]" value="{{$data['user']->user_info->image}}" />
+                        <input type="hidden" name="user_info[image]" value="{{$data['user']->user_info->image}}" />
+                        <input type="hidden" name="user_info[file_name]" value="{{$data['user']->user_info->file_name}}" />
+
                         <h5>
                             {{$data['filesize'] ?? ''}}
                         </h5>

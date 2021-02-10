@@ -91,8 +91,6 @@ class UserController extends Controller
 
         $user->load('phone_number', 'user_info', 'membership', 'committee_memberships', 'allExecutiveRoles');
 
-        $filesize = null;
-
         if(file_exists(storage_path() . '/app/users/' . $user->user_info['image'])) {
             $filesize = AttachmentService::human_filesize(
                 \filesize(\storage_path('app/users'.'/'.$user->user_info->image))) ? : null;
@@ -105,7 +103,7 @@ class UserController extends Controller
 
         $data = [
             'user' => $user,
-            'filesize' => $filesize,
+            'filesize' => $filesize ?? '',
             'user_roles' => $user_roles,
             'roles' => $roles,
             'action' => 'Edit',
@@ -177,7 +175,6 @@ class UserController extends Controller
                 }
             } else {
                 if (!is_null($userRequest->file('image'))) {
-//todo optimize image upload
                     $user_info['image'] = $this->uploadImage($userRequest);
                     $user_info['file_name'] = $userRequest->image->getClientOriginalName();
                 }
@@ -186,7 +183,6 @@ class UserController extends Controller
             $user->user_info->save();
         } else {
             $user_info = new UserInfo($userRequest->input('user_info'));
-//todo optimize image upload
             $user_info->image = $this->uploadImage($userRequest);
             $user->user_info()->save($user_info);
         }

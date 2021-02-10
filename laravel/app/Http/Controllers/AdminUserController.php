@@ -173,11 +173,11 @@ class AdminUserController extends Controller
                     'membership'
                     );
 
-        //dd($user->user_info);
         if($user->user_info) {
-            $filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/users' . '/' .
-                $user->user_info->image)))
-                ? : null;
+            if(file_exists(storage_path() . '/app/users/' . $user->user_info['image'])) {
+                $filesize = AttachmentService::human_filesize(
+                \filesize(\storage_path('app/users' . '/' . $user->user_info->image))) ? : null;
+            }
         }
 
         $user_roles = $user->getRoleNames()->toArray();
@@ -238,14 +238,14 @@ class AdminUserController extends Controller
             $user_info = $request['user_info'];
 
             if (isset($user_info['delete_image'])) {
-                Storage::disk('users')->delete($user_info['image']);
-
-                Session::flash('info', 'You have deleted '
-                    . $user_info['image'] . " (" . $user_info['file_name'] . ")");
-                $user_info['image'] = null;
-                $user_info['file_name'] = null;
+                if(file_exists(storage_path() . '/app/users/' . $user_info['image'])) {
+                    Storage::disk('users')->delete( $user_info['image']);
+                    Session::flash('info', 'You have deleted ' . $user_info['file_name']);
+                    $user_info['image'] = null;
+                    $user_info['file_name'] = null;
+                }
             } else {
-                if (! is_null($request->file('image'))) {
+                if (!is_null($request->file('image'))) {
                     $user_info['image'] = $this->uploadImage($request);
                     $user_info['file_name'] = $request->image->getClientOriginalName();
                 }
