@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Spatie\Permission\Models\Role;
 
 /**
@@ -326,7 +327,14 @@ class UserController extends Controller
     {
 //todo optimize image upload
         if (null !== $request->file('image')) {
-            return $request->file('image')->store('', 'users');
+
+            $file = $request->file('image')->store('', 'users');
+
+            $optimizerChain = OptimizerChainFactory::create();
+
+            $optimizerChain->optimize(storage_path() . '/app/users/' . $file);
+
+            return $file;
         }
         return false;
     }
