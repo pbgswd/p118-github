@@ -167,19 +167,32 @@
                        value="Share profile with other members?" size="40" readonly>
             </div>
             @if( isset($data['user']->user_info->image) )
-                <div class="col-12 mt-5 mb-5">
-                    <h4>
-                        <i class="far fa-images"></i>
-                        Image preview - Currently: {{ $data['user']->user_info->file_name }}
-                    </h4>
-                    <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}"
-                         class="m-1 member-profile-pic border rounded-lg"/>
+                <div class="row mb-3">
+                    <div class="col-12 mt-5 mb-2">
+                        <h4>
+                            <i class="far fa-images"></i>
+                            {{ $data['user']->user_info->file_name }}
+                        </h4>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-0 col-md-3">
+                    </div>
+                    <div class="col-12 col-md-6 text-center">
+                        <img src="{{ asset('storage/users/' . $data['user']->user_info->image) }}"
+                             class="border rounded-lg img-fluid" />
+                    </div>
+                    <div class="col-0 col-md-3">
+                    </div>
+                </div>
+                <div class="col-12">
                     <input type="hidden" name="user_info[image]" value="{{$data['user']->user_info->image}}" />
                     <input type="hidden" name="user_info[file_name]" value="{{$data['user']->user_info->file_name}}" />
                     <h5>
                         {{"File Size: " . $data['filesize'] ?? ''}}
                     </h5>
                 </div>
+
                 <div class="col-12 mt-3">
                     <i class="fas fa-info-circle"></i>
                     Image help: use an image ideally no wider than 250px.
@@ -206,7 +219,7 @@
                     </p>
                 </div>
             @endif
-            <div class="input-group mb-3 mt-3 pb-3">
+            <div class="input-group mt-3 pb-3">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[show_picture]" type="hidden" value="0" />
@@ -217,7 +230,7 @@
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
                        value="Show picture in your profile?" size="40" readonly>
             </div>
-            <h3 class="mt-5 p-lg-2 fw-bold">
+            <h3 class="mt-2 p-2 fw-bold">
                 <i class="fas fa-user text-primary"></i>
                 About Me
             </h3>

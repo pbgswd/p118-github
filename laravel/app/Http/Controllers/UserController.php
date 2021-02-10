@@ -176,6 +176,7 @@ class UserController extends Controller
                 }
             } else {
                 if (!is_null($userRequest->file('image'))) {
+//todo optimize image upload
                     $user_info['image'] = $this->uploadImage($userRequest);
                     $user_info['file_name'] = $userRequest->image->getClientOriginalName();
                 }
@@ -184,6 +185,7 @@ class UserController extends Controller
             $user->user_info->save();
         } else {
             $user_info = new UserInfo($userRequest->input('user_info'));
+//todo optimize image upload
             $user_info->image = $this->uploadImage($userRequest);
             $user->user_info()->save($user_info);
         }
@@ -322,6 +324,7 @@ class UserController extends Controller
      */
     protected function uploadImage(FormRequest $request): string
     {
+//todo optimize image upload
         if (null !== $request->file('image')) {
             return $request->file('image')->store('', 'users');
         }

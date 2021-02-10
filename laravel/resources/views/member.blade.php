@@ -22,24 +22,18 @@
                 </div>
             @endcan
         </div>
-
-
-
-            @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
-                <div class="row mb-3">
-                    <div class="col-0 col-md-3">
-                    </div>
-                    <div class="col-12 col-md-6 text-center">
-                        <img src="{{ asset('storage/users/' . $data['user']->user_info->image) }}"
-                             class="border rounded-lg img-fluid" />
-                    </div>
-                    <div class="col-0 col-md-3">
-                    </div>
+        @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
+            <div class="row mb-3">
+                <div class="col-0 col-md-3">
                 </div>
-            @endif
-
-
-
+                <div class="col-12 col-md-6 text-center">
+                    <img src="{{ asset('storage/users/' . $data['user']->user_info->image) }}"
+                         class="border rounded-lg img-fluid" />
+                </div>
+                <div class="col-0 col-md-3">
+                </div>
+            </div>
+        @endif
         <div class="row d-flex justify-content-between pt-2">
             @if (($data['user']->user_info->share_email ?? '' ) == 1)
                 <div class="col-12 col-md-5 text-md-left">
