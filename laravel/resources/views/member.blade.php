@@ -24,14 +24,22 @@
         </div>
 
 
-        <div class="row">
+
             @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
-                <div class="col-6 col-md-12 mb-3">
-                    <img src="{{ asset('storage/users/' . $data['user']->user_info->image) }}"
-                         class="member-profile-pic border rounded-lg" />
+                <div class="row mb-3">
+                    <div class="col-0 col-md-3">
+                    </div>
+                    <div class="col-12 col-md-6 text-center">
+                        <img src="{{ asset('storage/users/' . $data['user']->user_info->image) }}"
+                             class="border rounded-lg img-fluid" />
+                    </div>
+                    <div class="col-0 col-md-3">
+                    </div>
                 </div>
             @endif
-        </div>
+
+
+
         <div class="row d-flex justify-content-between pt-2">
             @if (($data['user']->user_info->share_email ?? '' ) == 1)
                 <div class="col-12 col-md-5 text-md-left">
