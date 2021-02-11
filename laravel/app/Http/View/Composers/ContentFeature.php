@@ -2,9 +2,11 @@
 
 namespace App\Http\View\Composers;
 
+use App\Models\Feature;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Topic;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 /**
@@ -35,11 +37,19 @@ class ContentFeature
             ->orderBy('updated_at', 'desc')
             ->with('topics')
             ->get();
+        $features = Feature::where('live', 1)
+            ->orderBy('date', 'desc')
+            ->get();
+
+        $user = Auth::user();
+        $user->load('user_info');
 
         $data = [
             'topics' => $topics,
             'posts' => $posts,
             'pages' => $pages,
+            'features' => $features,
+            'user' => $user,
             ];
 
         $view->with('data', $data);
