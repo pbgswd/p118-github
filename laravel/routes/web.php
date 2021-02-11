@@ -156,6 +156,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::post('/attachment_search', [CNS\LocalSearchController::class, 'admin_attachment_search'])
         ->name('list_attachments_search_result');
 
+    Route::get('features', [CNS\AdminFeatureController::class, 'index'])->name('admin_features_list');
+    Route::get('feature/create', [CNS\AdminFeatureController::class, 'create'])->name('admin_feature_create');
+    Route::post('feature/create', [CNS\AdminFeatureController::class, 'store']);
+    Route::get('feature/{feature}/edit', [CNS\AdminFeatureController::class, 'edit'])->name('admin_feature_edit');
+    Route::post('feature/{feature}/edit', [CNS\AdminFeatureController::class, 'update']);
+    Route::delete('feature/delete', [CNS\AdminFeatureController::class, 'destroy'])->name('admin_feature_destroy');
+
     Route::get('/policies', [CNS\AdminPolicyController::class, 'index'])->name('policies_list');
     Route::get('/policy/create', [CNS\AdminPolicyController::class, 'create'])->name('admin_policy_create');
     Route::post('/policy/create', [CNS\AdminPolicyController::class, 'store']);

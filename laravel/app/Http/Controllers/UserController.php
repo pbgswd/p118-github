@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Spatie\Image\Image;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Spatie\Permission\Models\Role;
 
@@ -326,6 +327,11 @@ class UserController extends Controller
             $file = $request->file('image')->store('', 'users');
 
             ImageOptimizer::optimize(storage_path() . '/app/users/' . $file);
+
+            Image::load(storage_path() . '/app/users/' . $file)
+                ->width(75)
+                ->height(75)
+                ->save(storage_path() . '/app/users/' . 'tn_75x75_' . $file);
 
             return $file;
         }

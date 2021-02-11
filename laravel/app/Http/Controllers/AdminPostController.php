@@ -66,7 +66,7 @@ class AdminPostController extends Controller
                 'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                     AccessLevelConstants::getConstants()),
                 'action' => 'Create',
-                'model_name' => 'post',
+               // 'model_name' => 'post',
             ],
         ]);
     }

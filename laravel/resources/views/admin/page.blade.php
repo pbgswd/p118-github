@@ -219,7 +219,7 @@
                 </div>
             @endif
         @endif
-        <div class="row mt-lg-3"> &nbsp;</div>
+
         <div class="row">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>

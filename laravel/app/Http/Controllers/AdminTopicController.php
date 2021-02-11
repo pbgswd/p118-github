@@ -48,13 +48,16 @@ class AdminTopicController extends Controller
 
         $topic = new Topic;
         $topic['user_id'] = Auth::id();
+        $access_levels = array_combine(AccessLevelConstants::getConstants(),
+            AccessLevelConstants::getConstants());
 
-        return view('admin.topic', [
-            'data' => [
-                'topic' => $topic,
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),
-                    AccessLevelConstants::getConstants()),
-                'action' => 'Create', ], ]);
+        $data = [
+            'topic' => $topic,
+            'access_levels' => $access_levels,
+            'action' => 'Create',
+        ];
+
+        return view('admin.topic', ['data' => $data]);
     }
 
     /**

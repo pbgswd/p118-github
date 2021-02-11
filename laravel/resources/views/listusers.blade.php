@@ -9,11 +9,15 @@
                 Member List
             </h1>
         </div>
-        <div class="col-12 col-md-4 text-center text-md-right">
+        <div class="col-12 col-md-4 text-center text-md-right font-weight-bolder">
             <h5>
                 <a href="{{route('member', Auth::user()->id)}}">
-                    <i class="fas fa-user text-primary"></i>View my profile
-                    <i class="far fa-arrow-alt-circle-right"></i>
+                    @if(Auth::user()->user_info->image != '')
+                        <img src="{{asset('storage/users/tn_75x75_' . Auth::user()->user_info->image) }}"
+                        class="img-fluid mb-2 border rounded-lg"/>
+                        <br />
+                    @endif
+                    <i class="fas fa-user text-primary"></i> View your profile
                 </a>
             </h5>
         </div>

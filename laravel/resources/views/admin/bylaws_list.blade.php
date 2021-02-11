@@ -1,7 +1,3 @@
-<?php
-//dd($data);
-$bylaws = $data['bylaws'];
-?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-gavel"></i> List By-laws'])
 @section('content')
 <div class="container">
@@ -13,9 +9,7 @@ $bylaws = $data['bylaws'];
                 <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
-    @if($data['count'] < 1)
-    No bylaws defined yet
-    @else
+
 <form name="delete" method="POST" action="{{route('admin_bylaw_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
@@ -35,7 +29,7 @@ $bylaws = $data['bylaws'];
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $bylaws as $a )
+                    @forelse ( $data['bylaws'] as $a )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -64,10 +58,11 @@ $bylaws = $data['bylaws'];
                             <td> {{ $a->created_at->format('F j Y H:i:s') }} </td>
                             <td> {{ $a->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
-                    @endforeach
-                    <tr>
-                        <td colspan="10">&nbsp;</td>
-                    </tr>
+                    @empty
+                        <tr>
+                            <td colspan="10">&nbsp;None cretated yet</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -80,12 +75,11 @@ $bylaws = $data['bylaws'];
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                     {{ $bylaws->links() }}
+                     {{ $data['bylaws']->links() }}
                 </ul>
             </div>
         </div>
         <div class="col"></div>
     </div>
 </form>
-@endif
 @endsection

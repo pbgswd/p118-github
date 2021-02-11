@@ -168,7 +168,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">
                                         <span data-feather="file"></span>
-                                        <h5>Content </h5>
+                                        <h5 class="font-weight-bold">Content </h5>
                                     </a>
                                 </li>
 
@@ -176,6 +176,12 @@
                                     <a class="nav-link" href="{{ route('topics_list') }}">
                                         <span data-feather="file"></span>
                                         Topics
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin_features_list') }}">
+                                        <span data-feather="file"></span>
+                                        Features
                                     </a>
                                 </li>
                                 <li class="nav-item">
