@@ -1,25 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-12 col-md-6">
-                <h3>
-                    Hi {{$data['user']->name}}
-                </h3>
-            </div>
-            <div class="col-12 col-md-6 text-md-right">
-                <h5 class="font-weight-bolder">
-                    <a href="{{route('member', $data['user']->id)}}" title="My Profile">
-                        @if($data['user']->user_info->image != '')
-                            <img src="{{asset('storage/users/tn_75x75_' . $data['user']->user_info->image)}}"
-                                 class="img-fluid mb-2 border rounded-lg"/>
-                            <br />
-                        @endif
-                        <i class="fas fa-user"></i> View your profile.
-                    </a>
-                </h5>
-            </div>
-        </div>
+    <div class="container">
         @if(null === $data['user']->user_info)
             <div class="row">
                 <div class="col-12">
