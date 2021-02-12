@@ -18,6 +18,7 @@ use App\Rules\Phone;
 use App\Services\AttachmentService;
 use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
+use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
@@ -36,12 +37,14 @@ class AdminUserController extends Controller
 {
     /**
      * @var EmailMemberUpdateService
+     * @var UserImageService
      */
     private $emailMemberUpdateService;
 
-    public function __construct(EmailMemberUpdateService $emailMemberUpdateService)
+    public function __construct(EmailMemberUpdateService $emailMemberUpdateService, UserImageService $userImageService)
     {
         $this->emailMemberUpdateService = $emailMemberUpdateService;
+        $this->userImageService = $userImageService;
     }
 
     /**
@@ -197,11 +200,12 @@ class AdminUserController extends Controller
 
     /**
      * @param UpdateUser $request
+     * @param UserImageService $service
      * @param User $user
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(UpdateUser $request, User $user): RedirectResponse
+    public function update(UpdateUser $request, UserImageService $service, User $user): RedirectResponse
     {
         $this->authorize('admin_update', Auth::user());
 
@@ -246,8 +250,14 @@ class AdminUserController extends Controller
                 }
             } else {
                 if (!is_null($request->file('image'))) {
-                    $user_info['image'] = $this->uploadImage($request);
-                    $user_info['file_name'] = $request->image->getClientOriginalName();
+
+                    $result = $this->userImageService->updateImage($request, 'users');
+
+                    $user_info['image'] = $result['image'];
+                    $user_info['file_name'] = $result['file_name'];
+
+                    //$user_info['image'] = $this->uploadImage($request);
+                    //$user_info['file_name'] = $request->image->getClientOriginalName();
                 }
             }
             $user->user_info->fill($user_info);

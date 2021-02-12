@@ -21,6 +21,21 @@ use function range;
  */
 class Options
 {
+    /**
+     * @return array
+     */
+    public static function thumb_values(): array
+    {
+        $arr = [
+            'height' => 75,
+            'width' => 75,
+            'tn_str' => 'tn_75x75_',
+        ];
+
+        return $arr;
+    }
+
+
     public static function address_update_contacts(): array
     {
         $contacts = ['dispatch@iatse118.com', 'payroll@iatse118.com',

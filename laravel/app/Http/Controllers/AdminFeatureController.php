@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Feature;
 use App\Services\AttachmentService;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Spatie\Image\Exceptions\InvalidManipulation;
+use Spatie\Image\Image;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class AdminFeatureController extends Controller
 {
@@ -91,17 +96,40 @@ class AdminFeatureController extends Controller
      * @param Request $request
      * @param Feature $feature
      * @return RedirectResponse
+     * @throws InvalidManipulation
      */
     public function update(Request $request, Feature $feature): RedirectResponse
     {
 
-        $feature->fill($request->feature);
-        $feature->save();
-        Session::flash('success', 'You have edited the Feature');
+        $feature = $request->input('feature');
 
-        return redirect()->route('admin_feature_edit', [$feature->slug]);
+        dd($feature);
+
+        if (isset($request['delete_image'])) {
+            if (file_exists(storage_path() . '/app/public/' . $feature['image'])) {
+                Storage::disk('users')->delete($feature['image']);
+                Session::flash('info', 'You have deleted ' . $feature['file_name']);
+                $feature['image'] = null;
+                $feature['file_name'] = null;
+            }
+        }
+
+
+        if (!is_null($request->file('image'))) {
+
+            $feature['file_name'] = $request['image']->getClientOriginalName();
+//todo image upload issue
+            $feature['image'] = $this->uploadImage($request);
+
+        }
+
+            $feature->save();
+
+            Session::flash('success', 'You have edited the Feature');
+
+            return redirect()->route('admin_feature_edit', [$feature->slug]);
+
     }
-
     /**
      * @param Feature $feature
      * @return RedirectResponse
@@ -117,5 +145,29 @@ class AdminFeatureController extends Controller
 
         Session::flash('success', 'You have deleted the Feature');
         return redirect()->route('admin_features_list');
+    }
+
+
+    /**
+     * @param FormRequest $request
+     * @return string
+     * @throws InvalidManipulation
+     */
+    protected function uploadImage(Request $request): string
+    {
+        if (null !== $request->file('image')) {
+
+            $file = $request->file('image')->store('', 'public');
+
+            ImageOptimizer::optimize(storage_path() . '/app/public/' . $file);
+
+            Image::load(storage_path() . '/app/public/' . $file)
+                ->width(75)
+                ->height(75)
+                ->save(storage_path() . '/app/public/' . 'tn_75x75_' . $file);
+
+            return $file;
+        }
+        return false;
     }
 }

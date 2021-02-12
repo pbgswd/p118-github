@@ -46,8 +46,8 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         'title',
         'content',
         'image',
-        'date',
         'file_name',
+        'date',
         'live',
     ];
 

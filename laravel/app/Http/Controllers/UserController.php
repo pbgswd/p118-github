@@ -6,6 +6,7 @@ use App\Http\Requests\Member\UpdateMember;
 use App\Http\Requests\Member\UpdateMemberEmergencyContact;
 use App\Http\Requests\User\UpdateMemberAddress;
 use App\Models\Membership;
+use App\Models\Options;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
@@ -13,6 +14,7 @@ use App\Rules\Phone;
 use App\Services\AttachmentService;
 use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
+use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
@@ -20,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\Image\Image;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Spatie\Permission\Models\Role;
@@ -31,12 +34,14 @@ class UserController extends Controller
 {
     /**
      * @var EmailMemberUpdateService
+     * @var UserImageService
      */
     private $emailMemberUpdateService;
 
-    public function __construct(EmailMemberUpdateService $emailMemberUpdateService)
+    public function __construct(EmailMemberUpdateService $emailMemberUpdateService, UserImageService $userImageService)
     {
         $this->emailMemberUpdateService = $emailMemberUpdateService;
+        $this->userImageService = $userImageService;
     }
 
     /**
@@ -116,11 +121,13 @@ class UserController extends Controller
 
     /**
      * @param UpdateMember $userRequest
+     * @param UserImageService $service
      * @param User $user
      * @return RedirectResponse
      * @throws AuthorizationException
+     * @throws InvalidManipulation
      */
-    public function update(UpdateMember $userRequest, User $user): RedirectResponse
+    public function update(UpdateMember $userRequest, UserImageService $service, User $user): RedirectResponse
     {
         $this->authorize('update', $user);
 
@@ -170,21 +177,36 @@ class UserController extends Controller
             if (isset($user_info['delete_image'])) {
                 if(file_exists(storage_path() . '/app/users/' . $user_info['image'])) {
                     Storage::disk('users')->delete( $user_info['image']);
+
+                    //todo delete thumb
+
                     Session::flash('info', 'You have deleted ' . $user_info['file_name']);
+
                     $user_info['image'] = null;
                     $user_info['file_name'] = null;
                 }
             } else {
                 if (!is_null($userRequest->file('image'))) {
-                    $user_info['image'] = $this->uploadImage($userRequest);
-                    $user_info['file_name'] = $userRequest->image->getClientOriginalName();
+
+                    $result = $this->userImageService->updateImage($userRequest, 'users');
+
+                    $user_info['image'] = $result['image'];
+                    $user_info['file_name'] = $result['file_name'];
+
+                    //$user_info['image'] = $this->uploadImage($userRequest);
+                    //$user_info['file_name'] = $userRequest->image->getClientOriginalName();
                 }
             }
             $user->user_info->fill($user_info);
             $user->user_info->save();
         } else {
             $user_info = new UserInfo($userRequest->input('user_info'));
-            $user_info->image = $this->uploadImage($userRequest);
+
+            //$user_info->image = $this->uploadImage($userRequest);
+
+            $result = $this->userImageService->updateImage($userRequest, 'users');
+            $user_info->image = $result['image'];
+
             $user->user_info()->save($user_info);
         }
 
@@ -319,6 +341,7 @@ class UserController extends Controller
     /**
      * @param FormRequest $request
      * @return string
+     * @throws InvalidManipulation
      */
     protected function uploadImage(FormRequest $request): string
     {
@@ -328,10 +351,13 @@ class UserController extends Controller
 
             ImageOptimizer::optimize(storage_path() . '/app/users/' . $file);
 
+            $w = Options::thumb_values()['width'];
+            $h = Options::thumb_values()['height'];
+
             Image::load(storage_path() . '/app/users/' . $file)
-                ->width(75)
-                ->height(75)
-                ->save(storage_path() . '/app/users/' . 'tn_75x75_' . $file);
+                ->width($w)
+                ->height($h)
+                ->save(storage_path() . '/app/users/' . Options::thumb_values()['tn_str'] . $file);
 
             return $file;
         }

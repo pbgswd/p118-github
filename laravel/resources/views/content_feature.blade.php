@@ -1,5 +1,21 @@
 <div class="row border border-dark rounded-lg my-3 py-1" style="background: rgba(220,220,220,0.8);">
     <div class="col col-md-3 pt-2">
+        <div class="col-12 border border-dark rounded-lg mb-2 text-center">
+            <h3>
+                Hi {{$data['user']->name}}
+            </h3>
+            <a href="{{route('member', $data['user']->id)}}" title="My Profile">
+                @if($data['user']->user_info->thumb != '')
+                    <img src="{{asset('storage/users/'. $data['user']->user_info->thumb)}}"
+                         class="img-fluid mb-2 border rounded-lg"/>
+                    <br />
+                @endif
+                <h5 class="font-weight-bolder">
+                    <i class="fas fa-user"></i> View your profile.
+                </h5>
+            </a>
+        </div>
+
         <div class="col col-12 border border-dark rounded-lg pt-1 mb-2 bg-dark text-white">
             <h5> Menu </h5>
         </div>
@@ -55,8 +71,22 @@
     </div>
     <div class="col col-md-9 pt-2">
         <div class="col col-12 border border-dark rounded-lg pt-2 pb-2 mb-2 bg-dark text-white">
-            <h3>Important Announcements</h3>
+            <h3>Feature News</h3>
         </div>
+        @forelse($data['features'] as $f)
+            <div class="col-12 border border-dark rounded-lg pt-2 mb-2">
+                @if($f->image !='')
+                    <img src="{{asset('storage/public/' . $f->image)}}"
+                         alt="{{$f->file_name}}"
+                         class="img-fluid mb-2 border rounded-lg"/>
+                @endif
+                <h2>
+                    {{$f->title}}
+                </h2>
+                {!! $f->content !!}
+            </div>
+        @empty
+        @endforelse
         <div class="col-12 border border-dark rounded-lg bg-secondary pt-2 mb-2">
             <h4>
                 <a class="text-white" href="{{route('posts')}}">

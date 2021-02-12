@@ -81,17 +81,40 @@
                     <p>ie.: Draft or Published.</p>
                 </div>
             </div>
-            <div class="row mt-lg-3">
-                <div class="col-md-6">
+            <div class="row mt-3">
+                <div class="col-12">
                     <div class="form-group">
-                        <label for="exampleInputFile">
-                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                            Add Primary Image To Feature
-                        </label>
-                        <input type="file" id="inputFile" name="feature[image]" multiple />
+                        @if(!isset($data['feature']->image))
+                            <label for="exampleInputFile">
+                                <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                                Add Primary Image To Feature
+                            </label>
+                            <input type="file" id="inputFile" name="image" />
+                        @else
+                            <img src="{{ asset('storage/public/'. $data['feature']->image) }}" />
+                            <input type="hidden" name="feature[image]" value="{{$data['feature']->image}}" />
+                            <input type="hidden" name="feature[file_name]" value="{{$data['feature']->file_name}}" />
+                            <h5>
+                                {{$data['filesize'] ?? ''}}
+                            </h5>
+
+                            <label for="exampleInputFile">
+                                <i class="far fa-trash-alt"></i>
+                                Delete
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input name="delete_image" type="checkbox" value="1" />
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Text input with checkbox"
+                                       value="Check to delete image." size="40" readonly>
+                            </label>
+                        @endif
                     </div>
                 </div>
             </div>
+
+
             <div class="row mt-lg-3">
                 <div class="col-md-6">
                     <div class="form-group">

@@ -3,6 +3,7 @@
 namespace App\Http\View\Composers;
 
 use App\Models\Feature;
+use App\Models\Options;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Topic;
@@ -43,6 +44,7 @@ class ContentFeature
 
         $user = Auth::user();
         $user->load('user_info');
+        $user->user_info->thumb = Options::thumb_values()['tn_str'] . $user->user_info->image ?? '';
 
         $data = [
             'topics' => $topics,
