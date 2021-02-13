@@ -70,8 +70,12 @@
         @endforeach
     </div>
     <div class="col col-md-9 pt-2">
-        <div class="col col-12 border border-dark rounded-lg pt-2 pb-2 mb-2 bg-dark text-white">
-            <h3>Feature News</h3>
+        <div class="col col-12 border border-dark rounded-lg pt-2 pb-2 mb-2 bg-dark">
+            <h3>
+                <a class="text-white" href="{{route('features')}}">
+                    Feature News
+                </a>
+            </h3>
         </div>
         @forelse($data['features'] as $f)
             <div class="col-12 border border-dark rounded-lg pt-2 mb-2">
@@ -81,7 +85,9 @@
                          class="img-fluid mb-2 border rounded-lg"/>
                 @endif
                 <h2>
-                    {{$f->title}}
+                    <a class="text-secondary" href="{{route('feature', $f->slug)}}">
+                        {{$f->title}}
+                    </a>
                 </h2>
                 {!! $f->content !!}
             </div>

@@ -81,6 +81,9 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('jobs', [CNS\EmploymentController::class, 'index'])->name('jobs_list');
     Route::get('job/{employment}', [CNS\EmploymentController::class, 'show'])->name('job_view');
 
+    Route::get('features', [CNS\FeatureController::class, 'index'])->name('features');
+    Route::get('feature/{feature}', [CNS\FeatureController::class, 'show'])->name('feature');
+
     Route::get('/members', [CNS\UserController::class, 'index'])->name('members');
     Route::get('/member/{user}', [CNS\UserController::class, 'show'])->name('member');
     Route::get('/member/{user}/edit', [CNS\UserController::class, 'edit'])->name('member_edit');
