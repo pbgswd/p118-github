@@ -35,6 +35,20 @@ class Options
         return $arr;
     }
 
+    /**
+     * @return array
+     */
+    public static function feature_thumb_values(): array
+    {
+        $arr = [
+            'height' => 100,
+            'width' => 100,
+            'tn_str' => 'tn_100x100_',
+        ];
+
+        return $arr;
+    }
+
 
     public static function address_update_contacts(): array
     {

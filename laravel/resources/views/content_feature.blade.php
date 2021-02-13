@@ -75,7 +75,7 @@
         </div>
         @forelse($data['features'] as $f)
             <div class="col-12 border border-dark rounded-lg pt-2 mb-2">
-                @if($f->image !='')
+                @if($f->image)
                     <img src="{{asset('storage/public/' . $f->image)}}"
                          alt="{{$f->file_name}}"
                          class="img-fluid mb-2 border rounded-lg"/>

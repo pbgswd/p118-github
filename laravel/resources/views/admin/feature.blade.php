@@ -91,7 +91,12 @@
                             </label>
                             <input type="file" id="inputFile" name="image" />
                         @else
-                            <img src="{{ asset('storage/public/'. $data['feature']->image) }}" />
+                            <img src="{{ asset('storage/public/'. $data['feature']->image) }}" /> <br />
+
+                            {{$data['feature']->filesize}}<br />
+                            <img src="{{ asset('storage/public/'. $data['feature']->thumb) }}" /><br />
+                        {{$data['feature']->thumb_size}}<br />
+
                             <input type="hidden" name="feature[image]" value="{{$data['feature']->image}}" />
                             <input type="hidden" name="feature[file_name]" value="{{$data['feature']->file_name}}" />
                             <h5>

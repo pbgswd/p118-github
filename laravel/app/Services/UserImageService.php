@@ -11,7 +11,7 @@ use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class UserImageService
 {
-    public function storeImage($request, string $dir, bool $make_thumb): array
+    public function storeImage($request, string $dir, bool $make_thumb, array $thumb_values): array
     {
         //todo handle upload and thumb generation
         $directory = '/app/' . $dir . '/';
@@ -21,17 +21,10 @@ class UserImageService
             $image = $request->file('image')->store('', $dir);
             ImageOptimizer::optimize(storage_path() . $directory . $image);
             if($make_thumb) {
-                $result = $this->generate_thumb($image, $dir, Options::thumb_values());
+                $result = $this->generate_thumb($image, $dir, $thumb_values);
             }
             $file_name = $request->image->getClientOriginalName();
         }
-
-        //todo handle thumb generation, kill bad sized thumbs
-        //read directory
-        //iterate
-        // if any file that starts with tn....... ! =  tn_str
-        //delete it
-        //create them
 
         $arr = [
             'image' => $image ?? '',
@@ -48,7 +41,7 @@ class UserImageService
      * @return array
      * @throws InvalidManipulation
      */
-    public function updateImage($request, string $dir, bool $make_thumb): array
+    public function updateImage($request, string $dir, bool $make_thumb, array $thumb_values): array
     {
 
         /** @var TYPE_NAME $directory */
@@ -64,7 +57,7 @@ class UserImageService
             ImageOptimizer::optimize(storage_path() . $directory . $image);
 
             if($make_thumb) {
-                $result = $this->generate_thumb($image, $dir, Options::thumb_values());
+                $result = $this->generate_thumb($image, $dir, $thumb_values);
             }
             $file_name = $request->image->getClientOriginalName();
         }

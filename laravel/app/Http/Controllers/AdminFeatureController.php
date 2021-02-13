@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Feature;
+use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\UserImageService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,10 +20,15 @@ class AdminFeatureController extends Controller
 {
     /** @var AttachmentService */
     private $attachmentService;
+    /**
+     * @var UserImageService
+     */
+    private $userImageService;
 
-    public function __construct(AttachmentService $attachmentService)
+    public function __construct(AttachmentService $attachmentService, UserImageService $userImageService)
     {
         $this->attachmentService = $attachmentService;
+        $this->userImageService = $userImageService;
     }
 
     /**
@@ -38,6 +45,7 @@ class AdminFeatureController extends Controller
 
         $data = [
             'features' => $features,
+            'thumbs' => Options::feature_thumb_values(),
         ];
 
         return view('admin.features-list', ['data' => $data]);
@@ -64,9 +72,19 @@ class AdminFeatureController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, UserImageService $service): RedirectResponse
     {
         $feature = new Feature($request->input('feature'));
+
+        if (null !== $request->file('image')) {
+
+            $file = $request->file('image')->store('', 'public');
+
+            $result = $this->userImageService->updateImage($request, 'public', true, Options::feature_thumb_values());
+
+            $feature['image'] = $result['image'];
+            $feature['file_name'] = $result['file_name'];
+        }
 
         $feature->save();
 
@@ -84,6 +102,22 @@ class AdminFeatureController extends Controller
     {
         $data = [];
 
+        if($feature['image']) {
+            if(file_exists(storage_path() . '/app/public/' . $feature['image'])) {
+                $feature->filesize = AttachmentService::human_filesize(
+                    \filesize(\storage_path('app/public' . '/' . $feature->image))) ? : null;
+
+                if(!file_exists(storage_path() . '/app/public/' . Options::feature_thumb_values()['tn_str'] .
+                    $feature['image'])) {
+                    $this->userImageService->generate_thumb($feature['image'], 'public',
+                        Options::feature_thumb_values());
+                }
+            }
+            $feature->thumb = Options::feature_thumb_values()['tn_str'] . $feature['image'];
+            $feature->thumb_size = AttachmentService::human_filesize(
+                \filesize(\storage_path('app/public' . '/' . $feature->thumb))) ? : null;
+        }
+
         $data = [
             'feature' => $feature,
             'action' => 'Edit',
@@ -100,34 +134,36 @@ class AdminFeatureController extends Controller
      */
     public function update(Request $request, Feature $feature): RedirectResponse
     {
-
-        $feature = $request->input('feature');
-
-        dd($feature);
+        $feature->fill($request->input('feature'));
 
         if (isset($request['delete_image'])) {
             if (file_exists(storage_path() . '/app/public/' . $feature['image'])) {
-                Storage::disk('users')->delete($feature['image']);
+
+                $this->userImageService->destroyImage($feature['image'], 'public', Options::feature_thumb_values());
+
                 Session::flash('info', 'You have deleted ' . $feature['file_name']);
                 $feature['image'] = null;
                 $feature['file_name'] = null;
             }
         }
 
+        if (null !== $request->file('image')) {
 
-        if (!is_null($request->file('image'))) {
+            $file = $request->file('image')->store('', 'public');
+
+            $result = $this->userImageService->updateImage($request, 'public', true, Options::feature_thumb_values());
 
             $feature['file_name'] = $request['image']->getClientOriginalName();
-//todo image upload issue
-            $feature['image'] = $this->uploadImage($request);
-
+            $feature['image'] = $result['image'];
+            $feature['file_name'] = $result['file_name'];
         }
 
-            $feature->save();
 
-            Session::flash('success', 'You have edited the Feature');
+        $feature->save();
 
-            return redirect()->route('admin_feature_edit', [$feature->slug]);
+        Session::flash('success', 'You have edited the Feature');
+
+        return redirect()->route('admin_feature_edit', [$feature->slug]);
 
     }
     /**

@@ -38,7 +38,7 @@ class ContentFeature
             ->orderBy('updated_at', 'desc')
             ->with('topics')
             ->get();
-        $features = Feature::where('live', 1)
+        $features = Feature::where([['live', 1],['date', '<', NOW()]])
             ->orderBy('date', 'desc')
             ->get();
 
