@@ -9,6 +9,7 @@ use App\Models\Feature;
 use App\Models\Options;
 use App\Services\AttachmentService;
 use App\Services\UserImageService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -33,10 +34,11 @@ class AdminFeatureController extends Controller
     /**
      * @param Request $request
      * @return View
+     * @throws AuthorizationException
      */
     public function index(Request $request): View
     {
-        $data = [];
+        $this->authorize('viewAny', Feature::class);
 
         $features = Feature::withoutGlobalScopes()
             ->sortable()
@@ -52,10 +54,11 @@ class AdminFeatureController extends Controller
 
     /**
      * @return View
+     * @throws AuthorizationException
      */
     public function create(): View
     {
-        $data = [];
+        $this->authorize('create', Feature::class);
 
         $feature = new Feature;
 
@@ -72,9 +75,12 @@ class AdminFeatureController extends Controller
      * @param UserImageService $service
      * @return RedirectResponse
      * @throws InvalidManipulation
+     * @throws AuthorizationException
      */
     public function store(StoreFeatureRequest $request, UserImageService $service): RedirectResponse
     {
+        $this->authorize('create', Feature::class);
+
         $feature = new Feature($request->input('feature'));
 
         if (null !== $request->file('image')) {
@@ -98,11 +104,12 @@ class AdminFeatureController extends Controller
     /**
      * @param Feature $feature
      * @return View
+     * @throws AuthorizationException
      * @throws InvalidManipulation
      */
     public function edit(Feature $feature): View
     {
-        $data = [];
+        $this->authorize('update', Feature::class);
 
         if($feature['image']) {
             if(file_exists(storage_path() . '/app/public/' . $feature['image'])) {
@@ -132,10 +139,13 @@ class AdminFeatureController extends Controller
      * @param UpdateFeatureRequest $request
      * @param Feature $feature
      * @return RedirectResponse
+     * @throws AuthorizationException
      * @throws InvalidManipulation
      */
     public function update(UpdateFeatureRequest $request, Feature $feature): RedirectResponse
     {
+        $this->authorize('update', Feature::class);
+
         $feature->fill($request->input('feature'));
 
         if (isset($request['delete_image'])) {
@@ -171,10 +181,12 @@ class AdminFeatureController extends Controller
     /**
      * @param DestroyFeatureRequest $request
      * @return RedirectResponse
-     * @throws \Exception
+     * @throws AuthorizationException
      */
     public function destroy(DestroyFeatureRequest $request): RedirectResponse
     {
+        $this->authorize('delete', Feature::class);
+
         Feature::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Feature $feature) {

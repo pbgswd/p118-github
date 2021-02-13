@@ -29,7 +29,7 @@ class FeaturePolicy
      */
     public function view(User $user, Feature $Feature)
     {
-        return Auth::check() === true; //todo check on FeaturePolicy
+       //
     }
 
     /**
