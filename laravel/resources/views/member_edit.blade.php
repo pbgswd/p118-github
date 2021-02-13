@@ -179,8 +179,8 @@
                     <div class="col-0 col-md-3">
                     </div>
                     <div class="col-12 col-md-6 text-center">
-                        <img src="{{ asset('storage/users/' . $data['user']->user_info->image) }}"
-                             class="border rounded-lg img-fluid" />
+                        <img src="{{asset('storage/users/' . $data['user']->user_info->image)}}"
+                             class="rounded img-fluid" />
                     </div>
                     <div class="col-0 col-md-3">
                     </div>

@@ -12,7 +12,7 @@
                         @if($f->image)
                             <img src="{{asset('storage/public/'.
                                 $data['thumbs']['tn_str'].$f->image)}}" alt="{{$f->title}}"
-                                class="border border-lg img-fluid"/>
+                                class="rounded img-fluid"/>
                         @endif
                         <h3>{{ $f->title }}</h3>
                         <p>{!! $f->content !!}</p>

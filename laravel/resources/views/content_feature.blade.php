@@ -7,7 +7,7 @@
             <a href="{{route('member', $data['user']->id)}}" title="My Profile">
                 @if($data['user']->user_info->thumb != '')
                     <img src="{{asset('storage/users/'. $data['user']->user_info->thumb)}}"
-                         class="img-fluid mb-2 border rounded-lg"/>
+                         class="img-fluid mb-2 rounded"/>
                     <br />
                 @endif
                 <h5 class="font-weight-bolder">
@@ -82,7 +82,7 @@
                 @if($f->image)
                     <img src="{{asset('storage/public/' . $f->image)}}"
                          alt="{{$f->file_name}}"
-                         class="img-fluid mb-2 border rounded-lg"/>
+                         class="img-fluid mb-2 rounded"/>
                 @endif
                 <h2>
                     <a class="text-secondary" href="{{route('feature', $f->slug)}}">

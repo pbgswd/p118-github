@@ -17,7 +17,7 @@
             </div>
         </div>
         <div  class="col-12">
-            <img src="{{ asset('storage/public/'. $data['feature']->image) }}" class="border border-lg img-fluid" />
+            <img src="{{ asset('storage/public/'. $data['feature']->image) }}" class="rounded img-fluid" />
             <br />
             <h1 class="text-center">
                 {{$data['feature']->title}}
