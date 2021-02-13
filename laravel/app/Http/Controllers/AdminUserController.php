@@ -20,15 +20,12 @@ use App\Services\EmailMemberUpdateAddressService;
 use App\Services\EmailMemberUpdateService;
 use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Spatie\Image\Exceptions\InvalidManipulation;
-use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Spatie\Permission\Models\Role;
 
 /**

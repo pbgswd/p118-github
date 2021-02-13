@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Feature;
 use App\Models\Options;
 use App\Services\AttachmentService;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class FeatureController extends Controller

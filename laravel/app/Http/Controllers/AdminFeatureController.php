@@ -6,15 +6,11 @@ use App\Models\Feature;
 use App\Models\Options;
 use App\Services\AttachmentService;
 use App\Services\UserImageService;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Spatie\Image\Exceptions\InvalidManipulation;
-use Spatie\Image\Image;
-use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class AdminFeatureController extends Controller
 {
@@ -70,7 +66,9 @@ class AdminFeatureController extends Controller
 
     /**
      * @param Request $request
+     * @param UserImageService $service
      * @return RedirectResponse
+     * @throws InvalidManipulation
      */
     public function store(Request $request, UserImageService $service): RedirectResponse
     {
@@ -97,6 +95,7 @@ class AdminFeatureController extends Controller
     /**
      * @param Feature $feature
      * @return View
+     * @throws InvalidManipulation
      */
     public function edit(Feature $feature): View
     {
@@ -158,7 +157,6 @@ class AdminFeatureController extends Controller
             $feature['file_name'] = $result['file_name'];
         }
 
-
         $feature->save();
 
         Session::flash('success', 'You have edited the Feature');
@@ -166,44 +164,21 @@ class AdminFeatureController extends Controller
         return redirect()->route('admin_feature_edit', [$feature->slug]);
 
     }
+
     /**
-     * @param Feature $feature
+     * @param Request $request
      * @return RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Feature $feature): RedirectResponse
+    public function destroy(Request $request): RedirectResponse
     {
         Feature::withoutGlobalScopes()
-            ->find($feature->id)
+            ->find($request->id)
             ->each(function (Feature $feature) {
               $feature->delete();
             });
 
         Session::flash('success', 'You have deleted the Feature');
         return redirect()->route('admin_features_list');
-    }
-
-
-    /**
-     * @param FormRequest $request
-     * @return string
-     * @throws InvalidManipulation
-     */
-    protected function uploadImage(Request $request): string
-    {
-        if (null !== $request->file('image')) {
-
-            $file = $request->file('image')->store('', 'public');
-
-            ImageOptimizer::optimize(storage_path() . '/app/public/' . $file);
-
-            Image::load(storage_path() . '/app/public/' . $file)
-                ->width(75)
-                ->height(75)
-                ->save(storage_path() . '/app/public/' . 'tn_75x75_' . $file);
-
-            return $file;
-        }
-        return false;
     }
 }
