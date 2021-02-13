@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Feature\DestroyFeatureRequest;
+use App\Http\Requests\Feature\StoreFeatureRequest;
+use App\Http\Requests\Feature\UpdateFeatureRequest;
 use App\Models\Feature;
 use App\Models\Options;
 use App\Services\AttachmentService;
@@ -65,12 +68,12 @@ class AdminFeatureController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreFeatureRequest $request
      * @param UserImageService $service
      * @return RedirectResponse
      * @throws InvalidManipulation
      */
-    public function store(Request $request, UserImageService $service): RedirectResponse
+    public function store(StoreFeatureRequest $request, UserImageService $service): RedirectResponse
     {
         $feature = new Feature($request->input('feature'));
 
@@ -126,12 +129,12 @@ class AdminFeatureController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param UpdateFeatureRequest $request
      * @param Feature $feature
      * @return RedirectResponse
      * @throws InvalidManipulation
      */
-    public function update(Request $request, Feature $feature): RedirectResponse
+    public function update(UpdateFeatureRequest $request, Feature $feature): RedirectResponse
     {
         $feature->fill($request->input('feature'));
 
@@ -166,11 +169,11 @@ class AdminFeatureController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param DestroyFeatureRequest $request
      * @return RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(DestroyFeatureRequest $request): RedirectResponse
     {
         Feature::withoutGlobalScopes()
             ->find($request->id)
