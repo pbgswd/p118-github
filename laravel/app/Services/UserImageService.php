@@ -4,33 +4,27 @@
 namespace App\Services;
 
 use App\Models\Options;
+use Illuminate\Support\Facades\Storage;
+use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\Image\Image;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class UserImageService
 {
-    public function storeImage($request, $dir): array
+    public function storeImage($request, string $dir, bool $make_thumb): array
     {
         //todo handle upload and thumb generation
         $directory = '/app/' . $dir . '/';
+        $image ='';
 
         if (null !== $request->file('image')) {
-
             $image = $request->file('image')->store('', $dir);
-
             ImageOptimizer::optimize(storage_path() . $directory . $image);
-
-            $w = Options::thumb_values()['width'];
-            $h = Options::thumb_values()['height'];
-
-            Image::load(storage_path() . $directory . $image)
-                ->width($w)
-                ->height($h)
-                ->save(storage_path() . $directory . Options::thumb_values()['tn_str'] . $image);
+            if($make_thumb) {
+                $result = $this->generate_thumb($image, $dir, Options::thumb_values());
+            }
+            $file_name = $request->image->getClientOriginalName();
         }
-
-        $file_name = $request->image->getClientOriginalName();
-
 
         //todo handle thumb generation, kill bad sized thumbs
         //read directory
@@ -40,55 +34,82 @@ class UserImageService
         //create them
 
         $arr = [
-            'image' => $image,
-            'file_name' => $file_name,
-            'thumb' =>  Options::thumb_values()['tn_str'] . $image,
+            'image' => $image ?? '',
+            'file_name' => $file_name ?? '',
+            'thumb' =>  $result ?? '',
         ];
 
         return $arr;
     }
 
-    public function updateImage($request, $dir): array
+    /**
+     * @param $request
+     * @param $dir
+     * @return array
+     * @throws InvalidManipulation
+     */
+    public function updateImage($request, string $dir, bool $make_thumb): array
     {
 
+        /** @var TYPE_NAME $directory */
         $directory = '/app/' . $dir . '/';
+        $image = '';
 
         if (null !== $request->file('image')) {
-
+            /**
+             * @var $image
+             */
             $image = $request->file('image')->store('', $dir);
 
             ImageOptimizer::optimize(storage_path() . $directory . $image);
 
-            $w = Options::thumb_values()['width'];
-            $h = Options::thumb_values()['height'];
-
-            Image::load(storage_path() . $directory . $image)
-                ->width($w)
-                ->height($h)
-                ->save(storage_path() . $directory . Options::thumb_values()['tn_str'] . $image);
+            if($make_thumb) {
+                $result = $this->generate_thumb($image, $dir, Options::thumb_values());
+            }
+            $file_name = $request->image->getClientOriginalName();
         }
 
-        $file_name = $request->image->getClientOriginalName();
-
-
-        //todo handle thumb generation, kill bad sized thumbs
-        //read directory
-        //iterate
-        // if any file that starts with tn....... ! =  tn_str
-        //delete it
-        //create them
-
         $arr = [
-            'image' => $image,
-            'file_name' => $file_name,
-            'thumb' =>  Options::thumb_values()['tn_str'] . $image,
+            'image' => $image ?? '',
+            'file_name' => $file_name ?? '',
+            'thumb' =>  $result ?? '',
         ];
 
         return $arr;
     }
 
-    public function destroyImage()
+    /**
+     * @param $image
+     * @param $dir
+     * @param $thumb_values
+     * @return string
+     * @throws InvalidManipulation
+     */
+    public function generate_thumb($image, $dir, $thumb_values ): string
     {
-        //todo delete image, thumbs
+        $directory = '/app/' . $dir . '/';
+        $w = $thumb_values['width'];
+        $h = $thumb_values['height'];
+
+        Image::load(storage_path() . $directory . $image)
+            ->width($w)
+            ->height($h)
+            ->save(storage_path() . $directory . $thumb_values['tn_str'] . $image);
+
+        return $thumb_values['tn_str'] . $image;
+    }
+
+
+    /**
+     * @param string $image
+     * @param string $dir
+     * @param array $thumb_values
+     * @return bool
+     */
+    public function destroyImage(string $image, string $dir, array $thumb_values): bool
+    {
+        Storage::disk($dir)->delete($image);
+        Storage::disk($dir)->delete($thumb_values['tn_str'] . $image);
+        return true;
     }
 }

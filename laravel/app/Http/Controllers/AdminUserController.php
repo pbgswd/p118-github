@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Spatie\Permission\Models\Role;
 
@@ -165,7 +166,7 @@ class AdminUserController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function edit(User $user): View
+    public function edit(User $user, UserImageService $service): View
     {
         $this->authorize('admin_update', Auth::user());
 
@@ -177,9 +178,20 @@ class AdminUserController extends Controller
                     );
 
         if($user->user_info) {
-            if(file_exists(storage_path() . '/app/users/' . $user->user_info['image'])) {
-                $filesize = AttachmentService::human_filesize(
-                \filesize(\storage_path('app/users' . '/' . $user->user_info->image))) ? : null;
+            if($user->user_info['image']) {
+                if(file_exists(storage_path() . '/app/users/' . $user->user_info['image'])) {
+                    $filesize = AttachmentService::human_filesize(
+                    \filesize(\storage_path('app/users' . '/' . $user->user_info->image))) ? : null;
+
+                    if(!file_exists(storage_path() . '/app/users/' . Options::thumb_values()['tn_str'] .
+                        $user->user_info['image'])) {
+                            $this->userImageService->generate_thumb($user->user_info['image'], 'users',
+                                Options::thumb_values());
+                    }
+                }
+                $user->user_info->thumb = Options::thumb_values()['tn_str'] . $user->user_info['image'];
+                $user->user_info->thumb_size = AttachmentService::human_filesize(
+                    \filesize(\storage_path('app/users' . '/' . $user->user_info->thumb))) ? : null;
             }
         }
 
@@ -204,6 +216,7 @@ class AdminUserController extends Controller
      * @param User $user
      * @return RedirectResponse
      * @throws AuthorizationException
+     * @throws InvalidManipulation
      */
     public function update(UpdateUser $request, UserImageService $service, User $user): RedirectResponse
     {
@@ -243,7 +256,9 @@ class AdminUserController extends Controller
 
             if (isset($user_info['delete_image'])) {
                 if(file_exists(storage_path() . '/app/users/' . $user_info['image'])) {
-                    Storage::disk('users')->delete( $user_info['image']);
+
+                    $this->userImageService->destroyImage($user_info['image'], 'users', Options::thumb_values());
+
                     Session::flash('info', 'You have deleted ' . $user_info['file_name']);
                     $user_info['image'] = null;
                     $user_info['file_name'] = null;
@@ -251,13 +266,11 @@ class AdminUserController extends Controller
             } else {
                 if (!is_null($request->file('image'))) {
 
-                    $result = $this->userImageService->updateImage($request, 'users');
+                    $result = $this->userImageService->updateImage($request, 'users', true);
 
                     $user_info['image'] = $result['image'];
                     $user_info['file_name'] = $result['file_name'];
 
-                    //$user_info['image'] = $this->uploadImage($request);
-                    //$user_info['file_name'] = $request->image->getClientOriginalName();
                 }
             }
             $user->user_info->fill($user_info);
@@ -449,7 +462,7 @@ class AdminUserController extends Controller
 
             if(null != $user_info) {
                 if ($user_info['image']) {
-                    Storage::disk('users')->delete($user_info['image']);
+                    $this->userImageService->destroyImage($user_info['image'], 'users', Options::thumb_values());
                 }
                 UserInfo::destroy($user_info['id']);
             }
@@ -467,22 +480,5 @@ class AdminUserController extends Controller
         Session::flash('success', Str::plural('Member', count($request->id)).' deleted.');
 
         return redirect()->route('users_list');
-    }
-
-    /**
-     * @param FormRequest $request
-     * @return String|null
-     */
-    protected function uploadImage(FormRequest $request): ?string
-    {
-        if (null !== $request->file('image')) {
-
-            $file = $request->file('image')->store('', 'users');
-
-            ImageOptimizer::optimize(storage_path() . '/app/users/' . $file);
-
-            return $file;
-        }
-        return false;
     }
 }

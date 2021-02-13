@@ -37,6 +37,10 @@ class UserController extends Controller
      * @var UserImageService
      */
     private $emailMemberUpdateService;
+    /**
+     * @var UserImageService
+     */
+    private $userImageService;
 
     public function __construct(EmailMemberUpdateService $emailMemberUpdateService, UserImageService $userImageService)
     {
@@ -90,6 +94,7 @@ class UserController extends Controller
      * @param User $user
      * @return View
      * @throws AuthorizationException
+     * @throws InvalidManipulation
      */
     public function edit(User $user): View
     {
@@ -97,9 +102,22 @@ class UserController extends Controller
 
         $user->load('phone_number', 'user_info', 'membership', 'committee_memberships', 'allExecutiveRoles');
 
-        if(file_exists(storage_path() . '/app/users/' . $user->user_info['image'])) {
-            $filesize = AttachmentService::human_filesize(
-                \filesize(\storage_path('app/users'.'/'.$user->user_info->image))) ? : null;
+        if($user->user_info) {
+            if($user->user_info['image']) {
+                if(file_exists(storage_path() . '/app/users/' . $user->user_info['image'])) {
+                    $filesize = AttachmentService::human_filesize(
+                        \filesize(\storage_path('app/users' . '/' . $user->user_info->image))) ? : null;
+
+                    if(!file_exists(storage_path() . '/app/users/' . Options::thumb_values()['tn_str'] .
+                        $user->user_info['image'])) {
+                        $this->userImageService->generate_thumb($user->user_info['image'], 'users',
+                            Options::thumb_values());
+                    }
+                }
+                $user->user_info->thumb = Options::thumb_values()['tn_str'] . $user->user_info['image'];
+                $user->user_info->thumb_size = AttachmentService::human_filesize(
+                    \filesize(\storage_path('app/users' . '/' . $user->user_info->thumb))) ? : null;
+            }
         }
 
         $currentUser = Auth::user();
@@ -176,9 +194,11 @@ class UserController extends Controller
             $user_info = $userRequest['user_info'];
             if (isset($user_info['delete_image'])) {
                 if(file_exists(storage_path() . '/app/users/' . $user_info['image'])) {
-                    Storage::disk('users')->delete( $user_info['image']);
 
-                    //todo delete thumb
+//Storage::disk('users')->delete($user_info['image']);
+// Storage::disk('users')->delete(Options::thumb_values()['tn_str'] . $user_info['image']);
+
+                    $this->userImageService->destroyImage($user_info['image'], 'users', Options::thumb_values());
 
                     Session::flash('info', 'You have deleted ' . $user_info['file_name']);
 
@@ -188,7 +208,7 @@ class UserController extends Controller
             } else {
                 if (!is_null($userRequest->file('image'))) {
 
-                    $result = $this->userImageService->updateImage($userRequest, 'users');
+                    $result = $this->userImageService->updateImage($userRequest, 'users', true);
 
                     $user_info['image'] = $result['image'];
                     $user_info['file_name'] = $result['file_name'];
@@ -204,7 +224,7 @@ class UserController extends Controller
 
             //$user_info->image = $this->uploadImage($userRequest);
 
-            $result = $this->userImageService->updateImage($userRequest, 'users');
+            $result = $this->userImageService->updateImage($userRequest, 'users', true);
             $user_info->image = $result['image'];
 
             $user->user_info()->save($user_info);
@@ -338,29 +358,5 @@ class UserController extends Controller
         return redirect()->route('edit_emergency_contact', $user->id);
     }
 
-    /**
-     * @param FormRequest $request
-     * @return string
-     * @throws InvalidManipulation
-     */
-    protected function uploadImage(FormRequest $request): string
-    {
-        if (null !== $request->file('image')) {
 
-            $file = $request->file('image')->store('', 'users');
-
-            ImageOptimizer::optimize(storage_path() . '/app/users/' . $file);
-
-            $w = Options::thumb_values()['width'];
-            $h = Options::thumb_values()['height'];
-
-            Image::load(storage_path() . '/app/users/' . $file)
-                ->width($w)
-                ->height($h)
-                ->save(storage_path() . '/app/users/' . Options::thumb_values()['tn_str'] . $file);
-
-            return $file;
-        }
-        return false;
-    }
 }

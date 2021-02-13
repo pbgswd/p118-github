@@ -190,6 +190,12 @@
                         <h5>
                             {{$data['filesize'] ?? ''}}
                         </h5>
+
+                        <img src="{{ asset('storage/users/'. $data['user']->user_info->thumb) }}"
+                             class="border rounded-lg img-fluid" />
+                        <h5>
+                            {{$data['user']->user_info->thumb_size ?? ''}}
+                        </h5>
                     </div>
                     <div class="input-group mb-3 col-12">
                         <div class="input-group-prepend">
