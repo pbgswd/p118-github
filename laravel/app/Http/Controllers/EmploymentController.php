@@ -26,10 +26,7 @@ class EmploymentController extends Controller
     public function index(): View
     {
         //todo update job status on page load
-
         // update status set status = 0
-
-        $data = [];
 
         $years = DB::table('employment')
             ->select(DB::raw('DISTINCT YEAR(deadline) as year'))
@@ -47,10 +44,12 @@ class EmploymentController extends Controller
             $job['jobstatus'] = $job->deadline->isPast() ? 0 : 1;
         }
 
-        $data['employment'] = $jobs;
-        $data['years'] = $years;
-        $data['year'] = '';
-        $data['count'] = Employment::count();
+        $data = [
+            'employment' => $jobs,
+            'years' => $years,
+            'year' => '',
+            'count' => Employment::count(),
+        ];
 
         return view('employment_list', ['data' => $data]);
     }
@@ -98,20 +97,7 @@ class EmploymentController extends Controller
     {
         return redirect()->route('list_jobs_year', $request->deadline);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     /**
      * Display the specified resource.
      *
