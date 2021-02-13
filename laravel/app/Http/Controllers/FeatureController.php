@@ -6,28 +6,26 @@ use App\Models\Feature;
 use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class FeatureController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return view
      */
-    public function index(): view
+    public function index(): View
     {
-        $data = [];
 
         $features = Feature::withoutGlobalScopes()
             ->sortable()
-            ->paginate(20);
+            ->paginate(10);
 
         $data = [
             'features' => $features,
             'thumbs' => Options::feature_thumb_values(),
         ];
 
-        return view('admin.features-list', ['data' => $data]);
+        return view('features', ['data' => $data]);
     }
 
 
@@ -39,8 +37,6 @@ class FeatureController extends Controller
      */
     public function show(Feature $feature)
     {
-        $data = [];
-
         if($feature['image']) {
             if(file_exists(storage_path() . '/app/public/' . $feature['image'])) {
                 $feature->filesize = AttachmentService::human_filesize(
@@ -62,6 +58,6 @@ class FeatureController extends Controller
             'action' => 'Edit',
         ];
 
-        return view('admin.feature', ['data' => $data]);
+        return view('feature', ['data' => $data]);
     }
 }
