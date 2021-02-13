@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Policies\CommitteePolicy;
 use App\Policies\CommitteePostPolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasMany;

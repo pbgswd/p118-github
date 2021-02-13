@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
+use App\Policies\FeaturePolicy;
 use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -18,7 +19,7 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
     use Taggable;
 
     protected $policies = [
-        //self::class => FeaturePolicy::class,
+        self::class => FeaturePolicy::class,
     ];
 
     public $sortable = [

@@ -2,10 +2,6 @@
 
 namespace App\Models;
 
-use App\Constants\AccessLevelConstants;
-use function array_combine;
-use function range;
-
 /**
  * Class USAStates
  * @package App\Models

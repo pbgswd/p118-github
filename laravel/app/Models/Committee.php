@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
-use function route;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
-use phpDocumentor\Reflection\Types\Boolean;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
