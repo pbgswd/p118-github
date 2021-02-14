@@ -137,23 +137,23 @@ class AdminFeatureController extends Controller
 
     /**
      * @param UpdateFeatureRequest $request
-     * @param Feature $feature
+     * @param Feature $any_feature
      * @return RedirectResponse
      * @throws AuthorizationException
      * @throws InvalidManipulation
      */
-    public function update(UpdateFeatureRequest $request, Feature $feature): RedirectResponse
+    public function update(UpdateFeatureRequest $request, Feature $any_feature): RedirectResponse
     {
         $this->authorize('update', Feature::class);
 
-        $feature->fill($request->input('feature'));
+        $any_feature->fill($request->input('feature'));
 
         if (isset($request['delete_image'])) {
-            if (file_exists(storage_path() . '/app/public/' . $feature['image'])) {
+            if (file_exists(storage_path() . '/app/public/' . $any_feature['image'])) {
 
-                $this->userImageService->destroyImage($feature['image'], 'public', Options::feature_thumb_values());
+                $this->userImageService->destroyImage($any_feature['image'], 'public', Options::feature_thumb_values());
 
-                Session::flash('info', 'You have deleted ' . $feature['file_name']);
+                Session::flash('info', 'You have deleted ' . $any_feature['file_name']);
                 $feature['image'] = null;
                 $feature['file_name'] = null;
             }
@@ -170,11 +170,11 @@ class AdminFeatureController extends Controller
             $feature['file_name'] = $result['file_name'];
         }
 
-        $feature->save();
+        $any_feature->save();
 
         Session::flash('success', 'You have edited the Feature');
 
-        return redirect()->route('admin_feature_edit', [$feature->slug]);
+        return redirect()->route('admin_feature_edit', [$any_feature->slug]);
 
     }
 

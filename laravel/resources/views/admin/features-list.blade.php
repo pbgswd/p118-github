@@ -39,7 +39,7 @@
                             <td>
                                 @if($f->image)
                                 <img src="{{asset('storage/public/'.
-                                    $data['thumbs']['tn_str'].$f->image)}}" />
+                                    $data['thumbs']['tn_str'].$f->image)}}" class="rounded" />
                                 @endif
                                 <h4>
                                     <a title="{{ $f->title }}" href="{{ route('admin_feature_edit', $f->slug) }}">

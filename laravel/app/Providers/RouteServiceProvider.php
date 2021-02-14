@@ -8,6 +8,7 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use App\Models\Employment;
+use App\Models\Feature;
 use App\Models\Meeting;
 use App\Models\Organization;
 use App\Models\Page;
@@ -86,6 +87,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('any_policy', static function ($id) {
             return Policy::withoutGlobalScopes()->findOrFail($id);
+        });
+        Route::bind('any_feature', static function ($slug) {
+            return Feature::withoutGlobalScopes()->where('slug', $slug)->first();
         });
     }
 

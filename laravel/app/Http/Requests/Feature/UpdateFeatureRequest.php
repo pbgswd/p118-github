@@ -26,7 +26,8 @@ class UpdateFeatureRequest extends FormRequest
         return [
             'delete_image' => 'boolean',
             'image' => 'file|nullable',
-            'feature.title' => 'required|max:255',
+            // 'page.title' => 'required|max:255|unique:pages,title,'.$this->route('any_page')->slug.',slug',
+            'feature.title' => 'required|max:255|unique:pages,title,'.$this->route('any_feature')->slug.',slug',
             'feature.content' => 'required',
             'feature.image' => 'string|nullable',
             'feature.file_name' => 'string|nullable',
