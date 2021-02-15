@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\HasAttachment;
 use App\Policies\CommitteePostPolicy;
 use DateTime;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
@@ -29,7 +31,7 @@ use Spatie\Searchable\SearchResult;
  * @property int                     $committee_id
  * @method static withoutGlobalScopes()
  */
-class CommitteePost extends LiveableModel implements Searchable
+class CommitteePost extends LiveableModel implements HasAttachment, Searchable
 {
     use Notifiable;
     use Sortable;
@@ -144,5 +146,31 @@ class CommitteePost extends LiveableModel implements Searchable
     public function admin_post_comments(): HasMany
     {
         return $this->hasMany(CommitteePostComment::class, 'post_id', 'id')->withoutGlobalScopes()->orderByDesc('updated_at');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
+    {
+        return $this->belongsToMany(Attachment::class, 'attachment_committee_post');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentFolder(): string
+    {
+        return 'committees';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return 'members';
     }
 }

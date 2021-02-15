@@ -97,7 +97,7 @@ class EmploymentController extends Controller
     {
         return redirect()->route('list_jobs_year', $request->deadline);
     }
-    
+
     /**
      * Display the specified resource.
      *

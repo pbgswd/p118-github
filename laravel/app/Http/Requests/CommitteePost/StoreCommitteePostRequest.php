@@ -33,6 +33,7 @@ class StoreCommitteePostRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'post.access_level' => 'required|string|max:255',
             'post.title' => 'required|unique:committee_posts,title|max:255',
             'post.content' => 'required',
             'post.sticky' => 'boolean',

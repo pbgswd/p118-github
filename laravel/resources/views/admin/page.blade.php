@@ -69,7 +69,8 @@
                     <div class="col-6 col-sm-3">
                         <p>Access Level for content:</p>
                         <div class="form-group">
-                            {{ select_options($data['access_levels'], old('page.access_level', $data['page']->access_level),
+                            {{ select_options($data['access_levels'],
+                                old('page.access_level', $data['page']->access_level),
                                 ['name' => 'page[access_level]', 'class' => 'form-control']) }}
                         </div>
                     </div>
@@ -153,8 +154,8 @@
         </div>
 
 
-        @if ($data['action'] == 'Edit')
-            @if(count($data['page']->attachments) > 0)
+
+            @if( $data['action'] == 'Edit' && count($data['page']->attachments) > 0)
                 <div class="col-md-12">
                     <h2>Files</h2>
                     <table class="table table-striped table-sm">
@@ -218,7 +219,6 @@
                     </table>
                 </div>
             @endif
-        @endif
 
         <div class="row">
             <div class="col-sm">
