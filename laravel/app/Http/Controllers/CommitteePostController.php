@@ -7,6 +7,7 @@ use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,16 @@ use Illuminate\View\View;
 
 class CommitteePostController extends Controller
 {
+    /**
+     * @var AttachmentService
+     */
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * @param Committee $committee
      * @return View
@@ -50,6 +61,18 @@ class CommitteePostController extends Controller
 
         $post->save();
 
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $post);
+
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
+
         Session::flash('success', 'You have saved a new post in '.$committee->name);
 
         return redirect()->route('committee_post_edit_form', [$committee->slug, $post->slug]);
@@ -65,7 +88,7 @@ class CommitteePostController extends Controller
     {
         $this->authorize('update', [CommitteePost::class, $committeePost]);
 
-        $committeePost->creator;
+        $committeePost->load('creator', 'committee', 'attachments');
 
         return view('committee_post_form', [$committee->slug, $committeePost->slug], [
             'data' => [
@@ -90,6 +113,19 @@ class CommitteePostController extends Controller
         $committeePost->fill($request['post']);
         $committeePost->save();
         $committeePost->creator;
+
+        $result = $this->attachmentService->updateAttachment($request, $committeePost);
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $committeePost);
+
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
 
         return view('committee_post_form', [
             $committee->slug, $committeePost->slug, ], [

@@ -37,6 +37,28 @@
             {!! $data['committeepost']->content !!}
             </div>
         </div>
+        @if(count($data['committeepost']->attachments) > 0)
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <h4>
+                        <i class="far fa-folder-open"></i>
+                        Files
+                    </h4>
+                    <ul class="list-group">
+                        @foreach ($data['committeepost']->attachments as $pa)
+                            <ul class="list-group-item">
+                                <a href="{{route('attachment_download',
+                                [$data['committeepost']->getAttachmentFolder(), $pa->id])}}"
+                                   title="Download {{$pa->file_name}}">
+                                    <i class="far fa-file"></i>
+                                    {{ $pa->description ?: $pa->file_name}}
+                                </a>
+                            </ul>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
         @if($data['canManage'] == 1)
             <div class="col-12 p-4">
                 <h5>

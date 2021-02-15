@@ -167,7 +167,7 @@ class AdminCommitteePostController extends Controller
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
             ->each(static function (CommitteePost $post) {
-                //todo delete comments associated with a committee post
+                $this->attachmentService->destroyAttachments($post);
                 $post->delete();
             });
 
