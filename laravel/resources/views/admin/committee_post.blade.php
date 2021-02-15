@@ -30,7 +30,7 @@
     <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <input type="hidden" name="access_level" value="members" />
+        <input type="hidden" name="post[access_level]" value="members" />
         <div class="row mt-3">
             <div class="form-group">
                 <div class="col-12">
