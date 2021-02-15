@@ -49,7 +49,9 @@ class Options
         return $arr;
     }
 
-
+    /**
+     * @return string[]
+     */
     public static function address_update_contacts(): array
     {
         $contacts = ['dispatch@iatse118.com', 'payroll@iatse118.com',
@@ -57,6 +59,10 @@ class Options
 
         return $contacts;
     }
+
+    /**
+     * @return string[]
+     */
     public static function testing_address_update_contacts(): array
     {
         $contacts = ['pbgswd@gmail.com', 'financialsecretary@iatse118.com'];
@@ -64,6 +70,9 @@ class Options
         return $contacts;
     }
 
+    /**
+     * @return array
+     */
     public static function access_levels(): array
     {
         $levels = AccessLevelConstants::getConstants();
@@ -71,6 +80,9 @@ class Options
         return array_combine($levels, $levels);
     }
 
+    /**
+     * @return mixed
+     */
     public static function membership_levels(): array
     {
         $membership = ['Member', 'Office']; // 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
@@ -78,6 +90,9 @@ class Options
         return array_combine($membership, $membership);
     }
 
+    /**
+     * @return mixed
+     */
     public static function committee_roles(): array
     {
         $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Past-Member'];
@@ -85,6 +100,9 @@ class Options
         return array_combine($membership, $membership);
     }
 
+    /**
+     * @return mixed
+     */
     public static function committee_executive_roles(): array
     {
         $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary'];
@@ -92,6 +110,9 @@ class Options
         return array_combine($committee_executive_roles, $committee_executive_roles);
     }
 
+    /**
+     * @return mixed
+     */
     public static function phone_label(): array
     {
         $phone_labels = ['cel', 'home', 'work', 'other'];
@@ -99,6 +120,9 @@ class Options
         return array_combine($phone_labels, $phone_labels);
     }
 
+    /**
+     * @return array
+     */
     public static function state_prov(): array
     {
         $provinces = [];
@@ -118,6 +142,10 @@ class Options
 
         return ['Provinces' => $provinces, null => 'Other (See next field)'];
     }
+
+    /**
+     * @return array
+     */
     public static function years(): array
     {
         $currentYear = date('Y');
@@ -126,6 +154,9 @@ class Options
         return array_combine($years, $years);
     }
 
+    /**
+     * @return array
+     */
     public static function months(): array
     {
         $months = [];
@@ -145,6 +176,9 @@ class Options
         return $months;
     }
 
+    /**
+     * @return array
+     */
     public static function days(): array
     {
         $days = range(1, 31);
@@ -152,6 +186,10 @@ class Options
         return array_combine($days, $days);
     }
 
+    /**
+     * @param $class
+     * @return array
+     */
     public static function fetchOptionTypes($class): array
     {
         $sorted = $class::orderBy('sort_order')->get();
