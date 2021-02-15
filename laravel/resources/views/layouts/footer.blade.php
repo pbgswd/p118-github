@@ -45,7 +45,7 @@
         </div>
     @endauth
     <div class="row mt-1 mt-md-5 px-2 d-flex justify-content-around">
-        <div class="col-12 col-md-4 mb-3 border border-secondary border-lg rounded pt-3">
+        <div class="col-12 col-md-4 mb-3 border border-secondary rounded pt-3">
             <h5>
                 <i class="fas fa-hashtag"></i>
                 To Read
@@ -61,7 +61,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-12 col-md-4 mb-3 mt-sm-5 mt-md-0 border border-secondary border-lg rounded pt-3">
+        <div class="col-12 col-md-4 mb-3 mt-sm-5 mt-md-0 border border-secondary rounded pt-3">
             <h5>
                 <i class="fas fa-hashtag"></i>
                 Social Media

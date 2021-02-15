@@ -7,7 +7,7 @@
             <a href="{{route('member', $data['user']->id)}}" title="My Profile">
                 @if($data['user']->user_info->thumb != '')
                     <img src="{{asset('storage/users/'. $data['user']->user_info->thumb)}}"
-                         class="img-fluid mb-2 rounded"/>
+                         class="img-fluid mb-2 rounded-circle"/>
                     <br />
                 @endif
                 <h5 class="font-weight-bolder">
