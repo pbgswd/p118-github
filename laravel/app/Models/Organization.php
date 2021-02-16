@@ -65,6 +65,10 @@ class Organization extends LiveableModel implements Searchable
     protected $casts = [
         'live' => 'boolean',
     ];
+    /**
+     * @var mixed
+     */
+    private $agreements;
 
     public function __construct(array $attributes = [])
     {

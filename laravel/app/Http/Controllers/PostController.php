@@ -29,10 +29,13 @@ class PostController extends Controller
     public function list(Request $request): View
     {
         if (Auth::check()) {
-            $posts = Post::sortable()->with('topics', 'tagged')->paginate(10);
+            $posts = Post::where('live',1)
+            ->sortable()
+            ->with('topics', 'tagged')
+            ->paginate(10);
         } else {
             $posts = Post::sortable()
-                ->where('access_level', '=', AccessLevelConstants::PUBLIC)
+                ->where([['access_level', '=', AccessLevelConstants::PUBLIC],['live',1]])
                 ->with('topics', 'tagged')
                 ->paginate(10);
         }

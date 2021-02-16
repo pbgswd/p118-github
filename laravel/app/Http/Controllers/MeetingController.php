@@ -23,6 +23,7 @@ class MeetingController extends Controller
             ->get();
 
         $meetings = Meeting::withoutGlobalScopes()
+            ->where('live',1)
             ->sortable()
             ->with('user')
             ->orderBy('date', 'desc')
@@ -53,6 +54,7 @@ class MeetingController extends Controller
             ->get();
 
         $meetings = Meeting::withoutGlobalScopes()
+            ->where('live',1)
             ->sortable()
             ->whereBetween('date', [$year.'-01-01', $year.'-12-31'])
             ->with('user')

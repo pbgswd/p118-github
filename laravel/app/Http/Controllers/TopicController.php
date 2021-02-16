@@ -17,13 +17,14 @@ class TopicController extends Controller
     {
         // public
         if (Auth::check()) {
-            $topics = Topic::sortable()
+            $topics = Topic::where('live',1)
+                ->sortable()
                 ->with('tagged')
                 ->orderBy('sort_order', 'desc')
                 ->paginate(10);
         } else {
             $topics = Topic::sortable()
-                ->where('access_level', '=', AccessLevelConstants::PUBLIC)
+                ->where([['access_level', '=', AccessLevelConstants::PUBLIC], ['live', 1]])
                 ->with('tagged')
                 ->paginate(10);
         }

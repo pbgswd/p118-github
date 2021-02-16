@@ -30,7 +30,8 @@ class ByLawController extends Controller
     {
         $data = [];
         if (Auth::check()) {
-            $data['bylaws'] = Bylaw::sortable()
+            $data['bylaws'] = Bylaw::where('live', 1)
+                ->sortable()
                 ->with('attachments')
                 ->orderBy('date', 'desc')
                 ->paginate(10);
@@ -38,7 +39,7 @@ class ByLawController extends Controller
             $data['count'] = Bylaw::count();
         } else {
             $data['bylaws'] = Bylaw::sortable()
-                ->where('access_level', 'public')
+                ->where([['access_level', 'public'],['live', 1]])
                 ->with('attachments')
                 ->orderBy('date', 'desc')
                 ->paginate(10);

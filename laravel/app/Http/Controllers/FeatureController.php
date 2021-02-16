@@ -16,6 +16,7 @@ class FeatureController extends Controller
     {
 
         $features = Feature::withoutGlobalScopes()
+            ->where('live', 1)
             ->sortable()
             ->paginate(10);
 

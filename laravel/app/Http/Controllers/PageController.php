@@ -16,10 +16,13 @@ class PageController extends Controller
     public function list(): View
     {
         if (Auth::check()) {
-            $pages = Page::sortable()->with('topics','tagged')->paginate(10);
+            $pages = Page::where('live',1)
+                ->sortable()
+                ->with('topics','tagged')
+                ->paginate(10);
         } else {
             $pages = Page::sortable()
-                ->where('access_level', '=', AccessLevelConstants::PUBLIC)
+                ->where([['access_level', '=', AccessLevelConstants::PUBLIC], ['live', 1]])
                 ->with('topics','tagged')
                 ->paginate(10);
         }

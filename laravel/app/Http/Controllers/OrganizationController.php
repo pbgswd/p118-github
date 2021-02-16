@@ -16,9 +16,7 @@ class OrganizationController extends Controller
         $data = [];
 
         if(Auth::user()) {
-            $data['organizations'] = Organization::where([
-                ['live', 1],
-                ])
+            $data['organizations'] = Organization::where('live', 1)
                 ->sortable()
                 ->orderBy('sort_order')
                 ->paginate(10);
@@ -32,8 +30,6 @@ class OrganizationController extends Controller
                 ->orderBy('sort_order')
                 ->paginate(10);
         }
-
-
 
         return view('organizations', ['data' => ['data' => $data]]);
     }
