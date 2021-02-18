@@ -26,7 +26,6 @@
                 </a>
             </div>
             <!-- /.carousel-item -->
-
             <div class="carousel-item">
                 <a class="" href="{{route('hire-us')}}">
                     <picture>
