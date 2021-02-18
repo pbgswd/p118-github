@@ -152,7 +152,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');
     Route::get('/developer', [CNS\AdminController::class, 'developer'])->name('developer');
 
-    Route::get('/carousel', [CNS\AdminCarouselController::class, 'index'])->name('admin_carousel');
+    Route::resource('carousel', CNS\AdminCarouselController::class); //->name('admin_carousel');
+    //Route::resource('carousel', [CNS\AdminCarouselController::class, 'index']); //->name('admin_carousel');
 
     Route::post('/search', [CNS\LocalSearchController::class, 'admin_search'])->name('admin_search');
     //Route::get('/search', [CNS\LocalSearchController::class, 'admin_index'])->name('admin_search_show');

@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Carousel;
 use App\Services\AttachmentService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class AdminCarouselController extends Controller
@@ -26,77 +23,82 @@ class AdminCarouselController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
         $data = [];
 
-        return view('admin.carousel', ['data' => $data]);
+        return view('admin.carousel_list', ['data' => $data]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
+        $data = [];
+        return view('admin.carousel', ['data' => $data]);
+        //dd(__METHOD__);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Carousel $carousel
-     * @return Response
+     * @param  \App\Models\Carousel  $carousel
+     * @return \Illuminate\Http\Response
      */
     public function show(Carousel $carousel)
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Carousel $carousel
-     * @return Response
+     * @param  \App\Models\Carousel  $carousel
+     * @return \Illuminate\Http\Response
      */
     public function edit(Carousel $carousel)
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Carousel $carousel
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Carousel  $carousel
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Carousel $carousel)
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Carousel $carousel
-     * @return Response
+     * @param  \App\Models\Carousel  $carousel
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Carousel $carousel)
     {
-        //
+        dd(__METHOD__);
     }
 }
