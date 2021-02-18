@@ -101,25 +101,25 @@
         <h3>Our Affiliations</h3>
     </div>
     <div class="pb-md-3 d-flex justify-content-md-center">
-        <div class="col pl-md-5">
+        <div class="col text-center">
             <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
                 <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png"
                      alt="BC Federation of Labor" class="flex-fill img-fluid association-img" />
             </a>
         </div>
-        <div class="col pl-md-5">
+        <div class="col text-center">
             <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
                 <img src="/storage/public/3qm1aQMeYkDEl30q8gh0iMiyorfRz6sqemdf0Skp.jpg"
                      alt="IATSE International" class="p-1 img-fluid association-img" />
             </a>
         </div>
-        <div class="col pl-md-5">
+        <div class="col text-center">
             <a href="https://canadianlabour.ca/" title="Canadian labour Congress" target="_blank">
                 <img src="/storage/public/KKVqVfiv4hU4ayxNukvYJsN5EKgIqnYfx5mssuT7.png"
                      alt="Canadian Labour Congress" class="p-1 flex-fill img-fluid  association-img" />
             </a>
         </div>
-        <div class="col pl-md-5">
+        <div class="col text-center">
             <a href="http://www.vdlc.ca/" title="Vancouver & District Labour Congress" target="_blank">
                 <img src="/storage/public/mlL21yHivsR7ztxYh3hRB2Y8j9rcFzY5BfXtSLE1.jpeg"
                      alt="Vancouver & District Labour Congress" class="p-1 flex-fill img-fluid  association-img" />
