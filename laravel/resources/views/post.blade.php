@@ -14,13 +14,12 @@
                 </p>
             </div>
             <div class="col-12 col-md-6 text-md-right">
-                <a href="{{route('post_show', $data['post']->slug)}}" title="Edit {{$data['post']->title}}">
+                <a href="{{route('post_edit', $data['post']->slug)}}" title="Edit {{$data['post']->title}}">
                     <i class="fas fa-edit"></i> Edit
                 </a>
             </div>
         </div>
-
-        <div class="col-12 text-center">
+        <div class="col-12 text-center mb-3">
             <h1>{{$data['post']->title}}</h1>
         </div>
         <div class="col-12">

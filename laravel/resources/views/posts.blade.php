@@ -19,7 +19,7 @@
                             </i>
                         </h6>
                         <a href="{{ route('post_show', $i->slug) }}">
-                            <h3>{{ $i->title }}</h3>
+                            <h3 class="text-center">{{ $i->title }}</h3>
                         </a>
                         <h6 class="font-weight-bold text-md-right align-self-end">
                             {{$i->updated_at->format('F j Y')}}

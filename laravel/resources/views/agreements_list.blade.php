@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($data['data']['agreements'] as $agreement)
+                @forelse ($data['data']['agreements'] as $agreement)
                     <tr>
                         <td>
                             <h5>
@@ -48,10 +48,15 @@
                             {{ $agreement->until->format('F j Y') }}
                         </td>
                     </tr>
-                @endforeach
-                <tr>
-                    <td colspan="3">&nbsp;</td>
-                </tr>
+                    @empty
+                    <tr>
+                        <td colspan="3">
+                            <a href="{{route('login')}}">Log in</a>
+                            to view available Agreements
+                        </td>
+                    </tr>
+                @endforelse
+
                 </tbody>
             </table>
         </div>

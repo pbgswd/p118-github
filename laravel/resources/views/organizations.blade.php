@@ -9,7 +9,7 @@
         <div class="row p-3">
             @foreach ( $data['data']['organizations'] as $organization )
                 <div class="col-12 col-md-4 mt-3 p-2">
-                    <div class="border border-dark rounded-lg h-100 w-100 p-2">
+                    <div class="border border-dark rounded-lg h-100 w-100 p-2 text-center">
                         <a href="{{ route('organization', $organization->slug) }}">
                             <h2>{{ $organization->name }}</h2>
                             <p>{!! $organization->summary !!}</p>
