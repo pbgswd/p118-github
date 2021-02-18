@@ -73,7 +73,7 @@
                                 </h5>
                             </td>
                             <td>
-                                @if($e->jobstatus == 1)
+                                @if($e->status == 1)
                                     <i class="fas fa-check"></i>
                                 @else
                                     <i class="far fa-times-circle"></i>

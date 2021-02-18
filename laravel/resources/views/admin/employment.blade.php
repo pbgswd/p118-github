@@ -62,7 +62,7 @@
             @if ($data['action'] == 'Edit')
                 <div class="col-12 mt-2 mb-2">
                     <h4>
-                        Status: {!! $data['employment']->jobstatus ? "<i class='fas fa-check'></i> Open" :
+                        Status: {!! $data['employment']->status ? "<i class='fas fa-check'></i> Open" :
                             "<i class='far fa-times-circle'></i> Closed" !!}
                     </h4>
                 </div>

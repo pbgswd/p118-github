@@ -31,6 +31,9 @@ class AdminEmploymentController extends Controller
     {
         $this->authorize('viewAny', Employment::class);
 
+        Employment::where('deadline', '<', now())
+            ->update(['status' => 0]);
+
         $data = [];
         $jobs = Employment::withoutGlobalScopes()
             ->sortable()
@@ -38,9 +41,6 @@ class AdminEmploymentController extends Controller
             ->orderBy('deadline', 'desc')
             ->paginate(20);
 
-        foreach ($jobs as $job) {
-            $job['jobstatus'] = $job->deadline->isPast() ? 0 : 1;
-        }
 
         $data['employment'] = $jobs;
         $data['count'] = Employment::withoutGlobalScopes()->count();
@@ -95,19 +95,18 @@ class AdminEmploymentController extends Controller
     public function edit(Employment $employment): View
     {
         $this->authorize('update', Employment::class);
+
+        Employment::where('deadline', '<', now())
+            ->update(['status' => 0]);
+
         $employment->load('user', 'attachments');
 
-        $employment['jobstatus'] = $employment->deadline->isPast() ? 0 : 1;
+        $data = [
+            'employment' => $employment,
+            'action' => 'Edit',
+        ];
 
-        return view(
-            'admin.employment',
-            [
-                'data' => [
-                    'employment' => $employment,
-                    'action' => 'Edit',
-                ],
-            ]
-        );
+        return view('admin.employment', ['data' => $data]);
     }
 
     /**

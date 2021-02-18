@@ -65,7 +65,7 @@
                             <td> {!! $e->live ? "<i class='fas fa-check'></i>" :
                                     "<i class='far fa-times-circle'></i>" !!}
                             </td>
-                            <td> {!! $e->jobstatus ? "<i class='fas fa-check'></i>" :
+                            <td> {!! $e->status ? "<i class='fas fa-check'></i>" :
                                     "<i class='far fa-times-circle'></i>" !!}
                             </td>
                             <td>

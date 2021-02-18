@@ -31,7 +31,7 @@
             </div>
             <div class="col-12 col-md-6 text-md-right">
                 <h4>Status:
-                    @if($data['employment']->jobstatus == 1)
+                    @if($data['employment']->status == 1)
                         <i class="fas fa-check"></i> Open
                     @else
                         <i class="far fa-times-circle"></i> Closed

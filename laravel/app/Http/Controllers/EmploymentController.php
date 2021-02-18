@@ -39,10 +39,8 @@ class EmploymentController extends Controller
             ->orderBy('deadline', 'desc')
             ->paginate(10);
 
-        foreach ($jobs as $job) {
-            //todo update job status on page load
-            $job['jobstatus'] = $job->deadline->isPast() ? 0 : 1;
-        }
+        Employment::where('deadline', '<', now())
+            ->update(['status' => 0]);
 
         $data = [
             'employment' => $jobs,
@@ -106,9 +104,10 @@ class EmploymentController extends Controller
      */
     public function show(Employment $employment)
     {
-        $employment->load('user', 'attachments');
+        Employment::where('deadline', '<', now())
+            ->update(['status' => 0]);
 
-        $employment['jobstatus'] = $employment->deadline->isPast() ? 0 : 1;
+        $employment->load('user', 'attachments');
 
         return view('employment', ['data' => ['employment' => $employment]]);
     }
