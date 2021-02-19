@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Options;
 use App\Models\Venue;
+use App\Services\UserImageService;
 use Auth;
 use Illuminate\View\View;
 
 class VenueController extends Controller
 {
+    public function __construct(UserImageService $userImageService)
+    {
+        $this->userImageService = $userImageService;
+    }
+
     /**
      * @return View
      */
@@ -18,11 +25,11 @@ class VenueController extends Controller
 
         $data['venues'] = Venue::where('live', 1)
             ->whereIn('access_level', ['public', $access])
-            ->sortable()
-            ->orderBy('sort_order')
             ->paginate(10);
 
-        return view('venues', ['data' => ['data' => $data]]);
+        $data['tn_prefix'] = Options::feature_thumb_values()['tn_str'];
+
+        return view('venues', ['data' =>  $data]);
     }
 
     /**
@@ -32,6 +39,18 @@ class VenueController extends Controller
     public function show(Venue $venue): View
     {
         $agreements = Auth::check() ? $venue->member_agreements : $venue->agreements;
+
+        if($venue['image']) {
+            if(file_exists(storage_path() . '/app/public/' . $venue['image'])) {
+
+                if(!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
+                    $venue['image'])) {
+                    $this->userImageService->generate_thumb($venue['image'], 'public',
+                        Options::venue_org_thumb_values());
+                }
+            }
+            $venue->thumb = Options::venue_org_thumb_values()['tn_str'] . $venue['image'];
+        }
 
         $data = [
             'venue' => $venue,

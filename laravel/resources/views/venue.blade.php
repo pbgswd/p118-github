@@ -16,22 +16,29 @@
             @endcan
         </div>
         <div class="row mb-2">
-
             <div class="col-12 text-center">
                 <h1>{{$data['venue']->name}}</h1>
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-12 text-center">
-                <p>
-                    <a href="{{$data['venue']->url}}" title="{{$data['venue']->name}}" target="_blank">
-                        <i class="fas fa-external-link-alt"></i>
-                        {{$data['venue']->url}}
-                    </a>
-                </p>
+        @if($data['venue']->url)
+            <div class="row mb-2">
+                <div class="col-12 text-center">
+                    <p>
+                        <a href="{{$data['venue']->url}}" title="{{$data['venue']->name}}" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            {{$data['venue']->url}}
+                        </a>
+                    </p>
+                </div>
             </div>
-        </div>
-
+        @endif
+        @if($data['venue']->image)
+            <div class="row mb-2">
+                <div class="col-12 text-center">
+                    <img src="{{asset('storage/public/'. $data['venue']->image)}}" class="img-fluid" title="{{$data['venue']->name}}"/>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 {!! $data['venue']->description !!}

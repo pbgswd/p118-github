@@ -7,12 +7,16 @@
             <h4>Where we work</h4>
         </div>
         <div class="row mb-3">
-            @foreach ( $data['data']['venues'] as $venue )
+            @foreach ( $data['venues'] as $venue )
                 <div class="col-md-4 col-12 p-2">
                     <div class="col border border-dark rounded-lg h-100 w-100 p-2 text-center">
                         <a href="{{ route('venue', $venue->slug) }}">
+                            @if($venue->image)
+                                <img src="{{asset('storage/public/'. $data['tn_prefix'].$venue->image)}}"
+                                     class="img-fluid" title="{{$venue->name}}"/>
+                            @endif
                             <h3>{{ $venue->name }}</h3>
-                            <p>{!! $venue->summary !!}</p>
+
                         </a>
                     </div>
                 </div>
@@ -21,7 +25,7 @@
         <div class="d-flex justify-content-center">
             <div class="list-group">
                 <ul class="pagination">
-                    {!! $data['data']['venues']->links() !!}
+                    {!! $data['venues']->links() !!}
                 </ul>
             </div>
         </div>

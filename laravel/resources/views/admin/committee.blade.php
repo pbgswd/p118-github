@@ -5,12 +5,12 @@
     <div class="container">
         <div class="row">
             <div class="col border border-dark rounded-lg mr-3 p-2">
-            <h5>
-                <a href="{{ route('committees_list') }}">
-                    <i class="far fa-arrow-alt-circle-left"></i>
-                    List of committees
-                </a>
-            </h5>
+                <h5>
+                    <a href="{{ route('committees_list') }}">
+                        <i class="far fa-arrow-alt-circle-left"></i>
+                        List of committees
+                    </a>
+                </h5>
             </div>
             @if ($data['action'] == 'Edit')
                 <div class="col border border-dark rounded-lg mr-3 p-2">
@@ -46,7 +46,8 @@
                         <a href="{{route('committee_posts_list', $data['committee']->slug)}}">
                             <i class="far fa-folder-open"></i>
                              {{$data['committee']->posts->count()}}
-                            {{Str::plural('post', $data['committee']->posts->count())}} in {{ $data['committee']->name }}
+                            {{Str::plural('post', $data['committee']->posts->count())}}
+                                in {{ $data['committee']->name }}
                         </a>
                     </h5>
                     <h5>
@@ -104,7 +105,8 @@
                                 {{ checked( old('committee.live', $data['committee']->live)) }} />
                             </div>
                         </div>
-                        <input type="text" class="form-control font-weight-bold" aria-label="Text input with checkbox"
+                        <input type="text" class="form-control font-weight-bold"
+                               aria-label="Text input with checkbox"
                                value="Check to make this committee live." size="80" readonly>
                     </div>
                 </div>
@@ -130,7 +132,8 @@
                                     <input name="committee[delete_image]" type="checkbox" value="1" />
                                 </div>
                             </div>
-                            <input type="text" class="form-control font-weight-bold" aria-label="Text input with checkbox"
+                            <input type="text" class="form-control font-weight-bold"
+                                   aria-label="Text input with checkbox"
                                    value="Check to delete image." size="40" readonly>
                         </div>
                     </div>
@@ -142,7 +145,6 @@
                                 Add banner
                             </label>
                             <input type="file" id="inputFile" name="committee[image]" />
-                            <input type="hidden"  name="user_info[image]" value="{{$data['committee']->image}}" />
                         </div>
                     </div>
                     <div class="col-12">

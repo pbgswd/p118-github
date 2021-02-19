@@ -37,10 +37,9 @@ class FeatureController extends Controller
      */
     public function show(Feature $feature)
     {
+        //todo fix service reference
         if($feature['image']) {
             if(file_exists(storage_path() . '/app/public/' . $feature['image'])) {
-                $feature->filesize = AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/public' . '/' . $feature->image))) ? : null;
 
                 if(!file_exists(storage_path() . '/app/public/' . Options::feature_thumb_values()['tn_str'] .
                     $feature['image'])) {
@@ -49,8 +48,6 @@ class FeatureController extends Controller
                 }
             }
             $feature->thumb = Options::feature_thumb_values()['tn_str'] . $feature['image'];
-            $feature->thumb_size = AttachmentService::human_filesize(
-                \filesize(\storage_path('app/public' . '/' . $feature->thumb))) ? : null;
         }
 
         $data = [

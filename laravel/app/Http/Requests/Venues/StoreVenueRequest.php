@@ -33,8 +33,7 @@ class StoreVenueRequest extends FormRequest
             'venue.url' => 'url|nullable',
             'venue.live' => 'boolean',
             'venue.admin_notes' => 'string|nullable',
-            'venue.image' => 'string|nullable',
-            'venue.file_name' => 'string|nullable',
+            'image' => 'file|nullable',
         ];
     }
 

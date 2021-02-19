@@ -6,21 +6,29 @@ use App\Http\Requests\Venues\DestroyVenueRequest;
 use App\Http\Requests\Venues\StoreVenueRequest;
 use App\Http\Requests\Venues\UpdateVenueRequest;
 use App\Models\Agreement;
+use App\Models\Options;
 use App\Models\Venue;
 use App\Services\AttachmentService;
+use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AdminVenueController extends Controller
 {
     private $attachmentService;
+    /**
+     * @var UserImageService
+     */
+    private $userImageService;
 
-    public function __construct(AttachmentService $attachmentService)
+    public function __construct(AttachmentService $attachmentService, UserImageService $userImageService)
     {
         $this->attachmentService = $attachmentService;
+        $this->userImageService = $userImageService;
     }
 
     /**
@@ -51,13 +59,13 @@ class AdminVenueController extends Controller
 
         $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
 
-        return view('admin.venue', [
-            'data' => [
-                'venue' => $venue,
-                'all_agreements' => $all_agreements,
-                'action' => 'Create',
-            ],
-        ]);
+        $data = [
+            'venue' => $venue,
+            'all_agreements' => $all_agreements,
+            'action' => 'Create',
+        ];
+
+        return view('admin.venue', ['data' => $data]);
     }
 
     /**
@@ -65,11 +73,20 @@ class AdminVenueController extends Controller
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(StoreVenueRequest $request): RedirectResponse
+    public function store(StoreVenueRequest $request, UserImageService $service): RedirectResponse
     {
         $this->authorize('create', Venue::class);
 
         $venue = new Venue($request->venue);
+
+        if (null !== $request->file('image')) {
+            $file = $request->file('image')->store('', 'public');
+
+            $result = $this->userImageService->updateImage($request, 'public', true, Options::venue_org_thumb_values());
+
+            $venue['image'] = $result['image'];
+            $venue['file_name'] = $request->file('image')->getClientOriginalName();
+        }
 
         $venue->save();
 
@@ -100,13 +117,30 @@ class AdminVenueController extends Controller
 
         $any_venue->setRelation('all_agreements', $all_agreements);
 
-        return view('admin.venue', [
-            'data' => [
-                'venue' => $any_venue,
-                'all_agreements' => $all_agreements,
-                'action' => 'Edit',
-            ],
-        ]);
+        if($any_venue['image']) {
+            if(file_exists(storage_path() . '/app/public/' . $any_venue['image'])) {
+                $any_venue->filesize = AttachmentService::human_filesize(
+                    \filesize(\storage_path('app/public' . '/' . $any_venue->image))) ? : null;
+
+                if(!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
+                    $any_venue['image'])) {
+
+                    $this->userImageService->generate_thumb($any_venue['image'], 'public',
+                        Options::venue_org_thumb_values());
+                }
+            }
+            $any_venue->thumb = Options::venue_org_thumb_values()['tn_str'] . $any_venue['image'];
+            $any_venue->thumb_size = AttachmentService::human_filesize(
+                \filesize(\storage_path('app/public' . '/' . $any_venue->thumb))) ? : null;
+        }
+
+        $data = [
+            'venue' => $any_venue,
+            'all_agreements' => $all_agreements,
+            'action' => 'Edit',
+        ];
+
+        return view('admin.venue', ['data' => $data]);
     }
 
     /**
@@ -120,6 +154,26 @@ class AdminVenueController extends Controller
         $this->authorize('update', Venue::class);
 
         $any_venue->fill($request['venue']);
+
+        if (isset($request['delete_image'])) {
+            if (file_exists(storage_path() . '/app/public/' . $any_venue['image'])) {
+
+                $this->userImageService->destroyImage($any_venue['image'], 'public', Options::venue_org_thumb_values());
+
+                Session::flash('info', 'You have deleted ' . $any_venue['file_name']);
+                $any_venue['image'] = null;
+                $any_venue['file_name'] = null;
+            }
+        }
+
+        if (null !== $request->file('image')) {
+            $file = $request->file('image')->store('', 'public');
+
+            $result = $this->userImageService->updateImage($request, 'public', true, Options::venue_org_thumb_values());
+
+            $any_venue['image'] = $result['image'];
+            $any_venue['file_name'] = $request->file('image')->getClientOriginalName();
+        }
 
         $any_venue->save();
 
@@ -146,6 +200,16 @@ class AdminVenueController extends Controller
         Venue::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Venue $venue) {
+
+                if ($venue['image']) {
+                    Storage::disk('public')->delete($venue['image']);
+                    Storage::disk('public')->delete(Options::venue_org_thumb_values()['tn_str'].$venue['image']);
+
+                    //$this->userImageService->destroyImage($feature['image'], 'public',
+                    // Options::feature_thumb_values());
+
+                }
+
                 $venue->delete();
             });
 

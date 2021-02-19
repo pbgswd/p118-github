@@ -50,6 +50,20 @@ class Options
     }
 
     /**
+     * @return array
+     */
+    public static function venue_org_thumb_values(): array
+    {
+        $arr = [
+            'height' => 200,
+            'width' => 200,
+            'tn_str' => 'tn_200x200_',
+        ];
+
+        return $arr;
+    }
+
+    /**
      * @return string[]
      */
     public static function address_update_contacts(): array

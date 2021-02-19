@@ -13,6 +13,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Spatie\Image\Exceptions\InvalidManipulation;
 
@@ -190,6 +191,16 @@ class AdminFeatureController extends Controller
         Feature::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Feature $feature) {
+                //todo delete image
+
+                if ($feature['image']) {
+                    Storage::disk('public')->delete($feature['image']);
+                    Storage::disk('public')->delete(Options::feature_thumb_values()['tn_str'].$feature['image']);
+
+    //$this->userImageService->destroyImage($feature['image'], 'public', Options::feature_thumb_values());
+
+                }
+
               $feature->delete();
             });
 
