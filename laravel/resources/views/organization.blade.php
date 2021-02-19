@@ -18,22 +18,33 @@
                 @endcan
             </div>
             <div class="row mt-2">
-                <div class="col-12 col-md-4"></div>
-                <div class="col-12 col-md-4 text-center">
+                <div class="col-12 text-center">
                     <h1>
                         {{$data['organization']->name}}
                     </h1>
                 </div>
-                <div class="col-12 col-md-4 text-md-right">
-                    <p>
-                        <a href="{{$data['organization']->url}}" title="{{$data['organization']->name}}"
-                           target="_blank">
-                            <i class="fas fa-external-link-alt"></i>
-                            {{$data['organization']->url}}
-                        </a>
-                    </p>
-                </div>
             </div>
+            @if($data['organization']->url)
+                <div class="row mt-2">
+                    <div class="col-12 text-center">
+                        <p>
+                            <a href="{{$data['organization']->url}}" title="{{$data['organization']->name}}"
+                               target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                {{$data['organization']->url}}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            @endif
+            @if($data['organization']->image)
+                <div class="row mb-2">
+                    <div class="col-12 text-center">
+                        <img src="{{asset('storage/public/'. $data['organization']->image)}}" class="img-fluid"
+                             title="{{$data['organization']->name}}"/>
+                    </div>
+                </div>
+            @endif
             <div class="col-12">
                 <p>{!! $data['organization']->description !!}</p>
             </div>

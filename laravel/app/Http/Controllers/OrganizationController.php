@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Options;
 use App\Models\Organization;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -14,24 +15,15 @@ class OrganizationController extends Controller
     public function list(): View
     {
         $data = [];
+        $access = Auth::check() ? 'members' : 'public';
 
-        if(Auth::user()) {
-            $data['organizations'] = Organization::where('live', 1)
-                ->sortable()
-                ->orderBy('sort_order')
-                ->paginate(10);
-        }
-        else {
-            $data['organizations'] = Organization::where([
-                ['live', 1],
-                ['access_level', 'public'],
-            ])
-                ->sortable()
-                ->orderBy('sort_order')
-                ->paginate(10);
-        }
+        $data['organizations'] = Organization::where('live', 1)
+            ->whereIn('access_level', ['public', $access])
+            ->paginate(10);
 
-        return view('organizations', ['data' => ['data' => $data]]);
+        $data['tn_prefix'] = Options::venue_org_thumb_values()['tn_str'];
+
+        return view('organizations', ['data' => $data]);
     }
 
     /**

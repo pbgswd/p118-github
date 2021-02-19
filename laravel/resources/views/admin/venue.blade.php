@@ -48,7 +48,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row mt-3">
             <div class="col-12">
                 <div class="form-group">
@@ -59,17 +58,14 @@
                         </label>
                         <input type="file" id="inputFile" name="image" />
                     @else
-
                         <input type="hidden" name="venue[image]" value="{{$data['venue']->image}}" />
                         <input type="hidden" name="venue[file_name]" value="{{$data['venue']->file_name}}" />
-
                         <img src="{{ asset('storage/public/'. $data['venue']->image)}}"
                              class="rounded img-fluid" /><br />
                         {{$data['venue']->filesize}}<br />
                         <img src="{{ asset('storage/public/'. $data['venue']->thumb) }}"
                              class="rounded img-fluid" /><br />
                         {{$data['venue']->thumb_size}} (thumbnail)<br />
-
                         <h5>
                             {{$data['filesize'] ?? ''}}
                         </h5>
@@ -89,8 +85,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row mt-3">
             <div class="form-group">
                 <div class="col-lg-8"><h4>Venue Website Link</h4></div>

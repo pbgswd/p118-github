@@ -1,7 +1,7 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded" style="background: rgba(220,220,220,0.8);">
         <div class="col-12 text-center">
             <h1>Venues</h1>
             <h4>Where we work</h4>
@@ -9,14 +9,13 @@
         <div class="row mb-3">
             @foreach ( $data['venues'] as $venue )
                 <div class="col-md-4 col-12 p-2">
-                    <div class="col border border-dark rounded-lg h-100 w-100 p-2 text-center">
+                    <div class="col border border-dark rounded h-100 w-100 p-2 text-center">
                         <a href="{{ route('venue', $venue->slug) }}">
                             @if($venue->image)
                                 <img src="{{asset('storage/public/'. $data['tn_prefix'].$venue->image)}}"
-                                     class="img-fluid" title="{{$venue->name}}"/>
+                                     class="img-fluid rounded" title="{{$venue->name}}"/>
                             @endif
                             <h3>{{ $venue->name }}</h3>
-
                         </a>
                     </div>
                 </div>

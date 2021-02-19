@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
+use App\Models\Interfaces\HasAttachment;
 use App\Policies\OrganizationPolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,12 +22,11 @@ use Spatie\Searchable\SearchResult;
  * @property string     $url
  * @property string     $access_level
  * @property bool    $live
- * @property int        $sort_order
  * @property User       $user
  * @property DateTime   $created_at
  * @property DateTime   $updated_at
  */
-class Organization extends LiveableModel implements Searchable
+class Organization extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
 
@@ -43,7 +43,8 @@ class Organization extends LiveableModel implements Searchable
         'url',
         'access_level',
         'live',
-        'sort_order',
+        'image',
+        'file_name',
         'user_id',
     ];
 
@@ -52,7 +53,6 @@ class Organization extends LiveableModel implements Searchable
         'name',
         'access_level',
         'live',
-        'sort_order',
         'created_at',
         'updated_at',
     ];
@@ -138,5 +138,31 @@ class Organization extends LiveableModel implements Searchable
     {
         return $this->belongsToMany(Agreement::class)
             ->orderBy('until', 'desc');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
+    {
+        // return $this->belongsToMany(Attachment::class, 'attachment_venuexxxxxx');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentFolder(): string
+    {
+        return 'public';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return $this->access_level;
     }
 }

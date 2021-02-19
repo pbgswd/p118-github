@@ -8,16 +8,30 @@ use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Models\Agreement;
 use App\Models\Options;
 use App\Models\Organization;
+use App\Services\AttachmentService;
+use App\Services\UserImageService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AdminOrganizationController extends Controller
 {
     /**
-     * @return Factory|View
+     * @var UserImageService
+     */
+    private $userImageService;
+
+    public function __construct(UserImageService $userImageService){
+        $this->userImageService = $userImageService;
+    }
+
+    /**
+     * @return View
+     * @throws AuthorizationException
      */
     public function index(): View
     {
@@ -32,7 +46,8 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
     public function create(): View
     {
@@ -53,12 +68,22 @@ class AdminOrganizationController extends Controller
 
     /**
      * @param StoreOrganizationRequest $request
+     * @param UserImageService $service
      * @return RedirectResponse
+     * @throws AuthorizationException
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
-    public function store(StoreOrganizationRequest $request): RedirectResponse
+    public function store(StoreOrganizationRequest $request, UserImageService $service): RedirectResponse
     {
         $this->authorize('create', Organization::class);
         $org = new Organization($request->organization);
+
+        if (null !== $request->file('image')) {
+            $file = $request->file('image')->store('', 'public');
+            $result = $this->userImageService->updateImage($request, 'public', true, Options::venue_org_thumb_values());
+            $org['image'] = $result['image'];
+            $org['file_name'] = $request->file('image')->getClientOriginalName();
+        }
 
         $org->save();
 
@@ -71,13 +96,31 @@ class AdminOrganizationController extends Controller
 
     /**
      * @param Organization $any_organization
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     public function edit(Organization $any_organization): View
     {
         $this->authorize('update', Organization::class);
 
         $any_organization->load('member_agreements');
+
+        if($any_organization['image']) {
+            if(file_exists(storage_path() . '/app/public/' . $any_organization['image'])) {
+                $any_organization->filesize = AttachmentService::human_filesize(
+                    \filesize(\storage_path('app/public' . '/' . $any_organization->image))) ? : null;
+
+                if(!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
+                    $any_organization['image'])) {
+                    $this->userImageService->generate_thumb($any_organization['image'], 'public',
+                        Options::venue_org_thumb_values());
+                }
+            }
+            $any_organization->thumb = Options::venue_org_thumb_values()['tn_str'] . $any_organization['image'];
+            $any_organization->thumb_size = AttachmentService::human_filesize(
+                \filesize(\storage_path('app/public' . '/' . $any_organization->thumb))) ? : null;
+        }
 
         $all_agreements = Agreement::whereNotIn(
             'id',
@@ -102,11 +145,34 @@ class AdminOrganizationController extends Controller
      * @param UpdateOrganizationRequest $request
      * @param Organization $any_organization
      * @return RedirectResponse
+     * @throws AuthorizationException
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     public function update(UpdateOrganizationRequest $request, Organization $any_organization): RedirectResponse
     {
         $this->authorize('update', Organization::class);
         $any_organization->fill($request->organization);
+
+        if (isset($request['delete_image'])) {
+            if (file_exists(storage_path() . '/app/public/' . $any_organization['image'])) {
+
+                $this->userImageService->destroyImage($any_organization['image'], 'public', Options::venue_org_thumb_values());
+
+                Session::flash('info', 'You have deleted ' . $any_organization['file_name']);
+                $any_organization['image'] = null;
+                $any_organization['file_name'] = null;
+            }
+        }
+
+        if (null !== $request->file('image')) {
+            $file = $request->file('image')->store('', 'public');
+
+            $result = $this->userImageService->updateImage($request, 'public', true, Options::venue_org_thumb_values());
+
+            $any_organization['image'] = $result['image'];
+            $any_organization['file_name'] = $request->file('image')->getClientOriginalName();
+        }
+
         $any_organization->save();
 
         if (null !== $request->id) {
@@ -123,13 +189,21 @@ class AdminOrganizationController extends Controller
     /**
      * @param DestroyOrganizationRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(DestroyOrganizationRequest $request): RedirectResponse
     {
         $this->authorize('delete', Organization::class);
+
         Organization::withoutGlobalScopes()
             ->find($request->id)
             ->each(static function (Organization $org) {
+                if ($org['image']) {
+                    Storage::disk('public')->delete($org['image']);
+                    Storage::disk('public')->delete(Options::venue_org_thumb_values()['tn_str'].$org['image']);
+                    //$this->userImageService->destroyImage($feature['image'], 'public',
+                    // Options::feature_thumb_values());
+                }
                 $org->delete();
             }
         );
