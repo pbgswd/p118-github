@@ -32,7 +32,6 @@ class StoreCommitteeRequest extends FormRequest
             'committee.name' => 'required|unique:committees,name|max:255',
             'committee.description' => 'required',
             'committee.email' => 'string|max:255',
-            //'committee.image'=> 'file|nullable',
             'committee.live' => 'boolean',
         ];
     }

@@ -7,6 +7,7 @@ use App\Http\Requests\Venues\StoreVenueRequest;
 use App\Http\Requests\Venues\UpdateVenueRequest;
 use App\Models\Agreement;
 use App\Models\Venue;
+use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -15,6 +16,13 @@ use Illuminate\View\View;
 
 class AdminVenueController extends Controller
 {
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * @return View
      * @throws AuthorizationException

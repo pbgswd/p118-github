@@ -2,7 +2,7 @@
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg pb-2" style="background: rgba(220,220,220,0.8);">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-12 col-md-6">
                 <a href="{{route('venues')}}">Venues</a>
             </div>
@@ -15,12 +15,14 @@
                 </div>
             @endcan
         </div>
-        <div class="row d-flex justify-content-around mb-2 mb-md-3">
-            <div class="col-12 col-md-4"></div>
-            <div class="col-12 col-md-4 text-center">
+        <div class="row mb-2">
+
+            <div class="col-12 text-center">
                 <h1>{{$data['venue']->name}}</h1>
             </div>
-            <div class="col-12 col-md-4 text-md-right">
+        </div>
+        <div class="row mb-2">
+            <div class="col-12 text-center">
                 <p>
                     <a href="{{$data['venue']->url}}" title="{{$data['venue']->name}}" target="_blank">
                         <i class="fas fa-external-link-alt"></i>
@@ -29,6 +31,7 @@
                 </p>
             </div>
         </div>
+
         <div class="row">
             <div class="col-12">
                 {!! $data['venue']->description !!}

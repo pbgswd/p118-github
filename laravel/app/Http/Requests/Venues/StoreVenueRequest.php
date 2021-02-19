@@ -31,9 +31,10 @@ class StoreVenueRequest extends FormRequest
             'venue.name' => 'required|unique:venues,name|max:255',
             'venue.description' => 'required|string',
             'venue.url' => 'url|nullable',
-            'venue.sort_order' =>  'required|numeric',
-            'venue.in_menu' => 'boolean',
             'venue.live' => 'boolean',
+            'venue.admin_notes' => 'string|nullable',
+            'venue.image' => 'string|nullable',
+            'venue.file_name' => 'string|nullable',
         ];
     }
 

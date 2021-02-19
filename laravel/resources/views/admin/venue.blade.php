@@ -1,9 +1,5 @@
-<?php
-$venue = $data['venue'];
-$all_agreements = $data['all_agreements'];
-?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"]
-. ' Venue ' . ($data["action"] == 'Edit' ? $venue->name : '') ])
+. ' Venue ' . ($data["action"] == 'Edit' ? $data['venue']->name : '') ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
@@ -35,7 +31,7 @@ $all_agreements = $data['all_agreements'];
                 <div class="col-lg-10">
                     <input type="text" class="form-control"
                            placeholder="Name" name="venue[name]"
-                           value="{{ old('venue.name', $venue->name)}}" size="80" required/>
+                           value="{{ old('venue.name', $data['venue']->name)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -47,64 +43,78 @@ $all_agreements = $data['all_agreements'];
                 <div class="col-lg-10">
                     <textarea name="venue[description]" id="venue-description"
                               placeholder="Summary content" class="form-control">
-                        {{old('venue.description', $venue->description)}}
+                        {{old('venue.description', $data['venue']->description)}}
                     </textarea>
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="form-group">
+                    @if(!isset($data['venue']->image))
+                        <label for="exampleInputFile">
+                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                            Add Primary Image To venue
+                        </label>
+                        <input type="file" id="inputFile" name="image" />
+                    @else
+                        <img src="{{ asset('storage/public/'. $data['venue']->image)}}"
+                             class="rounded img-fluid" /><br />
+                        {{$data['venue']->filesize}}<br />
+                        <img src="{{ asset('storage/public/'. $data['venue']->thumb) }}"
+                             class="rounded img-fluid" /><br />
+                        {{$data['venue']->thumb_size}} (thumbnail)<br />
+                        <input type="hidden" name="venue[image]" value="{{$data['venue']->image}}" />
+                        <input type="hidden" name="venue[file_name]" value="{{$data['venue']->file_name}}" />
+                        <h5>
+                            {{$data['filesize'] ?? ''}}
+                        </h5>
+                        <label for="exampleInputFile">
+                            <i class="far fa-trash-alt"></i>
+                            Delete Image
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input name="delete_image" type="checkbox" value="1" />
+                                </div>
+                                <input type="text" class="form-control" aria-label="Text input with checkbox"
+                                       value="Check to delete image." size="40" readonly>
+                            </div>
+
+                        </label>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-3">
             <div class="form-group">
                 <div class="col-lg-8"><h4>Venue Website Link</h4></div>
                 <div class="col-lg-10">
                     <input type="text" class="form-control"
                            placeholder="Website Address - http://...." name="venue[url]"
-                           value="{{ old('venue.url', $venue->url)}}" size="80" />
+                           value="{{ old('venue.url', $data['venue']->url)}}" size="80" />
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
-            <div class="col-md-6">
-                <div class="row">
-                     <div class="col-6 col-sm-3"></div>
-                    <div class="col-6 col-sm-3"></div>
-                    <!-- Force next columns to break to new line -->
-                    <div class="w-100"></div>
-                    <div class="col-12">&nbsp;</div>
-                    <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
-                    <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02"
-                               placeholder="e.g.: 1000, 2000" name="venue[sort_order]"
-                               value="{{old('venue.sort_order',$venue->sort_order)}}" size="30" required/>
-                        <p>e.g.: 1000, 2000</p>
-                    </div>
-                    <div class="invalid-feedback">
-                        Please add a numeric sort order {{ @$errors->get('venue.sort_order')[0] }}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="col-lg-2"><h4>Status</h4></div>
-                <div class="col-sm">
-                    <label>
-                        <input name="venue[in_menu]" type="hidden" value="0" />
-                        <input name="venue[in_menu]" type="checkbox" value="1"
-                            {{ checked(old('venue.in_menu',$venue->in_menu)) }} /> In Menu
-                    </label>
-                </div>
-                <div class="col-sm">
-                    <label>
-                         <input name="venue[live]" type="hidden" value="0" />
-                         <input name="venue[live]" type="checkbox" value="1"
-                             {{ checked( old('venue.live', $venue->live)) }} /> Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
-                </div>
+        <div class="row">
+            <div class="col-12"><h4>Status</h4></div>
+
+            <div class="col-12">
+                <label>
+                     <input name="venue[live]" type="hidden" value="0" />
+                     <input name="venue[live]" type="checkbox" value="1"
+                         {{ checked( old('venue.live', $data['venue']->live)) }} /> Check now to make Live
+                </label>
+                <p>ie.: Draft or Published.</p>
             </div>
         </div>
-        <div class="row border border-dark m-t-5 mb-lg-5">
+
+        <div class="row border border-dark rounded mt-5 mb-5 pt-2 pb-2">
         @if ($data['action'] == 'Edit')
-            <div class="col-5 m-1 border border-dark">
-                Agreements attached to {{$venue->name}}
+            <div class="col-12 col-md-6 pt-2">
+                <h5>Agreements attached to {{$data['venue']->name}}</h5>
                 <table class="table">
                     <thead>
                     <tr>
@@ -115,7 +125,7 @@ $all_agreements = $data['all_agreements'];
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($venue->member_agreements as $va)
+                        @forelse($data['venue']->member_agreements as $va)
                             <tr>
                                 <th scope="row">
                                     <input type="checkbox" name="id[]" value="{{$va->id}}" />
@@ -131,21 +141,29 @@ $all_agreements = $data['all_agreements'];
                                 <td>{{$va->from->format('F j Y')}}</td>
                                 <td>{{$va->until->format('F j Y')}}</td>
                             </tr>
-                        @endforeach
-                        <tr>
-                            <td> <i class="far fa-trash-alt fa"></i></td>
-                            <td colspan="3">Check to remove from Venue</td>
-                        </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4">No agreements associated</td>
+                            </tr>
+                        @endforelse
+                        @if($data['venue']->member_agreements->count() > 0)
+                            <tr>
+                                <td> <i class="far fa-trash-alt fa"></i></td>
+                                <td colspan="3">Check to remove from Venue</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
         @endif
-            <div class="col-5 m-1 border border-dark">
+            <div class="col-12 col-md-6 pt-2">
                 <div class="form-group">
+                    <h5>
                     <label for="exampleFormControlSelect2">List of all agreements not currently attached to
-                        {{$venue->name}}. Select and submit to attach to venue</label>
+                        {{$data['venue']->name}}. Select and submit to attach to venue</label>
+                    </h5>
                     <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
-                        @foreach($all_agreements as $agr)
+                        @foreach($data['all_agreements'] as $agr)
                             <option value="{{$agr->id}}">{{$agr->title}}</option>
                         @endforeach
                     </select>
@@ -165,7 +183,7 @@ $all_agreements = $data['all_agreements'];
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $venue->id }}">
+                <input type="hidden" name="id[]" value="{{ $data['venue']->id }}">
                 <input class="btn btn-outline-danger" type="submit" value="Delete">
             </form>
          </div>
