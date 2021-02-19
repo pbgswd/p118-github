@@ -25,7 +25,7 @@ class StoreFeatureRequest extends FormRequest
     {
         return [
             'image' => 'file|nullable',
-            'feature.title' => 'required|max:255',
+            'feature.title' => 'required|unique:features,title|max:255',
             'feature.content' => 'required',
             'feature.image' => 'string|nullable',
             'feature.file_name' => 'string|nullable',
