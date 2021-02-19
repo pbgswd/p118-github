@@ -16,9 +16,17 @@
                 @endcan
             </div>
         </div>
+        @if($data['feature']->image)
+        <div class="col-12 text-center d-flex align-items-center justify-content-center">
+            <picture>
+                <source srcset="{{asset('storage/public/'. $data['feature']->image)}}" media="(min-width: 577px)">
+                <img srcset="{{asset('storage/public/'.$data['feature']->thumb)}}" alt="{{$data['feature']->name}}"
+                     class="rounded img-fluid d-block">
+            </picture>
+        </div>
+        @endif
         <div  class="col-12">
-            <img src="{{ asset('storage/public/'. $data['feature']->image) }}" class="rounded img-fluid" />
-            <br />
+
             <h1 class="text-center">
                 {{$data['feature']->title}}
             </h1>

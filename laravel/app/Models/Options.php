@@ -41,9 +41,9 @@ class Options
     public static function feature_thumb_values(): array
     {
         $arr = [
-            'height' => 100,
-            'width' => 100,
-            'tn_str' => 'tn_100x100_',
+            'height' => 250,
+            'width' => 250,
+            'tn_str' => 'tn_250x250_',
         ];
 
         return $arr;

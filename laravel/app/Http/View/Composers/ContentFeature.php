@@ -42,6 +42,8 @@ class ContentFeature
             ->orderBy('date', 'desc')
             ->get();
 
+        $features->tn_str = Options::feature_thumb_values()['tn_str'];
+
         $user = Auth::user();
         $user->load('user_info');
         $user->user_info->thumb = Options::thumb_values()['tn_str'] . $user->user_info->image ?? '';

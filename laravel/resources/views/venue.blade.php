@@ -15,6 +15,17 @@
                 </div>
             @endcan
         </div>
+        @if($data['venue']->image)
+            <div class="row mb-2">
+                <div class="col-12 text-center d-flex align-items-center justify-content-center">
+                    <picture>
+                        <source srcset="{{asset('storage/public/'. $data['venue']->image)}}" media="(min-width: 577px)">
+                        <img srcset="{{asset('storage/public/'.$data['venue']->thumb)}}" alt="{{$data['venue']->name}}"
+                             class="rounded img-fluid d-block">
+                    </picture>
+                </div>
+            </div>
+        @endif
         <div class="row mb-2">
             <div class="col-12 text-center">
                 <h1>{{$data['venue']->name}}</h1>
@@ -29,13 +40,6 @@
                             {{$data['venue']->url}}
                         </a>
                     </p>
-                </div>
-            </div>
-        @endif
-        @if($data['venue']->image)
-            <div class="row mb-2">
-                <div class="col-12 text-center">
-                    <img src="{{asset('storage/public/'. $data['venue']->image)}}" class="img-fluid" title="{{$data['venue']->name}}"/>
                 </div>
             </div>
         @endif

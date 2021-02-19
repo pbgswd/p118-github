@@ -10,9 +10,14 @@
                 <div class="col border border-dark rounded-lg w-100 h-100 p-2">
                     <a href="{{ route('feature', $f->slug) }}" title="{{ $f->title }}">
                         @if($f->image)
-                            <img src="{{asset('storage/public/'.
-                                $data['thumbs']['tn_str'].$f->image)}}" alt="{{$f->title}}"
-                                class="rounded img-fluid"/>
+                            <div class="col-12 text-center d-flex align-items-center justify-content-center">
+                                <picture>
+                                    <source srcset="{{asset('storage/public/'. $f->image)}}" media="(min-width: 577px)">
+                                    <img srcset="{{asset('storage/public/'.$data['thumbs']['tn_str'].$f->image)}}"
+                                         alt="{{$f->name}}"
+                                         class="rounded img-fluid d-block">
+                                </picture>
+                            </div>
                         @endif
                         <h3>{{ $f->title }}</h3>
                         <p>{!! $f->content !!}</p>

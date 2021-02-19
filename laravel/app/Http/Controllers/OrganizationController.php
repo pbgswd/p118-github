@@ -32,15 +32,25 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization): View
     {
-        $data = [];
+        $agreements = Auth::check() ? $organization->member_agreements : $organization->agreements;
 
-        $data['agreements'] = Auth::check() ? $organization->member_agreements :
-            $organization->agreements;
+        if ($organization['image']) {
+            if (file_exists(storage_path() . '/app/public/' . $organization['image'])) {
 
-        $data['organization'] = $organization;
+                if (!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
+                    $organization['image'])) {
+                    $this->userImageService->generate_thumb($organization['image'], 'public',
+                        Options::venue_org_thumb_values());
+                }
+            }
+            $organization->thumb = Options::venue_org_thumb_values()['tn_str'] . $organization['image'];
 
-       // dd($data);
+            $data = [
+                'organization' => $organization,
+                'agreements' => $agreements,
+            ];
 
-        return view('organization', ['data' => $data]);
+            return view('organization', ['data' => $data]);
+        }
     }
 }
