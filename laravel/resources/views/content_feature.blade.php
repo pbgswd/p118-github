@@ -80,8 +80,6 @@
         @forelse($data['features'] as $f)
             <div class="col-12 border border-dark rounded-lg pt-2 mb-2">
                 @if($f->image)
-
-
                     <div class="col-12 text-center d-flex align-items-center justify-content-center mb-2">
                         <picture>
                             <source srcset="{{asset('storage/public/'. $f->image)}}"
@@ -91,9 +89,6 @@
                                  class="rounded img-fluid d-block">
                         </picture>
                     </div>
-
-
-
                 @endif
                 <h2>
                     <a class="text-secondary" href="{{route('feature', $f->slug)}}">

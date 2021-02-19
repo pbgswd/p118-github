@@ -20,15 +20,11 @@ use Illuminate\View\View;
 class AdminVenueController extends Controller
 {
     private $attachmentService;
-    /**
-     * @var UserImageService
-     */
-    private $userImageService;
 
-    public function __construct(AttachmentService $attachmentService, UserImageService $userImageService)
+    public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;
-        $this->userImageService = $userImageService;
+        //$this->userImageService = $userImageService;
     }
 
     /**
@@ -70,8 +66,10 @@ class AdminVenueController extends Controller
 
     /**
      * @param StoreVenueRequest $request
+     * @param UserImageService $service
      * @return RedirectResponse
      * @throws AuthorizationException
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     public function store(StoreVenueRequest $request, UserImageService $service): RedirectResponse
     {
@@ -82,7 +80,7 @@ class AdminVenueController extends Controller
         if (null !== $request->file('image')) {
             $file = $request->file('image')->store('', 'public');
 
-            $result = $this->userImageService->updateImage($request, 'public', true, Options::venue_org_thumb_values());
+            $result = $service->updateImage($request, 'public', true, Options::venue_org_thumb_values());
 
             $venue['image'] = $result['image'];
             $venue['file_name'] = $request->file('image')->getClientOriginalName();
@@ -146,10 +144,12 @@ class AdminVenueController extends Controller
     /**
      * @param UpdateVenueRequest $request
      * @param Venue $any_venue
+     * @param UserImageService $service
      * @return RedirectResponse
      * @throws AuthorizationException
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
-    public function update(UpdateVenueRequest $request, Venue $any_venue): RedirectResponse
+    public function update(UpdateVenueRequest $request, UserImageService $service, Venue $any_venue ): RedirectResponse
     {
         $this->authorize('update', Venue::class);
 
@@ -158,7 +158,7 @@ class AdminVenueController extends Controller
         if (isset($request['delete_image'])) {
             if (file_exists(storage_path() . '/app/public/' . $any_venue['image'])) {
 
-                $this->userImageService->destroyImage($any_venue['image'], 'public', Options::venue_org_thumb_values());
+                $service->destroyImage($any_venue['image'], 'public', Options::venue_org_thumb_values());
 
                 Session::flash('info', 'You have deleted ' . $any_venue['file_name']);
                 $any_venue['image'] = null;
@@ -169,7 +169,7 @@ class AdminVenueController extends Controller
         if (null !== $request->file('image')) {
             $file = $request->file('image')->store('', 'public');
 
-            $result = $this->userImageService->updateImage($request, 'public', true, Options::venue_org_thumb_values());
+            $result = $service->updateImage($request, 'public', true, Options::venue_org_thumb_values());
 
             $any_venue['image'] = $result['image'];
             $any_venue['file_name'] = $request->file('image')->getClientOriginalName();
@@ -200,14 +200,9 @@ class AdminVenueController extends Controller
         Venue::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Venue $venue) {
-
                 if ($venue['image']) {
                     Storage::disk('public')->delete($venue['image']);
                     Storage::disk('public')->delete(Options::venue_org_thumb_values()['tn_str'].$venue['image']);
-
-                    //$this->userImageService->destroyImage($feature['image'], 'public',
-                    // Options::feature_thumb_values());
-
                 }
 
                 $venue->delete();
