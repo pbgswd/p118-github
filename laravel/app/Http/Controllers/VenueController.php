@@ -25,7 +25,7 @@ class VenueController extends Controller
 
         $data['venues'] = Venue::where('live', 1)
             ->whereIn('access_level', ['public', $access])
-            ->paginate(10);
+            ->paginate(9);
 
         $data['tn_prefix'] = Options::venue_org_thumb_values()['tn_str'];
 
