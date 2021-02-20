@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="row mt-lg-3">
-            <div class="col-12">
+            <div class="col-6">
                 <div class="form-group">
                     <h4>Publish Date</h4>
                     <input
@@ -87,6 +87,7 @@
                 <div class="form-group">
                     @if(!isset($data['feature']->image))
                         <label for="exampleInputFile">
+                            <i class="far fa-file-image fa-2x"></i>
                             <i class="fas fa-cloud-upload-alt fa-2x"></i>
                             Add Primary Image To Feature
                         </label>
@@ -132,7 +133,7 @@
             </div>
         </div>
 -->
-        <div class="row">
+        <div class="row mt-3 pt-5">
             <div class="col-6">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
