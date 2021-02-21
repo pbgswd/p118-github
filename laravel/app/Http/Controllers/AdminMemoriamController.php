@@ -6,9 +6,8 @@ use App\Http\Requests\Memoriam\DestroyMemoriamRequest;
 use App\Http\Requests\Memoriam\StoreMemoriamRequest;
 use App\Http\Requests\Memoriam\UpdateMemoriamRequest;
 use App\Models\Memoriam;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -16,9 +15,12 @@ class AdminMemoriamController extends Controller
 {
     /**
      * @return View
+     * @throws AuthorizationException
      */
     public function index(): View
     {
+        $this->authorize('viewAny', Memoriam::class);
+
         $data['memoriam'] = Memoriam::withoutGlobalScopes()
             ->sortable()
             ->orderBy('date')
@@ -28,12 +30,13 @@ class AdminMemoriamController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
+        $this->authorize('create', Memoriam::class);
+
         $memoriam = new Memoriam;
 
         $data = [
@@ -47,10 +50,12 @@ class AdminMemoriamController extends Controller
     /**
      * @param StoreMemoriamRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-
     public function store(StoreMemoriamRequest $request): RedirectResponse
     {
+        $this->authorize('create', Memoriam::class);
+
         $memoriam = new Memoriam($request->input('memoriam'));
 
         $memoriam->save();
@@ -61,13 +66,14 @@ class AdminMemoriamController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Memoriam  $memoriam
-     * @return \Illuminate\Http\Response
+     * @param Memoriam $memoriam
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Memoriam $memoriam)
+    public function edit(Memoriam $memoriam): View
     {
+        $this->authorize('update', Memoriam::class);
+
         $data = [
             'memoriam' => $memoriam,
             'action' => 'Edit',
@@ -77,14 +83,15 @@ class AdminMemoriamController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Memoriam  $memoriam
-     * @return \Illuminate\Http\Response
+     * @param UpdateMemoriamRequest $request
+     * @param Memoriam $any_memoriam
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateMemoriamRequest $request, Memoriam $any_memoriam): RedirectResponse
     {
+        $this->authorize('update', Memoriam::class);
+
         $any_memoriam->fill($request->memoriam);
         $any_memoriam->save();
 
@@ -98,6 +105,8 @@ class AdminMemoriamController extends Controller
      */
     public function destroy(DestroyMemoriamRequest $request): RedirectResponse
     {
+        $this->authorize('delete', Memoriam::class);
+
         Memoriam::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Memoriam $memoriam) {
