@@ -15,6 +15,7 @@ class MemoriamController extends Controller
     public function index(): View
     {
         $memoriam = Memoriam::sortable()
+            ->where('live', 1)
             ->orderBy('date', 'desc')
             ->paginate(9);
 
