@@ -1,10 +1,10 @@
-<footer class="container mt-3">
-    <div class="row mb-2 p-2">
+<footer class="container mt-2">
+    <div class="row p-2">
         <div class="col-12 border border-dark rounded-lg d-flex justify-content-center align-items-center text-center
-            pt-2 pt-md-3 pb-2 mb-2">
+            p-2 mb-2">
             @guest
                 <a href="/login">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">
+                    <button class="btn btn-success my-2 my-sm-0 px-2" type="submit">
                         Login
                     </button>
                 </a>
@@ -12,7 +12,7 @@
                 <a id="search"></a>
                 <form id="logout-form" action="{{route('logout')}}" method="POST">
                     @csrf
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">
+                    <button class="btn btn-success my-2 my-sm-0 px-2" type="submit">
                         Logout
                     </button>
                 </form>
