@@ -7,7 +7,8 @@
         <div class="row mb-2 mb-lg-3">
             @foreach ( $data['pages'] as $i )
                 <div class="col-12 col-md-4 p-2">
-                    <div class="col border border-dark rounded-lg  w-100 h-100 p-2">
+                    <div class="col border border-dark rounded h-100 w-100 p-2 text-center
+                        ">
                         <h6>
                             <i>
                                 @foreach($i->topics as $pt)
@@ -17,13 +18,11 @@
                                 @endforeach
                             </i>
                         </h6>
+                       <h4>
                         <a href="{{ route('page_show', $i->slug) }}">
-                            <h4>{{ $i->title }}</h4>
-                            <p>{!! $i->description !!} </p>
+                            {{ $i->title }}
                         </a>
-                        <h6 class="font-weight-bold text-md-right align-self-end">
-                            {{$i->updated_at->format('F j Y')}}
-                        </h6>
+                        </h4>
                     </div>
                 </div>
             @endforeach

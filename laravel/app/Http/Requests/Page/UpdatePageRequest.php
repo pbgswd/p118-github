@@ -30,7 +30,6 @@ class UpdatePageRequest extends FormRequest
     {
         return [
             'page.title' => 'required|max:255|unique:pages,title,'.$this->route('any_page')->slug.',slug',
-            'page.description' => 'required',
             'page.content' => 'required',
             'page.access_level' => 'required|string|max:255',
             'page.sort_order' =>  'required|numeric',

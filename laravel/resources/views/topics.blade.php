@@ -7,7 +7,8 @@
         <div class="row mb-2 mb-lg-3">
             @foreach ( $data['topics'] as $i )
                 <div class="col-12 col-md-4 p-1">
-                    <div class="col border border-dark rounded-lg  w-100 h-100 p-2">
+                    <div class="col border border-dark rounded h-100 w-100 p-2 text-center d-flex align-items-center
+                        justify-content-center">
                         <a href="{{ route('topic_show', $i->slug) }}" title="{{ $i->name }}">
                             <h3>{{ $i->name }}</h3>
                             <p>{!! $i->description !!} </p>

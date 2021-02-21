@@ -26,10 +26,14 @@
             </div>
             <div class="row mb-3">
                 @forelse($data['topic']->pages as $page)
-                    <div class="col-12 col-md-4  p-2">
-                        <div class="col border border-dark rounded-lg  w-100 h-100 p-2">
-                            <a href="{{ route('page_show', $page->slug) }}">{{$page['title']}}</a>
-                            {!! $page['description'] !!}
+                    <div class="col-12 col-md-4 p-2">
+                        <div class="col border border-dark rounded h-100 w-100 p-2 text-center d-flex align-items-center
+                        justify-content-center">
+                            <h4>
+                            <a href="{{ route('page_show', $page->slug) }}">
+                                {{$page['title']}}
+                            </a>
+                            </h4>
                         </div>
                     </div>
                 @empty
@@ -44,7 +48,8 @@
             <div class="row mb-3">
                 @forelse($data['topic']->posts as $post)
                     <div class="col-12 col-md-4 p-2">
-                        <div class="border border-dark rounded-lg w-100 h-100 p-2">
+                        <div class="col border border-dark rounded h-100 w-100 p-2 text-center d-flex align-items-center
+                        justify-content-center">
                             <h4>
                                 <a href="{{ route('post_show', $post->slug) }}">
                                     {{$post['title']}}

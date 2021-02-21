@@ -15,7 +15,6 @@
                            title="{{$post->title}}">
                             {{$post->title}}
                         </a>
-                        {{$post->created_at->format('M j Y')}}
                     </li>
                 @empty
                     No posts yet

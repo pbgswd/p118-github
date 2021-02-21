@@ -34,7 +34,6 @@ class StorePageRequest extends FormRequest
     {
         return [
             'page.title' => 'required|unique:pages,title|max:255',
-            'page.description' => 'required',
             'page.content' => 'required',
             'page.access_level' => 'required|string|max:255',
             'page.sort_order' =>  'required|numeric',

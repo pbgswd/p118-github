@@ -33,19 +33,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-2">
-                    <h4>Summary</h4>
-                </div>
-                <div class="col-lg-10">
-                    <textarea name="page[description]" id="page-description" placeholder="Summary content"
-                              class="form-control">
-                        {{old('page.description', $data['page']->description)}}
-                    </textarea>
-                </div>
-            </div>
-        </div>
         @include('layouts.admin-select-topics')
         <div class="row">
             <div class="form-group">

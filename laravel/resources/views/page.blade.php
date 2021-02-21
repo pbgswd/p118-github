@@ -22,7 +22,6 @@
         </div>
         <div  class="col-12">
             <h1 class="text-center mb-2">{{$data['page']->title}}</h1>
-            <h2>{!! $data['page']->description !!}</h2>
         </div>
         <div class="col-12">
             {!! $data['page']->content !!}

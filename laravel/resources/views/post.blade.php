@@ -25,11 +25,6 @@
         <div class="col-12">
             {!! $data['post']->content !!}
         </div>
-        @if(!empty($data['post']->tagNames()))
-            <div class="col-12 p-2">
-                Tags: {{join(', ', $data['post']->tagNames())}}
-            </div>
-        @endif
         @if(count($data['post']->attachments) > 0)
             <div class="col-12 mt-3">
                 <h4>
