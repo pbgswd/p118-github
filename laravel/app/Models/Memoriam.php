@@ -18,7 +18,7 @@ class Memoriam extends LiveableModel implements HasAttachment, Searchable
     protected $table = 'memoriams';
 
     protected $policies = [
-        //self::class => MemoriamPolicy::class,
+        self::class => MemoriamPolicy::class,
     ];
 
     /**
