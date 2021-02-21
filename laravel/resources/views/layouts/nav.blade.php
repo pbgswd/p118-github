@@ -44,7 +44,7 @@
                     <a class="dropdown-item" href={{route('page_show', 'request-representation')}}>
                         Request Representation
                     </a>
-                    <a class="dropdown-item" href={{route('topic_show', 'in-memoriam')}}>
+                    <a class="dropdown-item" href={{route('memoriam_list')}}>
                         In Memoriam
                     </a>
                 </div>
