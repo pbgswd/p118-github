@@ -117,7 +117,8 @@
                             <i>
                                 @foreach($post->topics as $pt)
                                     <a href="{{route('topic_show', $pt->slug)}}"
-                                       title="{{$pt->name}}">{{$pt->name}}{{$loop->last ? '' : ','}}
+                                       title="{{$pt->name}}">
+                                        {{$pt->name}}{{$loop->last ? '' : ','}}
                                     </a>
                                 @endforeach
                             </i>

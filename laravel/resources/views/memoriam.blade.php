@@ -15,6 +15,11 @@
                 </div>
             @endcan
         </div>
+        <div class="row mb-2">
+            <div class="col-12 text-center">
+              <h1>In Memoriam</h1>
+            </div>
+        </div>
         @if($data['memoriam']->image)
             <div class="row mb-2">
                 <div class="col-12 text-center d-flex align-items-center justify-content-center">
@@ -31,6 +36,7 @@
         <div class="row mb-2">
             <div class="col-12 text-center">
                 <h1>{{$data['memoriam']->title}}</h1>
+                <h3>{{$data['memoriam']->date->format('F jS, Y')}}</h3>
             </div>
         </div>
         <div class="row">

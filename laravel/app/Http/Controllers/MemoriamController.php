@@ -10,15 +10,13 @@ use Illuminate\View\View;
 class MemoriamController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index(): View
     {
         $memoriam = Memoriam::sortable()
-            ->orderBy('date')
-            ->paginate(10);
+            ->orderBy('date', 'desc')
+            ->paginate(9);
 
         $mem = new Memoriam;
 
