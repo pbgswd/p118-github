@@ -10,6 +10,7 @@ use App\Models\CommitteePostComment;
 use App\Models\Employment;
 use App\Models\Feature;
 use App\Models\Meeting;
+use App\Models\Memoriam;
 use App\Models\Organization;
 use App\Models\Page;
 use App\Models\Policy;
@@ -90,6 +91,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('any_feature', static function ($slug) {
             return Feature::withoutGlobalScopes()->where('slug', $slug)->first();
+        });
+        Route::bind('any_memoriam', static function ($slug) {
+            return Memoriam::withoutGlobalScopes()->where('slug', $slug)->first();
         });
     }
 

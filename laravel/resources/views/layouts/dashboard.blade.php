@@ -156,15 +156,19 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin_memoriam_list') }}">
+                                        <span data-feather="file"></span>
+                                        In Memoriam
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('roles_list') }}">
                                         <span data-feather="file"></span>
-                                        Roles
+                                        Website Roles
                                     </a>
                                 </li>
                             @endcan
-
                             @can(['create articles'])
-
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">
                                         <span data-feather="file"></span>
