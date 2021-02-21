@@ -34,6 +34,9 @@
             <a href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members List</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
+            <a href="{{route('memoriam_list')}}"><i class="fas fa-heart"></i> In Memoriam</a>
+        </div>
+        <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('jobs_list')}}"><i class="fas fa-hard-hat"></i> Job Postings</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">

@@ -91,6 +91,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'memoriam' => [
+            'driver' => 'local',
+            'root' => storage_path('app/memoriam'),
+            'url' => env('APP_URL').'/memoriam',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

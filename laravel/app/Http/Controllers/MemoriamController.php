@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Memoriam;
+use App\Models\Options;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+class MemoriamController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(): View
+    {
+        $memoriam = Memoriam::sortable()
+            ->orderBy('date')
+            ->paginate(10);
+
+        $mem = new Memoriam;
+
+        $data = [
+            'memoriam' => $memoriam,
+            'folder' => $mem->getAttachmentFolder(),
+            'tn_prefix' => Options::memoriam_thumb_values()['tn_str'],
+        ];
+
+        return view('memoriams', ['data' => $data]);
+    }
+
+
+    /**
+     * @param Memoriam $memoriam
+     * @return View
+     */
+    public function show(Memoriam $memoriam): View
+    {
+         $folder = $memoriam->getAttachmentFolder();
+
+         $data = [
+             'memoriam' => $memoriam,
+             'folder' => $folder,
+             'tn_prefix' => Options::memoriam_thumb_values()['tn_str'],
+         ];
+
+        return view('memoriam', ['data' => $data]);
+    }
+
+}

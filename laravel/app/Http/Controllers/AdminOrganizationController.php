@@ -73,7 +73,7 @@ class AdminOrganizationController extends Controller
      * @throws AuthorizationException
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
-    public function store(StoreOrganizationRequest $request, UserImageService $service): RedirectResponse
+    public function store(StoreOrganizationRequest $request): RedirectResponse
     {
         $this->authorize('create', Organization::class);
         $org = new Organization($request->organization);

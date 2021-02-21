@@ -38,11 +38,11 @@
                             </td>
                             <td>
                                 @if($mem->image)
-                                <img src="{{asset('storage/public/'.
-                                    $data['thumbs']['tn_str'].$mem->image)}}" class="rounded" />
+                                <img src="{{asset('storage/'. $data['folder'] .'/'.
+                                    $data['tn_str'].$mem->image)}}" class="rounded" />
                                 @endif
                                 <h4>
-                                    <a title="{{ $mem->title }}" href="{{ route('admin_feature_edit', $mem->slug) }}">
+                                    <a title="{{ $mem->title }}" href="{{ route('admin_memoriam_edit', $mem->slug) }}">
                                         {{ $mem->title }}
                                     </a>
                                 </h4>

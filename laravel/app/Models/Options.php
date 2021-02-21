@@ -31,7 +31,19 @@ class Options
             'width' => 75,
             'tn_str' => 'tn_75x75_',
         ];
+        return $arr;
+    }
 
+    /**
+     * @return array
+     */
+    public static function memoriam_thumb_values(): array
+    {
+        $arr = [
+            'height' => 125,
+            'width' => 125,
+            'tn_str' => 'tn_125x125_',
+        ];
         return $arr;
     }
 
@@ -45,7 +57,6 @@ class Options
             'width' => 250,
             'tn_str' => 'tn_250x250_',
         ];
-
         return $arr;
     }
 
@@ -59,7 +70,6 @@ class Options
             'width' => 200,
             'tn_str' => 'tn_200x200_',
         ];
-
         return $arr;
     }
 

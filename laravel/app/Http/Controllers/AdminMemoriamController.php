@@ -6,6 +6,9 @@ use App\Http\Requests\Memoriam\DestroyMemoriamRequest;
 use App\Http\Requests\Memoriam\StoreMemoriamRequest;
 use App\Http\Requests\Memoriam\UpdateMemoriamRequest;
 use App\Models\Memoriam;
+use App\Models\Options;
+use App\Services\AttachmentService;
+use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -14,6 +17,15 @@ use Illuminate\View\View;
 class AdminMemoriamController extends Controller
 {
     /**
+     * @var UserImageService
+     */
+    private $userImageService;
+
+    public function __construct(UserImageService $userImageService){
+        $this->userImageService = $userImageService;
+    }
+
+    /**
      * @return View
      * @throws AuthorizationException
      */
@@ -21,10 +33,17 @@ class AdminMemoriamController extends Controller
     {
         $this->authorize('viewAny', Memoriam::class);
 
-        $data['memoriam'] = Memoriam::withoutGlobalScopes()
-            ->sortable()
+        $memoriam = Memoriam::sortable()
             ->orderBy('date')
             ->paginate(10);
+
+        $mem = new Memoriam;
+
+        $data = [
+            'memoriam' => $memoriam,
+            'folder' => $mem->getAttachmentFolder(),
+            'tn_str' => Options::memoriam_thumb_values()['tn_str'],
+        ];
 
         return view('admin.memoriams', ['data' => $data]);
     }
@@ -58,6 +77,14 @@ class AdminMemoriamController extends Controller
 
         $memoriam = new Memoriam($request->input('memoriam'));
 
+        if (null !== $request->file('image')) {
+            $folder = $memoriam->getAttachmentFolder();
+            $file = $request->file('image')->store('', $folder);
+            $result = $this->userImageService->updateImage($request, $folder, true, Options::memoriam_thumb_values());
+            $memoriam['image'] = $result['image'];
+            $memoriam['file_name'] = $request->file('image')->getClientOriginalName();
+        }
+
         $memoriam->save();
 
         Session::flash('success', 'You have saved a new memoriam');
@@ -74,9 +101,27 @@ class AdminMemoriamController extends Controller
     {
         $this->authorize('update', Memoriam::class);
 
+        $folder = $memoriam->getAttachmentFolder();
+
+        if($memoriam['image']) {
+            $tn_str = Options::memoriam_thumb_values()['tn_str'];
+            if(file_exists(storage_path() . '/app/'. $folder .'/'. $memoriam['image'])) {
+                $memoriam->filesize = AttachmentService::human_filesize(
+                    \filesize(\storage_path('app/'. $folder .'/'. $memoriam->image))) ? : null;
+
+                if(!file_exists(storage_path() . '/app/'. $folder .'/'. $tn_str . $memoriam['image'])) {
+                    $this->userImageService->generate_thumb($memoriam['image'], $folder, $tn_str);
+                }
+            }
+            $memoriam->thumb = $tn_str . $memoriam['image'];
+            $memoriam->thumb_size = AttachmentService::human_filesize(
+                \filesize(\storage_path('app/'. $folder .'/'. $memoriam->thumb))) ? : null;
+        }
+
         $data = [
             'memoriam' => $memoriam,
             'action' => 'Edit',
+            'folder' => $folder,
         ];
 
          return view('admin.memoriam', ['data' => $data]);
@@ -93,6 +138,31 @@ class AdminMemoriamController extends Controller
         $this->authorize('update', Memoriam::class);
 
         $any_memoriam->fill($request->memoriam);
+
+        $tn_str = Options::memoriam_thumb_values();
+
+        $folder = $any_memoriam->getAttachmentFolder();
+
+        if (isset($request['delete_image'])) {
+            if (file_exists(storage_path() . '/app/'. $folder . '/'. $any_memoriam['image'])) {
+
+                $this->userImageService->destroyImage($any_memoriam['image'], $folder, $tn_str);
+
+                Session::flash('info', 'You have deleted ' . $any_memoriam['file_name']);
+                $any_memoriam['image'] = null;
+                $any_memoriam['file_name'] = null;
+            }
+        }
+
+        if (null !== $request->file('image')) {
+
+            $file = $request->file('image')->store('', $folder);
+            $result = $this->userImageService->updateImage($request, $folder, true, $tn_str);
+            $any_memoriam['image'] = $result['image'];
+            $any_memoriam['file_name'] = $request->file('image')->getClientOriginalName();
+        }
+
+
         $any_memoriam->save();
 
         return redirect()->route('admin_memoriam_edit', $any_memoriam->slug);

@@ -53,7 +53,6 @@ class Memoriam extends LiveableModel implements HasAttachment, Searchable
         'live' => 'boolean',
     ];
 
-
     /**
      * @return SearchResult
      */

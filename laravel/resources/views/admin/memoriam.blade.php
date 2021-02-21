@@ -95,10 +95,10 @@
                         </label>
                         <input type="file" id="inputFile" name="image" />
                     @else
-                        <img src="{{ asset('storage/public/'. $data['memoriam']->image)}}"
+                        <img src="{{ asset('storage/'. $data['folder'] .'/'. $data['memoriam']->image)}}"
                             class="rounded img-fluid" /><br />
                         {{$data['memoriam']->filesize}}<br />
-                        <img src="{{ asset('storage/public/'. $data['memoriam']->thumb) }}"
+                        <img src="{{ asset('storage/'. $data['folder'] .'/'. $data['memoriam']->thumb) }}"
                              class="rounded img-fluid" /><br />
                         {{$data['memoriam']->thumb_size}} (thumbnail)<br />
                         <input type="hidden" name="memoriam[image]" value="{{$data['memoriam']->image}}" />

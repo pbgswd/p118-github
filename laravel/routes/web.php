@@ -29,6 +29,9 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('carousel', [CNS\CarouselController::class, 'show'])->name('carousel');
 
+    Route::get('memoriams', [CNS\MemoriamController::class, 'index'])->name('memoriam_list');
+    Route::get('memoriam/{memoriam}', [CNS\MemoriamController::class, 'show'])->name('memoriam');
+
     Route::get('executive', [CNS\ExecutiveController::class, 'index'])->name('executive');
 
     Route::get('/hire-us', [CNS\HireUsController::class, 'show'])->name('hire-us');
