@@ -23,13 +23,12 @@
         @if($data['memoriam']->image)
             <div class="row mb-2">
                 <div class="col-12 text-center d-flex align-items-center justify-content-center">
-
                     <picture>
                         <source srcset="{{asset('storage/'. $data['folder'] .'/'. $data['memoriam']->image)}}"
                                 media="(min-width: 577px)">
                         <img srcset="{{asset('storage/'. $data['folder'] ."/". $data['tn_prefix'].$data['memoriam']->image)}}"
                              alt="{{$data['memoriam']->title}}"
-                             class="rounded img-fluid d-block">
+                             class="rounded img-fluid w-50 mx-auto">
                     </picture>
                 </div>
             </div>

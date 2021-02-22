@@ -2,7 +2,7 @@
 @section('content')
 <div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row d-flex justify-content-around pb-md-3">
-        <div class="col-12 col-md-4">
+        <div class="col-0 col-md-4">
         </div>
         <div class="col-12 col-md-4 text-center">
             <h1>
@@ -12,11 +12,6 @@
         <div class="col-12 col-md-4 text-center text-md-right font-weight-bolder">
             <h5>
                 <a href="{{route('member', Auth::user()->id)}}">
-                    @if(Auth::user()->user_info->image != '')
-                        <img src="{{asset('storage/users/tn_75x75_' . Auth::user()->user_info->image) }}"
-                        class="img-fluid mb-2 border rounded-lg"/>
-                        <br />
-                    @endif
                     <i class="fas fa-user text-primary"></i> View your profile
                 </a>
             </h5>
@@ -24,7 +19,7 @@
         <div class="col-12 text-center">
             <h6>
                <span class="badge badge-primary badge-pill">
-                   {!! $data['count'] ?? 0 !!}
+                   {{ $data['count'] ?? 0 }}
                </span>
                 Members
             </h6>
@@ -77,9 +72,6 @@
                         </td>
                     </tr>
                 @endforeach
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
             </tbody>
         </table>
     </div>

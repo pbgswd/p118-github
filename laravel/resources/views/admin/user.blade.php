@@ -176,14 +176,14 @@
             </div>
             <div class="row mt-3">
                 @if( isset($data['user']->user_info->image) )
-                    <div class="col-12 mt-3 mb-3">
+                    <div class="col-12 mt-3 mb-3 mx-auto text-center">
                         <h4>
                             <i class="far fa-images"></i>
                             Profile Image Currently:
                             {{ $data['user']->user_info->file_name }}
                         </h4>
                         <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}"
-                            class="border rounded-lg img-fluid" />
+                            class="rounded img-fluid w-50 mx-auto" />
                         <input type="hidden" name="user_info[image]" value="{{$data['user']->user_info->image}}" />
                         <input type="hidden" name="user_info[file_name]" value="{{$data['user']->user_info->file_name}}" />
 
@@ -192,7 +192,7 @@
                         </h5>
 
                         <img src="{{ asset('storage/users/'. $data['user']->user_info->thumb) }}"
-                             class="border rounded-lg img-fluid" />
+                             class="rounded img-fluid mt-5" />
                         <h5>
                             {{$data['user']->user_info->thumb_size ?? ''}}
                         </h5>

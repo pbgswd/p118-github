@@ -96,7 +96,7 @@
                         <input type="file" id="inputFile" name="image" />
                     @else
                         <img src="{{ asset('storage/'. $data['folder'] .'/'. $data['memoriam']->image)}}"
-                            class="rounded img-fluid" /><br />
+                            class="rounded img-fluid w-50 mx-auto" /><br />
                         {{$data['memoriam']->filesize}}<br />
                         <img src="{{ asset('storage/'. $data['folder'] .'/'. $data['memoriam']->thumb) }}"
                              class="rounded img-fluid" /><br />

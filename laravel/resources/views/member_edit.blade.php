@@ -190,7 +190,7 @@
                                     media="(min-width: 577px)">
                             <img srcset="{{asset('storage/'. $data['folder'] ."/". $data['tn_prefix'].$data['user']->user_info->image)}}"
                                  alt="{{$data['user']->name}}"
-                                 class="rounded img-fluid d-block">
+                                 class="rounded img-fluid mx-auto">
                         </picture>
                     </div>
                     <div class="col-0 col-md-3">
