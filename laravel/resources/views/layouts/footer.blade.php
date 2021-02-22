@@ -46,15 +46,17 @@
         </div>
     @endauth
     <div class="row mt-1 mt-md-5 px-2 d-flex justify-content-around">
-        <div class="col-12 col-md-4 mb-3 border border-secondary rounded pt-3">
+        <div class="col-12 col-md-4 mb-3 pb-2 border border-secondary rounded pt-3">
             <h5>
                 <i class="fas fa-hashtag"></i>
                 To Read
             </h5>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a>
+                <li class="list-group-item">
+                    <a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a>
                 </li>
-                <li class="list-group-item"><a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a>
+                <li class="list-group-item">
+                    <a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a>
                 </li>
                 <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
                 <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
@@ -62,7 +64,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-12 col-md-4 mb-3 mt-sm-5 mt-md-0 border border-secondary rounded pt-3">
+        <div class="col-12 col-md-4 mb-3 pb-2 mt-sm-5 mt-md-0 border border-secondary rounded pt-3">
             <h5>
                 <i class="fas fa-hashtag"></i>
                 Social Media
