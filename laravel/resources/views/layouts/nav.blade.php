@@ -1,17 +1,16 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="" href="{{ route('hello') }}">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex align-items-center pt-2">
+    <a href="{{ route('hello') }}" title="{{config('app.name')}}">
         <img src="/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png"
              alt="{{config('app.name')}}"
-             title="{{config('app.name')}}"
-             class="mr-1 rounded" />
+             class="rounded" />
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">Menus
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse ml-2" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <div class="dropdown">
+        <ul class="navbar-nav mr-auto mb-0 d-flex align-items-center">
+            <div class="dropdown mr-1 mt-2 mt-md-0">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     About Us
@@ -26,8 +25,8 @@
                     </a>
                     <a class="dropdown-item" href="{{route('page_show', 'links')}}">Links</a>
                 </div>
-            </div>&nbsp;
-            <div class="dropdown">
+            </div>
+            <div class="dropdown mr-1 mt-2 mt-md-0">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Membership
@@ -48,10 +47,10 @@
                         In Memoriam
                     </a>
                 </div>
-            </div>&nbsp;
+            </div>
             @guest
             @else
-                <div class="dropdown">
+                <div class="dropdown mr-1 mt-2 mt-md-0">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Benefits
@@ -60,13 +59,13 @@
                         <a class="dropdown-item" href="{{route('topic_show', 'health-and-welfare')}}"
                            title="Health & Welfare Overview">H & W Overview</a>
                     </div>
-                </div>&nbsp;
+                </div>
             @endguest
-            <div class="dropdown">
+            <div class="dropdown mr-1 mt-2 mt-md-0">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Employers & Venues
-                </button>&nbsp;
+                </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown">
                     <a class="dropdown-item" href="{{route('organizations')}}">
                         <i class="fas fa-user-tie"></i>
@@ -81,25 +80,33 @@
                         Collective Agreements</a>
                 </div>
             </div>
-            <div class="dropdown">
+            <div class="dropdown mr-1 mt-2 mt-md-0">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Contact Us
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown">
                     <a class="dropdown-item" href="{{route('hire-us')}}">Why Hire Union</a>
-                    <a class="dropdown-item" href="{{route('contact')}}">Contact</a>
+                    <a class="dropdown-item" href="{{route('contact')}}">Contact Us</a>
                     <a class="dropdown-item" href="{{route('page_show','payroll-trust-account')}}">Payroll</a>
                 </div>
             </div>
             @guest
-            @else&nbsp;
-                <div class="dropdown">
+            @else
+                <div class="dropdown mr-1 mt-2 mt-md-0">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Members
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdown">
+                        @hasanyrole(['super-admin|office|writer|committee'])
+                        <a class="dropdown-item" href="{{route('admin')}}" title="Admin">
+                            <i class="fas fa-tachometer-alt"></i> Admin
+                        </a>
+                        @endrole
+                        <a class="dropdown-item" href="/site" title="Landing Page">
+                            <i class="fas fa-industry"></i>
+                            Landing Page</a>
                         <a class="dropdown-item" href="{{route('list_meetings')}}">
                             <i class="far fa-folder"></i>
                             Meeting Minutes</a>
@@ -127,24 +134,48 @@
                             <i class="fas fa-gavel"></i> Constitution & By-Laws</a>
                         <a class="dropdown-item" href="{{route('policies_list_public')}}">
                             <i class="fas fa-scroll"></i>  Policies</a>
-                        <a class="dropdown-item" href="/site"><i class="fas fa-industry">
-                            </i> Landing Page</a>
                     </div>
                 </div>
             @endguest
+            @auth
+                <li class="nav-item mt-2 mr-2 d-flex align-items-stretch">
+                    <a class="nav-link" href="{{route('landing_page')}}" title="Landing Page">
+                        <i class="fas fa-industry"></i>
+                    </a>
+                </li>
+                <li class="nav-item mt-2 d-block d-md-none d-lg-block">
+                    <form class="form-inline" action="{{route('search')}}" method="POST">
+                        {!! csrf_field() !!}
+                            <div class="input-group input-group-sm mr-1">
+                                <div class="input-group-prepend">
+                            <span class="input-group-text d-none d-md-block" id="basic-addon1">
+                                <i class="fas fa-search"></i>
+                            </span>
+                                </div>
+                                <input class="form-control" type="text" placeholder="Search"
+                                       aria-label="Search" name="search" size="30" required>
+                            </div>
+                            <button type="submit" name="Submit" value="Submit"
+                                    class="btn btn-sm btn-success mt-2 mt-md-0">
+                                Search
+                            </button>
+                    </form>
+                </li>
+                <li class="nav-item d-sm-block d-md-none">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            @endauth
             @guest
-            @else
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('landing_page')}}">
-                    <i class="fas fa-industry fa-2x"></i> Landing Page</a>
-            </li>
-                @hasanyrole(['super-admin|office|writer|committee'])
-                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin')}}" title="Admin">
-                            <i class="fas fa-2x fa-tachometer-alt"></i> Admin
-                        </a>
-                    </li>
-                @endrole
+                <li class="nav-item d-sm-block d-md-none">
+                    <a href="/login">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                    </a>
+                </li>
             @endguest
         </ul>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -158,11 +189,6 @@
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
                         </a>
                     </li>
-                    @if (Route::has('register'))
-                        <li class="nav-item float-right">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
                 @else
                     <li class="nav-item">
                         <form id="logout-form" action="{{ route('logout') }}" method="POST">

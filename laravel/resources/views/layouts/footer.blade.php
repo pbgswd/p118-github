@@ -1,26 +1,6 @@
 <footer class="container mt-2">
-    <div class="row p-2">
-        <div class="col-12 border border-dark rounded-lg d-flex justify-content-center align-items-center text-center
-            p-2 mb-2">
-            @guest
-                <a href="/login">
-                    <button class="btn btn-success my-2 my-sm-0 px-2" type="submit">
-                        Login
-                    </button>
-                </a>
-            @else
-                <a id="search"></a>
-                <form id="logout-form" action="{{route('logout')}}" method="POST">
-                    @csrf
-                    <button class="btn btn-success my-2 my-sm-0 px-2" type="submit">
-                        Logout
-                    </button>
-                </form>
-            @endguest
-        </div>
-    </div>
     @auth
-        <div class="row p-2">
+        <div class="row p-2 d-none d-md-block d-lg-none">
             <div class="col-12 border border-secondary rounded-lg p-2 pt-3">
             <form class="form-inline" action="{{route('search')}}" method="POST">
                 {!! csrf_field() !!}

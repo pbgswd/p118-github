@@ -68,7 +68,7 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         return new SearchResult(
             $this,
             $this->title,
-            \route('feature_show', $this->slug)
+            \route('feature', $this->slug)
         );
     }
 
