@@ -168,29 +168,44 @@
             </div>
             @if( isset($data['user']->user_info->image) )
                 <div class="row mb-3">
-                    <div class="col-12 mt-5 mb-2">
+                    <div class="col-12 mt-5 text-center">
                         <h4>
                             <i class="far fa-images"></i>
                             {{ $data['user']->user_info->file_name }}
+
                         </h4>
+                        <p class="d-sm-block d-md-none">
+                            <i>(Thumbnail for mobile view)</i>
+                        </p>
                     </div>
+                </div>
+
                 </div>
                 <div class="row mb-3">
                     <div class="col-0 col-md-3">
                     </div>
-                    <div class="col-12 col-md-6 text-center">
-                        <img src="{{asset('storage/users/' . $data['user']->user_info->image)}}"
-                             class="rounded img-fluid" />
+                    <div class="col-12 col-md-6 text-center d-flex align-items-center justify-content-center">
+                        <picture>
+                            <source srcset="{{asset('storage/'. $data['folder'] .'/'. $data['user']->user_info->image)}}"
+                                    media="(min-width: 577px)">
+                            <img srcset="{{asset('storage/'. $data['folder'] ."/". $data['tn_prefix'].$data['user']->user_info->image)}}"
+                                 alt="{{$data['user']->name}}"
+                                 class="rounded img-fluid d-block">
+                        </picture>
                     </div>
                     <div class="col-0 col-md-3">
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 text-center">
                     <input type="hidden" name="user_info[image]" value="{{$data['user']->user_info->image}}" />
                     <input type="hidden" name="user_info[file_name]" value="{{$data['user']->user_info->file_name}}" />
                     <h5>
                         {{"File Size: " . $data['filesize'] ?? ''}}
                     </h5>
+                    <p class="d-sm-block d-md-none">
+                        <i>(Size is for full size image)</i>
+                    </p>
+
                 </div>
                 <div class="input-group mb-6">
                     <div class="input-group-prepend">
@@ -230,7 +245,7 @@
                 <i class="fas fa-user text-primary"></i>
                 About Me
             </h3>
-            <div class="col-12 input-group mb-3">
+            <div class="col-12 input-group mb-3 d-flex justify-content-center">
                 @if (!optional($data['user']->user_info)->about || empty(optional($data['user']->user_info)->about))
                     <p class="font-italic">
                         Add something here about you such as your experience in

@@ -37,7 +37,9 @@ class UserImageService
 
     /**
      * @param $request
-     * @param $dir
+     * @param string $dir
+     * @param bool $make_thumb
+     * @param array $thumb_values
      * @return array
      * @throws InvalidManipulation
      */

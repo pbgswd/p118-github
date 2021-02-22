@@ -183,10 +183,10 @@ class AdminUserController extends Controller
                     if(!file_exists(storage_path() . '/app/users/' . Options::thumb_values()['tn_str'] .
                         $user->user_info['image'])) {
                             $this->userImageService->generate_thumb($user->user_info['image'], 'users',
-                                Options::thumb_values());
+                                Options::member_thumb_values());
                     }
                 }
-                $user->user_info->thumb = Options::thumb_values()['tn_str'] . $user->user_info['image'];
+                $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info['image'];
                 $user->user_info->thumb_size = AttachmentService::human_filesize(
                     \filesize(\storage_path('app/users' . '/' . $user->user_info->thumb))) ? : null;
             }

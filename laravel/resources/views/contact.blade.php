@@ -6,7 +6,6 @@
                 <h2>Contact IATSE Local 118</h2>
             </div>
         </div>
-
         <form class="form-horizontal" role="form" action="{{route('contact')}}" method="post">
             {!! csrf_field() !!}
             <div class="row p-2 mb-3">
@@ -29,7 +28,7 @@
                     <label for="mail_body" class="col-sm-2 control-label">
                         <h3>Message</h3>
                     </label>
-                    <textarea name="mail_body" placeholder="Message" form-control input-lg" rows="3"
+                    <textarea name="mail_body" placeholder="Message" class="form-control input-lg" rows="3"
                     cols="100">{{old('mail_body')}}</textarea>
                 </div>
             <div class="col-6">

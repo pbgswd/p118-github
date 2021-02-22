@@ -67,7 +67,7 @@ class UserController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function show(User $user): View
+    public function show(User $user, UserImageService $service): View
     {
         $this->authorize('view', $user);
 
@@ -78,9 +78,25 @@ class UserController extends Controller
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
 
+        $folder =  $user->getAttachmentFolder();
+
+        if($user->user_info['image']) {
+            if(file_exists(storage_path() . '/app/'. $folder .'/'. $user->user_info['image'])) {
+
+                if(!file_exists(storage_path() . '/app/'. $folder .'/'. Options::member_thumb_values()['tn_str'] .
+                    $user->user_info['image'])) {
+                    $service->generate_thumb($user->user_info['image'], $folder,
+                        Options::member_thumb_values());
+                }
+            }
+            $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info['image'];
+        }
+
         $data = [
             'user' => $user,
             'user_roles' => $member_roles,
+            'folder' => $folder,
+            'tn_prefix' => Options::member_thumb_values()['tn_str'],
         ];
 
         return view('member', ['data' => $data]);
@@ -104,13 +120,13 @@ class UserController extends Controller
                     $filesize = AttachmentService::human_filesize(
                         \filesize(\storage_path('app/users' . '/' . $user->user_info->image))) ? : null;
 
-                    if(!file_exists(storage_path() . '/app/users/' . Options::thumb_values()['tn_str'] .
+                    if(!file_exists(storage_path() . '/app/users/' . Options::member_thumb_values()['tn_str'] .
                         $user->user_info['image'])) {
                         $this->userImageService->generate_thumb($user->user_info['image'], 'users',
-                            Options::thumb_values());
+                            Options::member_thumb_values());
                     }
                 }
-                $user->user_info->thumb = Options::thumb_values()['tn_str'] . $user->user_info['image'];
+                $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info['image'];
                 $user->user_info->thumb_size = AttachmentService::human_filesize(
                     \filesize(\storage_path('app/users' . '/' . $user->user_info->thumb))) ? : null;
             }
@@ -120,6 +136,7 @@ class UserController extends Controller
         $roles = Role::get();
         $user_roles = $user->getRoleNames()->toArray();
         $user_roles = array_combine($user_roles, $user_roles);
+        $folder = $user->getAttachmentFolder();
 
         $data = [
             'user' => $user,
@@ -128,6 +145,8 @@ class UserController extends Controller
             'roles' => $roles,
             'action' => 'Edit',
             'currentUserPermissions' => $currentUser->permissions,
+            'folder' => $folder,
+            'tn_prefix' => Options::member_thumb_values()['tn_str'],
         ];
 
         return view('member_edit', ['data' => $data]);
@@ -186,15 +205,15 @@ class UserController extends Controller
                 ? $user_phone_info['phone_number'] : 'number deleted';
         }
 
+        $folder =  $user-> getAttachmentFolder();
+        $thumb_vals = Options::member_thumb_values();
+
         if ($user->user_info instanceof UserInfo) {
             $user_info = $userRequest['user_info'];
             if (isset($user_info['delete_image'])) {
-                if(file_exists(storage_path() . '/app/users/' . $user_info['image'])) {
+                if(file_exists(storage_path() .'/app/'. $folder .'/'. $user_info['image'])) {
 
-//Storage::disk('users')->delete($user_info['image']);
-// Storage::disk('users')->delete(Options::thumb_values()['tn_str'] . $user_info['image']);
-
-                    $this->userImageService->destroyImage($user_info['image'], 'users', Options::thumb_values());
+                    $service->destroyImage($user_info['image'], $folder, $thumb_vals );
 
                     Session::flash('info', 'You have deleted ' . $user_info['file_name']);
 
@@ -204,13 +223,15 @@ class UserController extends Controller
             } else {
                 if (!is_null($userRequest->file('image'))) {
 
-                    $result = $this->userImageService->updateImage($userRequest, 'users', true);
+                    $result = $service->updateImage($userRequest, $folder, true, $thumb_vals);
 
                     $user_info['image'] = $result['image'];
                     $user_info['file_name'] = $result['file_name'];
 
-                    //$user_info['image'] = $this->uploadImage($userRequest);
-                    //$user_info['file_name'] = $userRequest->image->getClientOriginalName();
+                    if(!file_exists(storage_path() . '/app/'. $folder .'/'. $thumb_vals['tn_str'] .
+                        $user_info['image'])) {
+                        $service->generate_thumb($user_info['image'], $folder, $thumb_vals);
+                    }
                 }
             }
             $user->user_info->fill($user_info);
@@ -218,12 +239,16 @@ class UserController extends Controller
         } else {
             $user_info = new UserInfo($userRequest->input('user_info'));
 
-            //$user_info->image = $this->uploadImage($userRequest);
+            $result = $service->updateImage($userRequest, 'users', true);
 
-            $result = $this->userImageService->updateImage($userRequest, 'users', true);
             $user_info->image = $result['image'];
 
             $user->user_info()->save($user_info);
+
+            if(!file_exists(storage_path() . '/app/'. $folder .'/'. $thumb_vals['tn_str']
+                . $user->user_info['image'])) {
+                $service->generate_thumb($user->user_info['image'], $folder, $thumb_vals);
+            }
         }
 
         if (!empty($message)) {

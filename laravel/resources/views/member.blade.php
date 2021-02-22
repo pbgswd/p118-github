@@ -24,13 +24,14 @@
         </div>
         @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
             <div class="row mb-3">
-                <div class="col-0 col-md-3">
-                </div>
-                <div class="col-12 col-md-6 text-center">
-                    <img src="{{ asset('storage/users/' . $data['user']->user_info->image) }}"
-                         class="rounded img-fluid" />
-                </div>
-                <div class="col-0 col-md-3">
+                <div class="col-12 d-flex align-items-center justify-content-center text-center">
+                     <picture>
+                        <source srcset="{{asset('storage/'. $data['folder'] .'/'. $data['user']->user_info->image)}}"
+                                media="(min-width: 577px)">
+                        <img srcset="{{asset('storage/'. $data['folder'] ."/". $data['tn_prefix'].$data['user']->user_info->image)}}"
+                             alt="{{$data['user']->name}}"
+                             class="rounded img-fluid d-block">
+                    </picture>
                 </div>
             </div>
         @endif
