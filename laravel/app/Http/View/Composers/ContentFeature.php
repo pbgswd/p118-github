@@ -46,7 +46,7 @@ class ContentFeature
 
         $user = Auth::user();
         $user->load('user_info');
-        $user->user_info->thumb = Options::thumb_values()['tn_str'] . $user->user_info->image ?? '';
+        $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info->image ?? '';
 
         $data = [
             'topics' => $topics,
