@@ -6,7 +6,7 @@
             <div class="col-12 col-md-6">
                 <a href="{{route('memoriam_list')}}">In Memoriam List</a>
             </div>
-            @can('edit members')
+            @can('edit users')
                 <div class="col-12 col-md-6 text-md-right">
                     <a href="{{route('admin_memoriam_edit', $data['memoriam']->slug)}}"
                        title="Edit {{$data['memoriam']->title}}">
@@ -19,6 +19,7 @@
             <div class="col-12 text-center">
               <h1>In Memoriam</h1>
             </div>
+
         </div>
         @if($data['memoriam']->image)
             <div class="row mb-2">

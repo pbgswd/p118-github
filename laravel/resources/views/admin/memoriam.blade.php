@@ -14,7 +14,7 @@
         </div>
         @if ($data['action'] == 'Edit')
             <div class="col-12 col-md-6 text-md-right">
-                <a href="{{route('admin_memoriam_edit', $data['memoriam']->slug)}}"
+                <a href="{{route('memoriam', $data['memoriam']->slug)}}"
                    title="View {{$data['memoriam']->title}}">
                     <i class="fas fa-eye"></i> View on website (edit)
                 </a>

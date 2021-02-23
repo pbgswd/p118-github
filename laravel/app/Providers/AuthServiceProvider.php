@@ -29,6 +29,7 @@ use App\Policies\CommitteePostPolicy;
 use App\Policies\EmploymentPolicy;
 use App\Policies\ExecutiveMembershipPolicy;
 use App\Policies\ExecutivePolicy;
+use App\Policies\FeaturePolicy;
 use App\Policies\InviteUserPolicy;
 use App\Policies\MeetingPolicy;
 use App\Policies\MemoriamPolicy;

@@ -48,10 +48,10 @@ class TopicController extends Controller
         $topic->pages = $topic->pages->sortByDesc('created_at');
         $topic->posts = $topic->posts->sortByDesc('created_at');
 
-        $layout = 'topic';
+        $layout = 1;
 
         if( $topic->pages->count() > 0 && $topic->posts->count() > 0){
-            //$layout = 2;
+            $layout = 2;
         }
 
         $data = [
@@ -59,6 +59,6 @@ class TopicController extends Controller
             'layout' => $layout,
             ];
 
-        return view($layout, ['data' => $data]);
+        return view('topic', ['data' => $data]);
     }
 }

@@ -10,6 +10,12 @@
     </button>
     <div class="collapse navbar-collapse ml-2" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto mb-0 d-flex align-items-center">
+            <li class="nav-item mt-2 mr-2 d-flex align-items-stretch d-block d-md-none">
+                <a class="nav-link" href="{{route('landing_page')}}" title="Landing Page">
+                    <i class="fas fa-industry fa-2"></i>
+                    Landing Page
+                </a>
+            </li>
             <div class="dropdown mr-1 mt-2 mt-md-0">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -35,7 +41,7 @@
                     <a class="dropdown-item" href="{{route('page_show', 'apply-for-work')}}"
                        title="Apply for Overhire Work">Apply for Overhire Work</a>
                     <a class="dropdown-item" href="{{route('page_show', 'requirements-for-membership')}}"
-                       title="Apply for Membership">Apply for membership</a>
+                       title="Apply for Membership">Apply for Membership</a>
                     <a class="dropdown-item" href="{{route('page_show', 'skills-verification-procedure')}}">
                         Skills Update Procedure
                     </a>
@@ -140,11 +146,13 @@
                 </div>
             @endguest
             @auth
-                <li class="nav-item mt-2 mr-2 d-flex align-items-stretch">
+
+                <li class="nav-item mt-2 mr-2 d-flex align-items-stretch d-block d-md-block justify-content-center text-center">
                     <a class="nav-link" href="{{route('landing_page')}}" title="Landing Page">
-                        <i class="fas fa-industry"></i>
+                        <i class="fas fa-industry fa-lg"></i>
                     </a>
                 </li>
+
                 <li class="nav-item mt-2 d-block d-md-none d-lg-block">
                     <form class="form-inline" action="{{route('search')}}" method="POST">
                         {!! csrf_field() !!}
