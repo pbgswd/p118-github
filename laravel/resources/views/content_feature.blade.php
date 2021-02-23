@@ -28,9 +28,6 @@
             </a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">
-            <a href="#search"><i class="fas fa-search"></i> Search</a>
-        </div>
-        <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('members')}}"><i class="fas fa-user-friends"></i> Members List</a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">

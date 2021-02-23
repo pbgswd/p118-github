@@ -18,7 +18,8 @@ class OrganizationController extends Controller
         $access = Auth::check() ? 'members' : 'public';
 
         $data['organizations'] = Organization::where('live', 1)
-            ->whereIn('access_level', ['public', $access])
+            //->whereIn('access_level', ['public', $access])
+            ->orderBy('name')
             ->paginate(9);
 
         $data['tn_prefix'] = Options::venue_org_thumb_values()['tn_str'];

@@ -48,8 +48,17 @@ class TopicController extends Controller
         $topic->pages = $topic->pages->sortByDesc('created_at');
         $topic->posts = $topic->posts->sortByDesc('created_at');
 
-        $data = ['topic' => $topic];
+        $layout = 'topic';
 
-        return view('topic', ['data' => $data]);
+        if( $topic->pages->count() > 0 && $topic->posts->count() > 0){
+            //$layout = 2;
+        }
+
+        $data = [
+            'topic' => $topic,
+            'layout' => $layout,
+            ];
+
+        return view($layout, ['data' => $data]);
     }
 }

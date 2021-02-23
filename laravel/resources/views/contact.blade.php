@@ -80,18 +80,14 @@
                         <i class="fas fa-envelope"></i> admin@iatse118.com</a>
                 </h3>
             </div>
-            @guest
-            @else
-                <div class="col-12 mt-3 content">
-                    <h3>
-                        <a href="tel:6042597365">
-                            <i class="fas fa-phone-square"></i> Local 118 Dispatch:
-                            604-259-7365
-                        </a>
-                    </h3>
-                </div>
-            @endguest
-        @guest
+            <div class="col-12 mt-3 content">
+                <h3>
+                    <a href="tel:6042597365">
+                        <i class="fas fa-phone-square"></i> Local 118 Dispatch:
+                        604-259-7365
+                    </a>
+                </h3>
+            </div>
         @else
             <div class="d-sm-block d-md-none col-12 mt-4 mb-3">
                 <h3>

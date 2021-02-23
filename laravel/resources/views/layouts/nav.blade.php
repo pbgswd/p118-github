@@ -33,12 +33,16 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown">
                     <a class="dropdown-item" href="{{route('page_show', 'apply-for-work')}}"
-                       title="Apply for Work">Apply</a>
+                       title="Apply for Overhire Work">Apply for Overhire Work</a>
+                    <a class="dropdown-item" href="{{route('page_show', 'requirements-for-membership')}}"
+                       title="Apply for Membership">Apply for membership</a>
                     <a class="dropdown-item" href="{{route('page_show', 'skills-verification-procedure')}}">
                         Skills Update Procedure
                     </a>
-                    <a class="dropdown-item" href="#">Availability & Dispatch</a>
-                    <a class="dropdown-item" href="{{route('page_show', 'dues-public')}}">Dues</a>
+                    <a class="dropdown-item" href="{{route('page_show', 'availability-and-dispatch')}}">
+                        Availability & Dispatch
+                    </a>
+                    <a class="dropdown-item" href="{{route('page_show', 'union-dues-overview')}}">Union Dues</a>
                     <a class="dropdown-item" href={{route('page_show', 'leaving-membership')}}>Leaving Membership</a>
                     <a class="dropdown-item" href={{route('page_show', 'request-representation')}}>
                         Request Representation
@@ -73,8 +77,6 @@
                     <a class="dropdown-item" href="{{route('venues')}}">
                         <i class="far fa-building"></i>
                         Venues</a>
-                    <a class="dropdown-item" href="{{route('agreement_show', 38)}}" title="">
-                        Master Rate Sheet</a>
                     <a class="dropdown-item" href="{{route('agreements_list_public')}}">
                         <i class="far fa-handshake"></i>
                         Collective Agreements</a>
