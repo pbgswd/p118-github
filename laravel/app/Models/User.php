@@ -121,7 +121,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
      */
     public function user_info(): HasOne
     {
-        return $this->hasOne(UserInfo::class);
+        return $this->hasOne(UserInfo::class)->withDefault();
     }
 
     /**

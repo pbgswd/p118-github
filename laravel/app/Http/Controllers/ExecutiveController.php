@@ -13,12 +13,17 @@ class ExecutiveController extends Controller
      */
     public function index(): View
     {
-
-        $executive = Executive::where('title', '!=', 'Trustee')->with('current_executive_user')->get();
-        $trustees = Executive::where('title', '=', 'Trustee')->with('current_executive_user')->get();
+        /**
+         * H&W id = 7
+         * Trustee id = 10
+         */
+        $executive = Executive::whereNotIn('id', [7, 10])->with('current_executive_user')->get();
+        $trustees = Executive::where('id', 10)->with('current_executive_user')->get();
+        $health = Executive::where('id', 7)->with('current_executive_user')->get();
         $committees = Committee::where('live', 1)->get();
 
         $data = [
+            'health' => $health,
             'executive' => $executive,
             'committees' => $committees,
             'trustees' => $trustees,

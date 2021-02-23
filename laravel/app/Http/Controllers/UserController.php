@@ -66,6 +66,7 @@ class UserController extends Controller
      * @param User $user
      * @return View
      * @throws AuthorizationException
+     * @throws InvalidManipulation
      */
     public function show(User $user, UserImageService $service): View
     {
@@ -79,24 +80,23 @@ class UserController extends Controller
         $member_roles = array_combine($member_roles, $member_roles);
 
         $folder =  $user->getAttachmentFolder();
+        $tn_prefix = Options::member_thumb_values()['tn_str'];
 
         if($user->user_info['image']) {
             if(file_exists(storage_path() . '/app/'. $folder .'/'. $user->user_info['image'])) {
-
-                if(!file_exists(storage_path() . '/app/'. $folder .'/'. Options::member_thumb_values()['tn_str'] .
-                    $user->user_info['image'])) {
+                if(!file_exists(storage_path() . '/app/'. $folder .'/'. $tn_prefix . $user->user_info['image'])) {
                     $service->generate_thumb($user->user_info['image'], $folder,
                         Options::member_thumb_values());
                 }
             }
-            $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info['image'];
+            $user->user_info->thumb = $tn_prefix . $user->user_info['image'];
         }
 
         $data = [
             'user' => $user,
             'user_roles' => $member_roles,
             'folder' => $folder,
-            'tn_prefix' => Options::member_thumb_values()['tn_str'],
+            'tn_prefix' => $tn_prefix,
         ];
 
         return view('member', ['data' => $data]);

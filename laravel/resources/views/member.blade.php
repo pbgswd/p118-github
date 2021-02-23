@@ -28,9 +28,10 @@
                      <picture>
                         <source srcset="{{asset('storage/'. $data['folder'] .'/'. $data['user']->user_info->image)}}"
                                 media="(min-width: 577px)">
-                        <img srcset="{{asset('storage/'. $data['folder'] ."/". $data['tn_prefix'].$data['user']->user_info->image)}}"
+                        <img srcset="{{asset('storage/'. $data['folder'] ."/". $data['tn_prefix'].
+                                        $data['user']->user_info->image)}}"
                              alt="{{$data['user']->name}}"
-                             class="rounded img-fluid ">
+                             class="rounded img-fluid">
                     </picture>
                 </div>
             </div>

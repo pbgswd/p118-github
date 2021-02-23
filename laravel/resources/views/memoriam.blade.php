@@ -19,7 +19,6 @@
             <div class="col-12 text-center">
               <h1>In Memoriam</h1>
             </div>
-
         </div>
         @if($data['memoriam']->image)
             <div class="row mb-2">
