@@ -1,12 +1,13 @@
 
     <div class="col-12 border border-dark rounded-lg p-lg-4 mb-3">
-        @if($data['birthday'] != '')
+        @if($data['history']['birthday'] != '')
             <h2 class="pt-2">
-                <i class="fas fa-birthday-cake"></i> {{ $data['birthday'] }}
+                <i class="fas fa-birthday-cake"></i>
+                {{ $data['history']['birthday'] }}
             </h2>
         @endif
         <h2 class="pt-2 font-weight-bolder">
-            {{$data['years']}} years, since {{$data['foundingYear']}}.
+            {{$data['history']['years']}} years, since {{$data['history']['foundingYear']}}.
         </h2>
         <p>
             Founded on September 13, 1904,
@@ -17,7 +18,7 @@
             the needs of your production.
         </p>
         <p>
-            <a class="btn btn-primary btn-lg" href="/page/history" role="button">
+            <a class="btn btn-primary btn-lg" href="{{route('page_show', 'history')}}" role="button">
                 Learn more &raquo;
             </a>
         </p>

@@ -25,11 +25,11 @@
                     <a class="dropdown-item" href="{{route('page_show', 'history')}}" title="History">
                         History
                     </a>
-                    <a class="dropdown-item" href="{{route('executive')}}">Executive</a>
-                    <a class="dropdown-item" href="{{route('bylaws_list_public')}}">
+                    <a class="dropdown-item" href="{{route('executive')}}" title="Executive">Executive</a>
+                    <a class="dropdown-item" href="{{route('bylaws_list_public')}}" title="Constitution & Bylaws">
                         Constitution & Bylaws
                     </a>
-                    <a class="dropdown-item" href="{{route('page_show', 'links')}}">Links</a>
+                    <a class="dropdown-item" href="{{route('page_show', 'links')}}" title="Links">Links</a>
                 </div>
             </div>
             <div class="dropdown mr-1 mt-2 mt-md-0">
@@ -42,18 +42,23 @@
                        title="Apply for Overhire Work">Apply for Overhire Work</a>
                     <a class="dropdown-item" href="{{route('page_show', 'requirements-for-membership')}}"
                        title="Apply for Membership">Apply for Membership</a>
-                    <a class="dropdown-item" href="{{route('page_show', 'skills-verification-procedure')}}">
+                    <a class="dropdown-item" href="{{route('page_show', 'skills-verification-procedure')}}"
+                        title="Skills Update Procedure">
                         Skills Update Procedure
                     </a>
-                    <a class="dropdown-item" href="{{route('page_show', 'availability-and-dispatch')}}">
+                    <a class="dropdown-item" href="{{route('page_show', 'availability-and-dispatch')}}"
+                        title="Availability & Dispatch">
                         Availability & Dispatch
                     </a>
-                    <a class="dropdown-item" href="{{route('page_show', 'union-dues-overview')}}">Union Dues</a>
-                    <a class="dropdown-item" href={{route('page_show', 'leaving-membership')}}>Leaving Membership</a>
-                    <a class="dropdown-item" href={{route('page_show', 'request-representation')}}>
+                    <a class="dropdown-item" href="{{route('page_show', 'union-dues-overview')}}"
+                        title="Union Dues">Union Dues</a>
+                    <a class="dropdown-item" href="{{route('page_show', 'leaving-membership')}}"
+                        title="Leaving Membership">Leaving Membership</a>
+                    <a class="dropdown-item" title="Request Representation"
+                        href="{{route('page_show', 'request-representation')}}">
                         Request Representation
                     </a>
-                    <a class="dropdown-item" href={{route('memoriam_list')}}>
+                    <a class="dropdown-item" title="In Memoriam" href="{{route('memoriam_list')}}">
                         In Memoriam
                     </a>
                 </div>
@@ -77,13 +82,13 @@
                     Employers & Venues
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown">
-                    <a class="dropdown-item" href="{{route('organizations')}}">
+                    <a class="dropdown-item" href="{{route('organizations')}}" title="Organizations">
                         <i class="fas fa-user-tie"></i>
                         Organizations</a>
-                    <a class="dropdown-item" href="{{route('venues')}}">
+                    <a class="dropdown-item" href="{{route('venues')}}" title="Venues">
                         <i class="far fa-building"></i>
                         Venues</a>
-                    <a class="dropdown-item" href="{{route('agreements_list_public')}}">
+                    <a class="dropdown-item" href="{{route('agreements_list_public')}}" title="Collective Agreements">
                         <i class="far fa-handshake"></i>
                         Collective Agreements</a>
                 </div>
@@ -94,9 +99,10 @@
                     Contact Us
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown">
-                    <a class="dropdown-item" href="{{route('hire-us')}}">Why Hire Union</a>
-                    <a class="dropdown-item" href="{{route('contact')}}">Contact Us</a>
-                    <a class="dropdown-item" href="{{route('page_show','payroll-trust-account')}}">Payroll</a>
+                    <a class="dropdown-item" href="{{route('hire-us')}}" title="Why Hire Union">Why Hire Union</a>
+                    <a class="dropdown-item" href="{{route('contact')}}" title="Contact Us">Contact Us</a>
+                    <a class="dropdown-item" href="{{route('page_show','payroll-trust-account')}}"
+                        title="Payroll">Payroll</a>
                 </div>
             </div>
             @guest
@@ -115,17 +121,17 @@
                         <a class="dropdown-item" href="/site" title="Landing Page">
                             <i class="fas fa-industry"></i>
                             Landing Page</a>
-                        <a class="dropdown-item" href="{{route('list_meetings')}}">
+                        <a class="dropdown-item" href="{{route('list_meetings')}}" title="Meeting Minutes">
                             <i class="far fa-folder"></i>
                             Meeting Minutes</a>
-                        <a class="dropdown-item" href="{{route('topic_show','Financial')}}">
+                        <a class="dropdown-item" href="{{route('topic_show','Financial')}}" title="Financial">
                             <i class="far fa-folder"></i> Financial</a>
-                        <a class="dropdown-item" href="{{route('committees')}}">
+                        <a class="dropdown-item" href="{{route('committees')}}" title="Committees">
                             <i class="fas fa-users"></i>
                             Committees</a>
-                        <a class="dropdown-item" href="{{route('topic_show','elections')}}">
+                        <a class="dropdown-item" href="{{route('topic_show','elections')}}" title="Elections">
                             <i class="fas fa-users"></i> Elections</a>
-                        <a class="dropdown-item" href="{{route('jobs_list')}}">
+                        <a class="dropdown-item" href="{{route('jobs_list')}}" title="Job Postings">
                             <i class="fas fa-hard-hat"></i>
                             Job Postings</a>
                         <a class="dropdown-item" href="https://login.callsteward.ca/" target="_blank"
@@ -136,11 +142,11 @@
                         <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}"
                            title="My Profile">
                             <i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
-                        <a class="dropdown-item" href="{{route('members')}}">
-                            <i class="fas fa-user-friends"></i> Members List</a>
-                        <a class="dropdown-item" href="{{route('bylaws_list_public')}}">
+                        <a class="dropdown-item" href="{{route('members')}}" title="Member list">
+                            <i class="fas fa-user-friends"></i> Member List</a>
+                        <a class="dropdown-item" href="{{route('bylaws_list_public')}}" title="Constitution & Bylaws">
                             <i class="fas fa-gavel"></i> Constitution & By-Laws</a>
-                        <a class="dropdown-item" href="{{route('policies_list_public')}}">
+                        <a class="dropdown-item" href="{{route('policies_list_public')}}" title="Policies">
                             <i class="fas fa-scroll"></i>  Policies</a>
                     </div>
                 </div>

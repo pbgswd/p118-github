@@ -23,9 +23,6 @@ class ContentFeature
      */
     public function compose(View $view)
     {
-        $topicFilter = function ($query) {
-            $query->where('slug', 'news');
-        };
 
         $topics = Topic::where([['live', 1],['landing_page', 1]])
             ->orderBy('sort_order', 'desc')
@@ -46,7 +43,10 @@ class ContentFeature
 
         $user = Auth::user();
         $user->load('user_info');
-        $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info->image ?? '';
+
+        if($user->user_info->image){
+            $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info->image ?? '';
+        }
 
         $data = [
             'topics' => $topics,
