@@ -17,13 +17,15 @@ class FrontPage
 
         $posts = Post::where([['live', 1],['access_level', AccessLevelConstants::PUBLIC]])
             ->orderBy('updated_at', 'desc')
-            ->with('topics')
             ->get();
+
+        // ['front_page', 1],
 
         $pages = Page::where([['live', 1],['access_level', AccessLevelConstants::PUBLIC]])
             ->orderBy('updated_at', 'desc')
-            ->with('topics')
             ->get();
+
+        // ['front_page', 1],['access_level', AccessLevelConstants::PUBLIC]
 
         $features = Feature::where([['live', 1],['date', '<', NOW()]])
             ->orderBy('date', 'desc')

@@ -90,7 +90,7 @@
                         </picture>
                     </div>
                 @endif
-                <h2>
+                <h2 class="text-center">
                     <a class="text-secondary" href="{{route('feature', $f->slug)}}">
                         {{$f->title}}
                     </a>
