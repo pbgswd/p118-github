@@ -146,13 +146,11 @@
                 </div>
             @endguest
             @auth
-
-                <li class="nav-item mt-2 mr-2 d-flex align-items-stretch d-block d-md-block justify-content-center text-center">
-                    <a class="nav-link" href="{{route('landing_page')}}" title="Landing Page">
+                <li class="nav-item mt-2 mr-2 d-flex align-items-stretch justify-content-center text-center">
+                    <a class="nav-link d-none d-md-block" href="{{route('landing_page')}}" title="Landing Page">
                         <i class="fas fa-industry fa-lg"></i>
                     </a>
                 </li>
-
                 <li class="nav-item mt-2 d-block d-md-none d-lg-block">
                     <form class="form-inline" action="{{route('search')}}" method="POST">
                         {!! csrf_field() !!}
