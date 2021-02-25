@@ -1,13 +1,25 @@
 @extends('layouts.dashboard')
 @section('content')
     <div class='container'>
-        <h3>
-           <span class="badge badge-primary badge-pill">
-               {{$data['memoriam']->count()}} {{ Str::plural('Memoriam', $data['memoriam']->count())}}
-           </span>
-            | <a href="{{ route('admin_memoriam_create') }}">Create new Memoriam
-                <i class="far fa-arrow-alt-circle-right"></i> </a>
-        </h3>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <h3>
+                   <span class="badge badge-primary badge-pill">
+                       {{$data['memoriam']->count()}} {{ Str::plural('Memoriam', $data['memoriam']->count())}}
+                   </span>
+                    | <a href="{{ route('admin_memoriam_create') }}">Create new Memoriam
+                        <i class="far fa-arrow-alt-circle-right"></i> </a>
+                </h3>
+            </div>
+            <div class="col-12 col-md-6 text-right">
+                <a href="{{route('memoriam_list')}}">
+                    <i class="far fa-eye"></i>
+                    View on website</a>
+            </div>
+
+        </div>
+
+
     </div>
     <form name="delete" method="POST" action="{{route('admin_memoriam_destroy')}}">
         {!! csrf_field() !!}

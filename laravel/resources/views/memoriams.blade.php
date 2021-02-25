@@ -2,8 +2,16 @@
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12 text-center">
-            <h1>In Memoriam</h1>
+        <div class="row">
+            <div class="col-0 col-md-4"></div>
+            <div class="col-12 col-md-4 text-center">
+                <h1>In Memoriam</h1>
+            </div>
+            <div class="col-0 col-md-4 text-right">
+                @can('edit users')
+                    <a href="{{route('admin_memoriam_list')}}">Admin</a>
+                @endcan
+            </div>
         </div>
         <div class="row">
             <div class="col-12 mt-1 mb-2 text-center">
