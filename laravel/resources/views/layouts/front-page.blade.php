@@ -1,29 +1,31 @@
 <div class="row">
     @forelse($data['news']['features'] as $f)
-        <div class="col-12 border border-dark rounded-lg pt-2 mb-2">
-            @if($f->image)
-                <div class="col-12 text-center d-flex justify-content-center mb-2">
-                    <picture>
-                        <source srcset="{{asset('storage/public/'. $f->image)}}"
-                                media="(min-width: 577px)">
-                        <img srcset="{{asset('storage/public/'.$data['news']['features']->tn_str.$f->image)}}"
-                             alt="{{$f->file_name}}"
-                             class="rounded img-fluid d-block w-75 mx-auto">
-                    </picture>
-                </div>
-            @endif
-            <h2 class="text-center">
-                <a class="text-secondary" href="{{route('feature', $f->slug)}}">
-                    {{$f->title}}
-                </a>
-            </h2>
-            {!! $f->content !!}
+        <div class="col-12 col-md-6 pt-2 mb-2">
+            <div class="col h-100 w-100 border border-dark rounded-lg pt-2 mb-2">
+                @if($f->image)
+                    <div class="col text-center d-flex justify-content-center mb-2">
+                        <picture>
+                            <source srcset="{{asset('storage/public/'. $f->image)}}"
+                                    media="(min-width: 577px)">
+                            <img srcset="{{asset('storage/public/'.$data['news']['features']->tn_str.$f->image)}}"
+                                 alt="{{$f->file_name}}"
+                                 class="rounded img-fluid d-block w-75 mx-auto">
+                        </picture>
+                    </div>
+                @endif
+                <h2 class="text-center">
+                    <a class="text-secondary" href="{{route('feature', $f->slug)}}">
+                        {{$f->title}}
+                    </a>
+                </h2>
+                {!! $f->content !!}
+            </div>
         </div>
     @empty
     @endforelse
 </div>
 <div class="row">
-    <div class="col-12 col-md-6 w-100 h-100 mb-2">
+    <div class="col-12 col-md-6 mb-2">
         <div class="col border border-dark rounded w-100 h-100">
             <ul class="list-group list-group-flush p-0 m-0">
                 @forelse($data['news']['posts'] as $post)
@@ -39,7 +41,7 @@
             </ul>
         </div>
     </div>
-    <div class="col-12 col-md-6 w-100 h-100 mt-md-0">
+    <div class="col-12 col-md-6 mt-md-0">
         <div class="col border border-dark rounded w-100 h-100">
             <ul class="list-group list-group-flush p-0 m-0">
                 @forelse($data['news']['pages'] as $page)

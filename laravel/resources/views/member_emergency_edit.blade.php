@@ -1,6 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-<div class="container border border-dark rounded-lg  p-4 mb-3" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded-lg p-4 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row">
         <h3>
             <a href="{{route('members')}}">
@@ -12,7 +12,7 @@
             </a>
         </h3>
     </div>
-       <div class="row d-flex justify-content-around pb-2">
+       <div class="row d-flex justify-content-around pb-2 text-center">
         <div class="col-12 col-md-5 mt-md-3">
             <h4>
                 <a href="{{route('member_address_edit', $data['user']->id)}}">
@@ -21,7 +21,7 @@
                 </a>
             </h4>
         </div>
-        <div class="col-12 col-md-5 mt-md-3">
+        <div class="col-12 col-md-5 mt-md-3 text-center">
             <h4>
                 <a href="{{route('member_edit', $data['user']->id)}}">
                     <i class="fas fa-user"></i>

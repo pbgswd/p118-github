@@ -9,7 +9,8 @@
         <div class="row mb-3">
             @foreach ( $data['venues'] as $venue )
                 <div class="col-md-4 col-12 p-2">
-                    <div class="col border border-dark rounded h-100 w-100 p-2 text-center d-flex align-items-center justify-content-center">
+                    <div class="col border border-dark rounded h-100 w-100 p-2 text-center d-flex align-items-center
+                        justify-content-center">
                         <a href="{{ route('venue', $venue->slug) }}">
                             @if($venue->image)
                                 <img src="{{asset('storage/public/'. $data['tn_prefix'].$venue->image)}}"
