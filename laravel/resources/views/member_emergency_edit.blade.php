@@ -12,18 +12,7 @@
             </a>
         </h3>
     </div>
-    <div class="row">
-        <div class="col-12 m-3">
-            <p>
-                <i>
-                    <i class="fas fa-asterisk"></i>
-                    Please note: the website does not store your emergency contact information.
-                    This form will email the office contacts to update your info.
-                </i>
-            </p>
-        </div>
-    </div>
-    <div class="row d-flex justify-content-around pb-2">
+       <div class="row d-flex justify-content-around pb-2">
         <div class="col-12 col-md-5 mt-md-3">
             <h4>
                 <a href="{{route('member_address_edit', $data['user']->id)}}">
@@ -47,13 +36,19 @@
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-md-3 pt-2">
-            <div class="col-12">
-                <div class="col-lg-12 mb-3">
+                <div class="col-12 mb-3">
                     <h3 class="">
                         <i class="fas fa-first-aid text-danger"></i>
                         Update Your Emergency Contact Information
                     </h3>
                 </div>
+            <div class="col-12 mb-3">
+                <h3>
+                    <i class="fas fa-exclamation-triangle text-secondary"></i>
+                    The office has your current information. Please use this form
+                    <span class="font-weight-bolder">only when there is a change.</span>
+                </h3>
+            </div>
                 <div class="input-group mb-3">
                     <div class="col-12 d-block d-md-none font-weight-bold">
                         Emergency Contact Name
@@ -93,7 +88,7 @@
                            value="{{ old('emergency_contact_relationship', $emergency_contact_relationship ?? '') }}"
                            size="40" />
                 </div>
-                <div class="input-group mt-lg-5 mb-3">
+                <div class="input-group mt-3 mb-3">
                     <h4>
                         Add any additional info for the office about this change.
                     </h4>
@@ -101,12 +96,23 @@
                         {{ old('message', $message ?? '') }}
                     </textarea>
                 </div>
-                <div class="col-12 mt-lg-5">
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            <i>
+                                <i class="fas fa-asterisk"></i>
+                                Please note: the website does not store your emergency contact information.
+                                This form will email the office contacts to update your info.
+                            </i>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 mt-2">
                     <i class="fas fa-edit fa-2x"></i>
                     <input class="btn btn-primary" type="submit"
                        value="{{ $data['action'] }} My Emergency Contact Info" />
                 </div>
-            </div>
+
         </div>
     </form>
 </div>

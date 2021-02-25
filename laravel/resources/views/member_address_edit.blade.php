@@ -49,10 +49,17 @@
             <form method="post" name="user_address" action="{{ url()->current() }}" enctype="multipart/form-data"
               class="needs-validation" novalidate>
                 {!! csrf_field() !!}
-                <div class="col-lg-12">
+                <div class="col-12">
                     <h3>
                         <i class="fas fa-address-card text-success"></i>
                         Update Your Address With The Office
+                    </h3>
+                </div>
+                <div class="col-12 mb-3">
+                    <h3>
+                        <i class="fas fa-exclamation-triangle text-secondary"></i>
+                        The office has your current information. Please use this form
+                        <span class="font-weight-bolder">only when there is a change.</span>
                     </h3>
                 </div>
                 <div class="input-group mb-3">
@@ -96,7 +103,7 @@
                         strtoupper($postal_code ?? '')) }}"
                         size="40" required/>
                 </div>
-                <div class="input-group mt-lg-5 mb-3">
+                <div class="input-group mt-3 mb-3">
                     <h4>
                         Add any additional info for the office about this change.
                     </h4>
@@ -104,7 +111,16 @@
                         {{ old('message', $message ?? '') }}
                     </textarea>
                 </div>
-                <div class="col-12 mt-lg-5">
+                <div class="col-12 mt-3">
+                    <p>
+                        <i>
+                            <i class="fas fa-asterisk"></i>
+                            Please note: the website does not store your address information.
+                            This form will email the office contacts to update your info.
+                        </i>
+                    </p>
+                </div>
+                <div class="col-12 mt-3">
                     <i class="fas fa-edit fa-2x"></i>
                     <input class="btn btn-primary" type="submit" value="{{ $data['action'] }} My Address" />
                 </div>
