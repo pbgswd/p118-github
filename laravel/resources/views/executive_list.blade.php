@@ -44,7 +44,7 @@
         </div>
         @forelse($data['health'] as $h         )
             <div class="col-12 col-md-4 p-1">
-                <div class="border border-dark rounded-lg w-100 h-100 p-2">
+                <div class="border border-dark rounded-lg w-100 h-100 p-2  text-center align-self-center">
                     <h4 class="text-center">
                         {{$h->title}}
                     </h4>
@@ -81,8 +81,8 @@
         </div>
         @forelse($data['trustees'] as $t)
             <div class="col-12 col-md-4 p-1">
-                <div class="border border-dark rounded-lg w-100 h-100 p-2">
-                    <h4 class="text-center">
+                <div class="border border-dark rounded-lg w-100 h-100 p-2 text-center align-self-center">
+                    <h4>
                         {{$t->title}}
                     </h4>
                     @forelse($t->current_executive_user as $hw)
@@ -103,12 +103,12 @@
                             {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('M j Y')}}
                         </div>
                     @empty
-                        <div class="text-center"> No entry</div>
+                        <div class="text-center">No entry</div>
                     @endforelse
                 </div>
             </div>
         @empty
-            <div class="text-center"> No entry</div>
+            <div class="text-center">No entry</div>
         @endforelse
     </div>
     @auth
@@ -118,8 +118,8 @@
             </div>
             @forelse($data['committees'] as $c)
                 <div class="col-12 col-md-4 p-1">
-                    <div class="border border-dark rounded-lg w-100 h-100 p-2">
-                        <h4 class="text-center">
+                    <div class="border border-dark rounded-lg w-100 h-100 p-2 text-center align-self-center">
+                        <h4>
                             <a href="{{route('committee', $c->slug)}}">
                             {{$c->name}}
                             </a>
