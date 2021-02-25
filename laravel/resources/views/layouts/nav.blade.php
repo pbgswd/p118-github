@@ -38,7 +38,7 @@
                     Membership
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown">
-                    <a class="dropdown-item" href="{{route('page_show', 'apply-for-work')}}"
+                    <a class="dropdown-item" href="{{route('page_show', 'apply-for-overhire-work')}}"
                        title="Apply for Overhire Work">Apply for Overhire Work</a>
                     <a class="dropdown-item" href="{{route('page_show', 'requirements-for-membership')}}"
                        title="Apply for Membership">Apply for Membership</a>
@@ -134,6 +134,10 @@
                         <a class="dropdown-item" href="{{route('jobs_list')}}" title="Job Postings">
                             <i class="fas fa-hard-hat"></i>
                             Job Postings</a>
+                        <a class="dropdown-item" href="{{route('page_show','apply-for-sister-local-status')}}"
+                           title="Job Postings">
+                            <i class="fas fa-hard-hat"></i>
+                            Apply for Sister Local Status</a>
                         <a class="dropdown-item" href="https://login.callsteward.ca/" target="_blank"
                            title="Link to CallSteward">
                             <i class="fas fa-headset"></i>

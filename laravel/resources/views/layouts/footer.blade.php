@@ -40,7 +40,7 @@
                 </li>
                 <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
                 <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
-                <li class="list-group-item"><a href="{{route('page_show', 'apply-for-work')}}">Apply for work</a>
+                <li class="list-group-item"><a href="{{route('page_show', 'apply-for-overhire-work')}}">Apply for work</a>
                 </li>
             </ul>
         </div>
