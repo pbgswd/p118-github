@@ -31,7 +31,7 @@
                         <img srcset="{{asset('storage/'. $data['folder'] ."/". $data['tn_prefix'].
                                         $data['user']->user_info->image)}}"
                              alt="{{$data['user']->name}}"
-                             class="rounded img-fluid">
+                             class="rounded img-fluid w-50">
                     </picture>
                 </div>
             </div>
