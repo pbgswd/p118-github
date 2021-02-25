@@ -1,8 +1,10 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container border border-dark rounded-lg mb-1 mb-lg-3" style="background: rgba(220,220,220,0.8); padding:2em;">
-        <div class="col-12 text-center">
-            <h1>Topics</h1>
+    <div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Topics</h1>
+            </div>
         </div>
         <div class="row mb-2 mb-lg-3">
             @foreach ( $data['topics'] as $i )

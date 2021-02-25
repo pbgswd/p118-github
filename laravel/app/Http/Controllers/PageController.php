@@ -17,14 +17,12 @@ class PageController extends Controller
     {
         if (Auth::check()) {
             $pages = Page::where('live',1)
-                ->sortable()
-                ->with('topics','tagged')
-                ->paginate(10);
+                ->with('topics')
+                ->paginate(9);
         } else {
-            $pages = Page::sortable()
-                ->where([['access_level', '=', AccessLevelConstants::PUBLIC], ['live', 1]])
-                ->with('topics','tagged')
-                ->paginate(10);
+            $pages = Page::where([['access_level', '=', AccessLevelConstants::PUBLIC], ['live', 1]])
+                ->with('topics')
+                ->paginate(9);
         }
 
         return view('pages', ['data' => ['pages' => $pages]]);
@@ -36,6 +34,8 @@ class PageController extends Controller
      */
     public function show(Page $page): View
     {
+        //todo public page policy if not public page?
+
         if (false === Auth::check() && $page->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this page.');
 

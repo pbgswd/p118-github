@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Feature\DestroyFeatureRequest;
 use App\Http\Requests\Feature\StoreFeatureRequest;
 use App\Http\Requests\Feature\UpdateFeatureRequest;
@@ -63,6 +64,8 @@ class AdminFeatureController extends Controller
         $data = [
             'feature' => $feature,
             'action' => 'Create',
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
         ];
 
         return view('admin.feature', ['data' => $data]);
@@ -134,6 +137,8 @@ class AdminFeatureController extends Controller
         $data = [
             'feature' => $feature,
             'action' => 'Edit',
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
         ];
 
         return view('admin.feature', ['data' => $data]);

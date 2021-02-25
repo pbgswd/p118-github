@@ -14,7 +14,7 @@
                     </div>
                 @endif
                 <h2 class="text-center">
-                    <a class="text-secondary" href="{{route('feature', $f->slug)}}">
+                    <a class="text-secondary" href="{{$f->url ?? '#'}}" title="{{$f->title}}">
                         {{$f->title}}
                     </a>
                 </h2>

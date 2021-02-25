@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\FeaturePolicy;
-use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
@@ -16,7 +15,6 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
 {
     use HasFactory;
     use Sortable;
-    use Taggable;
 
     protected $policies = [
         self::class => FeaturePolicy::class,
@@ -26,6 +24,9 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         'title',
         'date',
         'live',
+        'access_level',
+        'front_page',
+        'landing_page',
         'created_at',
         'updated_at',
     ];
@@ -45,11 +46,15 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
      */
     protected $fillable = [
         'title',
+        'url',
         'content',
         'image',
         'file_name',
         'date',
         'live',
+        'access_level',
+        'front_page',
+        'landing_page',
     ];
 
     /**

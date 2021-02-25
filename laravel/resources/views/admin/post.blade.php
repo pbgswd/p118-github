@@ -21,8 +21,7 @@
             </div>
         @endif
     </div>
-
-    <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data"
+    <form method="post" name="post" action="{{url()->current()}}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row">
@@ -34,9 +33,6 @@
                     <input type="text" class="form-control"  placeholder="Title" name="post[title]"
                            value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
                 </div>
-            </div>
-            <div class="col-12 col-md-3 mt-2">
-                <h5>Current selected topics:</h5>
             </div>
             <div class="col-12 col-md-6 font-weight-bold mt-2">
                 @foreach($data['topics'] as $topic)
@@ -111,20 +107,7 @@
             </div>
         </div>
         </div>
-        <div class="row mt-3 mb-2">
-            <div class="col-12 mb-4">
-                <h4>Tags</h4>
 
-                <div class="form-group">
-                    <input type="text" name="tags"
-                          value="<?php echo htmlentities(old('tags',
-                              join(', ', $data['post']->tagNames()))); ?>"
-                           size="40"/>
-                </div>
-
-                <i>Add tags related to post, comma separated.</i>
-            </div>
-        </div>
         <div class="row mt-3 mb-3">
             <div class="col-12">
                 <div class="form-group">

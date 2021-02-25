@@ -53,7 +53,7 @@
                             </td>
                             <td>{{$f->date->format('F j Y') ?? ''}}</td>
                             <td>
-                                <a href="{{ route('admin_bylaw_edit', $f->id) }}" title="Edit {{ $f->title }} ">
+                                <a href="{{ route('admin_feature_edit', $f->slug) }}" title="Edit {{ $f->title }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>

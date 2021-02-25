@@ -35,7 +35,20 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
+            <div class="form-group">
+                <div class="col-12">
+                    <h4>
+                        URL Link for Title (optional, relative or absolute link)
+                    </h4>
+                </div>
+                <div class="col-12">
+                    <input type="text" class="form-control"  placeholder="url" name="feature[url]"
+                           value="{{ old('feature.url', $data['feature']->url)}}" size="80"/>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
             <div class="form-group">
                 <div class="col-lg-2">
                     <h4>Content</h4>
@@ -47,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
+        <div class="row mt-3">
             <div class="col-6">
                 <div class="form-group">
                     <h4>Publish Date</h4>
@@ -64,9 +77,38 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3 mb-2 pb-2 pt-2">
+            <div class="col-12 col-md-4 text-md-right">
+                <h4>Access Level for content</h4>
+            </div>
+            <div class="col-12 col-md-5 text-left">
+                <div class="form-group">
+                    {{ select_options($data['access_levels'], old('feature.access_level',
+                        $data['feature']->access_level), ['name' => 'feature[access_level]',
+                        'class' => 'form-control']) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
             <div class="col-12">
                 <h4>Status</h4>
+            </div>
+            <div class="p-2">
+                <label>
+                    <input name="feature[front_page]" type="hidden" value="0" />
+                    <input name="feature[front_page]" type="checkbox" value="1"
+                        {{ checked(old('feature.front_page',$data['feature']->front_page)) }} />
+                    Front Page
+                </label>
+            </div>
+            <div class="p-2">
+                <label>
+                    <input name="feature[landing_page]" type="hidden" value="0" />
+                    <input name="feature[landing_page]" type="checkbox" value="1"
+                        {{ checked(old('feature.landing_page', $data['feature']->landing_page)) }} />
+                    Landing Page
+                </label>
             </div>
             <div class="col-12">
                 <label>

@@ -24,7 +24,6 @@
                         <th> @sortablelink('title', 'Title') </th>
                         <th> @sortablelink('access_level', 'Access Level') </th>
                         <th> @sortablelink('live', 'Is Live?') </th>
-                        <th> @sortablelink('sort_order', 'Sort Order') </th>
                         <th> @sortablelink('front_page', 'Front Page') </th>
                         <th> @sortablelink('landing_page', 'Landing Page') </th>
                         <th> Edit </th>
@@ -68,7 +67,6 @@
                                 {!! $i->live ? "<i class='fas fa-check'></i>" :
                                     "<i class='far fa-times-circle'></i>" !!}
                             </td>
-                            <td> {{ $i->sort_order }} </td>
                             <td>
                                 {!! $i->front_page ? '<i class="fas fa-check"></i>' :
                                     '<i class="far fa-times-circle"></i>' !!}
@@ -90,7 +88,6 @@
             </table>
         </div>
     </div>
-
     <div class="row mb-3">
         <div class="col">
             <i class="far fa-trash-alt fa-2x"></i>

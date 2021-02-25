@@ -32,10 +32,9 @@ class UpdatePageRequest extends FormRequest
             'page.title' => 'required|max:255|unique:pages,title,'.$this->route('any_page')->slug.',slug',
             'page.content' => 'required',
             'page.access_level' => 'required|string|max:255',
-            'page.sort_order' =>  'required|numeric',
-            'page.in_menu' => 'boolean',
-            'page.allow_comments' => 'boolean',
             'page.live' => 'boolean',
+            'page.front_page' => 'boolean',
+            'page.landing_page' => 'boolean',
         ];
     }
 }

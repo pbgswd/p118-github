@@ -40,26 +40,28 @@ class LocalSearchController extends Controller
         $data = [
             'search' => $request->search,
             'results' => (new Search())
-                ->registerModel(Post::class, ['title', 'content'])
-                ->registerModel(Page::class, ['title', 'content'])
-                ->registerModel(Topic::class, ['name', 'description'])
                 ->registerModel(Agreement::class, ['title', 'description'])
                 ->registerModel(Bylaw::class, ['title', 'description'])
-                ->registerModel(Policy::class, ['title', 'description'])
-                ->registerModel(Employment::class, ['title', 'description'])
-                ->registerModel(Meeting::class, ['title', 'description'])
-                ->registerModel(Organization::class, ['name', 'description'])
-                ->registerModel(Venue::class, ['name', 'description'])
                 ->registerModel(Committee::class, ['name', 'description'])
                 ->registerModel(CommitteePost::class, ['title', 'content'])
-                ->registerModel(User::class, 'name')
+                ->registerModel(Employment::class, ['title', 'description'])
                 ->registerModel(Executive::class, ['title', 'email'])
                 ->registerModel(Feature::class, ['title', 'content'])
+                ->registerModel(Organization::class, ['name', 'description'])
+                ->registerModel(Meeting::class, ['title', 'description'])
                 ->registerModel(Memoriam::class, ['title', 'content'])
-                ->registerModel(UserInfo::class, 'about')
+                ->registerModel(Page::class, ['title', 'content'])
+                ->registerModel(Policy::class, ['title', 'description'])
+                ->registerModel(Post::class, ['title', 'content'])
+                ->registerModel(Topic::class, ['name', 'description'])
+              //->registerModel(User::class, 'name')
+                ->registerModel(Venue::class, ['name', 'description'])
+                //->registerModel(UserInfo::class, 'about')
                 ->search($request->search),
         ];
 
+//dd(class_basename($data['results'][0]->searchable));
+//dd($data['results'][0]->searchable);
         /*
          * https://laraveldaily.com/new-package-laravel-searchable-easily-search-in-multiple-models/
          * https://packagist.org/packages/spatie/laravel-searchable

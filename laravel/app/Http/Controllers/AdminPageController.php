@@ -39,7 +39,7 @@ class AdminPageController extends Controller
         $this->authorize('viewAny', Page::class);
         $pages = Page::withoutGlobalScopes()
             ->sortable()
-            ->with('topics', 'tagged', 'user')
+            ->with('topics', 'user')
             ->paginate(20);
         $count = Page::withoutGlobalScopes()->count();
 
@@ -90,13 +90,12 @@ class AdminPageController extends Controller
     {
         $this->authorize('create', Page::class);
 
-        $page = new Page($request->page, $request->input('tags'));
+        $page = new Page($request->page);
 
         $page->save();
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $page);
-
             if ($result) {
                 Session::flash('success', 'You uploaded '.
                     count($request->file('attachments')).' files');
@@ -107,10 +106,6 @@ class AdminPageController extends Controller
 
         if (! empty($request->input('page.topic_id'))) {
             $page->topics()->sync($request->input('page.topic_id'));
-        }
-
-        if (! empty($request->tags)) {
-            $page->tag(trim($request->tags, ','));
         }
 
         Session::flash('success', 'You have saved a new page');
@@ -181,13 +176,6 @@ class AdminPageController extends Controller
             $any_page->topics()->sync($request->page['topic_id']);
         }
 
-        //todo make tags a service
-        if (empty($request->tags)) {
-            $any_page->untag();
-        } else {
-            $any_page->retag(trim($request->tags, ','));
-        }
-
         Session::flash('success', 'You have edited the page');
 
         return redirect()->route('page_edit', [$any_page->slug]);
@@ -205,7 +193,6 @@ class AdminPageController extends Controller
         Page::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Page $page) {
-                $page->untag();
                 $this->attachmentService->destroyAttachments($page);
                 $page->topics()->detach();
                 $page->delete();

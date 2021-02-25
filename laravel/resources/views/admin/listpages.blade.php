@@ -12,11 +12,9 @@
             </a>
         </h3>
 </div>
-
 <form name="delete" method="POST" action="{{route('page_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
-
     <div class="form-group">
         <div class="table-responsive">
             <table class="table table-striped table-sm">
@@ -26,7 +24,6 @@
                         <th> @sortablelink('title', 'Title') </th>
                         <th> @sortablelink('access_level', 'Access Level') </th>
                         <th> @sortablelink('live', 'Is Live?') </th>
-                        <th> @sortablelink('sort_order', 'Sort Order') </th>
                         <th> @sortablelink('front_page', 'Front Page') </th>
                         <th> @sortablelink('landing_page', 'Landing Page') </th>
                         <th> Edit </th>
@@ -58,25 +55,15 @@
                                     no topics
                                 @endforelse
                             </h6>
-                            @if (count($i->tags) > 0)
-                                <h6>
-                                    (
-                                        @foreach ( $i->tags as $tag )
-                                            {{$tag->name}}
-                                        @endforeach
-                                    )
-                                </h6>
-                            @endif
-                            Added by: <a href="{{route('member', $i->user->id)}}" target="_blank">
+                            Added by:
+                            <a href="{{route('member', $i->user->id)}}" target="_blank">
                                 {{$i->user->name}}
                             </a>
-
                         </td>
                         <td> {{ $i->access_level }} </td>
                         <td>
                             {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!}
                         </td>
-                        <td> {{ $i->sort_order }} </td>
                         <td>
                             {!! $i->front_page ? '<i class="fas fa-check"></i>' :
                                 '<i class="far fa-times-circle"></i>' !!}

@@ -19,14 +19,12 @@ class TopicController extends Controller
         if (Auth::check()) {
             $topics = Topic::where('live',1)
                 ->sortable()
-                ->with('tagged')
                 ->orderBy('sort_order', 'desc')
-                ->paginate(10);
+                ->paginate(9);
         } else {
             $topics = Topic::sortable()
                 ->where([['access_level', '=', AccessLevelConstants::PUBLIC], ['live', 1]])
-                ->with('tagged')
-                ->paginate(10);
+                ->paginate(9);
         }
 
         return view('topics', ['data' => ['topics' => $topics]]);

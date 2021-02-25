@@ -27,11 +27,14 @@ class UpdateFeatureRequest extends FormRequest
             'delete_image' => 'boolean',
             'image' => 'file|nullable',
             'feature.title' => 'required|max:255|unique:pages,title,'.$this->route('any_feature')->slug.',slug',
+            'feature.url' => 'string|nullable|max:255',
             'feature.content' => 'required',
             'feature.image' => 'string|nullable',
             'feature.file_name' => 'string|nullable',
             'feature.date' => 'date',
             'feature.live' => 'boolean',
+            'feature.front_page' => 'boolean',
+            'feature.landing_page' => 'boolean',
         ];
     }
 }

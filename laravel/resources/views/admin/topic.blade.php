@@ -111,21 +111,6 @@
             </div>
         </div>
         <div class="row mt-lg-3">
-            <div class="form-group">
-                <div class="col-lg-2">
-                    <h4>Tags</h4>
-                </div>
-                <div class="col-lg-10">
-                    <label>
-                        <input type="text" name="tags"
-                               value="<?php echo htmlentities(old('tags', join(', ', $data['topic']->tagNames()))); ?>"
-                               size="40" />
-                        <br />Add tags related to topic, comma separated.
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-lg-3">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputFile">

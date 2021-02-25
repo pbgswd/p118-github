@@ -41,7 +41,7 @@ class AdminPostController extends Controller
 
         $posts = Post::withoutGlobalScopes()
             ->sortable()
-            ->with('topics', 'tagged')
+            ->with('topics')
             ->paginate(20);
 
         return view('admin.listposts', ['data' => ['posts' => $posts]]);
@@ -80,7 +80,7 @@ class AdminPostController extends Controller
     {
         $this->authorize('create', Post::class);
 
-        $post = new Post($request->input('post'), $request->input('tags'));
+        $post = new Post($request->input('post'));
 
         $post->user_id = Auth::id();
         $post->save();
@@ -98,10 +98,6 @@ class AdminPostController extends Controller
 
         if (! empty($request->input('post.topic_id'))) {
             $post->topics()->sync($request->input('post.topic_id'));
-        }
-
-        if (! empty($request->tags)) {
-            $post->tag(trim($request->tags, ','));
         }
 
         Session::flash('success', 'You have saved a new post');
@@ -175,12 +171,6 @@ class AdminPostController extends Controller
             $any_post->topics()->detach();
         }
 
-        if (empty($request->tags)) {
-            $any_post->untag();
-        } else {
-            $any_post->retag(trim($request->tags, ','));
-        }
-
         Session::flash('success', 'You have edited the post');
 
         return redirect()->route('post_edit', [$any_post->slug]);
@@ -198,7 +188,6 @@ class AdminPostController extends Controller
         Post::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Post $post) {
-                $post->untag();
                 $this->attachmentService->destroyAttachments($post);
                 $post->topics()->detach();
                 $post->delete();

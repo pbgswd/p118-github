@@ -79,6 +79,7 @@
         </div>
         @forelse($data['features'] as $f)
             <div class="col-12 border border-dark rounded-lg pt-2 mb-2">
+                <a name="{{$f->title}}"></a>
                 @if($f->image)
                     <div class="col-12 text-center d-flex align-items-center justify-content-center mb-2">
                         <picture>
@@ -91,7 +92,7 @@
                     </div>
                 @endif
                 <h2 class="text-center">
-                    <a class="text-secondary" href="{{route('feature', $f->slug)}}">
+                    <a class="text-secondary" href="{{$f->url ?? '#'}}" title="{{$f->title}}">
                         {{$f->title}}
                     </a>
                 </h2>

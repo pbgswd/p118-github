@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\PagePolicy;
-use Conner\Tagging\Taggable;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -35,7 +34,6 @@ use Spatie\Searchable\SearchResult;
 class Page extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
-    use Taggable;
 
     /**
      * The attributes that are mass assignable.
@@ -45,7 +43,6 @@ class Page extends LiveableModel implements HasAttachment, Searchable
         'description',
         'content',
         'access_level',
-        'sort_order',
         'live',
         'front_page',
         'landing_page',
@@ -60,7 +57,6 @@ class Page extends LiveableModel implements HasAttachment, Searchable
         'title',
         'access_level',
         'live',
-        'sort_order',
         'front_page',
         'landing_page',
         'created_at',

@@ -1,5 +1,5 @@
 <div class="col-12 mt-4 mb-2">
-    <h4>Select topics for this content</h4>
+    <h4>Topics</h4>
 </div>
 <div class="col-12 col-md-8 mt-1 mb-2">
     @foreach ($data['topics'] as $topic)

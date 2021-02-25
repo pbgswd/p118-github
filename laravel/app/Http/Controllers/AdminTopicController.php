@@ -35,7 +35,7 @@ class AdminTopicController extends Controller
 
         $topics = Topic::withoutGlobalScopes()
             ->sortable()
-            ->with('tagged', 'user')
+            ->with('user')
             ->paginate(20);
 
         return view('admin.listtopics', ['data' => ['topics' => $topics]]);
@@ -69,7 +69,7 @@ class AdminTopicController extends Controller
     {
         $this->authorize('create', Topic::class);
 
-        $topic = new Topic($request->input('topic'), $request->input('tags'));
+        $topic = new Topic($request->input('topic'));
         $topic->user_id = Auth::id();
 
         $topic->save();
@@ -84,9 +84,6 @@ class AdminTopicController extends Controller
             }
         }
 
-        if (! empty($request->tags)) {
-            $topic->tag(trim($request->tags, ','));
-        }
         Session::flash('success', 'You have saved a new topic');
 
         return redirect()->route('topic_edit', [$topic->slug]);
@@ -137,12 +134,6 @@ class AdminTopicController extends Controller
             }
         }
 
-        if (empty($request->tags)) {
-            $any_topic->untag();
-        } else {
-            $any_topic->retag(trim($request->tags, ','));
-        }
-
         Session::flash('success', 'You have edited the topic');
 
         return redirect()->route('topic_edit', [$any_topic->slug]);
@@ -160,7 +151,6 @@ class AdminTopicController extends Controller
         Topic::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Topic $topic) {
-                $topic->untag();
                 $topic->pages()->detach();
                 $topic->posts()->detach();
                 $this->attachmentService->destroyAttachments($topic);

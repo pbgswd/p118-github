@@ -26,11 +26,14 @@ class StoreFeatureRequest extends FormRequest
         return [
             'image' => 'file|nullable',
             'feature.title' => 'required|unique:features,title|max:255',
+            'feature.url' => 'string|nullable|max:255',
             'feature.content' => 'required',
             'feature.image' => 'string|nullable',
             'feature.file_name' => 'string|nullable',
             'feature.date' => 'date',
             'feature.live' => 'boolean',
+            'feature.front_page' => 'boolean',
+            'feature.landing_page' => 'boolean',
         ];
     }
 }
