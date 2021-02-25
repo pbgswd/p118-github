@@ -88,19 +88,19 @@
                     </a>
                 </h3>
             </div>
-        @else
-            <div class="d-sm-block d-md-none col-12 mt-4 mb-3">
-                <h3>
-                    <a href="{{route('page_show', 'contact-us')}}">
-                        <i class="far fa-lg fa-address-book"></i>
-                        Contacts for Administration, Health & Welfare, and Committees
-                    </a>
-                </h3>
-            </div>
-            <div class="d-none d-md-block col-12 m-0 mt-4 pt-4">
-                {!! $data['contactPage'][0]->content ?? '' !!}
-            </div>
-        @endguest
+            @auth
+                <div class="d-sm-block d-md-none col-12 mt-4 mb-3">
+                    <h3>
+                        <a href="{{route('page_show', 'contact-us')}}">
+                            <i class="far fa-lg fa-address-book"></i>
+                            Contacts for Administration, Health & Welfare, and Committees
+                        </a>
+                    </h3>
+                </div>
+                <div class="d-none d-md-block col-12 m-0 mt-4 pt-4">
+                    {!! $data['contactPage'][0]->content ?? '' !!}
+                </div>
+            @endauth
         </div>
     </div>
 

@@ -58,7 +58,7 @@
                                         @auth
                                     </a>
                                 @endauth
-                                <a href="mailto:{{$t->email}}">
+                                <a href="mailto:{{$hw->email}}">
                                     <i class="fas fa-envelope"></i>
                                 </a>
                             </h4>
