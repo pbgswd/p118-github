@@ -20,10 +20,13 @@
         </div>
         <div class="row mb-lg-5">
             @if(null !== $data['committee']->image)
-                <div class="col-12 mb-3 pt-2">
+                <div class="col-12 mb-3 pt-2 text-center">
                     <img src="{{ asset('storage/committees/'.$data['committee']->image)}}"
                          class="border rounded-lg img-fluid mb-2" />
                 </div>
+
+
+
             @endif
             <div class="col-12 pt-2 text-center">
                 <h1>

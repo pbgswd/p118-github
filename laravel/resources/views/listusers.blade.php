@@ -64,6 +64,12 @@
                                 <br />
                             @empty
                             @endforelse
+                            @forelse($i->committee_memberships as $cm)
+                                <a href="{{route('committee', $cm->slug)}}" title="{{$cm->name}}">
+                                    {{$cm->name}}{!! $loop->last ? '<br />' : ',' !!}
+                                </a>
+                            @empty
+                            @endforelse
                             @if (!empty($i->user_info->share_email) )
                                 <a href="mailto:{{ $i->email }}">
                                     {{ $i->email }}

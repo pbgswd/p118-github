@@ -11,15 +11,15 @@
     <div class="row">
         @forelse ( $data['committees'] as $c )
             <div class="col-12 col-md-6 p-2">
-                <div class="col border border-dark rounded-lg w-100 h-100 p-3">
-                    @if($c->image)
-                        <img src="{{asset('storage/committees/'.$c->image)}}" class="img-fluid rounded" />
-                    @endif
-                    <h3>
-                        <a href="{{route('committee', $c->slug)}}">
+                <div class="col border border-dark rounded-lg w-100 h-100 p-3 text-center">
+                    <a href="{{route('committee', $c->slug)}}">
+                        @if($c->image)
+                            <img src="{{asset('storage/committees/'.$c->image)}}" class="img-fluid rounded mb-3" />
+                        @endif
+                        <h3>
                             {{ $c->name }}
-                        </a>
-                    </h3>
+                        </h3>
+                    </a>
                     <p>{!! $c->description !!}</p>
                 </div>
             </div>
