@@ -40,7 +40,7 @@
             @endforeach
         </div>
         <div class="row mb-2">
-            <div class="d-flex justify-content-center">
+            <div class="col-12 d-flex justify-content-center">
                 <div class="list-group">
                     <ul class="pagination">
                         {!! $data['memoriam']->links() !!}
