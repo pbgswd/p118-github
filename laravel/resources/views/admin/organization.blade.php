@@ -59,7 +59,8 @@
                         <input type="file" id="inputFile" name="image" />
                     @else
                         <input type="hidden" name="organization[image]" value="{{$data['organization']->image}}" />
-                        <input type="hidden" name="organization[file_name]" value="{{$data['organization']->file_name}}" />
+                        <input type="hidden" name="organization[file_name]"
+                               value="{{$data['organization']->file_name}}" />
                         <img src="{{ asset('storage/public/'. $data['organization']->image)}}"
                              class="rounded img-fluid" /><br />
                         {{$data['organization']->filesize}}<br />

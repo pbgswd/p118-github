@@ -132,14 +132,16 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
                 ->where([['live', 1],
                      ['access_level', 'public']
                 ])
-                ->orderBy('until', 'desc');
+                ->sortable()
+                ->orderBy('title');;
     }
 
     public function member_agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
             ->where('live', 1)
-            ->orderBy('title', 'desc');
+            ->sortable()
+            ->orderBy('title');
     }
 
 

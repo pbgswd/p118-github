@@ -54,7 +54,11 @@
                     <h4>
                         Agreements with {{$data['venue']->name}}
                     </h4>
-
+                    @if($data['agreements']->count() > 1)
+                        <h5>
+                            Order by: @sortablelink('title', 'Title')| @sortablelink('until', 'End Date')
+                        </h5>
+                    @endif
                     <ul class="list-group list-group-flush">
                         @foreach($data['agreements'] as $va)
                             <li class="list-group-item">
