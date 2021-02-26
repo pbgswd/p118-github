@@ -7,6 +7,7 @@ use App\Models\Venue;
 use App\Services\UserImageService;
 use Auth;
 use Illuminate\View\View;
+use Spatie\Image\Exceptions\InvalidManipulation;
 
 class VenueController extends Controller
 {
@@ -33,14 +34,13 @@ class VenueController extends Controller
     /**
      * @param Venue $venue
      * @return View
+     * @throws InvalidManipulation
      */
     public function show(Venue $venue): View
     {
-        $agreements = Auth::check() ? $venue->member_agreements : $venue->agreements;
-
+        //todo sort out where venue img should go
         if($venue['image']) {
             if(file_exists(storage_path() . '/app/public/' . $venue['image'])) {
-
                 if(!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
                     $venue['image'])) {
                     $this->userImageService->generate_thumb($venue['image'], 'public',
@@ -50,9 +50,11 @@ class VenueController extends Controller
             $venue->thumb = Options::venue_org_thumb_values()['tn_str'] . $venue['image'];
         }
 
+        $venue->attachments;
+
         $data = [
             'venue' => $venue,
-            'agreements' => $agreements,
+            'agreements' => Auth::check() ? $venue->member_agreements : $venue->agreements,
             ];
 
         return view('venue', ['data' => $data]);

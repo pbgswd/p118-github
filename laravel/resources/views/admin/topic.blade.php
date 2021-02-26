@@ -121,74 +121,72 @@
                 </div>
             </div>
         </div>
-        @if ($data['action'] == 'Edit')
-            @if(count($data['topic']->attachments) > 0)
-                <div class="col-md-12 pb-2 m-2">
-                    <h5>Files</h5>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
+        @if ($data['action'] == 'Edit' && count($data['topic']->attachments) > 0)
+            <div class="col-md-12 pb-2 m-2">
+                <h5>Files</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> File </th>
+                                <th>Access level</th>
+                                <th>Edit</th>
+                                <th> Description </th>
+                                <th> Created At </th>
+                                <th> Updated At </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($data['topic']->attachments as $ta)
                                 <tr>
-                                    <th> # </th>
-                                    <th> File </th>
-                                    <th>Access level</th>
-                                    <th>Edit</th>
-                                    <th> Description </th>
-                                    <th> Created At </th>
-                                    <th> Updated At </th>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="attachment[{{$ta->id}}][id]"
+                                                       value="{{$ta->id}}" />
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('attachment_download', [$data['topic']->getAttachmentFolder(),
+                                            $ta->id])}}"
+                                            title="Download {{$ta->file_name}}">
+                                            {{$ta->file_name}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{$ta->access_level}}
+                                    </td>
+                                    <td>
+                                        <a title="{{ $ta->name }}" href="{{ route('admin_attachment_edit', $ta->id) }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               placeholder="Add a description for this file"
+                                               name="attachment[{{$ta->id}}][description]"
+                                               value="{{ old('attachments.description', $ta->description)}}" size="40"/>
+                                    </td>
+                                    <td>
+                                        {{$ta->created_at}}
+                                    </td>
+                                    <td>
+                                        {{$ta->updated_at}}
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($data['topic']->attachments as $ta)
-                                    <tr>
-                                        <td>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" name="attachment[{{$ta->id}}][id]"
-                                                           value="{{$ta->id}}" />
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <a href="{{route('attachment_download', [$data['topic']->getAttachmentFolder(),
-                                                $ta->id])}}"
-                                                title="Download {{$ta->file_name}}">
-                                                {{$ta->file_name}}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            {{$ta->access_level}}
-                                        </td>
-                                        <td>
-                                            <a title="{{ $ta->name }}" href="{{ route('admin_attachment_edit', $ta->id) }}">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control"
-                                                   placeholder="Add a description for this file"
-                                                   name="attachment[{{$ta->id}}][description]"
-                                                   value="{{ old('attachments.description', $ta->description)}}" size="40"/>
-                                        </td>
-                                        <td>
-                                            {{$ta->created_at}}
-                                        </td>
-                                        <td>
-                                            {{$ta->updated_at}}
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr><td colspan="7">No files</td></tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-12 mt-2">
-                            <i class="far fa-trash-alt"></i>
-                            Select checkbox to delete file.
-                    </div>
+                            @empty
+                                <tr><td colspan="7">No files</td></tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-            @endif
+                <div class="col-12 mt-2">
+                        <i class="far fa-trash-alt"></i>
+                        Select checkbox to delete file.
+                </div>
+            </div>
         @endif
         <div class="row mt-5 mb-5">
             @if ($data['action'] == 'Edit')

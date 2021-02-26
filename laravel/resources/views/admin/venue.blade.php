@@ -109,8 +109,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row">
             <div class="col-12">
                 <h4>Status</h4>
@@ -125,7 +123,6 @@
                 <p>ie.: Draft or Published.</p>
             </div>
         </div>
-
         <div class="row border border-dark rounded mt-5 mb-5 pt-2 pb-2">
         @if ($data['action'] == 'Edit')
             <div class="col-12 col-md-6 pt-2">
@@ -146,8 +143,8 @@
                                     <input type="checkbox" name="id[]" value="{{$va->id}}" />
                                 </th>
                                 <td>
-                                    <a title="{{$va->title}}" href="{{ route('agreement_edit', $va->id) }}">
-                                        {{ $va->title }}
+                                    <a title="{{$va->title}}" href="{{route('agreement_edit', $va->id)}}">
+                                        {{$va->title}}
                                     </a>
                                     @if(\Carbon\Carbon::parse($va->until)->isPast())
                                         <i>(Not current)</i>
@@ -185,6 +182,85 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-lg-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To this Venue
+                    </label>
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
+                </div>
+            </div>
+        </div>
+
+        @if ($data['action'] == 'Edit' && count($data['venue']->attachments) > 0)
+            <div class="col-md-12 pb-2 m-2">
+                <h5>Files</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> File </th>
+                            <th>Access level</th>
+                            <th>Edit</th>
+                            <th> Description </th>
+                            <th> Created At </th>
+                            <th> Updated At </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse ($data['venue']->attachments as $ta)
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="attachment[{{$ta->id}}][id]"
+                                                   value="{{$ta->id}}" />
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="{{route('attachment_download', [$data['venue']->getAttachmentFolder(),
+                                            $ta->id])}}"
+                                       title="Download {{$ta->file_name}}">
+                                        {{$ta->file_name}}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{$ta->access_level}}
+                                </td>
+                                <td>
+                                    <a title="{{ $ta->name }}" href="{{ route('admin_attachment_edit', $ta->id) }}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"
+                                           placeholder="Add a description for this file"
+                                           name="attachment[{{$ta->id}}][description]"
+                                           value="{{ old('attachments.description', $ta->description)}}" size="40"/>
+                                </td>
+                                <td>
+                                    {{$ta->created_at}}
+                                </td>
+                                <td>
+                                    {{$ta->updated_at}}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="7">No files</td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 mt-2">
+                    <i class="far fa-trash-alt"></i>
+                    Select checkbox to delete file.
+                </div>
+            </div>
+        @endif
         <div class="row mt-lg-3">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>

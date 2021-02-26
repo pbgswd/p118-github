@@ -74,5 +74,25 @@
                 </div>
             </div>
         @endif
+        @if(count($data['venue']->attachments) > 0)
+            <div class="col-12 mt-3">
+                <h4>
+                    <i class="far fa-folder-open"></i>
+                    Files
+                </h4>
+                @foreach ($data['venue']->attachments as $va)
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="{{route('attachment_download',
+                                [$data['venue']->getAttachmentFolder(), $va->id])}}"
+                                title="Download {{$va->file_name}}">
+                                <i class="far fa-file"></i>
+                                {{$va->description ? : $va->file_name}}
+                            </a>
+                        </li>
+                    </ul>
+                @endforeach
+            </div>
+        @endif
     </div>
 @endsection

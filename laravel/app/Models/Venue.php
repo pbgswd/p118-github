@@ -133,7 +133,7 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
                      ['access_level', 'public']
                 ])
                 ->sortable()
-                ->orderBy('title');;
+                ->orderBy('title');
     }
 
     public function member_agreements(): BelongsToMany
@@ -144,13 +144,12 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
             ->orderBy('title');
     }
 
-
     /**
      * @return BelongsToMany
      */
     public function attachments(): BelongsToMany
     {
-       // return $this->belongsToMany(Attachment::class, 'attachment_venue');
+       return $this->belongsToMany(Attachment::class, 'attachment_venue');
     }
 
     /**
@@ -158,7 +157,7 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
      */
     public function getAttachmentFolder(): string
     {
-        return 'public';
+        return 'org_venue';
     }
 
     public function keepDissociatedAttachments(): bool

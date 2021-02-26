@@ -91,8 +91,8 @@ class AdminOrganizationController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $org);
             if ($result) {
-                Session::flash('success', 'You uploaded '.
-                    count($request->file('attachments')).' files');
+                Session::flash('success', 'You uploaded '. count($request->file('attachments')) .
+                    Str::plural(' file', count($request->file('attachments'))));
             } else {
                 Session::flash('error', 'You have an upload problem');
             }

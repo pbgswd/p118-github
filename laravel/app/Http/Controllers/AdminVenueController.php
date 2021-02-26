@@ -83,6 +83,16 @@ class AdminVenueController extends Controller
             $venue['file_name'] = $request->file('image')->getClientOriginalName();
         }
 
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $venue);
+            if ($result) {
+                Session::flash('success', 'You uploaded '. count($request->file('attachments')) .
+                    Str::plural(' file', count($request->file('attachments'))));
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
         $venue->save();
 
         $venue->agreements()->sync($request->all_agreements);
@@ -101,7 +111,7 @@ class AdminVenueController extends Controller
     {
         $this->authorize('update', Venue::class);
 
-        $any_venue->load('member_agreements');
+        $any_venue->load('member_agreements', 'attachments');
 
         $all_agreements = Agreement::whereNotIn(
             'id',
@@ -180,6 +190,17 @@ class AdminVenueController extends Controller
         }
 
         $any_venue->agreements()->attach($request->all_agreements);
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $any_venue);
+            if ($result) {
+                Session::flash('success', 'You uploaded '. count($request->file('attachments')) .
+                    Str::plural(' file', count($request->file('attachments'))));
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
 
         Session::flash('success', 'You have edited the venue');
 
