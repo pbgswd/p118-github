@@ -57,11 +57,12 @@
                 <div class="col-12 border border-dark rounded-lg mb-3 p-2">
                     <h4>
                         Agreements with {{$data['organization']->name}}
-                        @if($data['agreements']->count() > 1)
-                            <h5>
-                                Order by: @sortablelink('title', 'Title')| @sortablelink('until', 'End Date')
-                            </h5>
-                        @endif
+                    </h4>
+                    @if($data['agreements']->count() > 1)
+                        <h5>
+                            Order by: @sortablelink('title', 'Title')| @sortablelink('until', 'End Date')
+                        </h5>
+                    @endif
                     <ul class="list-group list-group-flush">
                         @foreach($data['agreements'] as $va)
                             <li class="list-group-item">
@@ -73,6 +74,26 @@
                             </li>
                         @endforeach
                     </ul>
+                </div>
+            @endif
+            @if(count($data['organization']->attachments) > 0)
+                <div class="col-12 mt-3">
+                    <h4>
+                        <i class="far fa-folder-open"></i>
+                        Files
+                    </h4>
+                    @foreach ($data['organization']->attachments as $pa)
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <a href="{{route('attachment_download',
+                                        [$data['organization']->getAttachmentFolder(), $pa->id])}}"
+                                   title="Download {{$pa->file_name}}">
+                                    <i class="far fa-file"></i>
+                                    {{$pa->description ? : $pa->file_name}}
+                                </a>
+                            </li>
+                        </ul>
+                    @endforeach
                 </div>
             @endif
         </div>

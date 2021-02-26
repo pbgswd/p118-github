@@ -107,7 +107,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12">
                 <h4>Status</h4>
@@ -184,6 +183,88 @@
                 </div>
             </div>
         </div>
+        <div class="row m-3">
+            <div class="col-12">
+                <h3>Attach Files</h3>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To this Organization
+                    </label>
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
+                </div>
+            </div>
+        </div>
+        @if ($data['action'] == 'Edit' && count($data['organization']->attachments) > 0)
+            <div class="col-md-12 pb-2 m-2">
+                <h5>Files</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> File </th>
+                            <th>Access level</th>
+                            <th>Edit</th>
+                            <th> Description </th>
+                            <th> Created At </th>
+                            <th> Updated At </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse ($data['organization']->attachments as $oa)
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="attachment[{{$oa->id}}][id]"
+                                                   value="{{$oa->id}}" />
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="{{route('attachment_download', [$data['organization']->getAttachmentFolder(),
+                                            $oa->id])}}"
+                                       title="Download {{$oa->file_name}}">
+                                        {{$oa->file_name}}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{$oa->access_level}}
+                                </td>
+                                <td>
+                                    <a title="{{ $oa->name }}" href="{{ route('admin_attachment_edit', $oa->id) }}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"
+                                           placeholder="Add a description for this file"
+                                           name="attachment[{{$oa->id}}][description]"
+                                           value="{{ old('attachments.description', $oa->description)}}" size="40"/>
+                                </td>
+                                <td>
+                                    {{$oa->created_at}}
+                                </td>
+                                <td>
+                                    {{$oa->updated_at}}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="7">No files</td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 mt-2">
+                    <i class="far fa-trash-alt"></i>
+                    Select checkbox to delete file.
+                </div>
+            </div>
+        @endif
+
         <div class="row mt-lg-3">
             <div class="col">
                 <i class="fas fa-edit fa-2x"></i>

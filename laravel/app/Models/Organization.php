@@ -69,6 +69,10 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
      * @var mixed
      */
     private $agreements;
+    /**
+     * @var mixed
+     */
+    private $attachments;
 
     public function __construct(array $attributes = [])
     {
@@ -147,7 +151,7 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
      */
     public function attachments(): BelongsToMany
     {
-        // return $this->belongsToMany(Attachment::class, 'attachment_venuexxxxxx');
+        return $this->belongsToMany(Attachment::class, 'attachment_organization');
     }
 
     /**
@@ -155,7 +159,7 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
      */
     public function getAttachmentFolder(): string
     {
-        return 'public';
+        return 'public'; //org_venue  anything
     }
 
     public function keepDissociatedAttachments(): bool

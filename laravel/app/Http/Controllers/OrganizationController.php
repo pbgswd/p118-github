@@ -30,7 +30,6 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization): View
     {
-        $agreements = Auth::check() ? $organization->member_agreements : $organization->agreements;
 
         if ($organization['image']) {
             if (file_exists(storage_path() . '/app/public/' . $organization['image'])) {
@@ -41,14 +40,15 @@ class OrganizationController extends Controller
                         Options::venue_org_thumb_values());
                 }
             }
-            $organization->thumb = Options::venue_org_thumb_values()['tn_str'] . $organization['image'];
-
-            $data = [
-                'organization' => $organization,
-                'agreements' => $agreements,
-            ];
-
-            return view('organization', ['data' => $data]);
         }
+        $organization->thumb = Options::venue_org_thumb_values()['tn_str'] . $organization['image'] ? : '';
+        $organization->attachments;
+
+        $data = [
+            'organization' => $organization,
+            'agreements' => Auth::check() ? $organization->member_agreements : $organization->agreements,
+        ];
+
+        return view('organization', ['data' => $data]);
     }
 }

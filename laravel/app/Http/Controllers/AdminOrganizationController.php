@@ -25,8 +25,9 @@ class AdminOrganizationController extends Controller
      */
     private $userImageService;
 
-    public function __construct(UserImageService $userImageService){
+    public function __construct(UserImageService $userImageService, AttachmentService $attachmentService){
         $this->userImageService = $userImageService;
+        $this->attachmentService = $attachmentService;
     }
 
     /**
@@ -87,6 +88,16 @@ class AdminOrganizationController extends Controller
 
         $org->save();
 
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $org);
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
         $org->agreements()->sync($request->all_agreements);
 
         Session::flash('success', 'You have saved a new venue');
@@ -104,7 +115,7 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('update', Organization::class);
 
-        $any_organization->load('member_agreements');
+        $any_organization->load('member_agreements', 'attachments');
 
         if($any_organization['image']) {
             if(file_exists(storage_path() . '/app/public/' . $any_organization['image'])) {
@@ -180,6 +191,18 @@ class AdminOrganizationController extends Controller
         }
 
         $any_organization->agreements()->attach($request->all_agreements);
+
+        $result = $this->attachmentService->updateAttachment($request, $any_organization);
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $any_organization);
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
 
         Session::flash('success', 'You have edited the organization');
 
