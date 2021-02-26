@@ -159,7 +159,7 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
      */
     public function getAttachmentFolder(): string
     {
-        return 'public'; //org_venue  anything
+        return 'org_venue';
     }
 
     public function keepDissociatedAttachments(): bool
