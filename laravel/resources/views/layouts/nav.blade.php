@@ -50,8 +50,15 @@
                         title="Availability & Dispatch">
                         Availability & Dispatch
                     </a>
-                    <a class="dropdown-item" href="{{route('page_show', 'union-dues-overview')}}"
-                        title="Union Dues">Union Dues</a>
+                    <a class="dropdown-item" href="{{route('page_show', 'apply-for-sister-local-status')}}"
+                       title="Union Dues">Apply for Sister Local Status</a>
+                    @auth
+                        <a class="dropdown-item" href="{{route('page_show', 'union-dues-members')}}"
+                           title="Union Dues">Union Dues for Members</a>
+                    @else
+                        <a class="dropdown-item" href="{{route('page_show', 'union-dues-overview')}}"
+                           title="Union Dues">Union Dues Overview</a>
+                    @endauth
                     <a class="dropdown-item" href="{{route('page_show', 'leaving-membership')}}"
                         title="Leaving Membership">Leaving Membership</a>
                     <a class="dropdown-item" title="Request Representation"
@@ -63,8 +70,7 @@
                     </a>
                 </div>
             </div>
-            @guest
-            @else
+            @auth
                 <div class="dropdown mr-1 mt-2 mt-md-0">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,7 +81,7 @@
                            title="Health & Welfare Overview">H & W Overview</a>
                     </div>
                 </div>
-            @endguest
+            @endauth
             <div class="dropdown mr-1 mt-2 mt-md-0">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
