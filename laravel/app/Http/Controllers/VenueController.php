@@ -20,12 +20,9 @@ class VenueController extends Controller
      */
     public function list(): View
     {
-        $data = [];
-        $access = Auth::check() ? 'members' : 'public';
-
         $data['venues'] = Venue::where('live', 1)
             ->orderBy('name')
-            //->whereIn('access_level', ['public', $access])
+            ->whereIn('access_level', ['public', Auth::check() ? 'members' : ''])
             ->paginate(9);
 
         $data['tn_prefix'] = Options::venue_org_thumb_values()['tn_str'];

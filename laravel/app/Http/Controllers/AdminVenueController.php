@@ -51,13 +51,10 @@ class AdminVenueController extends Controller
     {
         $this->authorize('create', Venue::class);
 
-        $venue = new Venue;
-
-        $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
-
         $data = [
-            'venue' => $venue,
-            'all_agreements' => $all_agreements,
+            'venue' => new Venue,
+            'all_agreements' => Agreement::withoutGlobalScopes()->orderBy('title')->get(),
+            'access_levels' => Options::access_levels(),
             'action' => 'Create',
         ];
 
@@ -135,6 +132,7 @@ class AdminVenueController extends Controller
         $data = [
             'venue' => $any_venue,
             'all_agreements' => $all_agreements,
+            'access_levels' => Options::access_levels(),
             'action' => 'Edit',
         ];
 

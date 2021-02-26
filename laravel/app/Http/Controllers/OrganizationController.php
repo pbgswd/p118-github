@@ -14,11 +14,8 @@ class OrganizationController extends Controller
      */
     public function list(): View
     {
-        $data = [];
-        $access = Auth::check() ? 'members' : 'public';
-
         $data['organizations'] = Organization::where('live', 1)
-            //->whereIn('access_level', ['public', $access])
+            ->whereIn('access_level', ['public', Auth::check() ? 'members' : ''])
             ->orderBy('name')
             ->paginate(9);
 

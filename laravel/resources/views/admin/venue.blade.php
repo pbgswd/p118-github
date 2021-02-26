@@ -87,22 +87,40 @@
         </div>
         <div class="row mt-3">
             <div class="form-group">
-                <div class="col-lg-8"><h4>Venue Website Link</h4></div>
-                <div class="col-lg-10">
+                <div class="col-12">
+                    <h4>Venue Website Link</h4>
+                </div>
+                <div class="col-12">
                     <input type="text" class="form-control"
                            placeholder="Website Address - http://...." name="venue[url]"
                            value="{{ old('venue.url', $data['venue']->url)}}" size="80" />
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12"><h4>Status</h4></div>
+        <div class="row mt-3">
+            <div class="col-12 pt-3">
+                <h4>Access Level</h4>
+            </div>
+            <div class="col-12 pt-3">
+                <div class="form-group">
+                    {{ select_options($data['access_levels'],
+                        old('venue.access_level', $data['venue']->access_level),
+                        ['name' => 'venue[access_level]', 'class' => 'form-control']) }}
+                </div>
+            </div>
+        </div>
 
+
+        <div class="row">
+            <div class="col-12">
+                <h4>Status</h4>
+            </div>
             <div class="col-12">
                 <label>
-                     <input name="venue[live]" type="hidden" value="0" />
-                     <input name="venue[live]" type="checkbox" value="1"
-                         {{ checked( old('venue.live', $data['venue']->live)) }} /> Check now to make Live
+                    <input name="venue[live]" type="hidden" value="0" />
+                    <input name="venue[live]" type="checkbox" value="1"
+                    {{ checked( old('venue.live', $data['venue']->live)) }} />
+                    Check now to make Live
                 </label>
                 <p>ie.: Draft or Published.</p>
             </div>
