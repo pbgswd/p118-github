@@ -39,7 +39,7 @@ class AdminPageController extends Controller
         $this->authorize('viewAny', Page::class);
         $pages = Page::withoutGlobalScopes()
             ->sortable()
-            ->with('topics', 'user')
+            ->with('topics', 'user', 'attachments')
             ->paginate(20);
         $count = Page::withoutGlobalScopes()->count();
 

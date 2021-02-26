@@ -47,13 +47,7 @@
                                     {{ $i->name }}
                                 </a>
                             </h4>
-                            @if (count($i->tags) > 0)
-                                (
-                                @foreach ( $i->tags as $tag )
-                                    {{$tag->name}}
-                                @endforeach
-                                )
-                            @endif
+                            {{$i->attachments->count()}} {{Str::plural('Attachment', $i->attachments->count()) }} <br />
                             Added by: <a href="{{route('member', $i->user->id)}}" target="_blank">
                                 {{$i->user->name}}
                             </a>

@@ -41,7 +41,7 @@ class AdminPostController extends Controller
 
         $posts = Post::withoutGlobalScopes()
             ->sortable()
-            ->with('topics')
+            ->with('topics', 'attachments')
             ->paginate(20);
 
         return view('admin.listposts', ['data' => ['posts' => $posts]]);

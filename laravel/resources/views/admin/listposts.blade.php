@@ -55,6 +55,7 @@
                                         no topics
                                     @endforelse
                                 </h6>
+                                {{$i->attachments->count()}} {{Str::plural('Attachment', $i->attachments->count())}} <br />
                                 <h6>
                                     Added by:
                                     <a href="{{route('member', $i->user->id)}}" target="_blank">
