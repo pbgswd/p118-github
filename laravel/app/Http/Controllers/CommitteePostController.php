@@ -7,6 +7,7 @@ use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -39,11 +40,13 @@ class CommitteePostController extends Controller
         $post = new CommitteePost;
         $post['committee'] = $committee;
 
-        return view('committee_post_form', [
-            'data' => [
-                'post' => $post, 'action' => 'Create',
-            ],
-        ]);
+        $data = [
+            'post' => $post,
+            'action' => 'Create',
+            'access_levels' => Options::access_levels(),
+        ];
+
+        return view('committee_post_form', ['data' => $data]);
     }
 
     /**
@@ -72,7 +75,6 @@ class CommitteePostController extends Controller
             }
         }
 
-
         Session::flash('success', 'You have saved a new post in '.$committee->name);
 
         return redirect()->route('committee_post_edit_form', [$committee->slug, $post->slug]);
@@ -94,6 +96,7 @@ class CommitteePostController extends Controller
             'data' => [
                 'post' => $committeePost,
                 'action' => 'Edit',
+                'access_levels' => Options::access_levels(),
             ],
         ]);
     }
@@ -102,11 +105,11 @@ class CommitteePostController extends Controller
      * @param UpdateCommitteePostRequest $request
      * @param Committee $committee
      * @param CommitteePost $committeePost
-     * @return View
+     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateCommitteePostRequest $request,
-                           Committee $committee, CommitteePost $committeePost): View
+                           Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
         $this->authorize('update', [CommitteePost::class, $committeePost]);
 
@@ -127,10 +130,7 @@ class CommitteePostController extends Controller
             }
         }
 
-        return view('committee_post_form', [
-            $committee->slug, $committeePost->slug, ], [
-            'data' => ['post' => $committeePost, 'action' => 'Edit'],
-        ]);
+        return redirect()->route('committee_post_edit_form', [$committee->slug, $committeePost->slug,]);
     }
 
     /**
@@ -152,15 +152,6 @@ class CommitteePostController extends Controller
         ) {
             $data['canManage'] = 1;
         }
-
-        /*
-        if($data['committeepost']->allow_comments == 1) {
-            $data['committeepost']->load('post_comments');
-            $data['committeepost']->post_comments = $data['committeepost']
-        ->post_comments->sortByDesc('created_at');
-        }
-        */
-        //  $data['action'] = 'Add';
 
         return view('committee_post', ['data' => $data]);
     }

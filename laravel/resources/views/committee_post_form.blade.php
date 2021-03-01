@@ -89,7 +89,12 @@
                                                title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
                                         </td>
                                         <td>
-                                            {{$data['post']->access_level}}
+                                            <div class="form-group">
+                                                {{ select_options($data['access_levels'],
+                                                    old('attachment.access_level', $pa->access_level),
+                                                    ['name' => 'attachment['.$pa->id.'][access_level]',
+                                                    'class' => 'form-control']) }}
+                                            </div>
                                         </td>
                                         <td>
                                             <a href="{{route('admin_attachment_edit', $pa->id)}}"
