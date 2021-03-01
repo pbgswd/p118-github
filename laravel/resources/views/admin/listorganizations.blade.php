@@ -44,6 +44,10 @@
                                 <h4>
                                     <a title="{{ $org->name }}" href="{{ route('organization_edit', $org->slug) }}">{{ $org->name }}</a>
                                 </h4>
+                                <h6>
+                                    {{$org->all_agreements->count() ?? 0}} {{Str::plural('Agreement', $org->all_agreements->count() ?? 0)}} <br />
+                                    {{$org->attachments->count() ?? 0}} {{Str::plural('Attachment', $org->attachments->count() ?? 0)}}
+                                </h6>
                             </td>
                             <td> {{ $org->access_level }} </td>
                             <td> {!! $org->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>

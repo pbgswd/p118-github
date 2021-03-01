@@ -148,11 +148,18 @@
                                                 <a href="{{route('attachment_download',
                                                             [$data['agreement']->getAttachmentFolder(),
                                                             $attachment->id])}}"
-                                                   title="Download {{$attachment->file_name}}">
+                                                    title="Download {{$attachment->file_name}}">
                                                     {{$attachment->file_name}}
                                                 </a>
                                             </td>
-                                            <td>{{$attachment->access_level}}</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ select_options($data['access_levels'],
+                                                        old('attachment.access_level', $attachment->access_level),
+                                                        ['name' => 'attachment['.$attachment->id.'][access_level]',
+                                                        'class' => 'form-control']) }}
+                                                </div>
+                                            </td>
                                             <td>
                                                 <a title="Edit page for {{ $attachment->file_name }}"
                                                    href="{{route('admin_attachment_edit', $attachment->id) }}">

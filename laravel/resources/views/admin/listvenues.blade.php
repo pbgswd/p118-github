@@ -44,6 +44,10 @@
                                         {{ $v->name }}
                                     </a>
                                 </h4>
+                                <h6>
+                                    {{$v->all_agreements->count() ?? 0}} {{Str::plural('Agreement', $v->all_agreements->count() ?? 0)}} <br />
+                                    {{$v->attachments->count() ?? 0}} {{Str::plural('Attachment', $v->attachments->count() ?? 0)}}
+                                </h6>
                             </td>
                             <td> {{ $v->access_level }} </td>
                             <td>

@@ -114,7 +114,6 @@
                 </div>
             </div>
         @if ($data['action'] == 'Edit')
-            @if(count($data['employment']->attachments) > 0)
                 <div class="col-md-12">
                     <h2>Files</h2>
                     <table class="table table-striped table-sm">
@@ -122,13 +121,15 @@
                             <tr>
                                 <th> # </th>
                                 <th> File </th>
+                                <th> Access Level </th>
                                 <th> Description </th>
+                                <th> Edit </th>
                                 <th> Created At </th>
                                 <th> Updated At </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data['employment']->attachments as $ma)
+                            @forelse ($data['employment']->attachments as $ma)
                                 <tr>
                                     <td>
                                         <div class="checkbox">
@@ -145,6 +146,14 @@
                                         </a>
                                     </td>
                                     <td>
+                                        <div class="form-group">
+                                            {{ select_options($data['access_levels'],
+                                                old('attachment.access_level', $ma->access_level),
+                                                ['name' => 'attachment['.$ma->id.'][access_level]',
+                                                'class' => 'form-control']) }}
+                                        </div>
+                                    </td>
+                                    <td>
                                         <input type="text" class="form-control"
                                                placeholder="Add a description for this file"
                                                name="attachment[{{$ma->id}}][description]"
@@ -152,22 +161,32 @@
                                                size="40"/>
                                     </td>
                                     <td>
-                                        {{$ma->created_at}}
+                                        <a title="{{ $ma->name }}" href="{{ route('admin_attachment_edit', $ma->id) }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                       {{$ma->created_at}}
                                     </td>
                                     <td>
                                         {{$ma->updated_at}}
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="7"> No files </td>
+                                </tr>
+                            @endforelse
+                            @if(count($data['employment']->attachments) > 0)
                             <tr>
                                 <td colspan="5">
                                     <i class="far fa-trash-alt"></i> Select checkbox to delete a file
                                 </td>
                             </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
-            @endif
         @endif
         </div>
         <div class="row mt-lg-3">

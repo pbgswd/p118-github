@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <h4>
-                    <a href="{{url()->previous()}}">
+                    <a href="{{route('jobs_list')}}">
                         <i class="far fa-arrow-alt-circle-left"></i>
                         Employment postings
                     </a>

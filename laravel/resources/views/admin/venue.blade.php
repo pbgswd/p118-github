@@ -183,7 +183,10 @@
             </div>
         </div>
         <div class="row mt-lg-3">
-            <div class="col-md-6">
+            <div class="col-12">
+                <h4>Attachments</h4>
+            </div>
+            <div class="col-12">
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
@@ -194,9 +197,11 @@
             </div>
         </div>
 
-        @if ($data['action'] == 'Edit' && count($data['venue']->attachments) > 0)
-            <div class="col-md-12 pb-2 m-2">
-                <h5>Files</h5>
+        @if ($data['action'] == 'Edit')
+            <div class="col-12 pb-2 m-2">
+                <h5>{{$data['venue']->attachments->count()}}
+                    {{Str::plural('File', $data['venue']->attachments->count())}}
+                </h5>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -250,7 +255,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="7">No files</td></tr>
+                            <tr><td colspan="7">No files attached</td></tr>
                         @endforelse
                         </tbody>
                     </table>

@@ -117,16 +117,17 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment): View
     {
+
         $this->authorize('update', Auth::user());
 
-        if (! \file_exists(\storage_path('app/'.$attachment->subfolder).'/'.$attachment->file)) {
-            Session::flash('error', $attachment->file_name.' was not found on the server');
+        if (! \file_exists(\storage_path('app/'. $attachment->subfolder) .'/'. $attachment->file)) {
+            Session::flash('error', $attachment->file_name. ' was not found on the server');
 
             return \redirect()->route('attachments_list');
         }
 
         $attachment->setCalculatedProperties();
-
+       // dd($attachment);
         return view('admin.attachment', ['data' => [
             'attachment' => $attachment,
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),

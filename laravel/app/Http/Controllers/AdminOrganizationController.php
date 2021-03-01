@@ -38,7 +38,7 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('viewAny', Organization::class);
         $data = [];
-        $data['organizations'] = Organization::withoutGlobalScopes()
+        $data['organizations'] = Organization::withoutGlobalScopes()->with('attachments', 'all_agreements')
             ->sortable()
             ->orderBy('name')
             ->paginate(10);
@@ -115,7 +115,7 @@ class AdminOrganizationController extends Controller
     {
         $this->authorize('update', Organization::class);
 
-        $any_organization->load('member_agreements', 'attachments');
+        $any_organization->load('attachments');
 
         if($any_organization['image']) {
             if(file_exists(storage_path() . '/app/public/' . $any_organization['image'])) {
@@ -161,13 +161,15 @@ class AdminOrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $any_organization): RedirectResponse
     {
+       // dd($request->all());
         $this->authorize('update', Organization::class);
         $any_organization->fill($request->organization);
 
         if (isset($request['delete_image'])) {
             if (file_exists(storage_path() . '/app/public/' . $any_organization['image'])) {
 
-                $this->userImageService->destroyImage($any_organization['image'], 'public', Options::venue_org_thumb_values());
+                $this->userImageService->destroyImage($any_organization['image'], 'public',
+                    Options::venue_org_thumb_values());
 
                 Session::flash('info', 'You have deleted ' . $any_organization['file_name']);
                 $any_organization['image'] = null;

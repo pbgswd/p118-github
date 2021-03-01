@@ -36,6 +36,7 @@ class AdminVenueController extends Controller
         $this->authorize('viewAny', Venue::class);
 
         $data['venues'] = Venue::withoutGlobalScopes()
+            ->with('all_agreements', 'attachments')
             ->sortable()
             ->orderBy('name')
             ->paginate(10);

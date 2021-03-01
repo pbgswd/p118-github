@@ -146,6 +146,13 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
             ->orderBy('title');
     }
 
+    public function all_agreements(): BelongsToMany
+    {
+        return $this->belongsToMany(Agreement::class)
+            ->sortable()
+            ->orderBy('title');
+    }
+
     /**
      * @return BelongsToMany
      */

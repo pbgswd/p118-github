@@ -185,7 +185,7 @@
         </div>
         <div class="row m-3">
             <div class="col-12">
-                <h3>Attach Files</h3>
+                <h4>Attachments</h4>
             </div>
             <div class="col-12">
                 <div class="form-group">
@@ -197,9 +197,11 @@
                 </div>
             </div>
         </div>
-        @if ($data['action'] == 'Edit' && count($data['organization']->attachments) > 0)
+        @if ($data['action'] == 'Edit')
             <div class="col-md-12 pb-2 m-2">
-                <h5>Files</h5>
+                <h5>{{$data['organization']->attachments->count()}}
+                    {{Str::plural('File', $data['organization']->attachments->count())}}
+                </h5>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -215,6 +217,7 @@
                         </thead>
                         <tbody>
                         @forelse ($data['organization']->attachments as $oa)
+
                             <tr>
                                 <td>
                                     <div class="checkbox">
@@ -225,14 +228,20 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="{{route('attachment_download', [$data['organization']->getAttachmentFolder(),
+                                    <a href="{{route('attachment_download',
+                                            [$data['organization']->getAttachmentFolder(),
                                             $oa->id])}}"
                                        title="Download {{$oa->file_name}}">
                                         {{$oa->file_name}}
                                     </a>
                                 </td>
                                 <td>
-                                    {{$oa->access_level}}
+                                    <div class="form-group">
+                                        {{ select_options($data['access_levels'],
+                                            old('attachment.access_level', $oa->access_level),
+                                            ['name' => 'attachment['.$oa->id.'][access_level]',
+                                            'class' => 'form-control']) }}
+                                    </div>
                                 </td>
                                 <td>
                                     <a title="{{ $oa->name }}" href="{{ route('admin_attachment_edit', $oa->id) }}">

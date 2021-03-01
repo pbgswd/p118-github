@@ -50,26 +50,27 @@ class AttachmentService
             foreach ($request->attachment as $k => $v) {
                 $attachment = Attachment::find($k);
 
-                //todo do I ever want to detach files from a post instead of delete ?
-
                 if (isset($v['id'])) {
                     if ($model->keepDissociatedAttachments()) {
-                        //dissociate file,
                         $model->attachments()->detach($attachment);
                     } else {
-                        // delete the file
                         Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
                         Attachment::destroy($v['id']);
                     }
                     continue;
                 }
 
-                $attachment->access_level = $model->access_level ?? AccessLevelConstants::MEMBERS;
+                $keys = array_keys($request->attachment);
 
-                $attachment->description = \trim($v['description']);
-                $attachment->save();
+                foreach($keys as $k)
+                {
+                    if($attachment->id == $k){
+                        $attachment->access_level = $request->attachment[$k]['access_level'];
+                        $attachment->description = \trim($request->attachment[$k]['description']);
+                        $attachment->save();
+                    }
+                }
             }
-
             return true;
         }
 

@@ -50,6 +50,7 @@ if (! function_exists('select_options')) {
      */
     function select_options(array $data, $selected = null, $attributes = true, $required = null)
     {
+
         $placeholder = null;
         if ($attributes === false) {
             $result = '';
@@ -82,6 +83,7 @@ if (! function_exists('select_options')) {
         }
 
         $result .= $closeTag;
+
         echo $result;
     }
 
@@ -104,7 +106,7 @@ if (! function_exists('select_options')) {
                 .$optAttributes;
 
             if (in_array($value, $selected)) {
-                $html .= ' selected="selected" ';
+                $html .= ' selected="selected"';
             }
             $html .= '>'.htmlspecialchars($label)."</option>\n";
         }

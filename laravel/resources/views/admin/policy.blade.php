@@ -123,7 +123,14 @@
                                             {{$attachment->file_name}}
                                         </a>
                                     </td>
-                                    <td>{{$attachment->access_level}}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            {{ select_options($data['access_levels'],
+                                                old('attachment.access_level', $attachment->access_level),
+                                                ['name' => 'attachment['.$attachment->id.'][access_level]',
+                                                'class' => 'form-control']) }}
+                                        </div>
+                                    </td>
                                     <td>
                                         <a title="Edit page for {{ $attachment->file_name }}"
                                            href="{{ route('admin_attachment_edit', $attachment->id) }}">
@@ -144,6 +151,9 @@
                                         {{$attachment->updated_at}}
                                     </td>
                                 </tr>
+                                <td colspan="5">
+                                    No files
+                                </td>
                             @endforeach
                             <tr>
                                 <td colspan="5">

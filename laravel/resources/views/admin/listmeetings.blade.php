@@ -41,8 +41,14 @@ $meetings = $data['meetings'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $a->title }}" href="{{ route('meeting_edit', $a->id) }}">{{ $a->title }}</a>
+                                    <a title="{{ $a->title }}" href="{{ route('meeting_edit', $a->id) }}">
+                                        {{ $a->title }}
+                                    </a>
                                 </h4>
+                                <h6>
+                                    {{$a->attachments->count()}}
+                                    {{Str::plural('Attachment', $a->attachments->count())}}
+                                </h6>
                             </td>
                             <td>
                                 @if(null !== ($a->attachments))

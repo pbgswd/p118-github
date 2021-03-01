@@ -19,7 +19,7 @@
             </div>
         @endif
     </div>
-    <h3>
+
 
 
 
@@ -62,8 +62,8 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-2">
-            <div class="col-md-6">
+        <div class="row mt-5">
+            <div class="col-12">
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
@@ -72,16 +72,17 @@
                     <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-2"><h4>Status</h4></div>
-                <div class="col-sm">
-                    <label>
-                        <input name="meeting[live]" type="hidden" value="0" />
-                        <input name="meeting[live]" type="checkbox" value="1" {{ checked( old('meeting.live', $data['meeting']->live)) }} /> Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
-                </div>
+            <div class="col-12">
+                <h4>Status</h4>
             </div>
+            <div class="col-12">
+                <label>
+                    <input name="meeting[live]" type="hidden" value="0" />
+                    <input name="meeting[live]" type="checkbox" value="1" {{ checked( old('meeting.live', $data['meeting']->live)) }} /> Check now to make Live
+                </label>
+                <p>ie.: Draft or Published.</p>
+            </div>
+        </div>
         </div>
         @if ($data['action'] == 'Edit')
             @if(count($data['meeting']->attachments) > 0)
@@ -100,7 +101,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data['meeting']->attachments as $ma)
+                            @forelse ($data['meeting']->attachments as $ma)
                                 <tr>
                                     <td>
                                         <div class="checkbox">
@@ -113,7 +114,12 @@
                                         <a href="{{route('attachment_download', [$data['meeting']->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
                                     </td>
                                     <td>
-                                        {{$ma->access_level}}
+                                        <div class="form-group">
+                                            {{ select_options($data['access_levels'],
+                                                old('attachment.access_level', $ma->access_level),
+                                                ['name' => 'attachment['.$ma->id.'][access_level]',
+                                                'class' => 'form-control']) }}
+                                        </div>
                                     </td>
                                     <td>
                                         <a title="Edit page for {{ $ma->file_name }}" href="{{ route('admin_attachment_edit', $ma->id) }}"><i class="far fa-edit"></i></a>

@@ -50,6 +50,9 @@
                                         <i>(Not current)</i>
                                     @endif
                                 </h4>
+                                <h6>
+                                    {{$a->attachments->count()}} {{Str::plural('Attachment', $a->attachments->count())}}
+                                </h6>
                             </td>
                             <td> {{ $a->access_level }} </td>
                             <td>

@@ -1,6 +1,3 @@
-<?php
-$attachment = $data['attachment'];
-?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> ' . $data['action'] . ' File'])
 @section('content')
     <div class="row mb-3">
@@ -26,20 +23,20 @@ $attachment = $data['attachment'];
                         Upload file to server & database. Insert or attach to content after.
                         You may add many images at once.
                     </p>
-                    <h5>Access Level for content:</h5>
+                    <h5>Access Level for content:  {{$data['attachment']->access_level}}</h5>
                     <div class="form-group">
                         {{ select_options($data['access_levels'],
-                            old('attachment.access_level', $attachment->access_level),
+                            old('attachment.access_level', $data['attachment']->access_level),
                             ['name' => 'attachment[access_level]', 'class' => 'form-control',
                             'placeholder' => 'Access Level'], 'required') }}
                     </div>
                 </div>
             </div>
         @else
-            @if(!in_array($attachment->extension, ['jpg', 'jpeg', 'png', 'gif']))
+            @if(!in_array($data['attachment']->extension, ['jpg', 'jpeg', 'png', 'gif']))
                 <div class="row">
                     <div class="col-md-4">
-                        {!! $attachment->extension == 'pdf' ? '<i class="far fa-file-pdf fa-8x"></i>' :
+                        {!! $data['attachment']->extension == 'pdf' ? '<i class="far fa-file-pdf fa-8x"></i>' :
                             '<i class="far fa-file fa-8x"></i>' !!}
                     </div>
                     <div class="col-md-8 text-wrap">
@@ -47,34 +44,34 @@ $attachment = $data['attachment'];
                             <i class="fas fa-info-circle"></i>
                             File Info
                         </h2>
-                        <p>
-                            <ul class="list-group">
-                                <li class="list-group-item">Location:
-                                    <a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/
-                                        {{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/
-                                        {{$attachment->subfolder}}/{{$attachment['file']}}
-                                    </a>
-                                </li>
-                                <li class="list-group-item">File Size: {{$attachment->filesize}}</li>
-                                <li class="list-group-item">Original File Name: {{$attachment['file_name']}}</li>
-                                <li class="list-group-item">Uploaded File Name: {{$attachment['file']}}</li>
-                                <li class="list-group-item">
-                                    <a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])}}
-                                        " title="Download {{$attachment->file_name}}">
-                                        {!! $attachment->extension == 'pdf' ? '<i class="far fa-file-pdf fa-4x"></i>' :
-                                            '<i class="fas fa-file-download fa-4x"></i>' !!}
-                                        Download {{$attachment['file_name']}}
-                                    </a>
-                                </li>
-                                <li class="list-group-item">File Type: {{$attachment->extension}}</li>
-                                <li class="list-group-item">
-                                    Last Updated: {{$attachment->updated_at->format('F j Y H:i:s')}}
-                                </li>
-                            </ul>
-                        </p>
+                        <ul class="list-group-flush">
+                            <li class="list-group-item">Location:
+                                <a href="{{env('APP_URL') .'/storage/'. $data['attachment']->subfolder .'/'.
+                                    $data['attachment']['file']}}" target="_blank">{{env('APP_URL') .'/storage/'.
+                                    $data['attachment']->subfolder .'/'. $data['attachment']['file']}}
+                                </a>
+                            </li>
+                            <li class="list-group-item">File Size: {{$data['attachment']->filesize}}</li>
+                            <li class="list-group-item">Original File Name: {{$data['attachment']['file_name']}}</li>
+                            <li class="list-group-item">Uploaded File Name: {{$data['attachment']['file']}}</li>
+                            <li class="list-group-item">
+                                <a href="{{route('attachment_download', [$data['attachment']->subfolder,
+                                   $data['attachment']->id])}}"
+                                   title="Download {{$data['attachment']->file_name}}">
+                                    {!! $data['attachment']->extension == 'pdf' ?
+                                        '<i class="far fa-file-pdf fa-4x"></i>' :
+                                        '<i class="fas fa-file-download fa-4x"></i>' !!}
+                                    Download {{$data['attachment']['file_name']}}
+                                </a>
+                            </li>
+                            <li class="list-group-item">File Type: {{$data['attachment']->extension}}</li>
+                            <li class="list-group-item">
+                                Last Updated: {{$data['attachment']->updated_at->format('F j Y H:i:s')}}
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                @include('admin.admin_partials.attachment_descrption_access_level_form_elements')
+                @include('admin.admin_partials.attachment_description_access_level_form_elements')
                 <div class="row">
                     <div class="col-12 mt-4 mb-3">
                         <h4>
@@ -86,24 +83,24 @@ $attachment = $data['attachment'];
                         <h4>Code</h4>
 <pre>
     <code>
-    &lt;a href={{env('APP_URL')}}/{{$attachment->subfolder}}/download/{{$attachment['id']}}"
-            title="Download {!! $attachment['file_name'] !!}"
+    &lt;a href={{env('APP_URL')}}/{{$data['attachment']->subfolder}}/download/{{$data['attachment']['id']}}"
+            title="Download {!! $data['attachment']['file_name'] !!}"
             target="_blank" /&gt;
-        {{$attachment->extension == 'pdf' ? '<i class="far fa-file-pdf fa-4x"></i>' : '<i class="far fa-file fa-4x"></i>' }}
-          {{$attachment->description ? : $attachment->file_name}}
+        {{$data['attachment']->extension == 'pdf' ? '<i class="far fa-file-pdf fa-4x"></i>' :
+            '<i class="far fa-file fa-4x"></i>' }}
+          {{$data['attachment']->description ? : $data['attachment']->file_name}}
         &lt;/a&gt;
     </code>
 </pre>
                     </div>
                     <div class="col-12 col-md-6">
                         <h4>...which will appear on the page like this:</h4>
-
-                        <a href={{env('APP_URL')}}/{{$attachment->subfolder}}/download/{{$attachment['id']}}"
-                           title="Download {!! $attachment['file_name'] !!}"
-                           target="_blank" />
-                        {!! $attachment->extension == 'pdf' ? '<i class="far fa-file-pdf fa-4x"></i>' :
-                            '<i class="far fa-file fa-4x"></i>' !!}
-                        {{$attachment->description ? : $attachment->file_name}}
+                        <a href="{{env('APP_URL') .'/'. $data['attachment']->subfolder .'/download/'.
+                            $data['attachment']['id']}}"
+                           title="Download {{$data['attachment']['file_name']}}" target="_blank" />
+                            {!! $data['attachment']->extension == 'pdf' ? '<i class="far fa-file-pdf fa-4x"></i>' :
+                                '<i class="far fa-file fa-4x"></i>' !!}
+                            {{$data['attachment']->description ? : $data['attachment']->file_name}}
                         </a>
                     </div>
                 </div>
@@ -112,74 +109,70 @@ $attachment = $data['attachment'];
                     <div class="col-12 col-md-6">
                         <img class="border rounded-lg m-1 img-fluid"
                               src="{!! asset('storage/' .
-                                $attachment->subfolder . "/" . $attachment['file']) .'"' !!}}"/>
+                                $data['attachment']->subfolder . "/" . $data['attachment']['file']) .'"' !!}}"/>
                     </div>
                     <div class="col-12 col-md-6">
                         <h3>
                             <i class="far fa-file-image"></i>
                             Image Info
                         </h3>
-                        <ul class="list-group">
+                        <ul class="list-group-flush">
                             <li class="list-group-item">Location:
-                                <a href="{{env('APP_URL')}}/storage/{{$attachment->subfolder}}/
-                                    {{$attachment['file']}}" target="_blank">{{env('APP_URL')}}/storage/
-                                    {{$attachment->subfolder}}/{{$attachment['file']}}
+                                <a href="{{env('APP_URL') .'/storage/'. $data['attachment']->subfolder .'/'.
+                                    $data['attachment']['file']}}" target="_blank">
+                                    {{env('APP_URL') .'/storage/'.
+                                    $data['attachment']->subfolder .'/'. $data['attachment']['file'] }}
                                 </a>
                             </li>
-                            <li class="list-group-item">File Size: {{$attachment->filesize}}</li>
-                            <li class="list-group-item">Original File Name: {{$attachment['file_name']}}</li>
+                            <li class="list-group-item">File Size: {{$data['attachment']->filesize}}</li>
+                            <li class="list-group-item">Original File Name: {{$data['attachment']['file_name']}}</li>
                             <li class="list-group-item">
-                                <a href="{{route('attachment_download', [$attachment->subfolder, $attachment->id])}}"
-                                   title="Download {{$attachment->file_name}}"><i class="fas fa-file-download"></i>
-                                    Download {{$attachment['file_name']}}
+                                <a href="{{route('attachment_download', [$data['attachment']->subfolder,
+                                    $data['attachment']->id])}}"
+                                   title="Download {{$data['attachment']->file_name}}">
+                                    <i class="fas fa-file-download"></i>
+                                    Download {{$data['attachment']['file_name']}}
                                 </a>
                             </li>
-                            <li class="list-group-item">Uploaded File Name: {{$attachment['file']}}</li>
-                            <li class="list-group-item">File Type: {{$attachment->extension}}</li>
-                            <li class="list-group-item">Width: {{$attachment->imagedata[0]}} px</li>
-                            <li class="list-group-item">Height: {{$attachment->imagedata[1]}} px</li>
-                            <li class="list-group-item">Mime Type: {{$attachment->imagedata['mime']}}</li>
+                            <li class="list-group-item">Uploaded File Name: {{$data['attachment']['file']}}</li>
+                            <li class="list-group-item">File Type: {{$data['attachment']->extension}}</li>
+                            <li class="list-group-item">Width: {{$data['attachment']->imagedata[0]}} px</li>
+                            <li class="list-group-item">Height: {{$data['attachment']->imagedata[1]}} px</li>
+                            <li class="list-group-item">Mime Type: {{$data['attachment']->imagedata['mime']}}</li>
                             <li class="list-group-item">
-                                Last Updated: {{$attachment['updated_at']->format('F j Y H:i:s')}}
+                                Last Updated: {{$data['attachment']['updated_at']->format('F j Y H:i:s')}}
                             </li>
                         </ul>
                     </div>
                 </div>
-                @include('admin.admin_partials.attachment_descrption_access_level_form_elements')
+                @include('admin.admin_partials.attachment_description_access_level_form_elements')
                 <div class="row">
                     <div class="col-12 mt-3 mb-1">
                         <h4>Insert into content with:</h4>
 <pre>
     <code>
-&lt;img src="/storage/{{$attachment->subfolder}}/{{$attachment['file']}}" class="border rounded-lg m-1 img-fluid" /&gt;
+&lt;img src="/storage/{{$data['attachment']->subfolder}}/{{$data['attachment']['file']}}" class="border rounded-lg m-1 img-fluid" /&gt;
     </code>
 </pre>
                     </div>
                 </div>
                 @endif
         @endif
-
-
-
-
-
-
         <div class="row mt-3 mb-5 p-4">
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
         @if ($data['action'] == 'Edit')
-            <div class="col-md-6" style="float:right">
+            <div class="col-12 col-md-6" style="float:right">
                 <form name="delete" method="POST" action="{{route('attachment_destroy')}}">
                     {!! csrf_field() !!}
                     {!! method_field('DELETE') !!}
                     <i class="far fa-trash-alt fa-2x"></i>
-                    <input type="hidden" name="id[]" value="{{ $attachment->id }}">
+                    <input type="hidden" name="id[]" value="{{ $data['attachment']->id }}">
                     <input class="btn btn-outline-danger" type="submit" value="Delete">
                 </form>
             </div>
         @endif
-
 @endsection

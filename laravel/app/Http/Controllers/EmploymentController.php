@@ -12,22 +12,12 @@ use Illuminate\View\View;
 
 class EmploymentController extends Controller
 {
-    /** @var AttachmentService */
-    private $attachmentService;
-
-    public function __construct(AttachmentService $attachmentService)
-    {
-        $this->attachmentService = $attachmentService;
-    }
 
     /**
      * @return View
      */
     public function index(): View
     {
-        //todo update job status on page load
-        // update status set status = 0
-
         $years = DB::table('employment')
             ->select(DB::raw('DISTINCT YEAR(deadline) as year'))
             ->orderBy('year', 'desc')

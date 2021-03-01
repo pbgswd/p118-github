@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Policies\AdminDestroyPolicy;
 use App\Http\Requests\Policies\AdminStorePolicy;
 use App\Http\Requests\Policies\AdminUpdatePolicy;
+use App\Models\Options;
 use App\Models\Policy;
 use App\Services\AttachmentService;
 use Exception;
@@ -52,6 +53,7 @@ class AdminPolicyController extends Controller
         $data = [
             'policy' => new Policy,
             'action' => 'Create',
+            'access_levels' => Options::access_levels(),
         ];
 
         return view('admin.policy', ['data' => $data]);
@@ -91,6 +93,7 @@ class AdminPolicyController extends Controller
         $data = [
             'policy' => $any_policy->loadWithoutGlobalScopes('user', 'attachments'),
             'action' => 'Edit',
+            'access_levels' => Options::access_levels(),
         ];
 
         return view('admin.policy', ['data' => $data]);

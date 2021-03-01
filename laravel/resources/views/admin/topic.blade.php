@@ -50,26 +50,22 @@
         <div class="row mt-lg-3">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-6 col-sm-3 align-middle">
+                    <div class="col-12 align-middle">
                         <h4>
                             Access Level for content
                         </h4>
                     </div>
-                    <div class="col-6 col-sm-3">
+                    <div class="col-12">
                         <div class="form-group">
-                            {{ select_options($data['access_levels'], old('topic.access_level', $data['topic']->access_level),
+                            {{ select_options($data['access_levels'], old('topic.access_level',
+                                $data['topic']->access_level),
                                 ['name' => 'topic[access_level]', 'class' => 'form-control']) }}
                         </div>
                     </div>
-                    <div class="col-6 col-sm-3"></div>
-                    <div class="col-6 col-sm-3"></div>
-                    <!-- Force next columns to break to new line -->
-                    <div class="w-100"></div>
-                    <div class="col-12">&nbsp;</div>
-                    <div class="col-6 col-sm-3">
+                    <div class="col-12">
                         <h4>Sort Order</h4>
                     </div>
-                    <div class="col-6 col-sm-3">
+                    <div class="col-12">
                         <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000"
                                name="topic[sort_order]" value="{{old('topic.sort_order',$data['topic']->sort_order)}}"
                                size="30" required/>
@@ -80,26 +76,25 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-lg-2">
-                    <h4>Status</h4>
-                </div>
-                <div class="col-sm">
-                    <label>
-                        <input name="topic[front_page]" type="hidden" value="0" />
-                        <input name="topic[front_page]" type="checkbox" value="1"
-                            {{ checked(old('topic.front_page',$data['topic']->front_page)) }} /> Front Page
-                    </label>
-                </div>
-                <div class="col-sm">
-                    <label>
-                        <input name="topic[landing_page]" type="hidden" value="0" />
-                        <input name="topic[landing_page]" type="checkbox" value="1"
-                            {{ checked(old('topic.landing_page', $data['topic']->landing_page)) }} />
-                        Landing Page
-                    </label>
-                </div>
-                <div class="col-sm">
+            <div class="col-12">
+                <h4>Status</h4>
+            </div>
+            <div class="col">
+                <label>
+                    <input name="topic[front_page]" type="hidden" value="0" />
+                    <input name="topic[front_page]" type="checkbox" value="1"
+                        {{ checked(old('topic.front_page',$data['topic']->front_page)) }} /> Front Page
+                </label>
+            </div>
+            <div class="col">
+                <label>
+                    <input name="topic[landing_page]" type="hidden" value="0" />
+                    <input name="topic[landing_page]" type="checkbox" value="1"
+                        {{ checked(old('topic.landing_page', $data['topic']->landing_page)) }} />
+                    Landing Page
+                </label>
+            </div>
+                <div class="col">
                     <label>
                          <input name="topic[live]" type="hidden" value="0" />
                          <input name="topic[live]" type="checkbox" value="1"
@@ -109,7 +104,7 @@
                     <p>ie.: Draft or Published.</p>
                 </div>
             </div>
-        </div>
+
         <div class="row mt-lg-3">
             <div class="col-md-6">
                 <div class="form-group">
@@ -121,7 +116,7 @@
                 </div>
             </div>
         </div>
-        @if ($data['action'] == 'Edit' && count($data['topic']->attachments) > 0)
+        @if ($data['action'] == 'Edit')
             <div class="col-md-12 pb-2 m-2">
                 <h5>Files</h5>
                 <div class="table-responsive">
@@ -156,7 +151,12 @@
                                         </a>
                                     </td>
                                     <td>
-                                        {{$ta->access_level}}
+                                        <div class="form-group">
+                                            {{ select_options($data['access_levels'],
+                                                old('attachment.access_level', $ta->access_level),
+                                                ['name' => 'attachment['.$ta->id.'][access_level]',
+                                                'class' => 'form-control']) }}
+                                        </div>
                                     </td>
                                     <td>
                                         <a title="{{ $ta->name }}" href="{{ route('admin_attachment_edit', $ta->id) }}">
@@ -177,15 +177,21 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr><td colspan="7">No files</td></tr>
+                                <tr>
+                                    <td colspan="7">
+                                        No files
+                                    </td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
-                <div class="col-12 mt-2">
-                        <i class="far fa-trash-alt"></i>
-                        Select checkbox to delete file.
-                </div>
+                @if(count($data['topic']->attachments) > 0)
+                    <div class="col-12 mt-2">
+                            <i class="far fa-trash-alt"></i>
+                            Select checkbox to delete file.
+                    </div>
+                @endif
             </div>
         @endif
         <div class="row mt-5 mb-5">

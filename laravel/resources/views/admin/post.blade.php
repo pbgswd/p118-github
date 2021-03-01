@@ -61,20 +61,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-md-4 text-md-right">
-                <h4>Sort Order</h4>
-            </div>
-            <div class="col-6 col-sm-3">
-                <input type="text" class="form-control"  id="validationCustom02" placeholder="e.g.: 1000, 2000"
-                       name="post[sort_order]" value="{{old('post.sort_order',$data['post']->sort_order)}}" size="30"
-                       required/>
-                <p>e.g.: 1000, 2000</p>
-            </div>
-            <div class="invalid-feedback">
-                Please add a numeric sort order {{ @$errors->get('post.sort_order')[0] }}
-            </div>
-        </div>
         <div class="row mt-2">
             <div class="col-12 col-md-4 text-md-right">
                 <h4>Status</h4>
@@ -155,7 +141,12 @@
                                         </a>
                                     </td>
                                     <td>
-                                        {{$pa->access_level}}
+                                        <div class="form-group">
+                                            {{ select_options($data['access_levels'],
+                                                old('attachment.access_level', $pa->access_level),
+                                                ['name' => 'attachment['.$pa->id.'][access_level]',
+                                                'class' => 'form-control']) }}
+                                        </div>
                                     </td>
                                     <td>
                                         <a title="edit access_level, description for {{ $pa->file_name }}"

@@ -6,6 +6,7 @@ use App\Http\Requests\Meetings\DestroyMeetingRequest;
 use App\Http\Requests\Meetings\StoreMeetingRequest;
 use App\Http\Requests\Meetings\UpdateMeetingRequest;
 use App\Models\Meeting;
+use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -60,6 +61,7 @@ class AdminMeetingController extends Controller
                 'data' => [
                     'meeting' => $meeting,
                     'action' => 'Add',
+                    'access_levels' => Options::access_levels(),
                 ],
             ]
         );
@@ -111,6 +113,7 @@ class AdminMeetingController extends Controller
                 'data' => [
                     'meeting' => $meeting,
                     'action' => 'Edit',
+                    'access_levels' => Options::access_levels(),
                 ],
             ]
         );

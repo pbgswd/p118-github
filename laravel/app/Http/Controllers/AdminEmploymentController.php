@@ -6,6 +6,7 @@ use App\Http\Requests\Employment\DestroyEmploymentRequest;
 use App\Http\Requests\Employment\StoreEmploymentRequest;
 use App\Http\Requests\Employment\UpdateEmploymentRequest;
 use App\Models\Employment;
+use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -34,13 +35,11 @@ class AdminEmploymentController extends Controller
         Employment::where('deadline', '<', now())
             ->update(['status' => 0]);
 
-        $data = [];
         $jobs = Employment::withoutGlobalScopes()
             ->sortable()
             ->with('attachments')
             ->orderBy('deadline', 'desc')
             ->paginate(20);
-
 
         $data['employment'] = $jobs;
         $data['count'] = Employment::withoutGlobalScopes()->count();
@@ -55,9 +54,14 @@ class AdminEmploymentController extends Controller
     public function create(): View
     {
         $this->authorize('create', Employment::class);
-        $e = new Employment;
 
-        return view('admin.employment', ['data' => ['employment' => $e, 'action' => 'Add']]);
+        $data = [
+            'employment' =>  new Employment,
+            'action' => 'Add',
+            'access_levels' => Options::access_levels(),
+        ];
+
+        return view('admin.employment', ['data' => $data]);
     }
 
     /**
@@ -104,6 +108,7 @@ class AdminEmploymentController extends Controller
         $data = [
             'employment' => $employment,
             'action' => 'Edit',
+            'access_levels' => Options::access_levels(),
         ];
 
         return view('admin.employment', ['data' => $data]);

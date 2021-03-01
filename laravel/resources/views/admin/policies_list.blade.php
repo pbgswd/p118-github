@@ -9,12 +9,13 @@ $policys = $data['policies'];
            <span class="badge badge-primary badge-pill">
                {{$data['count']}}
            </span>
-            policies. | <a href="{{ route('admin_policy_create') }}">Create new policy <i class="far fa-arrow-alt-circle-right"></i> </a>
+            policies. |
+            <a href="{{ route('admin_policy_create') }}">
+                Create new policy
+                <i class="far fa-arrow-alt-circle-right"></i>
+            </a>
         </h3>
 </div>
-    @if($data['count'] < 1)
-    No policies defined yet
-    @else
 <form name="delete" method="POST" action="{{route('admin_policy_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
@@ -34,7 +35,7 @@ $policys = $data['policies'];
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $policys as $a )
+                    @forelse ( $policys as $a )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -45,10 +46,18 @@ $policys = $data['policies'];
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $a->title }}" href="{{ route('admin_policy_edit', $a->id) }}">{{ $a->title }}</a>
+                                    <a title="{{ $a->title }}" href="{{ route('admin_policy_edit', $a->id) }}">
+                                        {{ $a->title }}
+                                    </a>
                                 </h4>
+                                <h6>
+                                    {{$a->attachments->count()}}
+                                    {{Str::plural('Attachment', $a->attachments->count())}}
+                                </h6>
                             </td>
-                            <td> {!! $a->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                            <td> {!! $a->live ? "<i class='fas fa-check'></i>" :
+                                    "<i class='far fa-times-circle'></i>" !!}
+                            </td>
                             <td>{{$a->date->format('F j Y')}}</td>
                             <td>
                                 <a href="{{ route('admin_policy_edit', $a->id) }}" title="Edit {{ $a->title }} ">
@@ -58,10 +67,11 @@ $policys = $data['policies'];
                             <td> {{ $a->created_at->format('F j Y H:i:s') }} </td>
                             <td> {{ $a->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
-                    @endforeach
-                    <tr>
-                        <td colspan="10">&nbsp;</td>
-                    </tr>
+                        @empty
+                        <tr>
+                            <td colspan="10">No policies</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -72,19 +82,14 @@ $policys = $data['policies'];
             <i class="far fa-trash-alt fa-2x"></i>
             <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
         </div>
-        <div class="col-6">
-            <div class="list-group">
-                <ul class="pagination">
-                     {{ $policys->links() }}
-                </ul>
-            </div>
-        </div>
-        <div class="col"></div>
+
     </div>
-
-
-
-    <div class="row" style="margin-top:6em;"></div>
 </form>
-@endif
+<div class="col-12">
+    <div class="list-group">
+        <ul class="pagination">
+            {{ $policys->links() }}
+        </ul>
+    </div>
+</div>
 @endsection
