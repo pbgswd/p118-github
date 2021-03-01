@@ -1,6 +1,12 @@
 <div class="row">
     @forelse($data['news']['features'] as $f)
-        <div class="col-12 col-md-6 pt-2 mb-2">
+        <div class="col-12
+        @if($loop->first && $loop->count % 2)
+            col-md-12
+        @else
+            col-md-6
+        @endif
+        pt-2 mb-2">
             <div class="col h-100 w-100 border border-dark rounded-lg pt-2 mb-2">
                 @if($f->image)
                     <div class="col text-center d-flex justify-content-center mb-2">
