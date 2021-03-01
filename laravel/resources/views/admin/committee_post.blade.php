@@ -91,7 +91,7 @@
 
         <div class="row mt-3">
 
-            @if( $data['action'] == 'Edit' && count($data['post']->attachments) > 0)
+            @if( $data['action'] == 'Edit')
                 <div class="col-md-12">
                     <h2>Files</h2>
                     <table class="table table-striped table-sm">
@@ -107,7 +107,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($data['post']->attachments as $pa)
+                        @forelse ($data['post']->attachments as $pa)
                             <tr>
                                 <td>
                                     <div class="checkbox">
@@ -122,7 +122,12 @@
                                        title="Download {{$pa->file_name}}">{{$pa->file_name}}</a>
                                 </td>
                                 <td>
-                                    {{$data['post']->access_level}}
+                                    <div class="form-group">
+                                        {{ select_options($data['access_levels'],
+                                            old('attachment.access_level', $pa->access_level),
+                                            ['name' => 'attachment['.$pa->id.'][access_level]',
+                                            'class' => 'form-control']) }}
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="{{route('admin_attachment_edit', $pa->id)}}"
@@ -144,13 +149,21 @@
                                     {{$pa->updated_at}}
                                 </td>
                             </tr>
-                        @endforeach
-                        <tr>
-                            <td colspan="7">
-                                <i class="far fa-trash-alt"></i>
-                                Select checkbox to delete a file
-                            </td>
-                        </tr>
+                        @empty
+                                <tr>
+                                    <td colspan="7">
+                                        No Files
+                                    </td>
+                                </tr>
+                        @endforelse
+                        @if(count($data['post']->attachments) > 0)
+                            <tr>
+                                <td colspan="7">
+                                    <i class="far fa-trash-alt"></i>
+                                    Select checkbox to delete a file
+                                </td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>

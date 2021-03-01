@@ -20,15 +20,6 @@ use Illuminate\View\View;
 
 class AdminCommitteeController extends Controller
 {
-    /**
-     * @var AttachmentService
-     */
-    private $attachmentService;
-
-    public function __construct(AttachmentService $attachmentService)
-    {
-        $this->attachmentService = $attachmentService;
-    }
 
     /**
      * @return View
@@ -86,18 +77,6 @@ class AdminCommitteeController extends Controller
 
         $committee->save();
 
-        /***
-        if (null !== ($request->file('attachments'))) {
-            $result = $this->attachmentService->createAttachment($request, $committee);
-            if ($result) {
-                Session::flash('success', 'You uploaded '.
-                    count($request->file('attachments')).' files');
-            } else {
-                Session::flash('error', 'You have an upload problem');
-            }
-        }
-***/
-        
         Session::flash('success', 'You have created a new committee, '.$committee->name);
 
         return redirect()->route('admin_committee_show', $committee->slug);
@@ -201,24 +180,8 @@ class AdminCommitteeController extends Controller
                 $any_committee['file_name'] = $request->file('committee.image')->getClientOriginalName();
             }
         }
-/**
-        if (null !== $request->file('committee.image')) {
-            $any_committee['image'] = $this->uploadImage($request);
-            $any_committee['file_name'] = $request->file('committee.image')->getClientOriginalName();
-        }
-**/
 
         $any_committee->save();
-
-            //todo update file
-/**
-            if ($result) {
-                Session::flash('success', 'You uploaded '
-                    .count($request->file('attachments')).' files');
-            } else {
-                Session::flash('error', 'You have an upload problem');
-            }
-        **/
 
         Session::flash('success', 'You have updated '.$any_committee->name);
 
@@ -238,7 +201,6 @@ class AdminCommitteeController extends Controller
             ->find($request->id)
             ->each(function (Committee $committee) {
                 $committee->committee_members()->detach();
-
 
                 if ($committee['image']) {
                     Storage::disk('committees')->delete($committee['image']);

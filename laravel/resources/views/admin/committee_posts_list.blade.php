@@ -21,8 +21,8 @@
             </a>
         </div>
     </div>
-</div>
-<div class="container">
+
+<div class="row">
     <form name="delete" method="POST" action="{{route('committee_post_destroy', $data['committee']->slug)}}">
         {!! csrf_field() !!}
         {!! method_field('DELETE') !!}
@@ -58,6 +58,10 @@
                                             {{ $p->title}}
                                         </a>
                                     </h5>
+                                    <h6>
+                                        {{$p->attachments->count()}}
+                                        {{Str::plural('Attachment', $p->attachments->count())}}
+                                    </h6>
                                 </td>
                                 <td>
                                     {!! $p->live ? "<i class='fas fa-check'></i>" :
@@ -79,7 +83,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7">&nbsp
+                                <td colspan="7">
                                     No posts in {{$data['committee']->name}}
                                 </td>
                             </tr>
@@ -108,5 +112,6 @@
             <div class="col"></div>
         </div>
     </form>
+</div>
 </div>
 @endsection

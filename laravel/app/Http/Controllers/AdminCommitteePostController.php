@@ -7,6 +7,7 @@ use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\Options;
 use App\Models\User;
 use App\Services\AttachmentService;
 use Exception;
@@ -42,6 +43,7 @@ class AdminCommitteePostController extends Controller
         $data = [
             'committee' => $committee,
             'posts' => CommitteePost::withoutGlobalScopes()
+                ->with('attachments')
                 ->sortable()
                 ->where('committee_id', $committee->id)
                 ->orderBy('created_at')
@@ -63,7 +65,14 @@ class AdminCommitteePostController extends Controller
         $post = new CommitteePost;
         $post['committee'] = $committee;
 
-        return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create']]);
+        $data = [
+            'post' => new CommitteePost,
+            'committee' => $committee,
+            'action' => 'Create',
+            'access_levels' => Options::access_levels(),
+        ];
+
+        return view('admin.committee_post', ['data' => $data]);
     }
 
     /**
@@ -114,6 +123,7 @@ class AdminCommitteePostController extends Controller
         $data = [
             'post' => $any_committee_post,
             'action' => 'Edit',
+            'access_levels' => Options::access_levels(),
         ];
 
         return view('admin.committee_post', ['data' => $data]);
