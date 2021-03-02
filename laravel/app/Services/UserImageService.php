@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-use App\Models\Options;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\Image\Image;
@@ -13,7 +12,6 @@ class UserImageService
 {
     public function storeImage($request, string $dir, bool $make_thumb, array $thumb_values): array
     {
-        //todo handle upload and thumb generation
         $directory = '/app/' . $dir . '/';
         $image ='';
 
@@ -26,13 +24,11 @@ class UserImageService
             $file_name = $request->image->getClientOriginalName();
         }
 
-        $arr = [
+        return [
             'image' => $image ?? '',
             'file_name' => $file_name ?? '',
             'thumb' =>  $result ?? '',
         ];
-
-        return $arr;
     }
 
     /**
@@ -48,7 +44,6 @@ class UserImageService
 
         /** @var TYPE_NAME $directory */
         $directory = '/app/' . $dir . '/';
-        $image = '';
 
         if (null !== $request->file('image')) {
             /**
@@ -64,13 +59,11 @@ class UserImageService
             $file_name = $request->image->getClientOriginalName();
         }
 
-        $arr = [
+        return [
             'image' => $image ?? '',
             'file_name' => $file_name ?? '',
             'thumb' =>  $result ?? '',
         ];
-
-        return $arr;
     }
 
     /**
@@ -93,7 +86,6 @@ class UserImageService
 
         return $thumb_values['tn_str'] . $image;
     }
-
 
     /**
      * @param string $image

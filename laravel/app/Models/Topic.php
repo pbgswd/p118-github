@@ -40,7 +40,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     use HasFactory;
     use Sortable;
 
-
     /**
      * The attributes that are mass assignable.
      */
@@ -87,6 +86,9 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('Topic');
+
         if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,

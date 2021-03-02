@@ -54,9 +54,9 @@ class LocalSearchController extends Controller
                 ->registerModel(Policy::class, ['title', 'description'])
                 ->registerModel(Post::class, ['title', 'content'])
                 ->registerModel(Topic::class, ['name', 'description'])
-              //->registerModel(User::class, 'name')
+                ->registerModel(User::class, 'name')
                 ->registerModel(Venue::class, ['name', 'description'])
-                //->registerModel(UserInfo::class, 'about')
+                ->registerModel(UserInfo::class, 'about')
                 ->search($request->search),
         ];
 
@@ -67,8 +67,6 @@ class LocalSearchController extends Controller
          * https://packagist.org/packages/spatie/laravel-searchable
          * https://medium.com/justlaravel/search-functionality-in-laravel-a2527282150b
          */
-
-        $data['plural'] = Str::plural('Result', $data['results']->count());
 
         return view('search', ['data' => $data]);
     }

@@ -13,7 +13,6 @@
                         justify-content-center">
                         <a href="{{ route('topic_show', $i->slug) }}" title="{{ $i->name }}">
                             <h3>{{ $i->name }}</h3>
-                            <p>{!! $i->description !!} </p>
                         </a>
                     </div>
                 </div>

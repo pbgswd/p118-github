@@ -82,19 +82,16 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if (request()->route()->getName() == 'admin_search') {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('Agreement');
 
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
                 \route('agreement_edit', $this->id)
             );
         }
-        //todo additional info returned with search content entity it is under, link
-        //what entity title, link to general list in entity title
-
-        $this->entity = 'Agreements';
-        $this->route = 'agreements_list';
 
         return new SearchResult(
             $this,

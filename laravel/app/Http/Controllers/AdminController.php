@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ModelList;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -14,7 +15,9 @@ class AdminController extends Controller
     public function index(): View
     {
         //Land on the home page of admin. Could have data later.
-        $data = [['user' => Auth::user()]];
+        $data = [
+            ['user' => Auth::user()]
+        ];
 
         return view('admin.admin', ['data' => $data]);
     }
@@ -33,6 +36,11 @@ class AdminController extends Controller
      */
     public function blank(User $user): View
     {
+        $mod = new ModelList;
+
+        $arr = ModelList::getModelList();
+
+
         return view('admin.admin-blank');
     }
 }

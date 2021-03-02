@@ -52,6 +52,9 @@ class Executive extends Model implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('Executive');
+
         if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,

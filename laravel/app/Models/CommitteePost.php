@@ -41,7 +41,6 @@ class CommitteePost extends LiveableModel implements HasAttachment, Searchable
 
     protected $policies = [
      self::class => CommitteePostPolicy::class,
-        //Committee::class => CommitteePolicy::class,
     ];
 
     public $sortable = [
@@ -67,6 +66,9 @@ class CommitteePost extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('CommitteePost');
+
         $committee = Committee::where('id', $this->committee_id)->first('slug');
 
         if (request()->route()->getName() == 'admin_search') {

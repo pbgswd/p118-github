@@ -10,19 +10,6 @@ use Illuminate\View\View;
 
 class ByLawController extends Controller
 {
-    /** @var AttachmentService */
-    private $attachmentService;
-
-    /**
-     * BylawController constructor.
-     *
-     * @param AttachmentService $attachmentService
-     */
-    public function __construct(AttachmentService $attachmentService)
-    {
-        $this->attachmentService = $attachmentService;
-    }
-
     /**
      * @return View
      */
@@ -51,10 +38,8 @@ class ByLawController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Bylaw $bylaw
-     * @return Response
+     * @return View
      */
     public function show(Bylaw $bylaw): View
     {
