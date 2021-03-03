@@ -62,11 +62,8 @@ class AdminCommitteePostController extends Controller
     {
         $this->authorize('update', $committee);
 
-        $post = new CommitteePost;
-        $post['committee'] = $committee;
-
         $data = [
-            'post' => new CommitteePost,
+            'post' =>  new CommitteePost,
             'committee' => $committee,
             'action' => 'Create',
             'access_levels' => Options::access_levels(),
@@ -118,10 +115,11 @@ class AdminCommitteePostController extends Controller
     {
         $this->authorize('update', $committee);
 
-        $any_committee_post->load('creator', 'committee', 'admin_post_comments', 'attachments');
+        $any_committee_post->load('creator', 'admin_post_comments', 'attachments');
 
         $data = [
             'post' => $any_committee_post,
+            'committee' => $committee,
             'action' => 'Edit',
             'access_levels' => Options::access_levels(),
         ];
@@ -177,7 +175,8 @@ class AdminCommitteePostController extends Controller
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
             ->each(static function (CommitteePost $post) {
-                $this->attachmentService->destroyAttachments($post);
+                $service = new AttachmentService;
+                $service->destroyAttachments($post);
                 $post->delete();
             });
 

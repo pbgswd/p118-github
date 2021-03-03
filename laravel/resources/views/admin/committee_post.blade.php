@@ -1,16 +1,16 @@
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' .
-        ($data["action"] == 'Edit' ? $data['post']->title : ' in ' . $data['post']['committee']->name) ])
+        ($data["action"] == 'Edit' ? $data['post']->title : ' in ' . $data['committee']->name) ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <div class="row mb-5">
         <div class="col-12 col-md-6">
             <h4>
-                <a href="{{route('admin_committee_show', $data['post']['committee']->slug)}}">
+                <a href="{{route('admin_committee_show', $data['committee']->slug)}}">
                     <i class="far fa-arrow-alt-circle-left"></i>
-                    {{$data['post']['committee']->name}} Page
+                    {{$data['committee']->name}} Page
                 </a> |
-                <a href="{{ route('committee_posts_list', $data['post']['committee']->slug) }}">
+                <a href="{{ route('committee_posts_list', $data['committee']->slug) }}">
                     <i class="far fa-arrow-alt-circle-left"></i>
                     List of posts
                 </a>
@@ -19,7 +19,7 @@
         @if($data['action'] == 'Edit')
             <div class="col-12 col-md-6 text-md-right">
                 <a href="{{route('public_committee_post_show',
-                    [$data['post']['committee']->slug, $data['post']->slug])}}"
+                    [$data['committee']->slug, $data['post']->slug])}}"
                     title="View {{$data['post']->title}}">
                     <i class="fas fa-eye"></i> View on website
                 </a>
@@ -179,7 +179,7 @@
             @if ($data['action'] == 'Edit')
                  <div class="col text-md-right">
                      <form name="delete" method="POST"
-                           action="{{route('committee_post_destroy', $data['post']['committee']->slug  )}}">
+                           action="{{route('committee_post_destroy', $data['committee']->slug)}}">
                          {!! csrf_field() !!}
                          {!! method_field('DELETE') !!}
                         <i class="far fa-trash-alt fa-2x"></i>
@@ -195,58 +195,4 @@
         Post added by {{$data['post']->creator->name}}
     </div>
     @endif
-<!--
-    @if ($data['action'] == 'Edit')
-        <div class="row mt-lg-5 mb-lg-5">
-            <div class="col-12">
-                <h2>
-                    {{$data['post']->admin_post_comments->count()}} Post
-                    {{Str::plural('Comment', $data['post']->admin_post_comments->count())}}.
-                    <a href="{{route('admin_committee_post_comment', $data['post']->slug)}}">
-                        <button type="button" class="btn btn-outline-success">Add New</button>
-                    </a>
-                </h2>
-            </div>
-        </div>
-        @foreach ($data['post']->admin_post_comments as $pc)
-            <div class="row border border-dark rounded pb-lg-3 pt-lg-2 mb-lg-3">
-                <div class="col-md-3">
-                    By: {{$pc->comment_author->name}}
-                </div>
-                <div class="col-md-3">
-                    Created: {{ \Carbon\Carbon::parse($pc->created_at)->format(' F j, Y H:i:s') }}
-                </div>
-                <div class="col-md-3">
-                    Last updated: {{ \Carbon\Carbon::parse($pc->updated_at)->format(' F j, Y H:i:s') }}
-                </div>
-                <div class="col-md-3">
-                    Live status: {{$pc->live ? "Live" : 'Not Live'}}
-                </div>
-                <div class="col-12 p-lg-4">
-                        {!! $pc->content !!}
-                </div>
-                <div class="col-12 p-lg-4">
-                    <div class="col-6" style="float:left">
-                        <a href="{{ route('admin_committee_post_comment_edit',
-                                [$data['post']->slug, $pc->id])}}" title="Edit Comment">
-                            <i class="fas fa-edit fa-2x"></i>
-                            <button type="button" class="btn btn-outline-primary">Edit</button>
-                        </a>
-                    </div>
-                    <div class="col-4" style="float:right">
-                        <form name="delete" method="POST" action="{{route('committee_post_comment_destroy')}}">
-                            {!! csrf_field() !!}
-                            {!! method_field('DELETE') !!}
-                            <i class="far fa-trash-alt fa-2x"></i>
-                            <input type="hidden" name="id[]" value="{{$pc->id}}">
-                            <input class="btn btn-outline-danger" type="submit" value="Delete">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
-    -->
-
-
 @endsection
