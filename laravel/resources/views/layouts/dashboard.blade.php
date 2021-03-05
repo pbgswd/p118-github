@@ -175,7 +175,11 @@
                                         <h5 class="font-weight-bold">Content </h5>
                                     </a>
                                 </li>
-
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('admin_proofreader')}}">
+                                    ProofReading
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('topics_list') }}">
                                         <span data-feather="file"></span>
