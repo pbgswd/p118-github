@@ -160,9 +160,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('memoriams', [CNS\AdminMemoriamController::class, 'index'])->name('admin_memoriam_list');
     Route::get('memoriam/create', [CNS\AdminMemoriamController::class, 'create'])->name('admin_memoriam_create');
     Route::post('memoriam/create', [CNS\AdminMemoriamController::class, 'store']);
-    Route::get('memoriam/{any_memoriam}/edit', [CNS\AdminMemoriamController::class, 'edit'])->name('admin_memoriam_edit');
+    Route::get('memoriam/{any_memoriam}/edit', [CNS\AdminMemoriamController::class, 'edit'])
+        ->name('admin_memoriam_edit');
     Route::post('memoriam/{any_memoriam}/edit', [CNS\AdminMemoriamController::class, 'update']);
     Route::delete('memoriam/delete', [CNS\AdminMemoriamController::class, 'destroy'])->name('admin_memoriam_destroy');
+
+    Route::get('proofreading-sync', [CNS\AdminProofReaderController::class, 'sync'])->name('admin_proofreader_sync');
+    Route::get('proofreading', [CNS\AdminProofReaderController::class, 'index'])->name('admin_proofreader');
+    Route::post('proofreading', [CNS\AdminProofReaderController::class, 'index_by_entity'])->name('index_by_entity');
+    Route::post('proofreading/{proofReader}/update', [CNS\AdminProofReaderController::class, 'update']);
 
     Route::post('/search', [CNS\LocalSearchController::class, 'admin_search'])->name('admin_search');
     //Route::get('/search', [CNS\LocalSearchController::class, 'admin_index'])->name('admin_search_show');
