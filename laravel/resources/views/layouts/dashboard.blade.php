@@ -177,7 +177,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{route('admin_proofreader')}}">
-                                    ProofReading
+                                    ProofReader
                                     </a>
                                 </li>
                                 <li class="nav-item">

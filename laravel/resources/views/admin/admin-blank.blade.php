@@ -5,7 +5,6 @@
 @can('edit articles')
     can edit articles
 @endcan
-    <div class='container m-lg-5'>
         <input type="date" id="pick-date" name="date" />
     </div>
         <div class='container m-lg-5'>
