@@ -13,10 +13,12 @@
         <div class='col-12 col-md-6 text-right p-3'>
             <h3>
                 <a href="{{route('admin_proofreader_sync')}}">
-                    <i class="fas fa-database"></i>
-                    Sync Content Data with<br />
-                    Proofreader table<br />
-                    before you begin.
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-database"></i>
+                        Sync Content Data with<br />
+                        Proofreader table<br />
+                        before you begin.
+                    </button>
 
                 </a>
             </h3>
