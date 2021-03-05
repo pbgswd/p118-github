@@ -19,7 +19,6 @@
                         Proofreader table<br />
                         before you begin.
                     </button>
-
                 </a>
             </h3>
         </div>
