@@ -12,7 +12,6 @@ class HistoryBlock
     public function compose(View $view)
     {
         $data['foundingYear'] = 1904;
-        // $today = Carbon::today();
         $data['foundingDate'] = Carbon::createMidnightDate(1904, 9, 13);
         $data['years'] = $data['foundingDate']->diffInYears(Carbon::today());
 
