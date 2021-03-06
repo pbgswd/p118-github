@@ -6,6 +6,17 @@ namespace App\Services;
 use App\Adapters\Proofreader\AgreementProofreaderAdapter;
 use App\Adapters\Proofreader\BaseProofreaderAdapter;
 use App\Adapters\Proofreader\BylawProofreaderAdapter;
+use App\Adapters\Proofreader\CommitteePostProofreaderAdapter;
+use App\Adapters\Proofreader\CommitteeProofreaderAdapter;
+use App\Adapters\Proofreader\EmploymentProofreaderAdapter;
+use App\Adapters\Proofreader\FeatureProofreaderAdapter;
+use App\Adapters\Proofreader\MeetingProofreaderAdapter;
+use App\Adapters\Proofreader\MemoriamProofreaderAdapter;
+use App\Adapters\Proofreader\OrganizationProofreaderAdapter;
+use App\Adapters\Proofreader\PageProofreaderAdapter;
+use App\Adapters\Proofreader\PolicyProofreaderAdapter;
+use App\Adapters\Proofreader\PostProofreaderAdapter;
+use App\Adapters\Proofreader\VenueProofreaderAdapter;
 use Illuminate\Support\Facades\DB;
 
 class ProofreaderService
@@ -20,9 +31,18 @@ class ProofreaderService
         $this->adapters = [
             new AgreementProofreaderAdapter,
             new BylawProofreaderAdapter,
-
+            new CommitteeProofreaderAdapter,
+          //  new CommitteePostProofreaderAdapter, //todo missing parameter
+            new EmploymentProofreaderAdapter,
+            new FeatureProofreaderAdapter,
+            new MeetingProofreaderAdapter,
+            new MemoriamProofreaderAdapter,
+            new OrganizationProofreaderAdapter,
+            new PostProofreaderAdapter,
+            new PageProofreaderAdapter,
+            new PolicyProofreaderAdapter,
+            new VenueProofreaderAdapter,
         ];
-
     }
 
     public function getContentNames(): array
@@ -40,7 +60,7 @@ class ProofreaderService
 
     public function sync()
     {
-        DB::statement('CREATE TEMPORARY TABLE seen_links(link varchar(100))');
+        DB::statement('CREATE TEMPORARY TABLE seen_links(link varchar(255))');
 
         foreach ($this->adapters as $adapter)
         {

@@ -18,7 +18,7 @@ class ModelList
     /**
      * @return \string[][]
      */
-    public static function getModelList(): array
+    public static function getModelList(): arraya
     {
         //metadata
         return [
