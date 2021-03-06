@@ -26,15 +26,15 @@ class CommitteePostProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getAdminRoute($row): string
     {
-        //todo get committee for route
-        return route('admin_committee_post_edit', $row['slug']);
+        $row->committee;
+        return route('admin_committee_post_edit', [$row->committee->slug, $row['slug']]);
     }
 
     public function getPublicRoute($row): string
     {
-        return route('committee', $row['slug']);
+        $row->committee;
+        return route('committee', $row->committee->slug);
     }
-
 }
 
 
