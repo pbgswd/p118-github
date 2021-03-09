@@ -37,8 +37,6 @@ class AdminAgreementController extends Controller
     {
         $this->authorize('viewAny', Agreement::class);
 
-        $data = [];
-
         $data['agreements'] = Agreement::withoutGlobalScopes()
             ->sortable()
             ->with('attachments')

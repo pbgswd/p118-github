@@ -84,11 +84,9 @@ class AttachmentController extends Controller
     {
         $this->authorize('create', Auth::user());
 
-        /** @var UploadedFile $image */
-        foreach ($request->file('images') as $image) {
+        $attachment = '';
 
-            //todo analyse attachment file size, resize,
-            // create thumb when it is an image -- A SERVICE
+        foreach ($request->file('images') as $image) {
 
             $file = $image->store('', 'public');
             $imageName = $image->getClientOriginalName();
@@ -127,14 +125,15 @@ class AttachmentController extends Controller
         }
 
         $attachment->setCalculatedProperties();
-       // dd($attachment);
-        return view('admin.attachment', ['data' => [
+
+        $data = [
             'attachment' => $attachment,
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
             'action' => 'Edit',
-            ],
-        ]);
+        ];
+
+        return view('admin.attachment', ['data' => $data]);
     }
 
     /**

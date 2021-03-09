@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Memoriam;
 use App\Models\Options;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class MemoriamController extends Controller

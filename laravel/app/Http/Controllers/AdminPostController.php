@@ -56,7 +56,6 @@ class AdminPostController extends Controller
         $this->authorize('create', Post::class);
 
         $post = new Post;
-        $post->topics;
 
         return view('admin.post', [
             'data' => [

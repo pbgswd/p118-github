@@ -117,6 +117,7 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('committee/{committee}/post/create', [CNS\CommitteePostController::class, 'create'])
         ->name('committee_add_public_post');
     Route::post('committee/{committee}/post/create', [CNS\CommitteePostController::class, 'store']);
+
     Route::get('committee/{committee}/post/{committeePost}', [CNS\CommitteePostController::class, 'show'])
         ->name('public_committee_post_show');
 

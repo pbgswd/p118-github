@@ -11,7 +11,6 @@ use App\Models\Organization;
 use App\Services\AttachmentService;
 use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;

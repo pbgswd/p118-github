@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bylaw;
-use App\Services\AttachmentService;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 

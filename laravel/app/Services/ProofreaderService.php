@@ -32,7 +32,7 @@ class ProofreaderService
             new AgreementProofreaderAdapter,
             new BylawProofreaderAdapter,
             new CommitteeProofreaderAdapter,
-          //  new CommitteePostProofreaderAdapter, //todo missing parameter
+            new CommitteePostProofreaderAdapter,
             new EmploymentProofreaderAdapter,
             new FeatureProofreaderAdapter,
             new MeetingProofreaderAdapter,

@@ -3,15 +3,22 @@
 namespace App\Adapters\Proofreader;
 
 use App\Models\CommitteePost;
+use Illuminate\Database\Eloquent\Collection;
 
 class CommitteePostProofreaderAdapter extends BaseProofreaderAdapter
 {
+    /**
+     * CommitteePostProofreaderAdapter constructor.
+     */
     public function __construct()
     {
         $this->contentClass = CommitteePost::class;
         $this->contentName = 'CommitteePost';
     }
 
+    /**
+     * @return string[]
+     */
     public function getMeta(): array
     {
         //Committee Model - specific to this class
@@ -24,16 +31,30 @@ class CommitteePostProofreaderAdapter extends BaseProofreaderAdapter
         ];
     }
 
+    /**
+     * @param array $row
+     * @return string
+     */
     public function getAdminRoute($row): string
     {
-        $row->committee;
-        return route('admin_committee_post_edit', [$row->committee->slug, $row['slug']]);
+        return route('admin_committee_post_edit', [$row->committee->slug, $row->slug]);
     }
 
+    /**
+     * @param array $row
+     * @return string
+     */
     public function getPublicRoute($row): string
     {
-        $row->committee;
-        return route('committee', $row->committee->slug);
+        return route('public_committee_post_show', [$row->committee->slug, $row->slug]);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAll(): Collection
+    {
+        return $this->getInstance()::with('committee')->get();
     }
 }
 

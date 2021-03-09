@@ -39,11 +39,10 @@ class AdminCarouselController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $data = [];
         return view('admin.carousel', ['data' => $data]);
-        //dd(__METHOD__);
     }
 
     /**

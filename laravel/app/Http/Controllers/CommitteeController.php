@@ -21,60 +21,7 @@ class CommitteeController extends Controller
             ->sortable()
             ->paginate(10);
 
-        /*
-         * names and profile links to who are Chair, cochair, Secretary
-         * logged in user is a member or not?
-         * count of members
-         * list of posts, news
-         * subscribe status, or unsubscribe
-         */
-
         return view('committees', ['data' => ['committees' => $c]]);
-    }
-
-    /**
-     * @param Committee $committee
-     * @return RedirectResponse
-     */
-    public function join(Committee $committee): RedirectResponse
-    {
-        /*****
-        $committee->load('committee_members');
-
-        $data['isMember'] = $committee->committee_members
-            ->contains(function (User $member) {
-            return Auth::id() == $member->id;
-        });
-
-        if($data['isMember'] == true) {
-            $committee->committee_members()
-                ->updateExistingPivot(Auth::id(), ['role' => 'Member']);
-        } else
-        {
-            $committee->committee_members()
-                ->attach(Auth::id(), ['role' => 'Member']);
-        }
-
-        Session::flash('success', 'You have joined ' . $committee->name);
-
-        return redirect()->route('committee', $committee->slug);
-        ********/
-    }
-
-    /**
-     * @param Committee $committee
-     * @return RedirectResponse
-     */
-    public function leave(Committee $committee): RedirectResponse
-    {
-        /**********
-        $committee->committee_members()
-            ->updateExistingPivot(Auth::id(), ['role' => 'Past-Member']);
-
-        Session::flash('success', 'You have left' . $committee->name);
-
-        return redirect()->route('committee', $committee->slug);
-         * *******/
     }
 
     /**
@@ -99,7 +46,6 @@ class CommitteeController extends Controller
 
         /** @var User $user */
         $user = Auth::user();
-        $user->committee_membership;
 
         $rank = \array_flip(\array_values(Options::committee_executive_roles()));
 
@@ -119,22 +65,5 @@ class CommitteeController extends Controller
             })->isNotEmpty();
 
         return view('committee', ['data' => $data]);
-    }
-
-    /**
-     * @param Committee $committee
-     * @return View
-     */
-    public function show_members(Committee $committee): View
-    {
-        /**
-         * do we use visibility preferences for users profile?
-         * do we say if you are a member you have to show your email
-         * do we say if you are a member you have to show your profile?
-         * show member status? Chair, Co-chair, Secretary, Member.
-        $committee->load('active_committee_members')->sortable();
-
-        return view('committee_list_members', ['data' => ['committee' => $committee]]);
-        */
     }
 }

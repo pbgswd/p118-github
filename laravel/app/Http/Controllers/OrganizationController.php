@@ -42,7 +42,7 @@ class OrganizationController extends Controller
             }
         }
         $organization->thumb = Options::venue_org_thumb_values()['tn_str'] . $organization['image'] ? : '';
-        $organization->attachments;
+        $organization->load('attachments');
 
         $data = [
             'organization' => $organization,

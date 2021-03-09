@@ -115,7 +115,6 @@ class CommitteePostController extends Controller
 
         $committeePost->fill($request['post']);
         $committeePost->save();
-        $committeePost->creator;
 
         $result = $this->attachmentService->updateAttachment($request, $committeePost);
 

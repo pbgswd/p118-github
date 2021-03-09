@@ -50,7 +50,7 @@ class VenueController extends Controller
             $venue->thumb = Options::venue_org_thumb_values()['tn_str'] . $venue['image'];
         }
 
-        $venue->attachments;
+        $venue->load('attachments');
 
         $data = [
             'venue' => $venue,

@@ -64,7 +64,6 @@ class AdminPageController extends Controller
 
         $page = new Page;
         $page['user_id'] = Auth::id();
-        $page->topics;
 
         return view(
             'admin.page',
@@ -147,7 +146,6 @@ class AdminPageController extends Controller
         $this->authorize('update', Page::class);
 
         $user = Auth::user();
-        $user->roles;
 
         $this->authorize('update', $any_page);
 

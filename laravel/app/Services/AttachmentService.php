@@ -19,9 +19,6 @@ class AttachmentService
     public function createAttachment(Request $request, HasAttachment $model): bool
     {
         foreach ($request->file('attachments') as $file) {
-            //todo what about max file size, number of files uploaded at a time,
-            //resizing images generate thumb $file
-
 
             $attachment = new Attachment;
             $attachment->user_id = Auth::id();
@@ -83,11 +80,10 @@ class AttachmentService
      */
     public function destroyAttachments(HasAttachment $model): bool
     {
-        $model->attachments;
+        $model->load('attachments');
 
         foreach ($model->attachments as $attachment) {
             Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
-            //todo delete attachment relation if exists?
             Attachment::destroy($attachment['id']);
         }
 

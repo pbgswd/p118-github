@@ -156,8 +156,6 @@ class AdminCommitteePostController extends Controller
 
         Session::flash('success', 'You have edited the post');
 
-        $committeePost->committee;
-
         return redirect()->route('admin_committee_post_edit',
             [$committeePost->committee->slug, $committeePost->slug]);
     }

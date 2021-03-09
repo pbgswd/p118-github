@@ -11,7 +11,7 @@ use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-class Memoriam extends LiveableModel implements HasAttachment, Searchable
+class Memoriam extends LiveableModel implements Searchable
 {
     use Sortable;
 
@@ -77,7 +77,7 @@ class Memoriam extends LiveableModel implements HasAttachment, Searchable
     }
 
     /**
-     * in urls, what field value is used to identify a record?
+     * @return string
      */
     public function getRouteKeyName(): string
     {
@@ -102,14 +102,6 @@ class Memoriam extends LiveableModel implements HasAttachment, Searchable
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function attachments(): BelongsToMany
-    {
-        // return $this->belongsToMany(Attachment::class, 'attachment_venue');
     }
 
     /**
