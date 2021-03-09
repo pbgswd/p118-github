@@ -14,14 +14,16 @@
             src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k">
         </script>
         <script src="/js/tinymce.js"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/fontawesome/fontawesome-free-5.15.2-web/css/all.min.css" />
 
         <script src="/js/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
 
         <script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
         <script src="{{ mix('/js/dashboard.js') }}"></script>
         <!-- Datepicker -->
         <link href='/css/bootstrap-datepicker.min.css' rel='stylesheet' type='text/css'>

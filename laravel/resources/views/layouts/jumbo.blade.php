@@ -19,8 +19,7 @@
         </script>
         <script src="/js/tinymce.js"></script>
         <link rel="canonical" href="http://{{env('APP_URL')}}/">
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
     </head>
