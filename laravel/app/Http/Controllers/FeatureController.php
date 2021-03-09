@@ -34,7 +34,7 @@ class FeatureController extends Controller
      * @param  \App\Models\Feature  $feature
      * @return \Illuminate\Http\Response
      */
-    public function show(Feature $feature)
+    public function show(Feature $feature): View
     {
         //todo fix service reference
         if($feature['image']) {

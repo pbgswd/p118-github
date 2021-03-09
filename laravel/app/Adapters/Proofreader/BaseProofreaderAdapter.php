@@ -38,9 +38,9 @@ abstract class BaseProofreaderAdapter
     }
 
 
-    public function getDatum($metaKey)
+    public function getDatum($metaKey): string
     {
-        return $this->getMeta()[$metaKey] ?? null;
+        return $this->getMeta()[$metaKey] ?? '';
     }
 
     public function getInstance(): Model

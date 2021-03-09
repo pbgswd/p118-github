@@ -14,7 +14,6 @@ class CommitteeProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Committee Model - specific to this class
         return [
             self::NAME => 'Committees',
             self::PUB_ROUTE_LIST => 'committees',
@@ -24,12 +23,12 @@ class CommitteeProofreaderAdapter extends BaseProofreaderAdapter
         ];
     }
 
-    public function getAdminRoute($row): string
+    public function getAdminRoute(array $row): string
     {
         return route('committee_edit', $row['slug']);
     }
 
-    public function getPublicRoute($row): string
+    public function getPublicRoute(array $row): string
     {
         return route('committee', $row['slug']);
     }

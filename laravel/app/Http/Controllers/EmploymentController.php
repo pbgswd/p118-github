@@ -91,7 +91,7 @@ class EmploymentController extends Controller
      * @param Employment $employment
      * @return Response
      */
-    public function show(Employment $employment)
+    public function show(Employment $employment): View
     {
         Employment::where('deadline', '<', now())
             ->update(['status' => 0]);

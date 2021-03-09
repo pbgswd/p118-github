@@ -70,6 +70,7 @@ class AdminMemoriamController extends Controller
      * @param StoreMemoriamRequest $request
      * @return RedirectResponse
      * @throws AuthorizationException
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     public function store(StoreMemoriamRequest $request): RedirectResponse
     {

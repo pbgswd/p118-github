@@ -35,7 +35,7 @@ class CommitteePostProofreaderAdapter extends BaseProofreaderAdapter
      * @param array $row
      * @return string
      */
-    public function getAdminRoute($row): string
+    public function getAdminRoute(array $row): string
     {
         return route('admin_committee_post_edit', [$row->committee->slug, $row->slug]);
     }
@@ -44,7 +44,7 @@ class CommitteePostProofreaderAdapter extends BaseProofreaderAdapter
      * @param array $row
      * @return string
      */
-    public function getPublicRoute($row): string
+    public function getPublicRoute(array $row): string
     {
         return route('public_committee_post_show', [$row->committee->slug, $row->slug]);
     }
