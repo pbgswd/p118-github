@@ -8,6 +8,7 @@ use App\Http\Requests\Bylaws\StoreBylawRequest;
 use App\Http\Requests\Bylaws\UpdateBylawRequest;
 use App\Models\Bylaw;
 use App\Services\AttachmentService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
@@ -31,7 +32,7 @@ class AdminByLawController extends Controller
 
     /**
      * @return View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function index(): View
     {
@@ -50,7 +51,7 @@ class AdminByLawController extends Controller
 
     /**
      * @return View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function create(): View
     {
@@ -68,7 +69,7 @@ class AdminByLawController extends Controller
     /**
      * @param StoreBylawRequest $request
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function store(StoreBylawRequest $request): RedirectResponse
     {
@@ -97,7 +98,7 @@ class AdminByLawController extends Controller
     /**
      * @param Bylaw $bylaw
      * @return View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function edit(Bylaw $bylaw): View
     {
@@ -116,7 +117,7 @@ class AdminByLawController extends Controller
      * @param UpdateBylawRequest $request
      * @param Bylaw $any_bylaw
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function update(UpdateBylawRequest $request, Bylaw $any_bylaw): RedirectResponse
     {
@@ -147,7 +148,7 @@ class AdminByLawController extends Controller
     /**
      * @param DestroyBylawRequest $request
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function destroy(DestroyBylawRequest $request): RedirectResponse
     {
