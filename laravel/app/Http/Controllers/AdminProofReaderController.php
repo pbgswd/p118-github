@@ -44,7 +44,7 @@ class AdminProofReaderController extends Controller
     {
         $pr = new ProofreaderService;
         $pr->sync();
-        Session::flash('success', 'You have synced the Proofreader');
+        Session::flash('success', 'You have synced the Proofreader data.');
 
         return redirect()->route('admin_proofreader');
     }

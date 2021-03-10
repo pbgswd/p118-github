@@ -19,8 +19,8 @@ abstract class BaseProofreaderAdapter
     protected $contentName;
     protected $instance;
 
-    abstract public function getAdminRoute(array $row): string;
-    abstract public function getPublicRoute(array $row): string;
+    abstract public function getAdminRoute($row): string;
+    abstract public function getPublicRoute($row): string;
 
     public function getAll(): Collection
     {

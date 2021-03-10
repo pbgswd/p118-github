@@ -23,12 +23,12 @@ class CommitteeProofreaderAdapter extends BaseProofreaderAdapter
         ];
     }
 
-    public function getAdminRoute(array $row): string
+    public function getAdminRoute($row): string
     {
         return route('committee_edit', $row['slug']);
     }
 
-    public function getPublicRoute(array $row): string
+    public function getPublicRoute($row): string
     {
         return route('committee', $row['slug']);
     }
