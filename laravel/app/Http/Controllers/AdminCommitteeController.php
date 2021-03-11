@@ -222,9 +222,6 @@ class AdminCommitteeController extends Controller
      */
     protected function uploadImage(FormRequest $request): string
     {
-        if (null !== $request->file('committee.image')) {
-            return $request->file('committee.image')->store('', 'committees');
-        }
-        return '';
+        return $request->file('committee.image')->store('', 'committees');
     }
 }

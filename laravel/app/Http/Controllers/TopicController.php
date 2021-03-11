@@ -38,8 +38,7 @@ class TopicController extends Controller
     {
         if (false === Auth::check() && $topic->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this topic.');
-
-            return redirect('login');
+            return view('auth.login');
         }
 
         $topic->attachments = $topic->attachments->sortByDesc('created_at');

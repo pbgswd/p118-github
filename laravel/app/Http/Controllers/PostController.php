@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\AccessLevelConstants;
 use App\Models\Post;
 use App\Services\AttachmentService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -45,7 +46,7 @@ class PostController extends Controller
      * @param Post $post
      * @return View
      */
-    public function show(Post $post): View
+    public function show(Post $post): RedirectResponse
     {
         if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this post.');

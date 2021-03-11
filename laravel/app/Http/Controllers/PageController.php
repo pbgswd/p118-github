@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Page;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -32,7 +33,7 @@ class PageController extends Controller
      * @param Page $page
      * @return View
      */
-    public function show(Page $page): View
+    public function show(Page $page): RedirectResponse
     {
         //todo public page policy if not public page?
 
