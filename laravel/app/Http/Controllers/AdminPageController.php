@@ -22,7 +22,7 @@ class AdminPageController extends Controller
     /**
      * @var AttachmentService
      */
-    private $attachmentService;
+    private AttachmentService $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
     {
@@ -145,8 +145,6 @@ class AdminPageController extends Controller
     {
         $this->authorize('update', Page::class);
 
-        $user = Auth::user();
-
         $this->authorize('update', $any_page);
 
         $any_page->fill($request->page);
@@ -165,11 +163,7 @@ class AdminPageController extends Controller
         }
 
         if (empty($request->input('page.topic_id'))) {
-            $assignedTopics = [];
-            foreach ($request->input('page.topics') as $topic) {
-                $assignedTopics[] = $topic->pivot->topic_id;
-            }
-            $any_page->topics()->detach($assignedTopics);
+            $any_page->topics()->detach($any_page->topics->pluck('id')->toArray());
         } else {
             $any_page->topics()->sync($request->page['topic_id']);
         }
