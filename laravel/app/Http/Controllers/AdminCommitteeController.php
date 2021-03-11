@@ -91,15 +91,14 @@ class AdminCommitteeController extends Controller
     {
         $this->authorize('view', $committee);
 
-        $committee->load('creator', 'active_committee_members');
-
-        $committee['post_count'] = $committee->posts->count();
+        $committee->load('creator', 'active_committee_members', 'posts');
         $committee['committee_roles'] = Options::committee_roles();
         $committee_executive_roles = Options::committee_executive_roles();
 
         $user = $committee->active_committee_members->find(Auth::user()->id);
 
         $canManage = 0;
+
         if ($user !== null &&
             $user->hasRole('committee') &&
             $user->hasPermissionTo('manage committee') &&
@@ -117,12 +116,12 @@ class AdminCommitteeController extends Controller
                     return array_search($user->pivot->role, $committee_executive_roles);
                 });
 
-        return view('admin.show_committee', ['data' => [
-                'committee' => $committee,
-                'canManage' => $canManage,
-                'action' => 'View',
-            ],
-        ]);
+        $data = [
+            'committee' => $committee,
+            'canManage' => $canManage,
+        ];
+
+        return view('admin.show_committee', ['data' => $data]);
     }
 
     /**
@@ -226,6 +225,6 @@ class AdminCommitteeController extends Controller
         if (null !== $request->file('committee.image')) {
             return $request->file('committee.image')->store('', 'committees');
         }
-        return false;
+        return '';
     }
 }

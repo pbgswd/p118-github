@@ -30,6 +30,7 @@ use Spatie\Searchable\SearchResult;
  * @property User[]           $committee_members
  * @property User[]           $active_committee_members
  * @property CommitteePost[]  $posts
+ * @property int|mixed|string|null user_id
  * @method static withoutGlobalScopes()
  */
 class Committee extends LiveableModel implements HasAttachment, Searchable
@@ -151,8 +152,6 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
     public function posts(): HasMany
     {
         return $this->hasMany(CommitteePost::class);
-        //->with(User::class);
-        //todo with associated author   return $this->belongsTo(User::class);
     }
 
     /**

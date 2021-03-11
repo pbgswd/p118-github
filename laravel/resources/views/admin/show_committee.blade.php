@@ -111,8 +111,8 @@
                 <h5>
                     <a href="{{route('committee_posts_list', $data['committee']->slug)}}">
                         <i class="far fa-folder-open"></i>
-                        {{$data['committee']['post_count']}}
-                        {{Str::plural('post', $data['committee']['post_count'])}}
+                        {{$data['committee']->posts->count()}}
+                        {{Str::plural('post', $data['committee']->posts->count())}}
                         in {{ $data['committee']->name }}
                     </a> |
                     <a href="{{route('admin_committee_post', $data['committee']->slug)}}">
