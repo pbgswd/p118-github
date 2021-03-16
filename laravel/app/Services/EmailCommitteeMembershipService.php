@@ -14,8 +14,8 @@ class EmailCommitteeMembershipService
 
         $cc = '';
 
-        if (env('APP_ENV') == 'local') {
-            $recipient = env('ADMIN_EMAIL');
+        if (config('app.APP_ENV') == 'local') {
+            $recipient = config('mail.admin.address');
             $cc = Options::testing_address_update_contacts();
         }
 
@@ -23,12 +23,12 @@ class EmailCommitteeMembershipService
             $recipient,
             $replyTo,
             $cc) {
-            $m->from(env('MAIL_FROM_ADDRESS'), 'Local 118 Website Committee Notification');
+            $m->from(config('mail.from.address'), 'Local 118 Website Committee Notification');
             $m->to($recipient, $recipient);
             if ($cc != '') {
                 $m->cc($cc, $cc);
             }
-            $m->subject('Local 118 Website Committee Notification')
+            $m->subject(config('app.APP_NAME') . ' Website Committee Notification')
                 ->replyTo($replyTo, $replyTo);
         });
     }

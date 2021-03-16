@@ -56,9 +56,19 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@iatse118.com'),
+        'name' => env('MAIL_FROM_NAME', 'No Reply IATSE Local 118'),
     ],
+
+    'admin' => [
+        'address' => 'superwebdeveloper@gmail.com',
+        'name' => 'Local 118 Website Administrator',
+    ],
+
+    'office_admin' => [
+        'address' => 'admin@iatse118.com',
+        'name' => 'IATSE 118 Administrator',
+        ],
 
     /*
     |--------------------------------------------------------------------------

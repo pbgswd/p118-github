@@ -12,17 +12,16 @@ class EmailMemberUpdateAddressService
 {
     public function sendMessage($update_type, $message, $user)
     {
-        $recipient = env('ADMIN_EMAIL');
+        $recipient =  config('mail.admin.address');
         $cc = '';
 
-        if (env('APP_ENV') == 'local') {
-            $recipient = env('ADMIN_EMAIL');
+        if (config('app.APP_ENV') == 'local') {
+            $recipient = config('mail.admin.address');
             $cc = Options::testing_address_update_contacts();
         }
 
-        if (env('APP_ENV') == 'production') {
-            //todo admin email in .env, somewhere other than here
-            $recipient = 'admin@iatse118.com';
+        if (config('app.APP_ENV') == 'production') {
+            $recipient = config('mail.office_admin.address');
             $cc = Options::address_update_contacts();
         }
 
@@ -32,13 +31,13 @@ class EmailMemberUpdateAddressService
             $user,
             $recipient,
             $cc) {
-            $m->from(env('MAIL_FROM_ADDRESS'), 'Local 118 Website');
+            $m->from(config('mail.from.address'), 'Local 118 Website');
             $m->to($recipient, $recipient);
             if ($cc != '') {
                 $m->cc($cc, $cc);
             }
             $m->replyTo($user->email, $user->name)
-                ->subject(env('APP_NAME') . ' Website ' . $update_type . ' Update For ' . $user->name);
+                ->subject(config('app.APP_NAME') . ' Website ' . $update_type . ' Update For ' . $user->name);
         });
     }
 }

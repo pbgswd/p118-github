@@ -16,17 +16,16 @@ class EmailMemberUpdateService
         $message['original_name'] = $original_name;
         $message['original_email'] = $user->email;
 
-        $recipient = env('ADMIN_EMAIL');
+        $recipient = config('mail.admin.address');
         $cc = '';
 
-        if (env('APP_ENV') == 'local') {
-            $recipient = env('ADMIN_EMAIL');
+        if (config('app.APP_ENV') == 'local') {
+            $recipient = config('mail.admin.address');
             $cc = Options::testing_address_update_contacts();
         }
 
-        if (env('APP_ENV') == 'production') {
-            //todo admin email in .env, somewhere other than here
-            $recipient = 'admin@iatse118.com';
+        if (config('app.APP_ENV') == 'production') {
+            $recipient = config('mail.office_admin.address');
             $cc = Options::address_update_contacts();
         }
 
@@ -34,13 +33,13 @@ class EmailMemberUpdateService
             $user,
             $recipient,
             $cc) {
-            $m->from(env('MAIL_FROM_ADDRESS'), 'Local 118 Website profile update for '.$user->name);
+            $m->from(config('mail.from.address'),  config('app.APP_NAME') .' Website profile update for '.$user->name);
             $m->to($recipient, $recipient);
             if ($cc != '') {
                 $m->cc($cc, $cc);
             }
             $m->replyTo($user->email, $message['Name'] ?? $user->name)
-                ->subject('Local 118 - Member Contact Info Update for '.$message['original_name']);
+                ->subject(config('app.APP_NAME') . ' - Member Contact Info Update for '.$message['original_name']);
         });
     }
 }
