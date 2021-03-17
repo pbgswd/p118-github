@@ -33,7 +33,7 @@ class PageController extends Controller
      * @param Page $page
      * @return View
      */
-    public function show(Page $page): RedirectResponse
+    public function show(Page $page): View
     {
         //todo public page policy if not public page?
 

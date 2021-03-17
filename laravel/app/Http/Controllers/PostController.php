@@ -46,7 +46,7 @@ class PostController extends Controller
      * @param Post $post
      * @return View
      */
-    public function show(Post $post): RedirectResponse
+    public function show(Post $post): View
     {
         if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this post.');
