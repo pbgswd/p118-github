@@ -20,9 +20,8 @@ use App\Http\Controllers as CNS; //Controller Name Space
  */
 Route::group(['middleware' => 'web'], function () {
     Auth::routes(['verify' => true, 'register' => false, 'reset' => true, 'login' => true]);
-    // turn off register route for production, web.
 
-    Route::get('/', [CNS\HelloController::class, 'index'])->name('hello'); // front page
+    Route::get('/', [CNS\HelloController::class, 'index'])->name('hello');
 
     Route::get('contact', [CNS\ContactController::class, 'show'])->name('contact');
     Route::post('contact', [CNS\ContactController::class, 'submit']);
@@ -70,12 +69,7 @@ Route::group(['middleware' => 'web'], function () {
  */
 Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('/site', [CNS\SiteController::class, 'index'])->name('landing_page');
-    //todo a controller? use HomeController?
-    /**
-    Route::get('/site', function () {
-        return view('site');
-    });
-     **/
+
     Route::get('/home', [CNS\HomeController::class, 'index'])->name('home'); // redirects to home page
 
     Route::post('jobs', [CNS\EmploymentController::class, 'jobs_year'])->name('jobs_year');

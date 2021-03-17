@@ -20,6 +20,7 @@
         "laravel/ui": "^3.0",
         "league/flysystem": "^1.0.55",
         "nesbot/carbon": "^2.24",
+        "predis/predis": "^1.1",
         "rtconner/laravel-tagging": "^3.2.3",
         "spatie/image": "^1.7.4",
         "spatie/laravel-image-optimizer": "^1.6",
