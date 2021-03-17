@@ -26,6 +26,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 
 class RouteServiceProvider extends ServiceProvider
 {
+    public const HOME = '/site';
     /**
      * This namespace is applied to your controller routes.
      *
