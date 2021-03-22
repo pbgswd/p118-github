@@ -99,7 +99,7 @@ class InviteUserController extends Controller
      * @param InviteUser $inviteUser
      * @return Factory|RedirectResponse|View
      */
-    public function show(InviteUser $inviteUser): RedirectResponse
+    public function show(InviteUser $inviteUser): View
     {
         // method open to whomsoever has the link
 
