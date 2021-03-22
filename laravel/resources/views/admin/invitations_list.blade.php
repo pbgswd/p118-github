@@ -54,7 +54,7 @@
                                 </h4>
                             </td>
                             <td>
-                                <a href="{{$i->email}}">{{$i->email}}</a>
+                                <a href="mailto:{{$i->email}}">{{$i->email}}</a>
                             </td>
                             <td>
                                 @if($i->remaining < 0)
