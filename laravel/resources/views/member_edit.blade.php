@@ -260,7 +260,7 @@
             </div>
             <div class="pt-5 pl-2 m-2">
                 <i class="fas fa-edit fa-2x"></i>
-                <input class="btn btn-primary btn-lg" type="submit" value="{{ $data['action'] }} My Profile" />
+                <input class="btn btn-primary btn-lg" type="submit" value="Update My Profile" />
             </div>
         </div>
     </form>
