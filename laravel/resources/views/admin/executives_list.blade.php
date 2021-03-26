@@ -111,7 +111,7 @@ $executives = $data['executives'];
     </form>
     <h5>
         <i class="fas fa-info-circle"></i>
-        Go a <a href="{{route('users_list')}}">member profile management page</a>
+        Go to a <a href="{{route('users_list')}}">member profile page</a>
         to assign a new Executive role.
     </h5>
 @endif
