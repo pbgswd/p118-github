@@ -108,6 +108,10 @@ img {
     img {
         max-width: 80%;
     }
+
+    html {
+        line-height: 1.6;
+    }
 }
 @include media-breakpoint-up(xl) { }
 
