@@ -51,10 +51,10 @@
             </h5>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <a href="https://twitter.com/iatse118" target="_blank"
+                    <a href="https://twitter.com/118IATSE" target="_blank"
                        title="IATSE Local 118">
                         <i class="fab fa-twitter"></i>
-                        @iatse118
+                        @118IATSE
                     </a>
                 </li>
                 <li class="list-group-item">
