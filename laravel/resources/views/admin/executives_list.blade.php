@@ -1,23 +1,18 @@
-<?php
-$executives = $data['executives'];
-?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> Executive Members'])
-@section('content')
-<div class="container">
-    <h3>
-        <a href="{{ route('users_list') }}">
-            Members List <i class="far fa-arrow-alt-circle-left"></i>
-        </a>
-    </h3>
-</div>
-    @if($executives->count() < 1)
-        No executive roles defined yet
-    @else
-        <form name="delete" method="POST" action="{{route('admin_executive_destroy')}}">
+    @section('content')
+    <div class="container">
+        <h3>
+            <a href="{{ route('users_list') }}">
+                <i class="far fa-arrow-alt-circle-left"></i>
+                All Members
+            </a>
+        </h3>
+    </div>
+    <form name="delete" method="POST" action="{{route('admin_executive_destroy')}}">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}
             <div class="form-group">
-                <div class="table-responsive">
+                <div class="table-responsive mb-3">
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>
@@ -31,7 +26,7 @@ $executives = $data['executives'];
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $executives as $e )
+                            @forelse ($data['executives'] as $e )
                                 <tr>
                                     <td>
                                         @if( !empty($e->user[0]))
@@ -41,7 +36,6 @@ $executives = $data['executives'];
                                                            value="{{$e->user[0]->pivot->id }}" />
                                                 </label>
                                             </div>
-                                        @else
                                         @endif
                                     </td>
                                     <td>
@@ -64,10 +58,9 @@ $executives = $data['executives'];
                                                 \Carbon\Carbon::now() <
                                                     \Carbon\Carbon::parse($e->user[0]->pivot->end_date))
                                                 <i class='fas fa-check'></i>
-                                                @else
+                                            @else
                                                 <i class='far fa-times-circle'></i>
                                             @endif
-                                        @else
                                         @endif
                                     </td>
                                     <td>
@@ -83,20 +76,19 @@ $executives = $data['executives'];
                                     <td>
                                         @if( !empty($e->user[0]))
                                             {{\Carbon\Carbon::parse($e->user[0]->pivot->start_date)->format('F j, Y')}}
-                                        @else
                                         @endif
                                     </td>
                                     <td>
                                         @if( !empty($e->user[0]))
                                             {{\Carbon\Carbon::parse($e->user[0]->pivot->end_date)->format('F j, Y')}}
-                                        @else
                                         @endif
                                     </td>
                                 </tr>
-                            @endforeach
-                            <tr>
-                                <td colspan="7">&nbsp;</td>
-                            </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7">No executive roles currently assinged.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -114,5 +106,4 @@ $executives = $data['executives'];
         Go to a <a href="{{route('users_list')}}">member profile page</a>
         to assign a new Executive role.
     </h5>
-@endif
 @endsection
