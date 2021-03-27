@@ -18,6 +18,8 @@
             src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k">
         </script>
         <script src="/js/tinymce.js"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-WS6SX6VR7N"></script>
+        <script src="/js/google-analytics.js"></script>
         <link rel="canonical" href="http://{{env('APP_URL')}}/">
 
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
