@@ -49,7 +49,20 @@
                 <i class="fas fa-hashtag"></i>
                 Social Media
             </h5>
+
             <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-center">
+                    <a href="https://www.facebook.com/IATSE118" target="_blank"
+                       title="IATSE Local 118 Facebook">
+                        <i class="fab fa-facebook"></i> FaceBook
+                    </a>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    <a href="https://www.instagram.com/iatse118/" target="_blank">
+                        <i class="fab fa-instagram"></i> InstaGram
+                    </a>
+                </li>
                 <li class="list-group-item">
                     <a href="https://twitter.com/118IATSE" target="_blank"
                        title="IATSE Local 118">
