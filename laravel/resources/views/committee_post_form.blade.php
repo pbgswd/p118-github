@@ -28,15 +28,23 @@
                   class="needs-validation" novalidate>
                 {!! csrf_field() !!}
                 <input type="hidden" name="post[access_level]" value="members" />
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
-                        <input type="text" class="form-control"  placeholder="Title" name="post[title]"
-                               value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
-                    </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                    <input type="text" class="form-control"  placeholder="Title" name="post[title]"
+                           value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
+                </div>
 
-                    <label for="post-content" class="control-label">
-                        <h4>Content</h4>
-                    </label>
+                <h5>Strongly recommended title format</h5>
+                <p>
+                    <i>The format for post title should be like this:</i>
+                    <br /><kbd>committeeItem - Month year</kbd>
+                    <i>or</i> <kbd>YWC Meeting Minutes - March 11th - 2021</kbd>
+                    <i>or</i> <kbd>YWC Report - May 2020</kbd>.
+                </p>
+
+                <label for="post-content" class="control-label">
+                    <h4>Content</h4>
+                </label>
 
                 <div class="col-12 mb-3 input-group">
                     <textarea name="post[content]" id="post-content" placeholder="Content" class="form-control">
@@ -53,6 +61,15 @@
                                 </label>
                                 <input type="file" id="inputFile" name="attachments[]" multiple />
                             </div>
+                        </div>
+                        <div class="col-12">
+                            <h5>Strongly recommended attachment file names</h5>
+                            <p>
+                                <i>Use the date and title in the file name, like this:</i>
+                                <kbd>itemcommittee_ddmmyyyy.pdf</kbd>
+                                <i>or</i>
+                                <kbd>ReportOrganizing_01032020.pdf</kbd>.
+                            </p>
                         </div>
                     </div>
 

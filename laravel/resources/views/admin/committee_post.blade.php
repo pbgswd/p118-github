@@ -39,8 +39,17 @@
                 <div class="col-12">
                     <input type="text" class="form-control"  placeholder="Title" name="post[title]"
                            value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
+
+                    <h5 class="mt-3">Strongly recommended title format</h5>
+                    <p>
+                        <i>The format for post title should be like this:</i>
+                        <br /><kbd>committeeItem - Month year</kbd>
+                        <i>or</i> <kbd>YWC Meeting Minutes - March 11th - 2021</kbd>
+                        <i>or</i> <kbd>YWC Report - May 2020</kbd>.
+                    </p>
                 </div>
             </div>
+
         </div>
         <div class="row mt-3">
             <div class="form-group">
@@ -75,6 +84,15 @@
                     </label>
                     <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
+            </div>
+            <div class="col-12">
+                <h5>Strongly recommended attachment file names</h5>
+                <p>
+                    <i>Use the date and title in the file name, like this:</i>
+                    <kbd>itemcommittee_ddmmyyyy.pdf</kbd>
+                    <i>or</i>
+                    <kbd>ReportOrganizing_01032020.pdf</kbd>.
+                </p>
             </div>
         </div>
         <div class="row mt-3">

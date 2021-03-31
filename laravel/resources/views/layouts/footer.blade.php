@@ -56,9 +56,7 @@
                        title="IATSE Local 118 Facebook">
                         <i class="fab fa-facebook"></i> FaceBook
                     </a>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
+
                     <a href="https://www.instagram.com/iatse118/" target="_blank">
                         <i class="fab fa-instagram"></i> InstaGram
                     </a>
