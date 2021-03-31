@@ -79,6 +79,10 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown">
                         <a class="dropdown-item" href="{{route('topic_show', 'health-and-welfare')}}"
                            title="Health & Welfare Overview">H & W Overview</a>
+                        <a class="dropdown-item font-weight-bolder"
+                           href="https://service.pac.bluecross.ca/member/login/" target="_blank">
+                            Pacific Blue Cross
+                        </a>
                     </div>
                 </div>
             @endauth
