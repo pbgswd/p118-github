@@ -34,7 +34,7 @@ class TopicController extends Controller
      * @param Topic $topic
      * @return View
      */
-    public function show(Topic $topic): View
+    public function show(Topic $topic)
     {
         if (false === Auth::check() && $topic->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this topic.');
