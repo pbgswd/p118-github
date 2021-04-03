@@ -10,9 +10,11 @@
                 </p>
             </div>
             <div class="col-12 col-md-6 text-md-right">
-                <a href="{{route('topic_edit', $data['topic']->slug)}}" title="Edit {{$data['topic']->title}}">
-                    <i class="fas fa-edit"></i> Edit
-                </a>
+                @can(['edit articles'])
+                    <a href="{{route('topic_edit', $data['topic']->slug)}}" title="Edit {{$data['topic']->title}}">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                @endcan
             </div>
         </div>
         <div class="row">
@@ -27,8 +29,8 @@
                 <div class="row">
                     @forelse($data['topic']->pages as $page)
                         <div class="col-12 col-md-4 p-1">
-                            <div class="col border border-dark rounded h-100 w-100 pt-1 text-center d-flex align-items-center
-                                justify-content-center">
+                            <div class="col border border-dark rounded h-100 w-100 pt-1 text-center d-flex
+                            align-items-center justify-content-center">
                                 <h4>
                                     <a href="{{ route('page_show', $page->slug) }}">
                                         {{$page['title']}}
@@ -46,8 +48,8 @@
                 <div class="row mt-3">
                     @forelse($data['topic']->posts as $post)
                         <div class="col-12 col-md-4 p-1">
-                            <div class="col border border-dark rounded h-100 w-100 pt-1 text-center d-flex align-items-center
-                                justify-content-center">
+                            <div class="col border border-dark rounded h-100 w-100 pt-1 text-center d-flex
+                            align-items-center justify-content-center">
                                 <h5>
                                     <a href="{{ route('post_show', $post->slug) }}">
                                         {{$post['title']}}

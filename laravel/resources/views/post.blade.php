@@ -14,9 +14,11 @@
                 </p>
             </div>
             <div class="col-12 col-md-6 text-md-right">
-                <a href="{{route('post_edit', $data['post']->slug)}}" title="Edit {{$data['post']->title}}">
-                    <i class="fas fa-edit"></i> Edit
-                </a>
+                @can(['edit articles'])
+                    <a href="{{route('post_edit', $data['post']->slug)}}" title="Edit {{$data['post']->title}}">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                @endcan
             </div>
         </div>
         <div class="col-12 text-center mb-3">
