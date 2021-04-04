@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Page;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -31,11 +33,13 @@ class PageController extends Controller
 
     /**
      * @param Page $page
-     * @return View
+     * @return Response
+     * @throws AuthorizationException
      */
     public function show(Page $page)
     {
         //todo public page policy if not public page?
+        //$this->authorize('view', Page::class);
 
         if (false === Auth::check() && $page->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this page.');

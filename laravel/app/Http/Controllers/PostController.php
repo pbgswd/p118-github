@@ -8,6 +8,7 @@ use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -44,10 +45,13 @@ class PostController extends Controller
 
     /**
      * @param Post $post
-     * @return View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Post $post)
     {
+       // $this->authorize('view', Post::class);
+
         if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this post.');
 
