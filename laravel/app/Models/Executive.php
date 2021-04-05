@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Policies\ExecutivePolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -83,6 +84,15 @@ class Executive extends Model implements Searchable
     {
         return $this->belongsToMany(User::class, 'executive_user')
             ->whereRaw('NOW() > start_date AND NOW() < end_date')
-            ->withPivot('id', 'start_date', 'end_date', 'current');
+            ->withPivot('id', 'start_date', 'end_date', 'current')
+            ->with('user_info');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function user_info(): HasOne
+    {
+        return $this->hasOne(UserInfo::class)->withDefault();
     }
 }

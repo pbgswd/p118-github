@@ -15,14 +15,18 @@
                         <div class="col mt-3 text-center align-self-center">
                             <h4>
                                 @auth
-                                    <a title="{{ $exec->name }}" href="{{ route('member', $exec->id)}}">
-                                        @endauth
-                                            {{$exec->name ?? ''}}
-                                        @auth
+                                    @if(true === $exec->user_info->show_profile)
+                                        <a title="{{ $exec->name }}" href="{{ route('member', $exec->id)}}">
+                                    @endif
+                                @endauth
+                                {{$exec->name ?? ''}}
+                                @auth
+                                    @if(true === $exec->user_info->show_profile)
+                                        </a>
+                                    @endif
+                                    <a href="mailto:{{$e->email}}">
+                                        <i class="fas fa-envelope"></i>
                                     </a>
-                                <a href="mailto:{{$e->email}}">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
                                 @endauth
                             </h4>
                             {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('M j Y')}} -
@@ -51,12 +55,16 @@
                         </h4>
                         <h4>
                             @auth
-                                <a title="{{ $hw->name }}" href="{{ route('member', $hw->id) }}">
-                                    @endauth
-                                        {{$hw->name ?? ''}}
-                                    @auth
-                                </a>
-                                <a href="mailto:{{$hw->email}}">
+                                @if(true === $hw->user_info->show_profile)
+                                    <a title="{{ $hw->name }}" href="{{ route('member', $hw->id) }}">
+                                @endif
+                            @endauth
+                                {{$hw->name ?? ''}}
+                            @auth
+                                @if(true === $hw->user_info->show_profile)
+                                    </a>
+                                @endif
+                                <a href="mailto:{{$h->email}}">
                                     <i class="fas fa-envelope"></i>
                                 </a>
                             @endauth
@@ -80,35 +88,36 @@
         @forelse($data['trustees'] as $t)
             @foreach($t->current_executive_user as $trustee )
                 <div class="col-12 col-md-4 p-1">
-                <div class="border border-dark rounded-lg w-100 h-100 p-2 text-center">
-                    <h4>{{$t->title }}</h4>
-                    <h4>
-                        @auth
-                            <a title="{{ $trustee->name }}"
-                               href="{{ route('member', $trustee->id) }}">
-                                @endauth
-                                {{$trustee->name ?? ''}}
-                                @auth
-                            </a>
-
-                        <a href="mailto:{{$trustee->email}}">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                        @endauth
-                    </h4>
-                    {{\Carbon\Carbon::parse($trustee->pivot->start_date)->format('M j Y')}} -
-                    {{\Carbon\Carbon::parse($trustee->pivot->end_date)->format('M j Y')}}
-                </div>
+                    <div class="border border-dark rounded-lg w-100 h-100 p-2 text-center">
+                        <h4>{{$t->title }}</h4>
+                        <h4>
+                            @auth
+                                @if(true === $trustee->user_info->show_profile)
+                                    <a title="{{ $trustee->name }}"
+                                       href="{{ route('member', $trustee->id) }}">
+                                @endif
+                            @endauth
+                            {{$trustee->name ?? ''}}
+                            @auth
+                                @if(true === $trustee->user_info->show_profile)
+                                    </a>
+                                @endif
+                                <a href="mailto:{{$t->email}}">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            @endauth
+                        </h4>
+                        {{\Carbon\Carbon::parse($trustee->pivot->start_date)->format('M j Y')}} -
+                        {{\Carbon\Carbon::parse($trustee->pivot->end_date)->format('M j Y')}}
+                    </div>
                 </div>
             @endforeach
         </div>
-
     @empty
         <div class="text-center">No entry</div>
     @endforelse
-
     @auth
-        <div class="row border border-dark rounded-lg mt-2 p-2" style="background: rgba(220,220,220,0.8);">
+        <div class="row border border-dark rounded-lg mt-2 p-2">
             <div class="col-12 text-center my-3">
                 <h1>Local 118 Committees</h1>
             </div>
