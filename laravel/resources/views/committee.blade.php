@@ -18,15 +18,12 @@
                 </div>
             @endcan
         </div>
-        <div class="row mb-lg-5">
+        <div class="row mb-3">
             @if(null !== $data['committee']->image)
                 <div class="col-12 mb-3 pt-2 text-center">
                     <img src="{{ asset('storage/committees/'.$data['committee']->image)}}"
                          class="border rounded-lg img-fluid mb-2" />
                 </div>
-
-
-
             @endif
             <div class="col-12 pt-2 text-center">
                 <h1>
@@ -37,6 +34,29 @@
                 <h4>
                     {!! $data['committee']->description !!}
                 </h4>
+            </div>
+        </div>
+        <div class="row mt-3 mb-3">
+            <div class="col-12 border border-dark rounded-lg pt-2 pb-2">
+                <h5>{{$data['committee']->name}} Executive</h5>
+                <ul class="list-group">
+                    @foreach ($data['executives'] as $exec)
+                        <li class="list-group-item">
+                            <i class="fas fa-user-tie"></i>
+                            {{$exec->pivot->role}}:
+                            <a href="{{route('member', $exec->id)}}">
+                                {{$exec->name}}
+                            </a>
+                        </li>
+                    @endforeach
+                    <li class="list-group-item">
+                        <i class="far fa-envelope"></i>
+                        Email:
+                        <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee">
+                            {{$data['committee']->email}}
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="row mb-4">
@@ -109,30 +129,6 @@
                         </div>
                     </div>
                 @endif
-            </div>
-        </div>
-
-        <div class="row mt-3">
-            <div class="col-12 border border-dark rounded-lg pt-2 pb-2">
-                <h5>{{$data['committee']->name}} Executive</h5>
-                <ul class="list-group">
-                    @foreach ($data['executives'] as $exec)
-                        <li class="list-group-item">
-                            <i class="fas fa-user-tie"></i>
-                            {{$exec->pivot->role}}:
-                            <a href="{{route('member', $exec->id)}}">
-                                {{$exec->name}}
-                            </a>
-                        </li>
-                    @endforeach
-                    <li class="list-group-item">
-                        <i class="far fa-envelope"></i>
-                        Email:
-                        <a href="mailto:{{$data['committee']->email}}?subject={{$data['committee']->name}} committee">
-                            {{$data['committee']->email}}
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
