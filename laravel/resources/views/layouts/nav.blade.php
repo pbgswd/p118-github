@@ -83,6 +83,10 @@
                            href="https://service.pac.bluecross.ca/member/login/" target="_blank">
                             Pacific Blue Cross
                         </a>
+                        <a class="dropdown-item font-weight-bolder"
+                           href="https://www.ceirp.ca/en/" title="CEIRP" target="_blank">
+                            CEIRP
+                        </a>
                     </div>
                 </div>
             @endauth
@@ -101,6 +105,11 @@
                     <a class="dropdown-item" href="{{route('agreements_list_public')}}" title="Collective Agreements">
                         <i class="far fa-handshake"></i>
                         Collective Agreements</a>
+
+                    <a class="dropdown-item" href=" /topic/contract-ratifications" title="Contract Ratifications">
+                        <i class="far fa-handshake"></i>
+                        Contract Ratifications</a>
+
                 </div>
             </div>
             <div class="dropdown mr-1 mt-2 mt-md-0">
@@ -129,7 +138,7 @@
                         </a>
                         @endrole
                         <a class="dropdown-item" href="/site" title="Landing Page">
-                            <i class="fas fa-industry"></i>
+                            <i class="fas fa-home"></i>
                             Landing Page</a>
                         <a class="dropdown-item" href="{{route('list_meetings')}}" title="Meeting Minutes">
                             <i class="far fa-folder"></i>
@@ -168,7 +177,9 @@
             @auth
                 <li class="nav-item mt-2 mr-2 d-flex align-items-stretch justify-content-center text-center">
                     <a class="nav-link d-none d-md-block" href="{{route('landing_page')}}" title="Landing Page">
-                        <i class="fas fa-industry fa-lg"></i>
+                         <span style="color: white">
+                            <i class="fas fa-home fa-lg"></i>
+                         </span>
                     </a>
                 </li>
                 <li class="nav-item mt-2 d-block d-md-none d-lg-block">

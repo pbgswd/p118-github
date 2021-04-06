@@ -28,7 +28,9 @@
                     {{$data['agreement']->from->format('F j Y')}} -
                     {{$data['agreement']->until->format('F j Y')}}
                     @if(\Carbon\Carbon::parse($data['agreement']->until)->isPast())
-                        <i>(Not current)</i>
+                        @auth
+                            <i>(Not current)</i>
+                        @endauth
                     @endif
                 </h4>
             </div>
@@ -42,7 +44,6 @@
                     <i class="far fa-folder-open"></i>
                     Files
                 </h4>
-
                 <ul class="list-group">
                     @forelse($data['agreement']->attachments as $att)
                         @if((false === Auth::check()

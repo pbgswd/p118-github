@@ -75,10 +75,6 @@
                     <a href="mailto:office@iatse118.com">
                         <i class="fas fa-envelope"></i> office@iatse118.com</a>
                 </h3>
-                <h3>
-                    <a href="mailto:admin@iatse118.com">
-                        <i class="fas fa-envelope"></i> admin@iatse118.com</a>
-                </h3>
             </div>
             <div class="col-12 mt-3 content">
                 <h3>

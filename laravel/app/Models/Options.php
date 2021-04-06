@@ -122,7 +122,7 @@ class Options
      */
     public static function membership_levels(): array
     {
-        $membership = ['Member', 'Office']; // 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
+        $membership = ['Member', 'Office']; // 'Inactive', 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
 
         return array_combine($membership, $membership);
     }

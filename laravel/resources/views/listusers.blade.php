@@ -39,7 +39,7 @@
                     <tr>
                         <td>
                             <h5>
-                                @if (!empty($i->user_info->show_profile) OR (Auth::user()->id == $i->id))
+                                @if ((true === $i->user_info->show_profile) OR (Auth::user()->id == $i->id))
                                     <a title="{{ $i->name }}" href="{{ route('member', $i->id) }}">
                                         {{ $i->name }}
                                     </a>

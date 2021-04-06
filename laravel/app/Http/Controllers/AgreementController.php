@@ -44,6 +44,7 @@ class AgreementController extends Controller
      */
     public function show(Agreement $agreement): View
     {
+        //todo order of attachments -> by newest agreement first.
         $agreement->load('user', 'attachments');
 
         return view('agreement_view', ['data' => ['agreement' => $agreement]]);

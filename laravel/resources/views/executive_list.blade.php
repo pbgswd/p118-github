@@ -41,7 +41,7 @@
            No entry
         @endforelse
     </div>
-
+    @auth
     <div class="row border border-dark rounded-lg mt-2 p-2 my-3">
         <div class="col-12 text-center my-3">
             <h1>Health & Welfare Administrators</h1>
@@ -69,8 +69,6 @@
                                 </a>
                             @endauth
                         </h4>
-                        {{\Carbon\Carbon::parse($hw->pivot->start_date)->format('M j Y')}} -
-                        {{\Carbon\Carbon::parse($hw->pivot->end_date)->format('M j Y')}}
                     </div>
                 </div>
             @empty
@@ -116,7 +114,7 @@
     @empty
         <div class="text-center">No entry</div>
     @endforelse
-    @auth
+
         <div class="row border border-dark rounded-lg mt-2 p-2">
             <div class="col-12 text-center my-3">
                 <h1>Local 118 Committees</h1>

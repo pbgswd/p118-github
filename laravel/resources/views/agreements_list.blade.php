@@ -34,7 +34,9 @@
                         <td>
                             <h5>
                                 @if(\Carbon\Carbon::parse($agreement->until)->isPast())
-                                    <i>(Not current)</i>
+                                    @auth
+                                        <i>(Not current)</i>
+                                    @endauth
                                 @endif
                                 <a title="{{ $agreement->title }}" href="{{route('agreement_show', $agreement->id)}}">
                                     {{ $agreement->title }}
