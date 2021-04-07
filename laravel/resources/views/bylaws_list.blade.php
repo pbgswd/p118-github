@@ -10,25 +10,17 @@
             </h2>
         </div>
         <div class="col-12 col-md-4 text-md-right">
-        <h3>
-           <span class="badge badge-primary badge-pill">
-               {{ $data['data']['count'] }}
-               Bylaw
-               {{ Str::plural('Document', $data['data']['count']) }}
-           </span>
-        </h3>
-        </div>
-        <div class="col-12">
-            <h5 class="font-italic">Please remember, we have pledged to keep
-                confidential the work of this body and
-                to do all in our power to discourage and
-                prevent violation of this requirement
-                by brother and sister members.
-            </h5>
+            <h3>
+               <span class="badge badge-primary badge-pill">
+                   {{ $data['data']['count'] }}
+                   Bylaw
+                   {{ Str::plural('Document', $data['data']['count']) }}
+               </span>
+            </h3>
         </div>
     </div>
     <div class="table-responsive  border border-dark rounded-lg mb-4">
-        <table class="table p-1" style="background: rgba(220,220,220,0.8);">
+        <table class="table p-1">
             <thead>
                 <tr>
                     <th> @sortablelink('title', 'Title') </th>
