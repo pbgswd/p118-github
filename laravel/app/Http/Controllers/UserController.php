@@ -168,11 +168,6 @@ class UserController extends Controller
 
         /** @var array $message */
         $message = [];
-        $original_name = $user->name;
-
-        if ($userRequest->user['name'] != $user->name) {
-            $message['Name'] = $userRequest->user['name'];
-        }
 
         if ($userRequest->user['email'] != $user->email) {
             $message['Email'] = $userRequest->user['email'];

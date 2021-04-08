@@ -24,8 +24,6 @@ class UpdateMember extends FormRequest
     public function rules()
     {
         return [
-            //unique:table,column,except,idColumn
-            'user.name' => 'required|string|max:255',
             'user.email' => 'required|max:255|unique:users,email,'.$this->route('user')->id.',id',
             'user_phone.label' => 'string|nullable',
             'user_phone.primary' => 'boolean',

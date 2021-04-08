@@ -71,13 +71,6 @@
             <div class="col-12">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Name</span>
-                    </div>
-                    <input type="text" class="form-control"  placeholder="Name" name="user[name]"
-                           value="{{ old('user.name', $data['user']->name)}}" size="80" required/>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">Email</span>
                     </div>
                     <input type="text" class="form-control"  placeholder="Email" name="user[email]"
