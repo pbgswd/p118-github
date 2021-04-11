@@ -57,17 +57,18 @@
                             @auth
                                 @if(true === $hw->user_info->show_profile)
                                     <a title="{{ $hw->name }}" href="{{ route('member', $hw->id) }}">
-                                @endif
-                            @endauth
-                                {{$hw->name ?? ''}}
-                            @auth
-                                @if(true === $hw->user_info->show_profile)
+                                        {{$hw->name ?? ''}}
                                     </a>
+                                @else
+                                    {{$hw->name ?? ''}}
                                 @endif
                                 <a href="mailto:{{$h->email}}">
                                     <i class="fas fa-envelope"></i>
                                 </a>
                             @endauth
+                            @guest
+                                {{$hw->name ?? ''}}
+                            @endguest
                         </h4>
                     </div>
                 </div>
@@ -91,19 +92,17 @@
                         <h4>
                             @auth
                                 @if(true === $trustee->user_info->show_profile)
-                                    <a title="{{ $trustee->name }}"
-                                       href="{{ route('member', $trustee->id) }}">
-                                @endif
-                            @endauth
-                            {{$trustee->name ?? ''}}
-                            @auth
-                                @if(true === $trustee->user_info->show_profile)
+                                    <a title="{{ $trustee->name ?? '' }}" href="{{ route('member', $trustee->id) }}">
+                                        {{$trustee->name ?? ''}}
                                     </a>
                                 @endif
                                 <a href="mailto:{{$t->email}}">
                                     <i class="fas fa-envelope"></i>
                                 </a>
                             @endauth
+                            @guest
+                                {{$trustee->name ?? ''}}
+                            @endguest
                         </h4>
                         {{\Carbon\Carbon::parse($trustee->pivot->start_date)->format('M j Y')}} -
                         {{\Carbon\Carbon::parse($trustee->pivot->end_date)->format('M j Y')}}
