@@ -102,10 +102,15 @@ class AttachmentService
         }
 
         return Storage::download($folder.'/'.$attachment['file'],
-            $attachment['file_name'], [], 'attachment');
+            $attachment['file_name'], ['Content-Disposition' => 'inline; filename="'.$attachment['file_name'].'"']);
     }
 
-    public static function human_filesize($bytes, $decimals = 2)
+    /**
+     * @param $bytes
+     * @param int $decimals
+     * @return string
+     */
+    public static function human_filesize($bytes, $decimals = 2): string
     {
         $factor = \floor((\strlen($bytes) - 1) / 3);
 
