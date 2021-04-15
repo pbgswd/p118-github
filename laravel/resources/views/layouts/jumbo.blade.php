@@ -24,6 +24,7 @@
 
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
+        <link rel="icon" href="/favicon.ico">
     </head>
     <body>
         <a id="top"></a>
