@@ -113,7 +113,7 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
      */
     public function attachments(): BelongsToMany
     {
-        return $this->belongsToMany(Attachment::class, 'attachment_agreement')->orderBy('id');
+        return $this->belongsToMany(Attachment::class, 'attachment_agreement')->orderBy('id', 'desc');
     }
 
     public function venues(): BelongsToMany
