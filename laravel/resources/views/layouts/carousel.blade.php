@@ -53,7 +53,9 @@
                     </div>
                 </div>
             </div>
-            <!-- /.carousel-item -->
+
+
+         <!-- /.carousel-item -->
             <div class="carousel-item">
                 <picture>
                     <source srcset="/storage/public/vzK5ybAkREaQWIT1Aorz18tYfEJIX1Fzec0ktGkd.jpg" media="(min-width: 1400px)">
