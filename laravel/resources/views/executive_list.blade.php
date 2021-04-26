@@ -90,19 +90,16 @@
                     <div class="border border-dark rounded-lg w-100 h-100 p-2 text-center">
                         <h4>{{$t->title }}</h4>
                         <h4>
-                            @auth
-                                @if(true === $trustee->user_info->show_profile)
-                                    <a title="{{ $trustee->name ?? '' }}" href="{{ route('member', $trustee->id) }}">
-                                        {{$trustee->name ?? ''}}
-                                    </a>
-                                @endif
-                                <a href="mailto:{{$t->email}}">
-                                    <i class="fas fa-envelope"></i>
+                            @if(true === $trustee->user_info->show_profile)
+                                <a title="{{ $trustee->name ?? '' }}" href="{{ route('member', $trustee->id) }}">
+                                    {{$trustee->name ?? ''}}
                                 </a>
-                            @endauth
-                            @guest
+                            @else
                                 {{$trustee->name ?? ''}}
-                            @endguest
+                            @endif
+                            <a href="mailto:{{$t->email}}">
+                                <i class="fas fa-envelope"></i>
+                            </a>
                         </h4>
                         {{\Carbon\Carbon::parse($trustee->pivot->start_date)->format('M j Y')}} -
                         {{\Carbon\Carbon::parse($trustee->pivot->end_date)->format('M j Y')}}
