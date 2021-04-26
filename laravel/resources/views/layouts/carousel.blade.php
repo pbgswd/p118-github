@@ -40,16 +40,16 @@
             <!-- /.carousel-item -->
             <div class="carousel-item">
                 <picture>
-                    <source srcset="/storage/public/OgN7XgSakf9F28tLVSAwXbj3dyWjmjwvIGL7vhmE.jpg" media="(min-width: 1400px)">
-                    <source srcset="/storage/public/a1DnMfzCZQ914j0pW5N0tojuzeU8oABaeybNHzCB.jpg" media="(min-width: 769px)">
-                    <source srcset="/storage/public/VvSG5f3Vtdo1GQixukCL8JU6gYL3bsBTHAwjyRBB.jpg" media="(min-width: 577px)">
-                    <img srcset="/storage/public/L14QT2AUPtArxCUdM1Zb5sLzZQSD0xu8MVFvk8rQ.jpg" alt="Orpheum Theatre" class="d-block img-fluid">
+                    <source srcset="/storage/public/cKJuLxJYEjxjE5L2ra5s9ynw5GrVM2P7PMgTJU5j.jpg" media="(min-width: 1400px)">
+                    <source srcset="/storage/public/bmouI3kV5lfB4JVffX0X6FMyGKKT4LEf8Y3CSLQr.jpg" media="(min-width: 769px)">
+                    <source srcset="/storage/public/9maoUzOlTpj8YC7FcQg2FDKDaLXp2pp4or6WT3Cu.jpg " media="(min-width: 577px)">
+                    <img srcset="/storage/public/T7PIhGCQaDoxOvJAH6aDF79KrwehnO3YYpBDhzoO.jpg" alt="Orpheum Theatre" class="d-block img-fluid">
                 </picture>
 
                 <div class="carousel-caption justify-content-center align-items-center">
                     <div>
-                        <h2>Stars Day and Night</h2>
-                        <p>We build your spectacle</p>
+                        <h2>Setting Your Stage</h2>
+                        <p>Live Performance Comes to Life</p>
                     </div>
                 </div>
             </div>
@@ -79,10 +79,9 @@
                     <source srcset="/storage/public/ofdOoXAOzfjYiJrYeRDLwAJRKD0SAMuiDH3tRA7k.jpg" media="(min-width: 577px)">
                     <img srcset="/storage/public/p5uTtyJcYSlvGjz04wIy5GBGVwNxDvYCoW1r3tPH.jpg" alt="Abbotsford Centre" class="d-block img-fluid">
                 </picture>
-                <div class="carousel-caption justify-content-center align-items-center text-dark">
-                    <div>
-                        <h2>Super Shows</h2>
-                        <p>We deliver your performance to the stage</p>
+                <div class="carousel-caption text-dark font-weight-bolder">
+                    <div class="mb-5">
+                        <h1>Super Shows<br />For <br />Super Stars</h1>
                     </div>
                 </div>
             </div>
