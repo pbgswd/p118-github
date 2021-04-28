@@ -79,9 +79,13 @@
                     <source srcset="/storage/public/ofdOoXAOzfjYiJrYeRDLwAJRKD0SAMuiDH3tRA7k.jpg" media="(min-width: 577px)">
                     <img srcset="/storage/public/p5uTtyJcYSlvGjz04wIy5GBGVwNxDvYCoW1r3tPH.jpg" alt="Abbotsford Centre" class="d-block img-fluid">
                 </picture>
-                <div class="carousel-caption text-dark font-weight-bolder">
-                    <div class="mb-5">
-                        <h1>Super Shows<br />For <br />Super Stars</h1>
+                <div class="carousel-caption font-weight-bolder">
+                    <div classs="mb-5">
+                        <h1 class="text-danger font-weight-bolder" style="text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000; -1px -1px 0 #000;">
+         Super Shows<br />
+         For <br />
+         Super Stars
+</h3>
                     </div>
                 </div>
             </div>
