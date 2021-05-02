@@ -230,6 +230,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     //Route::get('/invitation-mailmsg',[CNS\InviteUserController::class, 'mail'])->name('mail_invited_user');
     Route::post('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'update']);
     Route::delete('/invited_user/delete', [CNS\InviteUserController::class, 'destroy'])->name('invited_user_destroy');
+    Route::get('/invite_import-list', [CNS\InviteUserController::class, 'list_import'])->name('list_import');
+    Route::get('process_import_invitation', [CNS\InviteUserController::class, 'process_import_invitation'])
+        ->name('process_import_invitation');
 
     Route::get('/pages', [CNS\AdminPageController::class, 'index'])->name('pages_list');
     Route::get('/page/create', [CNS\AdminPageController::class, 'create'])->name('page_create');

@@ -12,6 +12,10 @@
                 <i class="far fa-arrow-alt-circle-right"></i>
             </a>
         </h3>
+    <h3 class="mt-5">
+        <a href="{{route('list_import')}}">View Temporary Member Import Data</a>
+    </h3>
+
 </div>
 <form name="delete" method="POST" action="{{route('invited_user_destroy')}}">
     {!! csrf_field() !!}

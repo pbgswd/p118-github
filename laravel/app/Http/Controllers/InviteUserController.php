@@ -12,8 +12,10 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -131,14 +133,67 @@ class InviteUserController extends Controller
     }
 
     /**
+     * @return View
+     */
+    public function list_import(): View
+    {
+        $data = DB::table('import_users')->get();
+
+        return view('admin.invite_list_import', ['data' => $data]);
+    }
+
+    /**
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function process_import_invitation(): RedirectResponse
+    {
+        $this->authorize('create', InviteUser::class);
+
+        $data = DB::table('import_users')
+            ->whereRaw('email IN (SELECT email FROM users)')
+            ->delete();
+
+        $data = DB::table('import_users')
+            ->whereRaw('email NOT IN (SELECT email FROM users)')
+            ->whereRaw('email NOT IN (SELECT email FROM invite_users)')
+            ->limit(5)
+            ->get();
+
+        foreach($data as $user)
+        {
+            $invitation = new InviteUser();
+            $invitation->name = $user->name;
+            $invitation->email = $user->email;
+            $invitation->password = str_replace('/', '', hash::make(Str::random(8)));
+            $invitation->membership_type = $user->membership_type;
+            $invitation->role = 'member';
+            $invitation->user_id = 1;
+            $invitation->message = "";
+
+            $invitation->save();
+
+            Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]],
+                function ($m) use ($invitation) {
+                    $m->from(config('mail.from.address'), config('mail.from.name').' Website Signup');
+                    $m->to($invitation['email'], $invitation['name'])
+                        ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
+                        ->subject('IATSE Local 118 Website Signup Invitation');
+                });
+        }
+
+        Session::flash('success', 'Invitation sent to '.$data->count(). ' members');
+
+        return redirect()->route('list_import');
+    }
+
+    /**
      * @param ProcessUserRequest $request
      * @param InviteUser $inviteUser
      * @return RedirectResponse
      */
     public function process_user(ProcessUserRequest $request, InviteUser $inviteUser): RedirectResponse
     {
-        // method open to whomsoever has the link
-        //todo determine password strength
 
         $data = [
             'name' => $inviteUser->name,

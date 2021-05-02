@@ -42,17 +42,33 @@
 
                               {!! $data['invitation']['message'] ?? '' !!}
 
-			                <p class="lead">This is your invitation to join the completely updated IATSE Local 118 website. </p>
-                            <p class="lead">You will need to create a secure password to go with your profile
-                                to log on to the site.
-                                Use the following link to begin the registration process.
+			                <p class="lead">This is your invitation to join the completely updated IATSE Local 118
+                                website. </p>
+                            <p class="lead">To join the website you will need to navigate to the page in the link
+                                provided below.
+                                  On that page you will create a secure login password. Your password must be a minimum
+                                of 6 characters. Do not use an easily guessable password.
                             </p>
-
+                            <p>Once you have done that, you will be prompted to log in to the
+                              site with your email address and new password.</p>
+                            <p>After you have logged in, be sure to look around, and update your personal profile
+                              information.</p>
+                            <p>Please note that we have not brought across your existing login information as a best
+                              security practice. </p>
                             <p style="margin-top: 2em;">
-                                <a href="{{route('invite_user_signup', ['inviteUser' => $data['invitation']['id'], 'password' => $data['invitation']['password']])}}" target="_blank">
-                                    {{route('invite_user_signup', [$data['invitation']['id'], $data['invitation']['password']])}}
+                                <a href="{{route('invite_user_signup', ['inviteUser' => $data['invitation']['id'],
+                                    'password' => $data['invitation']['password']])}}" target="_blank">
+                                    {{route('invite_user_signup', [$data['invitation']['id'],
+                                        $data['invitation']['password']])}}
                                 </a>
 			                </p>
+                              <p>See anything out of place? Report errors and typos to
+                                  <a href="mailto:office@iatse118.com" target="_blank" rel="noopener">
+                                      office@iatse118.com</a>.
+                              </p>
+                              <p>&nbsp;</p>
+                              <p>Have a great day.</p>
+                              <p>IATSE Local 118.</p>
                           </td>
                           <td class="expander"></td>
                         </tr>
