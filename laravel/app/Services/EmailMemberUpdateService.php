@@ -10,10 +10,9 @@ use Illuminate\Support\Facades\Mail;
  */
 class EmailMemberUpdateService
 {
-    public function sendMessage($message, $user, $original_name)
+    public function sendMessage($message, $user)
     {
         $message['id'] = $user->id;
-        $message['original_name'] = $original_name;
         $message['original_email'] = $user->email;
 
         $recipient = config('mail.admin.address');
@@ -39,7 +38,7 @@ class EmailMemberUpdateService
                 $m->cc($cc, $cc);
             }
             $m->replyTo($user->email, $message['Name'] ?? $user->name)
-                ->subject(config('app.APP_NAME') . ' - Member Contact Info Update for '.$message['original_name']);
+                ->subject(config('app.APP_NAME') . ' - Member Contact Info Update for '.$user->name);
         });
     }
 }

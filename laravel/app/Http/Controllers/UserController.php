@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Member\UpdateMember;
 use App\Http\Requests\Member\UpdateMemberEmergencyContact;
 use App\Http\Requests\User\UpdateMemberAddress;
+use App\Models\Executive;
 use App\Models\Membership;
 use App\Models\Options;
 use App\Models\PhoneNumber;
@@ -170,6 +171,24 @@ class UserController extends Controller
         $message = [];
 
         if ($userRequest->user['email'] != $user->email) {
+            //todo forbid change to admin role email unless you already have that association
+
+            $user->load('currentExecutiveRoles');
+
+            $execEmails = Executive::pluck('email')->toArray();
+
+            if(in_array($userRequest->user['email'], $execEmails))
+            {
+               // dd('user wants to change email to '. $userRequest->user['email']);
+
+                /**
+                 * if user already has an exec email associated with him
+                 * allow user to change email to exec email
+                 *
+                 * ??  decorator pattern
+                 */
+            }
+
             $message['Email'] = $userRequest->user['email'];
         }
 
@@ -247,7 +266,7 @@ class UserController extends Controller
         }
 
         if (!empty($message)) {
-            $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
+            $result = $this->emailMemberUpdateService->sendMessage($message, $user);
         }
 
         Session::flash('success', 'Profile for '.$user->name.
