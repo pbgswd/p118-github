@@ -37,11 +37,12 @@
                 <script src="https://www.google.com/recaptcha/api.js"></script>
                 <script>
                     function onSubmit(token) {
-                        document.getElementById("demo-form").submit();
+                        document.getElementById("contact-form").submit();
                     }
                 </script>
 
                 <button
+                    id="contact-form"
                     class="btn btn-primary g-recaptcha"
                     data-sitekey="6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"
                     data-callback=""
