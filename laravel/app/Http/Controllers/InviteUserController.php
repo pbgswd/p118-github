@@ -137,6 +137,14 @@ class InviteUserController extends Controller
      */
     public function list_import(): View
     {
+        $data = DB::table('import_users')
+            ->whereRaw('email IN (SELECT email FROM invite_users)')
+            ->delete();
+
+        $data = DB::table('import_users')
+            ->whereRaw('email IN (SELECT email FROM users)')
+            ->delete();
+
         $data = DB::table('import_users')->get();
 
         return view('admin.invite_list_import', ['data' => $data]);
@@ -181,6 +189,15 @@ class InviteUserController extends Controller
                         ->subject('IATSE Local 118 Website Signup Invitation');
                 });
         }
+
+        $data = DB::table('import_users')
+            ->whereRaw('email IN (SELECT email FROM invite_users)')
+            ->delete();
+
+        $data = DB::table('import_users')
+            ->whereRaw('email IN (SELECT email FROM users)')
+            ->delete();
+
 
         Session::flash('success', 'Invitation sent to '.$data->count(). ' members');
 
