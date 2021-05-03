@@ -20,6 +20,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact): View
     {
+        usleep(250000);
         $data = [];
 
         if (Auth::user()) {
@@ -36,10 +37,13 @@ class ContactController extends Controller
      */
     public function submit(SubmitContact $request): RedirectResponse
     {
+        usleep(250000);
         $cc = '';
         if (config('app.APP_ENV') == 'local') {
             $cc = Options::testing_address_update_contacts();
         }
+// https://developers.google.com/recaptcha/docs/verify
+        // recaptcha secret: 6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A
 
         Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
             $m->from( config('mail.from.address'), config('app.APP_NAME') . 'Contact Page Message from '
