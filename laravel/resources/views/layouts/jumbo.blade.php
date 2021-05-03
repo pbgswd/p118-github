@@ -20,7 +20,7 @@
         <script src="/js/tinymce.js"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-WS6SX6VR7N"></script>
         <script src="/js/google-analytics.js"></script>
-        <link rel="canonical" href="http://{{env('APP_URL')}}/">
+        <link rel="canonical" href="{{env('APP_URL')}}/">
 
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
