@@ -3,8 +3,8 @@
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-             {{$data['invitations']->count()}}
-               {{ Str::plural('Invitation', $data['invitations']->count()) }}
+             {{$data['count']}}
+               {{ Str::plural('Invitation', $data['count']) }}
                Pending
            </span>
             | <a href="{{ route('invite-new-user') }}">
