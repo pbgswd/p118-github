@@ -34,7 +34,7 @@
                     cols="100">{{old('mail_body')}}</textarea>
                 </div>
             <div class="col-6">
-                <script src="https://www.google.com/recaptcha/api.js?render=6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"></script>
+                <script src="https://www.google.com/recaptcha/api.js"></script>
                 <script>
                     function onSubmit(token) {
                         document.getElementById("contact-form").submit();

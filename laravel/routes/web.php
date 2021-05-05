@@ -18,13 +18,13 @@ use App\Http\Controllers as CNS; //Controller Name Space
 /**
  * PUBLIC ACCESS
  */
-Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => ['web','throttle:global']], function () {
     Auth::routes(['verify' => true, 'register' => false, 'reset' => true, 'login' => true]);
 
     Route::get('/', [CNS\HelloController::class, 'index'])->name('hello');
 
     Route::get('contact', [CNS\ContactController::class, 'show'])->name('contact');
-    Route::post('contact', [CNS\ContactController::class, 'submit']);
+    Route::post('contact', [CNS\ContactController::class, 'submit'])->middleware('throttle:post');
 
     Route::get('carousel', [CNS\CarouselController::class, 'show'])->name('carousel');
 
@@ -61,13 +61,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/bylaw/{bylaw}', [CNS\ByLawController::class, 'show'])->name('bylaw_show');
 
     Route::get('/{folder}/download/{attachment}', [CNS\AttachmentController::class, 'download'])
-        ->name('attachment_download');
+        ->name('attachment_download')->middleware('throttle:download');
 });
 
 /**
  * MEMBERS LOGGED IN
  */
-Route::group(['middleware' =>  ['web', 'auth']], function () {
+Route::group(['middleware' =>  ['web', 'auth','throttle:global']], function () {
     Route::get('/site', [CNS\SiteController::class, 'index'])->name('landing_page');
 
     Route::get('/home', [CNS\HomeController::class, 'index'])->name('home'); // redirects to home page
@@ -86,13 +86,13 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('/member/{user}/edit', [CNS\UserController::class, 'edit'])->name('member_edit');
 
     Route::get('/member/{user}/address/edit', [CNS\UserController::class, 'edit_address'])->name('member_address_edit');
-    Route::post('/member/{user}/address/edit', [CNS\UserController::class, 'update_address']);
+    Route::post('/member/{user}/address/edit', [CNS\UserController::class, 'update_address'])->middleware('throttle:post');
 
     Route::get('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'edit_emergency_contact'])
         ->name('edit_emergency_contact');
-    Route::post('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'update_emergency_contact']);
+    Route::post('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'update_emergency_contact'])->middleware('throttle:post');
 
-    Route::post('/member/{user}/edit', [CNS\UserController::class, 'update']);
+    Route::post('/member/{user}/edit', [CNS\UserController::class, 'update'])->middleware('throttle:post');
 
     Route::get('/invited/{user}/{hash}', [CNS\InviteUserController::class, 'process'])->name('process_user');
 
@@ -119,7 +119,7 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
 
     Route::get('committee/{committee}/post/{committeePost}/edit', [CNS\CommitteePostController::class, 'edit'])
         ->name('committee_post_edit_form');
-    Route::post('committee/{committee}/post/{any_committee_post}/edit', [CNS\CommitteePostController::class, 'update']);
+    Route::post('committee/{committee}/post/{any_committee_post}/edit', [CNS\CommitteePostController::class, 'update'])->middleware('throttle:post');
 
     Route::delete('committee/{committee}/post/{committeePost}/destroy', [CNS\CommitteePostController::class, 'destroy'])
         ->name('public_committee_post_destroy');
@@ -133,18 +133,15 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('minutes', [CNS\MeetingController::class, 'index'])->name('list_meetings');
     Route::get('minutes/{meeting}', [CNS\MeetingController::class, 'show'])->name('meeting');
 
-    Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
+    Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search')->middleware('throttle:post');
 
-   // Route::get('/search/{search}', [CNS\LocalSearchController::class, 'show'])->name('search_show');
-    // Route::get('/{folder}/attachment/{attachment[', 'CNS\AttachmentController::class, 'download'])
-    //->name('attachment_download');
 });
 
 
 /**
  * ADMIN SECTION
  */
-Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer','throttle:global']], function () {
 
     Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
     Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');

@@ -55,6 +55,7 @@ class Kernel extends BaseKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            ThrottleRequests::class,
         ],
 
         'api' => [
