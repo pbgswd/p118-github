@@ -124,7 +124,7 @@
     <div class="row">
         <div class="col-12 mt-5 mb-5 mt-md-5 mb-md-5 d-flex">
             <div class="p-2 flex-fill text-left">
-                <i class="far fa-copyright"></i> <?php echo date('Y'); ?>
+                <i class="far fa-copyright"></i> {{date('Y')}}
                 <br />
                 {{ config('app.name')}}
             </div>
