@@ -6,7 +6,7 @@
                 <h2>Contact IATSE Local 118</h2>
             </div>
         </div>
-        <form class="form-horizontal" role="form" action="{{route('contact')}}" method="post">
+        <form class="form-horizontal" id="contact-form" role="form" action="{{route('contact')}}" method="post">
             {!! csrf_field() !!}
             <div class="row p-2 mb-3">
                 <div class="input-group mb-3">
@@ -34,21 +34,16 @@
                     cols="100">{{old('mail_body')}}</textarea>
                 </div>
             <div class="col-6">
-                <script src="https://www.google.com/recaptcha/api.js"></script>
+                <script src="https://www.google.com/recaptcha/api.js?render=6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"></script>
                 <script>
                     function onSubmit(token) {
                         document.getElementById("contact-form").submit();
                     }
                 </script>
-
-                <button
-                    id="contact-form"
-                    class="btn btn-primary g-recaptcha"
-                    data-sitekey="6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"
-                    data-callback=""
-                    name="submit">
-                    Send
-                </button>
+                <button class="btn btn-primary g-recaptcha"
+                        data-sitekey="6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"
+                        data-callback='onSubmit'
+                        data-action='submit'>Submit</button>
             </div>
 
                 <div class="col-6 text-right">
@@ -76,7 +71,7 @@
                         <i class="fas fa-map-marked-alt"></i> Maps</a>
                 </h3>
                 <h3>
-                    <a href="tel:604-685-9553">
+                    <a href="tel:6046859553">
                         <i class="fas fa-phone-square"></i> 604-685-9553</a>
                 </h3>
                 <h3>
@@ -107,5 +102,4 @@
             @endauth
         </div>
     </div>
-
 @endsection
