@@ -213,7 +213,7 @@ class InviteUserController extends Controller
                         ->subject('IATSE Local 118 Website Signup Invitation');
                 });
 
-            Log::debug($invitation->name . ' was sent an invitation at ', date('Y-m-d H:i:s'));
+            Log::debug($invitation->name . ' was sent an invitation at ' . date('Y-m-d H:i:s'));
         }
 
         DB::table('import_users')
