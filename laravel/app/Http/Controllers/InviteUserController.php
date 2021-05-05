@@ -30,8 +30,7 @@ class InviteUserController extends Controller
      * @throws AuthorizationException
      */
     public function index(): View
-    {
-        
+    {        
         $this->authorize('viewAny', InviteUser::class);
 
         $data = DB::table('invite_users')
@@ -41,12 +40,14 @@ class InviteUserController extends Controller
         $invitations = InviteUser::with('user')
             ->sortable()
             ->paginate(10);
+
         $invitations->each(function ($item) {
             $item->since = $item->updated_at->diffForHumans(Carbon::now());
             $item->remaining = 48 - $item->updated_at->diffInHours(Carbon::now());
         });
 
         $data['invitations'] = $invitations;
+
         $data['count'] = count(InviteUser::all());
 
         return view('admin.invitations_list', ['data' => $data]);
