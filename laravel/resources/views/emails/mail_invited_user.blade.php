@@ -55,6 +55,8 @@
                               information.</p>
                             <p>Please note that we have not brought across your existing login information as a best
                               security practice. </p>
+                              <p>Remember: you use your email address as your login name, not your user name as was
+                                  the case before.</p>
                             <p style="margin-top: 2em;">
                                 <a href="{{route('invite_user_signup', ['inviteUser' => $data['invitation']['id'],
                                     'password' => $data['invitation']['password']])}}" target="_blank">
