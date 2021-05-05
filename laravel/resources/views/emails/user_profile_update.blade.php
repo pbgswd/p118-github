@@ -43,7 +43,7 @@
                         <tr>
                           <td>
                             <h3>
-                                Contact info update for {{$data['original_name']}}
+                                Contact info update for {{$data['original_name'] ?? $data['Name']}}
                             </h3>
 			                <p class="lead">
                                 Email: <a href="mailto:{{$data['original_email']}}">

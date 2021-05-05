@@ -80,7 +80,7 @@
                    <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
                    <input type="tel" class="form-control"  placeholder="Phone" name="user_phone[phone_number]"
                           value="{{ old('user_phone.phone_number', $data['user']->phone_number->phone_number ?? '')}}"
-                          size="80" required/>
+                          size="80"/>
                 </div>
             </div>
             <div class="input-group mb-2 col-12">
