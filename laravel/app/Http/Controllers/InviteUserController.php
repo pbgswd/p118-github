@@ -30,13 +30,13 @@ class InviteUserController extends Controller
      * @throws AuthorizationException
      */
     public function index(): View
-    {        
+    {
         $this->authorize('viewAny', InviteUser::class);
 
         $data = DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
-        
+
         $invitations = InviteUser::with('user')
             ->sortable()
             ->paginate(10);
@@ -46,6 +46,7 @@ class InviteUserController extends Controller
             $item->remaining = 48 - $item->updated_at->diffInHours(Carbon::now());
         });
 
+        $data =[];
         $data['invitations'] = $invitations;
 
         $data['count'] = count(InviteUser::all());
@@ -151,10 +152,9 @@ class InviteUserController extends Controller
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
-                $data = DB::table('invite_users')
+        $data = DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
-
 
         $data = DB::table('import_users')->get();
 
@@ -169,7 +169,6 @@ class InviteUserController extends Controller
     {
         $this->authorize('create', InviteUser::class);
 
-
      	$data = DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM invite_users)')
             ->delete();
@@ -178,11 +177,12 @@ class InviteUserController extends Controller
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
-
         $data = DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
-        
+
+        $data =[];
+
         $data = DB::table('import_users')
             ->whereRaw('email NOT IN (SELECT email FROM users)')
             ->whereRaw('email NOT IN (SELECT email FROM invite_users)')
