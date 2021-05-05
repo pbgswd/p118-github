@@ -31,8 +31,13 @@ class InviteUserController extends Controller
      */
     public function index(): View
     {
+        
         $this->authorize('viewAny', InviteUser::class);
 
+        $data = DB::table('invite_users')
+            ->whereRaw('email IN (SELECT email FROM users)')
+            ->delete();
+        
         $invitations = InviteUser::with('user')
             ->sortable()
             ->paginate(10);
@@ -145,6 +150,11 @@ class InviteUserController extends Controller
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
+                $data = DB::table('invite_users')
+            ->whereRaw('email IN (SELECT email FROM users)')
+            ->delete();
+
+
         $data = DB::table('import_users')->get();
 
         return view('admin.invite_list_import', ['data' => $data]);
@@ -158,14 +168,24 @@ class InviteUserController extends Controller
     {
         $this->authorize('create', InviteUser::class);
 
+
+     	$data = DB::table('import_users')
+            ->whereRaw('email IN (SELECT email FROM invite_users)')
+            ->delete();
+
         $data = DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
+
+        $data = DB::table('invite_users')
+            ->whereRaw('email IN (SELECT email FROM users)')
+            ->delete();
+        
         $data = DB::table('import_users')
             ->whereRaw('email NOT IN (SELECT email FROM users)')
             ->whereRaw('email NOT IN (SELECT email FROM invite_users)')
-            ->limit(5)
+            ->limit(25)
             ->get();
 
         foreach($data as $user)
