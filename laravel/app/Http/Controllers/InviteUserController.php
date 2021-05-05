@@ -211,13 +211,15 @@ class InviteUserController extends Controller
                         ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
                         ->subject('IATSE Local 118 Website Signup Invitation');
                 });
+
+            Log::debug($invitation->name . ' was sent an invitation at ', date('Y-m-d H:i:s'));
         }
 
-        $data = DB::table('import_users')
+        DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM invite_users)')
             ->delete();
 
-        $data = DB::table('import_users')
+        DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
