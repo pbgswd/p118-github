@@ -33,7 +33,7 @@ class InviteUserController extends Controller
     {
         $this->authorize('viewAny', InviteUser::class);
 
-        $data = DB::table('invite_users')
+        DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
@@ -144,15 +144,15 @@ class InviteUserController extends Controller
      */
     public function list_import(): View
     {
-        $data = DB::table('import_users')
+        DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM invite_users)')
             ->delete();
 
-        $data = DB::table('import_users')
+        DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
-        $data = DB::table('invite_users')
+        DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
@@ -169,15 +169,15 @@ class InviteUserController extends Controller
     {
         $this->authorize('create', InviteUser::class);
 
-     	$data = DB::table('import_users')
+     	DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM invite_users)')
             ->delete();
 
-        $data = DB::table('import_users')
+        DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
-        $data = DB::table('invite_users')
+        DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
@@ -188,6 +188,8 @@ class InviteUserController extends Controller
             ->whereRaw('email NOT IN (SELECT email FROM invite_users)')
             ->limit(25)
             ->get();
+
+        $count = count($data);
 
         foreach($data as $user)
         {
@@ -219,8 +221,7 @@ class InviteUserController extends Controller
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
-
-        Session::flash('success', 'Invitation sent to '.$data->count(). ' members');
+        Session::flash('success', 'Invitation sent to '.$count. ' members');
 
         return redirect()->route('list_import');
     }
