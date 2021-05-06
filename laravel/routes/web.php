@@ -18,7 +18,7 @@ use App\Http\Controllers as CNS; //Controller Name Space
 /**
  * PUBLIC ACCESS
  */
-Route::group(['middleware' => ['web','throttle:global']], function () {
+Route::group(['middleware' => ['web']], function () {
     Auth::routes(['verify' => true, 'register' => false, 'reset' => true, 'login' => true]);
 
     Route::get('/', [CNS\HelloController::class, 'index'])->name('hello');
@@ -44,10 +44,14 @@ Route::group(['middleware' => ['web','throttle:global']], function () {
     Route::get('/posts', [CNS\PostController::class, 'list'])->name('posts');
     Route::get('/post/{post}', [CNS\PostController::class, 'show'])->name('post_show');
 
+
+    
     Route::get('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'show'])
         ->name('invite_user_signup');
     Route::post('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'process_user']);
 
+
+    
     Route::get('/venues', [CNS\VenueController::class, 'list'])->name('venues');
     Route::get('/venue/{venue}', [CNS\VenueController::class, 'show'])->name('venue');
 
@@ -67,7 +71,7 @@ Route::group(['middleware' => ['web','throttle:global']], function () {
 /**
  * MEMBERS LOGGED IN
  */
-Route::group(['middleware' =>  ['web', 'auth','throttle:global']], function () {
+Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('/site', [CNS\SiteController::class, 'index'])->name('landing_page');
 
     Route::get('/home', [CNS\HomeController::class, 'index'])->name('home'); // redirects to home page
@@ -86,13 +90,13 @@ Route::group(['middleware' =>  ['web', 'auth','throttle:global']], function () {
     Route::get('/member/{user}/edit', [CNS\UserController::class, 'edit'])->name('member_edit');
 
     Route::get('/member/{user}/address/edit', [CNS\UserController::class, 'edit_address'])->name('member_address_edit');
-    Route::post('/member/{user}/address/edit', [CNS\UserController::class, 'update_address'])->middleware('throttle:post');
+    Route::post('/member/{user}/address/edit', [CNS\UserController::class, 'update_address']);
 
     Route::get('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'edit_emergency_contact'])
         ->name('edit_emergency_contact');
-    Route::post('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'update_emergency_contact'])->middleware('throttle:post');
+    Route::post('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'update_emergency_contact']);
 
-    Route::post('/member/{user}/edit', [CNS\UserController::class, 'update'])->middleware('throttle:post');
+    Route::post('/member/{user}/edit', [CNS\UserController::class, 'update']);
 
     Route::get('/invited/{user}/{hash}', [CNS\InviteUserController::class, 'process'])->name('process_user');
 
@@ -119,7 +123,7 @@ Route::group(['middleware' =>  ['web', 'auth','throttle:global']], function () {
 
     Route::get('committee/{committee}/post/{committeePost}/edit', [CNS\CommitteePostController::class, 'edit'])
         ->name('committee_post_edit_form');
-    Route::post('committee/{committee}/post/{any_committee_post}/edit', [CNS\CommitteePostController::class, 'update'])->middleware('throttle:post');
+    Route::post('committee/{committee}/post/{any_committee_post}/edit', [CNS\CommitteePostController::class, 'update']);
 
     Route::delete('committee/{committee}/post/{committeePost}/destroy', [CNS\CommitteePostController::class, 'destroy'])
         ->name('public_committee_post_destroy');
@@ -141,7 +145,7 @@ Route::group(['middleware' =>  ['web', 'auth','throttle:global']], function () {
 /**
  * ADMIN SECTION
  */
-Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer','throttle:global']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {
 
     Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
     Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');
