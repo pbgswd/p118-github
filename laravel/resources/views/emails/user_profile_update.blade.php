@@ -46,8 +46,8 @@
                                 Contact info update for {{$data['name']}}
                             </h3>
 			                <p class="lead">
-                                Email: <a href="mailto:{{$data['original_email']}}">
-                                            {{$data['original_email']}}
+                                Email: <a href="mailto:{{$data['email']}}">
+                                            {{$data['email']}}
                                        </a>
                             </p>
                             <p style="margin-bottom: 2em;">

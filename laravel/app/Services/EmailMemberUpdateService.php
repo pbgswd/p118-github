@@ -13,17 +13,17 @@ class EmailMemberUpdateService
     public function sendMessage($message, $user)
     {
         $message['id'] = $user->id;
-        $message['original_email'] = $user->email;
+      //  $message['original_email'] = $user->email;
 
         $recipient = config('mail.admin.address');
         $cc = '';
 
-        if (config('app.APP_ENV') == 'local') {
+        if (config('app.env') == 'local') {
             $recipient = config('mail.admin.address');
             $cc = Options::testing_address_update_contacts();
         }
 
-        if (config('app.APP_ENV') == 'production') {
+        if (config('app.env') == 'production') {
             $recipient = config('mail.office_admin.address');
             $cc = Options::address_update_contacts();
         }
@@ -32,13 +32,13 @@ class EmailMemberUpdateService
             $user,
             $recipient,
             $cc) {
-            $m->from(config('mail.from.address'),  config('app.APP_NAME') .' Website profile update for ' . $user->name);
+            $m->from(config('mail.from.address'),  config('app.name') .' Website profile update for ' . $user->name);
             $m->to($recipient, $recipient);
             if ($cc != '') {
                 $m->cc($cc, $cc);
             }
-            $m->replyTo($user->email, $message['Name'] ?? $user->name)
-                ->subject(config('app.APP_NAME') . ' - Member Contact Info Update for '.$user->name);
+            $m->replyTo($user->email, $user->name)
+                ->subject(config('app.name') . ' - Member Contact Info Update for '.$user->name);
         });
     }
 }
