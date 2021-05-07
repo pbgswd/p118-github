@@ -43,7 +43,7 @@
                         <tr>
                           <td>
                             <h3>
-                                Contact info update for {{$data['original_name'] ?? $data['Name']}}
+                                Contact info update for {{$data['name']}}
                             </h3>
 			                <p class="lead">
                                 Email: <a href="mailto:{{$data['original_email']}}">
@@ -57,18 +57,16 @@
                               <div style="background: #cce5ff; margin: 5px; padding:15px;">
                                   <ul>
                                       @foreach($data as $k => $v)
-                                          @if($k != 'original_email' and $k != 'id' and $k != 'original_name')
-                                              <li style="margin: 5px; padding:5px; list-style-type:none;">
-                                                  {{$k}}: {{$v}}
-                                              </li>
-                                          @endif
+                                          <li style="margin: 5px; padding:5px; list-style-type:none;">
+                                              {{$k}}: {{$v}}
+                                          </li>
                                       @endforeach
                                   </ul>
                               </div>
 
                               @if(Route::currentRouteName() == 'user_edit_update')
                                   <p style="margin-top: 2em;">This ADMIN update for
-                                      {{ $data['Name'] ?? $data['original_name'] }}
+                                      {{ $data['name']}}
                                       was submitted by {{Auth::user()->name}}.
                                   </p>
                               @endif
@@ -78,17 +76,17 @@
                           <tr>
                               <td>
                                  <p>
-                                     <a title="{{ $data['Name'] ?? $data['original_name']}}"
+                                     <a title="{{ $data['name']}}"
                                           href="{{ route('user_edit', $data['id'])}}">
                                          Admin Profile page for
-                                         {{ $data['Name'] ?? $data['original_name'] }}
+                                         {{ $data['name'] }}
                                     </a>
                                  </p>
                                   <p>
-                                      <a title="{{ $data['Name'] ?? $data['original_name']}}"
+                                      <a title="{{ $data['name']}}"
                                             href="{{ route('member', $data['id'])}}">
                                           Member Profile page for
-                                          {{ $data['Name'] ?? $data['original_name'] }}
+                                          {{ $data['name'] }}
                                       </a>
                                   </p>
                               </td>

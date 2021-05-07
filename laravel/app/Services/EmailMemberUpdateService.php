@@ -32,7 +32,7 @@ class EmailMemberUpdateService
             $user,
             $recipient,
             $cc) {
-            $m->from(config('mail.from.address'),  config('app.APP_NAME') .' Website profile update for '.$user->name);
+            $m->from(config('mail.from.address'),  config('app.APP_NAME') .' Website profile update for ' . $user->name);
             $m->to($recipient, $recipient);
             if ($cc != '') {
                 $m->cc($cc, $cc);

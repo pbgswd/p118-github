@@ -266,6 +266,7 @@ class UserController extends Controller
         }
 
         if (!empty($message)) {
+            $message['name'] = $user->name;
             $result = $this->emailMemberUpdateService->sendMessage($message, $user);
         }
 
