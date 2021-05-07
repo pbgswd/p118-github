@@ -58,7 +58,9 @@
                                 @endforeach
                             @endif
                         </td>
-                        <td> {{ $i->email }} </td>
+                        <td>
+                            <a href="mailto:{{ $i->email }}">{{ $i->email }}</a>
+                        </td>
                         <td>
                              {{ $i->membership['membership_type'] ?? '- -'}}
                         </td>
