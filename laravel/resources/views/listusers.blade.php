@@ -32,6 +32,7 @@
                 <tr>
                     <th> @sortablelink('name', 'Name') </th>
                     <th> </th>
+                    <th> <i class="fas fa-phone-square"></i> Phone</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,6 +77,15 @@
                                 </a>
                             @endif
                         </td>
+                        <td>
+                            @if (!empty($i->user_info->share_phone) )
+                                <h5 style="white-space: nowrap;">
+                                    <a href="tel:{{ $i->phone_number->phone_number }}">
+                                        <i class="fas fa-phone-square"></i> {{ $i->phone_number->phone_number }}
+                                    </a>
+                                </h5>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -90,6 +100,5 @@
             </div>
         </div>
     </div>
-
 </div>
 @endsection

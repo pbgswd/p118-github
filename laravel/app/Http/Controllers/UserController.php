@@ -53,7 +53,7 @@ class UserController extends Controller
     {
         $this->authorize('view', Auth::user());
 
-        $users = User::with(['user_info', 'currentExecutiveRoles', 'membership', 'committee_memberships'])
+        $users = User::with(['user_info', 'phone_number', 'currentExecutiveRoles', 'membership', 'committee_memberships'])
             ->sortable()
             ->orderBy('name')
             ->paginate(10);
