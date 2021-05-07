@@ -19,6 +19,7 @@ use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Spatie\Image\Exceptions\InvalidManipulation;
@@ -266,6 +267,9 @@ class UserController extends Controller
         }
 
         if (!empty($message)) {
+
+            Log::debug($user->name . ' updated their profile, sending email at  ' . date('Y-m-d H:i:s'));
+
             $message['email'] = $user->email;
             $message['name'] = $user->name;
             $result = $this->emailMemberUpdateService->sendMessage($message, $user);

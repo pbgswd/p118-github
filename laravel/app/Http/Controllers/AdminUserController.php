@@ -22,6 +22,7 @@ use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -299,7 +300,11 @@ class AdminUserController extends Controller
             $message['Membership'] = $request['user_membership']['membership_type'];
         }
 
+        Log::debug('Admin has updated the profile for ' . $user->name . ' at ' . date('Y-m-d H:i:s') );
+
         if (! empty($message)) {
+            $message['email'] = $user->email;
+            $message['name'] = $user->name;
             $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
