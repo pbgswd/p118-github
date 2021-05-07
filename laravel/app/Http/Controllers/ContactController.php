@@ -8,6 +8,7 @@ use App\Models\Options;
 use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -38,16 +39,20 @@ class ContactController extends Controller
     public function submit(SubmitContact $request): RedirectResponse
     {
         usleep(250000);
-        $cc = '';
-        if (config('app.APP_ENV') == 'local') {
+        $cc = [];
+        if (config('app.env')  == 'local') {
             $cc = Options::testing_address_update_contacts();
         }
 // https://developers.google.com/recaptcha/docs/verify
         // recaptcha secret: 6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A
 
+        Log::debug('Contact page message  ' . $request['name'] . ' Sending to: ' .
+            config('mail.office_admin.address') . ' ' . config('mail.office_admin.name') .', cc: ' .
+            implode(", ", $cc) . ' at ' . date('Y-m-d H:i:s'));
+
         Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
-            $m->from( config('mail.from.address'), config('app.APP_NAME') . 'Contact Page Message from '
-                .$request['name']);
+            $m->from( config('mail.from.address'), config('app.name') . 'Contact Page Message from '
+                . $request['name']);
             $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
             if ($cc != '') {
                 $m->cc($cc, $cc);
