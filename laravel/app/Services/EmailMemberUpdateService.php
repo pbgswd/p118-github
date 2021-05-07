@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Options;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -13,7 +14,6 @@ class EmailMemberUpdateService
     public function sendMessage($message, $user)
     {
         $message['id'] = $user->id;
-      //  $message['original_email'] = $user->email;
 
         $recipient = config('mail.admin.address');
         $cc = '';
@@ -28,6 +28,9 @@ class EmailMemberUpdateService
             $cc = Options::address_update_contacts();
         }
 
+        Log::debug('EmailMemberUpdateService update for ' . $message['name'] . ' Sending to: ' . $recipient .', cc: ' .
+            implode(", ", $cc) . ' at ' . date('Y-m-d H:i:s'));
+
         Mail::send('emails.user_profile_update', ['data' => $message], function ($m) use ($message,
             $user,
             $recipient,
@@ -40,5 +43,7 @@ class EmailMemberUpdateService
             $m->replyTo($user->email, $user->name)
                 ->subject(config('app.name') . ' - Member Contact Info Update for '.$user->name);
         });
+
+        Log::debug('Profile for ' . $user->name . ' updated, email sent at  ' . date('Y-m-d H:i:s'));
     }
 }
