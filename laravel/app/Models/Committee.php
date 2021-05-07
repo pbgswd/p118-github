@@ -142,6 +142,7 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
         return $this->belongsToMany(User::class)
             ->wherePivotIn('role', array_merge(Options::committee_executive_roles(), ['Member' => 'Member']))
             ->withPivot('role', 'committee_id')
+            ->with('user_info')
             ->wherePivot('deleted_at', null)
             ->withTimestamps();
     }

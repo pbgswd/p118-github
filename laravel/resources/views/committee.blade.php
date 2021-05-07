@@ -40,7 +40,7 @@
             <div class="col-12 border border-dark rounded-lg pt-2 pb-2">
                 <h5>{{$data['committee']->name}} Executive</h5>
                 <ul class="list-group">
-                    @foreach ($data['executives'] as $exec)
+                    @forelse ($data['executives'] as $exec)
                         <li class="list-group-item">
                             <i class="fas fa-user-tie"></i>
                             {{$exec->pivot->role}}:
@@ -48,7 +48,11 @@
                                 {{$exec->name}}
                             </a>
                         </li>
-                    @endforeach
+                    @empty
+                        <li class="list-group-item">
+                            No Executives defined
+                        </li>
+                    @endforelse
                     <li class="list-group-item">
                         <i class="far fa-envelope"></i>
                         Email:
@@ -56,6 +60,24 @@
                             {{$data['committee']->email}}
                         </a>
                     </li>
+                </ul>
+                <h5 class="mt-2">All Current Members of {{$data['committee']->name}}</h5>
+                <ul class="list-group">
+                    @forelse($data['committee']->active_committee_members as $mbr)
+                        <li class="list-group-item">
+                            @if($mbr->user_info->show_profile == 1)
+                                <a title="{{ $mbr->name }}" href="{{ route('member', $mbr->id) }}">
+                                    {{$mbr->name}}
+                                </a>
+                            @else
+                                {{$mbr->name}}
+                            @endif
+                        </li>
+                    @empty
+                        <li class="list-group-item">
+                            No members defined
+                        </li>
+                    @endforelse
                 </ul>
             </div>
         </div>

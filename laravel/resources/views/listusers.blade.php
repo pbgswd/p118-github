@@ -32,7 +32,7 @@
                 <tr>
                     <th> @sortablelink('name', 'Name') </th>
                     <th> </th>
-                    <th>                         
+                    <th>
                         <i class="fas fa-phone-square"></i>
                     </th>
                 </tr>
