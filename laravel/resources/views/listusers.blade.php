@@ -32,7 +32,9 @@
                 <tr>
                     <th> @sortablelink('name', 'Name') </th>
                     <th> </th>
-                    <th> <i class="fas fa-phone-square"></i> Phone</th>
+                    <th>                         
+                        <i class="fas fa-phone-square"></i>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -59,31 +61,49 @@
                                 <a href="mailto:{{$a->email}}" title="email {{$i->name}} at {{$a->email}}">
                                     <i class="fas fa-envelope"></i>
                                 </a>
-                                {{$a->title}}
-                                {{\Carbon\Carbon::parse($a->pivot->start_date)->format('M j Y')}}
-                                - {{\Carbon\Carbon::parse($a->pivot->end_date)->format('M j Y')}}
+                                {{$a->title}} <br />
+                                {{\Carbon\Carbon::parse($a->pivot->start_date)->format('M j Y')}} - <br />
+                                {{\Carbon\Carbon::parse($a->pivot->end_date)->format('M j Y')}}
                                 <br />
                             @empty
                             @endforelse
                             @forelse($i->committee_memberships as $cm)
                                 <a href="{{route('committee', $cm->slug)}}" title="{{$cm->name}}">
-                                    {{$cm->name}}{!! $loop->last ? '<br />' : ',' !!}
+                                    {{$cm->name}}{!! $loop->last ? '.' : ', <br />' !!}
                                 </a>
                             @empty
                             @endforelse
                             @if (!empty($i->user_info->share_email) )
-                                <a href="mailto:{{ $i->email }}">
-                                    {{ $i->email }}
-                                </a>
+                                <span class="d-sm-block d-md-none">
+                                     <a href="mailto:{{ $i->email }}">
+                                          <i class="fas fa-envelope"></i>
+                                    </a>
+                                </span>
+                                <span class="d-none d-md-block">
+                                    <h5 style="white-space: nowrap;">
+                                        <a href="mailto:{{ $i->email }}">
+                                            <i class="fas fa-envelope"></i>
+                                            {{ $i->email }}
+                                        </a>
+                                    </h5>
+                                </span>
                             @endif
                         </td>
-                        <td>
+                        <td class="p-2 pr-3">
                             @if (!empty($i->user_info->share_phone) )
-                                <h5 style="white-space: nowrap;">
+
+                                <span class="d-sm-block d-md-none">
                                     <a href="tel:{{ $i->phone_number->phone_number }}">
-                                        <i class="fas fa-phone-square"></i> {{ $i->phone_number->phone_number }}
+                                        <i class="fas fa-phone-square"></i>
                                     </a>
-                                </h5>
+                                </span>
+                                <span class="d-none d-md-block">
+                                    <h5 style="white-space: nowrap;">
+                                        <a href="tel:{{ $i->phone_number->phone_number }}">
+                                            <i class="fas fa-phone-square"></i> {{ $i->phone_number->phone_number }}
+                                        </a>
+                                    </h5>
+                                </span>
                             @endif
                         </td>
                     </tr>

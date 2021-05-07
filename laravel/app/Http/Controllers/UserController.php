@@ -56,7 +56,7 @@ class UserController extends Controller
         $users = User::with(['user_info', 'phone_number', 'currentExecutiveRoles', 'membership', 'committee_memberships'])
             ->sortable()
             ->orderBy('name')
-            ->paginate(10);
+            ->paginate(20);
 
         $count = Membership::where('membership_type', 'Member')->count();
 
