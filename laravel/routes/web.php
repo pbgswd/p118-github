@@ -24,7 +24,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', [CNS\HelloController::class, 'index'])->name('hello');
 
     Route::get('contact', [CNS\ContactController::class, 'show'])->name('contact');
-    Route::post('contact', [CNS\ContactController::class, 'submit'])->middleware('throttle:post');
+    Route::post('contact', [CNS\ContactController::class, 'submit']);
 
     Route::get('carousel', [CNS\CarouselController::class, 'show'])->name('carousel');
 
@@ -137,7 +137,7 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('minutes', [CNS\MeetingController::class, 'index'])->name('list_meetings');
     Route::get('minutes/{meeting}', [CNS\MeetingController::class, 'show'])->name('meeting');
 
-    Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search')->middleware('throttle:post');
+    Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
 
 });
 
