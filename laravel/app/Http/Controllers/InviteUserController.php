@@ -277,6 +277,8 @@ class InviteUserController extends Controller
 
         Auth::logout();
 
+        Log::debug($user->name . ' has completed their profile signup at  ' . date('Y-m-d H:i:s'));
+
         return redirect()->route('login');
     }
 
