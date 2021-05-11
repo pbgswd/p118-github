@@ -62,9 +62,6 @@
                                     <i class="fas fa-envelope"></i>
                                 </a>
                                 {{$a->title}} <br />
-                                {{\Carbon\Carbon::parse($a->pivot->start_date)->format('M j Y')}} - <br />
-                                {{\Carbon\Carbon::parse($a->pivot->end_date)->format('M j Y')}}
-                                <br />
                             @empty
                             @endforelse
                             @forelse($i->committee_memberships as $cm)
