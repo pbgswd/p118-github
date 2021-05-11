@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InviteUser\ProcessUserRequest;
 use App\Http\Requests\Member\UpdateMember;
 use App\Http\Requests\Member\UpdateMemberEmergencyContact;
 use App\Http\Requests\User\UpdateMemberAddress;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\Permission\Models\Role;
+use Illuminate\Http\Request;
 
 /**
  * Class UserController.
@@ -337,6 +339,30 @@ class UserController extends Controller
         Session::flash('success', 'Your address update has been emailed to the office.');
 
         return redirect()->route('member_address_edit', $user->id);
+    }
+
+    public function edit_password(User $user): View
+    {
+        $this->authorize('update', $user);
+
+        $data['action'] = "Edit";
+        $data['user'] = $user;
+
+        return view('member_password_edit', ['data' => $data]);
+    }
+
+    public function update_password(ProcessUserRequest $request, User $user): RedirectResponse
+    {
+        $this->authorize('update', $user);
+
+        $user->fill(['password' => bcrypt($request->password)]);
+        $user->save();
+
+        Log::debug($user->name . ' updated their password at  ' . date('Y-m-d H:i:s'));
+
+        Session::flash('success', 'Your password has been updated.');
+
+        return redirect()->route('member_password_edit', $user->id);
     }
 
     /**
