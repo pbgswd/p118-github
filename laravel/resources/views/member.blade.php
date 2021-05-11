@@ -104,7 +104,7 @@
         </div>
         @if ( Auth::user()->id == $data['user']->id)
             <div class="row d-flex justify-content-between pt-3">
-                <div class="col-12 col-md-4 text-md-left">
+                <div class="col-12 col-md-3 text-md-left">
                     <h5>
                         <a href="{{route('edit_emergency_contact', $data['user']->id)}}">
                             <i class="fas fa-first-aid text-danger"></i>
@@ -124,7 +124,17 @@
                         </a>
                     </h5>
                 </div>
-                <div class="col-12 col-md-4 text-md-right">
+                <div class="col-12 col-md-3 text-md-center">
+                    <h5>
+                        <a href="{{route('member_password_edit', $data['user']->id)}}">
+                            <i class="fas fa-unlock-alt"></i>
+                            <span class="font-weight-bold">
+                            Update Password
+                        </span>
+                        </a>
+                    </h5>
+                </div>
+                <div class="col-12 col-md-3 text-md-right">
                     <h5>
                         <a href="{{route('member_address_edit', $data['user']->id)}}">
                             <i class="fas fa-address-card text-success"></i>

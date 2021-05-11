@@ -122,7 +122,7 @@
             </div>
         </div>
         <div class="row d-flex justify-content-around mt-3 pt-2 mb-3">
-            <div class="col-12 col-md-5 mt-md-3">
+            <div class="col-12 col-md-4 mt-md-3">
                 <h4>
                     <a href="{{route('member_address_edit', $data['user']->id)}}">
                         <i class="fas fa-address-card text-success"></i>
@@ -132,7 +132,19 @@
                     </a>
                 </h4>
             </div>
-            <div class="col-12 col-md-5 mt-md-3">
+
+            <div class="col-12 col-md-4 mt-md-3">
+                <h4>
+                    <a href="{{route('member_password_edit', $data['user']->id)}}">
+                        <i class="fas fa-unlock-alt"></i>
+                        <span class="font-weight-bold">
+                            Update Password
+                        </span>
+                    </a>
+                </h4>
+            </div>
+
+            <div class="col-12 col-md-4 mt-md-3">
                 <h4>
                     <a href="{{route('edit_emergency_contact', $data['user']->id)}}">
                         <i class="fas fa-first-aid text-danger"></i>
