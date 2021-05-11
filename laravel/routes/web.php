@@ -45,13 +45,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/post/{post}', [CNS\PostController::class, 'show'])->name('post_show');
 
 
-    
+
     Route::get('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'show'])
         ->name('invite_user_signup');
     Route::post('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'process_user']);
 
 
-    
+
     Route::get('/venues', [CNS\VenueController::class, 'list'])->name('venues');
     Route::get('/venue/{venue}', [CNS\VenueController::class, 'show'])->name('venue');
 
@@ -97,6 +97,8 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::post('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'update_emergency_contact']);
 
     Route::post('/member/{user}/edit', [CNS\UserController::class, 'update']);
+    Route::get('/member/{user}/password', [CNS\UserController::class, 'edit_password'])->name('member_password_edit');
+    Route::post('/member/{user}/password', [CNS\UserController::class, 'update_password']);
 
     Route::get('/invited/{user}/{hash}', [CNS\InviteUserController::class, 'process'])->name('process_user');
 
