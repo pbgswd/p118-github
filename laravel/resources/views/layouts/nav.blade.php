@@ -50,8 +50,6 @@
                         title="Availability & Dispatch">
                         Availability & Dispatch
                     </a>
-                    <a class="dropdown-item" href="{{route('page_show', 'apply-for-sister-local-status')}}"
-                       title="Union Dues">Apply for Sister Local Status</a>
                     @auth
                         <a class="dropdown-item" href="{{route('page_show', 'union-dues-members')}}"
                            title="Union Dues">Union Dues for Members</a>
