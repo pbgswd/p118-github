@@ -66,11 +66,11 @@
                     @forelse($data['committee']->active_committee_members as $mbr)
                         <li class="list-group-item">
                             @if($mbr->user_info->show_profile == 1)
-                                <a title="{{ $mbr->name }}" href="{{ route('member', $mbr->id) }}">
-                                    {{$mbr->name}}
+                                <a title="{{$mbr->name}}" href="{{route('member', $mbr->id)}}">
+                                    {{$mbr->name}}, {{$mbr->pivot->role}}
                                 </a>
                             @else
-                                {{$mbr->name}}
+                                {{$mbr->name}}, {{$mbr->pivot->role}}
                             @endif
                         </li>
                     @empty
