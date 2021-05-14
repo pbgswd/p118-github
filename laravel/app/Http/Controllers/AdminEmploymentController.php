@@ -22,6 +22,12 @@ class AdminEmploymentController extends Controller
     public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;
+
+        Employment::where('deadline', '<', now())
+            ->update(['status' => 0]);
+
+        Employment::where('deadline', '>', now())
+            ->update(['status' => 1]);
     }
 
     /**
@@ -31,9 +37,6 @@ class AdminEmploymentController extends Controller
     public function index(): View
     {
         $this->authorize('viewAny', Employment::class);
-
-        Employment::where('deadline', '<', now())
-            ->update(['status' => 0]);
 
         $jobs = Employment::withoutGlobalScopes()
             ->sortable()
@@ -99,9 +102,6 @@ class AdminEmploymentController extends Controller
     public function edit(Employment $employment): View
     {
         $this->authorize('update', Employment::class);
-
-        Employment::where('deadline', '<', now())
-            ->update(['status' => 0]);
 
         $employment->load('user', 'attachments');
 
