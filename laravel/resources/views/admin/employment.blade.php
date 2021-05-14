@@ -55,7 +55,10 @@
                         data-date-format="yyyy-mm-dd"
                         data-date-startDate="-3d"
                         style='width: 300px;'
-                        value="{{ old('employment.date', $data['employment']->deadline->format('Y-m-d') )}}"
+                        value="{{ old('employment.date', (
+                            $data['employment']->deadline != null ?
+                            $data['employment']->deadline->format('Y-m-d') :
+                             \Carbon\Carbon::now()->format('Y-m-d')) )}}"
                     >
                 </div>
             </div>
