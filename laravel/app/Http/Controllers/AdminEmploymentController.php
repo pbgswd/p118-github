@@ -10,6 +10,8 @@ use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -89,6 +91,8 @@ class AdminEmploymentController extends Controller
             }
         }
 
+        Log::debug(Auth::user()->name  . ' created a new Job Posting.');
+
         Session::flash('success', 'employment posting saved');
 
         return redirect()->route('admin_employment_edit', [$employment->id]);
@@ -140,6 +144,8 @@ class AdminEmploymentController extends Controller
             }
         }
 
+        Log::debug(Auth::user()->name  . ' updated an existing Job Posting.');
+
         Session::flash('success', 'You have edited the employment information');
 
         return redirect()->route('admin_employment_edit', [$any_employment->id]);
@@ -163,6 +169,8 @@ class AdminEmploymentController extends Controller
 
         Session::flash('success', Str::plural(count($request->id).' posting', count($request->id)).
             ' and any related files deleted.');
+
+        Log::debug(Auth::user()->name  . ' deleted an existing Job Posting.');
 
         return redirect()->route('admin_employment_list');
     }
