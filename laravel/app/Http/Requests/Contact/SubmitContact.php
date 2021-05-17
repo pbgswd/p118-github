@@ -28,6 +28,7 @@ class SubmitContact extends FormRequest
             'name'         => 'required|min:2|max:255',
             'mail_subject' => 'required|min:6|max:255',
             'mail_body'    => 'required|min:6|max:2000',
+            'g-recaptcha-response' => 'required',
         ];
     }
 }
