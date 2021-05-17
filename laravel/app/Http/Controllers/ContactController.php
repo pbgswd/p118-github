@@ -57,8 +57,8 @@ class ContactController extends Controller
         Log::debug("Contact form Recaptcha v.3 score=".$resp->getScore());
 
         if ($resp->isSuccess()) {
-            Log::debug("Contact form Recaptcha v.3 score=".$resp->getScore() . " submission  from ".
-                $request->name ." was a success.");
+            Log::debug("Contact form Recaptcha v.3 score=".$resp->getScore() . " submission from ".
+                $request->name ." was returned as a success.");
         } else {
             $errors = $resp->getErrorCodes();
             Log::debug("Errors from Contact form Recaptcha v.3 from ". $request->name . ": ". serialize($errors));
