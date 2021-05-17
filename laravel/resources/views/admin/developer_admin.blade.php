@@ -55,9 +55,6 @@
                         Twitter Bootstrap 4.6 Documentation
                     </a>
                 </li>
-
-
-
                 <li class="list-group-item">
                     <a class="nav-link" href="http://getskeleton.com/" target="_blank">
                         <span data-feather="file-text"></span>
@@ -68,6 +65,20 @@
                     <a class="nav-link" href="#">
                         <span data-feather="file-text"></span>
                         Telescope
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="nav-link"
+                       href="https://analytics.google.com/analytics/web/#/a192453396p265939066/admin/streams/table/"
+                       target="_blank">
+                        <span data-feather="file-text"></span>
+                        Google Analytics
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="nav-link" href="https://www.google.com/recaptcha/admin/site/449110639" target="_blank">
+                        <span data-feather="file-text"></span>
+                        Google Recaptcha V.3
                     </a>
                 </li>
             </ul>
