@@ -33,18 +33,18 @@
                     <textarea name="mail_body" placeholder="Message" class="form-control input-lg" rows="3"
                     cols="100">{{old('mail_body')}}</textarea>
                 </div>
-            <div class="col-6">
-                <script src="https://www.google.com/recaptcha/api.js"></script>
-                <script>
-                    function onSubmit(token) {
-                        document.getElementById("contact-form").submit();
-                    }
-                </script>
-                <button class="btn btn-primary g-recaptcha"
-                        data-sitekey="6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"
-                        data-callback='onSubmit'
-                        data-action='submit'>Submit</button>
-            </div>
+                <div class="col-6">
+                    <script src="https://www.google.com/recaptcha/api.js?render=6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"></script>
+                    <script>
+                        function onSubmit(token) {
+                            document.getElementById("contact-form").submit();
+                        }
+                    </script>
+                    <button class="btn btn-primary g-recaptcha"
+                            data-sitekey="6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"
+                            data-callback='onSubmit'
+                            data-action='submit'>Submit</button>
+                </div>
 
                 <div class="col-6 text-right">
                     <button
