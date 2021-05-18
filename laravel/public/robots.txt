@@ -1,2 +1,9 @@
 User-agent: *
-Disallow:
+
+Disallow: /login
+Disallow: /search
+Disallow: /submit
+Disallow: /admin
+Allow: /
+
+Sitemap: https://iatse118.com/sitemap.xml
