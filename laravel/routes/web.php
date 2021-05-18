@@ -44,13 +44,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/posts', [CNS\PostController::class, 'list'])->name('posts');
     Route::get('/post/{post}', [CNS\PostController::class, 'show'])->name('post_show');
 
-
-
     Route::get('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'show'])
         ->name('invite_user_signup');
     Route::post('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'process_user']);
-
-
 
     Route::get('/venues', [CNS\VenueController::class, 'list'])->name('venues');
     Route::get('/venue/{venue}', [CNS\VenueController::class, 'show'])->name('venue');
