@@ -31,9 +31,9 @@ class AttachmentController extends Controller
     /**
      * @param string $folder
      * @param Attachment $attachment
-     * @return StreamedResponse
+     * @return RedirectResponse
      */
-    public function download(string $folder, Attachment $attachment): StreamedResponse
+    public function download(string $folder, Attachment $attachment)
     {
         return $this->attachmentService->downloadAttachment($attachment, $folder);
     }
