@@ -12,6 +12,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -35,6 +36,7 @@ class AttachmentController extends Controller
      */
     public function download(string $folder, Attachment $attachment)
     {
+        Log::debug('Downloading ' . $attachment->file_name . ' at ' . date('Y-m-d H:i:s'));
         return $this->attachmentService->downloadAttachment($attachment, $folder);
     }
 
