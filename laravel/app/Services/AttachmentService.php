@@ -7,6 +7,7 @@ use App\Models\Attachment;
 use App\Models\Interfaces\HasAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class AttachmentService
@@ -98,11 +99,12 @@ class AttachmentService
     public function downloadAttachment(Attachment $attachment, string $folder)
     {
         if (false === Auth::check() && $attachment->access_level != AccessLevelConstants::PUBLIC) {
-            abort(403, 'Unauthorized action.');
+            Session::flash('error', 'Please log in first and try the download link again.');
+            return redirect()->route('login');
+        } else {
+            return Storage::download($folder.'/'.$attachment['file'],
+                $attachment['file_name'], ['Content-Disposition' => 'inline; filename="'.$attachment['file_name'].'"']);
         }
-
-        return Storage::download($folder.'/'.$attachment['file'],
-            $attachment['file_name'], ['Content-Disposition' => 'inline; filename="'.$attachment['file_name'].'"']);
     }
 
     /**
