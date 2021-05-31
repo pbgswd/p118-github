@@ -30,6 +30,8 @@ class ContactController extends Controller
                 ->where('slug', 'contact-us')->get()];
         }
 
+        Log::debug('Contact page visited  at ' . date('Y-m-d H:i:s') . "\n");
+
         return view('contact', ['data' => $data]);
     }
 
