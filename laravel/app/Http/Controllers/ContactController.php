@@ -41,6 +41,12 @@ class ContactController extends Controller
      */
     public function submit(SubmitContact $request): RedirectResponse
     {
+/**
+        Log::debug("\n" . __METHOD__ .' hit, Contact page message submitted from ' . $request['name'] . ' sending to: ' .
+            config('mail.office_admin.address') . ' ' . config('mail.office_admin.name') .', cc: ' .
+            implode(", ", $cc) . ' at ' . date('Y-m-d H:i:s'). "\n");
+**/
+
         define("RECAPTCHA_V3_SECRET_KEY", '6Ldv4sQaAAAAADrmuSc0lzoaf-AiVMMES6LxAt7g');
         define("RECAPTCHA_THRESHOLD", "0.5");
 
