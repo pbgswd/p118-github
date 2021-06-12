@@ -45,7 +45,7 @@ class OrganizationController extends Controller
 
         $data = [
             'organization' => $organization,
-            'agreements' => Auth::check() ? $organization->member_agreements()->paginate(1) :
+            'agreements' => Auth::check() ? $organization->member_agreements()->paginate(5) :
                 $organization->agreements()->paginate(5),
         ];
 
