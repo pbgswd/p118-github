@@ -77,6 +77,13 @@
                         @endforeach
                     </ul>
                 </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="list-group text-center">
+                        <ul class="pagination text center">
+                            {{ $data['agreements']->links() }}
+                        </ul>
+                    </div>
+                </div>
             @endif
             @if(count($data['organization']->attachments) > 0)
                 <div class="col-12 mt-3">

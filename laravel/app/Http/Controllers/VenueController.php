@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agreement;
 use App\Models\Options;
 use App\Models\Venue;
 use App\Services\UserImageService;
@@ -38,7 +39,6 @@ class VenueController extends Controller
      */
     public function show(Venue $venue): View
     {
-        //todo sort out where venue img should go
         if($venue['image']) {
             if(file_exists(storage_path() . '/app/public/' . $venue['image'])) {
                 if(!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
@@ -54,7 +54,8 @@ class VenueController extends Controller
 
         $data = [
             'venue' => $venue,
-            'agreements' => Auth::check() ? $venue->member_agreements : $venue->agreements,
+            'agreements' => Auth::check() ? $venue->member_agreements()->paginate(5) :
+                $venue->agreements()->paginate(5),
             ];
 
         return view('venue', ['data' => $data]);

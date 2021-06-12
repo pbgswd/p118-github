@@ -126,18 +126,21 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         return $this->belongsToMany(AgreementHandler::class);
     }
 
-//todo use relation with additional columns
-    //todo obsolete methods
+    /**
+     * @return BelongsToMany
+     */
     public function venues(): BelongsToMany
     {
         return $this->belongsToMany(Venue::class, 'agreement_venue');
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class, 'agreement_organization');
     }
-
 
     /**
      * @return string
