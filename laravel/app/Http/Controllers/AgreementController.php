@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agreement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use App\Services\AgreementService;
+//use App\Services\AgreementService;
 
 class AgreementController extends Controller
 {
@@ -14,6 +14,7 @@ class AgreementController extends Controller
      * @param AgreementService $service
      * @return View
      */
+/**
     public function list_demo(AgreementService $service): View
     {
         $data = [];
@@ -33,7 +34,7 @@ class AgreementController extends Controller
         return view('agreements_list', ['data' => $data]);
 
     }
-
+**/
 
     /**
      * @return View
