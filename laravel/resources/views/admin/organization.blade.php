@@ -128,8 +128,10 @@
         </div>
         <div class="row mt-5 mb-5 p-2">
             @if ($data['action'] == 'Edit')
-                <div class="col-6">
-                    <h4>Agreements attached to {{$data['organization']->name}}</h4>
+                <div class="col-12">
+                    <h4>
+                        Agreements attached to {{$data['organization']->name}}
+                    </h4>
                     <table class="table">
                         <thead>
                         <tr>
@@ -167,21 +169,10 @@
                     </table>
                 </div>
             @endif
-            <div class="col-6">
-                <div class="form-group">
-                    <h4>
-                        <label for="exampleFormControlSelect2">
-                        List of all agreements not currently attached to this organization.
-                        Select and submit to attach.</label>
-                    </h4>
-                    <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
-                        @foreach($data['all_agreements'] as $agr)
-                            <option value="{{$agr->id}}">{{$agr->title}}</option>
-                        @endforeach
-                            <option value=""></option>
-                    </select>
-                </div>
-            </div>
+            <h5>
+                <a href="{{route('agreements_list')}}" title="List Agreement">List Agreements</a> |
+                <a href="{{route('agreement_create')}}" title="New Agreement">Create New Agreement</a>
+            </h5>
         </div>
         <div class="row m-3">
             <div class="col-12">

@@ -18,6 +18,7 @@
                 </div>
             @endcan
         </div>
+
         <div class="row">
             <div class="col-12 text-center">
                 <h1>
@@ -35,7 +36,25 @@
                 </h4>
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 text-center">
+            @forelse($data['agreement']->organizations as $org)
+                <a href="{{route('organization', $org->slug)}}">
+                    {{$org->name}}
+                </a>
+                @if(!$loop->last)|@endif
+                @if($loop->last)<br />@endif
+            @empty
+            @endforelse
+            @forelse($data['agreement']->venues as $venue)
+                <a href="{{route('venue', $venue->slug)}}">
+                    {{$venue->name}}
+                </a>
+                @if(!$loop->last)|@endif
+                @if($loop->last)<br />@endif
+            @empty
+            @endforelse
+        </div>
+        <div class="col-12 mt-2">
             {!! $data['agreement']->description !!}
         </div>
         @if(count($data['agreement']->attachments) > 0)

@@ -123,9 +123,9 @@
                 <p>ie.: Draft or Published.</p>
             </div>
         </div>
-        <div class="row border border-dark rounded mt-5 mb-5 pt-2 pb-2">
+        <div class="row border border-dark rounded mt-5 mb-5 p-2">
         @if ($data['action'] == 'Edit')
-            <div class="col-12 col-md-6 pt-2">
+            <div class="col-12 pt-2">
                 <h5>Agreements attached to {{$data['venue']->name}}</h5>
                 <table class="table">
                     <thead>
@@ -168,19 +168,11 @@
                 </table>
             </div>
         @endif
-            <div class="col-12 col-md-6 pt-2">
-                <div class="form-group">
-                    <h5>
-                    <label for="exampleFormControlSelect2">List of all agreements not currently attached to
-                        {{$data['venue']->name}}. Select and submit to attach to venue</label>
-                    </h5>
-                    <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
-                        @foreach($data['all_agreements'] as $agr)
-                            <option value="{{$agr->id}}">{{$agr->title}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+            <h5>
+                <a href="{{route('agreements_list')}}" title="List Agreement">List Agreements</a> |
+                <a href="{{route('agreement_create')}}" title="New Agreement">Create New Agreement</a>
+            </h5>
+
         </div>
         <div class="row mt-lg-3">
             <div class="col-12">

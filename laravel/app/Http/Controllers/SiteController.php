@@ -23,6 +23,7 @@ class SiteController extends Controller
         //dd(config('app'));
         //      dd(config('app.url'));
 
+
         /**
         SitemapGenerator::create("https://iatse118.com")
             ->getSitemap()
@@ -40,7 +41,7 @@ class SiteController extends Controller
             ->add(Url::create('/topic/contract-ratifications'))
             ->writeToFile(public_path().'/sitemap.xml');
         **/
-        
+
         return view('site', ['data' => ['user' => $user]]);
     }
 }

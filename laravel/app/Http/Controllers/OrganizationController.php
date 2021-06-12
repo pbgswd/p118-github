@@ -30,7 +30,6 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization): View
     {
-
         if ($organization['image']) {
             if (file_exists(storage_path() . '/app/public/' . $organization['image'])) {
 

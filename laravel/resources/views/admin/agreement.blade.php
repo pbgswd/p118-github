@@ -21,20 +21,83 @@
             </div>
         @endif
     </div>
-
     <form method="post" name="agreement" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
+
         <div class="row mt-lg-3">
             <div class="form-group">
-                <div class="col-lg-2"><h4>Title</h4></div>
-                <div class="col-lg-10">
+                <div class="col-12">
+                    <h4>Title of Agreement</h4>
+                </div>
+                <div class="col-12">
                     <input type="text" class="form-control"  placeholder="Title" name="agreement[title]"
                            value="{{ old('agreement.title', $data['agreement']->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
-        <div class="row">
+        @if($data['action'] == 'Edit')
+            <div class="col-12 p-3">
+                <h4>Venues and organizations associated with this agreement:</h4>
+                <h5>Venues</h5>
+                @forelse($data['agreement']->venues as $venue)
+                    {{$venue->name}}
+                    <a href="{{route('venue', $venue->slug)}}">Public</a>
+                    <a href="{{route('venue_edit', $venue->slug)}}">Admin</a>
+                    @if(!$loop->last) | @endif
+                    @if($loop->last)<br />@endif
+                @empty
+                    <i>None</i>
+                @endforelse
+                <h5>Organizations</h5>
+                @forelse($data['agreement']->organizations as $org)
+                    {{$org->name}}
+                    <a href="{{route('organization', $org->slug)}}">Public</a>
+                    <a href="{{route('organization_edit', $org->slug)}}">Admin</a>
+                    @if(!$loop->last) | @endif
+                @empty
+                    <i>None</i>
+                @endforelse
+            </div>
+        @endif
+        <div class="col-12 mb-5">
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">
+                    <h5>
+                        <i>Select Venues and Organizations to attach to this agreement
+                            (CTRL + click for multiple select).
+                        </i>
+                    </h5>
+                </label>
+                <select multiple class="form-control" name="agreement[client][]" id="exampleFormControlSelect2"  size="30">
+                    <option label="" value="">------------------------ Venues ---------------------</option>
+                    @foreach($data['venues'] as $venue)
+                        <option label="{{$venue->name}}" value="venue {{$venue->id}}"
+                            @if($data['action'] == 'Edit' && in_array($venue->id, $data['ass_venues']))
+                            selected="selected"
+                            @endif
+                        >
+                            {{$venue->name}}
+                        </option>
+                    @endforeach
+                    <option label="" value="">------------------------ Organizations ------------------------</option>
+                    @foreach($data['orgs'] as $org)
+                        <option label="{{$org->name}}" value="organization {{$org->id}}"
+                            @if($data['action'] == 'Edit' && in_array($org->id, $data['ass_orgs']))
+                                selected="selected"
+                            @endif
+                        >
+                            {{$org->name}}{{$org->name}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+
+
+
+        <div class="row mt-2">
             <div class="form-group">
                 <div class="col-lg-2">
                     <h4>Description</h4>
@@ -47,7 +110,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
+        <div class="row mt-5">
             <div class="col-md-6">
                 <div class="form-group">
                     <h4>Start Date of Agreement</h4>

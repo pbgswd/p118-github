@@ -6,6 +6,7 @@ use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\AgreementPolicy;
 use DateTime;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
@@ -23,6 +24,7 @@ use Spatie\Searchable\SearchResult;
  * @property Attachment[]   $attachments
  * @property Venue[]        $venues
  * @property Organization[] $organizations
+ * @property AgreementHandler[] $agreement_handlers
  * @property DateTime       $created_at
  * @property DateTime       $updated_at
  * @property DateTime       $from
@@ -116,6 +118,16 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         return $this->belongsToMany(Attachment::class, 'attachment_agreement')->orderBy('id', 'desc');
     }
 
+    /**
+     * @return BelongsToMany
+     */
+    public function agreement_handlers(): BelongsToMany
+    {
+        return $this->belongsToMany(AgreementHandler::class);
+    }
+
+//todo use relation with additional columns
+    //todo obsolete methods
     public function venues(): BelongsToMany
     {
         return $this->belongsToMany(Venue::class, 'agreement_venue');
@@ -125,6 +137,7 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
     {
         return $this->belongsToMany(Organization::class, 'agreement_organization');
     }
+
 
     /**
      * @return string

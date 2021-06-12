@@ -25,6 +25,7 @@ use Spatie\Searchable\SearchResult;
  * @property User       $user
  * @property DateTime   $created_at
  * @property DateTime   $updated_at
+ * @property AgreementHandler $agreement_handler
  */
 class Organization extends LiveableModel implements HasAttachment, Searchable
 {
@@ -65,10 +66,7 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
     protected $casts = [
         'live' => 'boolean',
     ];
-    /**
-     * @var mixed
-     */
-    private $agreements;
+
     /**
      * @var mixed
      */
@@ -131,6 +129,17 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
         return $this->hasOne(User::class);
     }
 
+    /**
+     * @return HasOne
+     */
+    public function agreement_handler(): HasOne
+    {
+        return $this->hasOne(AgreementHandler::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
     public function agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
@@ -138,22 +147,28 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
             ->where([['live', 1],
                 ['access_level', 'public']
             ])->sortable()
-            ->orderBy('title');
+            ->orderBy('until');
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function member_agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
             ->where('live', 1)
             ->sortable()
-            ->orderBy('title');
+            ->orderBy('until', 'desc');
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function all_agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
             ->sortable()
-            ->orderBy('title');
+            ->orderBy('until', 'desc');
     }
 
     /**

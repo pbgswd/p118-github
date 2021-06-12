@@ -24,6 +24,7 @@ use Spatie\Searchable\SearchResult;
  * @property User       $user
  * @property DateTime   $created_at
  * @property DateTime   $updated_at
+ * @property AgreementHandler $agreement_handler
  * @method static withoutGlobalScopes()
  */
 class Venue extends LiveableModel implements HasAttachment, Searchable
@@ -128,17 +129,34 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
         return $this->hasOne(User::class);
     }
 
+
+    /**
+     * @return BelongsToMany
+     */
     public function agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
-                ->whereRaw('until > NOW()')
-                ->where([['live', 1],
-                     ['access_level', 'public']
-                ])
-                ->sortable()
-                ->orderBy('title');
+            ->whereRaw('until > NOW()')
+            ->where([['live', 1],
+                ['access_level', 'public']
+            ])->sortable()
+            ->orderBy('until');
     }
 
+    /**
+     * @return BelongsToMany
+     */
+    public function all_agreements(): BelongsToMany
+    {
+        return $this->belongsToMany(Agreement::class)
+            ->sortable()
+            ->orderBy('title');
+    }
+
+
+    /**
+     * @return BelongsToMany
+     */
     public function member_agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
@@ -147,11 +165,13 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
             ->orderBy('title');
     }
 
-    public function all_agreements(): BelongsToMany
+
+    /**
+     * @return HasOne
+     */
+    public function agreement_handler(): HasOne
     {
-        return $this->belongsToMany(Agreement::class)
-            ->sortable()
-            ->orderBy('title');
+        return $this->hasOne(AgreementHandler::class);
     }
 
     /**

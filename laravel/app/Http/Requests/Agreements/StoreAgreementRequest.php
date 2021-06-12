@@ -33,6 +33,7 @@ class StoreAgreementRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'agreement.client' => 'array',
             'agreement.title' => 'required|max:255',
             'agreement.from' => 'date',
             'agreement.until' => 'date',

@@ -7,10 +7,13 @@ use App\Http\Requests\Agreements\StoreAgreementRequest;
 use App\Http\Requests\Agreements\UpdateAgreementRequest;
 use App\Models\Agreement;
 use App\Models\Options;
+use App\Models\Organization;
+use App\Models\Venue;
 use App\Services\AttachmentService;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -59,6 +62,8 @@ class AdminAgreementController extends Controller
         $data = [
             'agreement' => $agreement,
             'access_levels' => Options::access_levels(),
+            'orgs' => Organization::all(),
+            'venues' =>Venue::all(),
             'action' => 'Create',
         ];
 
@@ -77,6 +82,27 @@ class AdminAgreementController extends Controller
         $agreement = new Agreement($request->agreement);
 
         $agreement->save();
+
+        if(isset($request->agreement['client'])) {
+            foreach($request->agreement['client'] as $client)
+            {
+                $row = explode(" ", $client);
+                $client_type = $row[0];
+                $client_id = $row[1];
+
+                Log::debug("\n" . "Client type: ". $client_type . "\n");
+                Log::debug("\n" . "Client id: ". $client_id . "\n");
+
+                if($client_type == 'organization') {
+                    $agreement->organizations()->attach($client_id);
+                }
+
+                if($client_type == 'venue') {
+                    $agreement->venues()->attach($client_id);
+                }
+            }
+        }
+
 
         Session::flash('success', 'agreement posting saved');
 
@@ -102,12 +128,35 @@ class AdminAgreementController extends Controller
     public function edit(Agreement $agreement): View
     {
         $this->authorize('update', Agreement::class);
-//todo list order of attachements, by updated_at, review with Alex
+
+        //todo get related organizations and venues
+        //todo agreement doesnt know which org and venue it belongs to
+
+        $agreement->load('user', 'attachments', 'organizations', 'venues');
+
+        $ass_orgs = [];
+        foreach($agreement['organizations']->toArray() as $aa)
+        {
+            $ass_orgs[] = $aa['id'];
+        }
+
+        $ass_venues = [];
+        foreach($agreement['venues']->toArray() as $vv)
+        {
+            $ass_venues[] = $vv['id'];
+        }
+
         $data = [
-            'agreement' => $agreement->load('user', 'attachments'),
+            'agreement' => $agreement,
             'access_levels' => Options::access_levels(),
+            'orgs' => Organization::all(),
+            'venues' => Venue::all(),
+            'ass_orgs' => $ass_orgs,
+            'ass_venues' => $ass_venues,
             'action' => 'Edit',
         ];
+
+
 
         return view('admin.agreement', ['data' => $data]);
     }
@@ -125,6 +174,29 @@ class AdminAgreementController extends Controller
         $any_agreement->fill($request->agreement);
 
         $any_agreement->save();
+
+        $any_agreement->organizations()->detach();
+        $any_agreement->venues()->detach();
+
+        if(isset($request->agreement['client'])) {
+            foreach($request->agreement['client'] as $client)
+            {
+                $row = explode(" ", $client);
+                $client_type = $row[0];
+                $client_id = $row[1];
+
+                Log::debug("\n" . "Client type: ". $client_type . "\n");
+                Log::debug("\n" . "Client id: ". $client_id . "\n");
+
+                if($client_type == 'organization') {
+                    $any_agreement->organizations()->attach($client_id);
+                }
+
+                if($client_type == 'venue') {
+                    $any_agreement->venues()->attach($client_id);
+                }
+            }
+        }
 
         $result = $this->attachmentService->updateAttachment($request, $any_agreement);
 
