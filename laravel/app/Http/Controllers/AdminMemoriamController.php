@@ -13,6 +13,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use Spatie\Image\Exceptions\InvalidManipulation;
 
 class AdminMemoriamController extends Controller
 {
@@ -33,7 +34,8 @@ class AdminMemoriamController extends Controller
     {
         $this->authorize('viewAny', Memoriam::class);
 
-        $memoriam = Memoriam::sortable()
+        $memoriam = Memoriam::withoutGlobalScopes()
+            ->sortable()
             ->orderBy('date')
             ->paginate(10);
 
@@ -70,7 +72,7 @@ class AdminMemoriamController extends Controller
      * @param StoreMemoriamRequest $request
      * @return RedirectResponse
      * @throws AuthorizationException
-     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     * @throws InvalidManipulation
      */
     public function store(StoreMemoriamRequest $request): RedirectResponse
     {
@@ -97,6 +99,7 @@ class AdminMemoriamController extends Controller
      * @param Memoriam $memoriam
      * @return View
      * @throws AuthorizationException
+     * @throws InvalidManipulation
      */
     public function edit(Memoriam $memoriam): View
     {
