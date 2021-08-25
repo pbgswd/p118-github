@@ -12,7 +12,7 @@
         <ul class="navbar-nav mr-auto mb-0 d-flex align-items-center">
             <li class="nav-item mt-2 mr-2 d-flex align-items-stretch d-block d-md-none">
                 <a class="nav-link" href="{{route('landing_page')}}" title="Landing Page">
-                    <i class="fas fa-industry fa-2"></i>
+                    <i class="fas fa-home fa-2"></i>
                     Landing Page
                 </a>
             </li>
