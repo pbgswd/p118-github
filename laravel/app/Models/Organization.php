@@ -143,6 +143,7 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
     public function agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
+            ->with('attachments')
             ->whereRaw('until > NOW()')
             ->where([['live', 1],
                 ['access_level', 'public']
@@ -156,6 +157,7 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
     public function member_agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
+            ->with('attachments')
             ->where('live', 1)
             ->sortable()
             ->orderBy('until', 'desc');
