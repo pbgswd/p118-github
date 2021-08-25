@@ -80,7 +80,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('any_user', static function ($id) {
             return User::withoutGlobalScopes()->findOrFail($id);
         });
-        //todo remove scope venue, organization
         Route::bind('any_venue', static function ($slug) {
             return Venue::withoutGlobalScopes()->where('slug', $slug)->first();
         });
