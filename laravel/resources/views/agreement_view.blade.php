@@ -18,7 +18,6 @@
                 </div>
             @endcan
         </div>
-
         <div class="row">
             <div class="col-12 text-center">
                 <h1>
@@ -75,7 +74,6 @@
                                     {{$att->description ? : $att->file_name}}
                                 </a>
                             </li>
-
                         @endif
                     @empty
                         <li class="list-group-item">
