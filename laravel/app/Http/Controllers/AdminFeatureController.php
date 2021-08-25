@@ -40,6 +40,7 @@ class AdminFeatureController extends Controller
         $this->authorize('viewAny', Feature::class);
 
         $features = Feature::withoutGlobalScopes()
+            ->orderBy('date', 'desc')
             ->sortable()
             ->paginate(20);
 
