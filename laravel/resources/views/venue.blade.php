@@ -48,35 +48,54 @@
                 {!! $data['venue']->description !!}
             </div>
         </div>
-        @if (0 < $data['agreements']->count())
-            <div class="row border border-dark rounded-lg p-2">
-                <div class="col-12 pt-2">
+        @if ($data['agreements']->count() > 0)
+            <div class="row border border-dark rounded-lg mb-3 p-2">
+                <div class="col-12">
                     <h4>
                         Agreements with {{$data['venue']->name}}
                     </h4>
-                    @if($data['agreements']->count() > 1)
-                        <h5>
-                            Order by: @sortablelink('title', 'Title')| @sortablelink('until', 'End Date')
-                        </h5>
-                    @endif
+                </div>
+                @if($data['agreements']->count() > 1)
+                    <div class="col-6">
+                        Order by: @sortablelink('title', 'Title')
+                    </div>
+                    <div class="col-6">
+                        @sortablelink('until', 'End Date')
+                    </div>
+                @endif
+                <div class="col-12">
                     <ul class="list-group list-group-flush">
-                        @foreach($data['agreements'] as $va)
+                        @forelse($data['agreements'] as $va)
                             <li class="list-group-item">
                                 {!! (\Carbon\Carbon::parse($va->until)->isPast()) ? "<i>(Not current)</i>" : '' !!}
-                                <a title="{{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
+                                <a title="View {{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
                                     {{ $va->title }}
                                 </a>
-                                {{$va->from->format('F j Y')}} -
-                                {{$va->until->format('F j Y')}}
+                                {{$va->from->format('F j Y')}} - {{$va->until->format('F j Y')}}
                             </li>
-                        @endforeach
+                            <ul>
+                                @forelse($va->attachments as $att)
+                                    <li>
+                                        <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                           title="Download {{$att->file_name}}" target="_blank">
+                                            <i class="fas fa-file-download fa-1x"></i>
+                                            {{$att->file_name}} {{$att->description ? : ''}}
+                                        </a>
+                                    </li>
+                                @empty
+                                    <li>No attached files</li>
+                                @endforelse
+                            </ul>
+                        @empty
+                            <li></li>
+                        @endforelse
                     </ul>
-                </div>
-                <div class="col-12 d-flex justify-content-center">
-                    <div class="list-group text-center">
-                        <ul class="pagination text center">
-                            {{ $data['agreements']->links() }}
-                        </ul>
+                    <div class="col-12 d-flex justify-content-center">
+                        <div class="list-group text-center">
+                            <ul class="pagination text center">
+                                {{ $data['agreements']->links() }}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
