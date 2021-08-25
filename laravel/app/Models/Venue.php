@@ -136,6 +136,7 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
     public function agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
+            ->with('attachments')
             ->whereRaw('until > NOW()')
             ->where([['live', 1],
                 ['access_level', 'public']
@@ -159,7 +160,9 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
      */
     public function member_agreements(): BelongsToMany
     {
+        //todo get just the attachments related to the agreement
         return $this->belongsToMany(Agreement::class)
+            ->with('attachments')
             ->where('live', 1)
             ->sortable()
             ->orderBy('title');
