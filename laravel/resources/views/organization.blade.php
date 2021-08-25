@@ -55,36 +55,58 @@
                 <p>{!! $data['organization']->description !!}</p>
             </div>
             @if ($data['agreements']->count() > 0)
-                <div class="col-12 border border-dark rounded-lg mb-3 p-2">
-
-                    <h4>
-                        Agreements with {{$data['organization']->name}}
-                    </h4>
+                <div class="row border border-dark rounded-lg mb-3 p-2">
+                    <div class="col-12">
+                        <h4>
+                            Agreements with {{$data['organization']->name}}
+                        </h4>
+                    </div>
                     @if($data['agreements']->count() > 1)
-                        <h5>
-                            Order by: @sortablelink('title', 'Title')| @sortablelink('until', 'End Date')
-                        </h5>
+                        <div class="col-6">
+                            Order by: @sortablelink('title', 'Title')
+                        </div>
+                        <div class="col-6">
+                            @sortablelink('until', 'End Date')
+                        </div>
                     @endif
-                    <ul class="list-group list-group-flush">
-                        @foreach($data['agreements'] as $va)
-                            <li class="list-group-item">
-                                {!! (\Carbon\Carbon::parse($va->until)->isPast()) ? "<i>(Not current)</i>" : '' !!}
-                                <a title="View {{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
-                                    {{ $va->title }}
-                                </a>
-                                {{$va->from->format('F j Y')}} - {{$va->until->format('F j Y')}}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="col-12 d-flex justify-content-center">
-                    <div class="list-group text-center">
-                        <ul class="pagination text center">
-                            {{ $data['agreements']->links() }}
+                    <div class="col-12">
+                        <ul class="list-group list-group-flush">
+                            @forelse($data['agreements'] as $va)
+                                <li class="list-group-item">
+                                    {!! (\Carbon\Carbon::parse($va->until)->isPast()) ? "<i>(Not current)</i>" : '' !!}
+                                    <a title="View {{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
+                                        {{ $va->title }}
+                                    </a>
+                                    {{$va->from->format('F j Y')}} - {{$va->until->format('F j Y')}}
+                                </li>
+                                <ul>
+                                    @forelse($va->attachments as $att)
+                                        <li>
+                                            <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                               title="Download {{$att->file_name}}" target="_blank">
+                                                <i class="fas fa-file-download fa-1x"></i>
+                                                {{$att->file_name}} {{$att->description ? : ''}}
+                                            </a>
+                                        </li>
+                                    @empty
+                                        <li>No attached files</li>
+                                    @endforelse
+                                </ul>
+                            @empty
+                                <li></li>
+                            @endforelse
                         </ul>
+                        <div class="col-12 d-flex justify-content-center">
+                            <div class="list-group text-center">
+                                <ul class="pagination text center">
+                                    {{ $data['agreements']->links() }}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             @endif
+
             @if(count($data['organization']->attachments) > 0)
                 <div class="col-12 mt-3">
                     <h4>
