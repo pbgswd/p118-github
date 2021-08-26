@@ -19,12 +19,18 @@
         <div class="col col-12 border border-dark rounded-lg pt-1 mb-2 bg-dark text-white">
             <h5> Menu </h5>
         </div>
+        @hasanyrole(['super-admin|office|writer|committee'])
+            <div class="col-12 border border-dark rounded-lg mb-2 bg-secondary font-weight-bold">
+                <a class="text-white font-weight-bold" href="{{route('admin')}}" title="Admin">
+                    <i class="fas fa-tachometer-alt"></i> Admin
+                </a>
+            </div>
+        @endrole
         <div class="col-12 border border-dark rounded-lg mb-2 bg-secondary font-weight-bold">
             <a href="https://login.callsteward.ca/" class="text-white font-weight-bold" target="_blank"
                title="Link to CallSteward">
                 <i class="fas fa-headset"></i>
                 Call Steward
-                <i class="fas fa-headset"></i>
             </a>
         </div>
         <div class="col-12 border border-dark rounded-lg mb-2">

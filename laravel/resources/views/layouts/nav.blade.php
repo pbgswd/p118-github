@@ -15,6 +15,13 @@
                     <i class="fas fa-home fa-2"></i>
                     Landing Page
                 </a>
+                &nbsp;
+                @hasanyrole(['super-admin|office|writer|committee'])
+                <a class="nav-link" href="{{route('admin')}}" title="Admin">
+                    <i class="fas fa-tachometer-alt"></i> Admin
+                </a>
+                @endrole
+
             </li>
             <div class="dropdown mr-1 mt-2 mt-md-0">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
@@ -103,23 +110,9 @@
                     <a class="dropdown-item" href="{{route('agreements_list_public')}}" title="Collective Agreements">
                         <i class="far fa-handshake"></i>
                         Collective Agreements</a>
-
                     <a class="dropdown-item" href=" /topic/contract-ratifications" title="Contract Ratifications">
                         <i class="far fa-handshake"></i>
                         Contract Ratifications</a>
-
-                </div>
-            </div>
-            <div class="dropdown mr-1 mt-2 mt-md-0">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Contact Us
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdown">
-                    <a class="dropdown-item" href="{{route('hire-us')}}" title="Why Hire Union">Why Hire Union</a>
-                    <a class="dropdown-item" href="{{route('contact')}}" title="Contact Us">Contact Us</a>
-                    <a class="dropdown-item" href="{{route('page_show','payroll-trust-account')}}"
-                        title="Payroll">Payroll</a>
                 </div>
             </div>
             @guest
@@ -130,14 +123,6 @@
                         Members
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdown">
-                        @hasanyrole(['super-admin|office|writer|committee'])
-                        <a class="dropdown-item" href="{{route('admin')}}" title="Admin">
-                            <i class="fas fa-tachometer-alt"></i> Admin
-                        </a>
-                        @endrole
-                        <a class="dropdown-item" href="/site" title="Landing Page">
-                            <i class="fas fa-home"></i>
-                            Landing Page</a>
                         <a class="dropdown-item" href="{{route('list_meetings')}}" title="Meeting Minutes">
                             <i class="far fa-folder"></i>
                             Meeting Minutes</a>
@@ -155,11 +140,6 @@
                            title="Job Postings">
                             <i class="fas fa-hard-hat"></i>
                             Apply for Sister Local Status</a>
-                        <a class="dropdown-item" href="https://login.callsteward.ca/" target="_blank"
-                           title="Link to CallSteward">
-                            <i class="fas fa-headset"></i>
-                            Call Steward <i class="fas fa-headset"></i>
-                        </a>
                         <a class="dropdown-item" href="{{route('member', Auth::user()->id)}}"
                            title="My Profile">
                             <i class="fas fa-user"></i> {{ Auth::user()->name }}</a>
@@ -172,6 +152,18 @@
                     </div>
                 </div>
             @endguest
+            <div class="dropdown mr-1 mt-2 mt-md-0">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Contact Us
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdown">
+                    <a class="dropdown-item" href="{{route('hire-us')}}" title="Why Hire Union">Why Hire Union</a>
+                    <a class="dropdown-item" href="{{route('contact')}}" title="Contact Us">Contact Us</a>
+                    <a class="dropdown-item" href="{{route('page_show','payroll-trust-account')}}"
+                       title="Payroll">Payroll</a>
+                </div>
+            </div>
             @auth
                 <li class="nav-item mt-2 mr-2 d-flex align-items-stretch justify-content-center text-center">
                     <a class="nav-link d-none d-md-block" href="{{route('landing_page')}}" title="Landing Page">
