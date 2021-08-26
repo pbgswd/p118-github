@@ -53,8 +53,6 @@
                     </div>
                 </div>
             </div>
-
-
          <!-- /.carousel-item -->
             <div class="carousel-item">
                 <picture>
@@ -81,11 +79,12 @@
                 </picture>
                 <div class="carousel-caption font-weight-bolder">
                     <div classs="mb-5">
-                        <h1 class="text-danger font-weight-bolder" style="text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000; -1px -1px 0 #000;">
-         Super Shows<br />
-         For <br />
-         Super Stars
-</h3>
+                        <h3 class="text-danger font-weight-bolder"
+                            style="text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000; -1px -1px 0 #000;">
+                            Super Shows<br />
+                            For <br />
+                            Super Stars
+                        </h3>
                     </div>
                 </div>
             </div>
