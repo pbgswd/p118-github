@@ -41,10 +41,12 @@ class ContactController extends Controller
      */
     public function submit(SubmitContact $request): RedirectResponse
     {
-
-        Log::debug("\n" . __METHOD__ .'method hit, Contact page message submitted from ' . $request['name'] . ' sending to: ' .
-            config('mail.office_admin.address') . ' ' . config('mail.office_admin.name') . ' at ' . date('Y-m-d H:i:s'). "\n");
-
+        Log::debug("\n" . __METHOD__ .'method hit, Contact page message submitted from ' .
+            $request['name'] .
+            ' sending to: ' .
+            config('mail.office_admin.address') . ' ' .
+            config('mail.office_admin.name') . ' at ' .
+            date('Y-m-d H:i:s'). "\n");
 
         define("RECAPTCHA_V3_SECRET_KEY", '6Ldv4sQaAAAAADrmuSc0lzoaf-AiVMMES6LxAt7g');
         define("RECAPTCHA_THRESHOLD", "0.5");
@@ -67,16 +69,22 @@ class ContactController extends Controller
             $cc = Options::testing_address_update_contacts();
         }
 
-        Log::debug('Contact page message from ' . $request['name'] . ' sending to: ' .
-            config('mail.office_admin.address') . ' ' . config('mail.office_admin.name') .', cc: ' .
-            implode(", ", $cc) . ' at ' . date('Y-m-d H:i:s'). "\n");
+        Log::debug('Contact page message from ' . $request['name'] .
+            ' sending to: ' .
+            config('mail.office_admin.address') . ' ' .
+            config('mail.office_admin.name') .', cc: ' .
+            implode(", ", $cc) .
+            ' at ' .
+            date('Y-m-d H:i:s'). "\n");
 
         if ($resp->isSuccess()) {
             Log::debug("Contact form Recaptcha v.3 score=".$resp->getScore() . " submission from ".
                 $request->name ." was returned as a success. \n");
         } else {
             $errors = $resp->getErrorCodes();
-            Log::debug("Errors from Contact form Recaptcha v.3 from ". $request->name . ": ". serialize($errors). "\n");
+            Log::debug("Errors from Contact form Recaptcha v.3 from " .
+                $request->name . ": " .
+                serialize($errors). "\n");
         }
 
         Log::debug("Contact form submission data from ". $request->name . " " . serialize($resp). "\n");
@@ -89,7 +97,6 @@ class ContactController extends Controller
 
             Session::flash('warning', 'Your message was rejected by the Recaptcha filter.
                 Please wait before trying again.');
-
         } else {
             Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
                 $m->from( config('mail.from.address'), config('app.name') . 'Contact Page Message from '
