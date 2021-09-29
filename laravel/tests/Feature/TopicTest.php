@@ -31,6 +31,9 @@ class TopicTest extends TestCase
 
         $topics = Topic::factory()->count(20)->make();
 
+        dd($topics[0]);
+        exit();
+
         foreach ($topics as $topic) {
             echo 'attempting to insert '.$topic['name']."\n";
 

@@ -13,7 +13,7 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     /**
-     * Insert users into users table.
+     * Some work with users
      *
      * @return void
      */
@@ -22,22 +22,20 @@ class UserTest extends TestCase
     {
         $response = $this->get('/');
         if ($response->assertStatus(Response::HTTP_OK)) {
-            $response->assertSeeText('Laravel');
+            $response->assertSeeText('Login');
         }
 
         $response = $this->get('/register');
 
-        if ($response->assertStatus(Response::HTTP_OK)) {
-            $response->assertSeeText('Register');
+        if ($response->assertStatus(Response::HTTP_NOT_FOUND)) {
+            echo "\n public register new user page is blocked. \n";
         }
 
-        echo "\n public register new user page \n";
-
+        /**
         $users = User::factory()->count(1)->make();
-
+        print_r($users[0]->name);
         foreach ($users as $user) {
             echo 'attempting to insert '.$user['name']."\n";
-
             $response = $this->post(
                 '/register',
                 [
@@ -52,5 +50,6 @@ class UserTest extends TestCase
             );
             echo  $user['name']." has been posted. \n";
         }
+        * **/
     }
 }
