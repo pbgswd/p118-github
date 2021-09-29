@@ -13,6 +13,7 @@ class UserRoleTest extends TestCase
     public function testBasicTest()
     {
         echo "\n Begin ".basename(__FILE__)."\n";
+        echo "\n Begin method " . basename(__METHOD__). "\n";
 
         $response = $this->get('/');
 
@@ -29,22 +30,28 @@ class UserRoleTest extends TestCase
             ]
         );
 
+        //todo remove pass from file
+        //todo create fake users for unit testing?
+
         $users = [
             [
                 'email' => 'superwebdeveloper@gmail.com',
                 'password' => 'honda750',
                 'role' => 'super-admin',
             ],
+            /*
             [
                 'email' => 'pbgswd@gmail.com',
                 'password' => 'pbgswdpbgswd',
                 'role' => 'writer',
             ],
+
             [
                 'email' => 'humyum@hotmail.com',
                 'password' => 'a1humyum',
                 'role' => 'office',
             ],
+            */
         ];
 
         foreach ($users as $u) {
@@ -56,7 +63,7 @@ class UserRoleTest extends TestCase
                 echo "\n Login page \n";
             }
 
-            echo "\n Attempting to log in ".$u['email']."\n";
+            echo "\n Attempting to log in " . $u['email'] ." \n";
 
             $response = $this->call('POST', '/login',
                 [
@@ -65,6 +72,8 @@ class UserRoleTest extends TestCase
                    '_token' => csrf_token(),
                 ]
             );
+
+            echo "\n Response Status: " . $response->status() . "\n";
 
             if ($response->assertStatus(Response::HTTP_FOUND)) {
                 if ($response->assertSeeText('Redirecting to http')) {
@@ -85,24 +94,26 @@ class UserRoleTest extends TestCase
             $response = $this->get('/site');
 
             if ($response->assertStatus(Response::HTTP_OK)) {
-                if ($response->assertSeeText('Hi '.$user->name)) {
-                    echo "\n logged in as ".$user->name."\n";
-                }
-                if ($response->assertDontSeeText('monkey')) {
-                    echo "\n I dont see monkey \n";
+                if ($response->assertSeeText('Hi '. $user->name)
+                    && $response->assertSeeText('Logout')
+                    && $response->assertSeeText('Call Steward')) {
+                    echo "\n logged in as " . $user->name . "\n";
                 }
             }
 
-            if ($u->role == 'super-admin') {
+            if ($u['role'] == 'super-admin') {
                 //test
             }
-            if ($u->role == 'writer') {
+
+            if ($u['role'] == 'writer') {
                 //test
             }
-            if ($u->role == 'office') {
+
+            if ($u['role'] == 'office') {
                 //test
             }
-            if ($u->role == 'member') {
+
+            if ($u['role'] == 'member') {
                 //test
             }
 
@@ -131,7 +142,6 @@ class UserRoleTest extends TestCase
                 ]
             );
         }
-
-        echo "\n End ".basename(__FILE__)."\n";
+        echo "\n End method " . basename(__METHOD__). "\n";
     }
 }
