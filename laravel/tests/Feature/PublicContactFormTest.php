@@ -12,7 +12,7 @@ class PublicContactFormTest extends TestCase
      */
     public function testPublicContactPage()
     {
-        echo "\n Begin method " . basename(__METHOD__). "\n";
+
         $date = new \DateTime();
         $date->setTimezone(new \DateTimeZone('America/Vancouver'));
         $date = $date->format('F j, Y H:i:s');
