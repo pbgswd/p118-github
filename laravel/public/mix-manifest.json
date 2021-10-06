@@ -1,13 +1,13 @@
 {
-    "/js/app.js": "/js/app.js?id=d4b2f7105e72678b9cf3",
-    "/js/dashboard.js": "/js/dashboard.js?id=756867e3ffa866d46d2d",
-    "/js/tinymce.js": "/js/tinymce.js?id=afc6a3b794d843c31733",
-    "/js/google-analytics.js": "/js/google-analytics.js?id=ff4e5f8f62b9d3ded56a",
-    "/css/jumbotron.css": "/css/jumbotron.css?id=0ef7edc6babea5a47645",
+    "/js/dashboard.js": "/js/dashboard.js?id=b0cc9ddda3894fd03cec",
+    "/js/app.js": "/js/app.js?id=58eb44c636fdbeac3ef5",
+    "/js/tinymce.js": "/js/tinymce.js?id=31e9a368a04cf37d3ebd",
+    "/js/google-analytics.js": "/js/google-analytics.js?id=c434d378c280d107e776",
+    "/css/app.css": "/css/app.css?id=b4a1cb1e7bb641da415e",
     "/css/dashboard.css": "/css/dashboard.css?id=5bc928ceb9784bd651e3",
     "/css/email.css": "/css/email.css?id=3905bf5e3e08517d6f94",
-    "/css/app.css": "/css/app.css?id=ec5c643a03e1e652a2ce",
     "/css/carousel.css": "/css/carousel.css?id=b931e9ba07f09cf2df66",
     "/css/normalize.css": "/css/normalize.css?id=8fdb29560a7019b109be",
-    "/css/skeleton.css": "/css/skeleton.css?id=93155b25327adf07f26b"
+    "/css/skeleton.css": "/css/skeleton.css?id=93155b25327adf07f26b",
+    "/css/jumbotron.css": "/css/jumbotron.css?id=0ef7edc6babea5a47645"
 }
