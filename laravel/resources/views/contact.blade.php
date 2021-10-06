@@ -1,4 +1,4 @@
-@extends('layouts.jumbo')
+ @extends('layouts.jumbo')
 @section('content')
     <div class="container mb-3" style="background: rgba(220,220,220,0.8);">
         <div class="row mt-3 m-2 border border-dark rounded-lg">
