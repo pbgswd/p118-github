@@ -81,9 +81,9 @@
             </div>
             <div class="col-12 mt-3 content">
                 <h3>
-                    <a href="tel:6042597365">
+                    <a href="tel:7797451118">
                         <i class="fas fa-phone-square"></i> Local 118 Dispatch:
-                        604-259-7365
+                        779-745-1118
                     </a>
                 </h3>
             </div>
