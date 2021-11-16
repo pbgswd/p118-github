@@ -40,8 +40,8 @@ class AdminController extends Controller
         $arr = ModelList::getModelList();
 
         $csv = array();
-        $lines = file('../../files/Local118-CSV-Membership.csv', FILE_IGNORE_NEW_LINES);
-
+       // $lines = file('../../files/Local118-CSV-Membership.csv', FILE_IGNORE_NEW_LINES);
+$lines =[];
         foreach ($lines as $key => $value)
         {
             $csv[$key] = str_getcsv($value);
@@ -54,7 +54,7 @@ class AdminController extends Controller
             $data[$k]['membership_type'] = $c[3];
         }
 
-dd($data);
+//dd($data);
 
 
         return view('admin.admin-blank');

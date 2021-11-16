@@ -18,7 +18,7 @@
         "kyslik/column-sortable": "^6.0",
         "laravel/framework": "^8.18",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.0",
+        "laravel/ui": "^3.3",
         "league/flysystem": "^1.0.55",
         "nesbot/carbon": "^2.24",
         "predis/predis": "^1.1",

@@ -12,9 +12,7 @@
         <div class="col-12 col-md-4 text-md-right">
             <h3>
                <span class="badge badge-primary badge-pill">
-                   {{ $data['data']['count'] }}
-                   Bylaw
-                   {{ Str::plural('Document', $data['data']['count']) }}
+                   {{ $data['data']['count'] }} Bylaw {{ Str::plural('Document', $data['data']['count']) }}
                </span>
             </h3>
         </div>

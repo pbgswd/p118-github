@@ -13,7 +13,8 @@
             </a>
         </h3>
     <h3 class="mt-5">
-        <a href="{{route('list_import')}}">View Temporary Member Import Data</a>
+        <a href="{{route('list_import')}}">View Temporary Member Import Data</a> ||
+        <a href="{{route('invite-resend-list')}}">Re-Invite Member(s)</a>
     </h3>
 
 </div>
