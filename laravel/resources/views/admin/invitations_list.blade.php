@@ -14,7 +14,7 @@
         </h3>
     <h3 class="mt-5">
         <a href="{{route('list_import')}}">View Temporary Member Import Data</a> ||
-        <a href="{{route('invite-resend-list')}}">Re-Invite Member(s)</a>
+        <a href="{{route('invite-resend-list')}}">Send invited members to users data table</a>
     </h3>
 
 </div>

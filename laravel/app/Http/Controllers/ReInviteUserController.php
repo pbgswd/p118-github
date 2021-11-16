@@ -54,6 +54,6 @@ class ReInviteUserController extends Controller
         Log::debug(' On ' . date('Y-m-d H:i:s') . ', '. $data['count'] . ' pending members were
             reinvited, by adding them as members');
 
-        return redirect()->route('list_invited_users');
+        return redirect()->route('admin_list_invited_users');
     }
 }

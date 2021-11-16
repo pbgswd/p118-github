@@ -32,6 +32,7 @@ class InviteUserController extends Controller
      */
     public function index(): View
     {
+
         $this->authorize('viewAny', InviteUser::class);
 
         DB::table('invite_users')
@@ -53,6 +54,7 @@ class InviteUserController extends Controller
         $data['count'] = count(InviteUser::all());
 
         return view('admin.invitations_list', ['data' => $data]);
+
     }
 
     /**

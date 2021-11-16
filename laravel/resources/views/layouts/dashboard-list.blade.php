@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('list_invited_users') }}">
+                    <a class="nav-link" href="{{ route('admin_list_invited_users') }}">
                         <span data-feather="file"></span>
                         Invite Members
                     </a>

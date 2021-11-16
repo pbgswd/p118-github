@@ -223,8 +223,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('/invite-new-user', [CNS\InviteUserController::class, 'create'])->name('invite-new-user');
     Route::post('/invite-new-user', [CNS\InviteUserController::class, 'store']);
     Route::post('/invite_user', [CNS\InviteUserController::class, 'send']);
-    Route::get('/invited_users', [CNS\InviteUserController::class, 'index'])->name('list_invited_users');
-
+    Route::get('/invited_users', [CNS\InviteUserController::class, 'index'])->name('admin_list_invited_users');   
     Route::get('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'show'])->name('show_invited_user');
     Route::get('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'edit'])->name('invited_user_edit');
     //Route::get('/invitation-mailmsg',[CNS\InviteUserController::class, 'mail'])->name('mail_invited_user');
@@ -234,7 +233,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('process_import_invitation', [CNS\InviteUserController::class, 'process_import_invitation'])
         ->name('process_import_invitation');
 
-    //reinvite
     Route::get('/invite-resend-list', [CNS\ReInviteUserController::class, 'index'])->name('invite-resend-list');
 
     Route::get('/pages', [CNS\AdminPageController::class, 'index'])->name('pages_list');
