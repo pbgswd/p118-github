@@ -36,6 +36,12 @@
                             </div>
                         </div>
                     </form>
+                    <div class="h4">
+                        <i class="fas fa-exclamation-triangle fa-2x" style="color: red;"></i>
+                        Are you a member of IATSE 118 and haven't logged in before?
+                        Just enter your email to get a password reset emailed to you
+                        so you may log in.
+                    </div>
                 </div>
             </div>
         </div>
