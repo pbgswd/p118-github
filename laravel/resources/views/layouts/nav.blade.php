@@ -53,10 +53,6 @@
                         title="Skills Update Procedure">
                         Skills Update Procedure
                     </a>
-                    <a class="dropdown-item" href="{{route('page_show', 'availability-and-dispatch')}}"
-                        title="Availability & Dispatch">
-                        Availability & Dispatch
-                    </a>
                     @auth
                         <a class="dropdown-item" href="{{route('page_show', 'union-dues-members')}}"
                            title="Union Dues">Union Dues for Members</a>
