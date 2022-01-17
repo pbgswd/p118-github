@@ -32,7 +32,6 @@ class InviteUserController extends Controller
      */
     public function index(): View
     {
-
         $this->authorize('viewAny', InviteUser::class);
 
         DB::table('invite_users')
@@ -48,13 +47,12 @@ class InviteUserController extends Controller
             $item->remaining = 48 - $item->updated_at->diffInHours(Carbon::now());
         });
 
-        $data =[];
+        $data = [];
         $data['invitations'] = $invitations;
 
         $data['count'] = count(InviteUser::all());
 
         return view('admin.invitations_list', ['data' => $data]);
-
     }
 
     /**
@@ -104,7 +102,7 @@ class InviteUserController extends Controller
 
         Session::flash('success', 'Invitation for access sent to '.$invitation['name']);
 
-        return redirect()->route('list_invited_users');
+        return redirect()->route('admin_list_invited_users');
     }
 
     /**
@@ -300,6 +298,6 @@ class InviteUserController extends Controller
         Session::flash('success', Str::plural(count($request->id).' Invitation',
             count($request->id).' deleted.'));
 
-        return redirect()->route('list_invited_users');
+        return redirect()->route('admin_list_invited_users');
     }
 }

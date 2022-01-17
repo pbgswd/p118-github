@@ -42,7 +42,7 @@
 
                               {!! $data['invitation']['message'] ?? '' !!}
 
-			                <p class="lead">This is your invitation to join the completely updated IATSE Local 118
+			                <p class="lead">This is your invitation to join the IATSE Local 118
                                 website. </p>
                             <p class="lead">To join the website you will need to navigate to the page in the link
                                 provided below.
@@ -53,10 +53,6 @@
                               site with your email address and new password.</p>
                             <p>After you have logged in, be sure to look around, and update your personal profile
                               information.</p>
-                            <p>Please note that we have not brought across your existing login information as a best
-                              security practice. </p>
-                              <p>Remember: you use your email address as your login name, not your user name as was
-                                  the case before.</p>
                             <p style="margin-top: 2em;">
                                 <a href="{{route('invite_user_signup', ['inviteUser' => $data['invitation']['id'],
                                     'password' => $data['invitation']['password']])}}" target="_blank">
@@ -66,7 +62,8 @@
 			                </p>
                               <p>See anything out of place? Report errors and typos to
                                   <a href="mailto:office@iatse118.com" target="_blank" rel="noopener">
-                                      office@iatse118.com</a>.
+                                      office@iatse118.com</a> Or       <a href="mailto:webster@iatse118.com" target="_blank" rel="noopener">
+                                      webster@iatse118.com</a> .
                               </p>
                               <p>&nbsp;</p>
                               <p>Have a great day.</p>
