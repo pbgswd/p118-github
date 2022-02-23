@@ -6,6 +6,7 @@
             <li data-target="#carousel" data-slide-to="2"></li>
             <li data-target="#carousel" data-slide-to="3"></li>
             <li data-target="#carousel" data-slide-to="4"></li>
+            <li data-target="#carousel" data-slide-to="5"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
@@ -23,7 +24,24 @@
                 </div>
             </div>
             <!-- /.carousel-item -->
+
             <div class="carousel-item">
+                <picture>
+                    <source srcset="/storage/public/ud1VzDeXceaZ5HvB2pWirm8wsFE6gumkS4qwxVfm.jpg" media="(min-width: 1400px)">
+                    <source srcset="/storage/public/uQ2ihDNIsEhYHOHIT4zpu37HYuNP27T25n0v8KEj.jpg" media="(min-width: 769px)">
+                    <source srcset="/storage/public/sT5Lz4URSPiSmqdxn4T3WZqzpuxYK3owvLaEuqbV.jpg" media="(min-width: 577px)">
+                    <img srcset="/storage/public/3Ju2z51W5yTmuHqdO15T1lDG9YWrF4OpvlneEkjI.jpg" alt="The Orpheum" class="d-block img-fluid">
+                </picture>
+                <div class="carousel-caption">
+                    <div>
+                        <h2>We work among the stars</h2>
+                        <p>to bring your production to the stage</p>
+                    </div>
+                </div>
+            </div>
+            <!-- /.carousel-item -->
+
+	    <div class="carousel-item">
                 <picture>
                     <source srcset="/storage/public/7W7f1c0gLCLNnx6SNZ4VWRwYal2W8OyV9UUsFW2r.jpg" media="(min-width: 1400px)">
                     <source srcset="/storage/public/4mugQjHTNHDRJ8A6BUngTb8nWGbJJYk7ibuJ99kv.jpg" media="(min-width: 769px)">
