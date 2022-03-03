@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\InviteUser;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -10,19 +11,88 @@ use Tests\TestCase;
 
 class UserRoleTest extends TestCase
 {
-    public function testBasicTest()
+    /**
+     * @return array
+     */
+    public function userProvider()
     {
-        echo "\n Begin ".basename(__FILE__)."\n";
-        echo "\n Begin method " . basename(__METHOD__). "\n";
+        return [
+            'example user with member privileges' =>
+            [
+                'name' => 'testname 1',
+                'email' => 'abcd@xyz.com',
+                'password' => 'averygoodPassword100',
+                'membership_type' => 'Member',
+                'role' => 'member'
+            ],
+            'example user with super-admin privileges' =>
+            [
+                'name' => 'testname 2',
+                'email' => 'superwebdeveloper@gmail.com',
+                'password' => 'honda750',
+                'membership_type' => 'Member',
+                'role' => 'super-admin'
+            ],
+            /*
+            'example user with writer privileges' =>
+            [
+                'name' => 'testname 3',
+                'email' => 'pbgswd@gmail.com',
+                'password' => 'pbgswdpbgswd',
+                'membership_type' => 'Member',
+                'role' => 'writer',
+            ],
+                        'example user with writer privileges' =>
+            [
+                'name' => 'testname 4',
+                'email' => 'committeepbgswd@gmail.com',
+                'password' => 'pbgswdpbgswd',
+                'membership_type' => 'Member',
+                'role' => 'committee',
+            ],
+            'example user with office privileges' =>
+            [
+                'name' => 'testname 5',
+                'email' => 'humyum@hotmail.com',
+                'password' => 'a1humyum',
+                'membership_type' => 'Office',
+                'role' => 'office',
+            ],
+            */
+        ];
+    }
 
-        $response = $this->get('/');
+    /**
+     * @dataProvider userProvider
+     */
+    public function testInviteUserWasInvited($name, $email, $password, $membership_type, $role)
+    {
+/**
+ * InviteUser
+ * InviteUserController
+ * store method
+ */
 
-        if ($response->assertStatus(Response::HTTP_OK)) {
-            $response->assertSeeText('since 1904');
-            echo "\n since 1904 seen \n";
-        }
+        $response = $this->call('POST', '/admin/invite-new-user',
+            [
+                'invite[name]' => $name,
+                'invite[email]' => $email,
+                'invite[membership_type]' => $membership_type,
+                'invite[role]' => $role,
+                '_token' => csrf_token()
+            ]
+        );
 
-        echo "\n Login a user \n";
+        $this->assertDatabaseHas('invite_users', ['email' => $email]);
+
+    }
+
+
+    /**
+     * @dataProvider userProvider
+     */
+    public function testSeesTheWebsiteIndex()
+    {
 
         $response = $this->call('POST', '/logout',
             [
@@ -30,38 +100,16 @@ class UserRoleTest extends TestCase
             ]
         );
 
-        //todo remove pass from file
-        //todo create fake users for unit testing?
 
-        $users = [
-            [
-                'email' => 'superwebdeveloper@gmail.com',
-                'password' => 'honda750',
-                'role' => 'super-admin',
-            ],
-            /*
-            [
-                'email' => 'pbgswd@gmail.com',
-                'password' => 'pbgswdpbgswd',
-                'role' => 'writer',
-            ],
 
-            [
-                'email' => 'humyum@hotmail.com',
-                'password' => 'a1humyum',
-                'role' => 'office',
-            ],
-            */
-        ];
+        Session::start();
+        $response = $this->get('/login');
 
+        if ($response->assertStatus(Response::HTTP_OK)) {
+            $response->assertSeeText('Login');
+            echo "\n Login page \n";
+        }
         foreach ($users as $u) {
-            Session::start();
-            $response = $this->get('/login');
-
-            if ($response->assertStatus(Response::HTTP_OK)) {
-                $response->assertSeeText('Login');
-                echo "\n Login page \n";
-            }
 
             echo "\n Attempting to log in " . $u['email'] ." \n";
 

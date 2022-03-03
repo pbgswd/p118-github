@@ -20,7 +20,7 @@ class PublicUserTest extends TestCase
         $response = $this->get('/');
         $response->assertOk();
         if ($response->assertStatus(Response::HTTP_OK)) {
-            $response->assertSeeText('since 1904');
+            $response->assertSeeText('Our Affiliations');
         }
     }
 
@@ -40,17 +40,18 @@ class PublicUserTest extends TestCase
     {
         $response = $this->get('/page/links');
         $response->assertSeeText('Union Links');
-
     }
 
     public function testOrganizations()
     {
         $response = $this->get('/organizations');
         $response->assertSeeText('Where we work');
+    }
 
+    public function testOrganizationPage()
+    {
         $response = $this->get('/organization/vancouver-symphony-orchestra');
         $response->assertSeeText('Vancouver Symphony Orchestra');
-
     }
 
     public function testVenues()
@@ -85,24 +86,30 @@ class PublicUserTest extends TestCase
         }
     }
 
-
     public function testBylaws()
     {
         $response = $this->get('/bylaws');
-        $response->assertSeeText('1 Bylaw Document');
+        $response->assertSeeText('Constitution');
 
-        $response = $this->get('/bylaw/1');
+        $response = $this->get('/bylaw/50');
         echo "\n Response Status: " . $response->status() . "\n";
-        $response->assertSeeText('Constitution and By-Laws October 23th, 2019');
+        $response->assertSeeText('Constitution and By-Laws of IATSE Local 118 - December 21st, 2021');
     }
 
-    public function testBylawDownload()
+    public function testBylawsPage()
     {
-        $response = $this->get('/bylaws/download/398');
+        $response = $this->get('/bylaw/50');
+        echo "\n Response Status: " . $response->status() . "\n";
+        $response->assertSeeText('Constitution and By-Laws of IATSE Local 118 - December 21st, 2021');
+    }
+
+    public function testBylawSinglePageDownload()
+    {
+        $response = $this->get('/bylaws/download/1356');
 
         $header = $response->headers->get('content-disposition');
 
-        $this->assertEquals($header, 'inline; filename="Constitution and By-Laws October 23, 2019.pdf"');
+        $this->assertEquals($header, 'inline; filename="Constitution and By-Laws December 21, 2021.pdf"');
 
         /**
         $response->assertContains('attachment', (string)$response);
