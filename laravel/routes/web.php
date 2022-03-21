@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route; //Controller Name Space
 /**
  * PUBLIC ACCESS
  */
-Route::group(['middleware' => ['web']], function () {
+Route::middleware('web')->group(function () {
     Auth::routes(['verify' => true, 'register' => false, 'reset' => true, 'login' => true]);
 
     Route::get('/', [CNS\HelloController::class, 'index'])->name('hello');
@@ -67,7 +67,7 @@ Route::group(['middleware' => ['web']], function () {
 /**
  * MEMBERS LOGGED IN
  */
-Route::group(['middleware' =>  ['web', 'auth']], function () {
+Route::middleware('web', 'auth')->group(function () {
     Route::get('/site', [CNS\SiteController::class, 'index'])->name('landing_page');
 
     Route::get('/home', [CNS\HomeController::class, 'index'])->name('home'); // redirects to home page
@@ -141,7 +141,7 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
 /**
  * ADMIN SECTION
  */
-Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {
+Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->group(function () {
     Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
     Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');
     Route::get('/developer', [CNS\AdminController::class, 'developer'])->name('developer');
