@@ -28,8 +28,8 @@ class UserSeeder extends Seeder
             $date = date('Y-m-d H:i:s');
 
             DB::table('users')->insert([
-                'name' => $faker->name,
-                'email' => $faker->unique()->safeEmail,
+                'name' => $faker->name(),
+                'email' => $faker->unique()->safeEmail(),
                 'email_verified_at' => $date,
                 'password' => bcrypt('secret'),
                 'created_at' => $date,
@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
 
             DB::table('phone_numbers')->insert([
                 'user_id' => $userId,
-                'phone_number' => $faker->phoneNumber,
+                'phone_number' => $faker->phoneNumber(),
                 'label' => 'mobile',
                 'primary' => 1,
                 'created_at' => $date,
@@ -49,8 +49,8 @@ class UserSeeder extends Seeder
 
             DB::table('users_info')->insert([
                 'user_id' => $userId,
-                'share_email' => $faker->boolean,
-                'share_phone' => $faker->boolean,
+                'share_email' => $faker->boolean(),
+                'share_phone' => $faker->boolean(),
                 'image' => '',
                 'about' => $faker->text(1000),
             ]);
@@ -58,10 +58,10 @@ class UserSeeder extends Seeder
             DB::table('addresses')->insert([
                 'user_id' => $userId,
                 'unit' => $faker->numberBetween(1, 55),
-                'street' => $faker->streetAddress,
-                'city' => $faker->city,
+                'street' => $faker->streetAddress(),
+                'city' => $faker->city(),
                 'province' => 'BC',
-                'postal_code' => $faker->postcode,
+                'postal_code' => $faker->postcode(),
                 'country' => 'Canada',
                 'created_at' => $date,
                 'updated_at' => $date,
