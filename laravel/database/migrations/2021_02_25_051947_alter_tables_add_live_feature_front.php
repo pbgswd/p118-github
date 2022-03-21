@@ -28,7 +28,6 @@ class AlterTablesAddLiveFeatureFront extends Migration
             $table->dropColumn('description');
             $table->dropColumn('sort_order');
         });
-
     }
 
     /**

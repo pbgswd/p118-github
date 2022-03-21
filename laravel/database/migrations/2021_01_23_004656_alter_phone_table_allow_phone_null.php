@@ -28,6 +28,5 @@ class AlterPhoneTableAllowPhoneNull extends Migration
         Schema::table('phone_numbers', function (Blueprint $table) {
             $table->string('phone_number', 20)->change();
         });
-
     }
 }

@@ -33,8 +33,4 @@ class PageProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('page_show', $row['slug']);
     }
-
 }
-
-
-

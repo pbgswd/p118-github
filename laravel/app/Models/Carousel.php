@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 
-
 class Carousel extends LiveableModel implements HasAttachment
 {
     use Sortable;
@@ -66,9 +65,6 @@ class Carousel extends LiveableModel implements HasAttachment
         'live' => 'boolean',
     ];
 
-
-
-
     /**
      * @return HasOne
      */
@@ -76,7 +72,6 @@ class Carousel extends LiveableModel implements HasAttachment
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
-
 
     /**
      * @return BelongsToMany
@@ -103,5 +98,4 @@ class Carousel extends LiveableModel implements HasAttachment
     {
         return AccessLevelConstants::MEMBERS;
     }
-
 }

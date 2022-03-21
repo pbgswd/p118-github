@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-
 class Proofreader extends Model
 {
-
     protected $table = 'proofreader';
 
     /**
@@ -18,5 +16,4 @@ class Proofreader extends Model
     {
         return $this->belongsTo(User::class);
     }
-
 }

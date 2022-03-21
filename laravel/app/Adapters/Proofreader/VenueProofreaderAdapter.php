@@ -33,8 +33,4 @@ class VenueProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('venue', $row['slug']);
     }
-
 }
-
-
-

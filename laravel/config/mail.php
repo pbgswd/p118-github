@@ -68,7 +68,7 @@ return [
     'office_admin' => [
         'address' => 'admin@iatse118.com',
         'name' => 'IATSE 118 Administrator',
-        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------

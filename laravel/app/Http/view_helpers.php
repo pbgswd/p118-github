@@ -50,7 +50,6 @@ if (! function_exists('select_options')) {
      */
     function select_options(array $data, $selected = null, $attributes = true, $required = null)
     {
-
         $placeholder = null;
         if ($attributes === false) {
             $result = '';

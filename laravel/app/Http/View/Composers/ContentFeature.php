@@ -23,19 +23,18 @@ class ContentFeature
      */
     public function compose(View $view)
     {
-
-        $topics = Topic::where([['live', 1],['landing_page', 1]])
+        $topics = Topic::where([['live', 1], ['landing_page', 1]])
             ->orderBy('sort_order', 'desc')
             ->get();
-        $posts = Post::where([['live', 1],['landing_page', 1]])
+        $posts = Post::where([['live', 1], ['landing_page', 1]])
             ->orderBy('updated_at', 'desc')
             ->with('topics')
             ->get();
-        $pages = Page::where([['live', 1],['landing_page', 1]])
+        $pages = Page::where([['live', 1], ['landing_page', 1]])
             ->orderBy('updated_at', 'desc')
             ->with('topics')
             ->get();
-        $features = Feature::where([['live', 1],['landing_page', 1],['date', '<', NOW()]])
+        $features = Feature::where([['live', 1], ['landing_page', 1], ['date', '<', NOW()]])
             ->orderBy('date', 'desc')
             ->get();
 
@@ -44,8 +43,8 @@ class ContentFeature
         $user = Auth::user();
         $user->load('user_info');
 
-        if($user->user_info->image){
-            $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info->image ?? '';
+        if ($user->user_info->image) {
+            $user->user_info->thumb = Options::member_thumb_values()['tn_str'].$user->user_info->image ?? '';
         }
 
         $data = [
@@ -54,7 +53,7 @@ class ContentFeature
             'pages' => $pages,
             'features' => $features,
             'user' => $user,
-            ];
+        ];
 
         $view->with('data', $data);
     }

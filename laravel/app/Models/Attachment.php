@@ -94,10 +94,10 @@ class Attachment extends Model implements Searchable
      */
     public function setCalculatedProperties(): self
     {
-        $this->path_info = \pathinfo(\storage_path('app/'.$this->subfolder) . '/' . $this->file);
+        $this->path_info = \pathinfo(\storage_path('app/'.$this->subfolder).'/'.$this->file);
         $this->extension = $this->path_info['extension'];
-        $this->imagedata = \getimagesize(\storage_path('app/'.$this->subfolder) . '/' . $this->file);
-        $this->filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/'.$this->subfolder) . '/' .
+        $this->imagedata = \getimagesize(\storage_path('app/'.$this->subfolder).'/'.$this->file);
+        $this->filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/'.$this->subfolder).'/'.
             $this->file));
 
         return $this;

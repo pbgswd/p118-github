@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-
 class AdminPostController extends Controller
 {
     /**
@@ -128,7 +127,7 @@ class AdminPostController extends Controller
                 AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             'model_name' => 'post',
-            ];
+        ];
 
         return view('admin.post', ['data' => $data]);
     }

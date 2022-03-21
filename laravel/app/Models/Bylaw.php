@@ -34,7 +34,7 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
 
     protected $policies = [
         self::class => BylawPolicy::class,
-        ];
+    ];
 
     /**
      * The attributes that are mass assignable.

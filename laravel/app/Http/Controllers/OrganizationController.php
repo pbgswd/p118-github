@@ -31,16 +31,15 @@ class OrganizationController extends Controller
     public function show(Organization $organization): View
     {
         if ($organization['image']) {
-            if (file_exists(storage_path() . '/app/public/' . $organization['image'])) {
-
-                if (!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
+            if (file_exists(storage_path().'/app/public/'.$organization['image'])) {
+                if (! file_exists(storage_path().'/app/public/'.Options::venue_org_thumb_values()['tn_str'].
                     $organization['image'])) {
                     $this->userImageService->generate_thumb($organization['image'], 'public',
                         Options::venue_org_thumb_values());
                 }
             }
         }
-        $organization->thumb = Options::venue_org_thumb_values()['tn_str'] . $organization['image'] ? : '';
+        $organization->thumb = Options::venue_org_thumb_values()['tn_str'].$organization['image'] ?: '';
         $organization->load('attachments');
 
         $data = [

@@ -14,7 +14,7 @@ class PolicyController extends Controller
     {
         //$this->authorize('viewAny', Auth::user());
         $data = [];
-        $data['policies'] = Policy::where('live',1)
+        $data['policies'] = Policy::where('live', 1)
             ->sortable()
             ->with('attachments')
             ->orderBy('date', 'desc')

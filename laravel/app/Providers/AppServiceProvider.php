@@ -42,6 +42,5 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('page_parts.topics', 'App\Http\View\Composers\ViewComposers@topics');
         view()->composer('admin.admin_topics_menu', 'App\Http\View\Composers\ViewComposers@adminTopicsMenu');
          */
-        
     }
 }

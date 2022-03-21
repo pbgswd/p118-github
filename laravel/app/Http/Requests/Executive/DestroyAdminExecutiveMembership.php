@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class DestroyAdminExecutiveMembership extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,7 +24,7 @@ class DestroyAdminExecutiveMembership extends FormRequest
     public function rules()
     {
         return [
-           'id' => 'required|exists:executive_user',
+            'id' => 'required|exists:executive_user',
         ];
     }
 }

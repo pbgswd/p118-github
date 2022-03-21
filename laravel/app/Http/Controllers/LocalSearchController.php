@@ -60,8 +60,8 @@ class LocalSearchController extends Controller
                 ->search($request->search),
         ];
 
-//dd(class_basename($data['results'][0]->searchable));
-//dd($data['results'][0]->searchable);
+        //dd(class_basename($data['results'][0]->searchable));
+        //dd($data['results'][0]->searchable);
         /*
          * https://laraveldaily.com/new-package-laravel-searchable-easily-search-in-multiple-models/
          * https://packagist.org/packages/spatie/laravel-searchable

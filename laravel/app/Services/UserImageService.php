@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use Illuminate\Support\Facades\Storage;
@@ -12,13 +11,13 @@ class UserImageService
 {
     public function storeImage($request, string $dir, bool $make_thumb, array $thumb_values): array
     {
-        $directory = '/app/' . $dir . '/';
-        $image ='';
+        $directory = '/app/'.$dir.'/';
+        $image = '';
 
         if (null !== $request->file('image')) {
             $image = $request->file('image')->store('', $dir);
-            ImageOptimizer::optimize(storage_path() . $directory . $image);
-            if($make_thumb) {
+            ImageOptimizer::optimize(storage_path().$directory.$image);
+            if ($make_thumb) {
                 $result = $this->generate_thumb($image, $dir, $thumb_values);
             }
             $file_name = $request->image->getClientOriginalName();
@@ -43,7 +42,7 @@ class UserImageService
     {
 
         /** @var TYPE_NAME $directory */
-        $directory = '/app/' . $dir . '/';
+        $directory = '/app/'.$dir.'/';
 
         if (null !== $request->file('image')) {
             /**
@@ -51,9 +50,9 @@ class UserImageService
              */
             $image = $request->file('image')->store('', $dir);
 
-            ImageOptimizer::optimize(storage_path() . $directory . $image);
+            ImageOptimizer::optimize(storage_path().$directory.$image);
 
-            if($make_thumb) {
+            if ($make_thumb) {
                 $result = $this->generate_thumb($image, $dir, $thumb_values);
             }
             $file_name = $request->image->getClientOriginalName();
@@ -73,18 +72,18 @@ class UserImageService
      * @return string
      * @throws InvalidManipulation
      */
-    public function generate_thumb($image, $dir, $thumb_values ): string
+    public function generate_thumb($image, $dir, $thumb_values): string
     {
-        $directory = '/app/' . $dir . '/';
+        $directory = '/app/'.$dir.'/';
         $w = $thumb_values['width'];
         $h = $thumb_values['height'];
 
-        Image::load(storage_path() . $directory . $image)
+        Image::load(storage_path().$directory.$image)
             ->width($w)
             ->height($h)
-            ->save(storage_path() . $directory . $thumb_values['tn_str'] . $image);
+            ->save(storage_path().$directory.$thumb_values['tn_str'].$image);
 
-        return $thumb_values['tn_str'] . $image;
+        return $thumb_values['tn_str'].$image;
     }
 
     /**
@@ -96,7 +95,8 @@ class UserImageService
     public function destroyImage(string $image, string $dir, array $thumb_values): bool
     {
         Storage::disk($dir)->delete($image);
-        Storage::disk($dir)->delete($thumb_values['tn_str'] . $image);
+        Storage::disk($dir)->delete($thumb_values['tn_str'].$image);
+
         return true;
     }
 }

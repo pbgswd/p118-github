@@ -14,7 +14,7 @@ class AlterTopicsTableStickies extends Migration
     public function up()
     {
         // in_menu allow-comments to front_page landing_page
-        Schema::table('topics', function(Blueprint $table) {
+        Schema::table('topics', function (Blueprint $table) {
             $table->renameColumn('in_menu', 'front_page');
             $table->renameColumn('allow_comments', 'landing_page');
         });
@@ -28,9 +28,9 @@ class AlterTopicsTableStickies extends Migration
     public function down()
     {
         //front_page landing_page to in_menu allow-comments
-        Schema::table('topics', function(Blueprint $table) {
+        Schema::table('topics', function (Blueprint $table) {
             $table->renameColumn('front_page', 'in_menu');
-            $table->renameColumn('landing_page','allow_comments');
+            $table->renameColumn('landing_page', 'allow_comments');
         });
     }
 }

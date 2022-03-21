@@ -71,5 +71,4 @@ class CommitteePostPolicy
             ($user->hasAnyRole(['super-admin']) ||
                 $user->hasPermissionTo('create committee'));
     }
-
 }

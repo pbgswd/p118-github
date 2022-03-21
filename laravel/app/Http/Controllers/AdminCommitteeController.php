@@ -20,7 +20,6 @@ use Illuminate\View\View;
 
 class AdminCommitteeController extends Controller
 {
-
     /**
      * @return View
      * @throws AuthorizationException
@@ -70,7 +69,7 @@ class AdminCommitteeController extends Controller
         $committee = new Committee($request->input('committee'));
         $committee->user_id = Auth::id();
 
-        if (!is_null($request->file('committee.image'))) {
+        if (! is_null($request->file('committee.image'))) {
             $committee['image'] = $this->uploadImage($request);
             $committee['file_name'] = $request->file('committee.image')->getClientOriginalName();
         }
@@ -137,11 +136,11 @@ class AdminCommitteeController extends Controller
 
         $file_info = null;
 
-        if(null !== $any_committee['image']) {
-            $file_info['file_size'] = AttachmentService::human_filesize(\filesize(\storage_path('app/committees' .
-                '/' . $any_committee['image'])));
+        if (null !== $any_committee['image']) {
+            $file_info['file_size'] = AttachmentService::human_filesize(\filesize(\storage_path('app/committees'.
+                '/'.$any_committee['image'])));
 
-            $file_info['dimensions'] = \getimagesize(\storage_path('app/committees') . '/' .
+            $file_info['dimensions'] = \getimagesize(\storage_path('app/committees').'/'.
                 $any_committee['image']);
         }
 
@@ -174,7 +173,7 @@ class AdminCommitteeController extends Controller
             $any_committee['image'] = null;
             $any_committee['file_name'] = null;
         } else {
-            if (!is_null($request->file('committee.image'))) {
+            if (! is_null($request->file('committee.image'))) {
                 $any_committee['image'] = $this->uploadImage($request);
                 $any_committee['file_name'] = $request->file('committee.image')->getClientOriginalName();
             }

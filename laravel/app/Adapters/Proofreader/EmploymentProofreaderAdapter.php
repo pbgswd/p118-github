@@ -33,8 +33,4 @@ class EmploymentProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('job_view', $row['id']);
     }
-
 }
-
-
-

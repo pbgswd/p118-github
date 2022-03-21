@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 class ModelList
 {
     /**
@@ -12,6 +11,7 @@ class ModelList
     public function getModelInfo(string $model): array
     {
         $arr = $this->getModelList();
+
         return $arr[$model];
     }
 

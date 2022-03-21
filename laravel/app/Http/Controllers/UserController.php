@@ -19,13 +19,13 @@ use App\Services\EmailMemberUpdateService;
 use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\Permission\Models\Role;
-use Illuminate\Http\Request;
 
 /**
  * Class UserController.
@@ -37,6 +37,7 @@ class UserController extends Controller
      * @var UserImageService
      */
     private $emailMemberUpdateService;
+
     /**
      * @var UserImageService
      */
@@ -83,17 +84,17 @@ class UserController extends Controller
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
 
-        $folder =  $user->getAttachmentFolder();
+        $folder = $user->getAttachmentFolder();
         $tn_prefix = Options::member_thumb_values()['tn_str'];
 
-        if($user->user_info['image']) {
-            if(file_exists(storage_path() . '/app/'. $folder .'/'. $user->user_info['image'])) {
-                if(!file_exists(storage_path() . '/app/'. $folder .'/'. $tn_prefix . $user->user_info['image'])) {
+        if ($user->user_info['image']) {
+            if (file_exists(storage_path().'/app/'.$folder.'/'.$user->user_info['image'])) {
+                if (! file_exists(storage_path().'/app/'.$folder.'/'.$tn_prefix.$user->user_info['image'])) {
                     $service->generate_thumb($user->user_info['image'], $folder,
                         Options::member_thumb_values());
                 }
             }
-            $user->user_info->thumb = $tn_prefix . $user->user_info['image'];
+            $user->user_info->thumb = $tn_prefix.$user->user_info['image'];
         }
 
         $data = [
@@ -118,21 +119,21 @@ class UserController extends Controller
 
         $user->load('phone_number', 'user_info', 'membership', 'committee_memberships', 'allExecutiveRoles');
 
-        if($user->user_info) {
-            if($user->user_info['image']) {
-                if(file_exists(storage_path() . '/app/users/' . $user->user_info['image'])) {
+        if ($user->user_info) {
+            if ($user->user_info['image']) {
+                if (file_exists(storage_path().'/app/users/'.$user->user_info['image'])) {
                     $filesize = AttachmentService::human_filesize(
-                        \filesize(\storage_path('app/users' . '/' . $user->user_info->image))) ? : null;
+                        \filesize(\storage_path('app/users'.'/'.$user->user_info->image))) ?: null;
 
-                    if(!file_exists(storage_path() . '/app/users/' . Options::member_thumb_values()['tn_str'] .
+                    if (! file_exists(storage_path().'/app/users/'.Options::member_thumb_values()['tn_str'].
                         $user->user_info['image'])) {
                         $this->userImageService->generate_thumb($user->user_info['image'], 'users',
                             Options::member_thumb_values());
                     }
                 }
-                $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info['image'];
+                $user->user_info->thumb = Options::member_thumb_values()['tn_str'].$user->user_info['image'];
                 $user->user_info->thumb_size = AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/users' . '/' . $user->user_info->thumb))) ? : null;
+                    \filesize(\storage_path('app/users'.'/'.$user->user_info->thumb))) ?: null;
             }
         }
 
@@ -180,9 +181,8 @@ class UserController extends Controller
 
             $execEmails = Executive::pluck('email')->toArray();
 
-            if(in_array($userRequest->user['email'], $execEmails))
-            {
-               // dd('user wants to change email to '. $userRequest->user['email']);
+            if (in_array($userRequest->user['email'], $execEmails)) {
+                // dd('user wants to change email to '. $userRequest->user['email']);
 
                 /**
                  * if user already has an exec email associated with him
@@ -199,9 +199,9 @@ class UserController extends Controller
         $user->save();
         $user->touch();
 
-        if($userRequest->user_phone['phone_number'] != '') {
+        if ($userRequest->user_phone['phone_number'] != '') {
             $userRequest->validate([
-                'user_phone.phone_number' => [new Phone()]
+                'user_phone.phone_number' => [new Phone()],
             ]);
         }
 
@@ -222,30 +222,28 @@ class UserController extends Controller
                 ? $user_phone_info['phone_number'] : 'number deleted';
         }
 
-        $folder =  $user-> getAttachmentFolder();
+        $folder = $user->getAttachmentFolder();
         $thumb_vals = Options::member_thumb_values();
 
         if ($user->user_info instanceof UserInfo) {
             $user_info = $userRequest['user_info'];
             if (isset($user_info['delete_image'])) {
-                if(file_exists(storage_path() .'/app/'. $folder .'/'. $user_info['image'])) {
+                if (file_exists(storage_path().'/app/'.$folder.'/'.$user_info['image'])) {
+                    $service->destroyImage($user_info['image'], $folder, $thumb_vals);
 
-                    $service->destroyImage($user_info['image'], $folder, $thumb_vals );
-
-                    Session::flash('info', 'You have deleted ' . $user_info['file_name']);
+                    Session::flash('info', 'You have deleted '.$user_info['file_name']);
 
                     $user_info['image'] = null;
                     $user_info['file_name'] = null;
                 }
             } else {
-                if (!is_null($userRequest->file('image'))) {
-
+                if (! is_null($userRequest->file('image'))) {
                     $result = $service->updateImage($userRequest, $folder, true, $thumb_vals);
 
                     $user_info['image'] = $result['image'];
                     $user_info['file_name'] = $result['file_name'];
 
-                    if(!file_exists(storage_path() . '/app/'. $folder .'/'. $thumb_vals['tn_str'] .
+                    if (! file_exists(storage_path().'/app/'.$folder.'/'.$thumb_vals['tn_str'].
                         $user_info['image'])) {
                         $service->generate_thumb($user_info['image'], $folder, $thumb_vals);
                     }
@@ -262,15 +260,14 @@ class UserController extends Controller
 
             $user->user_info()->save($user_info);
 
-            if(!file_exists(storage_path() . '/app/'. $folder .'/'. $thumb_vals['tn_str']
-                . $user->user_info['image'])) {
+            if (! file_exists(storage_path().'/app/'.$folder.'/'.$thumb_vals['tn_str']
+                .$user->user_info['image'])) {
                 $service->generate_thumb($user->user_info['image'], $folder, $thumb_vals);
             }
         }
 
-        if (!empty($message)) {
-
-            Log::debug($user->name . ' updated their profile, sending email at  ' . date('Y-m-d H:i:s'));
+        if (! empty($message)) {
+            Log::debug($user->name.' updated their profile, sending email at  '.date('Y-m-d H:i:s'));
 
             $message['email'] = $user->email;
             $message['name'] = $user->name;
@@ -316,8 +313,7 @@ class UserController extends Controller
        UpdateMemberAddress $userRequest,
        EmailMemberUpdateAddressService $service,
        User $user
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $this->authorize('update', $user);
         $message = [];
 
@@ -345,7 +341,7 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        $data['action'] = "Edit";
+        $data['action'] = 'Edit';
         $data['user'] = $user;
 
         return view('member_password_edit', ['data' => $data]);
@@ -358,7 +354,7 @@ class UserController extends Controller
         $user->fill(['password' => bcrypt($request->password)]);
         $user->save();
 
-        Log::debug($user->name . ' updated their password at  ' . date('Y-m-d H:i:s'));
+        Log::debug($user->name.' updated their password at  '.date('Y-m-d H:i:s'));
 
         Session::flash('success', 'Your password has been updated.');
 
@@ -396,14 +392,13 @@ class UserController extends Controller
         UpdateMemberEmergencyContact $userRequest,
         EmailMemberUpdateAddressService $service,
         User $user
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $this->authorize('update', $user);
 
         $userRequest->validate([
             'emergency_contact_phone' => ['required',
-                new Phone()
-            ]
+                new Phone(),
+            ],
         ]);
 
         $message = [];
@@ -424,6 +419,4 @@ class UserController extends Controller
 
         return redirect()->route('edit_emergency_contact', $user->id);
     }
-
-
 }

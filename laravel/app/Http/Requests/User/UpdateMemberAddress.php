@@ -30,6 +30,6 @@ class UpdateMemberAddress extends FormRequest
             'city'=> 'max:255|required',
             'province'=> 'max:255|required',
             'postal_code'=> 'max:255|required',
-         ];
+        ];
     }
 }

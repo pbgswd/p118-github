@@ -83,19 +83,18 @@ class AdminAgreementController extends Controller
 
         $agreement->save();
 
-        if(isset($request->agreement['client'])) {
-            foreach($request->agreement['client'] as $client)
-            {
-                list($client_type, $client_id) = explode(" ", $client);
+        if (isset($request->agreement['client'])) {
+            foreach ($request->agreement['client'] as $client) {
+                list($client_type, $client_id) = explode(' ', $client);
 
-                Log::debug("\n" . "Client type: ". $client_type . "\n");
-                Log::debug("\n" . "Client id: ". $client_id . "\n");
+                Log::debug("\n".'Client type: '.$client_type."\n");
+                Log::debug("\n".'Client id: '.$client_id."\n");
 
-                if($client_type === 'organization') {
+                if ($client_type === 'organization') {
                     $agreement->organizations()->attach($client_id);
                 }
 
-                if($client_type === 'venue') {
+                if ($client_type === 'venue') {
                     $agreement->venues()->attach($client_id);
                 }
             }
@@ -129,14 +128,12 @@ class AdminAgreementController extends Controller
         $agreement->load('user', 'attachments', 'organizations', 'venues');
 
         $ass_orgs = [];
-        foreach($agreement['organizations']->toArray() as $aa)
-        {
+        foreach ($agreement['organizations']->toArray() as $aa) {
             $ass_orgs[] = $aa['id'];
         }
 
         $ass_venues = [];
-        foreach($agreement['venues']->toArray() as $vv)
-        {
+        foreach ($agreement['venues']->toArray() as $vv) {
             $ass_venues[] = $vv['id'];
         }
 
@@ -170,16 +167,15 @@ class AdminAgreementController extends Controller
         $any_agreement->organizations()->detach();
         $any_agreement->venues()->detach();
 
-        if(isset($request->agreement['client'])) {
-            foreach($request->agreement['client'] as $client)
-            {
-                list($client_type, $client_id) = explode(" ", $client);
+        if (isset($request->agreement['client'])) {
+            foreach ($request->agreement['client'] as $client) {
+                list($client_type, $client_id) = explode(' ', $client);
 
-                if($client_type === 'organization') {
+                if ($client_type === 'organization') {
                     $any_agreement->organizations()->attach($client_id);
                 }
 
-                if($client_type === 'venue') {
+                if ($client_type === 'venue') {
                     $any_agreement->venues()->attach($client_id);
                 }
             }

@@ -31,7 +31,7 @@ class PostController extends Controller
     public function list(Request $request): View
     {
         if (Auth::check()) {
-            $posts = Post::where('live',1)
+            $posts = Post::where('live', 1)
             ->with('topics')
             ->paginate(9);
         } else {
@@ -50,7 +50,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-       // $this->authorize('view', Post::class);
+        // $this->authorize('view', Post::class);
 
         if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this post.');

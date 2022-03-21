@@ -23,7 +23,6 @@ class AdminFeatureController extends Controller
     /** @var AttachmentService */
     private $attachmentService;
 
-
     public function __construct(AttachmentService $attachmentService)
     {
         //todo not using attachment service
@@ -86,7 +85,6 @@ class AdminFeatureController extends Controller
         $feature = new Feature($request->input('feature'));
 
         if (null !== $request->file('image')) {
-
             $file = $request->file('image')->store('', 'public');
 
             $result = $service->updateImage($request, 'public', true, Options::feature_thumb_values());
@@ -102,7 +100,6 @@ class AdminFeatureController extends Controller
         return redirect()->route('admin_feature_edit', [$feature->slug]);
     }
 
-
     /**
      * @param Feature $feature
      * @param UserImageService $service
@@ -114,25 +111,22 @@ class AdminFeatureController extends Controller
     {
         $this->authorize('update', Feature::class);
 
-        if($feature['image']) {
-
+        if ($feature['image']) {
             $tn_str = Options::feature_thumb_values()['tn_str'];
-            if(file_exists(storage_path() . '/app/public/' . $feature['image'])) {
-
+            if (file_exists(storage_path().'/app/public/'.$feature['image'])) {
                 $feature->filesize = AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/public/' . $feature->image))) ? : null;
+                    \filesize(\storage_path('app/public/'.$feature->image))) ?: null;
 
-                if( !file_exists(storage_path() . '/app/public/' . $tn_str . $feature['image']) ) {
+                if (! file_exists(storage_path().'/app/public/'.$tn_str.$feature['image'])) {
                     $service->generate_thumb($feature['image'], 'public',
                         Options::feature_thumb_values());
-
                 }
             }
 
-            $feature->thumb = $tn_str . $feature['image'];
+            $feature->thumb = $tn_str.$feature['image'];
 
             $feature->thumb_size = AttachmentService::human_filesize(
-                \filesize(\storage_path('app/public/' . $feature->thumb))) ? : null;
+                \filesize(\storage_path('app/public/'.$feature->thumb))) ?: null;
         }
 
         $data = [
@@ -160,17 +154,15 @@ class AdminFeatureController extends Controller
         $any_feature->fill($request->input('feature'));
 
         if (isset($request['delete_image'])) {
-            if (file_exists(storage_path() . '/app/public/' . $any_feature['image'])) {
-
+            if (file_exists(storage_path().'/app/public/'.$any_feature['image'])) {
                 $service->destroyImage($any_feature['image'], 'public', Options::feature_thumb_values());
 
-                Session::flash('info', 'You have deleted ' . $any_feature['file_name']);
+                Session::flash('info', 'You have deleted '.$any_feature['file_name']);
                 $any_feature['image'] = null;
                 $any_feature['file_name'] = null;
             }
         }
         if (null !== $request->file('image')) {
-
             $file = $request->file('image')->store('', 'public');
 
             $result = $service->updateImage($request, 'public', true, Options::feature_thumb_values());
@@ -184,7 +176,6 @@ class AdminFeatureController extends Controller
         Session::flash('success', 'You have edited the Feature');
 
         return redirect()->route('admin_feature_edit', [$any_feature->slug]);
-
     }
 
     /**
@@ -204,10 +195,11 @@ class AdminFeatureController extends Controller
                     Storage::disk('public')->delete(Options::feature_thumb_values()['tn_str'].$feature['image']);
                 }
 
-              $feature->delete();
+                $feature->delete();
             });
 
         Session::flash('success', 'You have deleted the Feature');
+
         return redirect()->route('admin_features_list');
     }
 }

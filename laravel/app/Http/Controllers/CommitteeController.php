@@ -17,7 +17,7 @@ class CommitteeController extends Controller
     public function index(): View
     {
         $c = Committee::with('creator', 'active_committee_members')
-            ->where('live',1)
+            ->where('live', 1)
             ->sortable()
             ->paginate(10);
 

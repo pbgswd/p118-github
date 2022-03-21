@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers as CNS;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers as CNS; //Controller Name Space
+use Illuminate\Support\Facades\Route; //Controller Name Space
 
 /*
 |--------------------------------------------------------------------------
@@ -126,8 +126,8 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::delete('committee/{committee}/post/{committeePost}/destroy', [CNS\CommitteePostController::class, 'destroy'])
         ->name('public_committee_post_destroy');
 
-//Route::post('committee/{committee}/post/{committeePost}/comment/create',
-// [CNS\CommitteePostCommentController::class, 'store'])
+    //Route::post('committee/{committee}/post/{committeePost}/comment/create',
+    // [CNS\CommitteePostCommentController::class, 'store'])
 //    ->name('public_committee_post_comment');
 
     Route::post('minutes', [CNS\MeetingController::class, 'post_year'])->name('post_year');
@@ -136,15 +136,12 @@ Route::group(['middleware' =>  ['web', 'auth']], function () {
     Route::get('minutes/{meeting}', [CNS\MeetingController::class, 'show'])->name('meeting');
 
     Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
-
 });
-
 
 /**
  * ADMIN SECTION
  */
 Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|committee|writer']], function () {
-
     Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
     Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');
     Route::get('/developer', [CNS\AdminController::class, 'developer'])->name('developer');
@@ -223,7 +220,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:super-admin|office|com
     Route::get('/invite-new-user', [CNS\InviteUserController::class, 'create'])->name('invite-new-user');
     Route::post('/invite-new-user', [CNS\InviteUserController::class, 'store']);
     Route::post('/invite_user', [CNS\InviteUserController::class, 'send']);
-    Route::get('/invited_users', [CNS\InviteUserController::class, 'index'])->name('admin_list_invited_users');   
+    Route::get('/invited_users', [CNS\InviteUserController::class, 'index'])->name('admin_list_invited_users');
     Route::get('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'show'])->name('show_invited_user');
     Route::get('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'edit'])->name('invited_user_edit');
     //Route::get('/invitation-mailmsg',[CNS\InviteUserController::class, 'mail'])->name('mail_invited_user');

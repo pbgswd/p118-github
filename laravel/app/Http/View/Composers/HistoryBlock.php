@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\View\Composers;
-
 
 use Carbon\Carbon;
 use Illuminate\View\View;
@@ -18,7 +16,7 @@ class HistoryBlock
         $data['birthday'] = '';
 
         if ((Carbon::today()->isBirthday($data['foundingDate']))) {
-            $data['birthday'] = 'Happy Birthday IATSE Local 118! You are ' . $data['years'] .
+            $data['birthday'] = 'Happy Birthday IATSE Local 118! You are '.$data['years'].
                 ' years young today!';
         }
 

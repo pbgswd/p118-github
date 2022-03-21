@@ -35,6 +35,7 @@ class StoreMemoriamRequest extends FormRequest
             'memoriam.date' => 'date',
         ];
     }
+
     protected function modifyInput(): void
     {
         $memoriam = \array_merge(

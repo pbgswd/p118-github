@@ -30,7 +30,7 @@ class FeaturePolicy
      */
     public function view(User $user, Feature $Feature)
     {
-       //
+        //
     }
 
     /**

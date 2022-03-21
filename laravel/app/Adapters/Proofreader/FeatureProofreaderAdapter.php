@@ -33,8 +33,4 @@ class FeatureProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('feature', $row['slug']);
     }
-
 }
-
-
-

@@ -29,22 +29,20 @@ class MemoriamController extends Controller
         return view('memoriams', ['data' => $data]);
     }
 
-
     /**
      * @param Memoriam $memoriam
      * @return View
      */
     public function show(Memoriam $memoriam): View
     {
-         $folder = $memoriam->getAttachmentFolder();
+        $folder = $memoriam->getAttachmentFolder();
 
-         $data = [
-             'memoriam' => $memoriam,
-             'folder' => $folder,
-             'tn_prefix' => Options::memoriam_thumb_values()['tn_str'],
-         ];
+        $data = [
+            'memoriam' => $memoriam,
+            'folder' => $folder,
+            'tn_prefix' => Options::memoriam_thumb_values()['tn_str'],
+        ];
 
         return view('memoriam', ['data' => $data]);
     }
-
 }

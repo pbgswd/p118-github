@@ -49,7 +49,6 @@ class EmploymentController extends Controller
         return view('employment_list', ['data' => $data]);
     }
 
-
     /**
      * @param $year
      * @return View
@@ -67,7 +66,7 @@ class EmploymentController extends Controller
             ->orderBy('deadline', 'asc')
             ->paginate(10);
 
-        $jobs_count =  Employment::where('live', '=', 1)
+        $jobs_count = Employment::where('live', '=', 1)
             ->whereBetween('deadline', [$year.'-01-01', $year.'-12-31'])->get();
 
         foreach ($jobs as $job) {

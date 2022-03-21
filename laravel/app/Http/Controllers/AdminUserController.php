@@ -175,21 +175,21 @@ class AdminUserController extends Controller
                     'membership'
                     );
 
-        if($user->user_info) {
-            if($user->user_info['image']) {
-                if(file_exists(storage_path() . '/app/users/' . $user->user_info['image'])) {
+        if ($user->user_info) {
+            if ($user->user_info['image']) {
+                if (file_exists(storage_path().'/app/users/'.$user->user_info['image'])) {
                     $filesize = AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/users' . '/' . $user->user_info->image))) ? : null;
+                    \filesize(\storage_path('app/users'.'/'.$user->user_info->image))) ?: null;
 
-                    if(!file_exists(storage_path() . '/app/users/' . Options::thumb_values()['tn_str'] .
+                    if (! file_exists(storage_path().'/app/users/'.Options::thumb_values()['tn_str'].
                         $user->user_info['image'])) {
-                            $this->userImageService->generate_thumb($user->user_info['image'], 'users',
+                        $this->userImageService->generate_thumb($user->user_info['image'], 'users',
                                 Options::member_thumb_values());
                     }
                 }
-                $user->user_info->thumb = Options::member_thumb_values()['tn_str'] . $user->user_info['image'];
+                $user->user_info->thumb = Options::member_thumb_values()['tn_str'].$user->user_info['image'];
                 $user->user_info->thumb_size = AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/users' . '/' . $user->user_info->thumb))) ? : null;
+                    \filesize(\storage_path('app/users'.'/'.$user->user_info->thumb))) ?: null;
             }
         }
 
@@ -253,22 +253,19 @@ class AdminUserController extends Controller
             $user_info = $request['user_info'];
 
             if (isset($user_info['delete_image'])) {
-                if(file_exists(storage_path() . '/app/users/' . $user_info['image'])) {
-
+                if (file_exists(storage_path().'/app/users/'.$user_info['image'])) {
                     $this->userImageService->destroyImage($user_info['image'], 'users', Options::thumb_values());
 
-                    Session::flash('info', 'You have deleted ' . $user_info['file_name']);
+                    Session::flash('info', 'You have deleted '.$user_info['file_name']);
                     $user_info['image'] = null;
                     $user_info['file_name'] = null;
                 }
             } else {
-                if (!is_null($request->file('image'))) {
-
+                if (! is_null($request->file('image'))) {
                     $result = $this->userImageService->updateImage($request, 'users', true);
 
                     $user_info['image'] = $result['image'];
                     $user_info['file_name'] = $result['file_name'];
-
                 }
             }
             $user->user_info->fill($user_info);
@@ -300,7 +297,7 @@ class AdminUserController extends Controller
             $message['Membership'] = $request['user_membership']['membership_type'];
         }
 
-        Log::debug('Admin has updated the profile for ' . $user->name . ' at ' . date('Y-m-d H:i:s') );
+        Log::debug('Admin has updated the profile for '.$user->name.' at '.date('Y-m-d H:i:s'));
 
         if (! empty($message)) {
             $message['email'] = $user->email;
@@ -312,7 +309,6 @@ class AdminUserController extends Controller
 
         return redirect()->route('user_edit', [$user->id]);
     }
-
 
     /**
      * @param User $user
@@ -347,8 +343,7 @@ class AdminUserController extends Controller
         UpdateMemberAddress $userRequest,
         EmailMemberUpdateAddressService $service,
         User $user
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $this->authorize('update', $user);
         $message = [];
 
@@ -403,14 +398,13 @@ class AdminUserController extends Controller
         UpdateMemberEmergencyContact $userRequest,
         EmailMemberUpdateAddressService $service,
         User $user
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $this->authorize('update', $user);
 
         $userRequest->validate([
             'emergency_contact_phone' => ['required',
-                new Phone()
-            ]
+                new Phone(),
+            ],
         ]);
 
         $message = [];
@@ -431,7 +425,6 @@ class AdminUserController extends Controller
 
         return redirect()->route('admin_edit_emergency_contact', $user->id);
     }
-
 
     /**
      * @param DestroyUser $request
@@ -462,7 +455,7 @@ class AdminUserController extends Controller
 
             $user_info = UserInfo::where('user_id', $user->id)->first();
 
-            if(null != $user_info) {
+            if (null != $user_info) {
                 if ($user_info['image']) {
                     $this->userImageService->destroyImage($user_info['image'], 'users', Options::thumb_values());
                 }

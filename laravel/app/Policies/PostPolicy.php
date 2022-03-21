@@ -31,7 +31,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-      //  dd([$user, $post]);
+        //  dd([$user, $post]);
     }
 
     /**

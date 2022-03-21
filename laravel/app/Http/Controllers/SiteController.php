@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+
 //use Spatie\Sitemap\Sitemap;
 //use Spatie\Sitemap\SitemapGenerator;
 //use Spatie\Sitemap\Tags\Url;
@@ -23,7 +24,6 @@ class SiteController extends Controller
         //dd(config('app'));
         //      dd(config('app.url'));
 
-
         /**
         SitemapGenerator::create("https://iatse118.com")
             ->getSitemap()
@@ -40,7 +40,7 @@ class SiteController extends Controller
             ->add(Url::create('/venues'))
             ->add(Url::create('/topic/contract-ratifications'))
             ->writeToFile(public_path().'/sitemap.xml');
-        **/
+         **/
 
         return view('site', ['data' => ['user' => $user]]);
     }

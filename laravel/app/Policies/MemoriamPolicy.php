@@ -33,7 +33,6 @@ class MemoriamPolicy
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
-
     }
 
     /**
@@ -70,7 +69,6 @@ class MemoriamPolicy
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
     }
-
 
     /**
      * @param User $user

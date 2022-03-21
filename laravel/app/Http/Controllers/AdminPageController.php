@@ -22,7 +22,6 @@ class AdminPageController extends Controller
     /**
      * @var AttachmentService
      */
-
     public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;

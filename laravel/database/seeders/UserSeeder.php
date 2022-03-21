@@ -39,12 +39,12 @@ class UserSeeder extends Seeder
             $userId = DB::getPdo()->lastInsertId();
 
             DB::table('phone_numbers')->insert([
-               'user_id' => $userId,
-               'phone_number' => $faker->phoneNumber,
-               'label' => 'mobile',
-               'primary' => 1,
-               'created_at' => $date,
-               'updated_at' => $date,
+                'user_id' => $userId,
+                'phone_number' => $faker->phoneNumber,
+                'label' => 'mobile',
+                'primary' => 1,
+                'created_at' => $date,
+                'updated_at' => $date,
             ]);
 
             DB::table('users_info')->insert([

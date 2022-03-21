@@ -143,7 +143,7 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
             ->wherePivotIn('role', array_merge(Options::committee_executive_roles(), [
                 'Member' => 'Member',
                 'Ex-officio' => 'Ex-officio',
-                ]))
+            ]))
             ->withPivot('role', 'committee_id')
             ->with('user_info')
             ->wherePivot('deleted_at', null)
@@ -183,5 +183,4 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
     {
         return $this->access_level;
     }
-
 }

@@ -31,6 +31,5 @@ class AlterTableOrganizations extends Migration
             $table->dropColumn('image');
             $table->dropColumn('file_name');
         });
-
     }
 }

@@ -100,7 +100,6 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         return $this->attributes['title'] = $value;
     }
 
-
     /**
      * @return BelongsToMany
      */
@@ -126,5 +125,4 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
     {
         return $this->access_level;
     }
-
 }

@@ -173,8 +173,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
         return $this->belongsToMany(Post::class);
     }
 
-
-
     /**
      * @return BelongsToMany
      */

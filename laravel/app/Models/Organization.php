@@ -146,7 +146,7 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
             ->with('attachments')
             ->whereRaw('until > NOW()')
             ->where([['live', 1],
-                ['access_level', 'public']
+                ['access_level', 'public'],
             ])->sortable()
             ->orderBy('until');
     }

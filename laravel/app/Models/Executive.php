@@ -37,8 +37,8 @@ class Executive extends Model implements Searchable
 
     protected $fillable = [
         'id',
-      'title',
-      'email',
+        'title',
+        'email',
     ];
 
     protected $dates = [
@@ -59,14 +59,14 @@ class Executive extends Model implements Searchable
         if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
-                config('app.APP_NAME') .' Executive',
+                config('app.APP_NAME').' Executive',
                 \route('admin_executives')
             );
         }
 
         return new SearchResult(
             $this,
-            config('app.APP_NAME') .' Executive',
+            config('app.APP_NAME').' Executive',
             \route('executive')
         );
     }

@@ -6,7 +6,6 @@ use Illuminate\Contracts\Validation\Rule;
 
 class Phone implements Rule
 {
-
     /**
      * Determine if the validation rule passes.
      *

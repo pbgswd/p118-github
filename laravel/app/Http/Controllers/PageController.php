@@ -19,7 +19,7 @@ class PageController extends Controller
     public function list(): View
     {
         if (Auth::check()) {
-            $pages = Page::where('live',1)
+            $pages = Page::where('live', 1)
                 ->with('topics')
                 ->paginate(9);
         } else {
