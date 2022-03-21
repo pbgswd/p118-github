@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccessLevelConstantsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migration.
@@ -74,4 +74,4 @@ class CreateAccessLevelConstantsTable extends Migration
     {
         Schema::dropIfExists('access_level_constants');
     }
-}
+};

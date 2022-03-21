@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateTopicsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -56,4 +56,4 @@ class UpdateTopicsTable extends Migration
             $table->enum('topic_type', ['page', 'entry'])->after('in_menu');
         });
     }
-}
+};

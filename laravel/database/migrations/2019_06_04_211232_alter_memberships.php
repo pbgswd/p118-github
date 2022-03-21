@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class AlterMemberships extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -26,4 +26,4 @@ class AlterMemberships extends Migration
     {
         DB::statement('ALTER TABLE memberships CHANGE admin_notes admin_notes varchar (255) NULL');
     }
-}
+};

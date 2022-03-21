@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RemoveAllowcommentsCommitteesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -27,4 +27,4 @@ class RemoveAllowcommentsCommitteesTable extends Migration
     {
         // delete column only, no going forward with it.
     }
-}
+};

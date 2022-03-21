@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateTopicsColumns extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -36,4 +36,4 @@ class UpdateTopicsColumns extends Migration
             $table->enum('allow_comments', ['yes', 'no'])->default('no')->after('in_menu');
         });
     }
-}
+};
