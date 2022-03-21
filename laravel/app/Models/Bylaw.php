@@ -48,13 +48,9 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
         'user_id',
     ];
 
-    protected $dates = [
-        'date',
-        'created_at',
-        'updated_at',
-    ];
 
     protected $casts = [
+        'date' => 'datetime',
         'live' => 'boolean',
     ];
 

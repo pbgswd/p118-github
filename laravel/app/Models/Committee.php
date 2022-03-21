@@ -53,10 +53,6 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
         'role',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
 
     protected $casts = [
         'allow_comments' => 'boolean',

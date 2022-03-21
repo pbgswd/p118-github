@@ -24,10 +24,7 @@ class Address extends Model implements Searchable
     protected $guard_name = 'web';
 
     /** @var array */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
+
 
     /**
      * The attributes that are mass assignable.

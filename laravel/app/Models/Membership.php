@@ -25,11 +25,9 @@ class Membership extends Model
     protected $guard_name = 'web';
 
     /** @var array */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'membership_date',
-        'membership_expires',
+    protected $casts = [
+        'membership_date' => 'datetime',
+        'membership_expires' => 'datetime',
     ];
 
     /**

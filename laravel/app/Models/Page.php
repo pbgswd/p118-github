@@ -63,10 +63,6 @@ class Page extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
 
     protected $casts = [
         'front_page' => 'boolean',

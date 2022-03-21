@@ -19,11 +19,6 @@ class PhoneNumber extends Model implements Searchable
 {
     protected $guard_name = 'web';
 
-    protected $dates =
-        [
-            'created_at',
-            'updated_at',
-        ];
 
     protected $casts =
         [

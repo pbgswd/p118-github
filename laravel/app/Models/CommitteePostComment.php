@@ -44,10 +44,6 @@ class CommitteePostComment extends LiveableModel implements Searchable
         'updated_at',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
 
     protected $casts = [
         'live' => 'boolean',
