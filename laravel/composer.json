@@ -12,7 +12,6 @@
         "doctrine/dbal": "^2.11",
         "enlightn/enlightn": "^1.8",
         "fideloper/proxy": "^4.4",
-        "fruitcake/laravel-cors": "^2.0",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.3",
         "kyslik/column-sortable": "^6.0",
