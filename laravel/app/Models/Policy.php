@@ -38,7 +38,6 @@ class Policy extends LiveableModel implements HasAttachment, Searchable
         self::class => PolicyPolicy::class,
     ];
 
-
     protected $casts = [
         'date' => 'datetime',
         'live' => 'boolean',

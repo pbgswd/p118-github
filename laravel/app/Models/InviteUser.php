@@ -47,7 +47,6 @@ class InviteUser extends Authenticatable
 
     /** @var array */
 
-
     /**
      * The attributes that are mass assignable.
      *

@@ -25,7 +25,6 @@ class Address extends Model implements Searchable
 
     /** @var array */
 
-
     /**
      * The attributes that are mass assignable.
      *

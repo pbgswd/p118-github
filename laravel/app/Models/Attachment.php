@@ -73,7 +73,6 @@ class Attachment extends Model implements Searchable
 
     /** @var array */
 
-
     /**
      * @return SearchResult
      */

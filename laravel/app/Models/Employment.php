@@ -53,7 +53,6 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
         'deadline',
     ];
 
-
     protected $casts = [
         'deadline' => 'datetime',
         'live' => 'boolean',

@@ -56,7 +56,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
         'updated_at',
     ];
 
-
     /**
      * The attributes that are mass assignable.
      */

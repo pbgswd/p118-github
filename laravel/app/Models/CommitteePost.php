@@ -50,7 +50,6 @@ class CommitteePost extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-
     protected $casts = [
         'sticky' => 'boolean',
         'allow_comments' => 'boolean',

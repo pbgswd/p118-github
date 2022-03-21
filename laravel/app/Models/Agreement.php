@@ -62,7 +62,6 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         'user_id',
     ];
 
-
     protected $casts = [
         'from' => 'datetime',
         'until' => 'datetime',

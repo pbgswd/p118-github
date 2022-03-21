@@ -58,7 +58,6 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-
     protected $casts = [
         'live' => 'boolean',
     ];

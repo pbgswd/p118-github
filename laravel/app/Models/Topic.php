@@ -70,7 +70,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-
     protected $casts = [
         'front_page' => 'boolean',
         'landing_page' => 'boolean',

@@ -19,7 +19,6 @@ class PhoneNumber extends Model implements Searchable
 {
     protected $guard_name = 'web';
 
-
     protected $casts =
         [
             'primary' => 'boolean',

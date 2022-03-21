@@ -40,6 +40,7 @@ class Executive extends Model implements Searchable
         'title',
         'email',
     ];
+
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',

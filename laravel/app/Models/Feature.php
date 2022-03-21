@@ -31,7 +31,6 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-
     protected $casts = [
         'date' => 'datetime',
         'live' => 'boolean',
