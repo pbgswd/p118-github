@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\View\Composers;
+namespace App\Composers;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Feature;

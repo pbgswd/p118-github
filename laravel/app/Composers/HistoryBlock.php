@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\View\Composers;
+namespace App\Composers;
 
 use Carbon\Carbon;
 use Illuminate\View\View;
