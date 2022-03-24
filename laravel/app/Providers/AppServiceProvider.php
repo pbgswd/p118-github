@@ -34,13 +34,13 @@ class AppServiceProvider extends ServiceProvider
 
         \Illuminate\Pagination\Paginator::useBootstrap();
 
-        View::composer('content_feature', \App\Http\View\Composers\ContentFeature::class);
-        View::composer('layouts.front-page', \App\Http\View\Composers\FrontPage::class);
-        View::composer('layouts.history-statement', \App\Http\View\Composers\HistoryBlock::class);
+        View::composer('content_feature', \App\Composers\ContentFeature::class);
+        View::composer('layouts.front-page', \App\Composers\FrontPage::class);
+        View::composer('layouts.history-statement', \App\Composers\HistoryBlock::class);
 
         /*
-        view()->composer('page_parts.topics', 'App\Http\View\Composers\ViewComposers@topics');
-        view()->composer('admin.admin_topics_menu', 'App\Http\View\Composers\ViewComposers@adminTopicsMenu');
+        view()->composer('page_parts.topics', 'App\Composers\ViewComposers@topics');
+        view()->composer('admin.admin_topics_menu', 'App\Composers\ViewComposers@adminTopicsMenu');
          */
     }
 }
