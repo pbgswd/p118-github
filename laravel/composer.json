@@ -17,7 +17,7 @@
         "laravel/framework": "^9.5",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
-        "league/flysystem": "^2.4",
+        "league/flysystem": "^3.0",
         "nesbot/carbon": "^2.57",
         "predis/predis": "^1.1",
         "rtconner/laravel-tagging": "^4.1",
