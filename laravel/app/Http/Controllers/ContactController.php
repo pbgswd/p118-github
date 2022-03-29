@@ -30,7 +30,7 @@ class ContactController extends Controller
                 ->where('slug', 'contact-us')->get(), ];
         }
 
-        Log::debug('Contact page visited  at '.date('Y-m-d H:i:s')."\n");
+        Log::debug('Contact page visited  at '.date('Y-m-d H:i:s')."\n \n \n");
 
         return view('contact', ['data' => $data]);
     }
@@ -41,35 +41,38 @@ class ContactController extends Controller
      */
     public function submit(SubmitContact $request): RedirectResponse
     {
-        Log::debug("\n".__METHOD__.'method hit, Contact page message submitted from '.
-            $request['name'].
-            ' sending to: '.
-            config('mail.office_admin.address').' '.
-            config('mail.office_admin.name').' at '.
-            date('Y-m-d H:i:s')."\n");
+        Log::debug("---------------------------------- \n");
+        Log::debug("\n" . __METHOD__ . ' method hit, Contact page message submitted from ' .
+            $request['name'] .
+            ' sending to: ' .
+            config('mail.office_admin.address') . ' ' .
+            config('mail.office_admin.name') . ' at ' .
+            date('Y-m-d H:i:s') . "\n");
 
-        define('RECAPTCHA_V3_SECRET_KEY', '6Ldv4sQaAAAAADrmuSc0lzoaf-AiVMMES6LxAt7g');
-        define('RECAPTCHA_THRESHOLD', '0.5');
+            define('RECAPTCHA_V3_SECRET_KEY', '6Ldv4sQaAAAAADrmuSc0lzoaf-AiVMMES6LxAt7g');
+            define('RECAPTCHA_THRESHOLD', '0.5');
 
-        $recaptcha = new ReCaptcha(RECAPTCHA_V3_SECRET_KEY);
-        $resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
+            $recaptcha = new ReCaptcha(RECAPTCHA_V3_SECRET_KEY);
 
-        Log::debug("\n".'Contact form Recaptcha v.3 score='.$resp->getScore()."\n");
+            $resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
 
-        $sub_time = $request->session()->get('submission_time');
+            Log::debug("---------------------------------- \n");
+            Log::debug("\n" . 'Contact form Recaptcha v.3 score=' . $resp->getScore() . "\n");
 
-        if ($request->session()->get('suspicious') == 'true' && $sub_time->diffInMinutes(Carbon::now()) < 5) {
-            Session::flash('error', 'Your submission appears suspicious.');
+            $sub_time = $request->session()->get('submission_time');
+/**
+            if ($request->session()->get('suspicious') == 'true' && $sub_time->diffInMinutes(Carbon::now()) < 5) {
+                Session::flash('error', 'Your submission appears suspicious.');
 
-            return redirect()->route('contact');
-        }
-
+                return redirect()->route('contact');
+            }
+**/
         $cc = [];
 
         if (config('app.env') == 'local') {
             $cc = Options::testing_address_update_contacts();
         }
-
+        Log::debug("---------------------------------- \n");
         Log::debug('Contact page message from '.$request['name'].
             ' sending to: '.
             config('mail.office_admin.address').' '.
@@ -79,18 +82,23 @@ class ContactController extends Controller
             date('Y-m-d H:i:s')."\n");
 
         if ($resp->isSuccess()) {
+            Log::debug("---------------------------------- \n");
             Log::debug('Contact form Recaptcha v.3 score='.$resp->getScore().' submission from '.
                 $request->name." was returned as a success. \n");
         } else {
             $errors = $resp->getErrorCodes();
+            Log::debug("---------------------------------- \n");
             Log::debug('Errors from Contact form Recaptcha v.3 from '.
                 $request->name.': '.
                 serialize($errors)."\n");
         }
-
+        Log::debug("---------------------------------- \n");
         Log::debug('Contact form submission data from '.$request->name.' '.serialize($resp)."\n");
 
-        if ($resp->getScore() < RECAPTCHA_THRESHOLD) {
+
+
+        if (($resp->getScore() < RECAPTCHA_THRESHOLD) && config('app.env') == 'production') {
+            Log::debug("---------------------------------- \n");
             Log::debug('Contact form recaptcha score was low = '.$resp->getScore()."\n");
 
             $request->session()->put('submission_time', Carbon::now());

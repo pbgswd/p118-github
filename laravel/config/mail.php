@@ -48,6 +48,7 @@ return [
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
+            'verify_peer' => env('MAIL_VERIFY_PEER'),
         ],
 
         'ses' => [
@@ -97,8 +98,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@iatse118.com'),
+        'name' => env('MAIL_FROM_NAME', 'No Reply IATSE Local 118'),
     ],
 
     'admin' => [
@@ -110,6 +111,8 @@ return [
         'address' => 'admin@iatse118.com',
         'name' => 'IATSE 118 Administrator',
     ],
+
+    //todo define reply_to  //'reply_to' => ['address' => '', 'name' => ''];
 
     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 

@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route; //Controller Name Space
 Route::middleware('web')->group(function () {
     Auth::routes(['verify' => true, 'register' => false, 'reset' => true, 'login' => true]);
 
+    Route::get('sendemail', [CNS\MailController::class, 'index']);
+
     Route::get('/', [CNS\HelloController::class, 'index'])->name('hello');
 
     Route::get('contact', [CNS\ContactController::class, 'show'])->name('contact');
