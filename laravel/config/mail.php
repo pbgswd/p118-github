@@ -108,8 +108,8 @@ return [
     ],
 
     'office_admin' => [
-        'address' => 'admin@iatse118.com',
-        'name' => 'IATSE 118 Administrator',
+        'address' => env('MAIL_OFFICE_EMAIL_RECIPIENT'),
+        'name' => env('MAIL_OFFICE_EMAIL_NAME'),
     ],
 
     //todo define reply_to  //'reply_to' => ['address' => '', 'name' => ''];

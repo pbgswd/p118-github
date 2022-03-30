@@ -49,29 +49,26 @@ class ContactController extends Controller
             config('mail.office_admin.name') . ' at ' .
             date('Y-m-d H:i:s') . "\n");
 
-            define('RECAPTCHA_V3_SECRET_KEY', '6Ldv4sQaAAAAADrmuSc0lzoaf-AiVMMES6LxAt7g');
-            define('RECAPTCHA_THRESHOLD', '0.5');
+        define('RECAPTCHA_V3_SECRET_KEY', '6Ldv4sQaAAAAADrmuSc0lzoaf-AiVMMES6LxAt7g');
+        define('RECAPTCHA_THRESHOLD', '0.5');
 
-            $recaptcha = new ReCaptcha(RECAPTCHA_V3_SECRET_KEY);
+        $recaptcha = new ReCaptcha(RECAPTCHA_V3_SECRET_KEY);
 
-            $resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
+        $resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
 
-            Log::debug("---------------------------------- \n");
-            Log::debug("\n" . 'Contact form Recaptcha v.3 score=' . $resp->getScore() . "\n");
+        Log::debug("---------------------------------- \n");
+        Log::debug("\n" . 'Contact form Recaptcha v.3 score=' . $resp->getScore() . "\n");
 
-            $sub_time = $request->session()->get('submission_time');
-/**
-            if ($request->session()->get('suspicious') == 'true' && $sub_time->diffInMinutes(Carbon::now()) < 5) {
-                Session::flash('error', 'Your submission appears suspicious.');
+        $sub_time = $request->session()->get('submission_time');
 
-                return redirect()->route('contact');
-            }
-**/
-        $cc = [];
+        if ($request->session()->get('suspicious') == 'true' && $sub_time->diffInMinutes(Carbon::now()) < 5) {
+            Session::flash('error', 'Your submission appears suspicious.');
 
-        if (config('app.env') == 'local') {
-            $cc = Options::testing_address_update_contacts();
+            return redirect()->route('contact');
         }
+
+        $cc = config('app.env') == 'local' ? [] : Options::testing_address_update_contacts();
+        
         Log::debug("---------------------------------- \n");
         Log::debug('Contact page message from '.$request['name'].
             ' sending to: '.
@@ -94,8 +91,6 @@ class ContactController extends Controller
         }
         Log::debug("---------------------------------- \n");
         Log::debug('Contact form submission data from '.$request->name.' '.serialize($resp)."\n");
-
-
 
         if (($resp->getScore() < RECAPTCHA_THRESHOLD) && config('app.env') == 'production') {
             Log::debug("---------------------------------- \n");
