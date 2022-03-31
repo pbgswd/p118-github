@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
+use App\Models\Interfaces\HasAttachment;
 use App\Policies\VenuePolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,20 +20,19 @@ use Spatie\Searchable\SearchResult;
  * @property string     $description
  * @property string     $url
  * @property string     $access_level
- * @property boolean    $live
- * @property int        $sort_order
- * @property boolean    $in_menu
+ * @property bool       $live
  * @property User       $user
  * @property DateTime   $created_at
  * @property DateTime   $updated_at
+ * @property AgreementHandler $agreement_handler
  * @method static withoutGlobalScopes()
  */
-class Venue extends LiveableModel implements Searchable
+class Venue extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
 
     protected $policies = [
-        Venue::class => VenuePolicy::class,
+        self::class => VenuePolicy::class,
     ];
 
     /**
@@ -44,8 +44,10 @@ class Venue extends LiveableModel implements Searchable
         'url',
         'access_level',
         'live',
-        'sort_order',
-        'in_menu',
+        'admin_notes',
+        'file_name',
+        'image',
+
     ];
 
     public $sortable = [
@@ -53,20 +55,16 @@ class Venue extends LiveableModel implements Searchable
         'name',
         'access_level',
         'live',
-        'sort_order',
-        'in_menu',
         'created_at',
         'updated_at',
     ];
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
-        'in_menu' => 'boolean',
-        'allow_comments' => 'boolean',
         'live' => 'boolean',
     ];
 
@@ -85,7 +83,10 @@ class Venue extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('Venue');
+
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->name,
@@ -116,6 +117,7 @@ class Venue extends LiveableModel implements Searchable
     public function setNameAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['name'] = $value;
     }
 
@@ -127,17 +129,77 @@ class Venue extends LiveableModel implements Searchable
         return $this->hasOne(User::class);
     }
 
+
+    /**
+     * @return BelongsToMany
+     */
     public function agreements(): BelongsToMany
     {
-            return $this->belongsToMany(Agreement::class)
-                ->whereRaw('NOW() < until')
-                ->orderBy('until', 'desc');
+        return $this->belongsToMany(Agreement::class)
+            ->with('attachments')
+            ->whereRaw('until > NOW()')
+            ->where([['live', 1],
+                ['access_level', 'public']
+            ])->sortable()
+            ->orderBy('until');
     }
 
+    /**
+     * @return BelongsToMany
+     */
+    public function all_agreements(): BelongsToMany
+    {
+        return $this->belongsToMany(Agreement::class)
+            ->sortable()
+            ->orderBy('title');
+    }
+
+
+    /**
+     * @return BelongsToMany
+     */
     public function member_agreements(): BelongsToMany
     {
-            return $this->belongsToMany(Agreement::class)
-                ->orderBy('until', 'desc');
+        //todo get just the attachments related to the agreement
+        return $this->belongsToMany(Agreement::class)
+            ->with('attachments')
+            ->where('live', 1)
+            ->sortable()
+            ->orderBy('title');
     }
 
+
+    /**
+     * @return HasOne
+     */
+    public function agreement_handler(): HasOne
+    {
+        return $this->hasOne(AgreementHandler::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
+    {
+       return $this->belongsToMany(Attachment::class, 'attachment_venue');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentFolder(): string
+    {
+        return 'org_venue';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return $this->access_level;
+    }
 }

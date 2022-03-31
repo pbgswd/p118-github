@@ -4,27 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Page;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-
 
 class PageController extends Controller
 {
     /**
-     * @return Factory|View
+     * @return View
      */
-    public function list()
+    public function list(): View
     {
         if (Auth::check()) {
-            $pages = Page::sortable()->with('tagged')->paginate(10);
-        }
-        else {
-            $pages = Page::sortable()
-                ->where('access_level', '=', AccessLevelConstants::PUBLIC)
-                ->with('tagged')
-                ->paginate(10);
+            $pages = Page::where('live',1)
+                ->with('topics')
+                ->paginate(9);
+        } else {
+            $pages = Page::where([['access_level', '=', AccessLevelConstants::PUBLIC], ['live', 1]])
+                ->with('topics')
+                ->paginate(9);
         }
 
         return view('pages', ['data' => ['pages' => $pages]]);
@@ -32,12 +33,17 @@ class PageController extends Controller
 
     /**
      * @param Page $page
-     * @return Factory|View
+     * @return Response
+     * @throws AuthorizationException
      */
     public function show(Page $page)
     {
+        //todo public page policy if not public page?
+        //$this->authorize('view', Page::class);
+
         if (false === Auth::check() && $page->access_level != AccessLevelConstants::PUBLIC) {
-            Session::flash('warning', "Login to view this page.");
+            Session::flash('warning', 'Login to view this page.');
+
             return redirect('login');
         }
 

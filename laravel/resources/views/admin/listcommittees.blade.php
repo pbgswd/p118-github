@@ -73,10 +73,7 @@
                             <tr>
                                 <th> @sortablelink('id','#') </th>
                                 <th> @sortablelink('title', 'Title') </th>
-                                <th> @sortablelink('access_level', 'Access Level') </th>
                                 <th> @sortablelink('live', 'Is Live?') </th>
-                                <th> @sortablelink('sort_order', 'Sort Order') </th>
-                                <th> @sortablelink('in_menu', 'In Menu?') </th>
                                 <th> Created By </th>
                                 <th>
                                     @can('manage committee')
@@ -107,13 +104,8 @@
                                             </a>
                                         </h4>
                                     </td>
-                                    <td> {{ $c->access_level }} </td>
                                     <td> {!! $c->live ? "<i class='fas fa-check'></i>" :
                                             "<i class='far fa-times-circle'></i>" !!}
-                                    </td>
-                                    <td> {{ $c->sort_order }} </td>
-                                    <td> {!! $c->in_menu ? '<i class="fas fa-check"></i>' :
-                                            '<i class="far fa-times-circle"></i>' !!}
                                     </td>
                                     <td>{{ $c->creator->name }}</td>
                                     <td>
@@ -129,14 +121,11 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="10">
+                                    <td colspan="7">
                                         No committees yet.
                                     </td>
                                 </tr>
                             @endforelse
-                            <tr>
-                                <td colspan="10">&nbsp;</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>

@@ -8,7 +8,9 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use App\Models\Employment;
+use App\Models\Feature;
 use App\Models\Meeting;
+use App\Models\Memoriam;
 use App\Models\Organization;
 use App\Models\Page;
 use App\Models\Policy;
@@ -17,10 +19,14 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Cache\RateLimiting\Limit;
 
 class RouteServiceProvider extends ServiceProvider
 {
+    public const HOME = '/site';
     /**
      * This namespace is applied to your controller routes.
      *
@@ -28,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+   // protected $namespace = 'App\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -37,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->configureRateLimiting();
+
         parent::boot();
 
         Route::bind('any_agreement', static function ($id) {
@@ -72,7 +80,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('any_user', static function ($id) {
             return User::withoutGlobalScopes()->findOrFail($id);
         });
-        //todo remove scope venue, organization
         Route::bind('any_venue', static function ($slug) {
             return Venue::withoutGlobalScopes()->where('slug', $slug)->first();
         });
@@ -81,6 +88,12 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('any_policy', static function ($id) {
             return Policy::withoutGlobalScopes()->findOrFail($id);
+        });
+        Route::bind('any_feature', static function ($slug) {
+            return Feature::withoutGlobalScopes()->where('slug', $slug)->first();
+        });
+        Route::bind('any_memoriam', static function ($slug) {
+            return Memoriam::withoutGlobalScopes()->where('slug', $slug)->first();
         });
     }
 
@@ -102,13 +115,13 @@ class RouteServiceProvider extends ServiceProvider
      * Define the "web" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
-     *
+     * namespace commented out in Laravel 8 Spark upgrade
      * @return void
      */
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
+             //->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
     }
 
@@ -116,14 +129,43 @@ class RouteServiceProvider extends ServiceProvider
      * Define the "api" routes for the application.
      *
      * These routes are typically stateless.
-     *
+     * namespace commented out in Laravel 8 Spark upgrade
      * @return void
      */
     protected function mapApiRoutes()
     {
         Route::prefix('api')
              ->middleware('api')
-             ->namespace($this->namespace)
+             //->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * Configure the rate limiters for the application.
+     *
+     * @return void
+     */
+    protected function configureRateLimiting()
+    {
+        RateLimiter::for('post', function (Request $request) {
+            return [
+                Limit::perMinute(10)->by(optional($request->email) ?: $request->ip()),
+                Limit::perMinute(60),
+            ];
+        });
+
+        RateLimiter::for('global', function (Request $request) {
+            return [
+                Limit::perMinute(60)->by($request->ip()),
+                Limit::perMinute(1000),
+            ];
+        });
+
+        RateLimiter::for('download', function (Request $request) {
+            return [
+                Limit::perMinute(10)->by($request->ip()),
+                Limit::perMinute(20),
+            ];
+        });
     }
 }

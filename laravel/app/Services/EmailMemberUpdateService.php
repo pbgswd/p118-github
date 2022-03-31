@@ -2,46 +2,48 @@
 
 namespace App\Services;
 
+use App\Models\Options;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 /**
  * @param Request $request
  */
-
 class EmailMemberUpdateService
 {
-
-    public function sendMessage($message, $user, $original_name)
+    public function sendMessage($message, $user)
     {
         $message['id'] = $user->id;
-        $message['original_name'] = $original_name;
-        $message['original_email'] = $user->email;
 
-        $recipient = env('ADMIN_EMAIL');
+        $recipient = config('mail.admin.address');
+        $cc = '';
 
-        if (env('APP_ENV') == 'local') {
-            $recipient = env('ADMIN_EMAIL');
-            $cc = '';
+        if (config('app.env') == 'local') {
+            $recipient = config('mail.admin.address');
+            $cc = Options::testing_address_update_contacts();
         }
 
-        if (env('APP_ENV') == 'production') {
-            //todo admin email in .env, somewhere other than here
-            $recipient = 'admin@iatse118.com';
-            $cc = 'healthandwelfare@iatse118.com';
+        if (config('app.env') == 'production') {
+            $recipient = config('mail.office_admin.address');
+            $cc = Options::address_update_contacts();
         }
+
+        Log::debug('EmailMemberUpdateService update for ' . $message['name'] . ' Sending to: ' . $recipient .', cc: ' .
+            implode(", ", $cc) . ' at ' . date('Y-m-d H:i:s'));
 
         Mail::send('emails.user_profile_update', ['data' => $message], function ($m) use ($message,
             $user,
             $recipient,
             $cc) {
-            $m->from(env('MAIL_FROM_ADDRESS'), "Local 118 Website profile update for ". $user->name);
+            $m->from(config('mail.from.address'),  config('app.name') .' Website profile update for ' . $user->name);
             $m->to($recipient, $recipient);
-            if($cc != '') {
+            if ($cc != '') {
                 $m->cc($cc, $cc);
             }
-            $m->replyTo($user->email, $message['Name'] ?? $user->name)
-                ->subject("Local 118 - Member Contact Info Update for " . $message['original_name']);
+            $m->replyTo($user->email, $user->name)
+                ->subject(config('app.name') . ' - Member Contact Info Update for '.$user->name);
         });
-    }
 
+        Log::debug('Profile for ' . $user->name . ' updated, email sent at  ' . date('Y-m-d H:i:s'));
+    }
 }

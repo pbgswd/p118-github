@@ -1,68 +1,133 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="container">
-    <div class="row border border-light rounded-lg p-lg-2 mb-2" style="background: #fff;">
-        <div class="col-12 mb-lg-1">
-            <h1>{{config('app.name')}}</h1>
+    <div class="row border border-dark rounded-lg mt-2 p-2">
+        <div class="col-12 text-center my-3">
+            <h1>Local 118 Executive</h1>
         </div>
+        @forelse($data['executive'] as $e)
+            <div class="col-12 col-md-3 p-1">
+                <div class="border border-dark rounded-lg w-100 h-100 p-2 text-center">
+                    <h4 class="text-center">
+                        {{$e->title}}
+                    </h4>
+                    @forelse($e->current_executive_user as $exec)
+                        <div class="col mt-3 text-center align-self-center">
+                            <h4>
+                                @auth
+                                    @if(true === $exec->user_info->show_profile)
+                                        <a title="{{ $exec->name }}" href="{{ route('member', $exec->id)}}">
+                                    @endif
+                                @endauth
+                                {{$exec->name ?? ''}}
+                                @auth
+                                    @if(true === $exec->user_info->show_profile)
+                                        </a>
+                                    @endif
+                                    <a href="mailto:{{$e->email}}">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                @endauth
+                            </h4>
+                            {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('M j Y')}} -
+                            {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('M j Y')}}
+                        </div>
+                    @empty
+                        <div class="text-center"> No entry</div>
+                    @endforelse
+                </div>
+            </div>
+        @empty
+           No entry
+        @endforelse
     </div>
-    <div class="row border border-light rounded-lg p-lg-2" style="background: rgba(220,220,220,0.8);">
-        <div class="col-12">
-            <h1> Executive </h1>
+    @auth
+    <div class="row border border-dark rounded-lg mt-2 p-2 my-3">
+        <div class="col-12 text-center my-3">
+            <h1>Health & Welfare Administrators</h1>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col" colspan="3"></th>
-                    <th scope="col">From</th>
-                    <th scope="col">Until</th>
-                </tr>
-            </thead>
-            <tbody>
-            @forelse($data as $e)
-                <tr>
-                    <td colspan="5">
-                        <h3>{{$e->title}}</h3>
-                    </td>
-                </tr>
-                @forelse($e->current_executive_user as $exec)
-                <tr>
-                    <td> &nbsp;</td>
-                    <td>
+        @forelse($data['health'] as $h)
+            @forelse($h->current_executive_user as $hw)
+                <div class="col-12 col-md-4 p-1">
+                    <div class="border border-dark rounded-lg w-100 h-100 p-2 text-center">
+                        <h4 class="text-center">
+                            {{$h->title}}
+                        </h4>
                         <h4>
                             @auth
-                                <a title="{{ $exec->name }}" href="{{ route('member', $exec->id) }}">
-                                    @endauth
-                                    {{$exec->name ?? ''}}
-                                    @auth
+                                @if(true === $hw->user_info->show_profile)
+                                    <a title="{{ $hw->name }}" href="{{ route('member', $hw->id) }}">
+                                        {{$hw->name ?? ''}}
+                                    </a>
+                                @else
+                                    {{$hw->name ?? ''}}
+                                @endif
+                                <a href="mailto:{{$h->email}}">
+                                    <i class="fas fa-envelope"></i>
                                 </a>
                             @endauth
+                            @guest
+                                {{$hw->name ?? ''}}
+                            @endguest
                         </h4>
-                    <td>
-                        <a href="mailto:{{$e->email}}">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </td>
-                    <td>
-                        {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('M j Y')}}
-                    </td>
-                    <td>
-                        {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('M j Y')}}
-                    </td>
-                </tr>
-                @empty
-                    <tr>
-                        <td colspan="5">No entry</td>
-                    </tr>
-                @endforelse
+                    </div>
+                </div>
             @empty
-                <tr>
-                    <td colspan="5">No entry</td>
-                </tr>
+                <div class="text-center"> No entry</div>
             @endforelse
-            </tbody>
-        </table>
-
+        @empty
+            <div class="text-center"> No entry</div>
+        @endforelse
     </div>
-</div>
+
+    <div class="row border border-dark rounded-lg my-3 p-2">
+        <div class="col-12 text-center my-3">
+            <h1>Local 118 Trustees</h1>
+        </div>
+        @forelse($data['trustees'] as $t)
+            @foreach($t->current_executive_user as $trustee )
+                <div class="col-12 col-md-4 p-1">
+                    <div class="border border-dark rounded-lg w-100 h-100 p-2 text-center">
+                        <h4>{{$t->title }}</h4>
+                        <h4>
+                            @if(true === $trustee->user_info->show_profile)
+                                <a title="{{ $trustee->name ?? '' }}" href="{{ route('member', $trustee->id) }}">
+                                    {{$trustee->name ?? ''}}
+                                </a>
+                            @else
+                                {{$trustee->name ?? ''}}
+                            @endif
+                            <a href="mailto:{{$t->email}}">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </h4>
+                        {{\Carbon\Carbon::parse($trustee->pivot->start_date)->format('M j Y')}} -
+                        {{\Carbon\Carbon::parse($trustee->pivot->end_date)->format('M j Y')}}
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @empty
+        <div class="text-center">No entry</div>
+    @endforelse
+
+        <div class="row border border-dark rounded-lg mt-2 p-2">
+            <div class="col-12 text-center my-3">
+                <h1>Local 118 Committees</h1>
+            </div>
+            @forelse($data['committees'] as $c)
+                <div class="col-12 col-md-4 p-1">
+                    <div class="border border-dark rounded-lg w-100 h-100 p-2 text-center align-self-center">
+                        <h4>
+                            <a href="{{route('committee', $c->slug)}}">
+                            {{$c->name}}
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+            @empty
+                <div class="text-center"> No entry</div>
+            @endforelse
+        </div>
+    @endauth
 @endsection

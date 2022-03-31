@@ -3,42 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bylaw;
-use App\Services\AttachmentService;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class ByLawController extends Controller
 {
-    /** @var AttachmentService  */
-    private $attachmentService;
-
     /**
-     * BylawController constructor.
-     *
-     * @param AttachmentService $attachmentService
+     * @return View
      */
-    public function __construct(AttachmentService $attachmentService)
-    {
-        $this->attachmentService = $attachmentService;
-    }
-
-    public function list()
+    public function list(): View
     {
         $data = [];
-        if(Auth::check()) {
-            $data['bylaws'] = Bylaw::sortable()
+        if (Auth::check()) {
+            $data['bylaws'] = Bylaw::where('live', 1)
+                ->sortable()
                 ->with('attachments')
                 ->orderBy('date', 'desc')
-                ->paginate(20);
+                ->paginate(10);
 
             $data['count'] = Bylaw::count();
-        }
-        else {
+        } else {
             $data['bylaws'] = Bylaw::sortable()
-                ->where('access_level', 'public')
+                ->where([['access_level', 'public'],['live', 1]])
                 ->with('attachments')
                 ->orderBy('date', 'desc')
-                ->paginate(20);
+                ->paginate(10);
 
             $data['count'] = Bylaw::where('access_level', 'public')->count();
         }
@@ -47,14 +36,11 @@ class ByLawController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Bylaw $bylaw
-     * @return Response
+     * @return View
      */
-    public function show(Bylaw $bylaw)
+    public function show(Bylaw $bylaw): View
     {
-
         $bylaw->load('user', 'attachments');
 
         return view('bylaw_view', ['data' => ['bylaw' => $bylaw]]);

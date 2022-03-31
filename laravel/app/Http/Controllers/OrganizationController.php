@@ -2,44 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Options;
 use App\Models\Organization;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class OrganizationController extends Controller
 {
     /**
-     * @return Factory|View
-     * @throws AuthorizationException
+     * @return View
      */
-    public function list()
+    public function list(): View
     {
-        $data = [];
-        $data['organizations'] = Organization::sortable()
+        $data['organizations'] = Organization::where('live', 1)
+            ->whereIn('access_level', ['public', Auth::check() ? 'members' : ''])
             ->orderBy('name')
-            ->paginate(10);
+            ->paginate(9);
 
-        return view('organizations', ['data' => ['data' => $data]]);
+        $data['tn_prefix'] = Options::venue_org_thumb_values()['tn_str'];
+
+        return view('organizations', ['data' => $data]);
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Organization $organization
-     * @return Response
+     * @return View
      */
-    public function show(Organization $organization)
+    public function show(Organization $organization): View
     {
+        if ($organization['image']) {
+            if (file_exists(storage_path() . '/app/public/' . $organization['image'])) {
 
-        $data = [];
+                if (!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
+                    $organization['image'])) {
+                    $this->userImageService->generate_thumb($organization['image'], 'public',
+                        Options::venue_org_thumb_values());
+                }
+            }
+        }
+        $organization->thumb = Options::venue_org_thumb_values()['tn_str'] . $organization['image'] ? : '';
+        $organization->load('attachments');
 
-        $data['agreements'] = Auth::check() ? $organization->member_agreements :
-            $organization->agreements;
-
-        $data['organization'] = $organization;
+        $data = [
+            'organization' => $organization,
+            'agreements' => Auth::check() ? $organization->member_agreements()->paginate(5) :
+                $organization->agreements()->paginate(5),
+        ];
 
         return view('organization', ['data' => $data]);
     }

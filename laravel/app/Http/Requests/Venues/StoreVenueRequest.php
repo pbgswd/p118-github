@@ -31,9 +31,9 @@ class StoreVenueRequest extends FormRequest
             'venue.name' => 'required|unique:venues,name|max:255',
             'venue.description' => 'required|string',
             'venue.url' => 'url|nullable',
-            'venue.sort_order' =>  'required|numeric',
-            'venue.in_menu' => 'boolean',
             'venue.live' => 'boolean',
+            'venue.admin_notes' => 'string|nullable',
+            'image' => 'file|nullable',
         ];
     }
 
@@ -42,7 +42,7 @@ class StoreVenueRequest extends FormRequest
         $venue = \array_merge(
             $this->input('venue'),
             [
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
             ]
         );
 

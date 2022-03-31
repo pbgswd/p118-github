@@ -1,57 +1,87 @@
-<?php
-$organization = $data['organization'];
-$all_agreements = $data['all_agreements'];
-?>
 @extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' organization '
-        . ($data["action"] == 'Edit' ? $organization->name : '') ])
+        . ($data["action"] == 'Edit' ? $data['organization']->name : '') ])
 @section('content')
-    <script>
-        tinymce.init({
-            selector: 'textarea#organization-description',
-            height: 200,
-            width:800,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor textcolor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | ' +
-                'bullist numlist outdent indent | removeformat | help',
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tiny.cloud/css/codepen.min.css'
-            ]
-        });
-    </script>
+    @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3>
-        <a href="{{ route('organizations_list') }}"> <i class="far fa-arrow-alt-circle-left"></i>
-            List of organizations
-        </a>
-    </h3>
-    <form method="post" name="organization" action="{{ url()->current() }}"
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h3>
+                <a href="{{ route('organizations_list') }}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    List of organizations
+                </a>
+            </h3>
+        </div>
+        @if($data['action'] == 'Edit')
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('organization', $data['organization']->slug)}}"
+                   title="View {{$data['organization']->name}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
+    </div>
+    <form method="post" name="organization" action="{{ url()->current()}}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row mt-lg-3">
             <div class="form-group">
-                <div class="col-lg-2"><h4>Name</h4></div>
-                <div class="col-lg-10">
+                <div class="col-12">
+                    <h4>Name</h4>
+                </div>
+                <div class="col-12">
                     <input type="text" class="form-control"  placeholder="Name" name="organization[name]"
-                           value="{{ old('organization.name', $organization->name)}}" size="80" required/>
+                           value="{{ old('organization.name', $data['organization']->name)}}" size="80" required/>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2">
+                <div class="col-12">
                     <h4>Description</h4>
                 </div>
-                <div class="col-lg-10">
+                <div class="col-12">
                     <textarea name="organization[description]" id="organization-description"
                               placeholder="Summary content" class="form-control">
-                        {{old('organization.description', $organization->description)}}
+                        {{old('organization.description', $data['organization']->description)}}
                     </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="form-group">
+                    @if(!isset($data['organization']->image))
+                        <label for="exampleInputFile">
+                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                            Add Primary Image To organization
+                        </label>
+                        <input type="file" id="inputFile" name="image" />
+                    @else
+                        <input type="hidden" name="organization[image]" value="{{$data['organization']->image}}" />
+                        <input type="hidden" name="organization[file_name]"
+                               value="{{$data['organization']->file_name}}" />
+                        <img src="{{ asset('storage/public/'. $data['organization']->image)}}"
+                             class="rounded img-fluid" /><br />
+                        {{$data['organization']->filesize}}<br />
+                        <img src="{{ asset('storage/public/'. $data['organization']->thumb) }}"
+                             class="rounded img-fluid" /><br />
+                        {{$data['organization']->thumb_size}} (thumbnail)<br />
+                        <h5>
+                            {{$data['filesize'] ?? ''}}
+                        </h5>
+                        <label for="exampleInputFile">
+                            <i class="far fa-trash-alt"></i>
+                            Delete Image
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input name="delete_image" type="checkbox" value="1" />
+                                </div>
+                                <input type="text" class="form-control" aria-label="Text input with checkbox"
+                                       value="Check to delete image." size="40" readonly>
+                            </div>
+                        </label>
+                    @endif
                 </div>
             </div>
         </div>
@@ -61,51 +91,47 @@ $all_agreements = $data['all_agreements'];
                 <div class="col-lg-10">
                     <input type="text" class="form-control"
                            placeholder="Website Address - http://...." name="organization[url]"
-                           value="{{ old('organization.url', $organization->url)}}" size="80" />
+                           value="{{ old('organization.url', $data['organization']->url)}}" size="80" />
                 </div>
             </div>
         </div>
         <div class="row mt-lg-3">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-6 col-sm-3"></div>
-                    <div class="col-6 col-sm-3"></div>
-                    <!-- Force next columns to break to new line -->
-                    <div class="w-100"></div>
-                    <div class="col-12">&nbsp;</div>
-                    <div class="col-6 col-sm-3"><h4>Sort Order</h4></div>
-                    <div class="col-6 col-sm-3">
-                        <input type="text" class="form-control"  id="validationCustom02"
-                               placeholder="e.g.: 1000, 2000" name="organization[sort_order]"
-                               value="{{old('organization.sort_order',$organization->sort_order)}}"
-                               size="30" required/>
-                        <p>e.g.: 1000, 2000</p>
-                    </div>
-                    <div class="invalid-feedback">
-                        Please add a numeric sort order {{ @$errors->get('organization.sort_order')[0] }}
-                    </div>
-                </div>
+            <div class="col-12 pt-3">
+                <h4>Access Level</h4>
             </div>
-            <div class="col-md-4">
-                <div class="col-lg-2"><h4>Status</h4></div>
-                <div class="col-sm">
-                    <label>
-                         <input name="organization[live]" type="hidden" value="0" />
-                         <input name="organization[live]" type="checkbox" value="1"
-                             {{ checked( old('organization.live', $organization->live)) }} />
-                        Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
+            <div class="col-12 pt-3">
+                <div class="form-group">
+                    {{ select_options($data['access_levels'],
+                        old('organization.access_level', $data['organization']->access_level),
+                        ['name' => 'organization[access_level]', 'class' => 'form-control']) }}
                 </div>
             </div>
         </div>
-<div class="row mt-lg-5">
-    <h3>Agreements for Organization</h3>
-</div>
-        <div class="row m-t-5 mb-lg-5">
+        <div class="row">
+            <div class="col-12">
+                <h4>Status</h4>
+            </div>
+            <div class="col-12">
+                <label>
+                     <input name="organization[live]" type="hidden" value="0" />
+                     <input name="organization[live]" type="checkbox" value="1"
+                         {{ checked( old('organization.live', $data['organization']->live)) }} />
+                    Check now to make Live
+                </label>
+                <p>ie.: Draft or Published.</p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <h3>Agreements for Organization</h3>
+            </div>
+        </div>
+        <div class="row mt-5 mb-5 p-2">
             @if ($data['action'] == 'Edit')
-                <div class="col-5 m-1">
-                    <h4>Agreements attached to {{$organization->name}}</h4>
+                <div class="col-12">
+                    <h4>
+                        Agreements attached to {{$data['organization']->name}}
+                    </h4>
                     <table class="table">
                         <thead>
                         <tr>
@@ -116,11 +142,11 @@ $all_agreements = $data['all_agreements'];
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($organization->member_agreements as $oa)
+                        @forelse($data['organization']->member_agreements as $oa)
                             <tr>
-                                <th scope="row">
+                                <td>
                                     <input type="checkbox" name="id[]" value="{{$oa->id}}" />
-                                </th>
+                                </td>
                                 <td>
                                     <a title="{{ $oa->title }}" href="{{ route('agreement_edit', $oa->id) }}">
                                         {{ $oa->title }}
@@ -132,48 +158,130 @@ $all_agreements = $data['all_agreements'];
                                 <td>{{$oa->from->format('F j Y')}}</td>
                                 <td>{{$oa->until->format('F j Y')}}</td>
                             </tr>
-                        @endforeach
-                        <td> <i class="far fa-trash-alt fa"></i></td>
-                        <td colspan="3">Check to remove from Venue</td>
+                        @empty
+                            <td colspan="4">No agreements assigned yet</td>
+                        @endforelse
+                        @if($data['organization']->member_agreements->count() > 0)
+                            <td> <i class="far fa-trash-alt fa"></i></td>
+                            <td colspan="3">Check to remove</td>
+                        @endif
                         </tbody>
                     </table>
                 </div>
             @endif
-            <div class="col-5 m-lg-2">
+            <h5>
+                <a href="{{route('agreements_list')}}" title="List Agreement">List Agreements</a> |
+                <a href="{{route('agreement_create')}}" title="New Agreement">Create New Agreement</a>
+            </h5>
+        </div>
+        <div class="row m-3">
+            <div class="col-12">
+                <h4>Attachments</h4>
+            </div>
+            <div class="col-12">
                 <div class="form-group">
-                    <h4>
-                        <label for="exampleFormControlSelect2">
-                        List of all agreements not currently attached to this organization.
-                        Select and submit to attach.</label>
-                    </h4>
-                    <select multiple class="form-control" name="all_agreements[]" id="agreements" size="20">
-                        @foreach($all_agreements as $agr)
-                            <option value="{{$agr->id}}">{{$agr->title}}</option>
-                        @endforeach
-                            <option value=""></option>
-                    </select>
+                    <label for="exampleInputFile">
+                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                        Add File(s) To this Organization
+                    </label>
+                    <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
         </div>
+        @if ($data['action'] == 'Edit')
+            <div class="col-md-12 pb-2 m-2">
+                <h5>{{$data['organization']->attachments->count()}}
+                    {{Str::plural('File', $data['organization']->attachments->count())}}
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> File </th>
+                            <th>Access level</th>
+                            <th>Edit</th>
+                            <th> Description </th>
+                            <th> Created At </th>
+                            <th> Updated At </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse ($data['organization']->attachments as $oa)
+
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="attachment[{{$oa->id}}][id]"
+                                                   value="{{$oa->id}}" />
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="{{route('attachment_download',
+                                            [$data['organization']->getAttachmentFolder(),
+                                            $oa->id])}}"
+                                       title="Download {{$oa->file_name}}">
+                                        {{$oa->file_name}}
+                                    </a>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        {{ select_options($data['access_levels'],
+                                            old('attachment.access_level', $oa->access_level),
+                                            ['name' => 'attachment['.$oa->id.'][access_level]',
+                                            'class' => 'form-control']) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <a title="{{ $oa->name }}" href="{{ route('admin_attachment_edit', $oa->id) }}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"
+                                           placeholder="Add a description for this file"
+                                           name="attachment[{{$oa->id}}][description]"
+                                           value="{{ old('attachments.description', $oa->description)}}" size="40"/>
+                                </td>
+                                <td>
+                                    {{$oa->created_at}}
+                                </td>
+                                <td>
+                                    {{$oa->updated_at}}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="7">No files</td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 mt-2">
+                    <i class="far fa-trash-alt"></i>
+                    Select checkbox to delete file.
+                </div>
+            </div>
+        @endif
+
         <div class="row mt-lg-3">
-            <div class="col-sm">
+            <div class="col">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-    <div class="col-sm"> &nbsp;</div>
+    <div class="col"> &nbsp;</div>
     @if ($data['action'] == 'Edit')
-         <div class="col-sm" style="float:right">
+         <div class="col text-right">
              <form name="delete" method="POST" action="{{route('organization_destroy')}}">
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $organization->id }}">
+                <input type="hidden" name="id[]" value="{{ $data['organization']->id }}">
                 <input class="btn btn-outline-danger" type="submit" value="Delete">
             </form>
          </div>
     @endif
 </div>
-<div class="row mt-lg-5">&nbsp;</div>
-
 @endsection

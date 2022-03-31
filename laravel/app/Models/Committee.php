@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\HasAttachment;
 use App\Policies\CommitteePolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,30 +12,28 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Searchable\SearchResult;
 use Spatie\Searchable\Searchable;
-use function route;
-
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int              $id
  * @property string           $name
  * @property string           $slug
  * @property string           $description
- * @property string           $access_level
  * @property string           $email
  * @property User             $creator
- * @property boolean          $in_menu
- * @property boolean          $live
- * @property boolean          $allow_comments
+ * @property bool          $in_menu
+ * @property bool          $live
+ * @property bool          $allow_comments
  * @property DateTime         $created_at
  * @property DateTime         $updated_at
  * @property User[]           $committee_members
  * @property User[]           $active_committee_members
  * @property CommitteePost[]  $posts
+ * @property int|mixed|string|null user_id
  * @method static withoutGlobalScopes()
  */
-class Committee extends LiveableModel implements Searchable
+class Committee extends LiveableModel implements HasAttachment, Searchable
 {
     use Notifiable;
     use Sortable;
@@ -43,7 +42,7 @@ class Committee extends LiveableModel implements Searchable
     protected $guard_name = 'web';
 
     protected $policies = [
-        Committee::class => CommitteePolicy::class,
+        self::class => CommitteePolicy::class,
     ];
 
     public $sortable = [
@@ -56,11 +55,10 @@ class Committee extends LiveableModel implements Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
-        'in_menu' => 'boolean',
         'allow_comments' => 'boolean',
         'live' => 'boolean',
     ];
@@ -71,12 +69,10 @@ class Committee extends LiveableModel implements Searchable
     protected $fillable = [
         'name',
         'description',
+        'file_name',
+        'image',
         'email',
-        'access_level',
         'live',
-        'sort_order',
-        'in_menu',
-        'allow_comments',
     ];
 
     /**
@@ -92,20 +88,22 @@ class Committee extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('Committee');
+
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->name,
                 \route('admin_committee_show', $this->slug)
             );
         }
-         return new SearchResult(
+
+        return new SearchResult(
             $this,
             $this->name,
             \route('committee', $this->slug)
         );
-
-
     }
 
     /**
@@ -116,6 +114,7 @@ class Committee extends LiveableModel implements Searchable
     public function setNameAttribute(string $value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['name'] = $value;
     }
 
@@ -141,8 +140,12 @@ class Committee extends LiveableModel implements Searchable
     public function active_committee_members(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
-            ->wherePivotIn('role', array_merge(Options::committee_executive_roles(), ['Member' => 'Member']))
+            ->wherePivotIn('role', array_merge(Options::committee_executive_roles(), [
+                'Member' => 'Member',
+                'Ex-officio' => 'Ex-officio',
+                ]))
             ->withPivot('role', 'committee_id')
+            ->with('user_info')
             ->wherePivot('deleted_at', null)
             ->withTimestamps();
     }
@@ -153,7 +156,32 @@ class Committee extends LiveableModel implements Searchable
     public function posts(): HasMany
     {
         return $this->hasMany(CommitteePost::class);
-        //->with(User::class);
-        //todo with associated author   return $this->belongsTo(User::class);
     }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
+    {
+        return $this->belongsToMany(Attachment::class, 'attachment_committee');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentFolder(): string
+    {
+        return 'public';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return $this->access_level;
+    }
+
 }

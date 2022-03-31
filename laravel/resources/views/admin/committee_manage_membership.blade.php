@@ -3,13 +3,21 @@
     ' for ' . $data['committee']->name ])
 @section('content')
     <div class='container m-lg-5'>
+        <div class="row">
+            <div class="col-12">
+                <h4>
+                    <a href="{{route('user_edit', $data['user']->id)}}">
+                        {{$data['user']->name}}
+                    </a>
+                </h4>
+            </div>
+        </div>
         <div class="row border border-dark rounded">
-            <form method="post" name="manage_committee_members"
-                  action="{{ url()->current() }}"
+            <form method="post" name="manage_committee_members" action="{{ url()->current() }}"
                   enctype="multipart/form-data"
                   class="needs-validation" novalidate>
                 {!! csrf_field() !!}
-                <div class="col-8 p-3">
+                <div class="col-12 p-3">
                     <div class="form-group">
                         <h4>
                             <label for="role">

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class StorePageRequest
+ * Class StorePageRequest.
  *
  * @property mixed[] $page
  */
@@ -34,13 +34,11 @@ class StorePageRequest extends FormRequest
     {
         return [
             'page.title' => 'required|unique:pages,title|max:255',
-            'page.description' => 'required',
             'page.content' => 'required',
             'page.access_level' => 'required|string|max:255',
-            'page.sort_order' =>  'required|numeric',
-            'page.in_menu' => 'boolean',
-            'page.allow_comments' => 'boolean',
             'page.live' => 'boolean',
+            'page.front_page' => 'boolean',
+            'page.landing_page' => 'boolean',
         ];
     }
 
@@ -49,7 +47,7 @@ class StorePageRequest extends FormRequest
         $page = \array_merge(
             $this->input('page'),
             [
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
             ]
         );
 

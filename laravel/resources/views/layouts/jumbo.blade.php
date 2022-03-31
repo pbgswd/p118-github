@@ -18,21 +18,30 @@
             src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k">
         </script>
         <script src="/js/tinymce.js"></script>
-        <link rel="canonical" href="http://{{env('APP_URL')}}/">
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-        <!-- Styles -->
-        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-        <style>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-WS6SX6VR7N"></script>
+        <script src="/js/google-analytics.js"></script>
+        <link rel="canonical" href="{{env('APP_URL')}}/">
 
-        </style>
-        <!-- Custom styles for this template -->
+        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
+
+        <!-- Favicons -->
+        <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
+        <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#563d7c">
+
+        <meta name="msapplication-config" content="/browserconfig.xml">
+        <meta name="theme-color" content="#563d7c">
+        <link rel="icon" href="/favicon.ico"><!-- 32×32 -->
+        <link rel="icon" href="/icon.svg" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png"><!-- 180×180 -->
+        <link rel="manifest" href="/manifest.webmanifest">
     </head>
     <body>
         <a id="top"></a>
         @include('layouts.nav')
-        <main role="main" class="mt-2 pt-lg-5">
+        <main role="main" class="">
             @include('flash-messages')
             @yield('content')
         </main>

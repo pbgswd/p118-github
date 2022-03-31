@@ -23,8 +23,6 @@
                         <th> @sortablelink('title', 'Title') </th>
                         <th> @sortablelink('access_level', 'Access Level') </th>
                         <th> @sortablelink('live', 'Is Live?') </th>
-                        <th> @sortablelink('sort_order', 'Sort Order') </th>
-                        <th> @sortablelink('in_menu', 'In Menu?') </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -46,15 +44,15 @@
                                         {{ $v->name }}
                                     </a>
                                 </h4>
+                                <h6>
+                                    {{$v->all_agreements->count() ?? 0}} {{Str::plural('Agreement', $v->all_agreements->count() ?? 0)}} <br />
+                                    {{$v->attachments->count() ?? 0}} {{Str::plural('Attachment', $v->attachments->count() ?? 0)}}
+                                </h6>
                             </td>
                             <td> {{ $v->access_level }} </td>
                             <td>
                                 {!! $v->live ? "<i class='fas fa-check'></i>" :
                                     "<i class='far fa-times-circle'></i>" !!}
-                            </td>
-                            <td> {{ $v->sort_order }} </td>
-                            <td> {!! $v->in_menu ? '<i class="fas fa-check"></i>' :
-                                    '<i class="far fa-times-circle"></i>' !!}
                             </td>
                             <td>
                                 <a href="{{ route('venue_edit', $v->slug) }}" title="Edit {{ $v->name }}">
@@ -70,7 +68,7 @@
                         </tr>
                     @endforelse
                     <tr>
-                        <td colspan="10">&nbsp;</td>
+                        <td colspan="8">&nbsp;</td>
                     </tr>
                 </tbody>
             </table>

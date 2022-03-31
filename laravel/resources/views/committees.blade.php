@@ -1,43 +1,41 @@
 @extends('layouts.jumbo')
 @section('content')
-<div class="container border border-dark rounded-lg mb-5" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded-lg mb-5 mt-3" style="background: rgba(220,220,220,0.8);">
     <div class="row">
-        <div class="col-12">
-            <h1 class="display-4">
+        <div class="col-12 mb-3 text-center">
+            <h1>
                 Local 118 Committees
             </h1>
         </div>
     </div>
     <div class="row">
         @forelse ( $data['committees'] as $c )
-            <div class="col-12 mt-1">
-                <div class="col border border-dark rounded-lg p-3">
-                    <h2>
-                        <a href="{{ route('committee', $c->slug) }}">
+            <div class="col-12 col-md-6 p-2">
+                <div class="col border border-dark rounded-lg w-100 h-100 p-3 text-center">
+                    <a href="{{route('committee', $c->slug)}}">
+                        @if($c->image)
+                            <img src="{{asset('storage/committees/'.$c->image)}}" class="img-fluid rounded mb-3" />
+                        @endif
+                        <h3>
                             {{ $c->name }}
-                        </a>
-                    </h2>
+                        </h3>
+                    </a>
                     <p>{!! $c->description !!}</p>
-                    <p>
-                        {{$c->active_committee_members->count()}}
-                        {{Str::plural('member', $c->active_committee_members->count())}}.
-                    </p>
                 </div>
             </div>
         @empty
             No committees created as of yet.
         @endforelse
     </div>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col">
+
+    <div class="col-12 mt-3">
+        <div class="d-flex justify-content-center">
             <div class="list-group">
                 <ul class="pagination">
                     {{$data['committees']->links()}}
                 </ul>
             </div>
         </div>
-        <div class="col"></div>
     </div>
 </div>
 @endsection

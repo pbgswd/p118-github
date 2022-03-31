@@ -5,7 +5,7 @@ namespace App\Http\Requests\Bylaws;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class DestroyBylawRequest
+ * Class DestroyBylawRequest.
  * @property int[] $id
  */
 class DestroyBylawRequest extends FormRequest
@@ -15,7 +15,7 @@ class DestroyBylawRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -25,7 +25,7 @@ class DestroyBylawRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'id' => 'required|exists:bylaws',

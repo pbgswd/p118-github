@@ -1,15 +1,15 @@
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Members'])
 @section('content')
 <div class="container">
-        <h3>
-           <span class="badge badge-primary badge-pill">
-               {!! $data['count'] !!}
-           </span>
-            Members. |
-            <a href="{{ route('invite-new-user') }}">Invite new member
-                <i class="far fa-arrow-alt-circle-right"></i>
-            </a>
-        </h3>
+    <h3>
+       <span class="badge badge-primary badge-pill">
+           {!! $data['count'] !!}
+       </span>
+        Members. |
+        <a href="{{ route('invite-new-user') }}">Invite new member
+            <i class="far fa-arrow-alt-circle-right"></i>
+        </a>
+    </h3>
 </div>
 <form name="delete" method="POST" action="{{route('user_destroy')}}">
     {!! csrf_field() !!}
@@ -58,9 +58,11 @@
                                 @endforeach
                             @endif
                         </td>
-                        <td> {{ $i->email }} </td>
                         <td>
-                             {{ $i->membership['membership_type'] }}
+                            <a href="mailto:{{ $i->email }}">{{ $i->email }}</a>
+                        </td>
+                        <td>
+                             {{ $i->membership['membership_type'] ?? '- -'}}
                         </td>
                         <td>
                             @foreach ($i->roles as $role)
@@ -84,20 +86,20 @@
         </div>
     </div>
     @if($data['users']->total() > 0)
-    <div class="row mb-lg-5">
-        <div class="col">
-            <i class="far fa-trash-alt fa-2x"></i>
-            <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
-        </div>
-        <div class="col-6">
-            <div class="list-group">
-                <ul class="pagination">
-                    {!! $data['users']->links() !!}
-                </ul>
+        <div class="row mb-lg-5">
+            <div class="col">
+                <i class="far fa-trash-alt fa-2x"></i>
+                <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
             </div>
+            <div class="col-6">
+                <div class="list-group">
+                    <ul class="pagination">
+                        {!! $data['users']->links() !!}
+                    </ul>
+                </div>
+            </div>
+            <div class="col"></div>
         </div>
-        <div class="col"></div>
-    </div>
     @endif
 </form>
 @endsection

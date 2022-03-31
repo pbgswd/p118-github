@@ -13,10 +13,10 @@ use Spatie\Searchable\SearchResult;
  * @property string $file_name
  * @property string $image
  * @property string $about
- * @property boolean $show_profile
- * @property boolean $show_picture
- * @property boolean $share_email
- * @property boolean $share_phone
+ * @property bool $show_profile
+ * @property bool $show_picture
+ * @property bool $share_email
+ * @property bool $share_phone
  * @property User $user
  */
 class UserInfo extends Model implements Searchable
@@ -57,7 +57,7 @@ class UserInfo extends Model implements Searchable
     {
         $user = User::where('id', $this->user_id)->first();
 
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $user,
                 $user->name,
@@ -65,12 +65,11 @@ class UserInfo extends Model implements Searchable
             );
         }
 
-       return new SearchResult(
+        return new SearchResult(
            $user,
            $user->name,
             \route('member', $this->user_id)
         );
-
     }
 
     /**

@@ -8,14 +8,12 @@ use App\Http\Requests\Topic\StoreTopicRequest;
 use App\Http\Requests\Topic\UpdateTopicRequest;
 use App\Models\Topic;
 use App\Services\AttachmentService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Illuminate\View\View as ViewAlias;
-
+use Illuminate\View\View;
 
 class AdminTopicController extends Controller
 {
@@ -28,83 +26,80 @@ class AdminTopicController extends Controller
     }
 
     /**
-     * @return Application|Factory|ViewAlias
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Topic::class);
 
         $topics = Topic::withoutGlobalScopes()
             ->sortable()
-            ->with('tagged', 'user')
+            ->with('user','attachments')
             ->paginate(20);
 
         return view('admin.listtopics', ['data' => ['topics' => $topics]]);
     }
 
-    /**
-     * @return Factory|ViewAlias
- */
+
     public function create()
     {
         $this->authorize('create', Topic::class);
 
         $topic = new Topic;
         $topic['user_id'] = Auth::id();
+        $access_levels = array_combine(AccessLevelConstants::getConstants(),
+            AccessLevelConstants::getConstants());
 
-        return view('admin.topic', [
-            'data' => [
-                'topic' => $topic,
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),
-                    AccessLevelConstants::getConstants()),
-                'action' => 'Create']]);
+        $data = [
+            'topic' => $topic,
+            'access_levels' => $access_levels,
+            'action' => 'Create',
+        ];
+
+        return view('admin.topic', ['data' => $data]);
     }
 
     /**
      * @param StoreTopicRequest $request
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-    public function store(StoreTopicRequest $request)
+    public function store(StoreTopicRequest $request): RedirectResponse
     {
         $this->authorize('create', Topic::class);
 
-        $topic = new Topic($request->input('topic'), $request->input('tags'));
+        $topic = new Topic($request->input('topic'));
         $topic->user_id = Auth::id();
 
         $topic->save();
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $topic);
-
-            if($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        if (!empty($request->tags)) {
-            $topic->tag(trim($request->tags, ','));
-        }
-        Session::flash('success', "You have saved a new topic");
+        Session::flash('success', 'You have saved a new topic');
 
         return redirect()->route('topic_edit', [$topic->slug]);
     }
 
     /**
      * @param Topic $topic
-     * @return Factory|ViewAlias
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Topic $topic)
+    public function edit(Topic $topic): View
     {
         $this->authorize('update', Topic::class);
 
         $data = [
-            'topic' => $topic->load('user','attachments'),
+            'topic' => $topic->load('user', 'attachments'),
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
             'action' => 'Edit',
@@ -117,9 +112,8 @@ class AdminTopicController extends Controller
      * @param UpdateTopicRequest $request
      * @param Topic $any_topic
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-
     public function update(UpdateTopicRequest $request, Topic $any_topic): RedirectResponse
     {
         $this->authorize('update', Topic::class);
@@ -132,23 +126,15 @@ class AdminTopicController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_topic);
 
-            if($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        if (empty($request->tags)) {
-            $any_topic->untag();
-        } else {
-            $any_topic->retag(trim($request->tags, ','));
-        }
-
-        Session::flash('success', "You have edited the topic");
+        Session::flash('success', 'You have edited the topic');
 
         return redirect()->route('topic_edit', [$any_topic->slug]);
     }
@@ -156,23 +142,22 @@ class AdminTopicController extends Controller
     /**
      * @param DestroyTopicRequest $request
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyTopicRequest $request)
+    public function destroy(DestroyTopicRequest $request): RedirectResponse
     {
         $this->authorize('delete', Topic::class);
 
         Topic::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Topic $topic) {
-                $topic->untag();
                 $topic->pages()->detach();
                 $topic->posts()->detach();
                 $this->attachmentService->destroyAttachments($topic);
                 $topic->delete();
-        });
+            });
 
-        Session::flash('success', Str::plural('Topic', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural('Topic', count($request->id)).' deleted.');
 
         return redirect()->route('topics_list');
     }

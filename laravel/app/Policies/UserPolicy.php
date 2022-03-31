@@ -7,7 +7,6 @@ use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Request;
 
-
 class UserPolicy
 {
     use HandlesAuthorization;
@@ -16,13 +15,12 @@ class UserPolicy
      * @param $user
      * @param $ability
      * @return bool
-    */
-
+     */
     public function before($user, $ability)
     {
-        $test = $user->hasRole(['super-admin', 'office',]) || $user->hasPermissionTo('create users');
+        $test = $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('create users');
         if ($test) {
-          return true;
+            return true;
         }
     }
 
@@ -33,7 +31,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-       return $user->hasRole(['super-admin', 'office']) ||
+        return $user->hasRole(['super-admin', 'office']) ||
        $user->hasPermissionTo('create users');
     }
 
@@ -58,7 +56,6 @@ class UserPolicy
         if ($test) {
             return false;
         }
-
     }
 
     /**
@@ -88,7 +85,7 @@ class UserPolicy
      */
     public function admin_update(User $user)
     {
-        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('edit users');;
+        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('edit users');
     }
 
     /**
@@ -101,7 +98,6 @@ class UserPolicy
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('delete users');
     }
-
 
     /**
      * Determine whether the user can restore the models user.

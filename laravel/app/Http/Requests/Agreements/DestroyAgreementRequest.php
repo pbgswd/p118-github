@@ -5,7 +5,7 @@ namespace App\Http\Requests\Agreements;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class DestroyAgreementRequest
+ * Class DestroyAgreementRequest.
  *
  * @property int[] $id
  */

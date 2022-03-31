@@ -15,7 +15,7 @@ class InviteUserPolicy
      */
     public function before($user)
     {
-        $test = $user->hasRole(['super-admin', 'office',]) || $user->hasPermissionTo('create users');
+        $test = $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('create users');
         if ($test) {
             return true;
         }
@@ -27,7 +27,7 @@ class InviteUserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('super-admin')||
+        return $user->hasRole('super-admin') ||
             $user->hasPermissionTo('create users');
     }
 
@@ -37,7 +37,7 @@ class InviteUserPolicy
      */
     public function view(User $user)
     {
-        return $user->hasRole('super-admin')||
+        return $user->hasRole('super-admin') ||
             $user->hasPermissionTo('create users');
     }
 
@@ -47,7 +47,7 @@ class InviteUserPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole(['super-admin', 'office'])||
+        return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
     }
 
@@ -57,7 +57,7 @@ class InviteUserPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole(['super-admin', 'office'])||
+        return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('edit users');
     }
 
@@ -67,7 +67,7 @@ class InviteUserPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole(['super-admin', 'office'])||
+        return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('edit users');
     }
 
@@ -77,7 +77,7 @@ class InviteUserPolicy
      */
     public function restore(User $user)
     {
-        return $user->hasRole(['super-admin', 'office'])||
+        return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('edit users');
     }
 
@@ -87,7 +87,7 @@ class InviteUserPolicy
      */
     public function forceDelete(User $user)
     {
-        return $user->hasRole(['super-admin', 'office'])||
+        return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('delete users');
     }
 }

@@ -5,19 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Policies\AdminDestroyPolicy;
 use App\Http\Requests\Policies\AdminStorePolicy;
 use App\Http\Requests\Policies\AdminUpdatePolicy;
+use App\Models\Options;
 use App\Models\Policy;
 use App\Services\AttachmentService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class AdminPolicyController extends Controller
 {
-    /** @var AttachmentService  */
+    /** @var AttachmentService */
     private $attachmentService;
 
     /**
@@ -30,11 +30,9 @@ class AdminPolicyController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $data = [];
         $data['policies'] = Policy::withoutGlobalScopes()
@@ -48,60 +46,54 @@ class AdminPolicyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $data = [
             'policy' => new Policy,
             'action' => 'Create',
+            'access_levels' => Options::access_levels(),
         ];
 
         return view('admin.policy', ['data' => $data]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
+     * @param AdminStorePolicy $request
+     * @return RedirectResponse
      */
-    public function store(AdminStorePolicy $request)
+    public function store(AdminStorePolicy $request): RedirectResponse
     {
         $policy = new Policy($request->policy);
 
         $policy->save();
 
-        Session::flash('success', "policy posting saved");
+        Session::flash('success', 'policy posting saved');
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $policy);
 
             if ($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
         return redirect()->route('admin_policy_edit', [$policy->id]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Policy $any_policy
-     * @return Response
+     * @return View
      */
-    public function edit(Policy $any_policy)
+    public function edit(Policy $any_policy): View
     {
         $data = [
             'policy' => $any_policy->loadWithoutGlobalScopes('user', 'attachments'),
             'action' => 'Edit',
+            'access_levels' => Options::access_levels(),
         ];
 
         return view('admin.policy', ['data' => $data]);
@@ -122,21 +114,18 @@ class AdminPolicyController extends Controller
 
         $result = $this->attachmentService->updateAttachment($request, $any_policy);
 
-        if (null !== ($request->file('attachments')))
-        {
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_policy);
 
-            if($result){
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "You have edited the policy");
+        Session::flash('success', 'You have edited the policy');
 
         return redirect()->route('admin_policy_edit', [$any_policy->id]);
     }
@@ -154,15 +143,14 @@ class AdminPolicyController extends Controller
         //$this->authorize('delete', Auth::user());
 
         /** @var Collection $policy */
-
         Policy::withoutGlobalScopes()
             ->find($request->id)
-            ->each(function(Policy $policy) {
+            ->each(function (Policy $policy) {
                 $this->attachmentService->destroyAttachments($policy);
                 $policy->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) .
+        Session::flash('success', Str::plural(count($request->id).' posting', count($request->id)).
             ' and any related files deleted.');
 
         return redirect()->route('policies_list');

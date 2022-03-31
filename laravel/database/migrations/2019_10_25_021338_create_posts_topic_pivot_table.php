@@ -18,7 +18,7 @@ class CreatePostsTopicPivotTable extends Migration
             $table->foreign('topic_id')->references('id')->on('topics');
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts');
-          });
+        });
     }
 
     /**

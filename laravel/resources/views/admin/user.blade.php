@@ -1,48 +1,52 @@
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i> ' . $data["action"]
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-user"></i> ' . $data["action"]
             . ' Member ' . ($data["action"] == "Edit" ? $data['user']->name : '') ])
 @section('content')
-<script>
-    tinymce.init({
-        selector: 'textarea#admin_notes, textarea#about',
-        height: 200,
-        width:800,
-        menubar: false,
-        plugins: [
-            'advlist autolink lists link image charmap print preview anchor textcolor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify ' +
-            '| bullist numlist outdent indent | removeformat | help',
-        content_css: [
-            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-            '//www.tiny.cloud/css/codepen.min.css'
-        ]
-    });
-</script>
+    @include('admin.admin_partials.admin_tinymce')
 <div class="container mb-lg-5">
     <div class="row">
-        <div class="col-4">
+        <div class="col-6">
             <h4>
                 <a href="{{ route('users_list') }}">
-                    <i class="far fa-arrow-alt-circle-left"></i> List of members
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    List of members
                 </a>
             </h4>
         </div>
-        <div class="col-4">
+        @if($data['action'] == 'Edit')
+            <div class="col-6 text-md-right">
+                <h4>
+                    <a title="public profile for {{ $data['user']->name }}" target="_blank"
+                       href="{{ route('member', $data['user']->id) }}">
+                        <i class="far fa-user-circle"></i>
+                        View public profile
+                    </a>
+                </h4>
+            </div>
+        @endif
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
             <h4>
-                <a title="public profile for {{ $data['user']->name }}" target="_blank"
-                   href="{{ route('member', $data['user']->id) }}">
-                    <i class="far fa-user-circle"></i> View public profile
+                <a href="{{route('admin_edit_address', $data['user']->id)}}">
+                    <i class="fas fa-address-card text-success"></i>
+                    Update address
+                </a>
+            </h4>
+        </div>
+        <div class="col-12 col-md-6 text-md-right">
+            <h4>
+                <a href="{{route('admin_edit_emergency_contact', $data['user']->id)}}">
+                    <i class="fas fa-first-aid text-danger"></i>
+                    Update emergency contact
                 </a>
             </h4>
         </div>
     </div>
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
-        {!! csrf_field() !!}
+        @csrf
         <div class="row border border-primary rounded-lg border-3 mt-lg-4 p-lg-1 mb-lg-3">
-            <div class="col-lg-12">
+            <div class="col-12 mt-2 mb-2">
                 <h3>Primary Contact Information</h3>
             </div>
             <div class="col-12 input-group mb-3">
@@ -59,7 +63,7 @@
                        value="{{ old('user.email', $data['user']->email ?? null)}}" size="80" required/>
                 </div>
             </div>
-            <div class="col-12 input-group mb-6">
+            <div class="col-12 input-group mb-3 pb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
                         <input name="user_info[share_email]" type="hidden" value="0" />
@@ -71,12 +75,12 @@
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
                        value="Share email in profile?" size="40" readonly>
             </div>
-            <div class="col-12 input-group mb-3 mt-1">
+            <div class="col-12 input-group mb-3 mt-2">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
-                   <input type="text" class="form-control"  placeholder="Phone" name="user_phone[phone_number]"
+                   <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
+                   <input type="tel" class="form-control"  placeholder="Phone" name="user_phone[phone_number]"
                           value="{{ old('user_phone.phone_number', $data['user']->phone_number->phone_number ?? '')}}"
-                          size="80" required/>
+                          size="80"/>
                 </div>
             </div>
             <div class="input-group mb-2 col-12">
@@ -93,14 +97,20 @@
             </div>
         </div>
         @if ($data['action'] == 'Edit')
-            <div class="row border border-primary rounded-lg border-3 mt-lg-1 pb-3 mb-lg-3">
-                <div class="col-12 pt-3">
+            <div class="row border border-primary rounded-lg border-3 mt-1 pb-3 mb-3">
+                <div class="col-12 col-md-6 mt-2 mb-2">
                     <h4>Committee Memberships</h4>
-                    <p>
+                </div>
+                <div class="col-12 col-md-6 mt-2 mb-2 text-md-right">
+                    <h4>
                         <a href="{{route('committees_list')}}">
-                            Go to Committees Admin
+                           Committees Admin
+                            <i class="far fa-arrow-alt-circle-right"></i>
                         </a>
-                    </p>
+                    </h4>
+                </div>
+
+                <div class="col-12 mt-2 mb-2">
                     @forelse($data['user']->committee_memberships as $c)
                         <h4>
                             <a href="{{route('admin_committee_show', $c->slug)}}">
@@ -117,37 +127,38 @@
                 </div>
             </div>
             <div class="row border border-primary rounded-lg border-3 mt-lg-1 pb-3">
-                <div class="col-6 pt-3">
+                <div class="col-6  mt-2 mb-2">
                     <h4>Executive Title & Email</h4>
                 </div>
                 <div class="col-6 pt-3 mb-3 text-right">
                     <a href="{{route('admin_executive_create', $data['user']->id)}}">
-                        <h4>Create new Executive Role <i class="far fa-arrow-alt-circle-right"></i></h4>
+                        <h4>Create new Executive Role
+                            <i class="far fa-arrow-alt-circle-right"></i>
+                        </h4>
                     </a>
                 </div>
-                    <div class="col-12 pt-3">
-                        @forelse($data['user']->allExecutiveRoles as $e)
-                            <h4>
-                                {!! $e->pivot->current ? "<b>Currently:</b> "
-                                    : '' !!}
-                                {{$e->title}},
-                                from {{\Carbon\Carbon::parse($e->pivot->start_date)->format('F j Y')}},
-                                until {{\Carbon\Carbon::parse($e->pivot->end_date)->format('F j Y')}}.
-                                <a href="{{route('admin_executive_edit', $e->pivot->id)}}"
-                                   title="Edit">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                            </h4>
-                            <br />
-                        @empty
-                        No executive roles for {{$data['user']->name}}.
-                        @endforelse
-                    </div>
-
+                <div class="col-12 pt-3">
+                    @forelse($data['user']->allExecutiveRoles as $e)
+                        <h4>
+                            {!! $e->pivot->current ? "<b>Currently:</b> "
+                                : '' !!}
+                            {{$e->title}},
+                            from {{\Carbon\Carbon::parse($e->pivot->start_date)->format('F j Y')}},
+                            until {{\Carbon\Carbon::parse($e->pivot->end_date)->format('F j Y')}}.
+                            <a href="{{route('admin_executive_edit', $e->pivot->id)}}"
+                               title="Edit">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                        </h4>
+                        <br />
+                    @empty
+                    No executive roles for {{$data['user']->name}}.
+                    @endforelse
+                </div>
             </div>
         @endif
         <div class="row border border-primary rounded-lg border-3 p-lg-3 mt-3 mb-3">
-            <div class="col-12">
+            <div class="col-12 mt-2 mb-2">
                 <h4>Member Info</h4>
             </div>
             <div class="input-group mb-3 col-12">
@@ -163,18 +174,33 @@
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
                        value="Check to share profile with other members." size="80" readonly>
             </div>
-            <div class="row mt-lg-3">
+            <div class="row mt-3">
                 @if( isset($data['user']->user_info->image) )
-                    <div class="col-4 mt-lg-1 mb-3">
-                        <h4><i class="far fa-images"></i> Profile Image</h4>
-                        <h5>Currently: {{ $data['user']->user_info->file_name }}</h5>
-                        <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}" width="150px" />
-                        <input type="hidden"  name="user_info[image]" value="{{$data['user']->user_info->image}}" />
+                    <div class="col-12 mt-3 mb-3 mx-auto text-center">
+                        <h4>
+                            <i class="far fa-images"></i>
+                            Profile Image Currently:
+                            {{ $data['user']->user_info->file_name }}
+                        </h4>
+                        <img src="{{ asset('storage/users/'. $data['user']->user_info->image) }}"
+                            class="rounded img-fluid w-50 mx-auto" />
+                        <input type="hidden" name="user_info[image]" value="{{$data['user']->user_info->image}}" />
+                        <input type="hidden" name="user_info[file_name]" value="{{$data['user']->user_info->file_name}}" />
+
+                        <h5>
+                            {{$data['filesize'] ?? ''}}
+                        </h5>
+
+                        <img src="{{ asset('storage/users/'. $data['user']->user_info->thumb) }}"
+                             class="rounded img-fluid mt-5" />
+                        <h5>
+                            {{$data['user']->user_info->thumb_size ?? ''}}
+                        </h5>
                     </div>
                     <div class="input-group mb-3 col-12">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input name="user_info[show_profile]" type="checkbox" value="1" />
+                                <input name="user_info[delete_image]" type="checkbox" value="1" />
                             </div>
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox"
@@ -218,10 +244,13 @@
                 </textarea>
             </div>
         </div>
-
         <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
-            <div class="col-md-12">
-                <h4>Membership type & details</h4>
+            <div class="col-12 mt-2 mb-2">
+                <h4>
+                    Membership type & details
+                </h4>
+            </div>
+            <div class="col-12 mt-2 mb-2">
                 <p>Member status is for all regular members, and Office is for office administrators.</p>
                 <p>
                     <i>Note: this section will manage membership date range and member seniority when we
@@ -246,21 +275,23 @@
             </div>
         </div>
         <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
-            <div class="col-md-12">
+            <div class="col-12 mt-2 mb-2">
                 <h4>User website admin access roles </h4>
+            </div>
+            <div class="col-12 mt-2 mb-2 pb-3">
                 <p>Use this section to grant access to members for managing content.</p>
-                <ul>
-                    <li>A member is 'member' by default, and just has access to login.</li>
-                    <li>A writer is a member who can update content in sections of the site.
+                <ul class="list-group">
+                    <li class="list-group-item">A member is 'member' by default, and just has access to login.</li>
+                    <li class="list-group-item">A writer is a member who can update content in sections of the site.
                         Committee privileges are not a part of this. </li>
-                    <li>An access level of 'office' allows for office staff to manage users.</li>
-                    <li>Super-admin access is for full do everything access.</li>
+                    <li class="list-group-item">An access level of 'office' allows for office staff to manage users.</li>
+                    <li class="list-group-item">Super-admin access is for full do everything access.</li>
                 </ul>
             </div>
             @foreach ($data['roles'] as $role)
-                <div class="col-md-12 mb-6">
+                <div class="col-12 mb-1">
                     <div class="input-group">
-                        <div class="input-group-prepend mr-lg-2">
+                        <div class="input-group-prepend mr-2 ">
                             <div class="input-group-text">
                                 <input name="user_roles[]" type="checkbox" value="{{$role->name}}"
                                     {{ checked(array_key_exists($role->name, $data['user_roles'])) }}
@@ -276,7 +307,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="row mt-lg-4">
+        <div class="row mt-4">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />

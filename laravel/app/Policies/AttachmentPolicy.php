@@ -12,7 +12,6 @@ class AttachmentPolicy
 
     public function before()
     {
-
     }
 
     /**
@@ -78,6 +77,7 @@ class AttachmentPolicy
         if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles'])) {
             return true;
         }
+
         return $user->id === $attachment->user_id;
     }
 
@@ -97,6 +97,7 @@ class AttachmentPolicy
         if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'delete articles'])) {
             return true;
         }
+
         return $user->id === $attachment->user_id;
     }
 
@@ -116,6 +117,7 @@ class AttachmentPolicy
         if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'delete articles'])) {
             return true;
         }
+
         return $user->id === $attachment->user_id;
     }
 
@@ -135,6 +137,7 @@ class AttachmentPolicy
         if ($user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'delete articles'])) {
             return true;
         }
+
         return $user->id === $attachment->user_id;
     }
 }

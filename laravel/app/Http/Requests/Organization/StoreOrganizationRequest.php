@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class StoreOrganizationRequest
+ * Class StoreOrganizationRequest.
  *
  * @property mixed[] $organization
  */
@@ -36,9 +36,8 @@ class StoreOrganizationRequest extends FormRequest
             'organization.name' => 'required|unique:organizations,name|max:255',
             'organization.description' => 'required|string',
             'organization.url' => 'url|nullable',
-            'organization.sort_order' =>  'required|numeric',
-            'organization.in_menu' => 'boolean',
             'organization.live' => 'boolean',
+            'image' => 'file|nullable',
         ];
     }
 

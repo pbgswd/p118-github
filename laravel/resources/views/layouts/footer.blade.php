@@ -1,162 +1,152 @@
-        <footer class="container border border-dark rounded-lg mt-2 mb-lg-5">
-            <div class="row mb-5 mr-2 p-lg-5">
-                <div class="col-3">
-                    <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
-                        <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png"
-                             alt="BC Federation of Labor" class="p-1" />
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
-                        <img src="/storage/public/E9psVVljWX9afHmiwfyeTCuXEU6WnKHUIoevll6Y.jpeg"
-                             alt="IATSE International" class="p-1" />
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="https://canadianlabour.ca/" title="Canadian labour Congress" target="_blank">
-                        <img src="/storage/public/KKVqVfiv4hU4ayxNukvYJsN5EKgIqnYfx5mssuT7.png"
-                             alt="Canadian Labour Congress" class="p-1" />
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="http://www.vdlc.ca/" title="Vancouver & District Labour Congress" target="_blank">
-                        <img src="/storage/public/mlL21yHivsR7ztxYh3hRB2Y8j9rcFzY5BfXtSLE1.jpeg"
-                             alt="Vancouver & District Labour Congress" class="p-1" />
-                    </a>
-                </div>
-            </div>
-            <div class="row flex-row">
-                <ul class="list-group list-group-horizontal flex-grow-0">
-                    <li class="list-group-item"><a href="/page/terms-of-use">Terms of Use</a> </li>
-                    <li class="list-group-item"><a href="/page/privacy-policy">Privacy Policy</a> </li>
-                    <li class="list-group-item"><a href="/page/disclaimer">Disclaimer</a> </li>
-                    <li class="list-group-item"><a href="/page/links">Links</a> </li>
-                    <li class="list-group-item"><a href="/page/apply-for-work">Apply for work</a></li>
-                    @guest
-                    @else
-                        @role('super-admin')
-                        <li class="list-group-item">
-                            <a href="{{route('admin')}}" title="Admin">
-                                <i class="fas fa-tachometer-alt"></i>
-                            </a>
-                        </li>
-                        @endrole
-                    @endguest
-                </ul>
-            </div>
-            <div class="row mt-2 flex-grow-0">
-                @guest
-                    <div class="col-12 mb-4">
-                        <a href="/login">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-                        </a>
+<footer class="container mt-2">
+    @auth
+        <div class="row p-2 d-none d-md-block d-lg-none">
+            <div class="col-12 border border-secondary rounded-lg p-2 pt-3">
+            <form class="form-inline" action="{{route('search')}}" method="POST">
+                {!! csrf_field() !!}
+                <div class="col-12 mb-0 mt-md-3 mb-md-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text d-none d-md-block" id="basic-addon1">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" placeholder="Search"
+                               aria-label="Search" name="search" size="80" required>
                     </div>
-                @else
-                    <div class="col-6 mb-4">
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button class="btn btn-outline-success my-2 my-sm-0 float-left" type="submit">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
-                    <div class="col-6 mb-5">
-                        <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="post">
-                            {!! csrf_field() !!}
-                            <i class="fas fa-search"></i> &nbsp;
-                            <input class="form-control mr-sm-2" type="text" placeholder="Search"
-                                   aria-label="Search" name="search">
-                            <button type="submit" name="Submit" value="Submit"
-                                    class="btn btn-outline-success my-2 my-sm-0">
-                                Search
-                            </button>
-                        </form>
-                    </div>
-                @endguest
+                </div>
+                <div class="col-12 mt-2 d-flex justify-content-end">
+                    <button type="submit" name="Submit" value="Submit"
+                            class="btn btn-success">
+                        Search
+                    </button>
+                </div>
+            </form>
             </div>
-            <div class="row mb-6 ">
-                <div class="col-4 flex-column">
-                    <h3>IATSE Local 118</h3>
-                    <h4>#206 - 2940 Main Street<br />
-                    Vancouver, BC, V5T 3G3</h4>
-                </div>
-                <div class="col-4 flex-column">
-                    <h3>
-                        <a href="https://goo.gl/maps/pXb7Bv8n1jHGykjh8" target="_blank" title="IATSE Local 118 Office">
-                            <i class="fas fa-map-marked-alt"></i> Maps
-                        </a>
-                    </h3>
-                    <h3>
-                        <a href="tel:604-685-9553">
-                            <i class="fas fa-phone-square"></i> 604-685-9553
-                        </a>
-                    </h3>
-                    <h3>
-                        <a href="mailto:office@iatse118.com">
-                            <i class="fas fa-envelope"></i> office@iatse118.com
-                        </a>
-                    </h3>
-                </div>
-                <div class="col-4 flex-column">
-                    <h5>
-                        <i class="fas fa-hashtag"></i>
-                        Social Media
-                    </h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item p-0 m-0">
-                            <a class="list-group-item" href="https://twitter.com/IATSE_118" target="_blank"
-                               title="IATSE Local 118">
-                                <i class="fab fa-twitter"></i>
-                                @IATSE_118
-                            </a>
-                        </li>
-                        <li class="list-group-item p-0 m-0">
-                            <a class="list-group-item" href="https://twitter.com/IATSECANADA" target="_blank"
-                               title="IATSE Canada">
-                                <i class="fab fa-twitter"></i>
-                                @IATSECANADA
-                            </a>
-                        </li>
-                        <li class="list-group-item p-0 m-0">
-                            <a class="list-group-item" href="https://twitter.com/IATSEYWC" target="_blank"
-                               title="IATSE Young Workers">
-                                <i class="fab fa-twitter"></i>
-                                @IATSEYWC
-                            </a>
-                        </li>
-                        <li class="list-group-item p-0 m-0">
-                            <a class="list-group-item" href="https://twitter.com/IATSE" target="_blank" title="IATSE">
-                                <i class="fab fa-twitter"></i>
-                                @IATSE
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row mt-2 mb-lg-2">
-                <div class="col-4 text-left">
-                    <i class="far fa-copyright"></i> <?php echo date('Y'); ?> {{ config('app.name')}}
-                </div>
-                <div class="col-4 text-left">
-                    <h6>Site by IATSE 118 Members</h6>
-                </div>
-                <div class="col-4 text-right">
-                    <a href="#top" title="Top of page">
-                        <i class="fas fa-angle-up"></i>
-                        Top of page
+        </div>
+    @endauth
+    <div class="row mt-1 mt-md-5 px-2 d-flex justify-content-around">
+        <div class="col-12 col-md-4 mb-3 pb-2 border border-secondary rounded pt-3">
+            <h5>
+                <i class="fas fa-hashtag"></i>
+                To Read
+            </h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a href="{{route('page_show', 'terms-of-use')}}">Terms of Use</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{route('page_show', 'privacy-policy')}}">Privacy Policy</a>
+                </li>
+                <li class="list-group-item"><a href="{{route('page_show', 'disclaimer')}}">Disclaimer</a></li>
+                <li class="list-group-item"><a href="{{route('page_show', 'links')}}">Links</a></li>
+                <li class="list-group-item"><a href="{{route('page_show', 'apply-for-overhire-work')}}">Apply for work</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md-4 mb-3 pb-2 mt-sm-5 mt-md-0 border border-secondary rounded pt-3">
+            <h5>
+                <i class="fas fa-hashtag"></i>
+                Social Media
+            </h5>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-center">
+                    <a href="https://www.facebook.com/IATSE118" target="_blank"
+                       title="IATSE Local 118 Facebook">
+                        <i class="fab fa-facebook"></i> FaceBook
                     </a>
-                </div>
+                    &nbsp;
+                    &nbsp;
+                    <a href="https://www.instagram.com/iatse118/" target="_blank">
+                        <i class="fab fa-instagram"></i> InstaGram
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://twitter.com/118IATSE" target="_blank"
+                       title="IATSE Local 118">
+                        <i class="fab fa-twitter"></i>
+                        @118IATSE
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://twitter.com/IATSECANADA" target="_blank"
+                       title="IATSE Canada">
+                        <i class="fab fa-twitter"></i>
+                        @IATSECANADA
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://twitter.com/IATSEYWC" target="_blank"
+                       title="IATSE Young Workers">
+                        <i class="fab fa-twitter"></i>
+                        @IATSEYWC
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://twitter.com/IATSE" target="_blank" title="IATSE">
+                        <i class="fab fa-twitter"></i>
+                        @IATSE
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-12 mt-3 text-center">
+        <h3>Our Affiliations</h3>
+    </div>
+    <div class="pb-md-3 d-flex justify-content-md-center">
+        <div class="col text-center">
+            <a href="http://www.bcfed.com/" title="BC Federation of Labour" target="_blank">
+                <img src="/storage/public/w8x7LmSqnTLjEHyftPbYRh3JFmBNh1GOVgjvGX6z.png"
+                     alt="BC Federation of Labor" class="flex-fill img-fluid association-img" />
+            </a>
+        </div>
+        <div class="col text-center">
+            <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
+                <img src="/storage/public/3qm1aQMeYkDEl30q8gh0iMiyorfRz6sqemdf0Skp.jpg"
+                     alt="IATSE International" class="p-1 img-fluid association-img" />
+            </a>
+        </div>
+        <div class="col text-center">
+            <a href="https://canadianlabour.ca/" title="Canadian labour Congress" target="_blank">
+                <img src="/storage/public/KKVqVfiv4hU4ayxNukvYJsN5EKgIqnYfx5mssuT7.png"
+                     alt="Canadian Labour Congress" class="p-1 flex-fill img-fluid  association-img" />
+            </a>
+        </div>
+        <div class="col text-center">
+            <a href="http://www.vdlc.ca/" title="Vancouver & District Labour Congress" target="_blank">
+                <img src="/storage/public/mlL21yHivsR7ztxYh3hRB2Y8j9rcFzY5BfXtSLE1.jpeg"
+                     alt="Vancouver & District Labour Congress" class="p-1 flex-fill img-fluid  association-img" />
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-5 mb-5 mt-md-5 mb-md-5 d-flex">
+            <div class="p-2 flex-fill text-left">
+                <i class="far fa-copyright"></i> {{date('Y')}}
+                <br />
+                {{ config('app.name')}}
             </div>
-        </footer>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-              integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-              crossorigin="anonymous">
-        <script src="/js/jquery-3.4.1.slim.min.js"
-                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-                crossorigin="anonymous">
-        </script>
-        <script>window.jQuery || document.write('<script src="/js/jquery.slim.min.js"><\/script>')</script>
-        <script src="/js/bootstrap.bundle.min.js"
-                integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-                crossorigin="anonymous">
-        </script>
+            <div class="p-2 flex-fill text-center">
+                <h6 align="center">Site by <br />IATSE 118 <br /> Members</h6>
+            </div>
+            <div class="p-2 flex-fill text-right">
+                <a href="#top" title="Top of page">
+                    <i class="fas fa-angle-up"></i>
+                    Top of page
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<link rel="stylesheet" href="/css/fontawesome/fontawesome-free-5.15.2-web/css/all.min.css" />
+<script src="/js/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous">
+</script>
+<script>window.jQuery || document.write('<script src="/js/jquery.slim.min.js"><\/script>')</script>
+<script src="/js/bootstrap.bundle.min.js"
+        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+        crossorigin="anonymous">
+</script>

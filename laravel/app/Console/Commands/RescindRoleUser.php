@@ -14,14 +14,12 @@ class RescindRoleUser extends AccessControl
      */
     protected $signature = 'role:rescind {role_name? : The name of an existing role to rescind.} {email? : The email of an existing user.}';
 
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Rescind a given role from a user.';
-
 
     /**
      * Execute the console command.
@@ -30,16 +28,12 @@ class RescindRoleUser extends AccessControl
      */
     public function handle()
     {
-        if ($this->argument('email') || $this->argument('role_name'))
-        {
+        if ($this->argument('email') || $this->argument('role_name')) {
             $user = User::where('email', $this->argument('email'))->first();
             $role = Role::where('name', $this->argument('name'))->first();
-            if (!$user || !$role)
-            {
+            if (! $user || ! $role) {
                 $this->error('Invalid role name or email.');
-            }
-            else
-            {
+            } else {
                 $user->removeRole($role);
             }
         }

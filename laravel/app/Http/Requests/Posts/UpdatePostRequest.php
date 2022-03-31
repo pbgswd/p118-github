@@ -24,14 +24,12 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'post.title' => 'required|max:255|unique:posts,title,' . $this->route('any_post')->slug . ',slug',
-            'post.description' => 'required',
+            'post.title' => 'required|max:255|unique:posts,title,'.$this->route('any_post')->slug.',slug',
             'post.content' => 'required',
             'post.access_level' => 'required|string|max:255',
-            'post.sort_order' =>  'required|numeric',
-            'post.in_menu' => 'boolean',
-            'post.allow_comments' => 'boolean',
             'post.live' => 'boolean',
+            'post.front_page' => 'boolean',
+            'post.landing_page' => 'boolean',
         ];
     }
 }

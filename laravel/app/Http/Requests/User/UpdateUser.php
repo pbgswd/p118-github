@@ -4,10 +4,8 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
 class UpdateUser extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,8 +26,8 @@ class UpdateUser extends FormRequest
         return [
             //unique:table,column,except,idColumn
             'user.name' => 'required|string|max:255',
-            'user.email' => 'required|max:255|unique:users,email,' . $this->route('user')->id . ',id',
-            'user_phone.phone_number' => 'required|max:255',
+            'user.email' => 'required|max:255|unique:users,email,'.$this->route('user')->id.',id',
+            'user_phone.phone_number' => 'max:20',
             'user_phone.label' => 'string|nullable',
             'user_phone.primary' => 'boolean',
             'user_info.share_email'=> 'boolean',
@@ -37,14 +35,14 @@ class UpdateUser extends FormRequest
             'user_info.image'=> 'string|nullable',
             'user_info.about'=> 'string|nullable|max:2000',
             'user_roles' => 'array|required',
-            /**
+        /**
             'user_membership.membership_date' => 'date',
             'user_membership.membership_expires' => 'date',
             'user_membership.seniority_number' => 'required|integer|unique:memberships,seniority_number,'
-             * . $this->route('user')->id . ',user_id',
+         * . $this->route('user')->id . ',user_id',.
             'user_membership.status' => 'string|required|max:255',
             'user_membership.admin_notes' => 'string|nullable|max:2000',
-             **/
+         **/
         ];
     }
 }

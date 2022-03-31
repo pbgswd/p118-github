@@ -3,54 +3,74 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agreement;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+//use App\Services\AgreementService;
 
 class AgreementController extends Controller
 {
+
     /**
-     * @return Factory|View
+     * @param AgreementService $service
+     * @return View
      */
-    public function list()
+/**
+    public function list_demo(AgreementService $service): View
     {
-        //todo member/public for attachments
         $data = [];
 
-        if(Auth::check() == false) {
-            $data['agreements'] = Agreement::sortable()
-                ->with('attachments')
-                ->whereRaw('NOW() < until')
+        $data['agreements'] = $service->get_parent_list();
+
+
+        //todo data when Auth::check() == false
+
+        // todo data count
+
+
+        //todo data when Auth::check() == true
+
+        // todo data count
+
+        return view('agreements_list', ['data' => $data]);
+
+    }
+**/
+
+    /**
+     * @return View
+     */
+    public function list(): View
+    {
+        $data = [];
+
+        if (Auth::check() == false) {
+            $data['agreements'] = Agreement::where([['live', 1],['access_level', 'public']])
                 ->orderBy('until', 'desc')
-                ->paginate(20);
+                ->sortable()
+                ->paginate(10);
 
-            $data['count'] = Agreement::with('attachments')
-                ->whereRaw('NOW() < until')->count();
+            $data['count'] = Agreement::where([['live', 1],['access_level', 'public']])->count();
+        } else {
 
-        }
-        else {
-            $data['agreements'] = Agreement::sortable()
-                ->with('attachments')
+            $data['agreements'] = Agreement::where('live', 1)
+                ->sortable()
                 ->orderBy('until', 'desc')
-                ->paginate(20);
+                ->paginate(10);
 
-            $data['count'] = Agreement::with('attachments')->count();
+            $data['count'] = Agreement::where('live', 1)->count();
         }
-
         return view('agreements_list', ['data' => ['data' => $data]]);
     }
 
-
     /**
-     * Display the specified resource.
      * @param Agreement $agreement
-     *
-     * @return Response
+     * @return View
      */
-    public function show(Agreement $agreement)
+    public function show(Agreement $agreement): View
     {
-        $agreement->load('user', 'attachments');
+        $agreement->load('user', 'attachments',  'organizations', 'venues');
+
+        //todo get all agreements for this
 
         return view('agreement_view', ['data' => ['agreement' => $agreement]]);
     }

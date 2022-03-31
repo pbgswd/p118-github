@@ -4,27 +4,25 @@ namespace App\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Searchable\SearchResult;
 use Spatie\Searchable\Searchable;
-
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property int $id
  * @property string $phone_number
  * @property string $label
- * @property boolean $primary
+ * @property bool $primary
  * @property DateTime created_at
  * @property DateTime updated_at
  */
 class PhoneNumber extends Model implements Searchable
 {
-
     protected $guard_name = 'web';
 
     protected $dates =
         [
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
 
     protected $casts =
@@ -39,7 +37,7 @@ class PhoneNumber extends Model implements Searchable
     {
         $user = User::where('id', $this->user_id)->first();
 
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $user,
                 $user->name,
@@ -53,7 +51,6 @@ class PhoneNumber extends Model implements Searchable
             \route('member', $this->user_id)
         );
     }
-
 
     /**
      * The attributes that are mass assignable.

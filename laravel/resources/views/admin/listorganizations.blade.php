@@ -1,18 +1,15 @@
-<?php
-$organizations = $data['organizations'];
-?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List organizations'])
 @section('content')
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-               {!! count($organizations)  !!}
+               {!! count($data['organizations'])  !!}
            </span>
             organizations. | <a href="{{ route('organization_create') }}">Create new organization <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
 
-    @if(count($organizations) < 1)
+    @if(count($data['organizations']) < 1)
     No organizations
     @else
 <form name="delete" method="POST" action="{{route('organization_destroy')}}">
@@ -28,15 +25,13 @@ $organizations = $data['organizations'];
                         <th> @sortablelink('title', 'Title') </th>
                         <th> @sortablelink('access_level', 'Access Level') </th>
                         <th> @sortablelink('live', 'Is Live?') </th>
-                        <th> @sortablelink('sort_order', 'Sort Order') </th>
-                        <th> @sortablelink('in_menu', 'In Menu?') </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $organizations as $org )
+                    @foreach ( $data['organizations'] as $org )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -49,11 +44,13 @@ $organizations = $data['organizations'];
                                 <h4>
                                     <a title="{{ $org->name }}" href="{{ route('organization_edit', $org->slug) }}">{{ $org->name }}</a>
                                 </h4>
+                                <h6>
+                                    {{$org->all_agreements->count() ?? 0}} {{Str::plural('Agreement', $org->all_agreements->count() ?? 0)}} <br />
+                                    {{$org->attachments->count() ?? 0}} {{Str::plural('Attachment', $org->attachments->count() ?? 0)}}
+                                </h6>
                             </td>
                             <td> {{ $org->access_level }} </td>
                             <td> {!! $org->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
-                            <td> {{ $org->sort_order }} </td>
-                            <td> {!! $org->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
                             <td>
                                 <a href="{{ route('organization_edit', $org->slug) }}" title="Edit {{ $org->name }} ">
                                     <i class="fas fa-edit"></i>
@@ -64,7 +61,7 @@ $organizations = $data['organizations'];
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="10">&nbsp;</td>
+                        <td colspan="8">&nbsp;</td>
                     </tr>
                 </tbody>
             </table>
@@ -79,7 +76,7 @@ $organizations = $data['organizations'];
         <div class="col-6">
             <div class="list-group">
                 <ul class="pagination">
-                     {{ $organizations->links() }}
+                     {{ $data['organizations']->links() }}
                 </ul>
             </div>
         </div>

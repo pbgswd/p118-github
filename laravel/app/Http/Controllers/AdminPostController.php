@@ -9,7 +9,7 @@ use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Services\AttachmentService;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,30 +32,30 @@ class AdminPostController extends Controller
 
     /**
      * @param Request $request
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $this->authorize('viewAny', Post::class);
 
         $posts = Post::withoutGlobalScopes()
             ->sortable()
-            ->with('tagged')
+            ->with('topics', 'attachments')
             ->paginate(20);
 
         return view('admin.listposts', ['data' => ['posts' => $posts]]);
     }
 
     /**
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Post::class);
 
         $post = new Post;
-        $post->topics;
 
         return view('admin.post', [
             'data' => [
@@ -65,20 +65,21 @@ class AdminPostController extends Controller
                 'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                     AccessLevelConstants::getConstants()),
                 'action' => 'Create',
-            ]
+                'model_name' => 'post',
+            ],
         ]);
     }
 
     /**
      * @param StorePostRequest $request
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request): RedirectResponse
     {
         $this->authorize('create', Post::class);
 
-        $post = new Post($request->input('post'), $request->input('tags'));
+        $post = new Post($request->input('post'));
 
         $post->user_id = Auth::id();
         $post->save();
@@ -86,43 +87,36 @@ class AdminPostController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $post);
 
-            if($result) {
-                Session::flash('success', "You uploaded "
-                    . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        if (!empty($request->input('post.topic_id'))) {
+        if (! empty($request->input('post.topic_id'))) {
             $post->topics()->sync($request->input('post.topic_id'));
         }
 
-        if (!empty($request->tags)) {
-            $post->tag(trim($request->tags, ','));
-        }
-
-        Session::flash('success', "You have saved a new post");
+        Session::flash('success', 'You have saved a new post');
 
         return redirect()->route('post_edit', [$post->slug]);
     }
 
     /**
      * @param Post $post
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Post $post)
+    public function edit(Post $post):View
     {
         $this->authorize('update', Post::class);
 
         $post->load('user', 'attachments', 'topics');
 
         $assignedTopics = [];
-        foreach ($post->topics as $topic)
-        {
+        foreach ($post->topics as $topic) {
             $assignedTopics[] = $topic->pivot->topic_id;
         }
 
@@ -130,9 +124,10 @@ class AdminPostController extends Controller
             'post' => $post,
             'topics' => Topic::all(),
             'assignedTopics' => $assignedTopics,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants()
-                ,AccessLevelConstants::getConstants()),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
             'action' => 'Edit',
+            'model_name' => 'post',
             ];
 
         return view('admin.post', ['data' => $data]);
@@ -142,7 +137,7 @@ class AdminPostController extends Controller
      * @param UpdatePostRequest $request
      * @param Post $any_post
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
     public function update(UpdatePostRequest $request, Post $any_post): RedirectResponse
     {
@@ -156,34 +151,26 @@ class AdminPostController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_post);
 
-            if($result) {
-                Session::flash('success', "You uploaded "
-                    . count($request->file('attachments')) . " files");
+            if ($result) {
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
             } else {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        if (!empty($request->post['topic_id'])) {
-
+        if (! empty($request->post['topic_id'])) {
             $assignedTopics = [];
 
-            foreach ($request->post['topic_id'] as $id)
-            {
+            foreach ($request->post['topic_id'] as $id) {
                 $assignedTopics[] = $id;
             }
             $any_post->topics()->sync($request->post['topic_id']);
         } else {
-           $any_post->topics()->detach();//no topics selected
+            $any_post->topics()->detach();
         }
 
-        if (empty($request->tags)) {
-            $any_post->untag();
-        } else {
-            $any_post->retag(trim($request->tags, ','));
-        }
-
-        Session::flash('success', "You have edited the post");
+        Session::flash('success', 'You have edited the post');
 
         return redirect()->route('post_edit', [$any_post->slug]);
     }
@@ -191,22 +178,21 @@ class AdminPostController extends Controller
     /**
      * @param DestroyPostRequest $request
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyPostRequest $request)
+    public function destroy(DestroyPostRequest $request): RedirectResponse
     {
         $this->authorize('delete', Post::class);
 
         Post::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Post $post) {
-                $post->untag();
                 $this->attachmentService->destroyAttachments($post);
                 $post->topics()->detach();
                 $post->delete();
             });
 
-        Session::flash('success', Str::plural('post', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural('post', count($request->id)).' deleted.');
 
         return redirect()->route('posts_list');
     }

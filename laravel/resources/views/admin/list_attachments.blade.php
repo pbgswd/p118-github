@@ -1,6 +1,3 @@
-<?php
-$attachments = $data['attachments'];
-?>
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> List Attachements and Images'])
 @section('content')
     <div class="container">
@@ -16,69 +13,62 @@ $attachments = $data['attachments'];
                 </h3>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <form id="search-form" action="{{route('list_attachments_search_result')}}" method="POST">
-                    @csrf
-                    <input class="form-control form-control-dark w-100" type="text"  style="background-color:#aaaaaa;" name="search" placeholder="Attachment Search" aria-label="Search">
-                </form>
-            </div>
-        </div>
-@if (count($attachments) > 0)
+        @include('admin.admin_partials.attachment_search_form')
+
+@if (count($data['attachments']) > 0)
     <form name="delete" method="POST" action="{{route('attachment_destroy')}}">
         {!! csrf_field() !!}
         {!! method_field('DELETE') !!}
-        <div class="form-group">
-            <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                    <thead>
-                    <tr>
-                        <th> @sortablelink('id','#') </th>
-                        <th> @sortablelink('file_name', 'File Name') </th>
-                        <th> @sortablelink('access_level', 'Access Level') </th>
-                        <th> @sortablelink('id', 'Id') </th>
-                        <th> @sortablelink('user_id', 'Uploaded By') </th>
-                        <th> Edit </th>
-                        <th> @sortablelink('created_at', 'Created At') </th>
-                        <th> @sortablelink('updated_at', 'Updated At') </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ( $attachments as $a )
+        <div class="row">
+            <div class="form-group">
+                <div class="table-responsive">
+                    <table class="table table-striped ">
+                        <thead>
                         <tr>
-                            <td>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="id[]" value="{{$a->id}}" />
-                                    </label>
-                                </div>
-                            </td>
-                            <td>
-                                <h4>
-                                    <a title="{{ $a->name }}" href="{{ route('admin_attachment_edit', $a->id) }}">{{ $a->file_name }}</a>
-                                </h4>
-                            </td>
-                            <td>
-                                {{$a->access_level}}
-                            </td>
-                            <td>
-                                {{$a->id}}
-                            </td>
-                            <td> {{ $a->user->name }} </td>
-                            <td>
-                                <a href="{{ route('admin_attachment_edit', $a->id) }}" title="Edit {{ $a->file_name }} ">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            </td>
-                            <td> {{ $a->created_at->format('F j Y H:i:s') }} </td>
-                            <td> {{ $a->updated_at->format('F j Y H:i:s') }} </td>
+                            <th> </th>
+                            <th> @sortablelink('file_name', 'File Name') </th>
+                            <th> @sortablelink('access_level', 'Access Level') </th>
+                            <th> @sortablelink('id', 'Id') </th>
+                            <th> @sortablelink('user_id', 'Uploaded By') </th>
+                            <th> Edit </th>
+                            <th> @sortablelink('created_at', 'Created At') </th>
+                            <th> @sortablelink('updated_at', 'Updated At') </th>
                         </tr>
-                    @endforeach
-                    <tr>
-                        <td colspan="8">&nbsp;</td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach ( $data['attachments'] as $a )
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="id[]" value="{{$a->id}}" />
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h4>
+                                        <a title="{{ $a->name }}" href="{{ route('admin_attachment_edit', $a->id) }}">{{ $a->file_name }}</a>
+                                    </h4>
+                                </td>
+                                <td>
+                                    {{$a->access_level}}
+                                </td>
+                                <td>
+                                    {{$a->id}}
+                                </td>
+                                <td> {{ $a->user->name }} </td>
+                                <td>
+                                    <a href="{{ route('admin_attachment_edit', $a->id) }}" title="Edit {{ $a->file_name }} ">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td> {{ $a->created_at->format('F j Y H:i:s') }} </td>
+                                <td> {{ $a->updated_at->format('F j Y H:i:s') }} </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -89,7 +79,7 @@ $attachments = $data['attachments'];
             <div class="col-6">
                 <div class="list-group">
                     <ul class="pagination">
-                        {!! $attachments->links() !!}
+                        {!! $data['attachments']->links() !!}
                     </ul>
                 </div>
             </div>

@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\UserPolicy;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,9 +15,8 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-
 /**
- * Class User
+ * Class User.
  *
  * @property int           $id
  * @property string        $name
@@ -35,6 +34,7 @@ use Spatie\Searchable\SearchResult;
  */
 class User extends Authenticatable implements HasAttachment, Searchable
 {
+    use HasFactory;
     use Notifiable;
     use Sortable;
     use HasRoles;
@@ -45,7 +45,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
      * @var string[]
      */
     protected $policies = [
-        User::class => UserPolicy::class,
+        self::class => UserPolicy::class,
     ];
 
     public $sortable = [
@@ -58,7 +58,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
@@ -93,8 +93,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->name,
@@ -122,7 +121,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
      */
     public function user_info(): HasOne
     {
-        return $this->hasOne(UserInfo::class);
+        return $this->hasOne(UserInfo::class)->withDefault();
     }
 
     /**
@@ -175,9 +174,8 @@ class User extends Authenticatable implements HasAttachment, Searchable
         return AccessLevelConstants::MEMBERS;
     }
 
-
     /**
-     * Limit to current active role(s) for the given user
+     * Limit to current active role(s) for the given user.
      *
      * @return BelongsToMany
      */
@@ -187,7 +185,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
     }
 
     /**
-     * All historical executive roles of the given user
+     * All historical executive roles of the given user.
      *
      * @return BelongsToMany
      */
@@ -198,7 +196,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
     }
 
     /**
-     * All historical executive roles of the given user
+     * All historical executive roles of the given user.
      *
      * @return BelongsToMany
      */
@@ -208,5 +206,4 @@ class User extends Authenticatable implements HasAttachment, Searchable
             ->whereRaw('NOW() > start_date AND NOW() < end_date')
             ->withPivot('id', 'start_date', 'end_date', 'current');
     }
-
 }

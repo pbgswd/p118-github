@@ -14,7 +14,7 @@ class AddMessageToInviteUsersTable extends Migration
     public function up()
     {
         Schema::table('invite_users', function (Blueprint $table) {
-           $table->text('message')->nullable()->after('name');
+            $table->text('message')->nullable()->after('name');
         });
     }
 

@@ -10,7 +10,6 @@ use App\Models\Page;
 use App\Models\Topic;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +17,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-
 class AdminPageController extends Controller
 {
     /**
      * @var AttachmentService
      */
-    private $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
     {
@@ -33,14 +30,16 @@ class AdminPageController extends Controller
 
     /**
      * @param Request $request
-     *
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $this->authorize('viewAny', Page::class);
-        $pages = Page::withoutGlobalScopes()->sortable()->with('tagged', 'user')->paginate(20);
+        $pages = Page::withoutGlobalScopes()
+            ->sortable()
+            ->with('topics', 'user', 'attachments')
+            ->paginate(20);
         $count = Page::withoutGlobalScopes()->count();
 
         return view(
@@ -55,16 +54,15 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Page::class);
 
         $page = new Page;
         $page['user_id'] = Auth::id();
-        $page->topics;
 
         return view(
             'admin.page',
@@ -75,6 +73,7 @@ class AdminPageController extends Controller
                     'access_levels' => Options::access_levels(),
                     'topics' => Topic::all(),
                     'action' => 'Create',
+                    'model_name' => 'page',
                 ],
             ]
         );
@@ -82,51 +81,42 @@ class AdminPageController extends Controller
 
     /**
      * @param StorePageRequest $request
-     *
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-    public function store(StorePageRequest $request)
+    public function store(StorePageRequest $request): RedirectResponse
     {
         $this->authorize('create', Page::class);
 
-        $page = new Page($request->page, $request->input('tags'));
+        $page = new Page($request->page);
 
         $page->save();
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $page);
-
-            if($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        if (!empty($request->input('page.topic_id'))) {
+        if (! empty($request->input('page.topic_id'))) {
             $page->topics()->sync($request->input('page.topic_id'));
         }
 
-        if (!empty($request->tags)) {
-            $page->tag(trim($request->tags, ','));
-        }
-
-        Session::flash('success', "You have saved a new page");
+        Session::flash('success', 'You have saved a new page');
 
         return redirect()->route('page_edit', [$page->slug]);
     }
 
     /**
      * @param Page $page
-     *
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Page $page)
+    public function edit(Page $page): View
     {
         $this->authorize('update', Page::class);
 
@@ -138,6 +128,7 @@ class AdminPageController extends Controller
             'assignedTopics' => $page->topics->pluck('id')->toArray(),
             'access_levels' => Options::access_levels(),
             'action' => 'Edit',
+            'model_name' => 'page',
         ];
 
         return view('admin.page', ['data' => $data]);
@@ -146,16 +137,12 @@ class AdminPageController extends Controller
     /**
      * @param UpdatePageRequest $request
      * @param Page $any_page
-     *
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
     public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
     {
         $this->authorize('update', Page::class);
-
-        $user = Auth::user();
-        $user->roles;
 
         $this->authorize('update', $any_page);
 
@@ -166,59 +153,43 @@ class AdminPageController extends Controller
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_page);
-            if($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
         if (empty($request->input('page.topic_id'))) {
-            $assignedTopics = [];
-            foreach ($request->input('page.topics') as $topic)
-            {
-                $assignedTopics[] = $topic->pivot->topic_id;
-            }
-            $any_page->topics()->detach($assignedTopics);
+            $any_page->topics()->detach($any_page->topics->pluck('id')->toArray());
         } else {
             $any_page->topics()->sync($request->page['topic_id']);
         }
 
-        //todo make tags a service
-        if (empty($request->tags)) {
-            $any_page->untag();
-        } else {
-            $any_page->retag(trim($request->tags, ','));
-        }
-
-        Session::flash('success', "You have edited the page");
+        Session::flash('success', 'You have edited the page');
 
         return redirect()->route('page_edit', [$any_page->slug]);
     }
 
     /**
      * @param DestroyPageRequest $request
-     *
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyPageRequest $request)
+    public function destroy(DestroyPageRequest $request): RedirectResponse
     {
         $this->authorize('delete', Page::class);
 
         Page::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Page $page) {
-                $page->untag();
                 $this->attachmentService->destroyAttachments($page);
                 $page->topics()->detach();
                 $page->delete();
             });
 
-        Session::flash('success', Str::plural('Page', count($request->id)) . ' deleted.');
+        Session::flash('success', Str::plural('Page', count($request->id)).' deleted.');
 
         return redirect()->route('pages_list');
     }

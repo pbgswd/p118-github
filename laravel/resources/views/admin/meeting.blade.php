@@ -1,36 +1,37 @@
-<?php
-$meeting = $data['meeting'];
-?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Meeting ' . ($data["action"] == 'Edit' ? $meeting->name : '') ])
+@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' Meeting ' .
+    ($data["action"] == 'Edit' ? $data['meeting']->name : '') ])
 @section('content')
-    <script>
-        tinymce.init({
-            selector: 'textarea#meeting-description',
-            height: 200,
-            width:800,
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor textcolor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tiny.cloud/css/codepen.min.css'
-            ]
-        });
-    </script>
+    @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <h3><a href="{{ route('meetings_list') }}"> <i class="far fa-arrow-alt-circle-left"></i> List of meetings</a></h3>
-    <form method="post" name="meeting" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <a href="{{ route('meetings_list') }}">
+                <i class="far fa-arrow-alt-circle-left"></i>
+                List of meetings
+            </a>
+        </div>
+        @if($data['action'] == 'Edit')
+            <div class="col-12 col-md-6 text-md-right">
+                <a href="{{route('meeting', $data['meeting']->id)}}"
+                   title="View {{$data['meeting']->title}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
+    </div>
+
+
+
+
+    <form method="post" name="meeting" action="{{ url()->current() }}" enctype="multipart/form-data"
+          class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row" style="margin-top:30px;"> &nbsp;</div>
         <div class="row">
             <div class="form-group">
                 <div class="col-lg-2"><h4>Title</h4></div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control"  placeholder="Title" name="meeting[title]" value="{{ old('meeting.title', $meeting->title)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Title" name="meeting[title]"
+                           value="{{ old('meeting.title', $data['meeting']->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
@@ -43,7 +44,7 @@ $meeting = $data['meeting'];
                         class="form-control"
                         placeholder="YYYY-MM-DD"
                         name="meeting[date]"
-                        value="{{ old('meeting.date', \optional($meeting->date)->toDateString())}}"
+                        value="{{ old('meeting.date', \optional($data['meeting']->date)->toDateString())}}"
                         size="80"
                         data-provide="datepicker"
                         data-date-format="yyyy-mm-dd"
@@ -57,12 +58,12 @@ $meeting = $data['meeting'];
                     <h4>Description</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="meeting[description]" id="meeting-description" placeholder="Summary content" class="form-control">{{old('meeting.description', $meeting->description)}}</textarea>
+                    <textarea name="meeting[description]" id="meeting-description" placeholder="Summary content" class="form-control">{{old('meeting.description', $data['meeting']->description)}}</textarea>
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-2">
-            <div class="col-md-6">
+        <div class="row mt-5">
+            <div class="col-12">
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
@@ -71,19 +72,20 @@ $meeting = $data['meeting'];
                     <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-2"><h4>Status</h4></div>
-                <div class="col-sm">
-                    <label>
-                        <input name="meeting[live]" type="hidden" value="0" />
-                        <input name="meeting[live]" type="checkbox" value="1" {{ checked( old('meeting.live', $meeting->live)) }} /> Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
-                </div>
+            <div class="col-12">
+                <h4>Status</h4>
+            </div>
+            <div class="col-12">
+                <label>
+                    <input name="meeting[live]" type="hidden" value="0" />
+                    <input name="meeting[live]" type="checkbox" value="1" {{ checked( old('meeting.live', $data['meeting']->live)) }} /> Check now to make Live
+                </label>
+                <p>ie.: Draft or Published.</p>
             </div>
         </div>
+        </div>
         @if ($data['action'] == 'Edit')
-            @if(count($meeting->attachments) > 0)
+            @if(count($data['meeting']->attachments) > 0)
                 <div class="col-md-12">
                     <h2>Files</h2>
                     <table class="table table-striped table-sm">
@@ -99,7 +101,7 @@ $meeting = $data['meeting'];
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($meeting->attachments as $ma)
+                            @forelse ($data['meeting']->attachments as $ma)
                                 <tr>
                                     <td>
                                         <div class="checkbox">
@@ -109,10 +111,15 @@ $meeting = $data['meeting'];
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', [$meeting->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
+                                        <a href="{{route('attachment_download', [$data['meeting']->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
                                     </td>
                                     <td>
-                                        {{$ma->access_level}}
+                                        <div class="form-group">
+                                            {{ select_options($data['access_levels'],
+                                                old('attachment.access_level', $ma->access_level),
+                                                ['name' => 'attachment['.$ma->id.'][access_level]',
+                                                'class' => 'form-control']) }}
+                                        </div>
                                     </td>
                                     <td>
                                         <a title="Edit page for {{ $ma->file_name }}" href="{{ route('admin_attachment_edit', $ma->id) }}"><i class="far fa-edit"></i></a>
@@ -152,7 +159,7 @@ $meeting = $data['meeting'];
                          {!! csrf_field() !!}
                          {!! method_field('DELETE') !!}
                         <i class="far fa-trash-alt fa-2x"></i>
-                        <input type="hidden" name="id[]" value="{{ $meeting->id }}">
+                        <input type="hidden" name="id[]" value="{{ $data['meeting']->id }}">
                         <input class="btn btn-outline-danger" type="submit" value="Delete Meeting">
                     </form>
                  </div>

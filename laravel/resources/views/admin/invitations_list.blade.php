@@ -3,8 +3,8 @@
 <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
-             {{$data['invitations']->count()}}
-               {{ Str::plural('Invitation', $data['invitations']->count()) }}
+             {{$data['count']}}
+               {{ Str::plural('Invitation', $data['count']) }}
                Pending
            </span>
             | <a href="{{ route('invite-new-user') }}">
@@ -12,6 +12,11 @@
                 <i class="far fa-arrow-alt-circle-right"></i>
             </a>
         </h3>
+    <h3 class="mt-5">
+        <a href="{{route('list_import')}}">View Temporary Member Import Data</a> ||
+        <a href="{{route('invite-resend-list')}}">Send invited members to users data table</a>
+    </h3>
+
 </div>
 <form name="delete" method="POST" action="{{route('invited_user_destroy')}}">
     {!! csrf_field() !!}
@@ -54,7 +59,7 @@
                                 </h4>
                             </td>
                             <td>
-                                <a href="{{$i->email}}">{{$i->email}}</a>
+                                <a href="mailto:{{$i->email}}">{{$i->email}}</a>
                             </td>
                             <td>
                                 @if($i->remaining < 0)

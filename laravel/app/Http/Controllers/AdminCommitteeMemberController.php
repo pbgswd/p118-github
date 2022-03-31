@@ -7,16 +7,14 @@ use App\Http\Requests\CommitteeMember\DestroyCommitteeMember;
 use App\Http\Requests\CommitteeMember\SearchCommitteeMember;
 use App\Http\Requests\CommitteeMember\StoreCommitteeMember;
 use App\Http\Requests\CommitteeMember\UpdateCommitteeMember;
-use App\Services\EmailCommitteeMembershipService;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use App\Services\EmailCommitteeMembershipService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-
 
 class AdminCommitteeMemberController extends Controller
 {
@@ -29,9 +27,10 @@ class AdminCommitteeMemberController extends Controller
 
     /**
      * @param Committee $committee
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index(Committee $committee)
+    public function index(Committee $committee): View
     {
         $this->authorize('update', $committee);
         $data = [];
@@ -49,15 +48,16 @@ class AdminCommitteeMemberController extends Controller
     /**
      * @param SearchCommitteeMember $request
      * @param Committee $committee
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function search(SearchCommitteeMember $request, Committee $committee)
+    public function search(SearchCommitteeMember $request, Committee $committee): View
     {
         $this->authorize('update', $committee);
 
         $data = [];
 
-        $data['search'] = User::where('name', 'LIKE', '%'. filter_var($request->search, FILTER_SANITIZE_STRING) .'%')
+        $data['search'] = User::where('name', 'LIKE', '%'.filter_var($request->search, FILTER_SANITIZE_STRING).'%')
             ->with(
                 ['committee_memberships' => function ($query) use ($committee) {
                     $query->where('committee_id', $committee->id);
@@ -74,16 +74,16 @@ class AdminCommitteeMemberController extends Controller
         return view('admin.committee_members_list', ['data' => $data]);
     }
 
-
     /**
      * @param Committee $committee
      * @param User $user
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create(Committee $committee, User $user)
+    public function create(Committee $committee, User $user): View
     {
         $this->authorize('update', $committee);
-        $data= [];
+        $data = [];
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
         $data['user'] = $user;
@@ -97,8 +97,9 @@ class AdminCommitteeMemberController extends Controller
      * @param Committee $committee
      * @param User $user
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreCommitteeMember $request, Committee $committee, User $user)
+    public function store(StoreCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
         $this->authorize('update', $committee);
 
@@ -106,7 +107,7 @@ class AdminCommitteeMemberController extends Controller
 
         $committee->committee_members()->attach($user['id'], ['role' => $request['role']]);
 
-        if(in_array($request['role'], Options::committee_executive_roles())) {
+        if (in_array($request['role'], Options::committee_executive_roles())) {
             $user->assignRole(CommitteeConstants::COMMITTEE);
         }
 
@@ -116,19 +117,19 @@ class AdminCommitteeMemberController extends Controller
 
         $result = $this->emailCommitteeMembershipService->sendMessage($data);
 
-        Session::flash('success', "You have added " . $user->name . " to " . $committee->name .
-            "An email notification has been sent.");
+        Session::flash('success', 'You have added '.$user->name.' to '.$committee->name.
+            'An email notification has been sent.');
 
         return redirect()->route('admin-list-committee-members', [$committee->slug, $user->id]);
     }
 
-
     /**
      * @param Committee $committee
      * @param User $user
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Committee $committee, User $user)
+    public function edit(Committee $committee, User $user): View
     {
         $this->authorize('update', $committee);
 
@@ -152,8 +153,9 @@ class AdminCommitteeMemberController extends Controller
      * @param Committee $committee
      * @param User $user
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(UpdateCommitteeMember $request, Committee $committee, User $user)
+    public function update(UpdateCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
         $this->authorize('update', $committee);
 
@@ -164,13 +166,11 @@ class AdminCommitteeMemberController extends Controller
         /**
          * get all roles of user
          * assign user to committee, add admin role if role assigned is executive
-         * if user is exec in another committee, user may keep that role
+         * if user is exec in another committee, user may keep that role.
          */
-
         $keepRole = 0;
 
-        foreach($user->committee_memberships as $m)
-        {
+        foreach ($user->committee_memberships as $m) {
             if (in_array($m->pivot->role, Options::committee_executive_roles()) &&
                     $committee->id != $m->pivot->committee_id) {
                 $keepRole = 1;
@@ -180,7 +180,7 @@ class AdminCommitteeMemberController extends Controller
         if (in_array($request['role'], Options::committee_executive_roles())) {
             $user->assignRole(CommitteeConstants::COMMITTEE);
         } else {
-            if ($keepRole == 0 && !in_array($request['role'], Options::committee_executive_roles())) {
+            if ($keepRole == 0 && ! in_array($request['role'], Options::committee_executive_roles())) {
                 $user->removeRole(CommitteeConstants::COMMITTEE);
             }
         }
@@ -193,7 +193,7 @@ class AdminCommitteeMemberController extends Controller
             $result = $this->emailCommitteeMembershipService->sendMessage($data);
         }
 
-        Session::flash('success', "You have updated " . $user->name . " in " . $committee->name);
+        Session::flash('success', 'You have updated '.$user->name.' in '.$committee->name);
 
         return redirect()->route('admin-list-committee-members', [$committee->slug, $user->id]);
     }
@@ -203,10 +203,10 @@ class AdminCommitteeMemberController extends Controller
      * @param Committee $committee
      * @param User $user
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user)
+    public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
-
         $this->authorize('update', $committee);
 
         $committee->committee_members()->updateExistingPivot($user['id'],
@@ -214,7 +214,7 @@ class AdminCommitteeMemberController extends Controller
 
         $committee->committee_members()->detach($user['id']);
 
-        Session::flash('success', $user->name . " was deleted from " . $committee->name);
+        Session::flash('success', $user->name.' was deleted from '.$committee->name);
 
         return redirect()->route('admin-list-committee-members', [$committee->slug]);
     }

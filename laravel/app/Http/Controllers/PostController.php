@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Constants\AccessLevelConstants;
 use App\Models\Post;
 use App\Services\AttachmentService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -27,32 +26,35 @@ class PostController extends Controller
 
     /**
      * @param Request $request
-     * @return Application|Factory|View
+     * @return View
      */
-    public function list(Request $request)
+    public function list(Request $request): View
     {
         if (Auth::check()) {
-            $posts = Post::sortable()->with('tagged')->paginate(10);
+            $posts = Post::where('live',1)
+            ->with('topics')
+            ->paginate(9);
         } else {
-            $posts = Post::sortable()
-                ->where('access_level', '=', AccessLevelConstants::PUBLIC)
-                ->with('tagged')
-                ->paginate(10);
+            $posts = Post::where([['access_level', AccessLevelConstants::PUBLIC], ['live', 1]])
+                ->with('topics')
+                ->paginate(9);
         }
 
         return view('posts', ['data' => ['posts' => $posts]]);
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Post $post
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Post $post)
     {
+       // $this->authorize('view', Post::class);
+
         if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
-            Session::flash('warning', "Login to view this post.");
+            Session::flash('warning', 'Login to view this post.');
+
             return redirect('login');
         }
 
@@ -60,6 +62,5 @@ class PostController extends Controller
         $data = ['post' => $post];
 
         return view('post', ['data' => $data]);
-
     }
 }

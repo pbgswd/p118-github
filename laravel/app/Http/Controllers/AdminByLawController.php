@@ -8,18 +8,16 @@ use App\Http\Requests\Bylaws\StoreBylawRequest;
 use App\Http\Requests\Bylaws\UpdateBylawRequest;
 use App\Models\Bylaw;
 use App\Services\AttachmentService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AdminByLawController extends Controller
 {
-    /** @var AttachmentService  */
+    /** @var AttachmentService */
     private $attachmentService;
 
     /**
@@ -33,10 +31,10 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Bylaw::class);
         $data = [];
@@ -51,11 +49,11 @@ class AdminByLawController extends Controller
         return view('admin.bylaws_list', ['data' => $data]);
     }
 
-
     /**
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Bylaw::class);
         $data = [
@@ -71,8 +69,9 @@ class AdminByLawController extends Controller
     /**
      * @param StoreBylawRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(StoreBylawRequest $request)
+    public function store(StoreBylawRequest $request): RedirectResponse
     {
         $this->authorize('create', Bylaw::class);
 
@@ -80,29 +79,28 @@ class AdminByLawController extends Controller
 
         $bylaw->save();
 
-        Session::flash('success', "bylaw posting saved");
+        Session::flash('success', 'bylaw posting saved');
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $bylaw);
 
             if ($result) {
-                Session::flash('success', "You uploaded "
-                    . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
+
         return redirect()->route('admin_bylaw_edit', [$bylaw->id]);
     }
 
     /**
      * @param Bylaw $bylaw
-     *
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Bylaw $bylaw)
+    public function edit(Bylaw $bylaw): View
     {
         $this->authorize('update', Bylaw::class);
         $data = [
@@ -119,6 +117,7 @@ class AdminByLawController extends Controller
      * @param UpdateBylawRequest $request
      * @param Bylaw $any_bylaw
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateBylawRequest $request, Bylaw $any_bylaw): RedirectResponse
     {
@@ -130,21 +129,18 @@ class AdminByLawController extends Controller
 
         $result = $this->attachmentService->updateAttachment($request, $any_bylaw);
 
-        if (null !== ($request->file('attachments')))
-        {
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_bylaw);
 
-            if ($result){
-                Session::flash('success', "You uploaded "
-                    . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "You have edited the bylaw information");
+        Session::flash('success', 'You have edited the bylaw information');
 
         return redirect()->route('admin_bylaw_edit', [$any_bylaw->id]);
     }
@@ -152,8 +148,9 @@ class AdminByLawController extends Controller
     /**
      * @param DestroyBylawRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyBylawRequest $request)
+    public function destroy(DestroyBylawRequest $request): RedirectResponse
     {
         $this->authorize('delete', Bylaw::class);
         /** @var Collection $bylaws */
@@ -165,7 +162,7 @@ class AdminByLawController extends Controller
             });
 
         Session::flash('success', Str::plural($bylaws->count()
-                . ' bylaw', $bylaws->count()) . ' and any related files deleted.');
+                .' bylaw', $bylaws->count()).' and any related files deleted.');
 
         return redirect()->route('admin_bylaws_list');
     }

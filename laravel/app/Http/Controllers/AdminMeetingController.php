@@ -6,16 +6,13 @@ use App\Http\Requests\Meetings\DestroyMeetingRequest;
 use App\Http\Requests\Meetings\StoreMeetingRequest;
 use App\Http\Requests\Meetings\UpdateMeetingRequest;
 use App\Models\Meeting;
+use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-
 
 class AdminMeetingController extends Controller
 {
@@ -30,10 +27,10 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Meeting::class);
 
@@ -49,10 +46,10 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Meeting::class);
         $meeting = new Meeting();
@@ -64,18 +61,18 @@ class AdminMeetingController extends Controller
                 'data' => [
                     'meeting' => $meeting,
                     'action' => 'Add',
+                    'access_levels' => Options::access_levels(),
                 ],
             ]
         );
     }
 
-
     /**
      * @param StoreMeetingRequest $request
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-    public function store(StoreMeetingRequest $request)
+    public function store(StoreMeetingRequest $request): RedirectResponse
     {
         $this->authorize('create', Meeting::class);
 
@@ -83,27 +80,28 @@ class AdminMeetingController extends Controller
 
         $meeting->save();
 
-        Session::flash('success', "Meeting saved");
+        Session::flash('success', 'Meeting saved');
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $meeting);
 
             if ($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
             } else {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('error', 'You have an upload problem');
             }
         }
+
         return redirect()->route('meeting_edit', [$meeting->id]);
     }
 
     /**
      * @param Meeting $meeting
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Meeting $meeting)
+    public function edit(Meeting $meeting): View
     {
         $this->authorize('update', Meeting::class);
 
@@ -115,17 +113,17 @@ class AdminMeetingController extends Controller
                 'data' => [
                     'meeting' => $meeting,
                     'action' => 'Edit',
+                    'access_levels' => Options::access_levels(),
                 ],
             ]
         );
     }
 
-
     /**
      * @param UpdateMeetingRequest $request
      * @param Meeting $any_meeting
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
@@ -140,24 +138,24 @@ class AdminMeetingController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_meeting);
 
             if ($result) {
-                Session::flash('success', "You uploaded " .
-                    count($request->file('attachments')) . " files");
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
             } else {
-                Session::flash('error', "You have an upload problem");
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "You have edited the meeting information");
+        Session::flash('success', 'You have edited the meeting information');
 
         return redirect()->route('meeting_edit', [$any_meeting->id]);
     }
 
     /**
-     * @param Request $request
+     * @param DestroyMeetingRequest $request
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyMeetingRequest $request)
+    public function destroy(DestroyMeetingRequest $request): RedirectResponse
     {
         $this->authorize('delete', Meeting::class);
         Meeting::withoutGlobalScopes()
@@ -167,7 +165,7 @@ class AdminMeetingController extends Controller
                 $meeting->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' Meeting', count($request->id)) .
+        Session::flash('success', Str::plural(count($request->id).' Meeting', count($request->id)).
             ' and any related files deleted.');
 
         return redirect()->route('meetings_list');

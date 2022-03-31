@@ -72,33 +72,4 @@ class CommitteePostPolicy
                 $user->hasPermissionTo('create committee'));
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param User $user
-     * @param CommitteePost $committeePost
-     * @return mixed
-     */
-    public function restore(User $user, CommitteePost $committeePost)
-    {
-        return $committee->active_committee_members->find($user->id) !== null ||
-            $user->hasPermissionTo('manage committee') ||
-            $user->hasAnyRole(['super-admin']) ||
-            $user->hasPermissionTo('create committee');
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param User $user
-     * @param CommitteePost $committeePost
-     * @return mixed
-     */
-    public function forceDelete(User $user, CommitteePost $committeePost)
-    {
-        return $committee->active_committee_members->find($user->id) !== null ||
-            $user->hasPermissionTo('manage committee') ||
-            $user->hasAnyRole(['super-admin']) ||
-            $user->hasPermissionTo('create committee');
-    }
 }

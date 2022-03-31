@@ -7,11 +7,12 @@ use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\Options;
 use App\Models\User;
+use App\Services\AttachmentService;
 use Exception;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -20,19 +21,29 @@ use Illuminate\View\View;
 class AdminCommitteePostController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return Response
+     * @var AttachmentService
      */
-    public function index(CommitteePost $committeePost, Committee $committee)
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
+    /**
+     * @param CommitteePost $committeePost
+     * @param Committee $committee
+     * @return View
+     * @throws AuthorizationException
+     */
+    public function index(CommitteePost $committeePost, Committee $committee): View
     {
         $this->authorize('update', $committee);
 
         $data = [
             'committee' => $committee,
             'posts' => CommitteePost::withoutGlobalScopes()
+                ->with('attachments')
                 ->sortable()
                 ->where('committee_id', $committee->id)
                 ->orderBy('created_at')
@@ -44,20 +55,31 @@ class AdminCommitteePostController extends Controller
 
     /**
      * @param Committee $committee
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create(Committee $committee)
+    public function create(Committee $committee): View
     {
         $this->authorize('update', $committee);
 
-        $post = new CommitteePost;
-        $post['committee'] = $committee;
+        $data = [
+            'post' =>  new CommitteePost,
+            'committee' => $committee,
+            'action' => 'Create',
+            'access_levels' => Options::access_levels(),
+        ];
 
-        return view('admin.committee_post', ['data' => ['post' => $post, 'action' => 'Create']]);
+        return view('admin.committee_post', ['data' => $data]);
     }
 
-
-    public function store(StoreCommitteePostRequest $request, Committee $committee, User $user)
+    /**
+     * @param StoreCommitteePostRequest $request
+     * @param Committee $committee
+     * @param User $user
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function store(StoreCommitteePostRequest $request, Committee $committee, User $user): RedirectResponse
     {
         $this->authorize('update', $committee);
 
@@ -67,26 +89,39 @@ class AdminCommitteePostController extends Controller
 
         $post->save();
 
-        Session::flash('success', "You have saved a new post in " . $committee->name);
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $post);
+
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
+        Session::flash('success', 'You have saved a new post in '.$committee->name);
 
         return redirect()->route('admin_committee_post_edit', [$committee->slug, $post->slug]);
     }
 
-
     /**
      * @param Committee $committee
      * @param CommitteePost $any_committee_post
-     * @return Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Committee $committee, CommitteePost $any_committee_post)
+    public function edit(Committee $committee, CommitteePost $any_committee_post): View
     {
         $this->authorize('update', $committee);
 
-        $any_committee_post->load('creator', 'committee' , 'admin_post_comments');
+        $any_committee_post->load('creator', 'admin_post_comments', 'attachments');
 
         $data = [
             'post' => $any_committee_post,
+            'committee' => $committee,
             'action' => 'Edit',
+            'access_levels' => Options::access_levels(),
         ];
 
         return view('admin.committee_post', ['data' => $data]);
@@ -97,8 +132,8 @@ class AdminCommitteePostController extends Controller
      * @param Committee $committee
      * @param CommitteePost $committeePost
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-
     public function update(UpdateCommitteePostRequest $request, Committee $committee,
                            CommitteePost $committeePost): RedirectResponse
     {
@@ -107,9 +142,19 @@ class AdminCommitteePostController extends Controller
         $committeePost->fill($request->post);
         $committeePost->save();
 
-        Session::flash('success', "You have edited the post");
+        $result = $this->attachmentService->updateAttachment($request, $committeePost);
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $committeePost);
 
-        $committeePost->committee;
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
+        Session::flash('success', 'You have edited the post');
 
         return redirect()->route('admin_committee_post_edit',
             [$committeePost->committee->slug, $committeePost->slug]);
@@ -128,11 +173,12 @@ class AdminCommitteePostController extends Controller
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)
             ->each(static function (CommitteePost $post) {
-                //todo delete comments associated with a committee post
+                $service = new AttachmentService;
+                $service->destroyAttachments($post);
                 $post->delete();
             });
 
-        Session::flash('success', 'Committee ' . Str::plural('post', count($request->id)) . ' deleted.');
+        Session::flash('success', 'Committee '.Str::plural('post', count($request->id)).' deleted.');
 
         return redirect()->route('committee_posts_list', $committee->slug);
     }

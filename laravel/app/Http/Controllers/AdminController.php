@@ -2,40 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ModelList;
 use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class AdminController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-
         //Land on the home page of admin. Could have data later.
-        $data = [['user' => Auth::user()]];
+        $data = [
+            ['user' => Auth::user()]
+        ];
 
         return view('admin.admin', ['data' => $data]);
     }
 
-    public function developer() {
+    /**
+     * @return View
+     */
+    public function developer(): View
+    {
         return view('admin.developer_admin');
     }
 
     /**
-     * @return Application|Factory|View
+     * @param User $user
+     * @return View
      */
-    public function blank(User $user)
+    public function blank(User $user): View
     {
+        $mod = new ModelList;
+        $arr = ModelList::getModelList();
+
+        $csv = array();
+       // $lines = file('../../files/Local118-CSV-Membership.csv', FILE_IGNORE_NEW_LINES);
+$lines =[];
+        foreach ($lines as $key => $value)
+        {
+            $csv[$key] = str_getcsv($value);
+        }
+
+        foreach($csv as $k => $c)
+        {
+            $data[$k]['name'] = $c[0] . " " . $c[1];
+            $data[$k]['email'] = $c[2];
+            $data[$k]['membership_type'] = $c[3];
+        }
+
+//dd($data);
+
 
         return view('admin.admin-blank');
     }
-
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminStorePolicy extends FormRequest
 {
     use ModifiesInputTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -32,6 +33,7 @@ class AdminStorePolicy extends FormRequest
             'policy.live' => 'boolean',
         ];
     }
+
     protected function modifyInput(): void
     {
         $policy = \array_merge(

@@ -47,6 +47,10 @@
                                         {{ $e->title }}
                                     </a>
                                 </h4>
+                                <h6>
+                                    {{$e->attachments->count()}}
+                                    {{Str::plural('Attachment', $e->attachments->count())}}
+                                </h6>
                             </td>
                             <td>
                                 @forelse ($e->attachments as $ea)
@@ -65,7 +69,7 @@
                             <td> {!! $e->live ? "<i class='fas fa-check'></i>" :
                                     "<i class='far fa-times-circle'></i>" !!}
                             </td>
-                            <td> {!! $e->jobstatus ? "<i class='fas fa-check'></i>" :
+                            <td> {!! $e->status ? "<i class='fas fa-check'></i>" :
                                     "<i class='far fa-times-circle'></i>" !!}
                             </td>
                             <td>

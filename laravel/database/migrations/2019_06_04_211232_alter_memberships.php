@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class AlterMemberships extends Migration
 {
@@ -14,7 +14,7 @@ class AlterMemberships extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE memberships CHANGE admin_notes admin_notes TEXT NULL");
+        DB::statement('ALTER TABLE memberships CHANGE admin_notes admin_notes TEXT NULL');
     }
 
     /**
@@ -24,6 +24,6 @@ class AlterMemberships extends Migration
      */
     public function down()
     {
-        DB::statement("ALTER TABLE memberships CHANGE admin_notes admin_notes varchar (255) NULL");
+        DB::statement('ALTER TABLE memberships CHANGE admin_notes admin_notes varchar (255) NULL');
     }
 }

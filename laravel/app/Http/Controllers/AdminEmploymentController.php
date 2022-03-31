@@ -6,15 +6,15 @@ use App\Http\Requests\Employment\DestroyEmploymentRequest;
 use App\Http\Requests\Employment\StoreEmploymentRequest;
 use App\Http\Requests\Employment\UpdateEmploymentRequest;
 use App\Models\Employment;
+use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-
 
 class AdminEmploymentController extends Controller
 {
@@ -24,27 +24,27 @@ class AdminEmploymentController extends Controller
     public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;
+
+        Employment::where('deadline', '<', now())
+            ->update(['status' => 0]);
+
+        Employment::where('deadline', '>', now())
+            ->update(['status' => 1]);
     }
 
     /**
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Employment::class);
 
-        $data = [];
         $jobs = Employment::withoutGlobalScopes()
             ->sortable()
             ->with('attachments')
             ->orderBy('deadline', 'desc')
             ->paginate(20);
-
-        foreach($jobs as $job)
-        {
-            $job['jobstatus'] = $job->deadline->isPast() ? 0 : 1;
-        }
 
         $data['employment'] = $jobs;
         $data['count'] = Employment::withoutGlobalScopes()->count();
@@ -53,73 +53,76 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Employment::class);
-        $e = new Employment;
-        return view('admin.employment', ['data' => ['employment' => $e, 'action' => 'Add']]);
+
+        $data = [
+            'employment' =>  new Employment,
+            'action' => 'Add',
+            'access_levels' => Options::access_levels(),
+        ];
+
+        return view('admin.employment', ['data' => $data]);
     }
 
     /**
      * @param StoreEmploymentRequest $request
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
-    public function store(StoreEmploymentRequest $request)
+    public function store(StoreEmploymentRequest $request): RedirectResponse
     {
         $this->authorize('create', Employment::class);
         $employment = new Employment($request->employment);
 
         $employment->save();
 
-        if (null !== ($request->file('attachments'))){
+        if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $employment);
 
-            if($result){
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "employment posting saved");
-        return redirect()->route('admin_employment_edit', [$employment->id]);
+        Log::debug(Auth::user()->name  . ' created a new Job Posting.');
 
+        Session::flash('success', 'employment posting saved');
+
+        return redirect()->route('admin_employment_edit', [$employment->id]);
     }
 
     /**
      * @param Employment $employment
-     * @return Factory|View
-
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Employment $employment)
+    public function edit(Employment $employment): View
     {
         $this->authorize('update', Employment::class);
+
         $employment->load('user', 'attachments');
 
-        $employment['jobstatus'] = $employment->deadline->isPast() ? 0 : 1;
+        $data = [
+            'employment' => $employment,
+            'action' => 'Edit',
+            'access_levels' => Options::access_levels(),
+        ];
 
-        return view(
-            'admin.employment',
-            [
-                'data' => [
-                    'employment' => $employment,
-                    'action' => 'Edit',
-                ],
-            ]
-        );
+        return view('admin.employment', ['data' => $data]);
     }
 
     /**
      * @param UpdateEmploymentRequest $request
      * @param Employment $any_employment
      * @return RedirectResponse
-
+     * @throws AuthorizationException
      */
     public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
     {
@@ -134,16 +137,16 @@ class AdminEmploymentController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_employment);
 
-            if($result) {
-                Session::flash('success', "You uploaded " . count($request->file('attachments')) . " files");
-            }
-            else
-            {
-                Session::flash('error', "You have an upload problem");
+            if ($result) {
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', "You have edited the employment information");
+        Log::debug(Auth::user()->name  . ' updated an existing Job Posting.');
+
+        Session::flash('success', 'You have edited the employment information');
 
         return redirect()->route('admin_employment_edit', [$any_employment->id]);
     }
@@ -151,21 +154,24 @@ class AdminEmploymentController extends Controller
     /**
      * @param DestroyEmploymentRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyEmploymentRequest $request)
+    public function destroy(DestroyEmploymentRequest $request): RedirectResponse
     {
         $this->authorize('delete', Employment::class);
 
         Employment::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Employment $employment) {
-               $this->attachmentService->destroyAttachments($employment);
-               $employment->delete();
+                $this->attachmentService->destroyAttachments($employment);
+                $employment->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id) . ' posting', count($request->id)) .
+        Session::flash('success', Str::plural(count($request->id).' posting', count($request->id)).
             ' and any related files deleted.');
 
-        return redirect()->route('employment_list');
+        Log::debug(Auth::user()->name  . ' deleted an existing Job Posting.');
+
+        return redirect()->route('admin_employment_list');
     }
 }

@@ -1,0 +1,10 @@
+{
+  "name": "IATSE Local 118",
+  "short_name": "iatse local 118",
+  "theme_color": "#fff",
+  "background_color": "#fff",
+  "display": "browser",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/"
+}

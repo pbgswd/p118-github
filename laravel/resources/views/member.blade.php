@@ -1,87 +1,150 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="jumbotron mb-lg-5">
-        <div class="container border border-dark rounded-lg p-2" style="background: rgba(220,220,220,0.8);">
-            <h1>
-                <a href="{{route('members')}}">
-                    <i class="far fa-arrow-alt-circle-left"></i> Members /
-                </a>
-                {{$data['user']->name}}
-                @if($data['user']->membership->membership_type != 'Member')
-                    ({{$data['user']->membership->membership_type}})
-                @endif
-            </h1>
-            <div class="row">
-                @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
-                    <div class="col-1">
-                        <img src="{{ asset('storage/users/' . $data['user']->user_info->image) }}" />
-                    </div>
-                @endif
-                <div class="col-3">
-                    @if ( Auth::user()->id == $data['user']->id)
-                        <div class="col-12 mt-lg-4">
-                            <a href="{{route('member_edit', Auth::user()->id )}}" title="Edit my profile">
-                                <button type="button" class="btn btn-primary">Edit My Profile</button>
-                            </a>
-                        </div>
+    <div class="container border border-dark rounded-lg pt-2 pb-3 my-3" style="background: rgba(220,220,220,0.8);">
+        <div class="row p-2">
+            <div class="col-12 col-md-6 w-100">
+                <h3>
+                    <a href="{{route('members')}}">
+                        <i class="far fa-arrow-alt-circle-left"></i> Members /
+                    </a>
+                    {{$data['user']->name}}
+                    @if($data['user']->membership->membership_type != 'Member')
+                        ({{$data['user']->membership->membership_type}})
                     @endif
+                </h3>
+            </div>
+            @can(['edit users'])
+                <div class="col-12 col-md-6 text-md-right">
+                    <a href="{{route('user_edit', $data['user']->id)}}"
+                       title="Edit {{$data['user']->name}}">
+                        <i class="fas fa-edit"></i> Admin Edit
+                    </a>
+                </div>
+            @endcan
+        </div>
+        @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
+            <div class="row mb-3">
+                <div class="col-12 d-flex align-items-center justify-content-center text-center">
+                     <picture>
+                        <source srcset="{{asset('storage/'. $data['folder'] .'/'. $data['user']->user_info->image)}}"
+                                media="(min-width: 577px)">
+                        <img srcset="{{asset('storage/'. $data['folder'] ."/". $data['tn_prefix'].
+                                        $data['user']->user_info->image)}}"
+                             alt="{{$data['user']->name}}"
+                             class="rounded img-fluid w-50">
+                    </picture>
                 </div>
             </div>
-            <div class="col-12">
-                @if (($data['user']->user_info->share_email ?? '' ) == 1)
-                    <h3>
-                        <i class="fas fa-envelope"></i>
+        @endif
+        <div class="row d-flex justify-content-between pt-2">
+            @if (($data['user']->user_info->share_email ?? '' ) == 1)
+                <div class="col-12 col-md-5 text-md-left">
+                    <h5>
                         <a href="mailto:{{$data['user']->email}}" title="Email {{$data['user']->name}}">
+                            <i class="fas fa-envelope"></i>
                             {{$data['user']->email}}
                         </a>
-                    </h3>
-                @endif
-                @if (($data['user']->user_info->share_phone  ?? '' )  == 1 &&
-                    !empty($data['user']->phone_number->phone_number))
-                    <h3>
-                        <i class="fas fa-phone-square"></i>
+                    </h5>
+                </div>
+            @endif
+            @if (($data['user']->user_info->share_phone  ?? '' )  == 1 &&
+                !empty($data['user']->phone_number->phone_number))
+                <div class="col-12 col-md-5 text-md-right">
+                    <h5>
                         <a href="tel:{{$data['user']->phone_number->phone_number ?? '' }}">
+                            <i class="fas fa-phone-square"></i>
                             {{$data['user']->phone_number->phone_number ?? '' }}
                         </a>
-                    </h3>
-                @endif
-                <p>{!! $data['user']->user_info->about  ?? '' !!}</p>
-            </div>
-            <div class="row p-4">
-                @if( $data['user']->allExecutiveRoles->count() > 0 )
-                    <div class="col-6 border border-dark rounded-lg mt-3 mr-1">
-                        <h4>
-                            Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}
-                        </h4>
+                    </h5>
+                </div>
+            @endif
+        </div>
+        <div class="col-12 pt-2">
+            {!! $data['user']->user_info->about  ?? '' !!}
+        </div>
+        <div class="row d-flex justify-content-md-around px-2 mb-2">
+            @if( $data['user']->allExecutiveRoles->count() > 0 )
+                <div class="col-12 col-md-5 mb-2 p-2 border border-dark rounded-lg">
+                    <h5>
+                        Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}
+                    </h5>
+                    <ul class="list-group">
                         @foreach($data['user']->allExecutiveRoles as $exec)
-                           <h5>{{$exec->title}}
+                           <li class="list-group-item">{{$exec->title}}
                                 {{ \Carbon\Carbon::parse($exec->pivot->end_date)->isPast() ? '':'(Currently)'}}
                                 <a href="mailto:{{$exec->email}}" title="Email {{$data['user']->name}} {{$exec->title}}
                                     at {{$exec->email}}">
                                     <i class="fas fa-envelope"></i>
-                                </a> <br />
+                                </a>
                                 {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('M j Y')}} -
                                 {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('M j Y')}}
-                           </h5>
-                            <br />
+                           </li>
                         @endforeach
-                    </div>
-                @endif
-                @if($data['user']->committee_memberships->count() > 0)
-                    <div class="col-5 border border-dark rounded-lg mt-3">
-                        <h4>Membership in committees</h4>
+                    </ul>
+                </div>
+            @endif
+            @if($data['user']->committee_memberships->count() > 0)
+                <div class="col-12 col-md-5 p-2 border border-dark rounded-lg">
+                    <h5>
+                        Membership in Committees
+                    </h5>
+                    <ul class="list-group">
                         @foreach($data['user']->committee_memberships as $m)
                             @if($m->pivot->role != 'Past-Member')
-                                    <h5>
-                                        <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">
-                                            {{$m->name}} -  {{$m->pivot->role}}
-                                        </a>
-                                    </h5>
+                                <li class="list-group-item">
+                                    <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">
+                                        {{$m->name}} -  {{$m->pivot->role}}
+                                    </a>
+                                </li>
                             @endif
                         @endforeach
-                    </div>
-                @endif
-            </div>
+                    </ul>
+                </div>
+            @endif
         </div>
+        @if ( Auth::user()->id == $data['user']->id)
+            <div class="row d-flex justify-content-between pt-3">
+                <div class="col-12 col-md-3 text-md-left">
+                    <h5>
+                        <a href="{{route('edit_emergency_contact', $data['user']->id)}}">
+                            <i class="fas fa-first-aid text-danger"></i>
+                            <span class="font-weight-bold">
+                            Update emergency contact
+                        </span>
+                        </a>
+                    </h5>
+                </div>
+                <div class="col-12 col-md-3 text-md-center">
+                    <h5>
+                        <a href="{{route('member_edit', $data['user']->id)}}">
+                            <i class="fas fa-user"></i>
+                            <span class="font-weight-bold">
+                            Update profile
+                        </span>
+                        </a>
+                    </h5>
+                </div>
+                <div class="col-12 col-md-3 text-md-center">
+                    <h5>
+                        <a href="{{route('member_password_edit', $data['user']->id)}}">
+                            <i class="fas fa-unlock-alt"></i>
+                            <span class="font-weight-bold">
+                            Update Password
+                        </span>
+                        </a>
+                    </h5>
+                </div>
+                <div class="col-12 col-md-3 text-md-right">
+                    <h5>
+                        <a href="{{route('member_address_edit', $data['user']->id)}}">
+                            <i class="fas fa-address-card text-success"></i>
+                            <span class="font-weight-bold">
+                                Update address
+                            </span>
+                        </a>
+                    </h5>
+                </div>
+            </div>
+        @endif
     </div>
 @endsection

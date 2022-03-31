@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
+use App\Models\Interfaces\HasAttachment;
 use App\Policies\OrganizationPolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,18 +21,18 @@ use Spatie\Searchable\SearchResult;
  * @property string     $description
  * @property string     $url
  * @property string     $access_level
- * @property boolean    $live
- * @property int        $sort_order
+ * @property bool    $live
  * @property User       $user
  * @property DateTime   $created_at
  * @property DateTime   $updated_at
+ * @property AgreementHandler $agreement_handler
  */
-class Organization extends LiveableModel implements Searchable
+class Organization extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
 
     protected $policies = [
-        Organization::class => OrganizationPolicy::class,
+        self::class => OrganizationPolicy::class,
     ];
 
     /**
@@ -43,7 +44,8 @@ class Organization extends LiveableModel implements Searchable
         'url',
         'access_level',
         'live',
-        'sort_order',
+        'image',
+        'file_name',
         'user_id',
     ];
 
@@ -52,19 +54,23 @@ class Organization extends LiveableModel implements Searchable
         'name',
         'access_level',
         'live',
-        'sort_order',
         'created_at',
         'updated_at',
     ];
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
         'live' => 'boolean',
     ];
+
+    /**
+     * @var mixed
+     */
+    private $attachments;
 
     public function __construct(array $attributes = [])
     {
@@ -77,8 +83,10 @@ class Organization extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('Organization');
 
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->name,
@@ -109,6 +117,7 @@ class Organization extends LiveableModel implements Searchable
     public function setNameAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['name'] = $value;
     }
 
@@ -120,17 +129,73 @@ class Organization extends LiveableModel implements Searchable
         return $this->hasOne(User::class);
     }
 
+    /**
+     * @return HasOne
+     */
+    public function agreement_handler(): HasOne
+    {
+        return $this->hasOne(AgreementHandler::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
     public function agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
-            ->whereRaw('NOW() < until')
-            ->orderBy('until', 'desc');
+            ->with('attachments')
+            ->whereRaw('until > NOW()')
+            ->where([['live', 1],
+                ['access_level', 'public']
+            ])->sortable()
+            ->orderBy('until');
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function member_agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
+            ->with('attachments')
+            ->where('live', 1)
+            ->sortable()
             ->orderBy('until', 'desc');
+    }
 
+    /**
+     * @return BelongsToMany
+     */
+    public function all_agreements(): BelongsToMany
+    {
+        return $this->belongsToMany(Agreement::class)
+            ->sortable()
+            ->orderBy('until', 'desc');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
+    {
+        return $this->belongsToMany(Attachment::class, 'attachment_organization');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentFolder(): string
+    {
+        return 'org_venue';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return $this->access_level;
     }
 }

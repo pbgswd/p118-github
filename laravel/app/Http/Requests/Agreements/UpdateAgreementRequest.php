@@ -5,7 +5,7 @@ namespace App\Http\Requests\Agreements;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UpdateAgreementRequest
+ * Class UpdateAgreementRequest.
  *
  * @property mixed[] $agreement
  */
@@ -29,6 +29,7 @@ class UpdateAgreementRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'agreement.client' => 'array',
             'agreement.title' => 'required|max:255',
             'agreement.from' => 'required|date',
             'agreement.until' => 'required|date',

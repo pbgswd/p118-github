@@ -13,7 +13,7 @@ class ExecutiveMembership extends Model implements Searchable
     protected $table = 'executive_user';
 
     protected $policies = [
-        ExecutiveMembership::class => ExecutiveMembershipPolicy::class,
+        self::class => ExecutiveMembershipPolicy::class,
     ];
 
     public $sortable = [
@@ -43,10 +43,9 @@ class ExecutiveMembership extends Model implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-
         $user = User::where('id', $this->user_id)->first();
 
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $user,
                 $user->name,
@@ -59,9 +58,7 @@ class ExecutiveMembership extends Model implements Searchable
             $user->name,
             \route('member', $user->id)
         );
-
     }
-
 
     /**
      * @var mixed
@@ -75,5 +72,4 @@ class ExecutiveMembership extends Model implements Searchable
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
-
 }

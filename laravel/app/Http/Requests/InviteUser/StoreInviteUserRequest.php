@@ -36,13 +36,12 @@ class StoreInviteUserRequest extends FormRequest
         ];
     }
 
-
     protected function modifyInput(): void
     {
         $invite = \array_merge(
             $this->input('invite'),
             [
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
             ]
         );
 

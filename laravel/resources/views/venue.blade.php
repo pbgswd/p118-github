@@ -1,63 +1,124 @@
-<?php
-$venue = $data['venue'];
-?>
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg pl-lg-1" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded-lg pb-2" style="background: rgba(220,220,220,0.8);">
+        <div class="row mb-3">
+            <div class="col-12 col-md-6">
+                <a href="{{route('venues')}}">Venues</a>
+            </div>
+            @can('edit articles')
+                <div class="col-12 col-md-6 text-md-right">
+                    <a href="{{route('venue_edit', $data['venue']->slug)}}"
+                       title="Edit {{$data['venue']->name}}">
+                        <i class="fas fa-edit"></i> Admin Edit
+                    </a>
+                </div>
+            @endcan
+        </div>
+        @if($data['venue']->image)
+            <div class="row mb-2">
+                <div class="col-12 text-center d-flex align-items-center justify-content-center">
+                    <picture>
+                        <source srcset="{{asset('storage/public/'. $data['venue']->image)}}" media="(min-width: 577px)">
+                        <img srcset="{{asset('storage/public/'.$data['venue']->thumb)}}" alt="{{$data['venue']->name}}"
+                             class="rounded img-fluid d-block">
+                    </picture>
+                </div>
+            </div>
+        @endif
+        <div class="row mb-2">
+            <div class="col-12 text-center">
+                <h1>{{$data['venue']->name}}</h1>
+            </div>
+        </div>
+        @if($data['venue']->url)
+            <div class="row mb-2">
+                <div class="col-12 text-center">
+                    <p>
+                        <a href="{{$data['venue']->url}}" title="{{$data['venue']->name}}" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            {{$data['venue']->url}}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-12">
-                <a href="{{ route('hello') }}">Home /</a>
-                <a href="{{route('venues')}}">venues /</a>
-            </div>
-            <div class="col-12">
-                <h1>{{$venue->name}}</h1>
-            </div>
-            <div class="col-12">
-                <p>
-                    <i class="fas fa-external-link-alt"></i>
-                    <a href="{{$venue->url}}" title="{{$venue->name}}" target="_blank">{{$venue->url}}</a>
-                </p>
-            </div>
-            <div class="col-12 p-lg-5">
-                {!! $venue->description !!}
+                {!! $data['venue']->description !!}
             </div>
         </div>
-    </div>
-    @if (0 < $data['agreements']->count())
-        <div class="container border border-dark
-                    rounded-lg pl-lg-1 mt-lg-3" style="background: rgba(220,220,220,0.8);">
-            <div class="row mt-lg-5 p-lg-5">
+        @if ($data['agreements']->count() > 0)
+            <div class="row border border-dark rounded-lg mb-3 p-2">
                 <div class="col-12">
-                    <h4>Agreements attached to {{$venue->name}}</h4>
+                    <h4>
+                        Agreements with {{$data['venue']->name}}
+                    </h4>
                 </div>
-                <table class="table">
-                    <tbody>
-                    @foreach($data['agreements'] as $va)
-                        <tr>
-                            <td>
-                                <p>
-                                    @if(\Carbon\Carbon::parse($va->until)->isPast())
-                                        <i>(Not current)</i>
-                                    @endif
-                                    <a title="{{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
-                                        {{ $va->title }}
-                                    </a>
-                                </p>
-                            </td>
-                            <td>
-                                <p>From: {{$va->from->format('F j Y')}}</p>
-                            </td>
-                            <td>
-                                <p>Until: {{$va->until->format('F j Y')}}</p>
-                            </td>
-                        </tr>
-                    @endforeach
-                    <td colspan="4">&nbsp;</td>
-                    </tbody>
-                </table>
+                @if($data['agreements']->count() > 1)
+                    <div class="col-6">
+                        Order by: @sortablelink('title', 'Title')
+                    </div>
+                    <div class="col-6">
+                        @sortablelink('until', 'End Date')
+                    </div>
+                @endif
+                <div class="col-12">
+                    <ul class="list-group list-group-flush">
+                        @forelse($data['agreements'] as $va)
+                            <li class="list-group-item">
+                                {!! (\Carbon\Carbon::parse($va->until)->isPast()) ? "<i>(Not current)</i>" : '' !!}
+                                <a title="View {{ $va->title }}" href="{{route('agreement_show', $va->id)}}">
+                                    {{ $va->title }}
+                                </a>
+                                {{$va->from->format('F j Y')}} - {{$va->until->format('F j Y')}}
+                            </li>
+                            <ul>
+                                @forelse($va->attachments as $att)
+                                    <li>
+                                        <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                           title="Download {{$att->file_name}}" target="_blank">
+                                            <i class="fas fa-file-download fa-1x"></i>
+                                            {{$att->file_name}} {{$att->description ? : ''}}
+                                        </a>
+                                    </li>
+                                @empty
+                                    <li>No attached files</li>
+                                @endforelse
+                            </ul>
+                        @empty
+                            <li></li>
+                        @endforelse
+                    </ul>
+                    <div class="col-12 d-flex justify-content-center">
+                        <div class="list-group text-center">
+                            <ul class="pagination text center">
+                                {{ $data['agreements']->links() }}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    @endif
-</div>
+        @endif
+        @if(count($data['venue']->attachments) > 0)
+            <div class="col-12 mt-3">
+                <h4>
+                    <i class="far fa-folder-open"></i>
+                    Files
+                </h4>
+                @foreach ($data['venue']->attachments as $va)
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="{{route('attachment_download',
+                                [$data['venue']->getAttachmentFolder(), $va->id])}}"
+                                title="Download {{$va->file_name}}">
+                                <i class="far fa-file"></i>
+                                {{$va->description ? : $va->file_name}}
+                            </a>
+                        </li>
+                    </ul>
+                @endforeach
+            </div>
+        @endif
+    </div>
 @endsection

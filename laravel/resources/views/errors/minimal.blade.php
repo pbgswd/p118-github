@@ -62,9 +62,7 @@
                 <a href="/">
                     <i class="fas fa-home fa-2x text-secondary"></i>
                 </a>
-                <a href="/admin">
-                    <i class="fas fa-tachometer-alt fa-2x text-secondary"></i>
-                </a>
+
                 <a href="/login">
                     <i class="fas fa-sign-in-alt fa-2x text-secondary"></i>
                 </a>

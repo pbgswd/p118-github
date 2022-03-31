@@ -2,92 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Site;
-
-use Illuminate\Http\Request;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
+//use Spatie\Sitemap\Sitemap;
+//use Spatie\Sitemap\SitemapGenerator;
+//use Spatie\Sitemap\Tags\Url;
 
 class SiteController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        //todo tell user to fill out prifle
-        $user = Auth::user()->load('phone_number', 'user_info', 'address');
+        $user = Auth::user()->load('phone_number', 'user_info');
 
-        //todo anything for site
+        //dd(1);
+        //dd(public_path());
+        //dd(config('app'));
+        //      dd(config('app.url'));
+
+
+        /**
+        SitemapGenerator::create("https://iatse118.com")
+            ->getSitemap()
+            ->add(Url::create('/'))
+            ->add(Url::create('/pages'))
+            ->add(Url::create('/posts'))
+            ->add(Url::create('/topics'))
+            ->add(Url::create('/executive'))
+            ->add(Url::create('/bylaws'))
+            ->add(Url::create('/page/links'))
+            ->add(Url::create('/memoriams'))
+            ->add(Url::create('/agreements'))
+            ->add(Url::create('/organizations'))
+            ->add(Url::create('/venues'))
+            ->add(Url::create('/topic/contract-ratifications'))
+            ->writeToFile(public_path().'/sitemap.xml');
+        **/
+
         return view('site', ['data' => ['user' => $user]]);
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\\Site  $site
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Site $site)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\\Site  $site
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Site $site)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\\Site  $site
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Site $site)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\\Site  $site
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Site $site)
-    {
-        //
     }
 }

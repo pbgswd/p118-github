@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\PagePolicy;
-use Conner\Tagging\Taggable;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,9 +20,9 @@ use Spatie\Searchable\SearchResult;
  * @property string       $content
  * @property string       $access_level
  * @property int          $sort_order
- * @property boolean      $live
- * @property boolean      $in_menu
- * @property boolean      $allow_comments
+ * @property bool         $live
+ * @property bool         $front_page
+ * @property bool         $landing_page
  * @property User         $user
  * @property int          $user_id
  * @property Topic[]      $topics
@@ -35,7 +34,6 @@ use Spatie\Searchable\SearchResult;
 class Page extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
-    use Taggable;
 
     /**
      * The attributes that are mass assignable.
@@ -45,14 +43,13 @@ class Page extends LiveableModel implements HasAttachment, Searchable
         'description',
         'content',
         'access_level',
-        'sort_order',
         'live',
-        'in_menu',
-        'allow_comments',
+        'front_page',
+        'landing_page',
     ];
 
     protected $policies = [
-        Page::class => PagePolicy::class,
+        self::class => PagePolicy::class,
     ];
 
     public $sortable = [
@@ -60,21 +57,20 @@ class Page extends LiveableModel implements HasAttachment, Searchable
         'title',
         'access_level',
         'live',
-        'sort_order',
-        'in_menu',
-        'allow_comments',
+        'front_page',
+        'landing_page',
         'created_at',
         'updated_at',
     ];
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
-        'in_menu' => 'boolean',
-        'allow_comments' => 'boolean',
+        'front_page' => 'boolean',
+        'landing_page' => 'boolean',
         'live' => 'boolean',
     ];
 
@@ -83,7 +79,10 @@ class Page extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('Page');
+
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
@@ -97,7 +96,6 @@ class Page extends LiveableModel implements HasAttachment, Searchable
             \route('page_show', $this->slug)
         );
     }
-
 
     /**
      * in urls, what field value is used to identify a Page record?

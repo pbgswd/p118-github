@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
-
 
 class HomeController extends Controller
 {
     //todo does the site need HomeController any more?
+
     /**
      * Create a new controller instance.
      *
@@ -21,12 +19,10 @@ class HomeController extends Controller
     }
 
     /**
-     * @return Application|RedirectResponse|Redirector
-     *
+     * @return RedirectResponse
      */
-    public function index()
+    public function index(): RedirectResponse
     {
-        //todo anything for the front page.
-        return redirect('/'); //view('home');
+        return redirect('/');
     }
 }

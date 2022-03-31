@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use App\Policies\CommitteePolicy;
+use App\Models\Interfaces\HasAttachment;
 use App\Policies\CommitteePostPolicy;
 use DateTime;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
@@ -19,9 +20,9 @@ use Spatie\Searchable\SearchResult;
  * @property string                  $title
  * @property string                  $slug
  * @property string                  $content
- * @property boolean                 $sticky
- * @property boolean                 $live
- * @property boolean                 $allow_comments
+ * @property bool                 $sticky
+ * @property bool                 $live
+ * @property bool                 $allow_comments
  * @property DateTime                $created_at
  * @property DateTime                $updated_at
  * @property User                    $creator
@@ -30,7 +31,7 @@ use Spatie\Searchable\SearchResult;
  * @property int                     $committee_id
  * @method static withoutGlobalScopes()
  */
-class CommitteePost extends LiveableModel implements Searchable
+class CommitteePost extends LiveableModel implements HasAttachment, Searchable
 {
     use Notifiable;
     use Sortable;
@@ -39,8 +40,7 @@ class CommitteePost extends LiveableModel implements Searchable
     protected $guard_name = 'web';
 
     protected $policies = [
-     CommitteePost::class => CommitteePostPolicy::class,
-        //Committee::class => CommitteePolicy::class,
+     self::class => CommitteePostPolicy::class,
     ];
 
     public $sortable = [
@@ -52,7 +52,7 @@ class CommitteePost extends LiveableModel implements Searchable
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $casts = [
@@ -66,9 +66,12 @@ class CommitteePost extends LiveableModel implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('CommitteePost');
+
         $committee = Committee::where('id', $this->committee_id)->first('slug');
 
-        if(request()->route()->getName() == 'admin_search') {
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
@@ -82,7 +85,6 @@ class CommitteePost extends LiveableModel implements Searchable
             \route('public_committee_post_show', [$committee->slug, $this->slug])
         );
     }
-
 
     /**
      * The attributes that are mass assignable.
@@ -112,6 +114,7 @@ class CommitteePost extends LiveableModel implements Searchable
     public function setTitleAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
+
         return $this->attributes['title'] = $value;
     }
 
@@ -145,5 +148,31 @@ class CommitteePost extends LiveableModel implements Searchable
     public function admin_post_comments(): HasMany
     {
         return $this->hasMany(CommitteePostComment::class, 'post_id', 'id')->withoutGlobalScopes()->orderByDesc('updated_at');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attachments(): BelongsToMany
+    {
+        return $this->belongsToMany(Attachment::class, 'attachment_committee_post');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentFolder(): string
+    {
+        return 'committees';
+    }
+
+    public function keepDissociatedAttachments(): bool
+    {
+        return true;
+    }
+
+    public function getAttachmentAccessLevel(): string
+    {
+        return 'members';
     }
 }

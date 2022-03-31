@@ -18,7 +18,6 @@ class DeletePagePost extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *

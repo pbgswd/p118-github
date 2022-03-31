@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Executive;
-use Illuminate\Http\Response;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\View\View;
 
 class AdminExecutiveController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return Response
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('viewAny', Executive::class);
 
@@ -21,5 +21,4 @@ class AdminExecutiveController extends Controller
 
         return view('admin.executives_list', ['data' => $data]);
     }
-
 }

@@ -5,7 +5,7 @@ namespace App\Http\Requests\Page;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class DestroyPageRequest
+ * Class DestroyPageRequest.
  *
  * @property mixed[] $id
  */

@@ -2,9 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class PostPolicy
 {
@@ -30,7 +31,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        // no policy, public
+      //  dd([$user, $post]);
     }
 
     /**

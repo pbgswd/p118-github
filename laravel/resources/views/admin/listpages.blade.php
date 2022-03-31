@@ -5,14 +5,16 @@
            <span class="badge badge-primary badge-pill">
                {{ $data['count'] }}
            </span>
-            Pages. | <a href="{{ route('page_create') }}">Create new page <i class="far fa-arrow-alt-circle-right"></i> </a>
+            Pages. |
+            <a href="{{ route('page_create') }}">
+                Create new page
+                <i class="far fa-arrow-alt-circle-right"></i>
+            </a>
         </h3>
 </div>
-
 <form name="delete" method="POST" action="{{route('page_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
-
     <div class="form-group">
         <div class="table-responsive">
             <table class="table table-striped table-sm">
@@ -22,9 +24,8 @@
                         <th> @sortablelink('title', 'Title') </th>
                         <th> @sortablelink('access_level', 'Access Level') </th>
                         <th> @sortablelink('live', 'Is Live?') </th>
-                        <th> @sortablelink('sort_order', 'Sort Order') </th>
-                        <th> @sortablelink('in_menu', 'In Menu?') </th>
-                        <th> @sortablelink('allow_comments', 'Allow Comments?') </th>
+                        <th> @sortablelink('front_page', 'Front Page') </th>
+                        <th> @sortablelink('landing_page', 'Landing Page') </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -42,24 +43,36 @@
                         </td>
                         <td>
                             <h4>
-                                <a title="{{ $i->title }}" href="{{ route('page_edit', $i->slug) }}">{{ $i->title }}</a>
+                                <a title="{{ $i->title }}" href="{{ route('page_edit', $i->slug) }}">
+                                    {{ $i->title }}
+                                </a>
                             </h4>
-                            @if (count($i->tags) > 0)
-                                (
-                                @foreach ( $i->tags as $tag )
-                                    {{$tag->name}}
-                                @endforeach
-                                )
-                            @endif
-
-                            Added by: <a href="{{route('member', $i->user->id)}}" target="_blank">{{$i->user->name}}</a>
-
+                            <h6>
+                                Topics:
+                                @forelse($i->topics as $t)
+                                    {{$t->name}}{{$loop->last ? '' : ","}}
+                                @empty
+                                    no topics
+                                @endforelse
+                            </h6>
+                            {{$i->attachments->count()}} {{Str::plural('Attachment', $i->attachments->count()) }}<br />
+                            Added by:
+                            <a href="{{route('member', $i->user->id)}}" target="_blank">
+                                {{$i->user->name}}
+                            </a>
                         </td>
                         <td> {{ $i->access_level }} </td>
-                        <td> {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
-                        <td> {{ $i->sort_order }} </td>
-                        <td> {!! $i->in_menu ? '<i class="fas fa-check"></i>' : '<i class="far fa-times-circle"></i>' !!} </td>
-                        <td> {!! $i->allow_comments ? "<i class='fas fa-check'></i>" : '<i class="far fa-times-circle"></i>' !!} </td>
+                        <td>
+                            {!! $i->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!}
+                        </td>
+                        <td>
+                            {!! $i->front_page ? '<i class="fas fa-check"></i>' :
+                                '<i class="far fa-times-circle"></i>' !!}
+                        </td>
+                        <td>
+                            {!! $i->landing_page ? "<i class='fas fa-check'></i>" :
+                                '<i class="far fa-times-circle"></i>' !!}
+                        </td>
                         <td>
                             <a href="{{ route('page_edit', $i->slug) }}" title="Edit {{ $i->name }} ">
                                 <i class="fas fa-edit"></i>

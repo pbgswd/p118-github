@@ -6,6 +6,7 @@ use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\AgreementPolicy;
 use DateTime;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
@@ -17,12 +18,13 @@ use Spatie\Searchable\SearchResult;
  * @property string         $title
  * @property string         $description
  * @property string         $access_level
- * @property boolean        $live
+ * @property bool        $live
  * @property int            $user_id
  * @property User           $user
  * @property Attachment[]   $attachments
  * @property Venue[]        $venues
  * @property Organization[] $organizations
+ * @property AgreementHandler[] $agreement_handlers
  * @property DateTime       $created_at
  * @property DateTime       $updated_at
  * @property DateTime       $from
@@ -30,13 +32,12 @@ use Spatie\Searchable\SearchResult;
  * @method static withoutGlobalScopes()
  * @method static whereNotIn(string $string, $map)
  */
-
 class Agreement extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
 
     protected $policies = [
-        Agreement::class => AgreementPolicy::class,
+        self::class => AgreementPolicy::class,
     ];
 
     public $sortable = [
@@ -55,6 +56,7 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         'title',
         'description',
         'live',
+        'access_level',
         'from',
         'until',
         'user_id',
@@ -82,7 +84,10 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        if(request()->route()->getName() == 'admin_search') {
+        $modelList = new ModelList;
+        $this->info = $modelList->getModelInfo('Agreement');
+
+        if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
                 $this->title,
@@ -110,14 +115,28 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
      */
     public function attachments(): BelongsToMany
     {
-        return $this->belongsToMany(Attachment::class, 'attachment_agreement');
+        return $this->belongsToMany(Attachment::class, 'attachment_agreement')->orderBy('id', 'desc');
     }
 
+    /**
+     * @return BelongsToMany
+     */
+    public function agreement_handlers(): BelongsToMany
+    {
+        return $this->belongsToMany(AgreementHandler::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
     public function venues(): BelongsToMany
     {
         return $this->belongsToMany(Venue::class, 'agreement_venue');
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class, 'agreement_organization');

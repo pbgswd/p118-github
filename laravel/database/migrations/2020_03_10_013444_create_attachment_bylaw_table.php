@@ -18,7 +18,6 @@ class CreateAttachmentBylawTable extends Migration
             $table->foreign('attachment_id')->references('id')->on('attachments')->onDelete('cascade');
             $table->unsignedBigInteger('bylaw_id')->index();
             $table->foreign('bylaw_id')->references('id')->on('bylaws')->onDelete('cascade');
-
         });
     }
 
