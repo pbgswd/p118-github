@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http;
+namespace App\Composers;
 
 use App\Models\Post;
 use App\Models\Topic;
-use DB;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
