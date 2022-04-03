@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Agreement;
 use App\Models\Options;
 use App\Models\Venue;
 use App\Services\UserImageService;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Spatie\Image\Exceptions\InvalidManipulation;
 

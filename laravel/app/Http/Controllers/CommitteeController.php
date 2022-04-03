@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Committee;
 use App\Models\Options;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 

@@ -68,7 +68,7 @@ class ContactController extends Controller
         }
 
         $cc = config('app.env') == 'local' ? [] : Options::testing_address_update_contacts();
-        
+
         Log::debug("---------------------------------- \n");
         Log::debug('Contact page message from '.$request['name'].
             ' sending to: '.
