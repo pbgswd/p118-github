@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-
 class AdminProofReaderController extends Controller
 {
     /**
@@ -58,7 +57,7 @@ class AdminProofReaderController extends Controller
         //todo form request
         $type = $request->type;
 
-        $entries =  Proofreader::where('content_type', $type)
+        $entries = Proofreader::where('content_type', $type)
             ->with('user')
             ->orderBy('content_updated_at', 'desc')
             ->get();
@@ -70,7 +69,6 @@ class AdminProofReaderController extends Controller
 
         return view('admin.proofreading', ['data' => $data]);
     }
-
 
     /**
      * @param Request $request
@@ -90,5 +88,4 @@ class AdminProofReaderController extends Controller
 
         return $this->index_by_entity($request);
     }
-
 }

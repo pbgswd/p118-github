@@ -5,18 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\InviteUser;
 use App\Models\Membership;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
-
-
-
 
 class ReInviteUserController extends Controller
 {
@@ -35,8 +30,7 @@ class ReInviteUserController extends Controller
         $data = [];
         $data['invitations'] = InviteUser::all();
 
-        foreach($data['invitations'] as $i)
-        {
+        foreach ($data['invitations'] as $i) {
             $password = str_replace('/', '', hash::make(Str::random(8)));
             $user = new User(array_merge(['name' => $i->name, 'email' => $i->email], ['password' => bcrypt($password)]));
             $user->save();
@@ -49,9 +43,9 @@ class ReInviteUserController extends Controller
 
         $data['count'] = count(InviteUser::all());
 
-        Session::flash('success', $data['count'] . ' pending members have been reinvited by adding them as members');
+        Session::flash('success', $data['count'].' pending members have been reinvited by adding them as members');
 
-        Log::debug(' On ' . date('Y-m-d H:i:s') . ', '. $data['count'] . ' pending members were
+        Log::debug(' On '.date('Y-m-d H:i:s').', '.$data['count'].' pending members were
             reinvited, by adding them as members');
 
         return redirect()->route('admin_list_invited_users');

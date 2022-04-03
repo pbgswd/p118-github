@@ -1,25 +1,30 @@
 <?php
 
-
 namespace App\Adapters\Proofreader;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-
 abstract class BaseProofreaderAdapter
 {
     public const NAME = 'name';
+
     public const PUB_ROUTE_LIST = 'pub_route_list';
+
     public const ADMIN_ROUTE_LIST = 'admin_route_list';
+
     public const PUB_ROUTE = 'pub_route';
+
     public const ADMIN_ROUTE = 'admin_route';
 
     protected $contentClass;
+
     protected $contentName;
+
     protected $instance;
 
     abstract public function getAdminRoute($row): string;
+
     abstract public function getPublicRoute($row): string;
 
     public function getAll(): Collection
@@ -37,7 +42,6 @@ abstract class BaseProofreaderAdapter
         return $this->contentName;
     }
 
-
     public function getDatum($metaKey): string
     {
         return $this->getMeta()[$metaKey] ?? '';
@@ -45,8 +49,7 @@ abstract class BaseProofreaderAdapter
 
     public function getInstance(): Model
     {
-        if (!$this->instance) {
-
+        if (! $this->instance) {
             $this->instance = (new \ReflectionClass($this->contentClass))->newInstance();
         }
 

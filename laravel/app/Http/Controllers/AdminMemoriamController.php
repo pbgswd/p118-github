@@ -22,7 +22,8 @@ class AdminMemoriamController extends Controller
      */
     private $userImageService;
 
-    public function __construct(UserImageService $userImageService){
+    public function __construct(UserImageService $userImageService)
+    {
         $this->userImageService = $userImageService;
     }
 
@@ -107,19 +108,19 @@ class AdminMemoriamController extends Controller
 
         $folder = $memoriam->getAttachmentFolder();
 
-        if($memoriam['image']) {
+        if ($memoriam['image']) {
             $tn_str = Options::memoriam_thumb_values()['tn_str'];
-            if(file_exists(storage_path() . '/app/'. $folder .'/'. $memoriam['image'])) {
+            if (file_exists(storage_path().'/app/'.$folder.'/'.$memoriam['image'])) {
                 $memoriam->filesize = AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/'. $folder .'/'. $memoriam->image))) ? : null;
+                    \filesize(\storage_path('app/'.$folder.'/'.$memoriam->image))) ?: null;
 
-                if(!file_exists(storage_path() . '/app/'. $folder .'/'. $tn_str . $memoriam['image'])) {
+                if (! file_exists(storage_path().'/app/'.$folder.'/'.$tn_str.$memoriam['image'])) {
                     $this->userImageService->generate_thumb($memoriam['image'], $folder, $tn_str);
                 }
             }
-            $memoriam->thumb = $tn_str . $memoriam['image'];
+            $memoriam->thumb = $tn_str.$memoriam['image'];
             $memoriam->thumb_size = AttachmentService::human_filesize(
-                \filesize(\storage_path('app/'. $folder .'/'. $memoriam->thumb))) ? : null;
+                \filesize(\storage_path('app/'.$folder.'/'.$memoriam->thumb))) ?: null;
         }
 
         $data = [
@@ -128,7 +129,7 @@ class AdminMemoriamController extends Controller
             'folder' => $folder,
         ];
 
-         return view('admin.memoriam', ['data' => $data]);
+        return view('admin.memoriam', ['data' => $data]);
     }
 
     /**
@@ -148,24 +149,21 @@ class AdminMemoriamController extends Controller
         $folder = $any_memoriam->getAttachmentFolder();
 
         if (isset($request['delete_image'])) {
-            if (file_exists(storage_path() . '/app/'. $folder . '/'. $any_memoriam['image'])) {
-
+            if (file_exists(storage_path().'/app/'.$folder.'/'.$any_memoriam['image'])) {
                 $this->userImageService->destroyImage($any_memoriam['image'], $folder, $tn_str);
 
-                Session::flash('info', 'You have deleted ' . $any_memoriam['file_name']);
+                Session::flash('info', 'You have deleted '.$any_memoriam['file_name']);
                 $any_memoriam['image'] = null;
                 $any_memoriam['file_name'] = null;
             }
         }
 
         if (null !== $request->file('image')) {
-
             $file = $request->file('image')->store('', $folder);
             $result = $this->userImageService->updateImage($request, $folder, true, $tn_str);
             $any_memoriam['image'] = $result['image'];
             $any_memoriam['file_name'] = $request->file('image')->getClientOriginalName();
         }
-
 
         $any_memoriam->save();
 
@@ -187,6 +185,7 @@ class AdminMemoriamController extends Controller
                 //$this->attachmentService->destroyAttachments($memoriam);
                 $memoriam->delete();
             });
+
         return redirect()->route('admin_memoriam_list');
     }
 }

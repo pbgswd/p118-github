@@ -33,8 +33,4 @@ class MeetingProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('meeting', $row['id']);
     }
-
 }
-
-
-

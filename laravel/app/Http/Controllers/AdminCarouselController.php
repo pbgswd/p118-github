@@ -42,6 +42,7 @@ class AdminCarouselController extends Controller
     public function create(): View
     {
         $data = [];
+
         return view('admin.carousel', ['data' => $data]);
     }
 

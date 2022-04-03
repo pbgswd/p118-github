@@ -34,6 +34,3 @@ class PolicyProofreaderAdapter extends BaseProofreaderAdapter
         return route('policy_show_public', $row['id']);
     }
 }
-
-
-

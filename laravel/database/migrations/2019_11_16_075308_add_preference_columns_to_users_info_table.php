@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPreferenceColumnsToUsersInfoTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migration.
      *
@@ -31,4 +30,4 @@ class AddPreferenceColumnsToUsersInfoTable extends Migration
             $table->dropColumn('show_picture');
         });
     }
-}
+};

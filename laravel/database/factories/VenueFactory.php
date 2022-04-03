@@ -21,7 +21,7 @@ class VenueFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->company.' hall';
+        $name = $this->faker->company().' hall';
         $slug = strtolower($name);
 
         return [

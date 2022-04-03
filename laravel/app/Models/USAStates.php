@@ -4,7 +4,6 @@ namespace App\Models;
 
 /**
  * Class USAStates
- * @package App\Models
  */
 class USAStates
 {

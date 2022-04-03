@@ -57,6 +57,3 @@ class CommitteePostProofreaderAdapter extends BaseProofreaderAdapter
         return $this->getInstance()::with('committee')->get();
     }
 }
-
-
-

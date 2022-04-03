@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class AlterUsersInfo extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -26,4 +25,4 @@ class AlterUsersInfo extends Migration
     {
         DB::statement('ALTER TABLE users_info CHANGE about about varchar( 255 )  NULL');
     }
-}
+};

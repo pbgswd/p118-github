@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RemoveImageColumns extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migration.
      *
@@ -50,4 +49,4 @@ class RemoveImageColumns extends Migration
             $table->string('image')->nullable()->after('content');
         });
     }
-}
+};

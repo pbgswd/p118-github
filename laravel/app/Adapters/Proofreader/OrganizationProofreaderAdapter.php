@@ -33,8 +33,4 @@ class OrganizationProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('organization', $row['slug']);
     }
-
 }
-
-
-

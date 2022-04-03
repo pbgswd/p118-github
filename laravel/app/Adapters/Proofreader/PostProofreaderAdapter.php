@@ -33,8 +33,4 @@ class PostProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('post_show', $row['slug']);
     }
-
 }
-
-
-

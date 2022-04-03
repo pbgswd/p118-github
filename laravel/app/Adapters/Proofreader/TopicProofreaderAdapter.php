@@ -33,8 +33,4 @@ class TopicProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('topic_topic', $row['slug']);
     }
-
 }
-
-
-

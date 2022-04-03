@@ -33,8 +33,4 @@ class MemoriamProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('memoriam', $row['slug']);
     }
-
 }
-
-
-

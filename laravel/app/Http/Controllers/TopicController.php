@@ -17,7 +17,7 @@ class TopicController extends Controller
     {
         // public
         if (Auth::check()) {
-            $topics = Topic::where('live',1)
+            $topics = Topic::where('live', 1)
                 ->sortable()
                 ->orderBy('sort_order', 'desc')
                 ->paginate(9);
@@ -38,6 +38,7 @@ class TopicController extends Controller
     {
         if (false === Auth::check() && $topic->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this topic.');
+
             return view('auth.login');
         }
 
@@ -47,14 +48,14 @@ class TopicController extends Controller
 
         $layout = 1;
 
-        if( $topic->pages->count() > 0 && $topic->posts->count() > 0){
+        if ($topic->pages->count() > 0 && $topic->posts->count() > 0) {
             $layout = 2;
         }
 
         $data = [
             'topic' => $topic,
             'layout' => $layout,
-            ];
+        ];
 
         return view('topic', ['data' => $data]);
     }

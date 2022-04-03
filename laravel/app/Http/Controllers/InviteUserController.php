@@ -12,7 +12,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -68,10 +67,10 @@ class InviteUserController extends Controller
         $invited->membership_type = 'Member';
 
         return view('admin.invite_user', ['data' => ['invite' => $invited,
-                'roles' => Role::get(),
-                'membership' => Options::membership_levels(),
-                'action' => 'Invite',
-            ],
+            'roles' => Role::get(),
+            'membership' => Options::membership_levels(),
+            'action' => 'Invite',
+        ],
         ]);
     }
 
@@ -135,7 +134,7 @@ class InviteUserController extends Controller
             'user' => $inviteUser,
             'invitation' => $inviteUser,
             'action' => 'Submit',
-            ];
+        ];
 
         return view('site_invitation', ['data' => $data]);
     }
@@ -170,7 +169,7 @@ class InviteUserController extends Controller
     {
         $this->authorize('create', InviteUser::class);
 
-     	DB::table('import_users')
+        DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM invite_users)')
             ->delete();
 
@@ -182,7 +181,7 @@ class InviteUserController extends Controller
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
-        $data =[];
+        $data = [];
 
         $data = DB::table('import_users')
             ->whereRaw('email NOT IN (SELECT email FROM users)')
@@ -192,8 +191,7 @@ class InviteUserController extends Controller
 
         $count = count($data);
 
-        foreach($data as $user)
-        {
+        foreach ($data as $user) {
             $invitation = new InviteUser();
             $invitation->name = $user->name;
             $invitation->email = $user->email;
@@ -201,7 +199,7 @@ class InviteUserController extends Controller
             $invitation->membership_type = $user->membership_type;
             $invitation->role = 'member';
             $invitation->user_id = 1;
-            $invitation->message = "";
+            $invitation->message = '';
 
             $invitation->save();
 
@@ -213,7 +211,7 @@ class InviteUserController extends Controller
                         ->subject('IATSE Local 118 Website Signup Invitation');
                 });
 
-            Log::debug($invitation->name . ' was sent an invitation at ' . date('Y-m-d H:i:s'));
+            Log::debug($invitation->name.' was sent an invitation at '.date('Y-m-d H:i:s'));
         }
 
         DB::table('import_users')
@@ -224,7 +222,7 @@ class InviteUserController extends Controller
             ->whereRaw('email IN (SELECT email FROM users)')
             ->delete();
 
-        Session::flash('success', 'Invitation sent to '.$count. ' members');
+        Session::flash('success', 'Invitation sent to '.$count.' members');
 
         return redirect()->route('list_import');
     }
@@ -236,7 +234,6 @@ class InviteUserController extends Controller
      */
     public function process_user(ProcessUserRequest $request, InviteUser $inviteUser): RedirectResponse
     {
-
         $data = [
             'name' => $inviteUser->name,
             'email' => $inviteUser->email,
@@ -277,7 +274,7 @@ class InviteUserController extends Controller
 
         Auth::logout();
 
-        Log::debug($user->name . ' has completed their profile signup at  ' . date('Y-m-d H:i:s'));
+        Log::debug($user->name.' has completed their profile signup at  '.date('Y-m-d H:i:s'));
 
         return redirect()->route('login');
     }

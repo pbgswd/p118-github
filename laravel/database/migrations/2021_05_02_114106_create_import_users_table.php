@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImportUsersTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -24,21 +23,19 @@ class CreateImportUsersTable extends Migration
         $csv = [];
         $lines = file('storage/app/public/h5hsfMzfcgMZCnsHaB7U6LTflMm7Pl5PGC4HtRCz.txt', FILE_IGNORE_NEW_LINES);
 
-        foreach ($lines as $key => $value)
-        {
+        foreach ($lines as $key => $value) {
             $csv[$key] = str_getcsv($value);
         }
 
         $data = [];
 
-        foreach($csv as $k => $c)
-        {
-            $data[$k]['name'] = $c[0] . " " . $c[1];
+        foreach ($csv as $k => $c) {
+            $data[$k]['name'] = $c[0].' '.$c[1];
             $data[$k]['email'] = $c[2];
             $data[$k]['membership_type'] = $c[3];
         }
 
-        foreach($data as $d) {
+        foreach ($data as $d) {
             DB::table('import_users')->insert([
                 'name' => $d['name'],
                 'email' => $d['email'],
@@ -58,4 +55,4 @@ class CreateImportUsersTable extends Migration
     {
         Schema::dropIfExists('import_users');
     }
-}
+};

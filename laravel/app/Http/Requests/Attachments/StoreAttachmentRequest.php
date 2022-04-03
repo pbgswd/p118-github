@@ -27,7 +27,7 @@ class StoreAttachmentRequest extends FormRequest
             'attachment.access_level' => 'string|required',
             'attachment.description' => 'string|max:256|nullable',
             'images' => 'required',
-          //'mage.*' => 'unique:attachments,name|max:255|distinct',
+            //'mage.*' => 'unique:attachments,name|max:255|distinct',
         ];
         //todo image store attachment validation completion
         /* https://www.itsolutionstuff.com/post/laravel-validation-for-multiple-files-in-arrayexample.html

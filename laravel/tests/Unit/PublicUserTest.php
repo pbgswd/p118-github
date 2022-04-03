@@ -61,7 +61,6 @@ class PublicUserTest extends TestCase
 
         $response = $this->get('/venue/arts-club-theatre-granville-island-stage');
         $response->assertSeeText('Arts Club Theatre Granville Island Stage');
-
     }
 
     public function testAgreements()
@@ -73,7 +72,8 @@ class PublicUserTest extends TestCase
         $response->assertSeeText('Spectra Venue Management');
     }
 
-    public function testHireUs() {
+    public function testHireUs()
+    {
         $response = $this->get('/hire-us');
         $response->assertSeeText('Why hire IATSE Local 118');
     }
@@ -92,14 +92,14 @@ class PublicUserTest extends TestCase
         $response->assertSeeText('Constitution');
 
         $response = $this->get('/bylaw/50');
-        echo "\n Response Status: " . $response->status() . "\n";
+        echo "\n Response Status: ".$response->status()."\n";
         $response->assertSeeText('Constitution and By-Laws of IATSE Local 118 - December 21st, 2021');
     }
 
     public function testBylawsPage()
     {
         $response = $this->get('/bylaw/50');
-        echo "\n Response Status: " . $response->status() . "\n";
+        echo "\n Response Status: ".$response->status()."\n";
         $response->assertSeeText('Constitution and By-Laws of IATSE Local 118 - December 21st, 2021');
     }
 
@@ -116,6 +116,5 @@ class PublicUserTest extends TestCase
         $this->assertTrue(preg_match('/(error|notice)/i', $response) === false);
         $response->assertHeader('content-type', 'text/html; charset=UTF-8');
         **/
-
     }
 }

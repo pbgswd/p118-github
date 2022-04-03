@@ -32,8 +32,4 @@ class CommitteeProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('committee', $row['slug']);
     }
-
 }
-
-
-

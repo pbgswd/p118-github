@@ -20,7 +20,6 @@ class AttachmentService
     public function createAttachment(Request $request, HasAttachment $model): bool
     {
         foreach ($request->file('attachments') as $file) {
-
             $attachment = new Attachment;
             $attachment->user_id = Auth::id();
             $attachment->access_level = $model->getAttachmentAccessLevel();
@@ -60,15 +59,15 @@ class AttachmentService
 
                 $keys = array_keys($request->attachment);
 
-                foreach($keys as $k)
-                {
-                    if($attachment->id == $k){
+                foreach ($keys as $k) {
+                    if ($attachment->id == $k) {
                         $attachment->access_level = $request->attachment[$k]['access_level'];
                         $attachment->description = \trim($request->attachment[$k]['description']);
                         $attachment->save();
                     }
                 }
             }
+
             return true;
         }
 
@@ -100,6 +99,7 @@ class AttachmentService
     {
         if (false === Auth::check() && $attachment->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('error', 'Please log in first and try the download link again.');
+
             return redirect()->route('login');
         } else {
             return Storage::download($folder.'/'.$attachment['file'],

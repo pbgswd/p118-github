@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTablesAddLiveFeatureFront extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -28,7 +27,6 @@ class AlterTablesAddLiveFeatureFront extends Migration
             $table->dropColumn('description');
             $table->dropColumn('sort_order');
         });
-
     }
 
     /**
@@ -40,4 +38,4 @@ class AlterTablesAddLiveFeatureFront extends Migration
     {
         //I want all the columns changed, gone forever
     }
-}
+};

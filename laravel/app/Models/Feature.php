@@ -31,13 +31,8 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $dates = [
-        'date',
-        'created_at',
-        'updated_at',
-    ];
-
     protected $casts = [
+        'date' => 'datetime',
         'live' => 'boolean',
     ];
 
@@ -100,7 +95,6 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         return $this->attributes['title'] = $value;
     }
 
-
     /**
      * @return BelongsToMany
      */
@@ -126,5 +120,4 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
     {
         return $this->access_level;
     }
-
 }

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateTopicColumnScope extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -25,4 +24,4 @@ class UpdateTopicColumnScope extends Migration
     {
         DB::statement("ALTER TABLE topics CHANGE access_level scope in_menu VARCHAR (255) NOT NULL DEFAULT 'members'");
     }
-}
+};

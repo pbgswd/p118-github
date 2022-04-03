@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateUrlColInOrganizationsTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -31,4 +30,4 @@ class UpdateUrlColInOrganizationsTable extends Migration
             $table->string('url')->nullable(false)->change();
         });
     }
-}
+};

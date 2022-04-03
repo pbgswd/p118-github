@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-
 use App\Adapters\Proofreader\AgreementProofreaderAdapter;
 use App\Adapters\Proofreader\BaseProofreaderAdapter;
 use App\Adapters\Proofreader\BylawProofreaderAdapter;
@@ -48,13 +47,13 @@ class ProofreaderService
     public function getContentNames(): array
     {
         $names = [];
-        foreach ($this->adapters as $adapter)
-        {
+        foreach ($this->adapters as $adapter) {
             $names[] = [
                 'name' => $adapter->getContentName(),
-                'title' => $adapter->getMeta()['name']
-                ];
+                'title' => $adapter->getMeta()['name'],
+            ];
         }
+
         return $names;
     }
 
@@ -62,12 +61,10 @@ class ProofreaderService
     {
         DB::statement('CREATE TEMPORARY TABLE seen_links(link varchar(255))');
 
-        foreach ($this->adapters as $adapter)
-        {
+        foreach ($this->adapters as $adapter) {
             $data = $adapter->getAll();
 
-            foreach ($data as $row)
-            {
+            foreach ($data as $row) {
                 DB::table('proofreader')
                     ->upsert(
                         [
@@ -95,16 +92,3 @@ class ProofreaderService
             WHERE sl.link IS NULL');
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -34,7 +34,7 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
 
     protected $policies = [
         self::class => BylawPolicy::class,
-        ];
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -48,13 +48,8 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
         'user_id',
     ];
 
-    protected $dates = [
-        'date',
-        'created_at',
-        'updated_at',
-    ];
-
     protected $casts = [
+        'date' => 'datetime',
         'live' => 'boolean',
     ];
 

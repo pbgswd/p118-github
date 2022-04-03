@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\View\Composers;
+namespace App\Composers;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Feature;
@@ -13,11 +13,11 @@ class FrontPage
 {
     public function compose(View $view)
     {
-      //
+        //
 
         $posts = Post::where([['live', 1],
             ['front_page', 1],
-            ['access_level', AccessLevelConstants::PUBLIC]])
+            ['access_level', AccessLevelConstants::PUBLIC], ])
             ->orderBy('updated_at', 'desc')
             ->get();
 
@@ -25,7 +25,7 @@ class FrontPage
 
         $pages = Page::where([['live', 1],
             ['front_page', 1],
-            ['access_level', AccessLevelConstants::PUBLIC]])
+            ['access_level', AccessLevelConstants::PUBLIC], ])
             ->orderBy('updated_at', 'desc')
             ->get();
 
@@ -44,7 +44,7 @@ class FrontPage
             'posts' => $posts,
             'pages' => $pages,
             'features' => $features,
-         ];
+        ];
 
         $view->with('data', $data);
     }

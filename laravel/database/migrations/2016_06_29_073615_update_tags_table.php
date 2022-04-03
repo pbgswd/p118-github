@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class UpdateTagsTable extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::table('tagging_tags', function ($table) {
@@ -21,4 +20,4 @@ class UpdateTagsTable extends Migration
             $table->dropColumn('tag_group_id');
         });
     }
-}
+};

@@ -31,6 +31,7 @@ class Options
             'width' => 75,
             'tn_str' => 'tn_75x75_',
         ];
+
         return $arr;
     }
 
@@ -44,6 +45,7 @@ class Options
             'width' => 125,
             'tn_str' => 'tn_125x125_',
         ];
+
         return $arr;
     }
 
@@ -57,6 +59,7 @@ class Options
             'width' => 250,
             'tn_str' => 'tn_250x250_',
         ];
+
         return $arr;
     }
 
@@ -70,6 +73,7 @@ class Options
             'width' => 200,
             'tn_str' => 'tn_200x200_',
         ];
+
         return $arr;
     }
 
@@ -83,6 +87,7 @@ class Options
             'width' => 200,
             'tn_str' => 'tn_200x200_',
         ];
+
         return $arr;
     }
 
@@ -92,7 +97,7 @@ class Options
     public static function address_update_contacts(): array
     {
         $contacts = ['dispatch@iatse118.com', 'payroll@iatse118.com',
-            'healthandwelfare@iatse118.com', 'returningofficer@iatse118.com'];
+            'healthandwelfare@iatse118.com', 'returningofficer@iatse118.com', ];
 
         return $contacts;
     }

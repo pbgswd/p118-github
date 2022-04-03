@@ -5,36 +5,36 @@ namespace App\Http\Controllers;
 use App\Models\Agreement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+
 //use App\Services\AgreementService;
 
 class AgreementController extends Controller
 {
-
     /**
      * @param AgreementService $service
      * @return View
      */
-/**
-    public function list_demo(AgreementService $service): View
-    {
-        $data = [];
+    /**
+        public function list_demo(AgreementService $service): View
+        {
+            $data = [];
 
-        $data['agreements'] = $service->get_parent_list();
-
-
-        //todo data when Auth::check() == false
-
-        // todo data count
+            $data['agreements'] = $service->get_parent_list();
 
 
-        //todo data when Auth::check() == true
+            //todo data when Auth::check() == false
 
-        // todo data count
+            // todo data count
 
-        return view('agreements_list', ['data' => $data]);
 
-    }
-**/
+            //todo data when Auth::check() == true
+
+            // todo data count
+
+            return view('agreements_list', ['data' => $data]);
+
+        }
+     **/
 
     /**
      * @return View
@@ -44,14 +44,13 @@ class AgreementController extends Controller
         $data = [];
 
         if (Auth::check() == false) {
-            $data['agreements'] = Agreement::where([['live', 1],['access_level', 'public']])
+            $data['agreements'] = Agreement::where([['live', 1], ['access_level', 'public']])
                 ->orderBy('until', 'desc')
                 ->sortable()
                 ->paginate(10);
 
-            $data['count'] = Agreement::where([['live', 1],['access_level', 'public']])->count();
+            $data['count'] = Agreement::where([['live', 1], ['access_level', 'public']])->count();
         } else {
-
             $data['agreements'] = Agreement::where('live', 1)
                 ->sortable()
                 ->orderBy('until', 'desc')
@@ -59,6 +58,7 @@ class AgreementController extends Controller
 
             $data['count'] = Agreement::where('live', 1)->count();
         }
+
         return view('agreements_list', ['data' => ['data' => $data]]);
     }
 
@@ -68,7 +68,7 @@ class AgreementController extends Controller
      */
     public function show(Agreement $agreement): View
     {
-        $agreement->load('user', 'attachments',  'organizations', 'venues');
+        $agreement->load('user', 'attachments', 'organizations', 'venues');
 
         //todo get all agreements for this
 

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterPhoneTableAllowPhoneNull extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -28,6 +27,5 @@ class AlterPhoneTableAllowPhoneNull extends Migration
         Schema::table('phone_numbers', function (Blueprint $table) {
             $table->string('phone_number', 20)->change();
         });
-
     }
-}
+};

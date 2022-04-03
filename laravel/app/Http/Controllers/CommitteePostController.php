@@ -129,7 +129,7 @@ class CommitteePostController extends Controller
             }
         }
 
-        return redirect()->route('committee_post_edit_form', [$committee->slug, $committeePost->slug,]);
+        return redirect()->route('committee_post_edit_form', [$committee->slug, $committeePost->slug]);
     }
 
     /**

@@ -24,7 +24,8 @@ class AdminOrganizationController extends Controller
      */
     private $userImageService;
 
-    public function __construct(UserImageService $userImageService, AttachmentService $attachmentService){
+    public function __construct(UserImageService $userImageService, AttachmentService $attachmentService)
+    {
         $this->userImageService = $userImageService;
         $this->attachmentService = $attachmentService;
     }
@@ -90,7 +91,7 @@ class AdminOrganizationController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $org);
             if ($result) {
-                Session::flash('success', 'You uploaded '. count($request->file('attachments')) .
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).
                     Str::plural(' file', count($request->file('attachments'))));
             } else {
                 Session::flash('error', 'You have an upload problem');
@@ -116,20 +117,20 @@ class AdminOrganizationController extends Controller
 
         $any_organization->load('attachments');
 
-        if($any_organization['image']) {
-            if(file_exists(storage_path() . '/app/public/' . $any_organization['image'])) {
+        if ($any_organization['image']) {
+            if (file_exists(storage_path().'/app/public/'.$any_organization['image'])) {
                 $any_organization->filesize = AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/public' . '/' . $any_organization->image))) ? : null;
+                    \filesize(\storage_path('app/public'.'/'.$any_organization->image))) ?: null;
 
-                if(!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
+                if (! file_exists(storage_path().'/app/public/'.Options::venue_org_thumb_values()['tn_str'].
                     $any_organization['image'])) {
                     $this->userImageService->generate_thumb($any_organization['image'], 'public',
                         Options::venue_org_thumb_values());
                 }
             }
-            $any_organization->thumb = Options::venue_org_thumb_values()['tn_str'] . $any_organization['image'];
+            $any_organization->thumb = Options::venue_org_thumb_values()['tn_str'].$any_organization['image'];
             $any_organization->thumb_size = AttachmentService::human_filesize(
-                \filesize(\storage_path('app/public' . '/' . $any_organization->thumb))) ? : null;
+                \filesize(\storage_path('app/public'.'/'.$any_organization->thumb))) ?: null;
         }
 
         $all_agreements = Agreement::whereNotIn(
@@ -160,17 +161,16 @@ class AdminOrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $any_organization): RedirectResponse
     {
-       // dd($request->all());
+        // dd($request->all());
         $this->authorize('update', Organization::class);
         $any_organization->fill($request->organization);
 
         if (isset($request['delete_image'])) {
-            if (file_exists(storage_path() . '/app/public/' . $any_organization['image'])) {
-
+            if (file_exists(storage_path().'/app/public/'.$any_organization['image'])) {
                 $this->userImageService->destroyImage($any_organization['image'], 'public',
                     Options::venue_org_thumb_values());
 
-                Session::flash('info', 'You have deleted ' . $any_organization['file_name']);
+                Session::flash('info', 'You have deleted '.$any_organization['file_name']);
                 $any_organization['image'] = null;
                 $any_organization['file_name'] = null;
             }

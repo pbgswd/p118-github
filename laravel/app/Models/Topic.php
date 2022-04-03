@@ -70,11 +70,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
     protected $casts = [
         'front_page' => 'boolean',
         'landing_page' => 'boolean',
@@ -172,8 +167,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     {
         return $this->belongsToMany(Post::class);
     }
-
-
 
     /**
      * @return BelongsToMany

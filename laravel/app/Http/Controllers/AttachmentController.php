@@ -10,14 +10,12 @@ use App\Models\Attachment;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AttachmentController extends Controller
 {
@@ -36,7 +34,8 @@ class AttachmentController extends Controller
      */
     public function download(string $folder, Attachment $attachment)
     {
-        Log::debug('Downloading ' . $attachment->file_name . ' at ' . date('Y-m-d H:i:s'));
+        Log::debug('Downloading '.$attachment->file_name.' at '.date('Y-m-d H:i:s'));
+
         return $this->attachmentService->downloadAttachment($attachment, $folder);
     }
 
@@ -69,9 +68,9 @@ class AttachmentController extends Controller
 
         return view('admin.attachment', [
             'data' => [
-            'attachment' => $attachment,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
-                AccessLevelConstants::getConstants()),
+                'attachment' => $attachment,
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                    AccessLevelConstants::getConstants()),
                 'action' => 'Add',
             ],
         ]);
@@ -89,7 +88,6 @@ class AttachmentController extends Controller
         $attachment = '';
 
         foreach ($request->file('images') as $image) {
-
             $file = $image->store('', 'public');
             $imageName = $image->getClientOriginalName();
             $attachment = new Attachment();
@@ -117,11 +115,10 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment): View
     {
-
         $this->authorize('update', Auth::user());
 
-        if (! \file_exists(\storage_path('app/'. $attachment->subfolder) .'/'. $attachment->file)) {
-            Session::flash('error', $attachment->file_name. ' was not found on the server');
+        if (! \file_exists(\storage_path('app/'.$attachment->subfolder).'/'.$attachment->file)) {
+            Session::flash('error', $attachment->file_name.' was not found on the server');
 
             return \redirect()->route('attachments_list');
         }

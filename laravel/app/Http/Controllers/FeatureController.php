@@ -13,7 +13,6 @@ class FeatureController extends Controller
      */
     public function index(): View
     {
-
         $features = Feature::withoutGlobalScopes()
             ->where('live', 1)
             ->sortable()
@@ -27,7 +26,6 @@ class FeatureController extends Controller
         return view('features', ['data' => $data]);
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -37,16 +35,15 @@ class FeatureController extends Controller
     public function show(Feature $feature): View
     {
         //todo fix service reference
-        if($feature['image']) {
-            if(file_exists(storage_path() . '/app/public/' . $feature['image'])) {
-
-                if(!file_exists(storage_path() . '/app/public/' . Options::feature_thumb_values()['tn_str'] .
+        if ($feature['image']) {
+            if (file_exists(storage_path().'/app/public/'.$feature['image'])) {
+                if (! file_exists(storage_path().'/app/public/'.Options::feature_thumb_values()['tn_str'].
                     $feature['image'])) {
                     $this->userImageService->generate_thumb($feature['image'], 'public',
                         Options::feature_thumb_values());
                 }
             }
-            $feature->thumb = Options::feature_thumb_values()['tn_str'] . $feature['image'];
+            $feature->thumb = Options::feature_thumb_values()['tn_str'].$feature['image'];
         }
 
         $data = [

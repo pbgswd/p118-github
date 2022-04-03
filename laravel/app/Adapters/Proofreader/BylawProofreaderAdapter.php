@@ -34,6 +34,3 @@ class BylawProofreaderAdapter extends BaseProofreaderAdapter
         return route('bylaw_show', $row['id']);
     }
 }
-
-
-

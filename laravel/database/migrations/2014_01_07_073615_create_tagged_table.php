@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTaggedTable extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('tagging_tagged', function (Blueprint $table) {
@@ -24,4 +23,4 @@ class CreateTaggedTable extends Migration
     {
         Schema::drop('tagging_tagged');
     }
-}
+};

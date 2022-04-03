@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTagGroupsTable extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('tagging_tag_groups', function (Blueprint $table) {
@@ -18,4 +17,4 @@ class CreateTagGroupsTable extends Migration
     {
         Schema::drop('tagging_tag_groups');
     }
-}
+};

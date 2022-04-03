@@ -28,7 +28,7 @@ class EmailCommitteeMembershipService
             if ($cc != '') {
                 $m->cc($cc, $cc);
             }
-            $m->subject(config('app.APP_NAME') . ' Website Committee Notification')
+            $m->subject(config('app.APP_NAME').' Website Committee Notification')
                 ->replyTo($replyTo, $replyTo);
         });
     }

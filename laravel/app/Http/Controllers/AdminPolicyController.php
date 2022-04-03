@@ -81,6 +81,7 @@ class AdminPolicyController extends Controller
                 Session::flash('error', 'You have an upload problem');
             }
         }
+
         return redirect()->route('admin_policy_edit', [$policy->id]);
     }
 

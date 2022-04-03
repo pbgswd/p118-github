@@ -58,11 +58,6 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
     protected $casts = [
         'live' => 'boolean',
     ];
@@ -146,7 +141,7 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
             ->with('attachments')
             ->whereRaw('until > NOW()')
             ->where([['live', 1],
-                ['access_level', 'public']
+                ['access_level', 'public'],
             ])->sortable()
             ->orderBy('until');
     }

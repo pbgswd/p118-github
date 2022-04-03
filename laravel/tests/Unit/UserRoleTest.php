@@ -17,21 +17,19 @@ class UserRoleTest extends TestCase
     public function userProvider()
     {
         return [
-            'example user with member privileges' =>
-            [
+            'example user with member privileges' => [
                 'name' => 'testname 1',
                 'email' => 'abcd@xyz.com',
                 'password' => 'averygoodPassword100',
                 'membership_type' => 'Member',
-                'role' => 'member'
+                'role' => 'member',
             ],
-            'example user with super-admin privileges' =>
-            [
+            'example user with super-admin privileges' => [
                 'name' => 'testname 2',
                 'email' => 'superwebdeveloper@gmail.com',
                 'password' => 'honda750',
                 'membership_type' => 'Member',
-                'role' => 'super-admin'
+                'role' => 'super-admin',
             ],
             /*
             'example user with writer privileges' =>
@@ -67,40 +65,34 @@ class UserRoleTest extends TestCase
      */
     public function testInviteUserWasInvited($name, $email, $password, $membership_type, $role)
     {
-/**
- * InviteUser
- * InviteUserController
- * store method
- */
-
+        /**
+         * InviteUser
+         * InviteUserController
+         * store method
+         */
         $response = $this->call('POST', '/admin/invite-new-user',
             [
                 'invite[name]' => $name,
                 'invite[email]' => $email,
                 'invite[membership_type]' => $membership_type,
                 'invite[role]' => $role,
-                '_token' => csrf_token()
+                '_token' => csrf_token(),
             ]
         );
 
         $this->assertDatabaseHas('invite_users', ['email' => $email]);
-
     }
-
 
     /**
      * @dataProvider userProvider
      */
     public function testSeesTheWebsiteIndex()
     {
-
         $response = $this->call('POST', '/logout',
             [
                 '_token' => csrf_token(),
             ]
         );
-
-
 
         Session::start();
         $response = $this->get('/login');
@@ -110,18 +102,17 @@ class UserRoleTest extends TestCase
             echo "\n Login page \n";
         }
         foreach ($users as $u) {
-
-            echo "\n Attempting to log in " . $u['email'] ." \n";
+            echo "\n Attempting to log in ".$u['email']." \n";
 
             $response = $this->call('POST', '/login',
                 [
-                   'email' => $u['email'],
-                   'password' => $u['password'],
-                   '_token' => csrf_token(),
+                    'email' => $u['email'],
+                    'password' => $u['password'],
+                    '_token' => csrf_token(),
                 ]
             );
 
-            echo "\n Response Status: " . $response->status() . "\n";
+            echo "\n Response Status: ".$response->status()."\n";
 
             if ($response->assertStatus(Response::HTTP_FOUND)) {
                 if ($response->assertSeeText('Redirecting to http')) {
@@ -142,10 +133,10 @@ class UserRoleTest extends TestCase
             $response = $this->get('/site');
 
             if ($response->assertStatus(Response::HTTP_OK)) {
-                if ($response->assertSeeText('Hi '. $user->name)
+                if ($response->assertSeeText('Hi '.$user->name)
                     && $response->assertSeeText('Logout')
                     && $response->assertSeeText('Call Steward')) {
-                    echo "\n logged in as " . $user->name . "\n";
+                    echo "\n logged in as ".$user->name."\n";
                 }
             }
 
@@ -190,6 +181,6 @@ class UserRoleTest extends TestCase
                 ]
             );
         }
-        echo "\n End method " . basename(__METHOD__). "\n";
+        echo "\n End method ".basename(__METHOD__)."\n";
     }
 }

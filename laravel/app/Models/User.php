@@ -56,11 +56,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
     /**
      * The attributes that are mass assignable.
      */

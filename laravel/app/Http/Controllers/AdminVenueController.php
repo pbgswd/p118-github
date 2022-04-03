@@ -87,7 +87,7 @@ class AdminVenueController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $venue);
             if ($result) {
-                Session::flash('success', 'You uploaded '. count($request->file('attachments')) .
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).
                     Str::plural(' file', count($request->file('attachments'))));
             } else {
                 Session::flash('error', 'You have an upload problem');
@@ -123,21 +123,20 @@ class AdminVenueController extends Controller
 
         $any_venue->setRelation('all_agreements', $all_agreements);
 
-        if($any_venue['image']) {
-            if(file_exists(storage_path() . '/app/public/' . $any_venue['image'])) {
+        if ($any_venue['image']) {
+            if (file_exists(storage_path().'/app/public/'.$any_venue['image'])) {
                 $any_venue->filesize = AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/public' . '/' . $any_venue->image))) ? : null;
+                    \filesize(\storage_path('app/public'.'/'.$any_venue->image))) ?: null;
 
-                if(!file_exists(storage_path() . '/app/public/' . Options::venue_org_thumb_values()['tn_str'] .
+                if (! file_exists(storage_path().'/app/public/'.Options::venue_org_thumb_values()['tn_str'].
                     $any_venue['image'])) {
-
                     $this->userImageService->generate_thumb($any_venue['image'], 'public',
                         Options::venue_org_thumb_values());
                 }
             }
-            $any_venue->thumb = Options::venue_org_thumb_values()['tn_str'] . $any_venue['image'];
+            $any_venue->thumb = Options::venue_org_thumb_values()['tn_str'].$any_venue['image'];
             $any_venue->thumb_size = AttachmentService::human_filesize(
-                \filesize(\storage_path('app/public' . '/' . $any_venue->thumb))) ? : null;
+                \filesize(\storage_path('app/public'.'/'.$any_venue->thumb))) ?: null;
         }
 
         $data = [
@@ -158,18 +157,17 @@ class AdminVenueController extends Controller
      * @throws AuthorizationException
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
-    public function update(UpdateVenueRequest $request, UserImageService $service, Venue $any_venue ): RedirectResponse
+    public function update(UpdateVenueRequest $request, UserImageService $service, Venue $any_venue): RedirectResponse
     {
         $this->authorize('update', Venue::class);
 
         $any_venue->fill($request['venue']);
 
         if (isset($request['delete_image'])) {
-            if (file_exists(storage_path() . '/app/public/' . $any_venue['image'])) {
-
+            if (file_exists(storage_path().'/app/public/'.$any_venue['image'])) {
                 $service->destroyImage($any_venue['image'], 'public', Options::venue_org_thumb_values());
 
-                Session::flash('info', 'You have deleted ' . $any_venue['file_name']);
+                Session::flash('info', 'You have deleted '.$any_venue['file_name']);
                 $any_venue['image'] = null;
                 $any_venue['file_name'] = null;
             }
@@ -195,13 +193,12 @@ class AdminVenueController extends Controller
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_venue);
             if ($result) {
-                Session::flash('success', 'You uploaded '. count($request->file('attachments')) .
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).
                     Str::plural(' file', count($request->file('attachments'))));
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
         }
-
 
         Session::flash('success', 'You have edited the venue');
 

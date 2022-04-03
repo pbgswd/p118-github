@@ -59,11 +59,6 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
     protected $casts = [
         'live' => 'boolean',
     ];
@@ -129,7 +124,6 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
         return $this->hasOne(User::class);
     }
 
-
     /**
      * @return BelongsToMany
      */
@@ -139,7 +133,7 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
             ->with('attachments')
             ->whereRaw('until > NOW()')
             ->where([['live', 1],
-                ['access_level', 'public']
+                ['access_level', 'public'],
             ])->sortable()
             ->orderBy('until');
     }
@@ -154,7 +148,6 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
             ->orderBy('title');
     }
 
-
     /**
      * @return BelongsToMany
      */
@@ -167,7 +160,6 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
             ->sortable()
             ->orderBy('title');
     }
-
 
     /**
      * @return HasOne
@@ -182,7 +174,7 @@ class Venue extends LiveableModel implements HasAttachment, Searchable
      */
     public function attachments(): BelongsToMany
     {
-       return $this->belongsToMany(Attachment::class, 'attachment_venue');
+        return $this->belongsToMany(Attachment::class, 'attachment_venue');
     }
 
     /**

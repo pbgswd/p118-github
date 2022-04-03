@@ -40,17 +40,12 @@ class CommitteePost extends LiveableModel implements HasAttachment, Searchable
     protected $guard_name = 'web';
 
     protected $policies = [
-     self::class => CommitteePostPolicy::class,
+        self::class => CommitteePostPolicy::class,
     ];
 
     public $sortable = [
         'id',
         'title',
-        'created_at',
-        'updated_at',
-    ];
-
-    protected $dates = [
         'created_at',
         'updated_at',
     ];

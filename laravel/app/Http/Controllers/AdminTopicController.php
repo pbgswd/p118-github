@@ -35,12 +35,11 @@ class AdminTopicController extends Controller
 
         $topics = Topic::withoutGlobalScopes()
             ->sortable()
-            ->with('user','attachments')
+            ->with('user', 'attachments')
             ->paginate(20);
 
         return view('admin.listtopics', ['data' => ['topics' => $topics]]);
     }
-
 
     public function create()
     {
@@ -103,7 +102,7 @@ class AdminTopicController extends Controller
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
             'action' => 'Edit',
-            ];
+        ];
 
         return view('admin.topic', ['data' => $data]);
     }

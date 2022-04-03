@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Constants\AccessLevelConstants;
 use App\Models\Page;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
@@ -19,7 +18,7 @@ class PageController extends Controller
     public function list(): View
     {
         if (Auth::check()) {
-            $pages = Page::where('live',1)
+            $pages = Page::where('live', 1)
                 ->with('topics')
                 ->paginate(9);
         } else {

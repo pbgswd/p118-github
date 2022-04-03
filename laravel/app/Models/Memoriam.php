@@ -43,13 +43,8 @@ class Memoriam extends LiveableModel implements Searchable
         'updated_at',
     ];
 
-    protected $dates = [
-        'date',
-        'created_at',
-        'updated_at',
-    ];
-
     protected $casts = [
+        'date' => 'datetime',
         'live' => 'boolean',
     ];
 

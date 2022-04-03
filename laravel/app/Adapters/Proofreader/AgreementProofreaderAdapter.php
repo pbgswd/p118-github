@@ -33,8 +33,4 @@ class AgreementProofreaderAdapter extends BaseProofreaderAdapter
     {
         return route('agreement_show', $row['id']);
     }
-
 }
-
-
-

@@ -6,10 +6,7 @@ use function array_combine;
 
 /**
  * Class Countries
- * @package App\Models
  */
-
-
 class Countries
 {
     public static function countries(): array
