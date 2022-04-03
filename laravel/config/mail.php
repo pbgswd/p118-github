@@ -98,13 +98,13 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@iatse118.com'),
-        'name' => env('MAIL_FROM_NAME', 'No Reply IATSE Local 118'),
+        'address' => env('MAIL_FROM_ADDRESS', env('MAIL_FROM_ADDRESS')),
+        'name' => env('MAIL_FROM_NAME', env('MAIL_FROM_NAME')),
     ],
 
     'admin' => [
-        'address' => 'superwebdeveloper@gmail.com',
-        'name' => 'Local 118 Website Administrator',
+        'address' => env('MAIL_ADMIN_EMAIL'),
+        'name' => env('MAIL_ADMIN_NAME'),
     ],
 
     'office_admin' => [
