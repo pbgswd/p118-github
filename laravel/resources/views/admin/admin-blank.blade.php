@@ -4,7 +4,7 @@
     console.log('inside admin-blank.blade the template file');
 </script>
 
-<div id="anotherapp">App Div , allows vue.js
+<div id="anotherapp">
     <form method="post" action="">
         My name: @{{ myName }} <br />
     <input v-model="someName" type="text" id="name" name="name"> (@{{ someName.length }} characters)
