@@ -1,5 +1,5 @@
     <link href="{{ mix('css/carousel.css') }}" rel="stylesheet">
-    <div id="carousel" class="carousel slide carousel-fade mb-1" data-ride="carousel" data-interval="6000">
+    <div id="carousel" class="carousel slide carousel-fade mb-3" data-ride="carousel" data-interval="6000">
         <ol class="carousel-indicators">
             <li data-target="#carousel" data-slide-to="0" class="active"></li>
             <li data-target="#carousel" data-slide-to="1"></li>
@@ -58,16 +58,15 @@
             <!-- /.carousel-item -->
             <div class="carousel-item">
                 <picture>
-                    <source srcset="/storage/public/cKJuLxJYEjxjE5L2ra5s9ynw5GrVM2P7PMgTJU5j.jpg" media="(min-width: 1400px)">
-                    <source srcset="/storage/public/bmouI3kV5lfB4JVffX0X6FMyGKKT4LEf8Y3CSLQr.jpg" media="(min-width: 769px)">
-                    <source srcset="/storage/public/9maoUzOlTpj8YC7FcQg2FDKDaLXp2pp4or6WT3Cu.jpg " media="(min-width: 577px)">
-                    <img srcset="/storage/public/T7PIhGCQaDoxOvJAH6aDF79KrwehnO3YYpBDhzoO.jpg" alt="Orpheum Theatre" class="d-block img-fluid">
+                    <source srcset="/storage/public/uEcfR64V9sR2PXMaHV5aWAKhIltb9z4s443TuZ4p.jpg" media="(min-width: 1400px)">
+                    <source srcset="/storage/public/xv6Gg53lbAvY94it2nWL7yCIMw9Jx8eQf74uat8l.jpg" media="(min-width: 769px)">
+                    <source srcset="/storage/public/wujDXQVDFzSgi9FK2AZ3POvqude24k4BSwn2DUTG.jpg" media="(min-width: 577px)">
+                    <img srcset="/storage/public/GW3zfWRGazl1nYmHXCfyt4mlrrMKXodTECl6RIeB.jpg" alt="Follow Spot" class="d-block img-fluid">
                 </picture>
-
                 <div class="carousel-caption justify-content-center align-items-center">
                     <div>
-                        <h2>Setting Your Stage</h2>
-                        <p>Live Performance Comes to Life</p>
+                        <h2>Spot On</h2>
+                        <p>We make the stars shine</p>
                     </div>
                 </div>
             </div>
