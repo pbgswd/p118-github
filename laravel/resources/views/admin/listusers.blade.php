@@ -48,6 +48,9 @@
                                 <a title="admin edit page for {{ $i->name }}" href="{{ route('user_edit', $i->id) }}">
                                     {{ $i->name }}
                                 </a>
+                                @if($i->is_banned == 1)
+                                    <span class="text-danger">Banned</span>
+                                @endif
                             </h4>
                             @if(count($i->currentExecutiveRoles) > 0)
                                 @foreach($i->currentExecutiveRoles as $a)

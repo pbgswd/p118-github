@@ -296,7 +296,8 @@
                                 <input name="user_roles[]" type="checkbox" value="{{$role->name}}"
                                     {{ checked(array_key_exists($role->name, $data['user_roles'])) }}
                                 />
-                            </div><strong  class="pl-lg-2">{{$role->name}}</strong>
+                            </div>
+                            <strong class="pl-lg-2">{{$role->name}}</strong>
                         </div>
                         @forelse ($role->permissions as $p)
                             <i> {{ $p->name }}, </i> &nbsp;
@@ -306,6 +307,24 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+        <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
+            <div class="col-12 mt-2 mb-2">
+                <h4>{{ $data['user']->is_banned == 1 ? "Unban" : "Ban" }} {{$data['user']->name}} </h4>
+            </div>
+            <div class="input-group mb-2 col-12">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input name="user[is_banned]" type="hidden" value="0" />
+                        <input name="user[is_banned]" type="checkbox"
+                               value="1"
+                               {{ checked(old('user.is_banned', $data['user']->is_banned ?? '')) }} />
+                    </div>
+                </div>
+                <input type="text" class="form-control" aria-label="Text input with checkbox"
+                       value="{{$data['user']->is_banned == 1 ? "Unban" : "Ban"}} {{$data['user']->name}} from the website?"
+                       size="40" readonly>
+            </div>
         </div>
         <div class="row mt-4">
             <div class="col-sm">

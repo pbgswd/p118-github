@@ -7,6 +7,9 @@
                 <div class="card-header font-weight-bold bg-dark text-white">
                     {{ __('Login') }} to {{env('APP_NAME')}}
                 </div>
+                @if (session('message'))
+                    <div class="alert alert-danger">{{ session('message') }}</div>
+                @endif
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

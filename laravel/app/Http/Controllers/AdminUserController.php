@@ -205,6 +205,10 @@ class AdminUserController extends Controller
             'action' => 'Edit',
         ];
 
+        if($user->is_banned == 1) {
+            Session::flash('error', 'NOTE: ' . $user->name . ' has been banned from accessing the website.');
+        }
+
         return view('admin.user', ['data' => $data]);
     }
 
@@ -277,6 +281,8 @@ class AdminUserController extends Controller
             }
             $user->user_info()->save($user_info);
         }
+
+        //todo user role 'suspended' OR permission
 
         $user_roles = $user->getRoleNames()->toArray();
 
@@ -438,7 +444,6 @@ class AdminUserController extends Controller
         $users = User::find($request->id);
 
         //todo cannot delete user when user has a post, page, topic, or is a member of a committee.
-        // Deal with this
         //todo user soft delete
 
         foreach ($users as $user) {

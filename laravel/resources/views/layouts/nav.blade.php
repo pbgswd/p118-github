@@ -154,7 +154,6 @@
                     Contact Us
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdown">
-                    <a class="dropdown-item" href="{{route('hire-us')}}" title="Why Hire Union">Why Hire Union</a>
                     <a class="dropdown-item" href="{{route('contact')}}" title="Contact Us">Contact Us</a>
                     <a class="dropdown-item" href="{{route('page_show','payroll-trust-account')}}"
                        title="Payroll">Payroll</a>

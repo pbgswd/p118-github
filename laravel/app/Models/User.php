@@ -64,6 +64,11 @@ class User extends Authenticatable implements HasAttachment, Searchable
         'email',
         'password',
         'email_verified_at',
+        'is_banned',
+    ];
+
+    protected $dates = [
+        'banned_until',
     ];
 
     /**

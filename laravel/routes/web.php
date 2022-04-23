@@ -35,7 +35,7 @@ Route::middleware('web')->group(function () {
 
     Route::get('executive', [CNS\ExecutiveController::class, 'index'])->name('executive');
 
-    Route::get('/hire-us', [CNS\HireUsController::class, 'show'])->name('hire-us');
+    //Route::get('/hire-us', [CNS\HireUsController::class, 'show'])->name('hire-us'); // to be updated
 
     Route::get('/pages', [CNS\PageController::class, 'list'])->name('pages');
     Route::get('/page/{page}', [CNS\PageController::class, 'show'])->name('page_show');
