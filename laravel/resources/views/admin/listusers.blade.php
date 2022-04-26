@@ -49,7 +49,7 @@
                                     {{ $i->name }}
                                 </a>
                                 @if($i->is_banned == 1)
-                                    <span class="text-danger">Banned</span>
+                                    <span class="text-danger">Suspended</span>
                                 @endif
                             </h4>
                             @if(count($i->currentExecutiveRoles) > 0)

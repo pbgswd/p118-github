@@ -310,7 +310,9 @@
         </div>
         <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
             <div class="col-12 mt-2 mb-2">
-                <h4>{{ $data['user']->is_banned == 1 ? "Unban" : "Ban" }} {{$data['user']->name}} </h4>
+                <h4>
+                    {{ $data['user']->is_banned == 1 ? "Remove suspension for" : "Suspend" }} {{$data['user']->name}}
+                </h4>
             </div>
             <div class="input-group mb-2 col-12">
                 <div class="input-group-prepend">
@@ -322,7 +324,7 @@
                     </div>
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
-                       value="{{$data['user']->is_banned == 1 ? "Unban" : "Ban"}} {{$data['user']->name}} from the website?"
+                       value="{{$data['user']->is_banned == 1 ? "Uncheck to remove suspension for" : "Check to suspend"}} {{$data['user']->name}}"
                        size="40" readonly>
             </div>
         </div>

@@ -206,7 +206,7 @@ class AdminUserController extends Controller
         ];
 
         if($user->is_banned == 1) {
-            Session::flash('error', 'NOTE: ' . $user->name . ' has been banned from accessing the website.');
+            Session::flash('error', 'NOTE: ' . $user->name . ' has been suspended from the website.');
         }
 
         return view('admin.user', ['data' => $data]);
