@@ -11,15 +11,6 @@ use Illuminate\View\View;
 
 class EmploymentController extends Controller
 {
-    public function __construct()
-    {
-        Employment::where('deadline', '<', now())
-            ->update(['status' => 0]);
-
-        Employment::where('deadline', '>', now())
-            ->update(['status' => 1]);
-    }
-
     /**
      * @return View
      */

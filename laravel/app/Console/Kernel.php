@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\UpdateEmploymentPostStatus;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,6 +17,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('executive:update')->daily();
+
+        $schedule->job(new UpdateEmploymentPostStatus)->daily();
     }
 
     /**

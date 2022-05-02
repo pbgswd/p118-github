@@ -24,12 +24,6 @@ class AdminEmploymentController extends Controller
     public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;
-
-        Employment::where('deadline', '<', now())
-            ->update(['status' => 0]);
-
-        Employment::where('deadline', '>', now())
-            ->update(['status' => 1]);
     }
 
     /**
