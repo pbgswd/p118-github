@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Jobs\UpdateEmploymentPostStatus;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +18,7 @@ class Kernel extends ConsoleKernel
     {
         Log::debug('running commands and jobs listed in  ' . __METHOD__);
 
-       $schedule->command('employment:update-status')->everyMinute();
+        $schedule->command('employment:update-status')->daily();
     }
 
     /**
