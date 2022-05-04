@@ -29,11 +29,6 @@ class UpdateEmploymentStatusCommand extends Command
      */
     public function handle()
     {
-        $result = Employment::where([
-            ['deadline', '<', now()],
-            ['status', '=', 1]
-        ])->get();
-
         Employment::where([
             ['deadline', '<', now()],
             ['status', '=', 1]
