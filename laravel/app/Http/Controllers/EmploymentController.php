@@ -27,9 +27,6 @@ class EmploymentController extends Controller
             ->orderBy('deadline', 'desc')
             ->paginate(10);
 
-        Employment::where('deadline', '<', now())
-            ->update(['status' => 0]);
-
         $data = [
             'employment' => $jobs,
             'years' => $years,
@@ -91,9 +88,6 @@ class EmploymentController extends Controller
      */
     public function show(Employment $employment): View
     {
-        Employment::where('deadline', '<', now())
-            ->update(['status' => 0]);
-
         $employment->load('user', 'attachments');
 
         return view('employment', ['data' => ['employment' => $employment]]);
