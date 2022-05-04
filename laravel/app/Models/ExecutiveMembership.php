@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Policies\ExecutiveMembershipPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -10,6 +11,8 @@ use Spatie\Searchable\SearchResult;
 
 class ExecutiveMembership extends Model implements Searchable
 {
+    use HasFactory;
+
     protected $table = 'executive_user';
 
     protected $policies = [

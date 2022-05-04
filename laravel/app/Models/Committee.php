@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\CommitteePolicy;
 use DateTime;
@@ -36,6 +37,7 @@ use Spatie\Searchable\SearchResult;
 class Committee extends LiveableModel implements HasAttachment, Searchable
 {
     use Notifiable;
+    use HasFactory;
     use Sortable;
     use HasRoles;
 

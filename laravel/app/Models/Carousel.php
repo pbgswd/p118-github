@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,6 +12,7 @@ use Kyslik\ColumnSortable\Sortable;
 class Carousel extends LiveableModel implements HasAttachment
 {
     use Sortable;
+    use HasFactory;
     //migration attachment_carousel
 
     /**

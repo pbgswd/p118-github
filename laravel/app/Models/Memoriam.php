@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,6 +15,7 @@ use Spatie\Searchable\SearchResult;
 class Memoriam extends LiveableModel implements Searchable
 {
     use Sortable;
+    use HasFactory;
 
     protected $table = 'memoriams';
 

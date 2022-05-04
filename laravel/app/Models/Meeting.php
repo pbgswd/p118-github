@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\MeetingPolicy;
@@ -27,6 +28,7 @@ use Spatie\Searchable\SearchResult;
 class Meeting extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
+    use HasFactory;
 
     protected $policies = [
         self::class => MeetingPolicy::class,

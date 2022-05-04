@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
@@ -28,6 +29,7 @@ use Spatie\Searchable\SearchResult;
 class CommitteePostComment extends LiveableModel implements Searchable
 {
     use Notifiable;
+    use HasFactory;
     use Sortable;
     use HasRoles;
 

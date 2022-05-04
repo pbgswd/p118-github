@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Policies\AttachmentPolicy;
 use App\Services\AttachmentService;
 use DateTime;
@@ -29,6 +30,7 @@ use Spatie\Searchable\SearchResult;
 class Attachment extends Model implements Searchable
 {
     use Sortable;
+    use HasFactory;
 
     /** @var string */
     public $path_info;

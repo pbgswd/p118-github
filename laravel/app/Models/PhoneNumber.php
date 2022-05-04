@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
@@ -17,6 +18,8 @@ use Spatie\Searchable\SearchResult;
  */
 class PhoneNumber extends Model implements Searchable
 {
+    use HasFactory;
+
     protected $guard_name = 'web';
 
     protected $casts =

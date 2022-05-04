@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\PagePolicy;
 use DateTime;
@@ -34,6 +35,7 @@ use Spatie\Searchable\SearchResult;
 class Page extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.

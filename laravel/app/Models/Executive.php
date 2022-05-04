@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Policies\ExecutivePolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,6 +21,7 @@ use Spatie\Searchable\SearchResult;
 class Executive extends Model implements Searchable
 {
     use Sortable;
+    use HasFactory;
 
     protected $policies = [
         self::class => ExecutivePolicy::class,

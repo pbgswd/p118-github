@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\PolicyPolicy;
@@ -22,6 +23,7 @@ use Spatie\Searchable\SearchResult;
 class Policy extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
