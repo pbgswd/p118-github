@@ -16,8 +16,6 @@ class EmailMemberUpdateAddressService
         $recipient = config('mail.admin.address');
         $cc = '';
 
-        Log::debug('Member updating address. Config app env value is: '.config('app.env'));
-
         if (config('app.env') == 'local') {
             $recipient = config('mail.admin.address');
             $cc = Options::testing_address_update_contacts();
@@ -27,9 +25,6 @@ class EmailMemberUpdateAddressService
             $recipient = config('mail.office_admin.address');
             $cc = Options::address_update_contacts();
         }
-
-        Log::debug('EmailMemberUpdateAddressService update for '.$user->name.' Sending to: '.$recipient.', cc: '.
-            implode(', ', $cc).' at '.date('Y-m-d H:i:s'));
 
         Mail::send('emails.user_address_update', ['update_type' => $update_type, 'data' => $message, 'user' => $user],
             function ($m) use ($update_type,
