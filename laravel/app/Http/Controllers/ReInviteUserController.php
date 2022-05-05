@@ -8,10 +8,8 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 
 class ReInviteUserController extends Controller
 {
@@ -44,9 +42,6 @@ class ReInviteUserController extends Controller
         $data['count'] = count(InviteUser::all());
 
         Session::flash('success', $data['count'].' pending members have been reinvited by adding them as members');
-
-        Log::debug(' On '.date('Y-m-d H:i:s').', '.$data['count'].' pending members were
-            reinvited, by adding them as members');
 
         return redirect()->route('admin_list_invited_users');
     }

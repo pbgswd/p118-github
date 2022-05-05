@@ -16,7 +16,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -210,8 +209,6 @@ class InviteUserController extends Controller
                         ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
                         ->subject('IATSE Local 118 Website Signup Invitation');
                 });
-
-            Log::debug($invitation->name.' was sent an invitation at '.date('Y-m-d H:i:s'));
         }
 
         DB::table('import_users')
@@ -273,8 +270,6 @@ class InviteUserController extends Controller
                                     You may now login with your email and password');
 
         Auth::logout();
-
-        Log::debug($user->name.' has completed their profile signup at  '.date('Y-m-d H:i:s'));
 
         return redirect()->route('login');
     }
