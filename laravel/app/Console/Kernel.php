@@ -16,8 +16,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        Log::debug('running commands and jobs listed in  ' . __METHOD__ . ' ' . date('Y-m-d H:i:s'));
-
         $schedule->command('employment:update-status')->daily();
     }
 
