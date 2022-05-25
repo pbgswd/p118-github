@@ -98,19 +98,11 @@ Route::middleware('web', 'auth')->group(function () {
     Route::get('/member/{user}/password', [CNS\UserController::class, 'edit_password'])->name('member_password_edit');
     Route::post('/member/{user}/password', [CNS\UserController::class, 'update_password']);
 
-    Route::get('/invited/{user}/{hash}', [CNS\InviteUserController::class, 'process'])->name('process_user');
-
     Route::get('policies', [CNS\PolicyController::class, 'index'])->name('policies_list_public');
     Route::get('/policies/{policy}', [CNS\PolicyController::class, 'show'])->name('policy_show_public');
 
     Route::get('committees', [CNS\CommitteeController::class, 'index'])->name('committees');
     Route::get('committee/{committee}', [CNS\CommitteeController::class, 'show'])->name('committee');
-
-    Route::post('committee/{committee}/join', [CNS\CommitteeController::class, 'join']);
-    Route::post('committee/{committee}/leave', [CNS\CommitteeController::class, 'leave']);
-
-    Route::get('committee/{committee}/show-members', [CNS\CommitteeController::class, 'show_members'])
-        ->name('committee_list_members');
 
     Route::get('committee/{committee}/post/create', [CNS\CommitteePostController::class, 'create'])
         ->name('committee_add_public_post');
@@ -221,12 +213,10 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
 
     Route::get('/invite-new-user', [CNS\InviteUserController::class, 'create'])->name('invite-new-user');
     Route::post('/invite-new-user', [CNS\InviteUserController::class, 'store']);
-    Route::post('/invite_user', [CNS\InviteUserController::class, 'send']);
     Route::get('/invited_users', [CNS\InviteUserController::class, 'index'])->name('admin_list_invited_users');
     Route::get('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'show'])->name('show_invited_user');
-    Route::get('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'edit'])->name('invited_user_edit');
+
     //Route::get('/invitation-mailmsg',[CNS\InviteUserController::class, 'mail'])->name('mail_invited_user');
-    Route::post('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'update']);
     Route::delete('/invited_user/delete', [CNS\InviteUserController::class, 'destroy'])->name('invited_user_destroy');
     Route::get('/invite_import-list', [CNS\InviteUserController::class, 'list_import'])->name('list_import');
     Route::get('process_import_invitation', [CNS\InviteUserController::class, 'process_import_invitation'])
