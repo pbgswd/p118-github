@@ -2,10 +2,48 @@
 
 namespace Tests;
 
+use App\Models\Membership;
+use App\Models\PhoneNumber;
+use App\Models\User;
+use App\Models\UserInfo;
+use Database\Seeders\AccessLevelConstantsSeeder;
+use Database\Seeders\RolesAndPermissionsSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, AdditionalAssertions;
+    use RefreshDatabase;
+    public $user, $users;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed(AccessLevelConstantsSeeder::class);
+        $this->seed(RolesAndPermissionsSeeder::class);
+
+        //$this->seed(UserSeeder::class);
+        $users = User::factory()
+            ->has(UserInfo::factory(), 'user_info')
+            ->has(PhoneNumber::factory(), 'phone_number')
+            ->has(Membership::factory(),'membership')
+            ->count(3)
+            ->create();
+
+        //todo do users need a role assigned to each of them?
+
+        $user = User::factory()
+            ->has(UserInfo::factory(), 'user_info')
+            ->has(PhoneNumber::factory(), 'phone_number')
+            ->has(Membership::factory(),'membership')
+            ->create();
+        $user->assignRole('member');
+        $this->user = $user;
+        //todo generate fake user resources for other tests to consume
+
+    }
+
 }
