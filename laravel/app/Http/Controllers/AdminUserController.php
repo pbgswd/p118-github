@@ -122,12 +122,6 @@ class AdminUserController extends Controller
 
         return redirect()->route('users_list');
         /*******************
-
-//todo is password here just encrypting the word 'secret'?
-//todo create default password for new user based on name and other data
-//todo do not allow user to keep first password on signup.
-//todo a fake password, then leverage password reset to send out login access
-
            $user = new User(array_merge($request->input('user'), ['password' => bcrypt('secret')]));
            $user->save();
 
