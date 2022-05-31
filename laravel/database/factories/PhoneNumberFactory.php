@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\PhoneNumber;
+Use App\Models\User;
 
 class PhoneNumberFactory extends Factory
 {
@@ -22,9 +23,10 @@ class PhoneNumberFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => \App\REPLACE_THIS::factory(),
+            'user_id' => User::factory(),
             'phone_number' => $this->faker->phonenumber,
-            'primary' => $this->faker->boolean,
+            'label' => null,
+            'primary' => 1,
         ];
     }
 }
