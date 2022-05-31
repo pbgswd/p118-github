@@ -32,6 +32,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => 'password$2y$10$92IXUN', // password
             'remember_token' => Str::random(10),
+            'is_banned' => 0,
         ];
     }
 }
