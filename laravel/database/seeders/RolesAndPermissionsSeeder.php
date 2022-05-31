@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -21,20 +22,32 @@ class RolesAndPermissionsSeeder extends Seeder
         // create permissions
         Permission::create(['name' => 'edit articles']);
         Permission::create(['name' => 'delete articles']);
+        Permission::create(['name' => 'create articles']);
         Permission::create(['name' => 'publish articles']);
         Permission::create(['name' => 'unpublish articles']);
+        Permission::create(['name' => 'create users']);
+        Permission::create(['name' => 'edit users']);
+        Permission::create(['name' => 'delete users']);
+        Permission::create(['name' => 'create committee']);
+        Permission::create(['name' => 'manage committee']);
+        Permission::create(['name' => 'delete committee']);
 
         // create roles and assign created permissions
 
-        // this can be done as separate statements
-        $role = Role::create(['name' => 'writer']);
-        $role->givePermissionTo('edit articles');
+        $role = Role::create(['name' => 'writer'])
+            ->givePermissionTo(
+                ['create articles', 'edit articles', 'publish articles', 'unpublish articles', 'delete articles']
+            );
 
-        // or may be done by chaining
-        $role = Role::create(['name' => 'moderator'])
-            ->givePermissionTo(['publish articles', 'unpublish articles']);
+        $role = Role::create(['name' => 'member']);
 
-        $role = Role::create(['name' => 'super-admin']);
-        $role->givePermissionTo(Permission::all());
+        $role = Role::create(['name' => 'office'])
+            ->givePermissionTo(['create users', 'edit users', 'delete users']);
+
+        $role = Role::create(['name' => 'committee'])
+            ->givePermissionTo(['create committee', 'manage committee']);
+
+        $role = Role::create(['name' => 'super-admin'])
+            ->givePermissionTo(Permission::all());
     }
 }
