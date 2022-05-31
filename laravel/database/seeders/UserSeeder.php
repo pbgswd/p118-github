@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class UserSeeder extends Seeder
@@ -20,26 +19,25 @@ class UserSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
-        $roleIds = [1, 2, 3, 4, 6];
-        shuffle($roleIds);
-
         for ($i = 0; $i < 20; $i++) {
-            shuffle($roleIds);
+
             $date = date('Y-m-d H:i:s');
 
-            DB::table('users')->insert([
+            $userData = [
                 'name' => $faker->name(),
                 'email' => $faker->unique()->safeEmail(),
                 'email_verified_at' => $date,
                 'password' => bcrypt('secret'),
                 'created_at' => $date,
                 'updated_at' => $date,
-            ]);
+                'is_banned' => null,
+            ];
 
-            $userId = DB::getPdo()->lastInsertId();
+            $user = new User($userData);
+            $user->save();
 
             DB::table('phone_numbers')->insert([
-                'user_id' => $userId,
+                'user_id' => $user->id,
                 'phone_number' => $faker->phoneNumber(),
                 'label' => 'mobile',
                 'primary' => 1,
@@ -48,37 +46,24 @@ class UserSeeder extends Seeder
             ]);
 
             DB::table('users_info')->insert([
-                'user_id' => $userId,
+                'user_id' => $user->id,
                 'share_email' => $faker->boolean(),
                 'share_phone' => $faker->boolean(),
                 'image' => '',
                 'about' => $faker->text(1000),
             ]);
 
-            DB::table('addresses')->insert([
-                'user_id' => $userId,
-                'unit' => $faker->numberBetween(1, 55),
-                'street' => $faker->streetAddress(),
-                'city' => $faker->city(),
-                'province' => 'BC',
-                'postal_code' => $faker->postcode(),
-                'country' => 'Canada',
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
+            // assign all members the member role
 
-            DB::table('model_has_roles')->insert([
-                'role_id' => $roleIds[0],
-                'model_type' => \App\Models\User::class,
-                'model_id' => $userId,
-            ]);
+            $user->assignRole('member');
 
             DB::table('memberships')->insert([
-                'user_id' => $userId,
-                'membership_date' => '2010-02-01',
-                'membership_expires' => '2020-02-01',
-                'seniority_number' => $userId,
-                'status' => 'current',
+                'user_id' => $user->id,
+                'membership_type' => 'member',
+                'membership_date' => null,
+                'membership_expires' => null,
+                'seniority_number' => null,
+                'status' => null,
                 'admin_notes' => $faker->text(600),
                 'created_at' => $date,
                 'updated_at' => $date,
