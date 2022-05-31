@@ -54,7 +54,6 @@ class UserController extends Controller
     public function index(): View
     {
         $this->authorize('view', Auth::user());
-
         $users = User::with(['user_info', 'phone_number', 'currentExecutiveRoles', 'membership', 'committee_memberships'])
             ->sortable()
             ->orderBy('name')
