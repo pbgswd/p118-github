@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Membership;
 
@@ -22,11 +23,13 @@ class MembershipFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => \App\REPLACE_THIS::factory(),
+            'user_id' => User::factory(),
+            'membership_type' => 'Member',
             'membership_date' => $this->faker->date,
             'membership_expires' => $this->faker->date,
-            'seniority_number' => $this->faker->randomNumber,
-            'status' => $this->faker->word,
+            'seniority_number' => null,
+            'status' => null,
+            'admin_notes' => $this->faker->text(20),
         ];
     }
 }
