@@ -65,11 +65,12 @@ class InviteUserController extends Controller
         $invited->role = ['member' => 'member'];
         $invited->membership_type = 'Member';
 
-        return view('admin.invite_user', ['data' => ['invite' => $invited,
+        return view('admin.invite_user', ['data' =>
+            ['invite' => $invited,
             'roles' => Role::get(),
             'membership' => Options::membership_levels(),
             'action' => 'Invite',
-        ],
+            ],
         ]);
     }
 
@@ -110,7 +111,6 @@ class InviteUserController extends Controller
     public function show(InviteUser $inviteUser): View
     {
         // method open to whomsoever has the link
-
         //todo 48 hour signup limitation of 48 hours before need to reapply
         /***
                 $now = Carbon::now();

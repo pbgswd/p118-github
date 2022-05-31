@@ -93,10 +93,6 @@
                 </select>
             </div>
         </div>
-
-
-
-
         <div class="row mt-2">
             <div class="form-group">
                 <div class="col-lg-2">
@@ -150,6 +146,8 @@
                         old('agreement.access_level', $data['agreement']->access_level),
                         ['name' => 'agreement[access_level]', 'class' => 'form-control']) }}
                 </div>
+                <i class="fas fa-asterisk"></i>
+                Note: you can update the Access Level to <i>public</i> after you have created the agreement.
             </div>
             <div class="col-6">
                 <div class="col-lg-2">
