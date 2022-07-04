@@ -22,6 +22,16 @@ class AdminUserControllerTest extends TestCase
 
         $user = \App\Models\User::factory()->create();
 
+        /**
+         *   $phone = new PhoneNumber($request->input('user_phone'));
+         *
+        $user->phone_number()->save($phone);
+         */
+//todo user_info
+
+        // todo user_address
+
+
         $response = $this->get(route('admin_edit_address', [$user]));
 
         $response->assertOk();

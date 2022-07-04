@@ -22,7 +22,12 @@ class AddressFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => \App\REPLACE_THIS::factory(),
+            'unit' =>  $this->faker->randomElement([$this->faker->numberBetween(1,20), " "]),
+            'street' => $this->faker->streetName(),
+            'city' => $this->faker->city(),
+            'province' => $this->faker->state(),
+            'postal_code' => $this->faker->postcode(),
+            'country' => $this->faker->country(),
         ];
     }
 }

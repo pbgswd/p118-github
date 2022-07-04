@@ -196,7 +196,7 @@ class UserController extends Controller
         $user->save();
         $user->touch();
 
-        if ($userRequest->user_phone['phone_number'] != '') {
+        if (isset($userRequest->user_phone['phone_number'])) {
             $userRequest->validate([
                 'user_phone.phone_number' => [new Phone()],
             ]);
@@ -221,9 +221,12 @@ class UserController extends Controller
 
         $folder = $user->getAttachmentFolder();
         $thumb_vals = Options::member_thumb_values();
+//dd([$userRequest->all(), $userRequest['user_info']]);
 
         if ($user->user_info instanceof UserInfo) {
+            //dd($user->user_info);
             $user_info = $userRequest['user_info'];
+            //dd($userRequest['user_info']);
             if (isset($user_info['delete_image'])) {
                 if (file_exists(storage_path().'/app/'.$folder.'/'.$user_info['image'])) {
                     $service->destroyImage($user_info['image'], $folder, $thumb_vals);
@@ -311,6 +314,8 @@ class UserController extends Controller
     ): RedirectResponse {
         $this->authorize('update', $user);
         $message = [];
+
+        dd($userRequest->all());
 
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
 

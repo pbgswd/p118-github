@@ -15,7 +15,7 @@ public/css/_tranitions.css
 public/js/*.js.map
 public/js/app.js
 public/js/dashboard.js
-
+bootstrap/cache/*
 /storage/*.key
 /vendor
 .env

@@ -11,6 +11,7 @@ use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Faker;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -21,6 +22,8 @@ abstract class TestCase extends BaseTestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $faker = Faker\Factory::create();
 
         $this->seed(AccessLevelConstantsSeeder::class);
         $this->seed(RolesAndPermissionsSeeder::class);
@@ -41,6 +44,8 @@ abstract class TestCase extends BaseTestCase
             ->has(Membership::factory(),'membership')
             ->create();
         $user->assignRole('member');
+
+        $this->faker = $faker;
         $this->user = $user;
         //todo generate fake user resources for other tests to consume
 

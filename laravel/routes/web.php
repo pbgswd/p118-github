@@ -87,6 +87,8 @@ Route::middleware('web', 'auth')->group(function () {
     Route::get('/member/{user}', [CNS\UserController::class, 'show'])->name('member');
     Route::get('/member/{user}/edit', [CNS\UserController::class, 'edit'])->name('member_edit');
 
+    Route::post('/member/{user}/edit', [CNS\UserController::class, 'update']);
+
     Route::get('/member/{user}/address/edit', [CNS\UserController::class, 'edit_address'])->name('member_address_edit');
     Route::post('/member/{user}/address/edit', [CNS\UserController::class, 'update_address']);
 
@@ -94,7 +96,6 @@ Route::middleware('web', 'auth')->group(function () {
         ->name('edit_emergency_contact');
     Route::post('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'update_emergency_contact']);
 
-    Route::post('/member/{user}/edit', [CNS\UserController::class, 'update']);
     Route::get('/member/{user}/password', [CNS\UserController::class, 'edit_password'])->name('member_password_edit');
     Route::post('/member/{user}/password', [CNS\UserController::class, 'update_password']);
 
