@@ -311,12 +311,12 @@ class UserController extends Controller
        UpdateMemberAddress $userRequest,
        EmailMemberUpdateAddressService $service,
        User $user
-    ): RedirectResponse {
+    ): RedirectResponse
+    {
+       // echo __METHOD__ . "\n"; exit();
+
         $this->authorize('update', $user);
         $message = [];
-
-        dd($userRequest->all());
-
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
 
         foreach ($addr as $k => $a) {
@@ -333,7 +333,7 @@ class UserController extends Controller
         }
 
         Session::flash('success', 'Your address update has been emailed to the office.');
-
+//dd(route('member_address_edit', $user->id));
         return redirect()->route('member_address_edit', $user->id);
     }
 

@@ -23,6 +23,8 @@ class UpdateMemberAddress extends FormRequest
      */
     public function rules(): array
     {
+       // return [];
+
         return [
             //unique:table,column,except,idColumn
             'unit' => 'max:255|nullable',
