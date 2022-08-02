@@ -68,6 +68,14 @@ class ContactController extends Controller
             Session::flash('warning', 'Your message was rejected by the Recaptcha filter.
                 Please wait before trying again.');
         } else {
+
+            dd([
+                config('mail.from.address'),
+                $cc,
+                config('mail.office_admin.address') . " " .  config('mail.office_admin.name')
+            ]);
+            //todo is .env mail configged properly to work with mailDev?
+
             Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
                 $m->from(config('mail.from.address'), config('app.name').'Contact Page Message from '
                     .$request['name']);

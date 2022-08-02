@@ -23,13 +23,13 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $faker = Faker\Factory::create();
+        $this->faker = Faker\Factory::create();
 
         $this->seed(AccessLevelConstantsSeeder::class);
         $this->seed(RolesAndPermissionsSeeder::class);
 
         //$this->seed(UserSeeder::class);
-        $users = User::factory()
+        User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
             ->has(Membership::factory(),'membership')
@@ -38,17 +38,15 @@ abstract class TestCase extends BaseTestCase
 
         //todo do users need a role assigned to each of them?
 
-        $user = User::factory()
+        $this->user = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
             ->has(Membership::factory(),'membership')
             ->create();
-        $user->assignRole('member');
+        $this->user->assignRole('member');
 
-        $this->faker = $faker;
-        $this->user = $user;
         //todo generate fake user resources for other tests to consume
-
+//dd($this->user->toArray());
     }
 
 }

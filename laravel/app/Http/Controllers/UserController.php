@@ -221,7 +221,6 @@ class UserController extends Controller
 
         $folder = $user->getAttachmentFolder();
         $thumb_vals = Options::member_thumb_values();
-//dd([$userRequest->all(), $userRequest['user_info']]);
 
         if ($user->user_info instanceof UserInfo) {
             //dd($user->user_info);
@@ -261,7 +260,7 @@ class UserController extends Controller
             $user->user_info()->save($user_info);
 
             if (! file_exists(storage_path().'/app/'.$folder.'/'.$thumb_vals['tn_str']
-                .$user->user_info['image'])) {
+                . $user->user_info['image'])) {
                 $service->generate_thumb($user->user_info['image'], $folder, $thumb_vals);
             }
         }
@@ -313,8 +312,6 @@ class UserController extends Controller
        User $user
     ): RedirectResponse
     {
-       // echo __METHOD__ . "\n"; exit();
-
         $this->authorize('update', $user);
         $message = [];
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
@@ -327,13 +324,11 @@ class UserController extends Controller
                 $message[ucfirst($a)] = $userRequest->$a;
             }
         }
-
         if (! empty($message)) {
             $result = $service->sendMessage('Member Address', $message, $user);
         }
 
         Session::flash('success', 'Your address update has been emailed to the office.');
-//dd(route('member_address_edit', $user->id));
         return redirect()->route('member_address_edit', $user->id);
     }
 
@@ -391,13 +386,16 @@ class UserController extends Controller
         EmailMemberUpdateAddressService $service,
         User $user
     ): RedirectResponse {
-        $this->authorize('update', $user);
 
+        $this->authorize('update', $user);
+        //todo do I need this validation for phone?
+        /**
         $userRequest->validate([
             'emergency_contact_phone' => ['required',
                 new Phone(),
             ],
         ]);
+         **/
 
         $message = [];
 
