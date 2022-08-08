@@ -28,7 +28,7 @@ use Spatie\Searchable\SearchResult;
  * @property DateTime   $updated_at
  * @property AgreementHandler $agreement_handler
  */
-class Organization extends LiveableModel implements HasAttachment, Searchable
+class   Organization extends LiveableModel implements HasAttachment, Searchable
 {
     use Sortable;
     use HasFactory;

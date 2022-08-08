@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Venue;
+use App\Models\Venue;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class VenueFactory extends Factory
@@ -25,15 +25,13 @@ class VenueFactory extends Factory
         $slug = strtolower($name);
 
         return [
+            'user_id' => \App\Models\User::factory(),
             'name' => $name,
             'slug' => $slug,
             'description' => $this->faker->text(50),
             'image' => strtolower($this->faker->text(5)).'.jpg',
-            'scope' => 'public',
-            'live' => 'yes',
-            'sort_order' => '1000',
-            'in_menu' => 'yes',
-            'allow_comments' => 'yes',
+            'access_level' => 'public',
+            'live' => 1,
         ];
     }
 }

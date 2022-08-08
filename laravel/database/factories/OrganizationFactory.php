@@ -25,17 +25,15 @@ class OrganizationFactory extends Factory
         $file_name = strtolower($this->faker->text(5));
 
         return [
-            'user_id' => $this->user->id,
+            'user_id' => \App\Models\User::factory(),
             'name' => $name,
             'slug' => strtolower($name),
             'url' => $this->faker->url(),
             'description' => $this->faker->text(50),
             'file_name' => $file_name .'.jpg',
             'image' => bcrypt($file_name).'.jpg',
-            'acess_level' => 'members',
-            'live' => 'yes',
-            'sort_order' => '1000',
-
+            'access_level' => 'members',
+            'live' => 1
         ];
     }
 }
