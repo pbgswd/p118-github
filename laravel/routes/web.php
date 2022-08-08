@@ -43,8 +43,10 @@ Route::middleware('web')->group(function () {
     Route::get('/topics', [CNS\TopicController::class, 'list'])->name('topics');
     Route::get('/topic/{topic}', [CNS\TopicController::class, 'show'])->name('topic_show');
 
-    Route::get('/posts', [CNS\PostController::class, 'list'])->name('posts');
-    Route::get('/post/{post}', [CNS\PostController::class, 'show'])->name('post_show');
+    Route::controller(CNS\PostController::class)->group(function() {
+       Route::get('/posts', 'list')->name('posts');
+       Route::get('/post/{post}', 'show')->name('post_show');
+    });
 
     Route::get('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'show'])
         ->name('invite_user_signup');
@@ -125,10 +127,12 @@ Route::middleware('web', 'auth')->group(function () {
     // [CNS\CommitteePostCommentController::class, 'store'])
 //    ->name('public_committee_post_comment');
 
-    Route::post('minutes', [CNS\MeetingController::class, 'post_year'])->name('post_year');
-    Route::get('minutes/year/{year}', [CNS\MeetingController::class, 'index_by_year'])->name('list_meetings_year');
-    Route::get('minutes', [CNS\MeetingController::class, 'index'])->name('list_meetings');
-    Route::get('minutes/{meeting}', [CNS\MeetingController::class, 'show'])->name('meeting');
+    Route::controller(CNS\MeetingController::class)->group(function() {
+        Route::post('minutes', 'post_year')->name('post_year');
+        Route::get('minutes/year/{year}', 'index_by_year')->name('list_meetings_year');
+        Route::get('minutes', 'index')->name('list_meetings');
+        Route::get('minutes/{meeting}', 'show')->name('meeting');
+    });
 
     Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
 });
@@ -143,13 +147,14 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
 
     Route::resource('carousel', CNS\AdminCarouselController::class);
 
-    Route::get('memoriams', [CNS\AdminMemoriamController::class, 'index'])->name('admin_memoriam_list');
-    Route::get('memoriam/create', [CNS\AdminMemoriamController::class, 'create'])->name('admin_memoriam_create');
-    Route::post('memoriam/create', [CNS\AdminMemoriamController::class, 'store']);
-    Route::get('memoriam/{any_memoriam}/edit', [CNS\AdminMemoriamController::class, 'edit'])
-        ->name('admin_memoriam_edit');
-    Route::post('memoriam/{any_memoriam}/edit', [CNS\AdminMemoriamController::class, 'update']);
-    Route::delete('memoriam/delete', [CNS\AdminMemoriamController::class, 'destroy'])->name('admin_memoriam_destroy');
+    Route::controller(CNS\AdminMemoriamController::class)->group(function(){
+        Route::get('memoriams', 'index')->name('admin_memoriam_list');
+        Route::get('memoriam/create', 'create')->name('admin_memoriam_create');
+        Route::post('memoriam/create', 'store');
+        Route::get('memoriam/{any_memoriam}/edit', 'edit')->name('admin_memoriam_edit');
+        Route::post('memoriam/{any_memoriam}/edit', 'update');
+        Route::delete('memoriam/delete', 'destroy')->name('admin_memoriam_destroy');
+    });
 
     Route::get('proofreading-sync', [CNS\AdminProofReaderController::class, 'sync'])->name('admin_proofreader_sync');
     Route::get('proofreading', [CNS\AdminProofReaderController::class, 'index'])->name('admin_proofreader');
@@ -256,40 +261,41 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::post('/venue/{any_venue}/edit', [CNS\AdminVenueController::class, 'update']);
     Route::delete('/venue/delete', [CNS\AdminVenueController::class, 'destroy'])->name('venue_destroy');
 
-    Route::get('committees', [CNS\AdminCommitteeController::class, 'index'])->name('committees_list');
-    Route::get('committee/create', [CNS\AdminCommitteeController::class, 'create'])->name('committee_create');
-    Route::post('committee/create', [CNS\AdminCommitteeController::class, 'store']);
-    Route::get('committee/{any_committee}/show', [CNS\AdminCommitteeController::class, 'show'])
-        ->name('admin_committee_show');
-    Route::get('committee/{any_committee}/edit', [CNS\AdminCommitteeController::class, 'edit'])
-        ->name('committee_edit');
-    Route::post('committee/{any_committee}/edit', [CNS\AdminCommitteeController::class, 'update']);
-    Route::delete('committee/delete', [CNS\AdminCommitteeController::class, 'destroy'])->name('committee_destroy');
+    Route::controller(CNS\AdminCommitteeMemberController::class)->group(function(){
+        Route::post('committee/{committee}/admin-list-committee-members', 'search');
+        Route::get('committee/{committee}/admin-list-committee-members', 'index')->name('admin-list-committee-members');
+        Route::get('committee/{committee}/admin-create-committee-members/user/{user}','create')
+            ->name('admin_create_committee_members');
+        Route::post('committee/{committee}/admin-create-committee-members/user/{user}','store');
+        Route::get('committee/{committee}/admin-edit-committee-members/user/{user}','edit')
+            ->name('admin_edit_committee_members');
+        Route::post('committee/{committee}/admin-edit-committee-members/user/{user}','update');
+        Route::delete('committee/{committee}/admin-manage-committee-members/user/{user}/delete','destroy')
+            ->name('admin_delete-committee_member');
+    });
 
-    Route::post('committee/{committee}/admin-list-committee-members', [CNS\AdminCommitteeMemberController::class, 'search']);
-    Route::get('committee/{committee}/admin-list-committee-members', [CNS\AdminCommitteeMemberController::class, 'index'])
-        ->name('admin-list-committee-members');
-    Route::get('committee/{committee}/admin-create-committee-members/user/{user}',
-        [CNS\AdminCommitteeMemberController::class, 'create'])->name('admin_create_committee_members');
-    Route::post('committee/{committee}/admin-create-committee-members/user/{user}',
-        [CNS\AdminCommitteeMemberController::class, 'store']);
-    Route::get('committee/{committee}/admin-edit-committee-members/user/{user}',
-        [CNS\AdminCommitteeMemberController::class, 'edit'])->name('admin_edit_committee_members');
-    Route::post('committee/{committee}/admin-edit-committee-members/user/{user}',
-        [CNS\AdminCommitteeMemberController::class, 'update']);
-    Route::delete('committee/{committee}/admin-manage-committee-members/user/{user}/delete',
-        [CNS\AdminCommitteeMemberController::class, 'destroy'])->name('admin_delete-committee_member');
+    Route::controller(CNS\AdminCommitteeController::class)->group(function(){
+        Route::get('committees', 'index')->name('committees_list');
+        Route::get('committee/create', 'create')->name('committee_create');
+        Route::post('committee/create', 'store');
+        Route::get('committee/{any_committee}/show', 'show')
+            ->name('admin_committee_show');
+        Route::get('committee/{any_committee}/edit', 'edit')
+            ->name('committee_edit');
+        Route::post('committee/{any_committee}/edit', 'update');
+        Route::delete('committee/delete', 'destroy')->name('committee_destroy');
+    });
 
-    Route::get('committee/{committee}/posts', [CNS\AdminCommitteePostController::class, 'index'])
-        ->name('committee_posts_list');
-    Route::get('committee/{committee}/post/create', [CNS\AdminCommitteePostController::class, 'create'])
-        ->name('admin_committee_post');
-    Route::post('committee/{committee}/post/create', [CNS\AdminCommitteePostController::class, 'store']);
-    Route::get('committee/{committee}/post/{any_committee_post}/edit', [CNS\AdminCommitteePostController::class, 'edit'])
-        ->name('admin_committee_post_edit');
-    Route::post('committee/{committee}/post/{any_committee_post}/edit', [CNS\AdminCommitteePostController::class, 'update']);
-    Route::delete('committee/{committee}/post/delete', [CNS\AdminCommitteePostController::class, 'destroy'])
-        ->name('committee_post_destroy');
+    Route::controller(CNS\AdminCommitteePostController::class)->group(function(){
+        Route::get('committee/{committee}/posts','index')->name('committee_posts_list');
+        Route::get('committee/{committee}/post/create','create')->name('admin_committee_post');
+        Route::post('committee/{committee}/post/create','store');
+        Route::get('committee/{committee}/post/{any_committee_post}/edit','edit')->name('admin_committee_post_edit');
+        Route::post('committee/{committee}/post/{any_committee_post}/edit','update');
+        Route::delete('committee/{committee}/post/delete','destroy')
+            ->name('committee_post_destroy');
+    });
+
 
     /****
     route::get('committee_post/{any_committee_post}/committee_post_comment/create',
@@ -304,13 +310,14 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         ->name('committee_post_comment_destroy');
     ***/
 
-    Route::get('agreements', [CNS\AdminAgreementController::class, 'index'])->name('agreements_list');
-    Route::get('agreement/create', [CNS\AdminAgreementController::class, 'create'])->name('agreement_create');
-    Route::post('agreement/create', [CNS\AdminAgreementController::class, 'store']);
-    Route::delete('/agreement/delete', [CNS\AdminAgreementController::class, 'destroy'])->name('agreement_destroy');
-    Route::get('/agreement/{any_agreement}/edit', [CNS\AdminAgreementController::class, 'edit'])
-        ->name('agreement_edit');
-    Route::post('/agreement/{any_agreement}/edit', [CNS\AdminAgreementController::class, 'update']);
+    Route::controller(CNS\AdminAgreementController::class)->group(function() {
+        Route::get('agreements', 'index')->name('agreements_list');
+        Route::get('agreement/create', 'create')->name('agreement_create');
+        Route::post('agreement/create', 'store');
+        Route::delete('/agreement/delete', 'destroy')->name('agreement_destroy');
+        Route::get('/agreement/{any_agreement}/edit', 'edit')->name('agreement_edit');
+        Route::post('/agreement/{any_agreement}/edit', 'update');
+    });
 
     Route::get('/organizations', [CNS\AdminOrganizationController::class, 'index'])->name('organizations_list');
     Route::get('/organization/create', [CNS\AdminOrganizationController::class, 'create'])->name('organization_create');

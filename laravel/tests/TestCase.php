@@ -17,7 +17,6 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, AdditionalAssertions;
     use RefreshDatabase;
-    public $user, $users;
 
     public function setUp(): void
     {
@@ -36,14 +35,20 @@ abstract class TestCase extends BaseTestCase
             ->count(3)
             ->create();
 
-        //todo do users need a role assigned to each of them?
-
         $this->user = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
             ->has(Membership::factory(),'membership')
             ->create();
         $this->user->assignRole('member');
+
+        $this->admin_user = User::factory()
+            ->has(UserInfo::factory(), 'user_info')
+            ->has(PhoneNumber::factory(), 'phone_number')
+            ->has(Membership::factory(),'membership')
+            ->create();
+        $this->admin_user->assignRole(['member', 'super-admin']);
+
 
         //todo generate fake user resources for other tests to consume
 //dd($this->user->toArray());

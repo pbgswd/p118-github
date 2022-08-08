@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * Class DestroyAgreementRequest.
  *
- * @property int[] $id
+ * @property int[] $ids
  */
 class DestroyAgreementRequest extends FormRequest
 {
@@ -29,7 +29,7 @@ class DestroyAgreementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:agreements',
+            'ids' => 'required',
         ];
     }
 }

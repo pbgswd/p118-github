@@ -203,16 +203,15 @@ class AdminAgreementController extends Controller
     public function destroy(DestroyAgreementRequest $request): RedirectResponse
     {
         $this->authorize('delete', Agreement::class);
-
         Agreement::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(function (Agreement $agreement) {
                 $this->attachmentService->destroyAttachments($agreement);
                 $agreement->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id).' posting', count($request->id)).
-            ' and any related files deleted.');
+        Session::flash('success', count([$request->ids]) . Str::plural(' agreement', count([$request->ids])).
+            ' and any related files have been deleted.');
 
         return redirect()->route('agreements_list');
     }

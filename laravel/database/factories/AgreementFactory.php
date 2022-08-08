@@ -21,15 +21,17 @@ class AgreementFactory extends Factory
      *
      * @return array
      */
+
     public function definition()
     {
+
         return [
-            'user_id' => 1,
-            'title' => 'Agreement ' . $this->faker->name(),
+            'user_id' => \App\Models\User::factory(),
+            'title' => 'Agreement ' . $this->faker->company(),
             'description' => 'Agreement description text ' . $this->faker->paragraph(),
             'access_level' => 'members',
             'live' => 1,
-            'from' => Carbon::now()->subDays(20),
+            'from' => Carbon::now()->subYears(2),
             'until' => Carbon::now()->addYears(3),
             'created_at' => now(),
             'updated_at' => now(),
