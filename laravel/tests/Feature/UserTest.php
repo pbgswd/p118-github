@@ -26,26 +26,5 @@ class UserTest extends TestCase
         if ($response->assertStatus(Response::HTTP_NOT_FOUND)) {
             echo "\n public register new user page is blocked. \n";
         }
-
-        /**
-        $users = User::factory()->count(1)->make();
-        print_r($users[0]->name);
-        foreach ($users as $user) {
-            echo 'attempting to insert '.$user['name']."\n";
-            $response = $this->post(
-                '/register',
-                [
-                    'user'=>[
-                        'name' => $user['name'],
-                        'email' => $user['email'],
-                        'password' => $user['password'],
-                        'password-confirm' => $user['password'],
-                    ],
-                    '_token' => Session::token(),
-                ]
-            );
-            echo  $user['name']." has been posted. \n";
-        }
-        * **/
     }
 }
