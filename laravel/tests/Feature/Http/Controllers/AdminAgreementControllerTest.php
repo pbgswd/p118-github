@@ -103,6 +103,7 @@ class AdminAgreementControllerTest extends TestCase
             [
                 'agreement' => $agreement->toArray()
             ]);
+
        $this->assertEquals(Session::get('success'), 'agreement posting saved');
     }
 
