@@ -9,7 +9,6 @@
                 <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
 </div>
-
 <form name="delete" method="POST" action="{{route('admin_bylaw_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
@@ -34,7 +33,7 @@
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="id[]" value="{{$a->id}}" />
+                                        <input type="checkbox" name="ids[]" value="{{$a->id}}" />
                                     </label>
                                 </div>
                             </td>

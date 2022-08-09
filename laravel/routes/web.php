@@ -85,21 +85,19 @@ Route::middleware('web', 'auth')->group(function () {
     Route::get('features', [CNS\FeatureController::class, 'index'])->name('features');
     Route::get('feature/{feature}', [CNS\FeatureController::class, 'show'])->name('feature');
 
-    Route::get('/members', [CNS\UserController::class, 'index'])->name('members');
-    Route::get('/member/{user}', [CNS\UserController::class, 'show'])->name('member');
-    Route::get('/member/{user}/edit', [CNS\UserController::class, 'edit'])->name('member_edit');
 
-    Route::post('/member/{user}/edit', [CNS\UserController::class, 'update']);
-
-    Route::get('/member/{user}/address/edit', [CNS\UserController::class, 'edit_address'])->name('member_address_edit');
-    Route::post('/member/{user}/address/edit', [CNS\UserController::class, 'update_address']);
-
-    Route::get('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'edit_emergency_contact'])
-        ->name('edit_emergency_contact');
-    Route::post('/member/{user}/emergency_contact/edit', [CNS\UserController::class, 'update_emergency_contact']);
-
-    Route::get('/member/{user}/password', [CNS\UserController::class, 'edit_password'])->name('member_password_edit');
-    Route::post('/member/{user}/password', [CNS\UserController::class, 'update_password']);
+    Route::controller(CNS\UserController::class)->group(function() {
+        Route::get('/members', 'index')->name('members');
+        Route::get('/member/{user}', 'show')->name('member');
+        Route::get('/member/{user}/edit', 'edit')->name('member_edit');
+        Route::post('/member/{user}/edit', 'update');
+        Route::get('/member/{user}/address/edit', 'edit_address')->name('member_address_edit');
+        Route::post('/member/{user}/address/edit', 'update_address');
+        Route::get('/member/{user}/emergency_contact/edit', 'edit_emergency_contact')->name('edit_emergency_contact');
+        Route::post('/member/{user}/emergency_contact/edit', 'update_emergency_contact');
+        Route::get('/member/{user}/password', 'edit_password')->name('member_password_edit');
+        Route::post('/member/{user}/password', 'update_password');
+    });
 
     Route::get('policies', [CNS\PolicyController::class, 'index'])->name('policies_list_public');
     Route::get('/policies/{policy}', [CNS\PolicyController::class, 'show'])->name('policy_show_public');
@@ -187,21 +185,19 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::post('/topic/{any_topic}/edit', [CNS\AdminTopicController::class, 'update']);
     Route::delete('/topic/delete', [CNS\AdminTopicController::class, 'destroy'])->name('topic_destroy');
 
-    Route::get('/users', [CNS\AdminUserController::class, 'index'])->name('users_list');
-    Route::get('/user/create', [CNS\AdminUserController::class, 'create'])->name('user_create');
-    Route::post('/user/create', [CNS\AdminUserController::class, 'store']);
-
-    Route::get('/user/{user}/address/edit', [CNS\AdminUserController::class, 'admin_edit_address'])
-        ->name('admin_edit_address');
-    Route::post('/user/{user}/address/edit', [CNS\AdminUserController::class, 'admin_update_address']);
-
-    Route::get('/user/{user}/emergency_contact/edit', [CNS\AdminUserController::class, 'admin_edit_emergency_contact'])
-        ->name('admin_edit_emergency_contact');
-    Route::post('/user/{user}/emergency_contact/edit', [CNS\AdminUserController::class, 'admin_update_emergency_contact']);
-
-    Route::get('/user/{user}/edit', [CNS\AdminUserController::class, 'edit'])->name('user_edit');
-    Route::post('/user/{user}/edit', [CNS\AdminUserController::class, 'update'])->name('user_edit_update');
-    Route::delete('/user/delete', [CNS\AdminUserController::class, 'destroy'])->name('user_destroy');
+    Route::controller(CNS\AdminUserController::class)->group(function() {
+        Route::get('/users', 'index')->name('users_list');
+        Route::get('/user/create', 'create')->name('user_create');
+        Route::post('/user/create', 'store');
+        Route::get('/user/{user}/address/edit', 'admin_edit_address')->name('admin_edit_address');
+        Route::post('/user/{user}/address/edit', 'admin_update_address');
+        Route::get('/user/{user}/emergency_contact/edit', 'admin_edit_emergency_contact')
+            ->name('admin_edit_emergency_contact');
+        Route::post('/user/{user}/emergency_contact/edit', 'admin_update_emergency_contact');
+        Route::get('/user/{user}/edit', 'edit')->name('user_edit');
+        Route::post('/user/{user}/edit', 'update')->name('user_edit_update');
+        Route::delete('/user/delete', 'destroy')->name('user_destroy');
+    });
 
     Route::get('/executives', [CNS\AdminExecutiveMembershipController::class, 'index'])
         ->name('admin_executives_list');
@@ -261,7 +257,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::post('/venue/{any_venue}/edit', [CNS\AdminVenueController::class, 'update']);
     Route::delete('/venue/delete', [CNS\AdminVenueController::class, 'destroy'])->name('venue_destroy');
 
-    Route::controller(CNS\AdminCommitteeMemberController::class)->group(function(){
+    Route::controller(CNS\AdminCommitteeMemberController::class)->group(function() {
         Route::post('committee/{committee}/admin-list-committee-members', 'search');
         Route::get('committee/{committee}/admin-list-committee-members', 'index')->name('admin-list-committee-members');
         Route::get('committee/{committee}/admin-create-committee-members/user/{user}','create')
@@ -274,7 +270,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
             ->name('admin_delete-committee_member');
     });
 
-    Route::controller(CNS\AdminCommitteeController::class)->group(function(){
+    Route::controller(CNS\AdminCommitteeController::class)->group(function() {
         Route::get('committees', 'index')->name('committees_list');
         Route::get('committee/create', 'create')->name('committee_create');
         Route::post('committee/create', 'store');
@@ -286,7 +282,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('committee/delete', 'destroy')->name('committee_destroy');
     });
 
-    Route::controller(CNS\AdminCommitteePostController::class)->group(function(){
+    Route::controller(CNS\AdminCommitteePostController::class)->group(function() {
         Route::get('committee/{committee}/posts','index')->name('committee_posts_list');
         Route::get('committee/{committee}/post/create','create')->name('admin_committee_post');
         Route::post('committee/{committee}/post/create','store');
@@ -295,7 +291,6 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('committee/{committee}/post/delete','destroy')
             ->name('committee_post_destroy');
     });
-
 
     /****
     route::get('committee_post/{any_committee_post}/committee_post_comment/create',

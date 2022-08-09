@@ -155,14 +155,14 @@ class AdminByLawController extends Controller
         $this->authorize('delete', Bylaw::class);
         /** @var Collection $bylaws */
         $bylaws = Bylaw::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(function (Bylaw $bylaw) {
                 $this->attachmentService->destroyAttachments($bylaw);
                 $bylaw->delete();
             });
 
-        Session::flash('success', Str::plural($bylaws->count()
-                .' bylaw', $bylaws->count()).' and any related files deleted.');
+        Session::flash('success', Str::plural(count([$bylaws]))
+                .' bylaw', count([$bylaws]) .' and any related files deleted.');
 
         return redirect()->route('admin_bylaws_list');
     }
