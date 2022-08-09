@@ -27,9 +27,10 @@ class StoreTopicRequest extends FormRequest
             'topic.name' => 'required|unique:topics,name|max:255',
             'topic.access_level' => 'required|string|max:255',
             'topic.sort_order' =>  'required|numeric',
-            'topic.in_menu' => 'boolean',
-            'topic.allow_comments' => 'boolean',
             'topic.live' => 'boolean',
+            'topic.description' => 'string|max:255',
+            'topic.front_page' => 'boolean',
+            'topic.landing_page' => 'boolean',
         ];
     }
 }

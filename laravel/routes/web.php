@@ -344,10 +344,13 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::delete('/employment/delete', [CNS\AdminEmploymentController::class, 'destroy'])
         ->name('admin_employment_destroy');
 
-    Route::get('bylaws/', [CNS\AdminByLawController::class, 'index'])->name('admin_bylaws_list');
-    Route::get('bylaw/create', [CNS\AdminByLawController::class, 'create'])->name('admin_bylaw_create');
-    Route::post('bylaw/create', [CNS\AdminByLawController::class, 'store']);
-    Route::get('/bylaw/{any_bylaw}/edit', [CNS\AdminByLawController::class, 'edit'])->name('admin_bylaw_edit');
-    Route::post('bylaw/{any_bylaw}/edit', [CNS\AdminByLawController::class, 'update']);
-    Route::delete('/bylaw/delete', [CNS\AdminByLawController::class, 'destroy'])->name('admin_bylaw_destroy');
+    Route::controller(CNS\AdminByLawController::class)->group(function(){
+        Route::get('bylaws/', 'index')->name('admin_bylaws_list');
+        Route::get('bylaw/create', 'create')->name('admin_bylaw_create');
+        Route::post('bylaw/create', 'store');
+        Route::get('/bylaw/{any_bylaw}/edit', 'edit')->name('admin_bylaw_edit');
+        Route::post('bylaw/{any_bylaw}/edit', 'update');
+        Route::delete('/bylaw/delete', 'destroy')->name('admin_bylaw_destroy');
+    });
+
 });

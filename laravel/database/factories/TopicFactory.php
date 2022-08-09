@@ -27,18 +27,17 @@ class TopicFactory extends Factory
     public function definition()
     {
         $title = $this->faker->text(20);
-        $slug = strtolower($title);
 
         return [
+            'user_id' => \App\Models\User::factory(),
             'name' => $title,
-            'slug' => $slug,
+            'slug' => Str::slug($title),
             'description' => $this->faker->text(50),
-            'image' => strtolower($this->faker->text(5)).'.jpg',
-            'scope' => 'public',
-            'live' => 'yes',
+            'access_level' => 'public',
+            'live' => '1',
             'sort_order' => '1000',
-            'in_menu' => 'yes',
-            'allow_comments' => 'yes',
+            'front_page' => 0,
+            'landing_page' => 0
         ];
     }
 }

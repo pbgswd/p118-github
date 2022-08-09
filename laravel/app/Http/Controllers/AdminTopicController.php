@@ -67,7 +67,6 @@ class AdminTopicController extends Controller
     public function store(StoreTopicRequest $request): RedirectResponse
     {
         $this->authorize('create', Topic::class);
-
         $topic = new Topic($request->input('topic'));
         $topic->user_id = Auth::id();
 
@@ -82,7 +81,6 @@ class AdminTopicController extends Controller
                 Session::flash('error', 'You have an upload problem');
             }
         }
-
         Session::flash('success', 'You have saved a new topic');
 
         return redirect()->route('topic_edit', [$topic->slug]);

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use Session;
 use Tests\TestCase;
 
@@ -20,6 +21,7 @@ class TopicTest extends TestCase
     //    use RefreshDatabase; // deletes all data
     public function testBasicTest()
     {
+//todo this is an old test, it can be thrown out
 
 /*        $response = $this->get('/admin/topic/');
 
@@ -27,38 +29,20 @@ class TopicTest extends TestCase
             $response->assertSeeText("Topics");
         }*/
 
-        echo "\n Admin create topics page \n";
-
         $topics = Topic::factory()->count(20)->make();
 
-        dd($topics[0]);
-        exit();
-
         foreach ($topics as $topic) {
-            echo 'attempting to insert '.$topic['name']."\n";
 
-            $response = $this->post(
-                '/admin/topic',
-                [
-                    'topic'=>[
-                        'name' => $topic['name'],
-                        'description' => $topic['description'],
-                        'image' => $topic['image'],
-                        'scope' => $topic['scope'],
-                        'live' => $topic['live'],
-                        'sort_order' => $topic['sort_order'],
-                        'in_menu' => $topic['in_menu'],
-                        'allow_comments' => $topic['allow_comments'],
-                    ],
-                    '_token' => Session::token(),
-                ]
+            $response = $this->actingAs($this->admin_user)
+                ->post(
+                    env('APP_URL') .'/admin/topic/create',
+                    [
+                        'topic' => $topic
+                    ]
             );
 
-            echo  $topic['name']." has been posted. \n";
+            $response->assertRedirect(route(env('APP_URL') .'/admin/topic/'. Str::slug($topic->name) . "/edit"));
 
-            /*            if ($response->assertStatus(Response::HTTP_OK)) {
-                            echo $topic['name'] . " has been stored in db. \n";
-                        }*/
         }
 
         /*        $response = $this->get(route('topics_list'));
