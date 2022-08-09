@@ -22,7 +22,13 @@ class CommitteeFactory extends Factory
     public function definition()
     {
         return [
-
+            'name' => 'Committee ' . $this->faker->name(),
+            'description' => 'Committee description' . $this->faker->paragraph(),
+            'file_name' => '',
+            'image' => '',
+            'email' => $this->faker->email(),
+            'live' => 1,
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }

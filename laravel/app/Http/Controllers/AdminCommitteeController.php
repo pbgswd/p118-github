@@ -196,7 +196,7 @@ class AdminCommitteeController extends Controller
         $this->authorize('delete', Committee::class);
 
         Committee::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(function (Committee $committee) {
                 $committee->committee_members()->detach();
 
@@ -210,7 +210,7 @@ class AdminCommitteeController extends Controller
                 $committee->delete();
             });
 
-        Session::flash('success', Str::plural('Committee', count($request->id)).' deleted.');
+        Session::flash('success', Str::plural('Committee', count([$request->ids])).' deleted.');
 
         return redirect()->route('committees_list');
     }

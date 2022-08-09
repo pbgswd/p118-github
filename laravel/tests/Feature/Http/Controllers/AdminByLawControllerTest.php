@@ -3,8 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Bylaw;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
@@ -35,7 +33,8 @@ class AdminByLawControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $bylaw = \App\Models\Bylaw::factory()->create();
-        $response = $this->actingAs($this->admin_user)->delete(route('admin_bylaw_destroy'), ['ids' => $bylaw->id]);
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('admin_bylaw_destroy'), ['ids' => $bylaw->id]);
         $this->assertModelMissing($bylaw);
         $response->assertRedirect(route('admin_bylaws_list'));
     }

@@ -143,6 +143,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');
     Route::get('/developer', [CNS\AdminController::class, 'developer'])->name('developer');
 
+    //todo carousel stubs for all things
     Route::resource('carousel', CNS\AdminCarouselController::class);
 
     Route::controller(CNS\AdminMemoriamController::class)->group(function(){
@@ -274,10 +275,8 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::get('committees', 'index')->name('committees_list');
         Route::get('committee/create', 'create')->name('committee_create');
         Route::post('committee/create', 'store');
-        Route::get('committee/{any_committee}/show', 'show')
-            ->name('admin_committee_show');
-        Route::get('committee/{any_committee}/edit', 'edit')
-            ->name('committee_edit');
+        Route::get('committee/{any_committee}/show', 'show')->name('admin_committee_show');
+        Route::get('committee/{any_committee}/edit', 'edit')->name('committee_edit');
         Route::post('committee/{any_committee}/edit', 'update');
         Route::delete('committee/delete', 'destroy')->name('committee_destroy');
     });
@@ -288,8 +287,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::post('committee/{committee}/post/create','store');
         Route::get('committee/{committee}/post/{any_committee_post}/edit','edit')->name('admin_committee_post_edit');
         Route::post('committee/{committee}/post/{any_committee_post}/edit','update');
-        Route::delete('committee/{committee}/post/delete','destroy')
-            ->name('committee_post_destroy');
+        Route::delete('committee/{committee}/post/delete','destroy')->name('committee_post_destroy');
     });
 
     /****
