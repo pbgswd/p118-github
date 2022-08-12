@@ -23,9 +23,7 @@ use Spatie\Searchable\SearchResult;
  * @property string           $description
  * @property string           $email
  * @property User             $creator
- * @property bool          $in_menu
- * @property bool          $live
- * @property bool          $allow_comments
+ * @property bool             $live
  * @property DateTime         $created_at
  * @property DateTime         $updated_at
  * @property User[]           $committee_members
@@ -56,7 +54,6 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
     ];
 
     protected $casts = [
-        'allow_comments' => 'boolean',
         'live' => 'boolean',
     ];
 

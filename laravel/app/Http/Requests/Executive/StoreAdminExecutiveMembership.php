@@ -23,7 +23,6 @@ class StoreAdminExecutiveMembership extends FormRequest
      */
     public function rules(): array
     {
-        //dd($this->executive['executive_id']);
         return [
             'executive.executive_id' => 'required',
             'executive.start_date' => 'date',

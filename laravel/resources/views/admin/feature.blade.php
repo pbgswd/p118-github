@@ -187,7 +187,7 @@
                         {!! csrf_field() !!}
                         {!! method_field('DELETE') !!}
                         <i class="far fa-trash-alt fa-2x"></i>
-                        <input type="hidden" name="id[]" value="{{ $data['feature']->id }}">
+                        <input type="hidden" name="ids[]" value="{{ $data['feature']->id }}">
                         <input class="btn btn-outline-danger" type="submit" value="Delete">
                     </form>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Feature;
 
@@ -22,7 +23,16 @@ class FeatureFactory extends Factory
     public function definition()
     {
         return [
-
+            'title' => 'Feature title ' . $this->faker->word(),
+            'url' => $this->faker->url(),
+            'content' => $this->faker->paragraph(),
+            'image' => '',
+            'file_name' => '',
+            'date' => Carbon::now(),
+            'live' => 1,
+            'access_level' => 'members',
+            'front_page' => 0,
+            'landing_page' => 1,
         ];
     }
 }

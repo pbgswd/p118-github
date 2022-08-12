@@ -32,7 +32,7 @@
                                         @if( !empty($e->user[0]))
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="id[]"
+                                                    <input type="checkbox" name="ids[]"
                                                            value="{{$e->user[0]->pivot->id }}" />
                                                 </label>
                                             </div>

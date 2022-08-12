@@ -37,13 +37,13 @@
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="id[]" value="{{$e->id}}" />
+                                        <input type="checkbox" name="ids[]" value="{{$e->id}}" />
                                     </label>
                                 </div>
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{!!  $e->title !!}" href="{{route('admin_employment_edit', $e->id)}}">
+                                    <a title="{!! $e->title !!}" href="{{route('admin_employment_edit', $e->id)}}">
                                         {{ $e->title }}
                                     </a>
                                 </h4>

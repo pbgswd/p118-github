@@ -128,7 +128,7 @@ class AdminExecutiveMembershipController extends Controller
     {
         $this->authorize('delete', ExecutiveMembership::class);
 
-        foreach ($request->id as $i) {
+        foreach ($request->ids as $i) {
             $e = ExecutiveMembership::find($i);
             $e->delete();
         }

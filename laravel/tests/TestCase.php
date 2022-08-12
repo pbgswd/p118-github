@@ -28,7 +28,7 @@ abstract class TestCase extends BaseTestCase
         $this->seed(RolesAndPermissionsSeeder::class);
 
         //$this->seed(UserSeeder::class);
-        User::factory()
+        $this->users = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
             ->has(Membership::factory(),'membership')
@@ -47,7 +47,7 @@ abstract class TestCase extends BaseTestCase
             ->has(PhoneNumber::factory(), 'phone_number')
             ->has(Membership::factory(),'membership')
             ->create();
-        $this->admin_user->assignRole(['member', 'super-admin']);
+        $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
 
 
         //todo generate fake user resources for other tests to consume

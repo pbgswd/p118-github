@@ -33,6 +33,7 @@ class AdminByLawControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $bylaw = \App\Models\Bylaw::factory()->create();
+        //todo is parameter correct?
         $response = $this->actingAs($this->admin_user)
             ->delete(route('admin_bylaw_destroy'), ['ids' => $bylaw->id]);
         $this->assertModelMissing($bylaw);
@@ -60,7 +61,8 @@ class AdminByLawControllerTest extends TestCase
     {
         $bylaw = \App\Models\Bylaw::factory()->create();
 
-        $response = $this->actingAs($this->admin_user)->get(route('admin_bylaw_edit', $bylaw->id));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('admin_bylaw_edit', $bylaw->id));
 
         $response->assertOk();
         $response->assertViewIs('admin.bylaw');
@@ -122,7 +124,8 @@ class AdminByLawControllerTest extends TestCase
 
         $data['description'] = "Description edit " . $data->description;
 
-        $response = $this->actingAs($this->admin_user)->post('admin/bylaw/'. $bylaw->id . '/edit', [
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/bylaw/'. $bylaw->id . '/edit', [
             'bylaw' => $data->toArray()
         ]);
 

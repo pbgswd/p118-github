@@ -38,7 +38,7 @@ class Executive extends Model implements Searchable
     ];
 
     protected $fillable = [
-        'id',
+        //'id',
         'title',
         'email',
     ];

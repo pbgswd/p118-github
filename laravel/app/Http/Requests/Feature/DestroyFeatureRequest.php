@@ -24,7 +24,7 @@ class DestroyFeatureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:features',
+            'ids' => 'required',
         ];
     }
 }

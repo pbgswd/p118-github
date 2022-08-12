@@ -188,7 +188,7 @@ class AdminFeatureController extends Controller
         $this->authorize('delete', Feature::class);
 
         Feature::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(function (Feature $feature) {
                 if ($feature['image']) {
                     Storage::disk('public')->delete($feature['image']);

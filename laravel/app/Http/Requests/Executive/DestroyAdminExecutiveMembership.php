@@ -24,7 +24,7 @@ class DestroyAdminExecutiveMembership extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|exists:executive_user',
+            'ids' => 'required',
         ];
     }
 }
