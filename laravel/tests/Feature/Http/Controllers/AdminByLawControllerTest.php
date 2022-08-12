@@ -33,9 +33,10 @@ class AdminByLawControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $bylaw = \App\Models\Bylaw::factory()->create();
-        //todo is parameter correct?
+
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('admin_bylaw_destroy'), ['ids' => $bylaw->id]);
+            ->delete(route('admin_bylaw_destroy', ['ids' => $bylaw->id]));
+
         $this->assertModelMissing($bylaw);
         $response->assertRedirect(route('admin_bylaws_list'));
     }
