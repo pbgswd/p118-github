@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Page;
+use Illuminate\Support\Str;
 
 class PageFactory extends Factory
 {
@@ -21,13 +22,17 @@ class PageFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence;
+
         return [
             'user_id' => \App\Models\User::factory(),
-            'title' => $this->faker->unique()->sentence,
-            'slug' => $this->faker->unique()->slug,
+            'title' => $title,
+            'slug' => Str::slug($title),
+            'content' => $this->faker->realText(500),
             'live' => $this->faker->boolean,
-            'in_menu' => $this->faker->boolean,
-            'allow_comments' => $this->faker->boolean,
+            'front_page' => $this->faker->boolean,
+            'landing_page' => $this->faker->boolean,
+            'access_level' => 'members'
         ];
     }
 }

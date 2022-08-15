@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Page;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
@@ -11,28 +13,25 @@ use Tests\TestCase;
  */
 class AdminPageControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $topics = \App\Models\Topic::factory()->times(3)->create();
-
-        $response = $this->get(route('page_create'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('page_create'));
 
         $response->assertOk();
         $response->assertViewIs('admin.page');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
@@ -40,16 +39,18 @@ class AdminPageControllerTest extends TestCase
 
         $page = \App\Models\Page::factory()->create();
 
-        $response = $this->delete(route('page_destroy'));
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('page_destroy', ['ids' => $page->id]));
 
         $response->assertRedirect(route('pages_list'));
-        $this->assertModelMissing($pageDestroy);
+        $this->assertModelMissing($page);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -62,59 +63,56 @@ class AdminPageControllerTest extends TestCase
 
     /**
      * @test
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $page = \App\Models\Page::factory()->create();
-        $topics = \App\Models\Topic::factory()->times(3)->create();
 
-        $response = $this->get(route('page_edit', ['any_page' => $any_page]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('page_edit', ['any_page' => $page]));
 
         $response->assertOk();
         $response->assertViewIs('admin.page');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $pages = \App\Models\Page::factory()->times(3)->create();
 
-        $response = $this->get(route('pages_list'));
+        $response = $this->actingAs($this->admin_user)->get(route('pages_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.listpages');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_returns_an_ok_response()
     {
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $response = $this->post('admin/page/create', [
-            // TODO: send request data
+        $page = \App\Models\Page::factory()->make();
+
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/page/create', [
+            'page' => $page->toArray()
         ]);
 
-        $response->assertRedirect(route('page_edit', [$page->slug]));
-
-        // TODO: perform additional assertions
+        $this->assertEquals(Session::get('success'),'You have saved a new page' );
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_validates_with_a_form_request()
     {
@@ -127,6 +125,7 @@ class AdminPageControllerTest extends TestCase
 
     /**
      * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
@@ -134,17 +133,21 @@ class AdminPageControllerTest extends TestCase
 
         $page = \App\Models\Page::factory()->create();
 
-        $response = $this->post(route('admin_update_page', ['any_page' => $any_page]), [
-            // TODO: send request data
+        $data = Page::first();
+
+        $data['content'] = 'content update ' . $page->content;
+
+        $response = $this->actingAs($this->admin_user)
+            ->post(route('admin_update_page', $data->id), [
+            'page' => $data->toArray()
         ]);
 
-        $response->assertRedirect(route('page_edit', [$any_page->slug]));
-
-        // TODO: perform additional assertions
+        $response->assertRedirect(route('page_edit', $data->id));
     }
 
     /**
      * @test
+     * @group updateok
      */
     public function update_validates_with_a_form_request()
     {
@@ -154,6 +157,4 @@ class AdminPageControllerTest extends TestCase
             \App\Http\Requests\Page\UpdatePageRequest::class
         );
     }
-
-    // test cases...
 }

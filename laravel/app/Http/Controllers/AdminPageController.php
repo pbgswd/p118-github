@@ -181,14 +181,14 @@ class AdminPageController extends Controller
         $this->authorize('delete', Page::class);
 
         Page::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(function (Page $page) {
                 $this->attachmentService->destroyAttachments($page);
                 $page->topics()->detach();
                 $page->delete();
             });
 
-        Session::flash('success', Str::plural('Page', count($request->id)).' deleted.');
+        Session::flash('success', Str::plural('Page', count([$request->ids])).' deleted.');
 
         return redirect()->route('pages_list');
     }

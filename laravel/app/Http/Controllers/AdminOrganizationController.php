@@ -218,7 +218,7 @@ class AdminOrganizationController extends Controller
     public function destroy(DestroyOrganizationRequest $request): RedirectResponse
     {
         $this->authorize('delete', Organization::class);
-//todo verify organization delete image 
+//todo verify organization delete image
         Organization::withoutGlobalScopes()
             ->find($request->ids)
             ->each(static function (Organization $org) {
