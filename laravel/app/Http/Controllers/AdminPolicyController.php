@@ -69,7 +69,7 @@ class AdminPolicyController extends Controller
 
         $policy->save();
 
-        Session::flash('success', 'policy posting saved');
+
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $policy);
@@ -81,7 +81,7 @@ class AdminPolicyController extends Controller
                 Session::flash('error', 'You have an upload problem');
             }
         }
-
+        Session::flash('success', 'policy posting saved');
         return redirect()->route('admin_policy_edit', [$policy->id]);
     }
 
@@ -145,13 +145,13 @@ class AdminPolicyController extends Controller
 
         /** @var Collection $policy */
         Policy::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(function (Policy $policy) {
                 $this->attachmentService->destroyAttachments($policy);
                 $policy->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id).' posting', count($request->id)).
+        Session::flash('success', Str::plural(count([$request->id]).' posting', count([$request->id])).
             ' and any related files deleted.');
 
         return redirect()->route('policies_list');

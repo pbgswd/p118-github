@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Policy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
@@ -11,43 +13,39 @@ use Tests\TestCase;
  */
 class AdminPolicyControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $response = $this->get(route('admin_policy_create'));
+        $response = $this->actingAs($this->admin_user)->get(route('admin_policy_create'));
 
         $response->assertOk();
         $response->assertViewIs('admin.policy');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $policy = \App\Models\Policy::factory()->create();
 
-        $response = $this->delete(route('admin_policy_destroy'));
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('admin_policy_destroy', ['ids' => $policy->id]));
 
         $response->assertRedirect(route('policies_list'));
-        $this->assertModelMissing($adminPolicyDestroy);
-
-        // TODO: perform additional assertions
+        $this->assertModelMissing($policy);
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -60,58 +58,55 @@ class AdminPolicyControllerTest extends TestCase
 
     /**
      * @test
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $policy = \App\Models\Policy::factory()->create();
 
-        $response = $this->get(route('admin_policy_edit', ['any_policy' => $any_policy]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('admin_policy_edit', $policy->id));
 
         $response->assertOk();
         $response->assertViewIs('admin.policy');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $policies = \App\Models\Policy::factory()->times(3)->create();
 
-        $response = $this->get(route('policies_list'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('policies_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.policies_list');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $policy = \App\Models\Policy::factory()->create();
 
-        $response = $this->post('admin/policy/create', [
-            // TODO: send request data
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/policy/create', [
+           'policy' => $policy->toArray()
         ]);
-
-        $response->assertRedirect(route('admin_policy_edit', [$policy->id]));
-
-        // TODO: perform additional assertions
+        $this->assertEquals(Session::get('success'), 'policy posting saved');
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_validates_with_a_form_request()
     {
@@ -124,24 +119,25 @@ class AdminPolicyControllerTest extends TestCase
 
     /**
      * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $policy = \App\Models\Policy::factory()->create();
 
-        $response = $this->post('admin/policy/{any_policy}/edit', [
-            // TODO: send request data
+        $data = Policy::first();
+
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/policy/' . $data->id . '/edit', [
+            'policy' => $data->toArray()
         ]);
 
-        $response->assertRedirect(route('admin_policy_edit', [$any_policy->id]));
-
-        // TODO: perform additional assertions
+        $response->assertRedirect(route('admin_policy_edit', $data->id));
     }
 
     /**
      * @test
+     * @group updateok
      */
     public function update_validates_with_a_form_request()
     {
@@ -151,6 +147,4 @@ class AdminPolicyControllerTest extends TestCase
             \App\Http\Requests\Policies\AdminUpdatePolicy::class
         );
     }
-
-    // test cases...
 }

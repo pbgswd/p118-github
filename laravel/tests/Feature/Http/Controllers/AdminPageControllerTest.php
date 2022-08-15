@@ -35,7 +35,8 @@ class AdminPageControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+
+        //todo 3 x fail, 4th time it passes wtf
 
         $page = \App\Models\Page::factory()->create();
 
@@ -98,16 +99,14 @@ class AdminPageControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $page = \App\Models\Page::factory()->make();
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/page/create', [
             'page' => $page->toArray()
         ]);
-
-        $this->assertEquals(Session::get('success'),'You have saved a new page' );
+       // $response->ddSession()['errors'];
+        $this->assertEquals(Session::get('success'),'You have saved a new page');
     }
 
     /**
@@ -129,8 +128,6 @@ class AdminPageControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $page = \App\Models\Page::factory()->create();
 
         $data = Page::first();
@@ -138,11 +135,11 @@ class AdminPageControllerTest extends TestCase
         $data['content'] = 'content update ' . $page->content;
 
         $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_update_page', $data->id), [
+            ->post(route('admin_update_page', $data->slug), [
             'page' => $data->toArray()
         ]);
 
-        $response->assertRedirect(route('page_edit', $data->id));
+        $response->assertRedirect(route('page_edit', $data->slug));
     }
 
     /**

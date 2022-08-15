@@ -28,7 +28,7 @@ class PageFactory extends Factory
             'user_id' => \App\Models\User::factory(),
             'title' => $title,
             'slug' => Str::slug($title),
-            'content' => $this->faker->realText(500),
+            'content' => $this->faker->text(200),
             'live' => $this->faker->boolean,
             'front_page' => $this->faker->boolean,
             'landing_page' => $this->faker->boolean,
