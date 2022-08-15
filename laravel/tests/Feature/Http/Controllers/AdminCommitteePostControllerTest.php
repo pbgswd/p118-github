@@ -28,7 +28,7 @@ class AdminCommitteePostControllerTest extends TestCase
         $response->assertViewIs('admin.committee_post');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -46,7 +46,7 @@ class AdminCommitteePostControllerTest extends TestCase
         $response->assertRedirect(route('committee_posts_list', $committee->slug));
         $this->assertModelMissing($committee);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -77,7 +77,7 @@ class AdminCommitteePostControllerTest extends TestCase
         $response->assertViewIs('admin.committee_post');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -97,7 +97,7 @@ class AdminCommitteePostControllerTest extends TestCase
         $response->assertViewIs('admin.committee_posts_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -116,7 +116,7 @@ class AdminCommitteePostControllerTest extends TestCase
 
         $response->assertRedirect(route('admin_committee_post_edit', [$committee->slug, $post->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -147,7 +147,7 @@ class AdminCommitteePostControllerTest extends TestCase
 
         $response->assertRedirect(route('admin_committee_post_edit', [$committeePost->committee->slug, $committeePost->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -162,5 +162,5 @@ class AdminCommitteePostControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

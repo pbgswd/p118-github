@@ -27,8 +27,8 @@ class CarouselControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('carousel');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

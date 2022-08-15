@@ -28,7 +28,7 @@ class ByLawControllerTest extends TestCase
         $response->assertViewIs('bylaws_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -46,8 +46,8 @@ class ByLawControllerTest extends TestCase
         $response->assertViewIs('bylaw_view');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

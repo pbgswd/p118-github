@@ -38,7 +38,7 @@ class AdminUserControllerTest extends TestCase
         $response->assertViewIs('admin.user-edit-address');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -56,7 +56,7 @@ class AdminUserControllerTest extends TestCase
         $response->assertViewIs('admin.user-edit-emergency-contact');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -74,7 +74,7 @@ class AdminUserControllerTest extends TestCase
 
         $response->assertRedirect(route('admin_edit_address', $user->id));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -104,7 +104,7 @@ class AdminUserControllerTest extends TestCase
 
         $response->assertRedirect(route('admin_edit_emergency_contact', $user->id));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -130,7 +130,7 @@ class AdminUserControllerTest extends TestCase
 
         $response->assertRedirect(route('users_list'));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -149,7 +149,7 @@ class AdminUserControllerTest extends TestCase
         $response->assertRedirect(route('users_list'));
         $this->assertModelMissing($userDestroy);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -180,7 +180,7 @@ class AdminUserControllerTest extends TestCase
         $response->assertViewIs('admin.user');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -198,7 +198,7 @@ class AdminUserControllerTest extends TestCase
         $response->assertViewIs('admin.listusers');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -214,7 +214,7 @@ class AdminUserControllerTest extends TestCase
 
         $response->assertRedirect(route('users_list'));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -244,7 +244,7 @@ class AdminUserControllerTest extends TestCase
 
         $response->assertRedirect(route('user_edit', [$user->id]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -259,5 +259,5 @@ class AdminUserControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

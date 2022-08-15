@@ -28,7 +28,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -44,8 +44,8 @@ class PageControllerTest extends TestCase
 
         $response->assertRedirect('login');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

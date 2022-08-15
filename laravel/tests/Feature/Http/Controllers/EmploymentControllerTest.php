@@ -29,7 +29,7 @@ class EmploymentControllerTest extends TestCase
         $response->assertViewIs('employment_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -49,7 +49,7 @@ class EmploymentControllerTest extends TestCase
         $response->assertViewIs('employment_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -67,7 +67,7 @@ class EmploymentControllerTest extends TestCase
 
         $response->assertRedirect(route('list_jobs_year', $request->deadline));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -98,8 +98,8 @@ class EmploymentControllerTest extends TestCase
         $response->assertViewIs('employment');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

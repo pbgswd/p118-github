@@ -28,7 +28,7 @@ class AdminProofReaderControllerTest extends TestCase
         $response->assertViewIs('admin.proofreading');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -48,7 +48,7 @@ class AdminProofReaderControllerTest extends TestCase
         $response->assertViewIs('admin.proofreading');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -62,7 +62,7 @@ class AdminProofReaderControllerTest extends TestCase
 
         $response->assertRedirect(route('admin_proofreader'));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -80,8 +80,8 @@ class AdminProofReaderControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

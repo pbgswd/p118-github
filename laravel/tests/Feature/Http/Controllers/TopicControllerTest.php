@@ -28,7 +28,7 @@ class TopicControllerTest extends TestCase
         $response->assertViewIs('topics');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -45,8 +45,8 @@ class TopicControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('auth.login');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

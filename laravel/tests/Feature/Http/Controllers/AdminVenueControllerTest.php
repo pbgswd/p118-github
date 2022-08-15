@@ -28,7 +28,7 @@ class AdminVenueControllerTest extends TestCase
         $response->assertViewIs('admin.venue');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -45,7 +45,7 @@ class AdminVenueControllerTest extends TestCase
         $response->assertRedirect(route('venues_list'));
         $this->assertModelMissing($venueDestroy);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -76,7 +76,7 @@ class AdminVenueControllerTest extends TestCase
         $response->assertViewIs('admin.venue');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -94,7 +94,7 @@ class AdminVenueControllerTest extends TestCase
         $response->assertViewIs('admin.listvenues');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -110,7 +110,7 @@ class AdminVenueControllerTest extends TestCase
 
         $response->assertRedirect(route('venue_edit', [$venue->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -140,7 +140,7 @@ class AdminVenueControllerTest extends TestCase
 
         $response->assertRedirect(route('venue_edit', [$any_venue->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -155,5 +155,5 @@ class AdminVenueControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

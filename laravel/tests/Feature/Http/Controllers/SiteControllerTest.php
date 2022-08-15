@@ -28,8 +28,8 @@ class SiteControllerTest extends TestCase
         $response->assertViewIs('site');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

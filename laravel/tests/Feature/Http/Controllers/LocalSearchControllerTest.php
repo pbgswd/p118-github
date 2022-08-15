@@ -28,7 +28,7 @@ class LocalSearchControllerTest extends TestCase
         $response->assertViewIs('admin.list_attachments_search_result');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -58,7 +58,7 @@ class LocalSearchControllerTest extends TestCase
         $response->assertViewIs('admin.search_admin');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -90,7 +90,7 @@ class LocalSearchControllerTest extends TestCase
         $response->assertViewIs('search');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -105,5 +105,5 @@ class LocalSearchControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

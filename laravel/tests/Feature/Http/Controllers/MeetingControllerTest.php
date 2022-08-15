@@ -29,7 +29,7 @@ class MeetingControllerTest extends TestCase
         $response->assertViewIs('list_meetings_minutes');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -49,7 +49,7 @@ class MeetingControllerTest extends TestCase
         $response->assertViewIs('list_meetings_minutes');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -67,7 +67,7 @@ class MeetingControllerTest extends TestCase
 
         $response->assertRedirect(route('list_meetings_year', $request->year));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -98,8 +98,8 @@ class MeetingControllerTest extends TestCase
         $response->assertViewIs('meeting');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

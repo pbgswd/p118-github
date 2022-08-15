@@ -29,7 +29,7 @@ class CommitteePostControllerTest extends TestCase
         $response->assertViewIs('committee_post_form');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -48,7 +48,7 @@ class CommitteePostControllerTest extends TestCase
         $response->assertRedirect(route('committee', $committee->slug));
         $this->assertModelMissing($committeePost);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -79,7 +79,7 @@ class CommitteePostControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('committee_post_form');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -99,7 +99,7 @@ class CommitteePostControllerTest extends TestCase
         $response->assertViewIs('committee_post');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -118,7 +118,7 @@ class CommitteePostControllerTest extends TestCase
 
         $response->assertRedirect(route('committee_post_edit_form', [$committee->slug, $post->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -150,7 +150,7 @@ class CommitteePostControllerTest extends TestCase
 
         $response->assertRedirect(route('committee_post_edit_form', [$committee->slug, $committeePost->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -165,5 +165,5 @@ class CommitteePostControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

@@ -29,7 +29,7 @@ class CommitteeControllerTest extends TestCase
         $response->assertViewIs('committees');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -48,8 +48,8 @@ class CommitteeControllerTest extends TestCase
         $response->assertViewIs('committee');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

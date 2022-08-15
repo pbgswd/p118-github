@@ -26,8 +26,8 @@ class ReInviteUserControllerTest extends TestCase
 
         $response->assertRedirect(route('admin_list_invited_users'));
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

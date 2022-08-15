@@ -260,5 +260,5 @@ class UserControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

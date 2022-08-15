@@ -23,8 +23,8 @@ class HelloControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('hello');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

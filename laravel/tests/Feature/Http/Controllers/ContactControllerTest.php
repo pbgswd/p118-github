@@ -29,7 +29,7 @@ class ContactControllerTest extends TestCase
         $response->assertViewIs('contact');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -45,7 +45,7 @@ class ContactControllerTest extends TestCase
 
         $response->assertRedirect(route('contact'));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -60,5 +60,5 @@ class ContactControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

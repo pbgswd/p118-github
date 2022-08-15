@@ -26,8 +26,8 @@ class HomeControllerTest extends TestCase
 
         $response->assertRedirect('/');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

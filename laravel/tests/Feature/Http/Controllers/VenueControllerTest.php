@@ -28,7 +28,7 @@ class VenueControllerTest extends TestCase
         $response->assertViewIs('venues');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -46,8 +46,8 @@ class VenueControllerTest extends TestCase
         $response->assertViewIs('venue');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

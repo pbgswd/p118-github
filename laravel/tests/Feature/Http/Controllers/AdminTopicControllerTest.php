@@ -26,7 +26,7 @@ class AdminTopicControllerTest extends TestCase
         $response->assertViewIs('admin.topic');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -43,7 +43,7 @@ class AdminTopicControllerTest extends TestCase
         $response->assertRedirect(route('topics_list'));
         $this->assertModelMissing($topicDestroy);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -73,7 +73,7 @@ class AdminTopicControllerTest extends TestCase
         $response->assertViewIs('admin.topic');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -91,7 +91,7 @@ class AdminTopicControllerTest extends TestCase
         $response->assertViewIs('admin.listtopics');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -107,7 +107,7 @@ class AdminTopicControllerTest extends TestCase
 
         $response->assertRedirect(route('topic_edit', [$topic->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -137,7 +137,7 @@ class AdminTopicControllerTest extends TestCase
 
         $response->assertRedirect(route('topic_edit', [$any_topic->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -152,5 +152,5 @@ class AdminTopicControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

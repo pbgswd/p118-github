@@ -171,5 +171,5 @@ class AdminCommitteeControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

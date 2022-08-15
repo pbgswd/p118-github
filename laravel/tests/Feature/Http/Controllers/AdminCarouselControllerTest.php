@@ -24,7 +24,7 @@ class AdminCarouselControllerTest extends TestCase
         $response->assertViewIs('admin.carousel');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -41,7 +41,7 @@ class AdminCarouselControllerTest extends TestCase
         $response->assertOk();
         $this->assertModelMissing($carousel);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -57,7 +57,7 @@ class AdminCarouselControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -73,7 +73,7 @@ class AdminCarouselControllerTest extends TestCase
         $response->assertViewIs('admin.carousel_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -89,7 +89,7 @@ class AdminCarouselControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -105,7 +105,7 @@ class AdminCarouselControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -123,8 +123,8 @@ class AdminCarouselControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

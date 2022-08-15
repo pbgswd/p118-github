@@ -29,7 +29,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
         $response->assertViewIs('admin.committee_manage_membership');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -47,7 +47,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
         $response->assertRedirect(route('admin-list-committee-members', [$committee->slug]));
         $this->assertModelMissing($user);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -78,7 +78,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
         $response->assertViewIs('admin.committee_manage_membership');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -96,7 +96,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
         $response->assertViewIs('admin.committee_members_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -117,7 +117,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
         $response->assertViewIs('admin.committee_members_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -148,7 +148,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
         $response->assertRedirect(route('admin-list-committee-members', [$committee->slug, $user->id]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -179,7 +179,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
         $response->assertRedirect(route('admin-list-committee-members', [$committee->slug, $user->id]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -194,5 +194,5 @@ class AdminCommitteeMemberControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

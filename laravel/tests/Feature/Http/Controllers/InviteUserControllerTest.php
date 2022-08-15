@@ -26,7 +26,7 @@ class InviteUserControllerTest extends TestCase
         $response->assertViewIs('admin.invite_user');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -41,7 +41,7 @@ class InviteUserControllerTest extends TestCase
         $response->assertRedirect(route('admin_list_invited_users'));
         $this->assertModelMissing($invitedUserDestroy);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -71,7 +71,7 @@ class InviteUserControllerTest extends TestCase
         $response->assertViewIs('admin.invitations_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -87,7 +87,7 @@ class InviteUserControllerTest extends TestCase
         $response->assertViewIs('admin.invite_list_import');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -101,7 +101,7 @@ class InviteUserControllerTest extends TestCase
 
         $response->assertRedirect(route('list_import'));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -119,7 +119,7 @@ class InviteUserControllerTest extends TestCase
 
         $response->assertRedirect(route('login'));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -148,7 +148,7 @@ class InviteUserControllerTest extends TestCase
 
         $response->assertRedirect(route('hello'));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -164,7 +164,7 @@ class InviteUserControllerTest extends TestCase
 
         $response->assertRedirect(route('admin_list_invited_users'));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -179,5 +179,5 @@ class InviteUserControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }

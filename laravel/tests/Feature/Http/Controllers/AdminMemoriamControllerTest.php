@@ -41,7 +41,7 @@ class AdminMemoriamControllerTest extends TestCase
         $response->assertRedirect(route('admin_memoriam_list'));
         $this->assertModelMissing($memoriam);
 
-        // TODO: perform additional assertions
+
     }
 
     /**

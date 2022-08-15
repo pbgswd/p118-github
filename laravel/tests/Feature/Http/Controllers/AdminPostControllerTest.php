@@ -11,28 +11,26 @@ use Tests\TestCase;
  */
 class AdminPostControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $topics = \App\Models\Topic::factory()->create();
 
-        $topics = \App\Models\Topic::factory()->times(3)->create();
-
-        $response = $this->get(route('post_create'));
+        $response = $this->actingAs($this->admin_user)->get(route('post_create'));
 
         $response->assertOk();
         $response->assertViewIs('admin.post');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
@@ -40,16 +38,14 @@ class AdminPostControllerTest extends TestCase
 
         $post = \App\Models\Post::factory()->create();
 
-        $response = $this->delete(route('post_destroy'));
+        $response = $this->actingAs($this->admin_user)->delete(route('post_destroy'));
 
         $response->assertRedirect(route('posts_list'));
         $this->assertModelMissing($postDestroy);
-
-        // TODO: perform additional assertions
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -61,7 +57,7 @@ class AdminPostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function edit_returns_an_ok_response()
     {
@@ -70,17 +66,17 @@ class AdminPostControllerTest extends TestCase
         $post = \App\Models\Post::factory()->create();
         $topics = \App\Models\Topic::factory()->times(3)->create();
 
-        $response = $this->get(route('post_edit', ['any_post' => $any_post]));
+        $response = $this->actingAs($this->admin_user)->get(route('post_edit', ['any_post' => $any_post]));
 
         $response->assertOk();
         $response->assertViewIs('admin.post');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function index_returns_an_ok_response()
     {
@@ -88,33 +84,33 @@ class AdminPostControllerTest extends TestCase
 
         $posts = \App\Models\Post::factory()->times(3)->create();
 
-        $response = $this->get(route('posts_list'));
+        $response = $this->actingAs($this->admin_user)->get(route('posts_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.listposts');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function store_returns_an_ok_response()
     {
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $response = $this->post('admin/post/create', [
+        $response = $this->actingAs($this->admin_user)->post('admin/post/create', [
             // TODO: send request data
         ]);
 
         $response->assertRedirect(route('post_edit', [$post->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function store_validates_with_a_form_request()
     {
@@ -126,7 +122,7 @@ class AdminPostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function update_returns_an_ok_response()
     {
@@ -134,17 +130,17 @@ class AdminPostControllerTest extends TestCase
 
         $post = \App\Models\Post::factory()->create();
 
-        $response = $this->post('admin/post/{any_post}/edit', [
+        $response = $this->actingAs($this->admin_user)->post('admin/post/{any_post}/edit', [
             // TODO: send request data
         ]);
 
         $response->assertRedirect(route('post_edit', [$any_post->slug]));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function update_validates_with_a_form_request()
     {
@@ -154,6 +150,5 @@ class AdminPostControllerTest extends TestCase
             \App\Http\Requests\Posts\UpdatePostRequest::class
         );
     }
-
-    // test cases...
+    
 }

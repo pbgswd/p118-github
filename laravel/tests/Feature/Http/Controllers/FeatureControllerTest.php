@@ -29,7 +29,7 @@ class FeatureControllerTest extends TestCase
         $response->assertViewIs('features');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -48,8 +48,8 @@ class FeatureControllerTest extends TestCase
         $response->assertViewIs('feature');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

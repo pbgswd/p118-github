@@ -28,7 +28,7 @@ class MemoriamControllerTest extends TestCase
         $response->assertViewIs('memoriams');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -46,8 +46,8 @@ class MemoriamControllerTest extends TestCase
         $response->assertViewIs('memoriam');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

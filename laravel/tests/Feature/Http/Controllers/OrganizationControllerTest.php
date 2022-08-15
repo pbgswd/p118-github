@@ -28,7 +28,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewIs('organizations');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -46,8 +46,8 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewIs('organization');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

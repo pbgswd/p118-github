@@ -29,7 +29,7 @@ class PolicyControllerTest extends TestCase
         $response->assertViewIs('policies_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -48,8 +48,8 @@ class PolicyControllerTest extends TestCase
         $response->assertViewIs('policy_view');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

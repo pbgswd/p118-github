@@ -28,7 +28,7 @@ class PostControllerTest extends TestCase
         $response->assertViewIs('posts');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -44,8 +44,8 @@ class PostControllerTest extends TestCase
 
         $response->assertRedirect('login');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

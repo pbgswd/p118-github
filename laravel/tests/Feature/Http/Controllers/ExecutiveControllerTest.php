@@ -29,8 +29,8 @@ class ExecutiveControllerTest extends TestCase
         $response->assertViewIs('executive_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

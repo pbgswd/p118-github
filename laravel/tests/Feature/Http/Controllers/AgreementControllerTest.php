@@ -35,7 +35,7 @@ class AgreementControllerTest extends TestCase
         $response->assertViewIs('agreements_list');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
 
         // todo: is there pagination and does it work? or not visible when not needed
     }
@@ -56,10 +56,10 @@ class AgreementControllerTest extends TestCase
         $response->assertViewIs('agreement_view');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
 
         // todo: a file attachment? is it there? Can I download it?
     }
 
-    // test cases...
+
 }

@@ -24,8 +24,8 @@ class RoleControllerTest extends TestCase
         $response->assertViewIs('admin.roles');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
-    // test cases...
+
 }

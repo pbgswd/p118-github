@@ -26,7 +26,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertViewIs('admin.attachment');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -43,7 +43,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(route('attachments_list'));
         $this->assertModelMissing($attachmentDestroy);
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -71,7 +71,7 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -87,7 +87,7 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertRedirect(route('attachments_list'));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -106,7 +106,7 @@ class AttachmentControllerTest extends TestCase
         $response->assertViewIs('admin.list_attachments');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -122,7 +122,7 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertRedirect(route('admin_attachment_edit', $attachment->id));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -152,7 +152,7 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertRedirect(route('admin_attachment_edit', $attachment->id));
 
-        // TODO: perform additional assertions
+
     }
 
     /**
@@ -167,5 +167,5 @@ class AttachmentControllerTest extends TestCase
         );
     }
 
-    // test cases...
+
 }
