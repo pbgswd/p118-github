@@ -178,11 +178,10 @@ class AdminMemoriamController extends Controller
     public function destroy(DestroyMemoriamRequest $request): RedirectResponse
     {
         $this->authorize('delete', Memoriam::class);
-
+//todo deal with attachments for memoriams safely
         Memoriam::withoutGlobalScopes()
             ->find($request->ids)
             ->each(function (Memoriam $memoriam) {
-                //todo deal with attachments for memoriams safely
                 //$this->attachmentService->destroyAttachments($memoriam);
                 $memoriam->delete();
             });

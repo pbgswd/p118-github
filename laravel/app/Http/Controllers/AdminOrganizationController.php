@@ -100,7 +100,7 @@ class AdminOrganizationController extends Controller
 
         $org->agreements()->sync($request->all_agreements);
 
-        Session::flash('success', 'You have saved a new venue');
+        Session::flash('success', 'You have saved a new organization');
 
         return redirect()->route('organization_edit', [$org->slug]);
     }
@@ -218,9 +218,9 @@ class AdminOrganizationController extends Controller
     public function destroy(DestroyOrganizationRequest $request): RedirectResponse
     {
         $this->authorize('delete', Organization::class);
-
+//todo verify organization delete image 
         Organization::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(static function (Organization $org) {
                 if ($org['image']) {
                     Storage::disk('public')->delete($org['image']);
@@ -232,7 +232,7 @@ class AdminOrganizationController extends Controller
             }
         );
 
-        Session::flash('success', Str::plural(count($request->id).' Organization', count($request->id)).
+        Session::flash('success', Str::plural(count([$request->id]).' Organization', count([$request->id])).
             ' deleted.');
 
         return redirect()->route('organizations_list');

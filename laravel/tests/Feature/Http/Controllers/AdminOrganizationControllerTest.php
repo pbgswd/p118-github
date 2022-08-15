@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,45 +12,41 @@ use Tests\TestCase;
  */
 class AdminOrganizationControllerTest extends TestCase
 {
-    use RefreshDatabase;
+   // use RefreshDatabase;
 
     /**
      * @test
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $agreements = \App\Models\Agreement::factory()->times(3)->create();
-
-        $response = $this->get(route('organization_create'));
+        $response = $this->actingas($this->admin_user)->get(route('organization_create'));
 
         $response->assertOk();
         $response->assertViewIs('admin.organization');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+
 
         $organization = \App\Models\Organization::factory()->create();
 
-        $response = $this->delete(route('organization_destroy'));
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('organization_destroy', ['ids' => $organization->id]));
 
         $response->assertRedirect(route('organizations_list'));
-        $this->assertModelMissing($organizationDestroy);
-
-        // TODO: perform additional assertions
+        $this->assertModelMissing($organization);
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -62,59 +59,57 @@ class AdminOrganizationControllerTest extends TestCase
 
     /**
      * @test
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $organization = \App\Models\Organization::factory()->create();
-        $agreements = \App\Models\Agreement::factory()->times(3)->create();
 
-        $response = $this->get(route('organization_edit', ['any_organization' => $any_organization]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('organization_edit', $organization->slug));
 
         $response->assertOk();
         $response->assertViewIs('admin.organization');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $organizations = \App\Models\Organization::factory()->times(3)->create();
 
-        $response = $this->get(route('organizations_list'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('organizations_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.listorganizations');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $organization = \App\Models\Organization::factory()->make();
 
-        $response = $this->post('admin/organization/create', [
-            // TODO: send request data
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/organization/create', [
+            'organization' => $organization->toArray()
         ]);
 
-        $response->assertRedirect(route('organization_edit', [$org->slug]));
+        $this->assertEquals(\Illuminate\Support\Facades\Session::get('success'), 'You have saved a new organization');
 
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_validates_with_a_form_request()
     {
@@ -127,24 +122,23 @@ class AdminOrganizationControllerTest extends TestCase
 
     /**
      * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $organization = \App\Models\Organization::factory()->create();
 
-        $response = $this->post('admin/organization/{any_organization}/edit', [
-            // TODO: send request data
+        $response = $this->actingAs($this->admin_user)
+          ->post('admin/organization/' .  $organization->slug .'/edit', [
+          'organization' => $organization->toArray()
         ]);
 
-        $response->assertRedirect(route('organization_edit', [$any_organization->slug]));
-
-        // TODO: perform additional assertions
+        $response->assertRedirect(route('organization_edit', $organization->slug));
     }
 
     /**
      * @test
+     * @group updateok
      */
     public function update_validates_with_a_form_request()
     {
@@ -154,6 +148,4 @@ class AdminOrganizationControllerTest extends TestCase
             \App\Http\Requests\Organization\UpdateOrganizationRequest::class
         );
     }
-
-    // test cases...
 }

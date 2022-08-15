@@ -29,7 +29,7 @@ class DestroyOrganizationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:organizations',
+            'ids' => 'required',
         ];
     }
 }

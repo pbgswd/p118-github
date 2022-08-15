@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Organization;
+use Psy\Util\Str;
 
 class OrganizationFactory extends Factory
 {
@@ -22,16 +23,16 @@ class OrganizationFactory extends Factory
     public function definition()
     {
         $name = $this->faker->company().' organization';
-        $file_name = strtolower($this->faker->text(5));
+        $file_name = ''; // strtolower($this->faker->text(5));
 
         return [
             'user_id' => \App\Models\User::factory(),
             'name' => $name,
-            'slug' => strtolower($name),
+            'slug' => \Illuminate\Support\Str::slug($name),
             'url' => $this->faker->url(),
-            'description' => $this->faker->text(50),
-            'file_name' => $file_name .'.jpg',
-            'image' => bcrypt($file_name).'.jpg',
+            'description' => $this->faker->paragraph(),
+            'file_name' => '', //$file_name .'.jpg',
+            'image' => '', //bcrypt($file_name).'.jpg',
             'access_level' => 'members',
             'live' => 1
         ];
