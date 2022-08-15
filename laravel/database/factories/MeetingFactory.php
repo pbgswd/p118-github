@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Meeting;
 
@@ -22,7 +23,11 @@ class MeetingFactory extends Factory
     public function definition()
     {
         return [
-
+            'title' => 'Meeting title ' . $this->faker->word(),
+            'description' => $this->faker->paragraph(),
+            'date' => Carbon::now(),
+            'live' => 1,
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }

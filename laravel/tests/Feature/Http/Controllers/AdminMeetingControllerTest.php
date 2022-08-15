@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Meeting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
@@ -11,43 +13,39 @@ use Tests\TestCase;
  */
 class AdminMeetingControllerTest extends TestCase
 {
-    use RefreshDatabase;
+   // use RefreshDatabase;
 
     /**
-     * @test
+     * @test  * @group
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $response = $this->get(route('meeting_create'));
+        $response = $this->actingAs($this->admin_user)->get(route('meeting_create'));
 
         $response->assertOk();
         $response->assertViewIs('admin.meeting');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $meeting = \App\Models\Meeting::factory()->create();
 
-        $response = $this->delete(route('meeting_destroy'));
-
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('meeting_destroy', ['ids' => $meeting]));
+        $this->assertModelMissing($meeting);
         $response->assertRedirect(route('meetings_list'));
-        $this->assertDeleted($meetingDestroy);
 
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -60,58 +58,54 @@ class AdminMeetingControllerTest extends TestCase
 
     /**
      * @test
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $meeting = \App\Models\Meeting::factory()->create();
 
-        $response = $this->get(route('meeting_edit', ['any_meeting' => $any_meeting]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('meeting_edit', ['any_meeting' => $meeting]));
 
         $response->assertOk();
         $response->assertViewIs('admin.meeting');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $meetings = \App\Models\Meeting::factory()->times(3)->create();
 
-        $response = $this->get(route('meetings_list'));
+        $response = $this->actingAs($this->admin_user)->get(route('meetings_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.listmeetings');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $meeting = \App\Models\Meeting::factory()->make();
 
-        $response = $this->post('admin/meeting/create', [
-            // TODO: send request data
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/meeting/create', [
+            'meeting' => $meeting->toArray()
         ]);
 
-        $response->assertRedirect(route('meeting_edit', [$meeting->id]));
-
-        // TODO: perform additional assertions
+        $this->assertEquals(Session::get('success'),'Meeting saved');
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_validates_with_a_form_request()
     {
@@ -124,24 +118,26 @@ class AdminMeetingControllerTest extends TestCase
 
     /**
      * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $meeting = \App\Models\Meeting::factory()->create();
+        $data = Meeting::first();
 
-        $response = $this->post('admin/meeting/{any_meeting}/edit', [
-            // TODO: send request data
+        $data['description'] = "Updated " . $data->description;
+
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/meeting/'. $meeting->id . '/edit', [
+            'meeting' => $data->toArray()
         ]);
+        $response->assertRedirect(route('meeting_edit', ['any_meeting' => $data->id]));
 
-        $response->assertRedirect(route('meeting_edit', [$any_meeting->id]));
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group updateok
      */
     public function update_validates_with_a_form_request()
     {
@@ -151,6 +147,4 @@ class AdminMeetingControllerTest extends TestCase
             \App\Http\Requests\Meetings\UpdateMeetingRequest::class
         );
     }
-
-    // test cases...
 }

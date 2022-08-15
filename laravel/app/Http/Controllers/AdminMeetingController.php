@@ -87,7 +87,7 @@ class AdminMeetingController extends Controller
 
             if ($result) {
                 Session::flash('success', 'You uploaded '.
-                    count($request->file('attachments')).' files');
+                    count([$request->file('attachments')]) . ' files');
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -139,7 +139,7 @@ class AdminMeetingController extends Controller
 
             if ($result) {
                 Session::flash('success', 'You uploaded '.
-                    count($request->file('attachments')).' files');
+                    count([$request->file('attachments')]).' files');
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -158,14 +158,15 @@ class AdminMeetingController extends Controller
     public function destroy(DestroyMeetingRequest $request): RedirectResponse
     {
         $this->authorize('delete', Meeting::class);
+       // dd($request->all());
         Meeting::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(function (Meeting $meeting) {
                 $this->attachmentService->destroyAttachments($meeting);
                 $meeting->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id).' Meeting', count($request->id)).
+        Session::flash('success', Str::plural(count([$request->id]).' Meeting', count([$request->id])).
             ' and any related files deleted.');
 
         return redirect()->route('meetings_list');
