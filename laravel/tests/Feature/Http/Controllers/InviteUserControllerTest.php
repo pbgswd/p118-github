@@ -39,7 +39,7 @@ class InviteUserControllerTest extends TestCase
         $response = $this->delete(route('invited_user_destroy'));
 
         $response->assertRedirect(route('admin_list_invited_users'));
-        $this->assertDeleted($invitedUserDestroy);
+        $this->assertModelMissing($invitedUserDestroy);
 
         // TODO: perform additional assertions
     }

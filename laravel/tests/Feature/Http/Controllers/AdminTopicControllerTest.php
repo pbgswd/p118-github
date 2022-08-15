@@ -41,7 +41,7 @@ class AdminTopicControllerTest extends TestCase
         $response = $this->delete(route('topic_destroy'));
 
         $response->assertRedirect(route('topics_list'));
-        $this->assertDeleted($topicDestroy);
+        $this->assertModelMissing($topicDestroy);
 
         // TODO: perform additional assertions
     }

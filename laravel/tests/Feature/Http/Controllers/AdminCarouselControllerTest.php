@@ -39,7 +39,7 @@ class AdminCarouselControllerTest extends TestCase
         $response = $this->delete(route('carousel.destroy', [$carousel]));
 
         $response->assertOk();
-        $this->assertDeleted($carousel);
+        $this->assertModelMissing($carousel);
 
         // TODO: perform additional assertions
     }

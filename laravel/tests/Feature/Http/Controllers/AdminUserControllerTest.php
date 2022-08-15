@@ -147,7 +147,7 @@ class AdminUserControllerTest extends TestCase
         $response = $this->delete(route('user_destroy'));
 
         $response->assertRedirect(route('users_list'));
-        $this->assertDeleted($userDestroy);
+        $this->assertModelMissing($userDestroy);
 
         // TODO: perform additional assertions
     }

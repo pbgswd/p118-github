@@ -43,7 +43,7 @@ class AdminPostControllerTest extends TestCase
         $response = $this->delete(route('post_destroy'));
 
         $response->assertRedirect(route('posts_list'));
-        $this->assertDeleted($postDestroy);
+        $this->assertModelMissing($postDestroy);
 
         // TODO: perform additional assertions
     }

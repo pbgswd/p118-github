@@ -43,7 +43,7 @@ class AdminPageControllerTest extends TestCase
         $response = $this->delete(route('page_destroy'));
 
         $response->assertRedirect(route('pages_list'));
-        $this->assertDeleted($pageDestroy);
+        $this->assertModelMissing($pageDestroy);
 
         // TODO: perform additional assertions
     }

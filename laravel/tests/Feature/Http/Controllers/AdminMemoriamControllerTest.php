@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Memoriam;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,43 +12,41 @@ use Tests\TestCase;
  */
 class AdminMemoriamControllerTest extends TestCase
 {
-    use RefreshDatabase;
+   // use RefreshDatabase;
 
     /**
      * @test
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $response = $this->get(route('admin_memoriam_create'));
+        $response = $this->actingAs($this->admin_user)->get(route('admin_memoriam_create'));
 
         $response->assertOk();
         $response->assertViewIs('admin.memoriam');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $memoriam = \App\Models\Memoriam::factory()->create();
 
-        $response = $this->delete(route('admin_memoriam_destroy'));
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('admin_memoriam_destroy', ['ids' => $memoriam->id]));
 
         $response->assertRedirect(route('admin_memoriam_list'));
-        $this->assertDeleted($adminMemoriamDestroy);
+        $this->assertModelMissing($memoriam);
 
         // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -60,58 +59,56 @@ class AdminMemoriamControllerTest extends TestCase
 
     /**
      * @test
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $memoriam = \App\Models\Memoriam::factory()->create();
 
-        $response = $this->get(route('admin_memoriam_edit', ['any_memoriam' => $any_memoriam]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('admin_memoriam_edit',  $memoriam->slug));
 
         $response->assertOk();
         $response->assertViewIs('admin.memoriam');
         $response->assertViewHas('data');
 
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $memoriams = \App\Models\Memoriam::factory()->times(3)->create();
 
-        $response = $this->get(route('admin_memoriam_list'));
+        $response = $this->actingAs($this->admin_user)->get(route('admin_memoriam_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.memoriams');
         $response->assertViewHas('data');
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $memoriam = Memoriam::factory()->make();
 
-        $response = $this->post('admin/memoriam/create', [
-            // TODO: send request data
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/memoriam/create', [
+            'memoriam' => $memoriam->toArray()
         ]);
 
-        $response->assertRedirect(route('admin_memoriam_edit', [$memoriam->slug]));
+        $response->assertRedirect(route('admin_memoriam_edit', $memoriam->slug));
 
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_validates_with_a_form_request()
     {
@@ -124,24 +121,30 @@ class AdminMemoriamControllerTest extends TestCase
 
     /**
      * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $memoriam = \App\Models\Memoriam::factory()->create();
 
-        $response = $this->post('admin/memoriam/{any_memoriam}/edit', [
-            // TODO: send request data
+        $data = Memoriam::first();
+
+        $data['content'] = 'Update to this ' . $memoriam->content;
+
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/memoriam/' . $data->slug . '/edit', [
+            'memoriam' => $data->toArray()
         ]);
 
-        $response->assertRedirect(route('admin_memoriam_edit', $any_memoriam->slug));
+        $response->assertRedirect(route('admin_memoriam_edit', $data->slug));
 
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
+     * @group updateok
      */
     public function update_validates_with_a_form_request()
     {
@@ -151,6 +154,4 @@ class AdminMemoriamControllerTest extends TestCase
             \App\Http\Requests\Memoriam\UpdateMemoriamRequest::class
         );
     }
-
-    // test cases...
 }

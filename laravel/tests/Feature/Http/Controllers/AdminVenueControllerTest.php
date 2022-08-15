@@ -43,7 +43,7 @@ class AdminVenueControllerTest extends TestCase
         $response = $this->delete(route('venue_destroy'));
 
         $response->assertRedirect(route('venues_list'));
-        $this->assertDeleted($venueDestroy);
+        $this->assertModelMissing($venueDestroy);
 
         // TODO: perform additional assertions
     }

@@ -41,7 +41,7 @@ class AttachmentControllerTest extends TestCase
         $response = $this->delete(route('attachment_destroy'));
 
         $response->assertRedirect(route('attachments_list'));
-        $this->assertDeleted($attachmentDestroy);
+        $this->assertModelMissing($attachmentDestroy);
 
         // TODO: perform additional assertions
     }

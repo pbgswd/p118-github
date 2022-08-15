@@ -24,7 +24,7 @@ class DestroyMemoriamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:memoriams',
+            'ids' => 'required',
         ];
     }
 }

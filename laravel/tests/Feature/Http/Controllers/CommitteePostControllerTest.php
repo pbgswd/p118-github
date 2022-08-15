@@ -46,7 +46,7 @@ class CommitteePostControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('public_committee_post_destroy', [$committee, $committeePost]));
 
         $response->assertRedirect(route('committee', $committee->slug));
-        $this->assertDeleted($committeePost);
+        $this->assertModelMissing($committeePost);
 
         // TODO: perform additional assertions
     }

@@ -41,7 +41,7 @@ class AdminPolicyControllerTest extends TestCase
         $response = $this->delete(route('admin_policy_destroy'));
 
         $response->assertRedirect(route('policies_list'));
-        $this->assertDeleted($adminPolicyDestroy);
+        $this->assertModelMissing($adminPolicyDestroy);
 
         // TODO: perform additional assertions
     }

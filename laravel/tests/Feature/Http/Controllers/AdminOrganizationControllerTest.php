@@ -43,7 +43,7 @@ class AdminOrganizationControllerTest extends TestCase
         $response = $this->delete(route('organization_destroy'));
 
         $response->assertRedirect(route('organizations_list'));
-        $this->assertDeleted($organizationDestroy);
+        $this->assertModelMissing($organizationDestroy);
 
         // TODO: perform additional assertions
     }

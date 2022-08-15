@@ -45,7 +45,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
         $response = $this->delete(route('admin_delete-committee_member', [$committee, $user]));
 
         $response->assertRedirect(route('admin-list-committee-members', [$committee->slug]));
-        $this->assertDeleted($user);
+        $this->assertModelMissing($user);
 
         // TODO: perform additional assertions
     }
