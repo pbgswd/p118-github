@@ -24,7 +24,7 @@ class DestroyPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:posts',
+            'ids' => 'required',
         ];
     }
 }

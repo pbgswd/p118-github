@@ -23,6 +23,12 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => \App\Models\User::factory(),
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->text(),
+            'access_level' => 'public',
+            'live' => $this->faker->boolean,
+            'front_page' => $this->faker->boolean,
+            'landing_page'=> $this->faker->boolean,
         ];
     }
 }

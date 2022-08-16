@@ -184,14 +184,14 @@ class AdminPostController extends Controller
         $this->authorize('delete', Post::class);
 
         Post::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(function (Post $post) {
                 $this->attachmentService->destroyAttachments($post);
                 $post->topics()->detach();
                 $post->delete();
             });
 
-        Session::flash('success', Str::plural('post', count($request->id)).' deleted.');
+        Session::flash('success', Str::plural('post', count([$request->ids])).' deleted.');
 
         return redirect()->route('posts_list');
     }

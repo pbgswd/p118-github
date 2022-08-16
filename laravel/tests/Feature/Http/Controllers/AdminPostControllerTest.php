@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
@@ -34,18 +36,19 @@ class AdminPostControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $post = \App\Models\Post::factory()->create();
 
-        $response = $this->actingAs($this->admin_user)->delete(route('post_destroy'));
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('post_destroy', ['ids' => $post->id]));
 
+        $this->assertModelMissing($post);
         $response->assertRedirect(route('posts_list'));
-        $this->assertModelMissing($postDestroy);
+
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -57,60 +60,55 @@ class AdminPostControllerTest extends TestCase
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $post = \App\Models\Post::factory()->create();
-        $topics = \App\Models\Topic::factory()->times(3)->create();
 
-        $response = $this->actingAs($this->admin_user)->get(route('post_edit', ['any_post' => $any_post]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('post_edit', $post->slug));
 
         $response->assertOk();
         $response->assertViewIs('admin.post');
         $response->assertViewHas('data');
-
-
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $posts = \App\Models\Post::factory()->times(3)->create();
 
-        $response = $this->actingAs($this->admin_user)->get(route('posts_list'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('posts_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.listposts');
         $response->assertViewHas('data');
-
-
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group storeok
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $response = $this->actingAs($this->admin_user)->post('admin/post/create', [
-            // TODO: send request data
+        $post = \App\Models\Post::factory()->make();
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/post/create', [
+            'post' => $post->toArray()
         ]);
 
-        $response->assertRedirect(route('post_edit', [$post->slug]));
-
-
+        $this->assertEquals(Session::get('success'), 'You have saved a new post');
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group storeok
      */
     public function store_validates_with_a_form_request()
     {
@@ -122,25 +120,29 @@ class AdminPostControllerTest extends TestCase
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $post = \App\Models\Post::factory()->create();
 
-        $response = $this->actingAs($this->admin_user)->post('admin/post/{any_post}/edit', [
-            // TODO: send request data
+        $data = Post::first();
+
+        $data['content'] = "Content update ". $data->post;
+
+
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/post/' . $data->slug . '/edit', [
+           'post' => $data->toArray()
         ]);
 
-        $response->assertRedirect(route('post_edit', [$any_post->slug]));
-
-
+        $response->assertRedirect(route('post_edit', [$data->slug]));
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group updateok
      */
     public function update_validates_with_a_form_request()
     {
@@ -150,5 +152,5 @@ class AdminPostControllerTest extends TestCase
             \App\Http\Requests\Posts\UpdatePostRequest::class
         );
     }
-    
+
 }
