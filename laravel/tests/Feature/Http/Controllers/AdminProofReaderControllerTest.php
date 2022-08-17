@@ -12,7 +12,7 @@ use Tests\TestCase;
  */
 class AdminProofReaderControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
