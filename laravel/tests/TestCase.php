@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\Address;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
@@ -39,6 +40,7 @@ abstract class TestCase extends BaseTestCase
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
             ->has(Membership::factory(),'membership')
+            ->has(Address::factory(), 'address')
             ->create();
         $this->user->assignRole('member');
 

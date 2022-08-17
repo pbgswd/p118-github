@@ -343,7 +343,7 @@ class AdminUserController extends Controller
     ): RedirectResponse {
         $this->authorize('update', $user);
         $message = [];
-
+//dd($userRequest->all());
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
 
         foreach ($addr as $k => $a) {

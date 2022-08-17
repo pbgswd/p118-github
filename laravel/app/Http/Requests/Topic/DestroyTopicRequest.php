@@ -24,7 +24,7 @@ class DestroyTopicRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:topics',
+            'ids' => 'required',
         ];
     }
 }

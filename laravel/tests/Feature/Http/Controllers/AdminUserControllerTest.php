@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Address;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,78 +13,61 @@ use Tests\TestCase;
  */
 class AdminUserControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
+     * @group edit_address_ok
      */
     public function admin_edit_address_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $user = \App\Models\User::factory()->create();
-
-        /**
-         *   $phone = new PhoneNumber($request->input('user_phone'));
-         *
-        $user->phone_number()->save($phone);
-         */
-//todo user_info
-
-        // todo user_address
-
-
-        $response = $this->get(route('admin_edit_address', [$user]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('admin_edit_address', $this->user->id));
 
         $response->assertOk();
         $response->assertViewIs('admin.user-edit-address');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
+     * @group edit_emerg_ok
      */
     public function admin_edit_emergency_contact_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->get(route('admin_edit_emergency_contact', [$user]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('admin_edit_emergency_contact', $this->user));
 
         $response->assertOk();
         $response->assertViewIs('admin.user-edit-emergency-contact');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
+     * @group update_addr_ok
      */
     public function admin_update_address_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->post('admin/user/{user}/address/edit', [
-            // TODO: send request data
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/user/' . $this->user->id . '/address/edit', [
+                'unit' => $this->user->address->unit,
+                'street' => $this->user->address->street,
+                'city' => $this->user->address->city,
+                'province' => $this->user->address->province,
+                'postal_code' => $this->user->address->postal_code,
         ]);
 
-        $response->assertRedirect(route('admin_edit_address', $user->id));
-
-
+        $response->assertRedirect(route('admin_edit_address', $this->user->id));
     }
 
     /**
      * @test
+     * @group update_addr_ok
      */
     public function admin_update_address_validates_with_a_form_request()
     {
-        $this->assertActionUsesFormRequest(
+        $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,
             'admin_update_address',
             \App\Http\Requests\User\UpdateMemberAddress::class
@@ -91,28 +76,28 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group update_emerg_ok
      */
     public function admin_update_emergency_contact_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/user/' . $this->user->id . '/emergency_contact/edit', [
+                'emergency_contact_name' => $this->faker->name,
+                'emergency_contact_phone' => '6663336666',
+                'emergency_contact_relationship' => 'spouse',
+                'message' => $this->faker->paragraph
+            ]);
 
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->post('admin/user/{user}/emergency_contact/edit', [
-            // TODO: send request data
-        ]);
-
-        $response->assertRedirect(route('admin_edit_emergency_contact', $user->id));
-
-
+        $response->assertRedirect(route('admin_edit_emergency_contact', $this->user->id));
     }
 
     /**
      * @test
+     * @group update_emerg_ok
      */
     public function admin_update_emergency_contact_validates_with_a_form_request()
     {
-        $this->assertActionUsesFormRequest(
+        $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,
             'admin_update_emergency_contact',
             \App\Http\Requests\Member\UpdateMemberEmergencyContact::class
@@ -121,43 +106,42 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->markTestIncomplete( __FUNCTION__ .' is not used.');
 
-        $response = $this->get(route('user_create'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('user_create'));
 
         $response->assertRedirect(route('users_list'));
-
-
     }
 
     /**
      * @test
+     * @group
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $user = \App\Models\User::factory()->create();
         $userInfo = \App\Models\UserInfo::factory()->create();
         $executiveMembership = \App\Models\ExecutiveMembership::factory()->create();
 
-        $response = $this->delete(route('user_destroy'));
+        $response = $this->actingAs($this->admin_user)->delete(route('user_destroy'));
 
         $response->assertRedirect(route('users_list'));
-        $this->assertModelMissing($userDestroy);
-
-
+        $this->actingAs($this->admin_user)->assertModelMissing($userDestroy);
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function destroy_validates_with_a_form_request()
     {
-        $this->assertActionUsesFormRequest(
+        $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,
             'destroy',
             \App\Http\Requests\User\DestroyUser::class
@@ -166,15 +150,16 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $user = \App\Models\User::factory()->create();
         $executives = \App\Models\Executive::factory()->times(3)->create();
 
-        $response = $this->get(route('user_edit', [$user]));
+        $response = $this->actingAs($this->admin_user)->get(route('user_edit', [$user]));
 
         $response->assertOk();
         $response->assertViewIs('admin.user');
@@ -185,14 +170,15 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $users = \App\Models\User::factory()->times(3)->create();
 
-        $response = $this->get(route('users_list'));
+        $response = $this->actingAs($this->admin_user)->get(route('users_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.listusers');
@@ -203,12 +189,13 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $response = $this->post('admin/user/create', [
+        $response = $this->actingAs($this->admin_user)->post('admin/user/create', [
             // TODO: send request data
         ]);
 
@@ -219,10 +206,11 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group
      */
     public function store_validates_with_a_form_request()
     {
-        $this->assertActionUsesFormRequest(
+        $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,
             'store',
             \App\Http\Requests\User\StoreUser::class
@@ -230,15 +218,15 @@ class AdminUserControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $user = \App\Models\User::factory()->create();
 
-        $response = $this->post(route('user_edit_update', [$user]), [
+        $response = $this->actingAs($this->admin_user)->post(route('user_edit_update', [$user]), [
             // TODO: send request data
         ]);
 
@@ -248,11 +236,11 @@ class AdminUserControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function update_validates_with_a_form_request()
     {
-        $this->assertActionUsesFormRequest(
+        $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,
             'update',
             \App\Http\Requests\User\UpdateUser::class
