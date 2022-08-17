@@ -54,7 +54,7 @@ class AdminProofReaderController extends Controller
      */
     public function index_by_entity(Request $request): View
     {
-        //todo form request
+        //todo form request for index by entity
         $type = $request->type;
 
         $entries = Proofreader::where('content_type', $type)
@@ -77,6 +77,7 @@ class AdminProofReaderController extends Controller
      */
     public function update(Request $request, Proofreader $proofReader)
     {
+
         //todo form request validator
 
         $proofReader->user_id = Auth::id();

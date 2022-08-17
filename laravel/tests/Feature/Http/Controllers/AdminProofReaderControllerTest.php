@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Proofreader;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,14 +16,14 @@ class AdminProofReaderControllerTest extends TestCase
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $proofreaders = \App\Models\Proofreader::factory()->times(3)->create();
 
-        $response = $this->get(route('admin_proofreader'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('admin_proofreader'));
 
         $response->assertOk();
         $response->assertViewIs('admin.proofreading');
@@ -33,55 +34,64 @@ class AdminProofReaderControllerTest extends TestCase
 
     /**
      * @test
+     * @group entityok
      */
     public function index_by_entity_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $proof = Proofreader::factory()->make();
 
-        $proofreaders = \App\Models\Proofreader::factory()->times(3)->create();
+        $types = ['CommitteePost', 'Post', 'Meeting', 'Feature'];
+        shuffle($types);
 
-        $response = $this->post(route('index_by_entity'), [
-            // TODO: send request data
+        $response = $this->actingAs($this->admin_user)
+            ->post(route('index_by_entity'), [
+            'type' => $types[0],
         ]);
 
         $response->assertOk();
         $response->assertViewIs('admin.proofreading');
         $response->assertViewHas('data');
 
-
     }
 
     /**
      * @test
+     * @group syncok
      */
     public function sync_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $response = $this->get(route('admin_proofreader_sync'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('admin_proofreader_sync'));
 
         $response->assertRedirect(route('admin_proofreader'));
-
-
     }
 
     /**
      * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+
+        $types = ['CommitteePost', 'Post', 'Meeting', 'Feature'];
+        shuffle($types);
 
         $proofreader = \App\Models\Proofreader::factory()->create();
+        $proof = Proofreader::first();
 
-        $response = $this->post('admin/proofreading/{proofReader}/update', [
-            // TODO: send request data
+        $data = [
+            'type'  =>  $types[0],
+            'pr' => [
+                'type' => $types[0]
+            ]
+        ];
+
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/proofreading/' . $proof->id .'/update', [
+            $data
         ]);
 
         $response->assertOk();
-
-
     }
-
-
 }
