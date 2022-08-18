@@ -219,6 +219,8 @@ class AdminUserController extends Controller
 
         $user->load('phone_number', 'membership');
 
+        dd($request->all());
+
         $message = [];
         $original_name = $user->name;
 
@@ -432,13 +434,19 @@ class AdminUserController extends Controller
     {
         $this->authorize('delete', Auth::user());
 
-        $users = User::find($request->id);
+        $users = User::with('roles')->find($request->ids);
 
-        //todo cannot delete user when user has a post, page, topic, or is a member of a committee.
-        //todo user soft delete
+        // todo cannot delete user when user has a post, page, topic,
+        //  or is a member of a committee.
+        // todo user soft delete
+
+      // dd($users->toArray());
 
         foreach ($users as $user) {
-            $user_roles = $user->getRoleNames()->toArray();
+//dd($user);
+            dd($user['roles']);
+
+            $user_roles = $user->getRoleNames();
             $user_roles = array_combine($user_roles, $user_roles);
 
             foreach ($user_roles as $r) {
@@ -468,7 +476,7 @@ class AdminUserController extends Controller
             User::destroy($user->id);
         }
 
-        Session::flash('success', Str::plural('Member', count($request->id)).' deleted.');
+        Session::flash('success', Str::plural('Member', count([$request->id])).' deleted.');
 
         return redirect()->route('users_list');
     }

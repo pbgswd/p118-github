@@ -120,24 +120,29 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
-     * @group
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
+       $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+//dump($this->user->toArray());
 
-        $user = \App\Models\User::factory()->create();
-        $userInfo = \App\Models\UserInfo::factory()->create();
-        $executiveMembership = \App\Models\ExecutiveMembership::factory()->create();
+        //dd($this->user->getRoleNames());
 
-        $response = $this->actingAs($this->admin_user)->delete(route('user_destroy'));
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('user_destroy', ['ids' => $this->user->id]));
+
+        //$response->dumpSession()['errors'];
+        //$response->ddSession()['errors'];
+
+        $this->assertModelMissing($this->user);
 
         $response->assertRedirect(route('users_list'));
-        $this->actingAs($this->admin_user)->assertModelMissing($userDestroy);
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -150,50 +155,38 @@ class AdminUserControllerTest extends TestCase
 
     /**
      * @test
-     * @group
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $user = \App\Models\User::factory()->create();
-        $executives = \App\Models\Executive::factory()->times(3)->create();
-
-        $response = $this->actingAs($this->admin_user)->get(route('user_edit', [$user]));
+        $response = $this->actingAs($this->admin_user)->get(route('user_edit', $this->user));
 
         $response->assertOk();
         $response->assertViewIs('admin.user');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
-     * @group
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $users = \App\Models\User::factory()->times(3)->create();
-
         $response = $this->actingAs($this->admin_user)->get(route('users_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.listusers');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
-     * @group
+     * @group storeok
      */
+/*    //todo delete method, not used in application
     public function store_returns_an_ok_response()
     {
-        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
+       $this->markTestIncomplete( __FUNCTION__ .' note used');
 
         $response = $this->actingAs($this->admin_user)->post('admin/user/create', [
             // TODO: send request data
@@ -202,11 +195,11 @@ class AdminUserControllerTest extends TestCase
         $response->assertRedirect(route('users_list'));
 
 
-    }
+    }*/
 
     /**
      * @test
-     * @group
+     * @group storeok
      */
     public function store_validates_with_a_form_request()
     {
@@ -218,25 +211,27 @@ class AdminUserControllerTest extends TestCase
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->actingAs($this->admin_user)->markTestIncomplete( __FUNCTION__ .' has issues.');
+       $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($this->admin_user)->post(route('user_edit_update', [$user]), [
-            // TODO: send request data
+        $user = User::where('id', $this->user->id)->get();
+      //  dump($user->toArray());
+        //dump($user[0]->toArray());
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/user' . $user[0]->id . '/edit', [
+            'user' => $user[0]->toArray()
         ]);
 
-        $response->assertRedirect(route('user_edit', [$user->id]));
-
-
+        $response->assertRedirect(route('user_edit', [$user[0]->id]));
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group updateok
      */
     public function update_validates_with_a_form_request()
     {

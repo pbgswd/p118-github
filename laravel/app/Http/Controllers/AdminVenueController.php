@@ -215,7 +215,7 @@ class AdminVenueController extends Controller
         $this->authorize('delete', Venue::class);
 
         Venue::withoutGlobalScopes()
-            ->find($request->id)
+            ->find($request->ids)
             ->each(function (Venue $venue) {
                 if ($venue['image']) {
                     Storage::disk('public')->delete($venue['image']);
@@ -225,8 +225,8 @@ class AdminVenueController extends Controller
                 $venue->delete();
             });
 
-        Session::flash('success', Str::plural(count($request->id).
-                ' Venue', count($request->id)).' deleted.');
+        Session::flash('success', Str::plural(count([$request->id]).
+                ' Venue', count([$request->id])).' deleted.');
 
         return redirect()->route('venues_list');
     }

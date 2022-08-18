@@ -29,7 +29,7 @@ class DestroyUser extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|exists:users',
+            'ids' => 'required',
         ];
     }
 }

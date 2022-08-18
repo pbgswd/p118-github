@@ -21,15 +21,16 @@ class VenueFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->company().' hall';
+        $name = $this->faker->company().' hall venue';
         $slug = strtolower($name);
 
         return [
             'user_id' => \App\Models\User::factory(),
             'name' => $name,
-            'slug' => $slug,
             'description' => $this->faker->text(50),
-            'image' => strtolower($this->faker->text(5)).'.jpg',
+            'url' => $this->faker->url,
+            'image' => '',
+            'file_name' => '',
             'access_level' => 'public',
             'live' => 1,
         ];

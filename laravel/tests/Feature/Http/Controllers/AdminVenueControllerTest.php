@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Venue;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
@@ -11,49 +13,43 @@ use Tests\TestCase;
  */
 class AdminVenueControllerTest extends TestCase
 {
-    use RefreshDatabase;
+   // use RefreshDatabase;
 
     /**
      * @test
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $agreements = \App\Models\Agreement::factory()->times(3)->create();
-
-        $response = $this->get(route('venue_create'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('venue_create'));
 
         $response->assertOk();
         $response->assertViewIs('admin.venue');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $venue = \App\Models\Venue::factory()->create();
 
-        $response = $this->delete(route('venue_destroy'));
-
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('venue_destroy', ['ids' => $venue->id]));
+        $this->assertModelMissing($venue);
         $response->assertRedirect(route('venues_list'));
-        $this->assertModelMissing($venueDestroy);
-
-
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
-        $this->assertActionUsesFormRequest(
+        $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminVenueController::class,
             'destroy',
             \App\Http\Requests\Venues\DestroyVenueRequest::class
@@ -62,63 +58,60 @@ class AdminVenueControllerTest extends TestCase
 
     /**
      * @test
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $venue = \App\Models\Venue::factory()->create();
-        $agreements = \App\Models\Agreement::factory()->times(3)->create();
 
-        $response = $this->get(route('venue_edit', ['any_venue' => $any_venue]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('venue_edit', $venue->slug));
 
         $response->assertOk();
         $response->assertViewIs('admin.venue');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $venues = \App\Models\Venue::factory()->times(3)->create();
 
-        $response = $this->get(route('venues_list'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('venues_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.listvenues');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $venue = \App\Models\Venue::factory()->make();
 
-        $response = $this->post('admin/venue/create', [
-            // TODO: send request data
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/venue/create', [
+            'venue' => $venue->toArray()
         ]);
-
-        $response->assertRedirect(route('venue_edit', [$venue->slug]));
-
-
+        // both work, but issues
+        //$response->assertRedirect(route('venue_edit', [$venue->slug]));
+        $this->assertEquals(Session::get('success'), 'You have saved a new venue');
     }
 
     /**
      * @test
+     * @group storeok
      */
     public function store_validates_with_a_form_request()
     {
-        $this->assertActionUsesFormRequest(
+        $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminVenueController::class,
             'store',
             \App\Http\Requests\Venues\StoreVenueRequest::class
@@ -127,33 +120,33 @@ class AdminVenueControllerTest extends TestCase
 
     /**
      * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $venue = \App\Models\Venue::factory()->create();
 
-        $response = $this->post('admin/venue/{any_venue}/edit', [
-            // TODO: send request data
+        $data = Venue::first();
+
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/venue/' . $venue->slug . '/edit', [
+             'venue' => $data->toArray()
         ]);
 
-        $response->assertRedirect(route('venue_edit', [$any_venue->slug]));
-
-
+        $response->assertRedirect(route('venue_edit', $venue->slug));
     }
 
     /**
      * @test
+     * @group updateok
+     *
      */
     public function update_validates_with_a_form_request()
     {
-        $this->assertActionUsesFormRequest(
+        $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminVenueController::class,
             'update',
             \App\Http\Requests\Venues\UpdateVenueRequest::class
         );
     }
-
-
 }
