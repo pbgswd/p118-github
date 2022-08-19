@@ -216,17 +216,18 @@ class AdminUserControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-       $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+      // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $user = User::where('id', $this->user->id)->get();
-      //  dump($user->toArray());
-        //dump($user[0]->toArray());
+        $user = User::find($this->user->id);
+
+      dd($user->toArray());
+
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/user' . $user[0]->id . '/edit', [
-            'user' => $user[0]->toArray()
+            ->post('admin/user/' . $user->id . '/edit', [
+            'user' => $user->toArray()
         ]);
-
-        $response->assertRedirect(route('user_edit', [$user[0]->id]));
+        //$response->ddSession()['errors'];
+        $response->assertRedirect(route('user_edit', $user->id));
     }
 
     /**

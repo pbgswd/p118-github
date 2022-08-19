@@ -11,15 +11,13 @@ use Tests\TestCase;
  */
 class OrganizationControllerTest extends TestCase
 {
-    use RefreshDatabase;
+  //  use RefreshDatabase;
 
     /**
      * @test
      */
     public function list_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $organizations = \App\Models\Organization::factory()->times(3)->create();
 
         $response = $this->get(route('organizations'));
@@ -27,8 +25,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('organizations');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -36,8 +32,6 @@ class OrganizationControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $organization = \App\Models\Organization::factory()->create();
 
         $response = $this->get(route('organization', [$organization]));
@@ -45,9 +39,5 @@ class OrganizationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('organization');
         $response->assertViewHas('data');
-
-
     }
-
-
 }

@@ -22,7 +22,11 @@ class ContactFactory extends Factory
     public function definition()
     {
         return [
-
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'mail_subject' => $this->faker->text(5),
+            'mail_body' => $this->faker->text(200),
+            //'g-recaptcha-response'
         ];
     }
 }

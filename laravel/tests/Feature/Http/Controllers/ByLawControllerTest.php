@@ -15,11 +15,10 @@ class ByLawControllerTest extends TestCase
 
     /**
      * @test
+     * @group listok
      */
     public function list_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $bylaws = \App\Models\Bylaw::factory()->times(3)->create();
 
         $response = $this->get(route('bylaws_list_public'));
@@ -27,27 +26,22 @@ class ByLawControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('bylaws_list');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
+     * @group showok
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $bylaw = \App\Models\Bylaw::factory()->create();
 
-        $response = $this->get(route('bylaw_show', [$bylaw]));
+        $response = $this->get(route('bylaw_show', $bylaw->id));
 
         $response->assertOk();
         $response->assertViewIs('bylaw_view');
         $response->assertViewHas('data');
-
-
     }
-
-
 }

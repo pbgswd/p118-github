@@ -11,14 +11,14 @@ use Tests\TestCase;
  */
 class PageControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
      */
     public function list_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+      //  $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $pages = \App\Models\Page::factory()->times(3)->create();
 
@@ -27,8 +27,6 @@ class PageControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('pages');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -42,10 +40,8 @@ class PageControllerTest extends TestCase
 
         $response = $this->get(route('page_show', [$page]));
 
-        $response->assertRedirect('login');
-
+      //  $response->assertRedirect('login');
+        $response->assertRedirect(route('page_show', [$page->slug]));
 
     }
-
-
 }

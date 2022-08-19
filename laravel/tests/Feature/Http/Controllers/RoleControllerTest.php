@@ -16,16 +16,11 @@ class RoleControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $response = $this->get(route('roles_list'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('roles_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.roles');
         $response->assertViewHas('data');
-
-
     }
-
-
 }

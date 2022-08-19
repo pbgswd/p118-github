@@ -219,7 +219,7 @@ class AdminUserController extends Controller
 
         $user->load('phone_number', 'membership');
 
-        dd($request->all());
+      //  dd([$user->toArray(), $request->all()]);
 
         $message = [];
         $original_name = $user->name;
@@ -443,8 +443,8 @@ class AdminUserController extends Controller
       // dd($users->toArray());
 
         foreach ($users as $user) {
-//dd($user);
-            dd($user['roles']);
+dd($user);
+           // dd($user['roles']);
 
             $user_roles = $user->getRoleNames();
             $user_roles = array_combine($user_roles, $user_roles);

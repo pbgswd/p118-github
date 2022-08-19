@@ -15,21 +15,17 @@ class EmploymentControllerTest extends TestCase
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $employments = \App\Models\Employment::factory()->times(3)->create();
-        $user = \App\Models\User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('jobs_list'));
+        $response = $this->actingAs($this->user)->get(route('jobs_list'));
 
         $response->assertOk();
         $response->assertViewIs('employment_list');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -41,9 +37,10 @@ class EmploymentControllerTest extends TestCase
 
         $employment = \App\Models\Employment::factory()->create();
         $employments = \App\Models\Employment::factory()->times(3)->create();
-        $user = \App\Models\User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('list_jobs_year', ['deadline' => $employment->deadline]));
+
+        $response = $this->actingAs($user)
+            ->get(route('list_jobs_year', ['deadline' => $employment->deadline]));
 
         $response->assertOk();
         $response->assertViewIs('employment_list');

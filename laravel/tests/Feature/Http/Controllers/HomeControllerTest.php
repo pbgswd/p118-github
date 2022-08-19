@@ -11,23 +11,23 @@ use Tests\TestCase;
  */
 class HomeControllerTest extends TestCase
 {
-    use RefreshDatabase;
+   // use RefreshDatabase;
 
     /**
      * @test
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('home'));
-
+        $response = $this->actingAs($this->user)->get(route('home'));
         $response->assertRedirect('/');
-
-
     }
 
-
+    /**
+     * @test
+     */
+    public function index_unauthenticated_returns_an_ok_response()
+    {
+        $response = $this->get(route('home'));
+        $response->assertRedirect('/login');
+    }
 }

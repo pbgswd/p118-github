@@ -18,7 +18,7 @@ class TopicControllerTest extends TestCase
      */
     public function list_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $topics = \App\Models\Topic::factory()->times(3)->create();
 
@@ -43,7 +43,8 @@ class TopicControllerTest extends TestCase
         $response = $this->get(route('topic_show', [$topic]));
 
         $response->assertOk();
-        $response->assertViewIs('auth.login');
+        $response->assertRedirect(route('topic_show', [$topic->slug]));
+        //$response->assertViewIs('auth.login');
 
 
     }

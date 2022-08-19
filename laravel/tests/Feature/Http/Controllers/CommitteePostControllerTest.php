@@ -14,7 +14,7 @@ class CommitteePostControllerTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @test
+     * @test * @group
      */
     public function create_returns_an_ok_response()
     {
@@ -33,7 +33,7 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function destroy_returns_an_ok_response()
     {
@@ -52,7 +52,7 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -64,7 +64,7 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function edit_returns_an_ok_response()
     {
@@ -83,7 +83,7 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function show_returns_an_ok_response()
     {
@@ -103,7 +103,7 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function store_returns_an_ok_response()
     {
@@ -122,7 +122,7 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function store_validates_with_a_form_request()
     {
@@ -134,7 +134,7 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function update_returns_an_ok_response()
     {
@@ -154,7 +154,7 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test
+     * @test * @group
      */
     public function update_validates_with_a_form_request()
     {

@@ -11,15 +11,13 @@ use Tests\TestCase;
  */
 class SiteControllerTest extends TestCase
 {
-    use RefreshDatabase;
+   // use RefreshDatabase;
 
     /**
      * @test
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $user = \App\Models\User::factory()->create();
 
         $response = $this->actingAs($user)->get(route('landing_page'));
@@ -27,9 +25,5 @@ class SiteControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('site');
         $response->assertViewHas('data');
-
-
     }
-
-
 }

@@ -11,25 +11,20 @@ use Tests\TestCase;
  */
 class PolicyControllerTest extends TestCase
 {
-    use RefreshDatabase;
+   // use RefreshDatabase;
 
     /**
      * @test
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $policies = \App\Models\Policy::factory()->times(3)->create();
-        $user = \App\Models\User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('policies_list_public'));
+        $response = $this->actingAs($this->user)->get(route('policies_list_public'));
 
         $response->assertOk();
         $response->assertViewIs('policies_list');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -37,19 +32,14 @@ class PolicyControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $policy = \App\Models\Policy::factory()->create();
-        $user = \App\Models\User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('policy_show_public', [$policy]));
+        $response = $this->actingAs($this->user)->get(route('policy_show_public', [$policy]));
 
         $response->assertOk();
         $response->assertViewIs('policy_view');
         $response->assertViewHas('data');
-
-
     }
-
-
 }

@@ -11,25 +11,20 @@ use Tests\TestCase;
  */
 class FeatureControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $features = \App\Models\Feature::factory()->times(3)->create();
-        $user = \App\Models\User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('features'));
+        $response = $this->actingAs($this->user)->get(route('features'));
 
         $response->assertOk();
         $response->assertViewIs('features');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -37,19 +32,12 @@ class FeatureControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $feature = \App\Models\Feature::factory()->create();
-        $user = \App\Models\User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('feature', [$feature]));
+        $response = $this->actingAs($this->user)->get(route('feature', [$feature]));
 
         $response->assertOk();
         $response->assertViewIs('feature');
         $response->assertViewHas('data');
-
-
     }
-
-
 }

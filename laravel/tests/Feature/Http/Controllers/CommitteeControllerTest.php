@@ -11,25 +11,21 @@ use Tests\TestCase;
  */
 class CommitteeControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $committees = \App\Models\Committee::factory()->times(3)->create();
-        $user = \App\Models\User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('committees'));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('committees'));
 
         $response->assertOk();
         $response->assertViewIs('committees');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -37,12 +33,10 @@ class CommitteeControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $committee = \App\Models\Committee::factory()->create();
-        $user = \App\Models\User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('committee', [$committee]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('committee', $committee->slug));
 
         $response->assertOk();
         $response->assertViewIs('committee');

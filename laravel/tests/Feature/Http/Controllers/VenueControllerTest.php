@@ -18,7 +18,7 @@ class VenueControllerTest extends TestCase
      */
     public function list_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $venues = \App\Models\Venue::factory()->times(3)->create();
 
@@ -27,8 +27,6 @@ class VenueControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('venues');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -36,7 +34,7 @@ class VenueControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $venue = \App\Models\Venue::factory()->create();
 
@@ -46,8 +44,5 @@ class VenueControllerTest extends TestCase
         $response->assertViewIs('venue');
         $response->assertViewHas('data');
 
-
     }
-
-
 }

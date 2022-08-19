@@ -11,18 +11,13 @@ use Tests\TestCase;
  */
 class ContactControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $contact = \App\Models\Contact::factory()->create();
-        $pages = \App\Models\Page::factory()->times(3)->create();
-
         $response = $this->get(route('contact'));
 
         $response->assertOk();
@@ -37,15 +32,13 @@ class ContactControllerTest extends TestCase
      */
     public function submit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
+       $this->markTestIncomplete( __FUNCTION__ .' has issues. -- needs g-recaptcha-response');
+        $contact = \App\Models\Contact::factory()->make();
         $response = $this->post('contact', [
-            // TODO: send request data
+            $contact
         ]);
 
         $response->assertRedirect(route('contact'));
-
-
     }
 
     /**

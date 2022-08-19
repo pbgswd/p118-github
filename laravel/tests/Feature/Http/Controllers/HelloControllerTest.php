@@ -16,15 +16,9 @@ class HelloControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $response = $this->get(route('hello'));
 
         $response->assertOk();
         $response->assertViewIs('hello');
-
-
     }
-
-
 }

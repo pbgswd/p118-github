@@ -18,7 +18,7 @@ class PostControllerTest extends TestCase
      */
     public function list_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $posts = \App\Models\Post::factory()->times(3)->create();
 
@@ -36,16 +36,12 @@ class PostControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+     $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $post = \App\Models\Post::factory()->create();
 
         $response = $this->get(route('post_show', [$post]));
-
-        $response->assertRedirect('login');
-
-
+        $response->assertRedirect(route('post_show', [$post->slug]));
+        //$response->assertRedirect('login');
     }
-
-
 }

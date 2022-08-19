@@ -18,17 +18,11 @@ class CarouselControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $carousel = \App\Models\Carousel::factory()->create();
+        //$carousel = \App\Models\Carousel::factory()->create();
 
         $response = $this->get(route('carousel'));
 
         $response->assertOk();
         $response->assertViewIs('carousel');
-
-
     }
-
-
 }
