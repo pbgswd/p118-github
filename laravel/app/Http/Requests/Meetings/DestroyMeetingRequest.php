@@ -23,6 +23,7 @@ class DestroyMeetingRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'ids' => 'required',
         ];

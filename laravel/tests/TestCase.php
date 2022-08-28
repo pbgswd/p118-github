@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication, AdditionalAssertions;
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,10 +50,6 @@ abstract class TestCase extends BaseTestCase
             ->has(Membership::factory(),'membership')
             ->create();
         $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
-
-
-        //todo generate fake user resources for other tests to consume
-//dd($this->user->toArray());
     }
 
 }

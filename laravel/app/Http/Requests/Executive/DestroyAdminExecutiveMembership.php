@@ -23,6 +23,7 @@ class DestroyAdminExecutiveMembership extends FormRequest
      */
     public function rules()
     {
+        //todo error
         return [
             'ids' => 'required',
         ];
