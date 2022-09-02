@@ -26,8 +26,6 @@ class StoreTopicRequestTest extends TestCase
      */
     public function authorize()
     {
-
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -38,17 +36,16 @@ class StoreTopicRequestTest extends TestCase
      */
     public function rules()
     {
-        $this->markTestIncomplete(__FUNCTION__ . ' in ' . __FILE__ . ' has issues');
-
         $actual = $this->subject->rules();
 
         $this->assertValidationRules([
             'topic.name' => 'required|unique:topics,name|max:255',
             'topic.access_level' => 'required|string|max:255',
             'topic.sort_order' => 'required|numeric',
-            'topic.in_menu' => 'boolean',
-            'topic.allow_comments' => 'boolean',
             'topic.live' => 'boolean',
+            'topic.description' => 'string|max:255',
+            'topic.front_page' => 'boolean',
+            'topic.landing_page' => 'boolean',
         ], $actual);
     }
 

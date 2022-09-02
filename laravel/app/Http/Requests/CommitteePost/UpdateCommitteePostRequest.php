@@ -28,6 +28,7 @@ class UpdateCommitteePostRequest extends FormRequest
      */
     public function rules(): array
     {
+        dd(debug_backtrace());
         return [
             'post.access_level' => 'required|string|max:255',
             'post.title' => 'required|max:255|unique:committee_posts,title,'.$this->route('any_committee_post')->slug.',slug',

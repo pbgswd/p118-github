@@ -38,7 +38,7 @@ class UpdateCommitteeRequestTest extends TestCase
      */
     public function rules()
     {
-        $this->markTestIncomplete(__FUNCTION__ . ' in ' . __FILE__ . ' has issues');
+        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cannot be tested without context. Use Feature test');
 
         $actual = $this->subject->rules();
 

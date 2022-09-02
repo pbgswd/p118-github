@@ -26,8 +26,6 @@ class UpdateCommitteePostRequestTest extends TestCase
      */
     public function authorize()
     {
-
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -38,12 +36,13 @@ class UpdateCommitteePostRequestTest extends TestCase
      */
     public function rules()
     {
-        $this->markTestIncomplete(__FUNCTION__ . ' in ' . __FILE__ . ' has issues');
+       $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cannot be tested without context');
 
         $actual = $this->subject->rules();
 
         $this->assertValidationRules([
             'post.access_level' => 'required|string|max:255',
+            'post.title' => 'required|max:255|unique:committee_posts,title,slug',
             'post.content' => 'required',
             'post.sticky' => 'boolean',
             'post.allow_comments' => 'boolean',

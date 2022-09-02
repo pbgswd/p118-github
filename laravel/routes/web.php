@@ -76,15 +76,15 @@ Route::middleware('web', 'auth')->group(function () {
 
     Route::get('/home', [CNS\HomeController::class, 'index'])->name('home'); // redirects to home page
 
-    Route::post('jobs', [CNS\EmploymentController::class, 'jobs_year'])->name('jobs_year');
-    Route::get('jobs/{deadline}', [CNS\EmploymentController::class, 'index_by_year'])->name('list_jobs_year');
-
-    Route::get('jobs', [CNS\EmploymentController::class, 'index'])->name('jobs_list');
-    Route::get('job/{employment}', [CNS\EmploymentController::class, 'show'])->name('job_view');
+    Route::controller(CNS\EmploymentController::class)->group(function() {
+        Route::post('jobs', 'jobs_year')->name('jobs_year');
+        Route::get('jobs/{deadline}', 'index_by_year')->name('list_jobs_year');
+        Route::get('jobs', 'index')->name('jobs_list');
+        Route::get('job/{employment}', 'show')->name('job_view');
+    });
 
     Route::get('features', [CNS\FeatureController::class, 'index'])->name('features');
     Route::get('feature/{feature}', [CNS\FeatureController::class, 'show'])->name('feature');
-
 
     Route::controller(CNS\UserController::class)->group(function() {
         Route::get('/members', 'index')->name('members');
@@ -105,25 +105,17 @@ Route::middleware('web', 'auth')->group(function () {
     Route::get('committees', [CNS\CommitteeController::class, 'index'])->name('committees');
     Route::get('committee/{committee}', [CNS\CommitteeController::class, 'show'])->name('committee');
 
-    Route::get('committee/{committee}/post/create', [CNS\CommitteePostController::class, 'create'])
-        ->name('committee_add_public_post');
-    Route::post('committee/{committee}/post/create', [CNS\CommitteePostController::class, 'store']);
+    Route::controller(CNS\CommitteePostController::class)->group(function() {
+        Route::get('committee/{committee}/post/create', 'create')->name('committee_add_public_post');
+        Route::post('committee/{committee}/post/create', 'store');
+        Route::get('committee/{committee}/post/{committeePost}','show')->name('public_committee_post_show');
+        Route::get('committee/{committee}/post/{committeePost}/edit', 'edit')->name('committee_post_edit_form');
 
-    Route::get('committee/{committee}/post/{committeePost}', [CNS\CommitteePostController::class, 'show'])
-        ->name('public_committee_post_show');
+        Route::post('committee/{committee}/post/{any_committee_post}/edit', 'update');
 
-    //Route::post('committee/{committee}/post/{committeePost}/create[, 'CNS\CommitteePostController::class, 'store']);
-
-    Route::get('committee/{committee}/post/{committeePost}/edit', [CNS\CommitteePostController::class, 'edit'])
-        ->name('committee_post_edit_form');
-    Route::post('committee/{committee}/post/{any_committee_post}/edit', [CNS\CommitteePostController::class, 'update']);
-
-    Route::delete('committee/{committee}/post/{committeePost}/destroy', [CNS\CommitteePostController::class, 'destroy'])
-        ->name('public_committee_post_destroy');
-
-    //Route::post('committee/{committee}/post/{committeePost}/comment/create',
-    // [CNS\CommitteePostCommentController::class, 'store'])
-//    ->name('public_committee_post_comment');
+        Route::delete('committee/{committee}/post/{committeePost}/destroy', 'destroy')
+            ->name('public_committee_post_destroy');
+    });
 
     Route::controller(CNS\MeetingController::class)->group(function() {
         Route::post('minutes', 'post_year')->name('post_year');
@@ -345,5 +337,4 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::post('bylaw/{any_bylaw}/edit', 'update');
         Route::delete('/bylaw/delete', 'destroy')->name('admin_bylaw_destroy');
     });
-
 });

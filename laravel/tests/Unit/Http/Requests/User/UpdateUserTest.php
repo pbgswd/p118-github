@@ -26,8 +26,6 @@ class UpdateUserTest extends TestCase
      */
     public function authorize()
     {
-        //
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -38,7 +36,7 @@ class UpdateUserTest extends TestCase
      */
     public function rules()
     {
-        $this->markTestIncomplete(__FUNCTION__ . ' in ' . __FILE__ . ' has issues');
+        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cant be tested without context. Use Feature test');
 
         $actual = $this->subject->rules();
 
