@@ -162,7 +162,6 @@ class AdminCommitteeController extends Controller
      */
     public function update(UpdateCommitteeRequest $request, Committee $any_committee): RedirectResponse
     {
-        dd($request->all());
         $this->authorize('update', $any_committee);
 
         $any_committee->fill($request->committee);

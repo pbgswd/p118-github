@@ -42,6 +42,7 @@ abstract class TestCase extends BaseTestCase
             ->has(Membership::factory(),'membership')
             ->has(Address::factory(), 'address')
             ->create();
+
         $this->user->assignRole('member');
 
         $this->admin_user = User::factory()
@@ -49,6 +50,7 @@ abstract class TestCase extends BaseTestCase
             ->has(PhoneNumber::factory(), 'phone_number')
             ->has(Membership::factory(),'membership')
             ->create();
+
         $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
     }
 

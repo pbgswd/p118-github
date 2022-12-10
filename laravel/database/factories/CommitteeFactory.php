@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Committee;
+use function Aws\boolean_value;
 
 class CommitteeFactory extends Factory
 {
@@ -22,13 +23,13 @@ class CommitteeFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => \App\Models\User::factory(),
             'name' => 'Committee ' . $this->faker->name(),
             'description' => 'Committee description' . $this->faker->paragraph(),
-            'file_name' => '',
-            'image' => '',
+            'file_name' => null,
+            'image' => null,
             'email' => $this->faker->email(),
-            'live' => 1,
-            'user_id' => \App\Models\User::factory(),
+            'live' => $this->faker->boolean(),
         ];
     }
 }

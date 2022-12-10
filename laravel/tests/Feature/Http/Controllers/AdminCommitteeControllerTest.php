@@ -32,7 +32,7 @@ class AdminCommitteeControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $committee = \App\Models\Committee::factory()->create();
+        $committee = Committee::factory()->create();
         $response = $this->actingAs($this->admin_user)
             ->delete(route('committee_destroy'), ['ids' => $committee->id]);
         $this->assertModelMissing($committee);
@@ -58,15 +58,9 @@ class AdminCommitteeControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-        //todo fix
-        $this->markTestIncomplete('Has issues');
-        $committee = \App\Models\Committee::factory()->create();
-//$data = Committee::first();
-//dd([$committee->toArray(), $data]);
-//dd($this->admin_user);
-        $response = $this->actingAs($this->admin_user)
-           // ->get(route('committee_edit', 1));
-            ->get('/admin/committee/'. $committee->id . '/edit');
+        $committee = Committee::factory()->create();
+
+        $response = $this->actingAs($this->admin_user)->get(route('committee_edit', $committee->slug));
 
         $response->assertOk();
         $response->assertViewIs('admin.committee');
@@ -79,7 +73,7 @@ class AdminCommitteeControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-        $committees = \App\Models\Committee::factory()->times(3)->create();
+        $committees = Committee::factory()->times(3)->create();
 
         $response = $this->actingAs($this->admin_user)->get(route('committees_list'));
 
@@ -94,12 +88,10 @@ class AdminCommitteeControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-//todo fix
-        $this->markTestIncomplete('Has issues');
-        $committee = \App\Models\Committee::factory()->create();
+        $committee = Committee::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->get(route('admin_committee_show', ['any_committee' => $committee->id]));
+            ->get(route('admin_committee_show', ['any_committee' => $committee->slug]));
 
         $response->assertOk();
         $response->assertViewIs('admin.show_committee');
@@ -141,21 +133,22 @@ class AdminCommitteeControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete('Has issues');
-        $committee = \App\Models\Committee::factory()->create();
+        $this->markTestIncomplete('errors');
+
+        $committee = Committee::factory()->create();
 
         $data = Committee::first();
 
-        $data['description'] = 'Update to description' . $data->description;
-
-       // dd($data);
+        $data['description'] = 'Update to description ';
 
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/committee/'. $data->id .'/edit', [
+            ->post('admin/committee/'. $data->slug .'/edit', [
             'any_committee' => $data
         ]);
+
         //$response->dumpSession()['errors'];
-        $response->assertRedirect(route('committee_edit', [$data]));
+        //($data);
+        $response->assertRedirect(route('committee_edit', [$data->slug]));
     }
 
     /**

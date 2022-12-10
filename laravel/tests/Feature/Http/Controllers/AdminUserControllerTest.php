@@ -125,15 +125,9 @@ class AdminUserControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-//dump($this->user->toArray());
-
-        //dd($this->user->getRoleNames());
 
         $response = $this->actingAs($this->admin_user)
             ->delete(route('user_destroy', ['ids' => $this->user->id]));
-
-        //$response->dumpSession()['errors'];
-        //$response->ddSession()['errors'];
 
         $this->assertModelMissing($this->user);
 
@@ -219,8 +213,6 @@ class AdminUserControllerTest extends TestCase
       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $user = User::find($this->user->id);
-
-      dd($user->toArray());
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/user/' . $user->id . '/edit', [

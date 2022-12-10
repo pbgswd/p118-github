@@ -54,7 +54,7 @@ class AdminCarouselController extends Controller
      */
     public function store(Request $request)
     {
-        dd(__METHOD__);
+
     }
 
     /**
@@ -65,7 +65,7 @@ class AdminCarouselController extends Controller
      */
     public function show(Carousel $carousel)
     {
-        dd(__METHOD__);
+
     }
 
     /**
@@ -99,6 +99,6 @@ class AdminCarouselController extends Controller
      */
     public function destroy(Carousel $carousel)
     {
-        dd(__METHOD__);
+
     }
 }
