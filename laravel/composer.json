@@ -22,6 +22,7 @@
         "nesbot/carbon": "^2.57",
         "predis/predis": "^1.1",
         "rtconner/laravel-tagging": "^4.1",
+        "sendgrid/sendgrid": "^8.0",
         "spatie/image": "^2.0",
         "spatie/laravel-image-optimizer": "^1.7",
         "spatie/laravel-permission": "^5.5",
