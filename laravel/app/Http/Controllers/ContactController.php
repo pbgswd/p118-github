@@ -9,10 +9,11 @@ use App\Models\Page;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use ReCaptcha\ReCaptcha;
+use SendGrid\Mail\TypeException;
+
 
 class ContactController extends Controller
 {
@@ -35,13 +36,14 @@ class ContactController extends Controller
     /**
      * @param SubmitContact $request
      * @return RedirectResponse
+     * @throws TypeException
      */
     public function submit(SubmitContact $request): RedirectResponse
     {
-        define('RECAPTCHA_V3_SECRET_KEY', '6Ldv4sQaAAAAADrmuSc0lzoaf-AiVMMES6LxAt7g');
-        define('RECAPTCHA_THRESHOLD', '0.5');
+       // define('RECAPTCHA_V3_SECRET_KEY', '6Ldv4sQaAAAAADrmuSc0lzoaf-AiVMMES6LxAt7g');
+        //define('RECAPTCHA_THRESHOLD', '0.5');
 
-        $recaptcha = new ReCaptcha(RECAPTCHA_V3_SECRET_KEY);
+        $recaptcha = new ReCaptcha(getenv('GOOGLE_RECAPTCHA_V3_SECRET_KEY'));
 
         $resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
 
@@ -60,7 +62,7 @@ class ContactController extends Controller
             $errors = $resp->getErrorCodes();
         }
 
-        if (($resp->getScore() < RECAPTCHA_THRESHOLD) && config('app.env') == 'production') {
+        if (($resp->getScore() < getenv('GOOGLE_RECAPTCHA_THRESHOLD')) && config('app.env') == 'production') {
 
             $request->session()->put('submission_time', Carbon::now());
             $request->session()->put('suspicious', 'true');
@@ -68,29 +70,24 @@ class ContactController extends Controller
             Session::flash('warning', 'Your message was rejected by the Recaptcha filter.
                 Please wait before trying again.');
         } else {
-
-            dd([
-                config('mail.from.address'),
-                $cc,
-                config('mail.office_admin.address') . " " .  config('mail.office_admin.name')
-            ]);
-            //todo is .env mail configged properly to work with mailDev?
-
-            Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
-                $m->from(config('mail.from.address'), config('app.name').'Contact Page Message from '
-                    .$request['name']);
-                $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
-                if ($cc != '') {
-                    $m->cc($cc, $cc);
-                }
-                $m->replyTo($request['email'], $request['name']);
-                $m->subject('Contact Page '.$request['subject']);
-            });
-
-            Session::flash('success', 'Your message was sent.');
+            $email = new \SendGrid\Mail\Mail();
+            $email->setFrom(getenv('MAIL_FROM_ADDRESS'),  getenv('MAIL_FROM_NAME'));
+            $email->setSubject('Contact Page '.$request['subject']);
+            $email->addTo(getenv('MAIL_ADMIN_EMAIL'), getenv('MAIL_OFFICE_EMAIL_NAME'));
+            $email->setReplyTo($request['email'], $request['name']);
+            $email->addContent("text/plain", "you must view this message body as HTML");
+            $email->addContent(
+                "text/html", addslashes(view('emails.contact', ['data' => $request]))
+            );
+            $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
+            try {
+                $response = $sendgrid->send($email);
+                Session::flash('success', 'Your message was sent.');
+            } catch (Exception $e) {
+                echo 'Caught exception: '. $e->getMessage() ."\n";
+            }
             $request->session()->pull('suspicious');
         }
-
         return redirect()->route('contact');
     }
 }
