@@ -40,9 +40,6 @@ class ContactController extends Controller
      */
     public function submit(SubmitContact $request): RedirectResponse
     {
-       // define('RECAPTCHA_V3_SECRET_KEY', '6Ldv4sQaAAAAADrmuSc0lzoaf-AiVMMES6LxAt7g');
-        //define('RECAPTCHA_THRESHOLD', '0.5');
-
         $recaptcha = new ReCaptcha(getenv('GOOGLE_RECAPTCHA_V3_SECRET_KEY'));
 
         $resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
@@ -71,7 +68,7 @@ class ContactController extends Controller
                 Please wait before trying again.');
         } else {
             $email = new \SendGrid\Mail\Mail();
-            $email->setFrom(getenv('MAIL_FROM_ADDRESS'),  getenv('MAIL_FROM_NAME'));
+            $email->setFrom(getenv('MAIL_FROM_ADDRESS'),  getenv('MAIL_FROM_NAME') . " Contact Page");
             $email->setSubject('Contact Page '.$request['subject']);
             $email->addTo(getenv('MAIL_ADMIN_EMAIL'), getenv('MAIL_OFFICE_EMAIL_NAME'));
             $email->setReplyTo($request['email'], $request['name']);
