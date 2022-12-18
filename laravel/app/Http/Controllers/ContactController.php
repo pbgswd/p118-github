@@ -68,7 +68,7 @@ class ContactController extends Controller
             Session::flash('warning', 'Your message was rejected by the Recaptcha filter.
                 Please wait before trying again.');
         } else {
-            Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
+	  Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
                 $m->from(config('mail.from.address'), config('app.name') . 'Contact Page Message from '
                     . $request['name']);
                 $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
@@ -77,6 +77,9 @@ class ContactController extends Controller
                 }
                 $m->replyTo($request['email'], $request['name']);
                 $m->subject('Contact Page ' . $request['subject']);
+
+		Session::flash('success', 'Message Sent');
+
             });
                 return redirect()->route('contact');
         }
