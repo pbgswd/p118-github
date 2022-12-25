@@ -1,13 +1,13 @@
 {
-    "/js/dashboard.js": "/js/dashboard.js?id=e38ed9c6d44b047ad645d93023b035a4",
-    "/js/app.js": "/js/app.js?id=e351653c914211e8d7dc2bb8793e0ca0",
-    "/js/tinymce.js": "/js/tinymce.js?id=ef0e8e97c2466090ec0e74f0b5738027",
-    "/js/google-analytics.js": "/js/google-analytics.js?id=9bd0abef3a088fd78fea797057610d8c",
-    "/css/app.css": "/css/app.css?id=2641ea97a56f8305b0cacfd0787f1a9e",
-    "/css/dashboard.css": "/css/dashboard.css?id=6fea6cc1fe028984199acf1e72746dc3",
-    "/css/email.css": "/css/email.css?id=c7f8aef70bdd34c5dadd61c31c0bf83a",
-    "/css/carousel.css": "/css/carousel.css?id=baf27f9e1432c560d497d39c31af833b",
-    "/css/normalize.css": "/css/normalize.css?id=3b10fb8ecec601249026a9bea316d320",
-    "/css/skeleton.css": "/css/skeleton.css?id=b1de2f7ee25fb341191b74922c3c4dbc",
-    "/css/jumbotron.css": "/css/jumbotron.css?id=d5e02ec2cbd75ade19167ebc9af93d1f"
+    "/js/app.js": "/js/app.js?id=2d218a176adf7aa7f61f80e73ee234be",
+    "/js/dashboard.js": "/js/dashboard.js?id=37556b1f42f3832cb66da794e841849e",
+    "/js/tinymce.js": "/js/tinymce.js?id=5908e0d1ab5bc10ee99ff38c54adbe5f",
+    "/js/google-analytics.js": "/js/google-analytics.js?id=78a0fd18c170e6280e6fd0bdc055f90a",
+    "/css/app.css": "/css/app.css?id=55d895c89d52a964f2ab418963070a2d",
+    "/css/dashboard.css": "/css/dashboard.css?id=6b00aa040f90d762b91717074829bfe3",
+    "/css/email.css": "/css/email.css?id=3905bf5e3e08517d6f9436e4d15d0a3d",
+    "/css/carousel.css": "/css/carousel.css?id=b931e9ba07f09cf2df6636caeed45d73",
+    "/css/normalize.css": "/css/normalize.css?id=8fdb29560a7019b109be9526fabfa371",
+    "/css/skeleton.css": "/css/skeleton.css?id=93155b25327adf07f26b3fa5b3f612c7",
+    "/css/jumbotron.css": "/css/jumbotron.css?id=0ef7edc6babea5a47645bda0c45368aa"
 }
