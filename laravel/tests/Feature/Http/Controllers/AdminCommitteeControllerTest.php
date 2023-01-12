@@ -133,22 +133,30 @@ class AdminCommitteeControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete('errors');
+
+        //todo why errors
+        //$this->markTestIncomplete('errors');
 
         $committee = Committee::factory()->create();
 
-        $data = Committee::first();
+        //dd($committee->all());
 
-        $data['description'] = 'Update to description ';
+        $data = Committee::firstOrFail();
+//dd(['slug' => $data->slug]);
+
+
+        $data['description'] = 'Update to description ' . $data->description;
+$name = $data->slug;
+        dd([$committee, $data]);
 
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/committee/'. $data->slug .'/edit', [
-            'any_committee' => $data
+            ->post('admin/committee/'. $name .'/edit', [
+            'any_committee' => $data->toArray()
         ]);
 
         //$response->dumpSession()['errors'];
         //($data);
-        $response->assertRedirect(route('committee_edit', [$data->slug]));
+        $response->assertRedirect(route('committee_edit', [$name]));
     }
 
     /**
@@ -163,6 +171,4 @@ class AdminCommitteeControllerTest extends TestCase
             \App\Http\Requests\Committees\UpdateCommitteeRequest::class
         );
     }
-
-
 }

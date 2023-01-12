@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Interfaces\HasAttachment;
 use App\Policies\CommitteePolicy;
 use DateTime;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -38,6 +38,8 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
     use HasFactory;
     use Sortable;
     use HasRoles;
+
+    protected $table = 'committees';
 
     protected $guard_name = 'web';
 
