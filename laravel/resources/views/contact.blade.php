@@ -6,6 +6,9 @@
                 <h2>Contact IATSE Local 118</h2>
             </div>
         </div>
+
+
+<div style="display: inline">
         <form class="form-horizontal" id="contact-form" role="form" action="{{route('contact')}}" method="post">
             {!! csrf_field() !!}
             <div class="row p-2 mb-3">
@@ -56,6 +59,9 @@
                 </div>
             </div>
         </form>
+
+</div>
+
 
         <div class="row mt-2 p-2 mb-lg-5 border border-dark rounded-lg">
             <div class="col-12 col-md-6 p-sm-4 p-2">

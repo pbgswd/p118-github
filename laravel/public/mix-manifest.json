@@ -1,13 +1,13 @@
 {
-    "/js/dashboard.js": "/js/dashboard.js?id=b0cc9ddda3894fd03cec",
-    "/js/app.js": "/js/app.js?id=58eb44c636fdbeac3ef5",
-    "/js/tinymce.js": "/js/tinymce.js?id=31e9a368a04cf37d3ebd",
-    "/js/google-analytics.js": "/js/google-analytics.js?id=c434d378c280d107e776",
-    "/css/app.css": "/css/app.css?id=b4a1cb1e7bb641da415e",
-    "/css/dashboard.css": "/css/dashboard.css?id=5bc928ceb9784bd651e3",
-    "/css/email.css": "/css/email.css?id=3905bf5e3e08517d6f94",
-    "/css/carousel.css": "/css/carousel.css?id=b931e9ba07f09cf2df66",
-    "/css/normalize.css": "/css/normalize.css?id=8fdb29560a7019b109be",
-    "/css/skeleton.css": "/css/skeleton.css?id=93155b25327adf07f26b",
-    "/css/jumbotron.css": "/css/jumbotron.css?id=0ef7edc6babea5a47645"
+    "/js/app.js": "/js/app.js?id=2d218a176adf7aa7f61f80e73ee234be",
+    "/js/dashboard.js": "/js/dashboard.js?id=37556b1f42f3832cb66da794e841849e",
+    "/js/tinymce.js": "/js/tinymce.js?id=5908e0d1ab5bc10ee99ff38c54adbe5f",
+    "/js/google-analytics.js": "/js/google-analytics.js?id=78a0fd18c170e6280e6fd0bdc055f90a",
+    "/css/app.css": "/css/app.css?id=55d895c89d52a964f2ab418963070a2d",
+    "/css/dashboard.css": "/css/dashboard.css?id=6b00aa040f90d762b91717074829bfe3",
+    "/css/email.css": "/css/email.css?id=3905bf5e3e08517d6f9436e4d15d0a3d",
+    "/css/carousel.css": "/css/carousel.css?id=b931e9ba07f09cf2df6636caeed45d73",
+    "/css/normalize.css": "/css/normalize.css?id=8fdb29560a7019b109be9526fabfa371",
+    "/css/skeleton.css": "/css/skeleton.css?id=93155b25327adf07f26b3fa5b3f612c7",
+    "/css/jumbotron.css": "/css/jumbotron.css?id=0ef7edc6babea5a47645bda0c45368aa"
 }
