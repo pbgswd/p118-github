@@ -29,7 +29,7 @@ class DestroyPageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ids' => 'required',
+            'id' => 'required',
         ];
     }
 }
