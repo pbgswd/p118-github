@@ -151,4 +151,10 @@
         integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
         crossorigin="anonymous">
 </script>
+<script>
+    setTimeout(function(){
+        // code to be executed after 1 second
+    }, 1000);
+
+</script>
 <script  src="{{ asset('js/app.js') }}" defer></script>
