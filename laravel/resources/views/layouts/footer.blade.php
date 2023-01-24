@@ -151,4 +151,4 @@
         integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
         crossorigin="anonymous">
 </script>
-<script async src="{{ asset('js/app.js') }}" defer></script>
+<script  src="{{ asset('js/app.js') }}" defer></script>
