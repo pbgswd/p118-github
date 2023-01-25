@@ -140,4 +140,5 @@
         </div>
     </div>
 </footer>
-<script src="{{ asset('js/app.js') }}" defer></script>  
+<link rel="stylesheet" href="/css/fontawesome/fontawesome-free-5.15.2-web/css/all.min.css" />
+<script src="{{ asset('js/app.js') }}" defer></script>
