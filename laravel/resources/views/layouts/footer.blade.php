@@ -129,7 +129,7 @@
                 {{ config('app.name')}}
             </div>
             <div class="p-2 flex-fill text-center">
-                <h6 align="center">Site by <br />IATSE 118 <br /> Members</h6>
+                <h6 align="center">Site by <br />IATSE Local 118 <br /> Members</h6>
             </div>
             <div class="p-2 flex-fill text-right">
                 <a href="#top" title="Top of page">
@@ -140,21 +140,4 @@
         </div>
     </div>
 </footer>
-<link rel="stylesheet" href="/css/fontawesome/fontawesome-free-5.15.2-web/css/all.min.css" />
-<!-- Scripts -->
-<script src="/js/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous">
-</script>
-<script>window.jQuery.ready || document.write('<script src="/js/jquery.slim.min.js"><\/script>')</script>
-<script src="/js/bootstrap.bundle.min.js"
-        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-        crossorigin="anonymous">
-</script>
-<script>
-    setTimeout(function(){
-        // code to be executed after 1 second
-    }, 1000);
-
-</script>
-<script  src="{{ asset('js/app.js') }}" defer></script>
+<script src="{{ asset('js/app.js') }}" defer></script>  
