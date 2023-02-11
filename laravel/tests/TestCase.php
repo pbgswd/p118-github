@@ -10,6 +10,7 @@ use App\Models\UserInfo;
 use Database\Seeders\AccessLevelConstantsSeeder;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Log;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Faker;
@@ -17,12 +18,12 @@ use Faker;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, AdditionalAssertions;
-    use RefreshDatabase;
+   // use RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
-
+        Log::debug('TestCase.php -- a test has started');
         $this->faker = Faker\Factory::create();
 
         $this->seed(AccessLevelConstantsSeeder::class);
