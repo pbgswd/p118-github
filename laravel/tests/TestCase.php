@@ -24,6 +24,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         Log::debug('TestCase.php -- a test has started');
+
         $this->faker = Faker\Factory::create();
 
         $this->seed(AccessLevelConstantsSeeder::class);
