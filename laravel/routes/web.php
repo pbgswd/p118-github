@@ -135,8 +135,9 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');
     Route::get('/developer', [CNS\AdminController::class, 'developer'])->name('developer');
 
-    //todo carousel stubs for all things
-    Route::resource('carousel', CNS\AdminCarouselController::class);
+    Route::controller(CNS\AdminCarouselController::class)->group(function() {
+       Route::get('carousel', 'index')->name('admin_carousel_list');
+    });
 
     Route::controller(CNS\AdminMemoriamController::class)->group(function(){
         Route::get('memoriams', 'index')->name('admin_memoriam_list');

@@ -33,3 +33,4 @@ class DestroyAgreementRequest extends FormRequest
         ];
     }
 }
+//todo remove plural, add singular

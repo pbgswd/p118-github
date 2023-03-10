@@ -10,6 +10,7 @@ use App\Models\UserInfo;
 use Database\Seeders\AccessLevelConstantsSeeder;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -25,10 +26,12 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         Log::debug('TestCase.php -- a test has started');
 
-        $this->faker = Faker\Factory::create();
+        //Artisan::class('migrate:fresh');
 
-        $this->seed(AccessLevelConstantsSeeder::class);
-        $this->seed(RolesAndPermissionsSeeder::class);
+        $this->faker = Faker\Factory::create();
+//todo solve why next 2 lines cause issues.
+        //$this->seed(AccessLevelConstantsSeeder::class); // run when db is schema only
+        //$this->seed(RolesAndPermissionsSeeder::class);  // run when db is schema only
 
         //$this->seed(UserSeeder::class);
         $this->users = User::factory()

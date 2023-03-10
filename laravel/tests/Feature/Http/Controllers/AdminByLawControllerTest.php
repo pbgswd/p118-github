@@ -126,7 +126,7 @@ class AdminByLawControllerTest extends TestCase
         $data['description'] = "Description edit " . $data->description;
 
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/bylaw/'. $bylaw->id . '/edit', [
+            ->post('admin/bylaw/'. $data->id . '/edit', [
             'bylaw' => $data->toArray()
         ]);
 

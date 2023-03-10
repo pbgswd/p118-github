@@ -19,7 +19,7 @@ class AdminCarouselControllerTest extends TestCase
      */
     public function create_returns_an_ok_response()
     {
-        $response = $this->actingAs($this->admin_user)->get(route('carousel.create'));
+        $response = $this->actingAs($this->admin_user)->get(route('admin_carousel_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.carousel');

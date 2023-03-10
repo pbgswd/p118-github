@@ -16,10 +16,10 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-laralvel/.env
-laralvel/.env~
-laralvel/.env.testing
-laralvel/.env.testing~
+laravel/.env
+laravel/.env~
+laravel/.env.testing
+laravel/.env.testing~
 *.php~
 *.css~
 *.blade~

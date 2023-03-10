@@ -190,7 +190,7 @@ class AdminPostController extends Controller
                 $post->topics()->detach();
                 $post->delete();
             });
-
+//todo change plural to singular
         Session::flash('success', Str::plural('post', count([$request->ids])).' deleted.');
 
         return redirect()->route('posts_list');

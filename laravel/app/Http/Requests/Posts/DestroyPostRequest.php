@@ -28,3 +28,4 @@ class DestroyPostRequest extends FormRequest
         ];
     }
 }
+//todo replace plural for singular
