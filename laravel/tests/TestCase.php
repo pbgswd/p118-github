@@ -15,23 +15,24 @@ use Illuminate\Support\Facades\Log;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Faker;
+use App\Http\Kernel;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, AdditionalAssertions;
-   // use RefreshDatabase;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
         Log::debug('TestCase.php -- a test has started');
 
-        //Artisan::class('migrate:fresh');
+        Artisan::call('migrate:fresh');
 
         $this->faker = Faker\Factory::create();
 //todo solve why next 2 lines cause issues.
-        //$this->seed(AccessLevelConstantsSeeder::class); // run when db is schema only
-        //$this->seed(RolesAndPermissionsSeeder::class);  // run when db is schema only
+        $this->seed(AccessLevelConstantsSeeder::class); // run when db is schema only
+        $this->seed(RolesAndPermissionsSeeder::class);  // run when db is schema only
 
         //$this->seed(UserSeeder::class);
         $this->users = User::factory()

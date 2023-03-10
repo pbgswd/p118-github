@@ -11,7 +11,7 @@ use Tests\TestCase;
  */
 class AdminCarouselControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    //use RefreshDatabase;
 
     /**
      * @test
