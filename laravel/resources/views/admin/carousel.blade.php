@@ -4,7 +4,7 @@
     <div class="row border border-primary mb-3">
         <div class='col-6'>
             <h2>
-                <a href="{{route('carousel.index')}}">
+                <a href="{{route('carousel.admin_carousel_list')}}">
                     Admin Carousel
                 </a>
             </h2>

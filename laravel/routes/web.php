@@ -28,7 +28,7 @@ Route::middleware('web')->group(function () {
     Route::get('contact', [CNS\ContactController::class, 'show'])->name('contact');
     Route::post('contact', [CNS\ContactController::class, 'submit']);
 
-    Route::get('carousel', [CNS\CarouselController::class, 'show'])->name('carousel');
+    //Route::get('carousel', [CNS\CarouselController::class, 'show'])->name('carousel');
 
     Route::get('memoriams', [CNS\MemoriamController::class, 'index'])->name('memoriam_list');
     Route::get('memoriam/{memoriam}', [CNS\MemoriamController::class, 'show'])->name('memoriam');
@@ -136,7 +136,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::get('/developer', [CNS\AdminController::class, 'developer'])->name('developer');
 
     Route::controller(CNS\AdminCarouselController::class)->group(function() {
-       Route::get('carousel', 'index')->name('');
+       Route::get('carousel', 'index')->name('admin_carousel_list');
     });
 
     Route::controller(CNS\AdminMemoriamController::class)->group(function(){
@@ -321,14 +321,17 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::post('/meeting/{any_meeting}/edit', [CNS\AdminMeetingController::class, 'update']);
     Route::delete('/meeting/delete', [CNS\AdminMeetingController::class, 'destroy'])->name('meeting_destroy');
 
-    Route::get('employment-list/', [CNS\AdminEmploymentController::class, 'index'])->name('admin_employment_list');
-    Route::get('employment/create', [CNS\AdminEmploymentController::class, 'create'])->name('admin_employment_create');
-    Route::post('employment/create', [CNS\AdminEmploymentController::class, 'store']);
-    Route::get('/employment/{any_employment}/edit', [CNS\AdminEmploymentController::class, 'edit'])
-        ->name('admin_employment_edit');
-    Route::post('employment/{any_employment}/edit', [CNS\AdminEmploymentController::class, 'update']);
-    Route::delete('/employment/delete', [CNS\AdminEmploymentController::class, 'destroy'])
-        ->name('admin_employment_destroy');
+
+    Route::controller(CNS\AdminEmploymentController::class)->group(function() {
+        Route::get('employment-list/','index')->name('admin_employment_list');
+        Route::get('employment/create','create')->name('admin_employment_create');
+        Route::post('employment/create','store');
+        Route::get('/employment/{any_employment}/edit','edit')
+            ->name('admin_employment_edit');
+        Route::post('employment/{any_employment}/edit','update');
+        Route::delete('/employment/delete','destroy')
+            ->name('admin_employment_destroy');
+    });
 
     Route::controller(CNS\AdminByLawController::class)->group(function(){
         Route::get('bylaws/', 'index')->name('admin_bylaws_list');

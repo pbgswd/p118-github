@@ -194,11 +194,22 @@ class AdminCommitteeController extends Controller
     public function destroy(DestroyCommitteeRequest $request): RedirectResponse
     {
         $this->authorize('delete', Committee::class);
-
+//echo(__FILE__ . " line: " . __LINE__);
         Committee::withoutGlobalScopes()
-            ->find($request->ids)
+            ->find($request->id)
             ->each(function (Committee $committee) {
+
+                //dump($committee);
+                //dump(Auth::user()->with('membership'));
+
+                // does user have the role
+                // what is the committee
+                // what is the user
+                // does the user have privileges
+
+
                 $committee->committee_members()->detach();
+              //  echo(__FILE__ . " line: " . __LINE__);
 
                 if ($committee['image']) {
                     Storage::disk('committees')->delete($committee['image']);
@@ -210,7 +221,7 @@ class AdminCommitteeController extends Controller
                 $committee->delete();
             });
 
-        Session::flash('success', Str::plural('Committee', count([$request->ids])).' deleted.');
+        Session::flash('success', Str::plural('Committee', count([$request->id])).' deleted.');
 
         return redirect()->route('committees_list');
     }

@@ -2,9 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Membership;
+use App\Models\PhoneNumber;
+use App\Models\User;
+use App\Models\UserInfo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Committee;
-use function Aws\boolean_value;
+
 
 class CommitteeFactory extends Factory
 {
@@ -20,12 +24,23 @@ class CommitteeFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): Array
     {
+
+        $this->committee_admin_user = User::factory()
+            ->has(UserInfo::factory(), 'user_info')
+            ->has(PhoneNumber::factory(), 'phone_number')
+            ->has(Membership::factory(),'membership')
+            ->create();
+
+        $this->committee_admin_user->assignRole(['super-admin', 'member', 'committee']);
+
+        /// \App\Models\User::factory()
         return [
-            'user_id' => \App\Models\User::factory(),
-            'name' => 'Committee ' . $this->faker->name(),
-            'description' => 'Committee description' . $this->faker->paragraph(),
+            'user_id' => $this->committee_admin_user->id,
+           // 'user_id' => $this->admin_user->id,
+            'name' => 'Committee Name ' . $this->faker->name(),
+            'description' => 'Committee description ' . $this->faker->paragraph(),
             'file_name' => null,
             'image' => null,
             'email' => $this->faker->email(),

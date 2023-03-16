@@ -28,7 +28,7 @@ class CommitteePolicy
     public function view(User $user, Committee $committee)
     {
         return $user->hasAnyRole(['super-admin', 'writer', 'committee']) ||
-            $user->hasAnyPermission(['create committee', 'manage committee', 'delete committee']);
+            $user->hasAnyPermission(['create committee', 'manage committee']);
     }
 
     /**
@@ -62,8 +62,7 @@ class CommitteePolicy
     public function delete(User $user)
     {
         // admin policy
-        return $user->hasAnyRole(['super-admin']) ||
-            $user->hasPermissionTo('delete committee');
+        return $user->hasAnyRole(['super-admin']);
     }
 
     /**
@@ -84,7 +83,6 @@ class CommitteePolicy
      */
     public function forceDelete(User $user)
     {
-        return $user->hasAnyRole(['super-admin']) ||
-            $user->hasPermissionTo('delete committee');
+        return $user->hasAnyRole(['super-admin']);
     }
 }

@@ -129,7 +129,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('carousel.index') }}">
+                    <a class="nav-link" href="{{ route('admin_carousel_list') }}">
                         <span data-feather="file"></span>
                         Carousel Management
                     </a>

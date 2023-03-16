@@ -11,11 +11,12 @@ use Database\Seeders\AccessLevelConstantsSeeder;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Faker;
-use App\Http\Kernel;
+
 
 abstract class TestCase extends BaseTestCase
 {
@@ -25,12 +26,17 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         Log::debug('TestCase.php -- a test has started');
 
+        DB::connection()->enableQueryLog();
+
+
+        Artisan::call('cache:clear');
         Artisan::call('migrate:fresh');
 
         $this->faker = Faker\Factory::create();
-//todo solve why next 2 lines cause issues.
+
         $this->seed(AccessLevelConstantsSeeder::class); // run when db is schema only
         $this->seed(RolesAndPermissionsSeeder::class);  // run when db is schema only
 

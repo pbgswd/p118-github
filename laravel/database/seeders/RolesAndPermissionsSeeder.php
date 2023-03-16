@@ -45,7 +45,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ->givePermissionTo(['create users', 'edit users', 'delete users']);
 
         $role = Role::create(['name' => 'committee'])
-            ->givePermissionTo(['create committee', 'manage committee']);
+            ->givePermissionTo(['create committee', 'manage committee', 'delete committee']);
 
         $role = Role::create(['name' => 'super-admin'])
             ->givePermissionTo(Permission::all());

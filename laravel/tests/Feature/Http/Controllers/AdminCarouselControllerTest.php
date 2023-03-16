@@ -11,7 +11,7 @@ use Tests\TestCase;
  */
 class AdminCarouselControllerTest extends TestCase
 {
-    //use RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * @test
@@ -22,7 +22,7 @@ class AdminCarouselControllerTest extends TestCase
         $response = $this->actingAs($this->admin_user)->get(route('admin_carousel_list'));
 
         $response->assertOk();
-        $response->assertViewIs('admin.carousel');
+        $response->assertViewIs('admin.carousel_list');
         $response->assertViewHas('data');
     }
 
@@ -40,8 +40,6 @@ class AdminCarouselControllerTest extends TestCase
 
         $response->assertOk();
         $this->assertModelMissing($carousel);
-
-
     }
 
     /**
@@ -65,7 +63,7 @@ class AdminCarouselControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-        $response = $this->actingAs($this->admin_user)->get(route('carousel.index'));
+        $response = $this->actingAs($this->admin_user)->get(route('admin_carousel_list'));
 
         $response->assertOk();
         $response->assertViewIs('admin.carousel_list');

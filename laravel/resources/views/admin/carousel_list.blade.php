@@ -7,7 +7,7 @@
         </div>
         <div class='col-4'>
             <h2>
-               <a href="{{route('carousel.create')}}"> Create Carousel Slide</a>
+               <a href="{{route('admin_carousel_list')}}"> Create Carousel Slide</a>
             </h2>
             <p>
                 You will require 4 images
@@ -15,7 +15,7 @@
         </div>
         <div class='col-4 text-right'>
             <h5>
-                <a href="{{route('carousel')}}">Website Carousel </a>
+                <a href="{{route('admin_carousel_list')}}">Website Carousel </a>
             </h5>
         </div>
     </div>
