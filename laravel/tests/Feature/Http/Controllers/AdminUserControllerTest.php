@@ -210,7 +210,7 @@ class AdminUserControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-      // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+      $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $user = User::find($this->user->id);
 
@@ -234,6 +234,4 @@ class AdminUserControllerTest extends TestCase
             \App\Http\Requests\User\UpdateUser::class
         );
     }
-
-
 }

@@ -28,7 +28,7 @@ Route::middleware('web')->group(function () {
     Route::get('contact', [CNS\ContactController::class, 'show'])->name('contact');
     Route::post('contact', [CNS\ContactController::class, 'submit']);
 
-    //Route::get('carousel', [CNS\CarouselController::class, 'show'])->name('carousel');
+    Route::get('carousel', [CNS\CarouselController::class, 'show'])->name('carousel');
 
     Route::get('memoriams', [CNS\MemoriamController::class, 'index'])->name('memoriam_list');
     Route::get('memoriam/{memoriam}', [CNS\MemoriamController::class, 'show'])->name('memoriam');
@@ -148,36 +148,46 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('memoriam/delete', 'destroy')->name('admin_memoriam_destroy');
     });
 
-    Route::get('proofreading-sync', [CNS\AdminProofReaderController::class, 'sync'])->name('admin_proofreader_sync');
-    Route::get('proofreading', [CNS\AdminProofReaderController::class, 'index'])->name('admin_proofreader');
-    Route::post('proofreading', [CNS\AdminProofReaderController::class, 'index_by_entity'])->name('index_by_entity');
-    Route::post('proofreading/{proofReader}/update', [CNS\AdminProofReaderController::class, 'update']);
+    Route::controller(CNS\AdminProofReaderController::class)->group(function () {
+        Route::get('proofreading-sync', 'sync')->name('admin_proofreader_sync');
+        Route::get('proofreading', 'index')->name('admin_proofreader');
+        Route::post('proofreading', 'index_by_entity')->name('index_by_entity');
+        Route::post('proofreading/{proofReader}/update', 'update');
+    });
 
-    Route::post('/search', [CNS\LocalSearchController::class, 'admin_search'])->name('admin_search');
-    //Route::get('/search', [CNS\LocalSearchController::class, 'admin_index'])->name('admin_search_show');
-    Route::post('/attachment_search', [CNS\LocalSearchController::class, 'admin_attachment_search'])
-        ->name('list_attachments_search_result');
+    Route::controller(CNS\LocalSearchController::class)->group(function () {
+        Route::post('/search','admin_search')->name('admin_search');
+        //Route::get('/search','admin_index')->name('admin_search_show');
+        Route::post('/attachment_search', 'admin_attachment_search')
+            ->name('list_attachments_search_result');
+    });
 
-    Route::get('features', [CNS\AdminFeatureController::class, 'index'])->name('admin_features_list');
-    Route::get('feature/create', [CNS\AdminFeatureController::class, 'create'])->name('admin_feature_create');
-    Route::post('feature/create', [CNS\AdminFeatureController::class, 'store']);
-    Route::get('feature/{any_feature}/edit', [CNS\AdminFeatureController::class, 'edit'])->name('admin_feature_edit');
-    Route::post('feature/{any_feature}/edit', [CNS\AdminFeatureController::class, 'update']);
-    Route::delete('feature/delete', [CNS\AdminFeatureController::class, 'destroy'])->name('admin_feature_destroy');
+    Route::controller(CNS\AdminFeatureController::class)->group(function () {
+        Route::get('features', 'index')->name('admin_features_list');
+        Route::get('feature/create', 'create')->name('admin_feature_create');
+        Route::post('feature/create', 'store');
+        Route::get('feature/{any_feature}/edit', 'edit')->name('admin_feature_edit');
+        Route::post('feature/{any_feature}/edit', 'update');
+        Route::delete('feature/delete', 'destroy')->name('admin_feature_destroy');
+    });
 
-    Route::get('/policies', [CNS\AdminPolicyController::class, 'index'])->name('policies_list');
-    Route::get('/policy/create', [CNS\AdminPolicyController::class, 'create'])->name('admin_policy_create');
-    Route::post('/policy/create', [CNS\AdminPolicyController::class, 'store']);
-    Route::get('/policy/{any_policy}/edit', [CNS\AdminPolicyController::class, 'edit'])->name('admin_policy_edit');
-    Route::post('/policy/{any_policy}/edit', [CNS\AdminPolicyController::class, 'update']);
-    Route::delete('/policy/delete', [CNS\AdminPolicyController::class, 'destroy'])->name('admin_policy_destroy');
+    Route::controller(CNS\AdminPolicyController::class)->group(function () {
+        Route::get('/policies', 'index')->name('policies_list');
+        Route::get('/policy/create', 'create')->name('admin_policy_create');
+        Route::post('/policy/create', 'store');
+        Route::get('/policy/{any_policy}/edit', 'edit')->name('admin_policy_edit');
+        Route::post('/policy/{any_policy}/edit', 'update');
+        Route::delete('/policy/delete', 'destroy')->name('admin_policy_destroy');
+    });
 
-    Route::get('/topics', [CNS\AdminTopicController::class, 'index'])->name('topics_list');
-    Route::get('/topic/create', [CNS\AdminTopicController::class, 'create'])->name('topic_create');
-    Route::post('/topic/create', [CNS\AdminTopicController::class, 'store']);
-    Route::get('/topic/{any_topic}/edit', [CNS\AdminTopicController::class, 'edit'])->name('topic_edit');
-    Route::post('/topic/{any_topic}/edit', [CNS\AdminTopicController::class, 'update']);
-    Route::delete('/topic/delete', [CNS\AdminTopicController::class, 'destroy'])->name('topic_destroy');
+    Route::controller(CNS\AdminTopicController::class)->group(function () {
+        Route::get('/topics','index')->name('topics_list');
+        Route::get('/topic/create','create')->name('topic_create');
+        Route::post('/topic/create','store');
+        Route::get('/topic/{any_topic}/edit','edit')->name('topic_edit');
+        Route::post('/topic/{any_topic}/edit','update');
+        Route::delete('/topic/delete','destroy')->name('topic_destroy');
+    });
 
     Route::controller(CNS\AdminUserController::class)->group(function() {
         Route::get('/users', 'index')->name('users_list');
@@ -244,12 +254,14 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
 
     Route::get('/roles', [CNS\RoleController::class, 'index'])->name('roles_list');
 
-    Route::get('/venues', [CNS\AdminVenueController::class, 'index'])->name('venues_list');
-    Route::get('/venue/create', [CNS\AdminVenueController::class, 'create'])->name('venue_create');
-    Route::post('/venue/create', [CNS\AdminVenueController::class, 'store']);
-    Route::get('/venue/{any_venue}/edit', [CNS\AdminVenueController::class, 'edit'])->name('venue_edit');
-    Route::post('/venue/{any_venue}/edit', [CNS\AdminVenueController::class, 'update']);
-    Route::delete('/venue/delete', [CNS\AdminVenueController::class, 'destroy'])->name('venue_destroy');
+    Route::controller(CNS\AdminVenueController::class)->group(function (){
+        Route::get('/venues', 'index')->name('venues_list');
+        Route::get('/venue/create', 'create')->name('venue_create');
+        Route::post('/venue/create', 'store');
+        Route::get('/venue/{any_venue}/edit', 'edit')->name('venue_edit');
+        Route::post('/venue/{any_venue}/edit', 'update');
+        Route::delete('/venue/delete', 'destroy')->name('venue_destroy');
+    });
 
     Route::controller(CNS\AdminCommitteeMemberController::class)->group(function() {
         Route::post('committee/{committee}/admin-list-committee-members', 'search');
