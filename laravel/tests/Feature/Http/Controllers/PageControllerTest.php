@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -11,7 +9,7 @@ use Tests\TestCase;
  */
 class PageControllerTest extends TestCase
 {
-    //use RefreshDatabase;
+    //
 
     /**
      * @test
@@ -34,14 +32,10 @@ class PageControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $page = \App\Models\Page::factory()->create();
-
         $response = $this->get(route('page_show', [$page]));
-
-      //  $response->assertRedirect('login');
-        $response->assertRedirect(route('page_show', [$page->slug]));
-
+        $response->assertOk();
+        $response->assertViewIs('page');
+        $response->assertViewHas('data');
     }
 }

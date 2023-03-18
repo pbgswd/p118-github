@@ -3,8 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Proofreader;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -12,7 +10,7 @@ use Tests\TestCase;
  */
 class AdminProofReaderControllerTest extends TestCase
 {
-    //use RefreshDatabase;
+    //
 
     /**
      * @test

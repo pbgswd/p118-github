@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -11,7 +9,7 @@ use Tests\TestCase;
  */
 class ContactControllerTest extends TestCase
 {
-    //use RefreshDatabase;
+    //
 
     /**
      * @test
@@ -19,12 +17,9 @@ class ContactControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $response = $this->get(route('contact'));
-
         $response->assertOk();
         $response->assertViewIs('contact');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -52,6 +47,4 @@ class ContactControllerTest extends TestCase
             \App\Http\Requests\Contact\SubmitContact::class
         );
     }
-
-
 }

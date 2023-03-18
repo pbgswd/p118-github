@@ -5,7 +5,6 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Agreement;
 use App\Models\Organization;
 use App\Models\Venue;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
@@ -14,7 +13,7 @@ use Tests\TestCase;
  */
 class AdminAgreementControllerTest extends TestCase
 {
-    use RefreshDatabase;
+
 
     /**
      * @test

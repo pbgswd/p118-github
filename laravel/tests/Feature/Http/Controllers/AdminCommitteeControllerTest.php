@@ -3,8 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Committee;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
@@ -13,7 +11,7 @@ use Tests\TestCase;
  */
 class AdminCommitteeControllerTest extends TestCase
 {
-    //use RefreshDatabase;
+    //
 
     /**
      * @test

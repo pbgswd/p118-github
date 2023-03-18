@@ -29,10 +29,10 @@ class PageFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'content' => $this->faker->text(200),
-            'live' => $this->faker->boolean,
+            'live' => 1,
             'front_page' => $this->faker->boolean,
             'landing_page' => $this->faker->boolean,
-            'access_level' => 'members'
+            'access_level' => 'public'
         ];
     }
 }

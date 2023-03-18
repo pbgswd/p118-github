@@ -1,9 +1,6 @@
 <?php
 
 namespace Tests\Feature\Http\Controllers;
-
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -11,45 +8,30 @@ use Tests\TestCase;
  */
 class MeetingControllerTest extends TestCase
 {
-   // use RefreshDatabase;
-
     /**
      * @test
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $meetings = \App\Models\Meeting::factory()->times(3)->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('list_meetings'));
-
+        $response = $this->actingAs($this->user)->get(route('list_meetings'));
         $response->assertOk();
         $response->assertViewIs('list_meetings_minutes');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
+     * @indexyearok
      */
     public function index_by_year_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $meeting = \App\Models\Meeting::factory()->create();
         $meetings = \App\Models\Meeting::factory()->times(3)->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('list_meetings_year', ['year' => $meeting->year]));
-
+        $response = $this->actingAs($this->user)->get(route('list_meetings_year', ['year' => $meeting->date]));
         $response->assertOk();
         $response->assertViewIs('list_meetings_minutes');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -57,17 +39,12 @@ class MeetingControllerTest extends TestCase
      */
     public function post_year_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->post(route('post_year'), [
-            // TODO: send request data
+        $meeting = \App\Models\Meeting::factory()->create();
+        $year = date_format($meeting->date, 'Y');
+        $response = $this->actingAs($this->user)->post(route('post_year'), [
+            'year' => $year
         ]);
-
-        $response->assertRedirect(route('list_meetings_year', $request->year));
-
-
+        $response->assertRedirect(route('list_meetings_year', $year));
     }
 
     /**
@@ -84,22 +61,14 @@ class MeetingControllerTest extends TestCase
 
     /**
      * @test
+     * @showok
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $meeting = \App\Models\Meeting::factory()->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('meeting', [$meeting]));
-
+        $response = $this->actingAs($this->user)->get(route('meeting', [$meeting->id]));
         $response->assertOk();
         $response->assertViewIs('meeting');
         $response->assertViewHas('data');
-
-
     }
-
-
 }

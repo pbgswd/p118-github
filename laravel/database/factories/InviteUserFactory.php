@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Membership;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\InviteUser;
 
@@ -21,8 +22,14 @@ class InviteUserFactory extends Factory
      */
     public function definition()
     {
+
         return [
-            'user_id' => \App\Models\User::factory(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'password' => 'password$2y$10$92IXUN', // password
+            'membership_type' => 'Member',
+            'role' => 'member',
+            'user_id' => 1,
         ];
     }
 }

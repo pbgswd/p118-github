@@ -3,9 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Topic;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
@@ -13,7 +10,7 @@ use Tests\TestCase;
  */
 class AdminTopicControllerTest extends TestCase
 {
-    //use RefreshDatabase;
+    //
 
     /**
       * @test

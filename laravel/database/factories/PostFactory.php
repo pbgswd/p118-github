@@ -27,7 +27,7 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence,
             'content' => $this->faker->text(),
             'access_level' => 'public',
-            'live' => $this->faker->boolean,
+            'live' => 1,
             'front_page' => $this->faker->boolean,
             'landing_page'=> $this->faker->boolean,
         ];

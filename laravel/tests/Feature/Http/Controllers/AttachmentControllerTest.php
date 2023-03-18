@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -11,22 +9,20 @@ use Tests\TestCase;
  */
 class AttachmentControllerTest extends TestCase
 {
-    use RefreshDatabase;
+//todo admin attachment work
 
     /**
      * @test
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $response = $this->get(route('attachment_create'));
+        $response = $this->actingAs($this->admin_user)->get(route('attachment_create'));
 
         $response->assertOk();
         $response->assertViewIs('admin.attachment');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -38,12 +34,10 @@ class AttachmentControllerTest extends TestCase
 
         $attachment = \App\Models\Attachment::factory()->create();
 
-        $response = $this->delete(route('attachment_destroy'));
+        $response = $this->actingAs($this->admin_user)->delete(route('attachment_destroy'));
 
         $response->assertRedirect(route('attachments_list'));
         $this->assertModelMissing($attachmentDestroy);
-
-
     }
 
     /**
@@ -67,11 +61,9 @@ class AttachmentControllerTest extends TestCase
 
         $attachment = \App\Models\Attachment::factory()->create();
 
-        $response = $this->get(route('attachment_download', ['folder' => $attachment->folder, $attachment]));
+        $response = $this->actingAs($this->admin_user)->get(route('attachment_download', ['folder' => $attachment->folder, $attachment]));
 
         $response->assertOk();
-
-
     }
 
     /**
@@ -83,11 +75,15 @@ class AttachmentControllerTest extends TestCase
 
         $attachment = \App\Models\Attachment::factory()->create();
 
-        $response = $this->get(route('admin_attachment_edit', [$attachment]));
+        $response = $this->actingAs($this->admin_user)->get(route('admin_attachment_edit', [$attachment->id]));
 
         $response->assertRedirect(route('attachments_list'));
 
-
+/*
+        $response->assertOk();
+        $response->assertViewIs('admin.attachment');
+        $response->assertViewHas('data');
+*/
     }
 
     /**
@@ -95,18 +91,12 @@ class AttachmentControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $attachment = \App\Models\Attachment::factory()->create();
         $attachments = \App\Models\Attachment::factory()->times(3)->create();
-
-        $response = $this->get(route('attachments_list'));
-
+        $response = $this->actingAs($this->admin_user)->get(route('attachments_list'));
         $response->assertOk();
         $response->assertViewIs('admin.list_attachments');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -115,14 +105,12 @@ class AttachmentControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        // TODO: send request data
+        $response = $this->actingAs($this->admin_user)->post('admin/attachment/create', [
 
-        $response = $this->post('admin/attachment/create', [
-            // TODO: send request data
         ]);
 
         $response->assertRedirect(route('admin_attachment_edit', $attachment->id));
-
-
     }
 
     /**
@@ -146,13 +134,11 @@ class AttachmentControllerTest extends TestCase
 
         $attachment = \App\Models\Attachment::factory()->create();
 
-        $response = $this->post('admin/attachment/{attachment}/edit', [
+        $response = $this->actingAs($this->admin_user)->post('admin/attachment/{attachment}/edit', [
             // TODO: send request data
         ]);
 
         $response->assertRedirect(route('admin_attachment_edit', $attachment->id));
-
-
     }
 
     /**
@@ -166,6 +152,4 @@ class AttachmentControllerTest extends TestCase
             \App\Http\Requests\Attachments\UpdateAttachmentRequest::class
         );
     }
-
-
 }

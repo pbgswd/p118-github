@@ -3,8 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Feature;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -12,7 +10,7 @@ use Tests\TestCase;
  */
 class AdminFeatureControllerTest extends TestCase
 {
-    //use RefreshDatabase;
+    //
 
     /**
      * @test

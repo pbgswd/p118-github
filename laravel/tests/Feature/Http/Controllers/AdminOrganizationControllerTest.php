@@ -2,9 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Contracts\Session\Session;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -12,7 +9,7 @@ use Tests\TestCase;
  */
 class AdminOrganizationControllerTest extends TestCase
 {
-   // use RefreshDatabase;
+   //
 
     /**
      * @test

@@ -27,7 +27,7 @@ class PolicyFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->text(200),
-            'live' => $this->faker->boolean,
+            'live' => 1,
             'date' => Carbon::now(),
             'user_id' => \App\Models\User::factory(),
         ];

@@ -32,7 +32,6 @@ class ProofreaderFactory extends Factory
             'user_id' => \App\Models\User::factory(),
             'proofread_at' => Carbon::now(),
             'content_updated_at' => Carbon::now(),
-
         ];
     }
 }

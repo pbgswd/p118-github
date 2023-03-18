@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -11,22 +9,16 @@ use Tests\TestCase;
  */
 class InviteUserControllerTest extends TestCase
 {
-    use RefreshDatabase;
 
     /**
      * @test
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $response = $this->get(route('invite-new-user'));
-
+        $response = $this->actingAs($this->admin_user)->get(route('invite-new-user'));
         $response->assertOk();
         $response->assertViewIs('admin.invite_user');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -35,13 +27,11 @@ class InviteUserControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $response = $this->delete(route('invited_user_destroy'));
+//todo incomplete, determine what flow is supposed to happen
+        $response = $this->actingAs($this->admin_user)->delete(route('invited_user_destroy'));
 
         $response->assertRedirect(route('admin_list_invited_users'));
         $this->assertModelMissing($invitedUserDestroy);
-
-
     }
 
     /**
@@ -61,17 +51,11 @@ class InviteUserControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $inviteUsers = \App\Models\InviteUser::factory()->times(3)->create();
-
-        $response = $this->get(route('admin_list_invited_users'));
-
+        $response = $this->actingAs($this->admin_user)->get(route('admin_list_invited_users'));
         $response->assertOk();
         $response->assertViewIs('admin.invitations_list');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -79,15 +63,10 @@ class InviteUserControllerTest extends TestCase
      */
     public function list_import_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $response = $this->get(route('list_import'));
-
+        $response = $this->actingAs($this->admin_user)->get(route('list_import'));
         $response->assertOk();
         $response->assertViewIs('admin.invite_list_import');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -95,13 +74,8 @@ class InviteUserControllerTest extends TestCase
      */
     public function process_import_invitation_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $response = $this->get(route('process_import_invitation'));
-
+        $response = $this->actingAs($this->admin_user)->get(route('process_import_invitation'));
         $response->assertRedirect(route('list_import'));
-
-
     }
 
     /**
@@ -109,17 +83,21 @@ class InviteUserControllerTest extends TestCase
      */
     public function process_user_returns_an_ok_response()
     {
+        //todo more work on process user
+        /*
+         * invited user hits a link, gets site membership
+         * not done by admin_user
+         */
+
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $inviteUser = \App\Models\InviteUser::factory()->create();
+//todo send request data determine the flow
+        $response = $this->actingAs($this->admin_user)->post('site_invitation/{inviteUser}/{password}', [
 
-        $response = $this->post('site_invitation/{inviteUser}/{password}', [
-            // TODO: send request data
         ]);
 
         $response->assertRedirect(route('login'));
-
-
     }
 
     /**
@@ -139,16 +117,16 @@ class InviteUserControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
+        //todo more work to do, more flow needed, determine what we are doing here
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $inviteUser = \App\Models\InviteUser::factory()->create();
         $user = \App\Models\User::factory()->create();
 
-        $response = $this->get(route('invite_user_signup', [$inviteUser, 'password' => $inviteUser->password]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('invite_user_signup', [$inviteUser, 'password' => $inviteUser->password]));
 
         $response->assertRedirect(route('hello'));
-
-
     }
 
     /**
@@ -156,6 +134,7 @@ class InviteUserControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
+        //todo more work to do, more flow needed, determine what we are doing here
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $response = $this->post('admin/invite-new-user', [
@@ -163,8 +142,6 @@ class InviteUserControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(route('admin_list_invited_users'));
-
-
     }
 
     /**
@@ -178,6 +155,4 @@ class InviteUserControllerTest extends TestCase
             \App\Http\Requests\InviteUser\StoreInviteUserRequest::class
         );
     }
-
-
 }

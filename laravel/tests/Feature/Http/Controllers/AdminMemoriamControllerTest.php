@@ -3,8 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Memoriam;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -12,7 +10,7 @@ use Tests\TestCase;
  */
 class AdminMemoriamControllerTest extends TestCase
 {
-   // use RefreshDatabase;
+   //
 
     /**
      * @test

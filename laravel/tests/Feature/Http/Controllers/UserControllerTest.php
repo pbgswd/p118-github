@@ -4,8 +4,8 @@ namespace Tests\Feature\Http\Controllers;
 
 
 use App\Models\Address;
-use Tests\TestCase;
 use Illuminate\Http\Response;
+use Tests\TestCase;
 
 
 /**
@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
  */
 class UserControllerTest extends TestCase
 {
-    //use RefreshDatabase;
+    //
 
     /**
      * @test

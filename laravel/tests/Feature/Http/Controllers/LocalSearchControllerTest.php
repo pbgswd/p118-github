@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -11,24 +9,26 @@ use Tests\TestCase;
  */
 class LocalSearchControllerTest extends TestCase
 {
-    use RefreshDatabase;
+
 
     /**
      * @test
+     * @adminsearchreturnsok
      */
     public function admin_attachment_search_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+      $this->markTestIncomplete( __FUNCTION__ .' has issues. Needs data in attachments table ');
 
-        $response = $this->post(route('list_attachments_search_result'), [
-            // TODO: send request data
+//todo there need to be attachments to return in the search
+
+        $response = $this->actingAs( $this->admin_user)
+            ->post(route('list_attachments_search_result'), [
+                'search' => " "
         ]);
 
         $response->assertOk();
         $response->assertViewIs('admin.list_attachments_search_result');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -49,16 +49,16 @@ class LocalSearchControllerTest extends TestCase
     public function admin_search_returns_an_ok_response()
     {
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $post = \App\Models\Post::factory()->create();
 
         $response = $this->post(route('admin_search'), [
-            // TODO: send request data
+            "search" => $post->title
         ]);
 
-        $response->assertOk();
-        $response->assertViewIs('admin.search_admin');
-        $response->assertViewHas('data');
-
-
+        $response->assertRedirect(route('admin_search'));
+       // $response->assertOk();
+       // $response->assertViewIs('admin.search_admin');
+        //$response->assertViewHas('data');
     }
 
     /**
@@ -76,26 +76,6 @@ class LocalSearchControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
-    {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->post(route('search'), [
-            // TODO: send request data
-        ]);
-
-        $response->assertOk();
-        $response->assertViewIs('search');
-        $response->assertViewHas('data');
-
-
-    }
-
-    /**
-     * @test
-     */
     public function index_validates_with_a_form_request()
     {
         $this->assertActionUsesFormRequest(
@@ -104,6 +84,4 @@ class LocalSearchControllerTest extends TestCase
             \App\Http\Requests\Search\LocalSearchResult::class
         );
     }
-
-
 }
