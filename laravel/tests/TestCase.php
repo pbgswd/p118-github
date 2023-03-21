@@ -31,7 +31,6 @@ abstract class TestCase extends BaseTestCase
 
         DB::connection()->enableQueryLog();
 
-
         Artisan::call('cache:clear');
         Artisan::call('migrate:fresh');
 
@@ -40,7 +39,6 @@ abstract class TestCase extends BaseTestCase
         $this->seed(AccessLevelConstantsSeeder::class); // run when db is schema only
         $this->seed(RolesAndPermissionsSeeder::class);  // run when db is schema only
 
-        //$this->seed(UserSeeder::class);
         $this->users = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
@@ -65,5 +63,4 @@ abstract class TestCase extends BaseTestCase
 
         $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
     }
-
 }

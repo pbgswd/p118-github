@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Log;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -92,12 +93,17 @@ class Attachment extends Model implements Searchable
      */
     public function setCalculatedProperties(): self
     {
-        $this->path_info = \pathinfo(\storage_path('app/'.$this->subfolder).'/'.$this->file);
+        $this->path_info = \pathinfo(\storage_path('app/' . $this->subfolder) . '/' . $this->file);
         $this->extension = $this->path_info['extension'];
-        $this->imagedata = \getimagesize(\storage_path('app/'.$this->subfolder).'/'.$this->file);
-        $this->filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/'.$this->subfolder).'/'.
-            $this->file));
 
+        if(file_exists($this->path_info['dirname'] . '/' . $this->path_info['basename'])) {
+            $this->imagedata = \getimagesize(\storage_path('app/' . $this->subfolder) . '/' . $this->file);
+            $this->filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/' . $this->subfolder)
+                . '/' . $this->file));
+        } else {
+            $this->imagedata = [0,0,0,'"width="0" height="0"', 'bits' => 8, 'mime' => '"application/octet-stream"'];
+            $this->filesize = "0KB";
+        }
         return $this;
     }
 

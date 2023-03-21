@@ -22,7 +22,7 @@ class LocalSearchFactory extends Factory
     public function definition()
     {
         return [
-
+//todo there may be nothing to add for this factory, just leaving it in for now.
         ];
     }
 }

@@ -118,9 +118,9 @@ class AttachmentController extends Controller
             Session::flash('error', $attachment->file_name.' was not found on the server');
 
             return \redirect()->route('attachments_list');
+        } else {
+            $attachment->setCalculatedProperties();
         }
-
-        $attachment->setCalculatedProperties();
 
         $data = [
             'attachment' => $attachment,
