@@ -34,7 +34,6 @@ class AdminPostControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
         $post = \App\Models\Post::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
@@ -42,12 +41,11 @@ class AdminPostControllerTest extends TestCase
 
         $this->assertModelMissing($post);
         $response->assertRedirect(route('posts_list'));
-
     }
 
     /**
      * @test
-     * @group destroyok
+     *
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -124,13 +122,9 @@ class AdminPostControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
         $post = \App\Models\Post::factory()->create();
 
         $data = Post::first();
-
-        //dd($data); exit();
-//todo why does $data return null?
 
         $data->content = "Content update ". $data->content;
 
@@ -144,7 +138,7 @@ class AdminPostControllerTest extends TestCase
 
     /**
      * @test
-     * @group updateok
+     *
      */
     public function update_validates_with_a_form_request()
     {
