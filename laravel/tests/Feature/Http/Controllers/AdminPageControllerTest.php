@@ -33,23 +33,16 @@ class AdminPageControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-        //todo 3 x fail, 4th time it passes wtf
-
         $page = \App\Models\Page::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('page_destroy', ['ids' => $page->id]));
-
-        $response->assertRedirect(route('pages_list'));
+            ->delete(route('page_destroy', ['id' => $page->id]));
         $this->assertModelMissing($page);
-
-
+        $response->assertRedirect(route('pages_list'));
     }
 
     /**
      * @test
-     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -103,8 +96,8 @@ class AdminPageControllerTest extends TestCase
             ->post('admin/page/create', [
             'page' => $page->toArray()
         ]);
-       // $response->ddSession()['errors'];
-        $this->assertEquals(Session::get('success'),'You have saved a new page');
+
+        $this->assertEquals(Session::get('success'),"You have saved a new page");
     }
 
     /**
@@ -126,29 +119,20 @@ class AdminPageControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $page = \App\Models\Page::factory()->create();
-        echo "\n sluggggg: " . $page->slug . "\n";
         $data = Page::first();
-
-        $data['title'] = $page->title;
-        $data['access_level'] = $data->access_level;
-        $data['content'] = 'content update ' . $page->content;
+        $data->content = 'content update ' . $data->content;
 
         $response = $this->actingAs($this->admin_user)
             ->post(route('admin_update_page', $page->slug), [
-            'page' => $data
+            'page' => $data->toArray()
         ]);
-
-        echo "\n route: " . route('page_edit', $page->slug) . "\n";
-
         $response->assertRedirect(route('page_edit', $page->slug));
     }
 
     /**
      * @test
-     * @group updateok
+     *
      */
     public function update_validates_with_a_form_request()
     {
