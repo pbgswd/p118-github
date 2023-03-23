@@ -11,8 +11,6 @@ use Tests\TestCase;
  */
 class AdminPolicyControllerTest extends TestCase
 {
-    //
-
     /**
      * @test
      * @group createok
@@ -32,7 +30,6 @@ class AdminPolicyControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
         $policy = \App\Models\Policy::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
@@ -44,7 +41,7 @@ class AdminPolicyControllerTest extends TestCase
 
     /**
      * @test
-     * @group destroyok
+     *
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -69,7 +66,6 @@ class AdminPolicyControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('admin.policy');
         $response->assertViewHas('data');
-
     }
 
     /**
@@ -122,7 +118,6 @@ class AdminPolicyControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
         $policy = \App\Models\Policy::factory()->create();
 
         $data = Policy::first();
