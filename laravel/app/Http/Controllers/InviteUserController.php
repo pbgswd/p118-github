@@ -282,13 +282,19 @@ class InviteUserController extends Controller
     public function destroy(DestroyInviteUserRequest $request): RedirectResponse
     {
         $this->authorize('delete', InviteUser::class);
-
+/*
+ * dd($request->all());
         foreach ($request->id as $id) {
             InviteUser::destroy($id);
         }
+*/
 
-        Session::flash('success', Str::plural(count($request->id).' Invitation',
-            count($request->id).' deleted.'));
+        InviteUser::find($request->id)
+            ->each(function (InviteUser $inviteUser) {
+                $inviteUser->delete();
+            });
+
+        Session::flash('success', Str::plural(count([$request->id]) . ' Invitation' . ' deleted.'));
 
         return redirect()->route('admin_list_invited_users');
     }

@@ -12,6 +12,7 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
@@ -23,15 +24,16 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-//todo incomplete, determine what flow is supposed to happen
-        $response = $this->actingAs($this->admin_user)->delete(route('invited_user_destroy'));
+        $inviteUser = \App\Models\InviteUser::factory()->create();
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('invited_user_destroy',['id' => [$inviteUser->id]]));
 
+        $this->assertModelMissing($inviteUser);
         $response->assertRedirect(route('admin_list_invited_users'));
-        $this->assertModelMissing($invitedUserDestroy);
     }
 
     /**
@@ -60,6 +62,7 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group listimportok
      */
     public function list_import_returns_an_ok_response()
     {
@@ -80,22 +83,27 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group processok
      */
     public function process_user_returns_an_ok_response()
     {
-        //todo more work on process user
-        /*
-         * invited user hits a link, gets site membership
-         * not done by admin_user
-         */
-
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $inviteUser = \App\Models\InviteUser::factory()->create();
-//todo send request data determine the flow
-        $response = $this->actingAs($this->admin_user)->post('site_invitation/{inviteUser}/{password}', [
+        $response = $this->get(route('invite_user_signup', [
+            'inviteUser' => $inviteUser->id,
+            'password' => $inviteUser->password
+            ])
+        );
 
-        ]);
+        $response->assertOk();
+        $response->assertViewIs('site_invitation');
+        $response->assertViewHas('data');
+
+        $response = $this->post(route('public_process_invitation', [$inviteUser->id, $inviteUser->password]),
+            [
+                'password' => '1234password1234PASSWORD',
+                'password_confirmation' => '1234password1234PASSWORD',
+            ]
+        );
 
         $response->assertRedirect(route('login'));
     }
@@ -114,31 +122,32 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     * @group showinvitationok
      */
     public function show_returns_an_ok_response()
     {
-        //todo more work to do, more flow needed, determine what we are doing here
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
         $inviteUser = \App\Models\InviteUser::factory()->create();
-        $user = \App\Models\User::factory()->create();
+        $response = $this->get(route('invite_user_signup', [
+                'inviteUser' => $inviteUser->id,
+                'password' => $inviteUser->password
+            ])
+        );
 
-        $response = $this->actingAs($this->admin_user)
-            ->get(route('invite_user_signup', [$inviteUser, 'password' => $inviteUser->password]));
-
-        $response->assertRedirect(route('hello'));
+        $response->assertOk();
+        $response->assertViewIs('site_invitation');
+        $response->assertViewHas('data');
     }
 
     /**
      * @test
+     * @group storeinvitedok
      */
     public function store_returns_an_ok_response()
     {
-        //todo more work to do, more flow needed, determine what we are doing here
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $inviteUser = \App\Models\InviteUser::factory()->create();
 
-        $response = $this->post('admin/invite-new-user', [
-            // TODO: send request data
+        $response = $this->actingAs($this->admin_user)->post(route('store_invited_user'), [
+            'invite' => $inviteUser->toArray()
         ]);
 
         $response->assertRedirect(route('admin_list_invited_users'));

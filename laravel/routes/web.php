@@ -50,7 +50,8 @@ Route::middleware('web')->group(function () {
 
     Route::get('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'show'])
         ->name('invite_user_signup');
-    Route::post('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'process_user']);
+    Route::post('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'process_user'])
+        ->name('public_process_invitation');
 
     Route::get('/venues', [CNS\VenueController::class, 'list'])->name('venues');
     Route::get('/venue/{venue}', [CNS\VenueController::class, 'show'])->name('venue');
@@ -218,7 +219,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         ->name('admin_executive_destroy');
 
     Route::get('/invite-new-user', [CNS\InviteUserController::class, 'create'])->name('invite-new-user');
-    Route::post('/invite-new-user', [CNS\InviteUserController::class, 'store']);
+    Route::post('/invite-new-user', [CNS\InviteUserController::class, 'store'])->name('store_invited_user');
     Route::get('/invited_users', [CNS\InviteUserController::class, 'index'])->name('admin_list_invited_users');
     Route::get('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'show'])->name('show_invited_user');
 
