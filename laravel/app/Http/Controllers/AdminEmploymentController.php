@@ -146,16 +146,15 @@ class AdminEmploymentController extends Controller
     public function destroy(DestroyEmploymentRequest $request): RedirectResponse
     {
         $this->authorize('delete', Employment::class);
-dd($request->all());
+
         Employment::withoutGlobalScopes()
-            ->find($request->ids)
+            ->find($request->id)
             ->each(function (Employment $employment) {
                 $this->attachmentService->destroyAttachments($employment);
                 $employment->delete();
             });
 
-        Session::flash('success', Str::plural(count([$request->ids]).' posting', count([$request->ids])).
-            ' and any related files deleted.');
+        Session::flash('success', Str::plural(count([$request->id]).' posting' . ' and any related files deleted.'));
 
         return redirect()->route('admin_employment_list');
     }

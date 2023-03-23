@@ -37,7 +37,7 @@
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="ids[]" value="{{$e->id}}" />
+                                        <input type="checkbox" name="id[]" value="{{$e->id}}" />
                                     </label>
                                 </div>
                             </td>

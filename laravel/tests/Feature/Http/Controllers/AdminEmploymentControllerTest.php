@@ -32,14 +32,12 @@ class AdminEmploymentControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete('has issues');
         $employment = \App\Models\Employment::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('admin_employment_destroy'), ['ids' => $employment->id]);
+            ->delete(route('admin_employment_destroy'), ['id' => $employment->id]);
         $this->assertModelMissing($employment);
         $response->assertRedirect(route('admin_employment_list'));
-
     }
 
     /**
@@ -122,18 +120,16 @@ class AdminEmploymentControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete('has issues');
-
         $employment = \App\Models\Employment::factory()->create();
 
         $job = Employment::first();
-//todo posting job data properly?
+
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/employment/{any_employment}/edit', [
+            ->post(route('admin_employment_update', $job->id), [
             'employment' => $job->toArray()
         ]);
 
-        $response->assertRedirect(route('admin_employment_edit', ['any_employment' => $job->id]));
+        $response->assertRedirect(route('admin_employment_edit',  [$job->id]));
     }
 
     /**

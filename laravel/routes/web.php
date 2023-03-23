@@ -204,30 +204,29 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('/user/delete', 'destroy')->name('user_destroy');
     });
 
-    Route::get('/executives', [CNS\AdminExecutiveMembershipController::class, 'index'])
-        ->name('admin_executives_list');
-
-    Route::get('/user/{user}/executiveMembership/create', [CNS\AdminExecutiveMembershipController::class, 'create'])
-        ->name('admin_executive_create');
-    Route::post('/user/{user}/executiveMembership/create', [CNS\AdminExecutiveMembershipController::class, 'store']);
-    Route::get('/executiveMembership/{executiveMembership}/edit', [CNS\AdminExecutiveMembershipController::class, 'edit'])
-        ->name('admin_executive_edit');
-    Route::post('/executiveMembership/{executiveMembership}/edit', [CNS\AdminExecutiveMembershipController::class, 'update']);
+    Route::controller(CNS\AdminExecutiveMembershipController::class)->group(function () {
+        Route::get('/executives', 'index')->name('admin_executives_list');
+        Route::get('/user/{user}/executiveMembership/create', 'create')->name('admin_executive_create');
+        Route::post('/user/{user}/executiveMembership/create', 'store');
+        Route::get('/executiveMembership/{executiveMembership}/edit', 'edit')->name('admin_executive_edit');
+        Route::post('/executiveMembership/{executiveMembership}/edit', 'update');
+    });
 
     Route::get('executive_members', [CNS\AdminExecutiveController::class, 'index'])->name('admin_executives');
     Route::delete('executives/delete', [CNS\AdminExecutiveMembershipController::class, 'destroy'])
         ->name('admin_executive_destroy');
 
-    Route::get('/invite-new-user', [CNS\InviteUserController::class, 'create'])->name('invite-new-user');
-    Route::post('/invite-new-user', [CNS\InviteUserController::class, 'store'])->name('store_invited_user');
-    Route::get('/invited_users', [CNS\InviteUserController::class, 'index'])->name('admin_list_invited_users');
-    Route::get('/invited_user/{inviteUser}', [CNS\InviteUserController::class, 'show'])->name('show_invited_user');
-
-    //Route::get('/invitation-mailmsg',[CNS\InviteUserController::class, 'mail'])->name('mail_invited_user');
-    Route::delete('/invited_user/delete', [CNS\InviteUserController::class, 'destroy'])->name('invited_user_destroy');
-    Route::get('/invite_import-list', [CNS\InviteUserController::class, 'list_import'])->name('list_import');
-    Route::get('process_import_invitation', [CNS\InviteUserController::class, 'process_import_invitation'])
-        ->name('process_import_invitation');
+    Route::controller(CNS\InviteUserController::class)->group(function () {
+        Route::get('/invite-new-user', 'create')->name('invite-new-user');
+        Route::post('/invite-new-user', 'store')->name('store_invited_user');
+        Route::get('/invited_users', 'index')->name('admin_list_invited_users');
+        Route::get('/invited_user/{inviteUser}', 'show')->name('show_invited_user');
+        //Route::get('/invitation-mailmsg' 'mail')->name('mail_invited_user');
+        Route::delete('/invited_user/delete', 'destroy')->name('invited_user_destroy');
+        Route::get('/invite_import-list', 'list_import')->name('list_import');
+        Route::get('process_import_invitation', 'process_import_invitation')
+            ->name('process_import_invitation');
+    });
 
     Route::get('/invite-resend-list', [CNS\ReInviteUserController::class, 'index'])->name('invite-resend-list');
 
@@ -341,7 +340,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::post('employment/create','store');
         Route::get('/employment/{any_employment}/edit','edit')
             ->name('admin_employment_edit');
-        Route::post('employment/{any_employment}/edit','update');
+        Route::post('employment/{any_employment}/edit','update')->name('admin_employment_update');
         Route::delete('/employment/delete','destroy')
             ->name('admin_employment_destroy');
     });
