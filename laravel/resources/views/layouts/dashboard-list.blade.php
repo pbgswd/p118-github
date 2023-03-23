@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin_executives') }}">
+                    <a class="nav-link" href="{{ route('admin_executives_list') }}">
                         <span data-feather="file"></span>
                         Executives
                     </a>

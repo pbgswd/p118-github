@@ -24,4 +24,6 @@ class AdminExecutiveControllerTest extends TestCase
         $response->assertViewIs('admin.executives_list');
         $response->assertViewHas('data');
     }
+
+
 }

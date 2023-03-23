@@ -22,10 +22,8 @@ class ExecutiveFactory extends Factory
     public function definition()
     {
         return [
-           // 'id' =>
             'title' => 'executive title ' . $this->faker->jobTitle(),
             'email' => $this->faker->email(),
-
         ];
     }
 }

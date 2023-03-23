@@ -23,9 +23,7 @@ class AdminExecutiveMembershipController extends Controller
     public function index(): View
     {
         $this->authorize('viewAny', ExecutiveMembership::class);
-        //todo index method
-        //'admin_executives_list'
-        $data = [];
+
 
         /***
                $data = [];
@@ -33,6 +31,8 @@ class AdminExecutiveMembershipController extends Controller
          * ->with('user')->orderBy('created_at', 'desc')->paginate(20);
                $data['count'] = Executive::count();
 **/
+
+        $data = Executive::with('user')->get();
 
         return view('admin.executives_list', ['data' => $data]);
     }
@@ -128,13 +128,20 @@ class AdminExecutiveMembershipController extends Controller
     {
         $this->authorize('delete', ExecutiveMembership::class);
 
-        foreach ($request->ids as $i) {
+/*        foreach ($request->id as $i) {
             $e = ExecutiveMembership::find($i);
             $e->delete();
-        }
+        }*/
+
+        ExecutiveMembership::find($request->id)
+            ->each(function(ExecutiveMembership $executiveMembership) {
+                $executiveMembership->delete();
+            });
+
+
 
         Session::flash('success', 'Executive role deleted.');
 
-        return redirect()->route('admin_executives');
+        return redirect()->route('admin_executives_list');
     }
 }

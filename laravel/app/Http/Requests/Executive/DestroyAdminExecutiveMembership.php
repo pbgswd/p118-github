@@ -25,7 +25,7 @@ class DestroyAdminExecutiveMembership extends FormRequest
     {
         //todo error
         return [
-            'ids' => 'required',
+            'id' => 'required',
         ];
     }
 }

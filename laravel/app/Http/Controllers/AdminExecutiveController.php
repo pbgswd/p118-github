@@ -20,5 +20,7 @@ class AdminExecutiveController extends Controller
         $data['executives'] = Executive::with('user')->get();
 
         return view('admin.executives_list', ['data' => $data]);
+
+
     }
 }

@@ -26,13 +26,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($data['executives'] as $e )
+                            @forelse ($data as $e )
                                 <tr>
                                     <td>
                                         @if( !empty($e->user[0]))
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="ids[]"
+                                                    <input type="checkbox" name="id[]"
                                                            value="{{$e->user[0]->pivot->id }}" />
                                                 </label>
                                             </div>

@@ -207,14 +207,11 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::controller(CNS\AdminExecutiveMembershipController::class)->group(function () {
         Route::get('/executives', 'index')->name('admin_executives_list');
         Route::get('/user/{user}/executiveMembership/create', 'create')->name('admin_executive_create');
-        Route::post('/user/{user}/executiveMembership/create', 'store');
+        Route::post('/user/{user}/executiveMembership/create', 'store')->name('admin_executive_store');
         Route::get('/executiveMembership/{executiveMembership}/edit', 'edit')->name('admin_executive_edit');
-        Route::post('/executiveMembership/{executiveMembership}/edit', 'update');
+        Route::post('/executiveMembership/{executiveMembership}/edit', 'update')->name('admin_executive_update');
+        Route::delete('executives/delete', 'destroy')->name('admin_executive_destroy');
     });
-
-    Route::get('executive_members', [CNS\AdminExecutiveController::class, 'index'])->name('admin_executives');
-    Route::delete('executives/delete', [CNS\AdminExecutiveMembershipController::class, 'destroy'])
-        ->name('admin_executive_destroy');
 
     Route::controller(CNS\InviteUserController::class)->group(function () {
         Route::get('/invite-new-user', 'create')->name('invite-new-user');
@@ -230,27 +227,32 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
 
     Route::get('/invite-resend-list', [CNS\ReInviteUserController::class, 'index'])->name('invite-resend-list');
 
-    Route::get('/pages', [CNS\AdminPageController::class, 'index'])->name('pages_list');
-    Route::get('/page/create', [CNS\AdminPageController::class, 'create'])->name('page_create');
-    Route::post('/page/create', [CNS\AdminPageController::class, 'store']);
-    Route::get('/page/{any_page}/edit', [CNS\AdminPageController::class, 'edit'])->name('page_edit');
-    Route::post('/page/{any_page}/edit', [CNS\AdminPageController::class, 'update'])->name('admin_update_page');
-    Route::delete('/page/delete', [CNS\AdminPageController::class, 'destroy'])->name('page_destroy');
+    Route::controller(CNS\AdminPageController::class)->group(function() {
+        Route::get('/pages', 'index')->name('pages_list');
+        Route::get('/page/create', 'create')->name('page_create');
+        Route::post('/page/create', 'store');
+        Route::get('/page/{any_page}/edit', 'edit')->name('page_edit');
+        Route::post('/page/{any_page}/edit', 'update')->name('admin_update_page');
+        Route::delete('/page/delete', 'destroy')->name('page_destroy');
+    });
 
-    Route::get('/posts', [CNS\AdminPostController::class, 'index'])->name('posts_list');
-    Route::get('/post/create', [CNS\AdminPostController::class, 'create'])->name('post_create');
-    Route::post('/post/create', [CNS\AdminPostController::class, 'store']);
-    Route::get('/post/{any_post}/edit', [CNS\AdminPostController::class, 'edit'])->name('post_edit');
-    Route::post('/post/{any_post}/edit', [CNS\AdminPostController::class, 'update']);
-    Route::delete('/post/delete', [CNS\AdminPostController::class, 'destroy'])->name('post_destroy');
+    Route::controller(CNS\AdminPostController::class)->group(function() {
+        Route::get('/posts', 'index')->name('posts_list');
+        Route::get('/post/create', 'create')->name('post_create');
+        Route::post('/post/create', 'store');
+        Route::get('/post/{any_post}/edit', 'edit')->name('post_edit');
+        Route::post('/post/{any_post}/edit', 'update');
+        Route::delete('/post/delete', 'destroy')->name('post_destroy');
+    });
 
-    Route::get('/attachments', [CNS\AttachmentController::class, 'index'])->name('attachments_list');
-    Route::get('/attachment/create', [CNS\AttachmentController::class, 'create'])->name('attachment_create');
-    Route::post('/attachment/create', [CNS\AttachmentController::class, 'store']);
-    Route::get('/attachment/{attachment}/edit', [CNS\AttachmentController::class, 'edit'])
-        ->name('admin_attachment_edit');
-    Route::post('/attachment/{attachment}/edit', [CNS\AttachmentController::class, 'update']);
-    Route::delete('/attachment/delete', [CNS\AttachmentController::class, 'destroy'])->name('attachment_destroy');
+    Route::controller(CNS\AttachmentController::class)->group(function() {
+        Route::get('/attachments', 'index')->name('attachments_list');
+        Route::get('/attachment/create', 'create')->name('attachment_create');
+        Route::post('/attachment/create', 'store');
+        Route::get('/attachment/{attachment}/edit', 'edit')->name('admin_attachment_edit');
+        Route::post('/attachment/{attachment}/edit', 'update');
+        Route::delete('/attachment/delete', 'destroy')->name('attachment_destroy');
+    });
 
     Route::get('/roles', [CNS\RoleController::class, 'index'])->name('roles_list');
 

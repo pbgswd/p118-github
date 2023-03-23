@@ -14,7 +14,7 @@ $roles = $data['roles'];
         <div class="row mt-3">
             <div class="col-3 text-left">
                 <h5>
-                    <a href="{{route('admin_executives')}}">
+                    <a href="{{route('admin_executives_list')}}">
                         Executives list <i class="far fa-arrow-alt-circle-right"></i>
                     </a>
                 </h5>
