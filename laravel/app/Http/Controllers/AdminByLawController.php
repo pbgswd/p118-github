@@ -161,8 +161,7 @@ class AdminByLawController extends Controller
                 $bylaw->delete();
             });
 
-        Session::flash('success', Str::plural(count([$bylaws]))
-                .' bylaw', count([$bylaws]) .' and any related files deleted.');
+        Session::flash('success', Str::plural('bylaw', count([$bylaws])) . ' and any related files deleted.');
 
         return redirect()->route('admin_bylaws_list');
     }
