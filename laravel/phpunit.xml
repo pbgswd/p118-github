@@ -9,6 +9,9 @@
         </include>
     </coverage>
     <testsuites>
+        <testsuite name="Controller">
+            <directory suffix="Test.php">./tests/Feature/Http/Controllers</directory>
+        </testsuite>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
