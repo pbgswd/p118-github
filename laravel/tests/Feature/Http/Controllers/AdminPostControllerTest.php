@@ -37,7 +37,7 @@ class AdminPostControllerTest extends TestCase
         $post = \App\Models\Post::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('post_destroy', ['ids' => $post->id]));
+            ->delete(route('post_destroy', ['id' => $post->id]));
 
         $this->assertModelMissing($post);
         $response->assertRedirect(route('posts_list'));
