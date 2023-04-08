@@ -181,7 +181,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
      */
     public function executive_roles(): BelongsToMany
     {
-        return $this->belongsToMany(ExecutiveMembership::class);
+        return $this->belongsToMany(Executive::class);
     }
 
     /**

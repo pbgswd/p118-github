@@ -8,6 +8,7 @@ use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
 use Database\Seeders\AccessLevelConstantsSeeder;
+use Database\Seeders\ExecutiveSeeder;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
@@ -39,6 +40,7 @@ abstract class TestCase extends BaseTestCase
 
         $this->seed(AccessLevelConstantsSeeder::class); // run when db is schema only
         $this->seed(RolesAndPermissionsSeeder::class);  // run when db is schema only
+        $this->seed(ExecutiveSeeder::class);
 
         $this->users = User::factory()
             ->has(UserInfo::factory(), 'user_info')

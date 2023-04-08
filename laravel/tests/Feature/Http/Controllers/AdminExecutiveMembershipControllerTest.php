@@ -107,7 +107,7 @@ class AdminExecutiveMembershipControllerTest extends TestCase
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminExecutiveMembershipController::class,
             'store',
-            \App\Http\Requests\Executive\StoreAdminExecutiveMembership::class
+            \App\Http\Requests\Executive\StoreAdminExecutive::class
         );
     }
 
@@ -134,7 +134,7 @@ class AdminExecutiveMembershipControllerTest extends TestCase
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminExecutiveMembershipController::class,
             'update',
-            \App\Http\Requests\Executive\UpdateAdminExecutiveMembership::class
+            \App\Http\Requests\Executive\UpdateAdminExecutive::class
         );
     }
 }

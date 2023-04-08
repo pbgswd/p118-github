@@ -7,18 +7,18 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Requests\Executive\UpdateAdminExecutiveMembership
+ * @see \App\Http\Requests\Executive\UpdateAdminExecutive
  */
 class UpdateAdminExecutiveMembershipTest extends TestCase
 {
-    /** @var \App\Http\Requests\Executive\UpdateAdminExecutiveMembership */
+    /** @var \App\Http\Requests\Executive\UpdateAdminExecutive */
     private $subject;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Executive\UpdateAdminExecutiveMembership();
+        $this->subject = new \App\Http\Requests\Executive\UpdateAdminExecutive();
     }
 
     /**

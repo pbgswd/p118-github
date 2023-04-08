@@ -8,7 +8,6 @@ use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateMemberAddress;
 use App\Http\Requests\User\UpdateUser;
 use App\Models\Executive;
-use App\Models\ExecutiveMembership;
 use App\Models\Membership;
 use App\Models\Options;
 use App\Models\PhoneNumber;
@@ -446,8 +445,6 @@ class AdminUserController extends Controller
                 $user->membership()->delete();
                 $user->address()->delete();
 
-             //   $user->load('user_info');
-
                 if (null != $user->user_info) {
                     if ($user->user_info['image']) {
                         $this->userImageService
@@ -458,7 +455,7 @@ class AdminUserController extends Controller
 
                $user->executive_roles()->delete();
 
-                Log::debug('Destroying user ' . $user->id);
+                Log::debug('attempting to destroy user ' . $user->name . ", id:" . $user->id);
                 User::destroy($user->id);
             });
 
@@ -482,7 +479,7 @@ class AdminUserController extends Controller
             Membership::where('user_id', $user->id)->delete();
             $user_info = UserInfo::where('user_id', $user->id)->first();
 
-            $e = ExecutiveMembership::find($user->id);
+            $e = Executive::find($user->id);
             if (null != $e) {
                 $e->delete();
             }

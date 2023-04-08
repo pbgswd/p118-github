@@ -4,7 +4,7 @@ namespace App\Http\Requests\Executive;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminDestroyExecutive extends FormRequest
+class DestroyAdminExecutive extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +21,11 @@ class AdminDestroyExecutive extends FormRequest
      *
      * @return array
      */
-    public function rules(): array
+    public function rules()
     {
+        //todo error
         return [
-            'id' => 'required|exists:executives',
+            'id' => 'required',
         ];
     }
 }

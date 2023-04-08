@@ -204,12 +204,12 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('/user/delete', 'destroy')->name('user_destroy');
     });
 
-    Route::controller(CNS\AdminExecutiveMembershipController::class)->group(function () {
+    Route::controller(CNS\AdminExecutiveController::class)->group(function () {
         Route::get('/executives', 'index')->name('admin_executives_list');
-        Route::get('/user/{user}/executiveMembership/create', 'create')->name('admin_executive_create');
-        Route::post('/user/{user}/executiveMembership/create', 'store')->name('admin_executive_store');
-        Route::get('/executiveMembership/{executiveMembership}/edit', 'edit')->name('admin_executive_edit');
-        Route::post('/executiveMembership/{executiveMembership}/edit', 'update')->name('admin_executive_update');
+        Route::get('/user/{user}/executive/create', 'create')->name('admin_executive_create');
+        Route::post('/user/{user}/executive/create', 'store')->name('admin_executive_store');
+        Route::get('/executive/{executive}/edit', 'edit')->name('admin_executive_edit');
+        Route::post('/executive/{executive}/edit', 'update')->name('admin_executive_update');
         Route::delete('executives/delete', 'destroy')->name('admin_executive_destroy');
     });
 
