@@ -22,6 +22,7 @@ use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -219,8 +220,6 @@ class AdminUserController extends Controller
 
         $user->load('phone_number', 'membership');
 
-      //  dd([$user->toArray(), $request->all()]);
-
         $message = [];
         $original_name = $user->name;
 
@@ -237,6 +236,7 @@ class AdminUserController extends Controller
         $user->touch();
 
         if ($user->phone_number instanceof PhoneNumber) {
+
             if ($request->user_phone['phone_number'] != $user->phone_number->phone_number) {
                 $message['Phone'] = $request->user_phone['phone_number'];
             }
@@ -250,7 +250,6 @@ class AdminUserController extends Controller
 
         if ($user->user_info instanceof UserInfo) {
             $user_info = $request['user_info'];
-
             if (isset($user_info['delete_image'])) {
                 if (file_exists(storage_path().'/app/users/'.$user_info['image'])) {
                     $this->userImageService->destroyImage($user_info['image'], 'users', Options::thumb_values());
@@ -434,18 +433,44 @@ class AdminUserController extends Controller
     {
         $this->authorize('delete', Auth::user());
 
-        $users = User::with('roles')->find($request->ids);
+        User::find($request->toArray())
+            ->each(function (User $user) {
+            $user_roles = $user->getRoleNames();
+
+            $user_roles = array_combine(array_values($user_roles->toArray()),$user_roles->toArray());
+                foreach ($user_roles as $r) {
+                    $user->removeRole($r);
+                }
+
+                $user->phone_number()->delete();
+                $user->membership()->delete();
+                $user->address()->delete();
+
+             //   $user->load('user_info');
+
+                if (null != $user->user_info) {
+                    if ($user->user_info['image']) {
+                        $this->userImageService
+                            ->destroyImage($user->user_info['image'], 'users', Options::thumb_values());
+                    }
+                    $user->user_info()->delete();
+                }
+
+               $user->executive_roles()->delete();
+
+                Log::debug('Destroying user ' . $user->id);
+                User::destroy($user->id);
+            });
+
+/************
+
+        $users = User::find($request->id->toArray());//->with('roles');
 
         // todo cannot delete user when user has a post, page, topic,
         //  or is a member of a committee.
         // todo user soft delete
 
-      // dd($users->toArray());
-
         foreach ($users as $user) {
-dd($user);
-           // dd($user['roles']);
-
             $user_roles = $user->getRoleNames();
             $user_roles = array_combine($user_roles, $user_roles);
 
@@ -454,29 +479,19 @@ dd($user);
             }
 
             PhoneNumber::where('user_id', $user->id)->delete();
-
             Membership::where('user_id', $user->id)->delete();
-
             $user_info = UserInfo::where('user_id', $user->id)->first();
-
-            if (null != $user_info) {
-                if ($user_info['image']) {
-                    $this->userImageService->destroyImage($user_info['image'], 'users', Options::thumb_values());
-                }
-                UserInfo::destroy($user_info['id']);
-            }
 
             $e = ExecutiveMembership::find($user->id);
             if (null != $e) {
                 $e->delete();
             }
-
             $user->allExecutiveRoles()->detach();
-
             User::destroy($user->id);
         }
+ * **/
 
-        Session::flash('success', Str::plural('Member', count([$request->id])).' deleted.');
+        Session::flash('success', Str::plural('Member', count([$request->id])) . ' deleted.');
 
         return redirect()->route('users_list');
     }

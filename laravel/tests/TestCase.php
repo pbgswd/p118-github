@@ -27,6 +27,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        Log::debug('==============================================');
         Log::debug('TestCase.php -- a test has started');
 
         DB::connection()->enableQueryLog();
@@ -62,5 +63,6 @@ abstract class TestCase extends BaseTestCase
             ->create();
 
         $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
+Log::debug("End of setUp");
     }
 }

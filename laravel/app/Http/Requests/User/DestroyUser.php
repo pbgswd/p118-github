@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class DestroyUser.
@@ -29,7 +30,7 @@ class DestroyUser extends FormRequest
     public function rules()
     {
         return [
-            'ids' => 'required',
+            'id' => 'required',
         ];
     }
 }

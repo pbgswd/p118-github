@@ -324,7 +324,8 @@
                     </div>
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
-                       value="{{$data['user']->is_banned == 1 ? "Uncheck to remove suspension for" : "Check to suspend"}} {{$data['user']->name}}"
+                       value="{{$data['user']->is_banned == 1 ? "Uncheck to remove suspension for"
+                                        : "Check to suspend"}} {{$data['user']->name}}"
                        size="40" readonly>
             </div>
         </div>
