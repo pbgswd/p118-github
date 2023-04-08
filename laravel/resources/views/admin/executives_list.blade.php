@@ -86,7 +86,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7">No executive roles currently assinged.</td>
+                                    <td colspan="7">No executive roles currently assigned.</td>
                                 </tr>
                             @endforelse
                         </tbody>

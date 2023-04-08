@@ -129,7 +129,7 @@ $roles = $data['roles'];
                  <form name="delete" method="POST" action="{{route('admin_executive_destroy')}}">
                      {!! csrf_field() !!}
                      {!! method_field('DELETE') !!}
-                     <input type="hidden" name="ids[]" value="{{$assigned_role->id}}" />
+                     <input type="hidden" name="id[]" value="{{$assigned_role->id}}" />
                      <i class="far fa-trash-alt fa-2x"></i>
                      <input class="btn btn-outline-danger" type="submit" value="Delete Executive Member role">
                  </form>
