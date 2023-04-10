@@ -17,9 +17,8 @@ class AdminExecutiveControllerTest extends TestCase
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestSkipped(__FUNCTION__);
         $response = $this->actingAs($this->admin_user)
-            ->get(route('admin_executive_create', $this->executive_user->id));
+            ->get(route('admin_executive_create', $this->user->id));
         $response->assertOk();
         $response->assertViewIs('admin.executive');
         $response->assertViewHas('data');
@@ -31,20 +30,19 @@ class AdminExecutiveControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestSkipped(__FUNCTION__);
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('admin_executive_destroy'), ['id' => $this->executive_user->id]);
-//todo delete the entry for the executive title in executive_user table
-        $this->assertModelMissing($this->executive_user);
+            ->delete(route('admin_executive_destroy'), ['id' => $this->executive_user->executive_role]);
+
+        $this->assertModelMissing($this->executive_user->executive_role);
         $response->assertRedirect(route('admin_executives_list'));
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
-        $this->markTestSkipped(__FUNCTION__);
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminExecutiveController::class,
             'destroy',
@@ -58,12 +56,8 @@ class AdminExecutiveControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-        //todo  by way of how its done in the code; better
-        $this->markTestSkipped(__FUNCTION__);
-
-
         $response = $this->actingAs($this->admin_user)
-            ->get(route('admin_executive_edit', $this->executive_user->id));
+            ->get(route('admin_executive_edit', $this->executive_user->executive_role));
 
         $response->assertOk();
         $response->assertViewIs('admin.executive');
@@ -75,7 +69,6 @@ class AdminExecutiveControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestSkipped(__FUNCTION__);
         $response = $this->actingAs($this->admin_user)
             ->get(route('admin_executives_list'));
 
@@ -90,12 +83,19 @@ class AdminExecutiveControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestSkipped(__FUNCTION__);
-        //$executive = \App\Models\Executive::factory()->make();
-//todo the data for submitting etc
+       // $this->markTestSkipped(__FUNCTION__);
+
+        $data = [
+            'executive_id' => 1,
+            'start_date' => date('Y-m-d'),
+            'end_date' => date('d-m-Y', strtotime('+1 year')),
+            'user_id' => $this->user->id,
+            'current' => 1,
+        ];
+
         $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_executive_store', $this->executive_user),
-                ['executive' => $executive->toArray()]
+            ->post(route('admin_executive_store', $this->user),
+                ['executive' => $data]
             );
 
         $this->assertEquals(Session::get('success'), 'You have created a member executive role');
@@ -107,7 +107,6 @@ class AdminExecutiveControllerTest extends TestCase
      */
     public function store_validates_with_a_form_request()
     {
-        $this->markTestSkipped(__FUNCTION__);
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminExecutiveController::class,
             'store',
@@ -121,17 +120,13 @@ class AdminExecutiveControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestSkipped(__FUNCTION__);
-       // $executiveMembership = \App\Models\Executive::factory()->create();
-        $data = Executive::first();
-
-        //todo update the properties of the executive title for the user
 
         $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_executive_update', $data->id),[
-            'executive' => $data->toArray()
+            ->post(route('admin_executive_update', $this->executive_user->executive_role->id),[
+            'executive' => $this->executive_user->executive_role->toArray()
         ]);
-        $response->assertRedirect(route('admin_executive_edit', $data->id));
+
+        $response->assertRedirect(route('admin_executive_edit', $this->executive_user->executive_role->id));
     }
 
     /**
@@ -139,7 +134,6 @@ class AdminExecutiveControllerTest extends TestCase
      */
     public function update_validates_with_a_form_request()
     {
-        $this->markTestSkipped(__FUNCTION__);
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminExecutiveController::class,
             'update',

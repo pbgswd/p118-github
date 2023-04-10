@@ -77,8 +77,8 @@ Log::debug('TestCase.php -- a test has started');
         );
         $executive->user_id = $this->executive_user->id;
         $executive->current = $executive->end_date->isPast() ? 0 : 1;
-
         $executive->save();
+        $this->executive_user->load('executive_role');
 
         $this->admin_user = User::factory()
             ->has(UserInfo::factory(), 'user_info')

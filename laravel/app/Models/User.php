@@ -145,12 +145,10 @@ class User extends Authenticatable implements HasAttachment, Searchable
      *
      * @return HasOne
      */
-    //todo not sure if this relation is needed  HasOne
-/*    public function executive_role(): HasOne
+    public function executive_role(): HasOne
     {
-        return $this->hasOne(Executive::class, 'executive_user')
-           ->withPivot('id', 'start_date', 'end_date', 'current');
-    }*/
+        return $this->hasOne(ExecutiveMembership::class);
+    }
 
 
     /**
