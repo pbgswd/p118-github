@@ -453,7 +453,7 @@ class AdminUserController extends Controller
                     $user->user_info()->delete();
                 }
 
-               $user->executive_roles()->delete();
+               $user->executive_role()->delete();
 
                 Log::debug('attempting to destroy user ' . $user->name . ", id:" . $user->id);
                 User::destroy($user->id);

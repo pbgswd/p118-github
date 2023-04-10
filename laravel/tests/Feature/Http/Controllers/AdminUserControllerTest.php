@@ -110,7 +110,7 @@ class AdminUserControllerTest extends TestCase
      * @test
      * @group
      */
-    public function create_returns_an_ok_response()
+/*    public function create_returns_an_ok_response()
     {
         $this->markTestSkipped( __FUNCTION__ .' is not used.');
 
@@ -118,7 +118,7 @@ class AdminUserControllerTest extends TestCase
             ->get(route('user_create'));
 
         $response->assertRedirect(route('users_list'));
-    }
+    }*/
 
     /**
      * @test
@@ -126,24 +126,10 @@ class AdminUserControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        Log::debug("Start of " . __FUNCTION__);
-      // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $user = User::factory()
-            ->has(UserInfo::factory(), 'user_info')
-            ->has(PhoneNumber::factory(), 'phone_number')
-            ->has(Membership::factory(),'membership')
-            ->has(Address::factory(), 'address')
-            ->create();
-
-        $user->assignRole('member');
-
-        Log::debug("In " . __FUNCTION__ .", User id is: " . $user->id);
-
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('user_destroy', ['id' => $user->id]));
+            ->delete(route('user_destroy', ['id' => $this->user->id]));
 
-        //$this->assertModelMissing($user);
+        $this->assertModelMissing($this->user);
 
         $response->assertRedirect(route('users_list'));
     }
