@@ -27,26 +27,16 @@ class Executive extends Model implements Searchable
         self::class => ExecutivePolicy::class,
     ];
 
-    protected $table = 'executives';
+   protected $table = 'executives';
 
     public $sortable = [
         'id',
         'title',
         'email',
-        'created_at',
-        'updated_at',
+        'start_date',
+        'end_date',
     ];
 
-    protected $fillable = [
-        //'id',
-        'title',
-        'email',
-    ];
-
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
-    ];
 
     /**
      * @return SearchResult

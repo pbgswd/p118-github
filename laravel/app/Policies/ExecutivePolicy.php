@@ -22,18 +22,6 @@ class ExecutivePolicy
     }
 
     /**
-     * Determine whether the user can view the model.
-     *
-     * @param User $user
-     * @param  \App\Executive  $executive
-     * @return mixed
-     */
-    public function view(User $user)
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can create models.
      *
      * @param User $user

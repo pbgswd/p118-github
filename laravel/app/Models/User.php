@@ -141,6 +141,19 @@ class User extends Authenticatable implements HasAttachment, Searchable
     }
 
     /**
+     * The Executive role of the given user.
+     *
+     * @return HasOne
+     */
+    //todo not sure if this relation is needed  HasOne
+/*    public function executive_role(): HasOne
+    {
+        return $this->hasOne(Executive::class, 'executive_user')
+           ->withPivot('id', 'start_date', 'end_date', 'current');
+    }*/
+
+
+    /**
      * @return BelongsToMany
      */
     public function attachments(): BelongsToMany
@@ -181,7 +194,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
      */
     public function executive_roles(): BelongsToMany
     {
-        return $this->belongsToMany(Executive::class);
+        return $this->belongsToMany(ExecutiveMembership::class);
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace Tests;
 
 use App\Models\Address;
+
+use App\Models\ExecutiveMembership;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
@@ -28,8 +30,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        Log::debug('==============================================');
-        Log::debug('TestCase.php -- a test has started');
+Log::debug('==============================================');
+Log::debug('TestCase.php -- a test has started');
 
         DB::connection()->enableQueryLog();
 
@@ -58,6 +60,26 @@ abstract class TestCase extends BaseTestCase
 
         $this->user->assignRole('member');
 
+        $this->executive_user = User::factory()
+            ->has(UserInfo::factory(), 'user_info')
+            ->has(PhoneNumber::factory(), 'phone_number')
+            ->has(Membership::factory(),'membership')
+            ->has(Address::factory(), 'address')
+            ->create();
+        $this->executive_user->assignRole('member');
+
+        $executive = new ExecutiveMembership(
+            [
+                'executive_id' => 1,
+                'start_date' => date('Y-m-d'),
+                'end_date' => date('d-m-Y', strtotime('+1 year'))
+            ]
+        );
+        $executive->user_id = $this->executive_user->id;
+        $executive->current = $executive->end_date->isPast() ? 0 : 1;
+
+        $executive->save();
+
         $this->admin_user = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
@@ -66,5 +88,6 @@ abstract class TestCase extends BaseTestCase
 
         $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
 Log::debug("End of setUp");
+Log::debug('==============================================');
     }
 }

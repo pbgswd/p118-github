@@ -6,6 +6,7 @@ use App\Http\Requests\Executive\DestroyAdminExecutive;
 use App\Http\Requests\Executive\StoreAdminExecutive;
 use App\Http\Requests\Executive\UpdateAdminExecutive;
 use App\Models\Executive;
+use App\Models\ExecutiveMembership;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -22,17 +23,14 @@ class AdminExecutiveController extends Controller
     public function index(): View
     {
         $this->authorize('viewAny', Executive::class);
-
-
-        /***
-               $data = [];
-               $data['executives'] = Executive::sortable()
-         * ->with('user')->orderBy('created_at', 'desc')->paginate(20);
-               $data['count'] = Executive::count();
+/***
+       $data = [];
+       $data['executives'] = Executive::sortable()
+ * ->with('user')->orderBy('created_at', 'desc')->paginate(20);
+       $data['count'] = Executive::count();
 **/
-
         $data = Executive::with('user')->get();
-//dd($data);
+
         return view('admin.executives_list', ['data' => $data]);
     }
 
@@ -57,18 +55,22 @@ class AdminExecutiveController extends Controller
 
     /**
      * @param StoreAdminExecutive $request
+     * @param Executive $executive
      * @param User $user
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(StoreAdminExecutive $request, User $user): RedirectResponse
+    public function store(StoreAdminExecutive $request, Executive $executive, User $user): RedirectResponse
     {
+
         $this->authorize('create', Executive::class);
 
-        $executive = new Executive($request->input('executive'));
+        $executive = new ExecutiveMembership($request->input('executive'));
         $executive->user_id = $user->id;
-        $endDate = Carbon::createFromDate($request->end_date);
-        $executive->current = $endDate->isPast() ? 0 : 1;
+        $executive->start_date = Carbon::createFromDate($request->executive['start_date']);
+        $executive->end_date = Carbon::createFromDate($request->executive['end_date']);
+        $executive->current = $executive->end_date->isPast() ? 0 : 1;
+
         $executive->save();
 
         //todo msg member that he she has a role.
@@ -79,12 +81,13 @@ class AdminExecutiveController extends Controller
     }
 
     /**
-     * @param Executive $executive
+     * @param ExecutiveMembership $executive
      * @return View
      * @throws AuthorizationException
      */
-    public function edit(Executive $executive): View
+    public function edit(ExecutiveMembership $executive): View
     {
+
         $this->authorize('update', Executive::class);
 
         $executive->load('user');
@@ -101,12 +104,12 @@ class AdminExecutiveController extends Controller
 
     /**
      * @param UpdateAdminExecutive $request
-     * @param Executive $executive
+     * @param ExecutiveMembership $executive
      * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateAdminExecutive $request,
-                           Executive $executive): RedirectResponse
+                           ExecutiveMembership $executive): RedirectResponse
     {
         $this->authorize('update', Executive::class);
 
@@ -127,13 +130,8 @@ class AdminExecutiveController extends Controller
     {
         $this->authorize('delete', Executive::class);
 
-/*        foreach ($request->id as $i) {
-            $e = Executive::find($i);
-            $e->delete();
-        }*/
-
-        Executive::find($request->id)
-            ->each(function(Executive $executive) {
+        ExecutiveMembership::find($request->id)
+            ->each(function(ExecutiveMembership $executive) {
                 $executive->delete();
             });
 
