@@ -22,19 +22,8 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function create_returns_an_ok_response()
     {
-        $committee = Committee::factory()->create();
-
-        $user = User::factory()
-            ->has(UserInfo::factory(), 'user_info')
-            ->has(PhoneNumber::factory(), 'phone_number')
-            ->has(Membership::factory(),'membership')
-            ->has(Address::factory(), 'address')
-            ->create();
-
-        $user->assignRole('member');
-
         $response = $this->actingAs($this->admin_user)
-            ->get(route('admin_create_committee_members', [$committee, $user]));
+            ->get(route('admin_create_committee_members', [$this->committee, $this->user]));
 
         $response->assertOk();
         $response->assertViewIs('admin.committee_manage_membership');
@@ -47,27 +36,13 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $committee = Committee::factory()->create();
-
-        $user = User::factory()
-            ->has(Membership::factory(),'membership')
-            ->create();
-        $user->assignRole('member');
 
         $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_create_committee_members', [$committee, $user]),
-                [
-                    'role' => 'Chair'
-                ]);
+            ->delete(route('admin_delete-committee_member', [$this->committee, $this->committee_member->id]));
 
-        //todo delete member from committee, then prove it
+       $response->assertRedirect(route('admin-list-committee-members', $this->committee));
 
-        $response = $this->actingAs($this->admin_user)
-            ->delete(route('admin_delete-committee_member', [$committee, $user->id]));
-
-       $response->assertRedirect(route('admin-list-committee-members', [$committee->slug]));
-
-        $this->assertModelMissing($user->id);
+        $this->assertModelMissing($this->committee->committee_members);
     }
 
     /**
@@ -89,22 +64,14 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-        $committee = Committee::factory()->create();
-
-        $user = User::factory()
-            ->has(Membership::factory(),'membership')
-            ->create();
-
-        $user->assignRole('member');
-
-        $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_create_committee_members', [$committee, $user]),
+/*        $response = $this->actingAs($this->admin_user)
+            ->post(route('admin_create_committee_members', [$this->committee, $this->user]),
                 [
                     'role' => 'Chair'
                 ]);
-        // user is now a member of the committee
+        // user is now a member of the committee*/
 
-        $response = $this->get(route('admin_edit_committee_members', [$committee, $user]));
+        $response = $this->get(route('admin_edit_committee_members', [$this->committee, $this->user]));
 
         $response->assertOk();
         $response->assertViewIs('admin.committee_manage_membership');
@@ -117,10 +84,8 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-        $committee = Committee::factory()->create();
-
         $response = $this->actingAs($this->admin_user)
-            ->get(route('admin-list-committee-members', [$committee]));
+            ->get(route('admin-list-committee-members', [$this->committee]));
 
         $response->assertOk();
         $response->assertViewIs('admin.committee_members_list');
@@ -133,12 +98,10 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function search_returns_an_ok_response()
     {
-        $committee = Committee::factory()->create();
-
         $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_search_committee_members', $committee),
+            ->post(route('admin_search_committee_members', $this->committee),
                 [
-                    'search' => $this->user->name,
+                    'search' => $this->committee_member->name,
                 ]);
 
         $response->assertOk();
@@ -165,21 +128,13 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
-        $committee = Committee::factory()->create();
-
-        $user = User::factory()
-            ->has(Membership::factory(),'membership')
-            ->create();
-
-        $user->assignRole('member');
-
         $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_create_committee_members', [$committee, $user]),
+            ->post(route('admin_create_committee_members', [$this->committee, $this->user]),
             [
-                'role' => 'Chair'
+                'role' => 'Member'
             ]);
 
-        $response->assertRedirect(route('admin-list-committee-members', [$committee->slug, $user->id]));
+        $response->assertRedirect(route('admin-list-committee-members', [$this->committee->slug, $this->user->id]));
     }
 
     /**
@@ -201,19 +156,13 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $committee = Committee::factory()->create();
-        $user = User::factory()
-            ->has(Membership::factory(),'membership')
-            ->create();
-        $user->assignRole('member');
-
         $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_update_committee_member', [$committee, $user]),
+            ->post(route('admin_update_committee_member', [$this->committee, $this->committee_member]),
                 [
                     'role' => 'Member'
                 ]);
 
-        $response->assertRedirect(route('admin-list-committee-members', [$committee->slug, $user->id]));
+        $response->assertRedirect(route('admin-list-committee-members', [$this->committee->slug, $this->committee_member->id]));
     }
 
     /**

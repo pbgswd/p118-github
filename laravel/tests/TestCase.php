@@ -103,14 +103,15 @@ Log::debug('TestCase.php -- a test has started');
 
         $this->committee_admin_user->assignRole(['super-admin', 'member', 'committee']);
 
-        $this->committee = Committee::factory()->create(['user_id' => $this->committee_member->id);
+        $this->committee = Committee::factory()->create(['user_id' => $this->committee_admin_user->id]);
 
 
         $response = $this->actingAs($this->admin_user)
             ->post(route('admin_create_committee_members', [$this->committee, $this->committee_member]),
                 [
-                    'role' => 'Chair'
+                    'role' => 'Member'
                 ]);
+
 //todo committee posts
         $committeePost = CommitteePost::factory()
             ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member->id]);

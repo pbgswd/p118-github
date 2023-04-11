@@ -26,9 +26,6 @@ class CommitteeFactory extends Factory
      */
     public function definition(): Array
     {
-
-
-
         return [
             'name' => 'Committee Name ' . $this->faker->name(),
             'description' => 'Committee description ' . $this->faker->paragraph(),
