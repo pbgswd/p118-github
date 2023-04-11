@@ -78,6 +78,7 @@ class AdminCommitteeMemberController extends Controller
      * @param Committee $committee
      * @param User $user
      * @return View
+     *
      * @throws AuthorizationException
      */
     public function create(Committee $committee, User $user): View

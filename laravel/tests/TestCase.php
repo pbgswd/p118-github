@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Models\Address;
 
+use App\Models\Committee;
 use App\Models\ExecutiveMembership;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
@@ -87,6 +88,20 @@ Log::debug('TestCase.php -- a test has started');
             ->create();
 
         $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
+
+
+        $this->committee = Committee::factory()->create();
+        $this->committee_member = User::factory()
+            ->has(Membership::factory(),'membership')
+            ->create();
+        $this->committee_member->assignRole('member');
+
+        $response = $this->actingAs($this->admin_user)
+            ->post(route('admin_create_committee_members', [$this->committee, $this->committee_member]),
+                [
+                    'role' => 'Chair'
+                ]);
+
 Log::debug("End of setUp");
 Log::debug('==============================================');
     }
