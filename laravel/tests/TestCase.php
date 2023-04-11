@@ -5,6 +5,7 @@ namespace Tests;
 use App\Models\Address;
 
 use App\Models\Committee;
+use App\Models\CommitteePost;
 use App\Models\ExecutiveMembership;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
@@ -89,18 +90,33 @@ Log::debug('TestCase.php -- a test has started');
 
         $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
 
-
-        $this->committee = Committee::factory()->create();
         $this->committee_member = User::factory()
             ->has(Membership::factory(),'membership')
             ->create();
         $this->committee_member->assignRole('member');
+
+        $this->committee_admin_user = User::factory()
+            ->has(UserInfo::factory(), 'user_info')
+            ->has(PhoneNumber::factory(), 'phone_number')
+            ->has(Membership::factory(),'membership')
+            ->create();
+
+        $this->committee_admin_user->assignRole(['super-admin', 'member', 'committee']);
+
+        $this->committee = Committee::factory()->create(['user_id' => $this->committee_member->id);
+
 
         $response = $this->actingAs($this->admin_user)
             ->post(route('admin_create_committee_members', [$this->committee, $this->committee_member]),
                 [
                     'role' => 'Chair'
                 ]);
+//todo committee posts
+        $committeePost = CommitteePost::factory()
+            ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member->id]);
+        $committeePosts = CommitteePost::factory()
+            ->times(3)
+            ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member->id]);
 
 Log::debug("End of setUp");
 Log::debug('==============================================');

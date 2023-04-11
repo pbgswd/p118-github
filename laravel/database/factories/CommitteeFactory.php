@@ -27,16 +27,9 @@ class CommitteeFactory extends Factory
     public function definition(): Array
     {
 
-        $this->committee_admin_user = User::factory()
-            ->has(UserInfo::factory(), 'user_info')
-            ->has(PhoneNumber::factory(), 'phone_number')
-            ->has(Membership::factory(),'membership')
-            ->create();
 
-        $this->committee_admin_user->assignRole(['super-admin', 'member', 'committee']);
 
         return [
-            'user_id' => $this->committee_admin_user->id,
             'name' => 'Committee Name ' . $this->faker->name(),
             'description' => 'Committee description ' . $this->faker->paragraph(),
             'file_name' => null,

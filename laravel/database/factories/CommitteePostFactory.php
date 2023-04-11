@@ -21,8 +21,14 @@ class CommitteePostFactory extends Factory
      */
     public function definition()
     {
+        //todo post and user has to be associated with committee
         return [
-
+            'user_id' => \App\Models\User::factory(),
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->text(),
+            'live' => 1,
+            'sticky' => 1,
+            'allow_comments' => 0,
         ];
     }
 }

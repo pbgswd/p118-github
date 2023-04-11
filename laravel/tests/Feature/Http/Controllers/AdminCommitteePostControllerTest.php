@@ -13,20 +13,14 @@ class AdminCommitteePostControllerTest extends TestCase
 
     /**
      * @test
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $committee = \App\Models\Committee::factory()->create();
-
-        $response = $this->get(route('admin_committee_post', [$committee]));
-
+        $response = $this->get(route('admin_committee_post', [$this->committee]));
         $response->assertOk();
         $response->assertViewIs('admin.committee_post');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -36,15 +30,10 @@ class AdminCommitteePostControllerTest extends TestCase
     {
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $committee = \App\Models\Committee::factory()->create();
-        $committeePost = \App\Models\CommitteePost::factory()->create();
+        $response = $this->delete(route('committee_post_destroy', [$this->committee]));
 
-        $response = $this->delete(route('committee_post_destroy', [$committee]));
-
-        $response->assertRedirect(route('committee_posts_list', $committee->slug));
-        $this->assertModelMissing($committee);
-
-
+        $response->assertRedirect(route('committee_posts_list', $this->committee->slug));
+        $this->assertModelMissing($this->committee);
     }
 
     /**
@@ -69,33 +58,23 @@ class AdminCommitteePostControllerTest extends TestCase
         $committee = \App\Models\Committee::factory()->create();
         $committeePost = \App\Models\CommitteePost::factory()->create();
 
-        $response = $this->get(route('admin_committee_post_edit', [$committee, 'any_committee_post' => $any_committee_post]));
+        $response = $this->get(route('admin_committee_post_edit', [$this->committee, 'any_committee_post' => $any_committee_post]));
 
         $response->assertOk();
         $response->assertViewIs('admin.committee_post');
         $response->assertViewHas('data');
-
-
     }
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $committeePost = \App\Models\CommitteePost::factory()->create();
-        $committee = \App\Models\Committee::factory()->create();
-        $committeePosts = \App\Models\CommitteePost::factory()->times(3)->create();
-
-        $response = $this->get(route('committee_posts_list', [$committee]));
-
+        $response = $this->get(route('committee_posts_list', [$this->committee]));
         $response->assertOk();
         $response->assertViewIs('admin.committee_posts_list');
         $response->assertViewHas('data');
-
-
     }
 
     /**
@@ -105,16 +84,12 @@ class AdminCommitteePostControllerTest extends TestCase
     {
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $committee = \App\Models\Committee::factory()->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->post('admin/committee/{committee}/post/create', [
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/committee/{committee}/post/create', [
             // TODO: send request data
         ]);
 
-        $response->assertRedirect(route('admin_committee_post_edit', [$committee->slug, $post->slug]));
-
-
+        $response->assertRedirect(route('admin_committee_post_edit', [$this->committee->slug, $post->slug]));
     }
 
     /**
@@ -136,16 +111,13 @@ class AdminCommitteePostControllerTest extends TestCase
     {
         $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
-        $committee = \App\Models\Committee::factory()->create();
-        $committeePost = \App\Models\CommitteePost::factory()->create();
-
-        $response = $this->post('admin/committee/{committee}/post/{any_committee_post}/edit', [
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/committee/{committee}/post/{any_committee_post}/edit', [
             // TODO: send request data
         ]);
 
-        $response->assertRedirect(route('admin_committee_post_edit', [$committeePost->committee->slug, $committeePost->slug]));
-
-
+        $response->assertRedirect(route('admin_committee_post_edit',
+            [$committeePost->committee->slug, $committeePost->slug]));
     }
 
     /**
@@ -159,6 +131,4 @@ class AdminCommitteePostControllerTest extends TestCase
             \App\Http\Requests\CommitteePost\UpdateCommitteePostRequest::class
         );
     }
-
-
 }
