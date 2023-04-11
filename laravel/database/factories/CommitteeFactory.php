@@ -35,16 +35,14 @@ class CommitteeFactory extends Factory
 
         $this->committee_admin_user->assignRole(['super-admin', 'member', 'committee']);
 
-        /// \App\Models\User::factory()
         return [
             'user_id' => $this->committee_admin_user->id,
-           // 'user_id' => $this->admin_user->id,
             'name' => 'Committee Name ' . $this->faker->name(),
             'description' => 'Committee description ' . $this->faker->paragraph(),
             'file_name' => null,
             'image' => null,
             'email' => $this->faker->email(),
-            'live' => $this->faker->boolean(),
+            'live' => 1,
         ];
     }
 }

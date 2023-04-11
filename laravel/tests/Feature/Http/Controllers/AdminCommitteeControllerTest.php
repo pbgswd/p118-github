@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Committee;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
@@ -27,22 +28,16 @@ class AdminCommitteeControllerTest extends TestCase
 
     /**
      * @test
-     * @group destroy
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete('errors');
+
         $committee = Committee::factory()->create();
-        //todo get proper relations for admin_user
-      //  dump($this->admin_user->with('membership'));
-      //  dump([$this->admin_user->id, $committee->user_id]);
+        $committeeUser = User::find($committee->user_id);
 
-        $response = $this->actingAs($committee->user_id)
+        $response = $this->actingAs($committeeUser)
             ->delete(route('committee_destroy'), ['id' => $committee->id]);
-
-        //dump($response, 'DUUUMP');
-        // $queries = \DB::getQueryLog();
-        //   dump($queries);
 
         $this->assertModelMissing($committee);
         $response->assertRedirect(route('committees_list'));
@@ -50,7 +45,7 @@ class AdminCommitteeControllerTest extends TestCase
 
     /**
      * @test
-     * @group destroy
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -143,31 +138,26 @@ class AdminCommitteeControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
 
-        //todo why errors
-        $this->markTestIncomplete('errors');
-
         $committee = Committee::factory()->create();
-
-        echo "\n committee id: " . $committee->id ."\n";
-        echo "committee name: " . $committee->name ."\n";
-
+        $committeeUser = User::find($committee->user_id);
         $data = Committee::find($committee->id);
 
-        $data['committee'] = [
-            "user_id" => 6,
+        $data = [
             "name" => "bla bla " . $data->name,
             "description" => 'Update to description ' . $data->description,
             "email" => $data->email,
             "live" => $data->live
             ];
 
-        $response = $this->actingAs($this->admin_user)
-            ->post('admin/committee/'. $data->slug .'/edit', [
-            'any_committee' => $data
+        $response = $this->actingAs($committeeUser)
+            ->post(route('admin_committee_update', $committee->slug), [
+            'committee' => $data
         ]);
 
-        //$response->assertRedirect(route('admin_committee_show', $data->slug));
-        $response->assertRedirect('http://p118.local/admin/committee/'.$data->slug.'/edit');
+        $committee = Committee::find($committee->id);
+
+        $response->assertRedirect(route('committee_edit', $committee->slug));
+
     }
 
     /**

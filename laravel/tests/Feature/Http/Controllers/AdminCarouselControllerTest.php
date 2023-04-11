@@ -28,7 +28,7 @@ class AdminCarouselControllerTest extends TestCase
      * @test
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+   /* public function destroy_returns_an_ok_response()
     {
         $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
 
@@ -38,13 +38,13 @@ class AdminCarouselControllerTest extends TestCase
 
         $response->assertOk();
         $this->assertModelMissing($carousel);
-    }
+    }*/
 
     /**
      * @test
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+ /*   public function edit_returns_an_ok_response()
     {
         $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
 
@@ -53,7 +53,7 @@ class AdminCarouselControllerTest extends TestCase
         $response = $this->get(route('carousel.edit', [$carousel]));
 
         $response->assertOk();
-    }
+    }*/
 
     /**
      * @test
@@ -72,7 +72,7 @@ class AdminCarouselControllerTest extends TestCase
      * @test
      * @group showok
      */
-    public function show_returns_an_ok_response()
+   /* public function show_returns_an_ok_response()
     {
         $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
 
@@ -81,13 +81,13 @@ class AdminCarouselControllerTest extends TestCase
         $response = $this->actingAs($this->admin_user)->get(route('carousel.show', [$carousel]));
 
         $response->assertOk();
-    }
+    }*/
 
     /**
      * @test
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+   /* public function store_returns_an_ok_response()
     {
        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
         $carousel = \App\Models\Carousel::factory()->make();
@@ -96,13 +96,13 @@ class AdminCarouselControllerTest extends TestCase
         ]);
 
         $response->assertOk();
-    }
+    }*/
 
     /**
      * @test
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    /*public function update_returns_an_ok_response()
     {
         $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
 
@@ -117,5 +117,5 @@ class AdminCarouselControllerTest extends TestCase
         ]);
 
         $response->assertOk();
-    }
+    }*/
 }

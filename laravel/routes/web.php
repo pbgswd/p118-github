@@ -284,7 +284,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::post('committee/create', 'store');
         Route::get('committee/{any_committee}/show', 'show')->name('admin_committee_show');
         Route::get('committee/{any_committee}/edit', 'edit')->name('committee_edit');
-        Route::post('committee/{any_committee}/edit', 'update');
+        Route::post('committee/{any_committee}/edit', 'update')->name('admin_committee_update');
         Route::delete('committee/delete', 'destroy')->name('committee_destroy');
     });
 
