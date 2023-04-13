@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\CommitteePost;
 use Tests\TestCase;
 
 /**
@@ -12,45 +13,36 @@ class CommitteePostControllerTest extends TestCase
 
 
     /**
-     * @test * @group
+     * @test
+     * @group createok
      */
     public function create_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $committee = \App\Models\Committee::factory()->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('committee_add_public_post', [$committee]));
+        $response = $this->actingAs($this->committee_member)
+            ->get(route('committee_add_public_post', [$this->committee]));
 
         $response->assertOk();
         $response->assertViewIs('committee_post_form');
         $response->assertViewHas('data');
 
-
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $response = $this->actingAs($this->committee_member)
+            ->delete(route('public_committee_post_destroy', [$this->committee, $this->committeePost]));
 
-        $committee = \App\Models\Committee::factory()->create();
-        $committeePost = \App\Models\CommitteePost::factory()->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->delete(route('public_committee_post_destroy', [$committee, $committeePost]));
-
-        $response->assertRedirect(route('committee', $committee->slug));
-        $this->assertModelMissing($committeePost);
-
-
+        $response->assertRedirect(route('committee', $this->committee->slug));
+        $this->assertModelMissing($this->committeePost);
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -62,65 +54,51 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $committee = \App\Models\Committee::factory()->create();
-        $committeePost = \App\Models\CommitteePost::factory()->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('committee_post_edit_form', [$committee, $committeePost]));
+        $response = $this->actingAs($this->committee_member)
+            ->get(route('committee_post_edit_form', [$this->committee, $this->committeePost]));
 
         $response->assertOk();
         $response->assertViewIs('committee_post_form');
-
-
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group showok
      */
     public function show_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $committee = \App\Models\Committee::factory()->create();
-        $committeePost = \App\Models\CommitteePost::factory()->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('public_committee_post_show', [$committee, $committeePost]));
+        $response = $this->actingAs($this->committee_member)
+            ->get(route('public_committee_post_show', [$this->committee, $this->committeePost]));
 
         $response->assertOk();
         $response->assertViewIs('committee_post');
         $response->assertViewHas('data');
-
-
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group storeok
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $post = CommitteePost::factory()->make();
 
-        $committee = \App\Models\Committee::factory()->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->post('committee/{committee}/post/create', [
-            // TODO: send request data
+        $response = $this->actingAs($this->committee_member)
+            ->post('committee/{committee}/post/create', [
+            'post' => $post
         ]);
 
-        $response->assertRedirect(route('committee_post_edit_form', [$committee->slug, $post->slug]));
-
-
+        $response->assertRedirect(route('committee_post_edit_form', [$this->committee->slug, $post->value('slug')]));
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group storeok
      */
     public function store_validates_with_a_form_request()
     {
@@ -132,27 +110,23 @@ class CommitteePostControllerTest extends TestCase
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
-
-        $committee = \App\Models\Committee::factory()->create();
-        $committeePost = \App\Models\CommitteePost::factory()->create();
-        $user = \App\Models\User::factory()->create();
-
-        $response = $this->actingAs($user)->post('committee/{committee}/post/{any_committee_post}/edit', [
-            // TODO: send request data
+        $response = $this->actingAs($this->committee_member)
+            ->post('committee/{committee}/post/{any_committee_post}/edit', [
+                'post' => $this->committeePost
         ]);
 
-        $response->assertRedirect(route('committee_post_edit_form', [$committee->slug, $committeePost->slug]));
-
-
+        $response->assertRedirect(route('committee_post_edit_form',
+            [$this->committee->slug, $this->committeePost->slug]));
     }
 
     /**
-     * @test * @group
+     * @test
+     * @group updateok
      */
     public function update_validates_with_a_form_request()
     {
@@ -162,6 +136,4 @@ class CommitteePostControllerTest extends TestCase
             \App\Http\Requests\CommitteePost\UpdateCommitteePostRequest::class
         );
     }
-
-
 }

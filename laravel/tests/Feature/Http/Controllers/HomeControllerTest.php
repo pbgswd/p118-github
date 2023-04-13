@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 /**
@@ -13,18 +14,22 @@ class HomeControllerTest extends TestCase
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $response = $this->actingAs($this->user)->get(route('home'));
-        $response->assertRedirect('/');
+        $response = $this->actingAs($this->user)->get(route('landing_page'));
+        $response->assertOk();
+        $response->assertViewIs('site');
     }
 
     /**
      * @test
+     * @group indexnot
      */
     public function index_unauthenticated_returns_an_ok_response()
     {
+        Auth::logout();
         $response = $this->get(route('home'));
         $response->assertRedirect('/login');
     }

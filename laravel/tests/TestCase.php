@@ -113,9 +113,9 @@ Log::debug('TestCase.php -- a test has started');
                 ]);
 
 //todo committee posts
-        $committeePost = CommitteePost::factory()
+        $this->committeePost = CommitteePost::factory()
             ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member->id]);
-        $committeePosts = CommitteePost::factory()
+        $this->committeePosts = CommitteePost::factory()
             ->times(3)
             ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member->id]);
 
