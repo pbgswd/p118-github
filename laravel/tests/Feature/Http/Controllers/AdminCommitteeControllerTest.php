@@ -36,13 +36,12 @@ class AdminCommitteeControllerTest extends TestCase
         $response = $this->actingAs($this->committee_admin_user)
             ->delete(route('committee_destroy'), ['id' => $testcommittee->id]);
 
-        //$this->assertModelMissing($testcommittee);
+        $this->assertModelMissing($testcommittee);
         $response->assertRedirect(route('committees_list'));
     }
 
     /**
      * @test
-     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
