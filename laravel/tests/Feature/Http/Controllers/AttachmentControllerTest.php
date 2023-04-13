@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Attachment;
 use Tests\TestCase;
 
 /**
@@ -27,21 +28,32 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $attachment = \App\Models\Attachment::factory()->create();
 
-        $response = $this->actingAs($this->admin_user)->delete(route('attachment_destroy'));
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('attachment_destroy', ['id' => $attachment->id]));
 
         $response->assertRedirect(route('attachments_list'));
-        $this->assertModelMissing($attachmentDestroy);
+        $this->assertModelMissing($attachment);
+
+        /**
+         *    ├ Attempt to read property "subfolder" on bool
+        │
+        ╵ /var/www/project118/laravel/vendor/laravel/framework/src/Illuminate/Testing/TestResponse.php:148
+        ╵ /var/www/project118/laravel/tests/Feature/Http/Controllers/AttachmentControllerTest.php:42
+
+         */
     }
 
     /**
      * @test
+     * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -54,30 +66,36 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     * @group downloadok
      */
     public function download_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        //$this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $attachment = \App\Models\Attachment::factory()->create();
 
-        $response = $this->actingAs($this->admin_user)->get(route('attachment_download', ['folder' => $attachment->folder, $attachment]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('attachment_download', ['folder' => $attachment->folder, 'attachment' => $attachment]));
 
         $response->assertOk();
     }
 
     /**
      * @test
+     * @group editok
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        //$this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $attachment = \App\Models\Attachment::factory()->create();
 
-        $response = $this->actingAs($this->admin_user)->get(route('admin_attachment_edit', [$attachment->id]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('admin_attachment_edit', [$attachment->id]));
 
-        $response->assertRedirect(route('attachments_list'));
+        $response->assertOk();
+        $response->assertViewIs('admin.attachment');
+        //$response->assertRedirect(route('attachments_list'));
 
 /*
         $response->assertOk();
@@ -88,11 +106,11 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     * @group indexok
      */
     public function index_returns_an_ok_response()
     {
-        $attachment = \App\Models\Attachment::factory()->create();
-        $attachments = \App\Models\Attachment::factory()->times(3)->create();
+        Attachment::factory()->times(3)->create();
         $response = $this->actingAs($this->admin_user)->get(route('attachments_list'));
         $response->assertOk();
         $response->assertViewIs('admin.list_attachments');
@@ -101,16 +119,19 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     * @group storeok
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
         // TODO: send request data
-        $response = $this->actingAs($this->admin_user)->post('admin/attachment/create', [
+        $attachment = \App\Models\Attachment::factory()->make();
+        $response = $this->actingAs($this->admin_user)
+            ->post(route('create_attachment', [$attachment]));
 
-        ]);
+        $att = Attachment::latest()->first();
 
-        $response->assertRedirect(route('admin_attachment_edit', $attachment->id));
+        $response->assertRedirect(route('admin_attachment_edit', $att));
     }
 
     /**
@@ -127,22 +148,26 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     * @group updateok
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        //$this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $attachment = \App\Models\Attachment::factory()->create();
 
-        $response = $this->actingAs($this->admin_user)->post('admin/attachment/{attachment}/edit', [
-            // TODO: send request data
+        $att = Attachment::latest()->first();
+        $response = $this->actingAs($this->admin_user)
+            ->post('admin/attachment/{attachment}/edit', [
+            $att
         ]);
 
-        $response->assertRedirect(route('admin_attachment_edit', $attachment->id));
+        $response->assertRedirect(route('admin_attachment_edit', $att));
     }
 
     /**
      * @test
+     * @group updateok
      */
     public function update_validates_with_a_form_request()
     {

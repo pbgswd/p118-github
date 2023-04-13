@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Address;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 
@@ -32,8 +33,9 @@ class UserControllerTest extends TestCase
      */
     public function not_authenticated_index_returns_a_response()
     {
+        Auth::logout();
         $response = $this->get(route('members'));
-        $response->assertStatus(Response::HTTP_FOUND); //302
+        $response->assertRedirect('/login');
     }
 
     /**

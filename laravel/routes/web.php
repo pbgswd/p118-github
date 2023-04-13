@@ -248,7 +248,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::controller(CNS\AttachmentController::class)->group(function() {
         Route::get('/attachments', 'index')->name('attachments_list');
         Route::get('/attachment/create', 'create')->name('attachment_create');
-        Route::post('/attachment/create', 'store');
+        Route::post('/attachment/create', 'store')->name('create_attachment');
         Route::get('/attachment/{attachment}/edit', 'edit')->name('admin_attachment_edit');
         Route::post('/attachment/{attachment}/edit', 'update');
         Route::delete('/attachment/delete', 'destroy')->name('attachment_destroy');
