@@ -91,11 +91,6 @@ Log::debug('TestCase.php -- a test has started');
 
         $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
 
-        $this->committee_member = User::factory()
-            ->has(Membership::factory(),'membership')
-            ->create();
-        $this->committee_member->assignRole('member');
-
         $this->committee_admin_user = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
@@ -106,19 +101,17 @@ Log::debug('TestCase.php -- a test has started');
 
         $this->committee = Committee::factory()->create(['user_id' => $this->committee_admin_user->id]);
 
+        $this->committee->committee_members()->attach($this->user->id, ['role' => 'Member']);
 
-        $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_create_committee_members', [$this->committee, $this->committee_member]),
-                [
-                    'role' => 'Member'
-                ]);
+//todo be able to retrieve committee members from the committee
 
 //todo committee posts
-        $this->committeePost = CommitteePost::factory()
-            ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member->id]);
+
+/*        $this->committeePost = CommitteePost::factory()
+            ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member()->id]);
         $this->committeePosts = CommitteePost::factory()
             ->times(3)
-            ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member->id]);
+            ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member()->id]);*/
 
 Log::debug("End of setUp");
 Log::debug('==============================================');
