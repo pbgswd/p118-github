@@ -31,12 +31,10 @@ class AdminCommitteeControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $testcommittee = Committee::factory()->create(['user_id' => $this->committee_admin_user->id]);
-
         $response = $this->actingAs($this->committee_admin_user)
-            ->delete(route('committee_destroy'), ['id' => $testcommittee->id]);
+            ->delete(route('committee_destroy'), ['id' => $this->committee->id]);
 
-        $this->assertModelMissing($testcommittee);
+        $this->assertModelMissing($this->committee);
         $response->assertRedirect(route('committees_list'));
     }
 
@@ -99,7 +97,7 @@ class AdminCommitteeControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $committee = Committee::factory()
-            ->make(['user_id' => $this->committee_member->id]);
+            ->make(['user_id' => $this->user->id]);
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/committee/create', [
@@ -131,6 +129,7 @@ class AdminCommitteeControllerTest extends TestCase
         $data = Committee::find($this->committee->id);
 
         $data = [
+            'slug' => $data->slug,
             "name" => "bla bla " . $data->name,
             "description" => 'Update to description ' . $data->description,
             "email" => $data->email,
@@ -138,7 +137,7 @@ class AdminCommitteeControllerTest extends TestCase
             ];
 
         $response = $this->actingAs($this->committee_admin_user)
-            ->post(route('admin_committee_update', $this->committee->slug), [
+            ->post(route('admin_committee_update', $data['slug']), [
             'committee' => $data
         ]);
 

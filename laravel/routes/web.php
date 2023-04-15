@@ -268,6 +268,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::controller(CNS\AdminCommitteeMemberController::class)->group(function() {
         Route::post('committee/{committee}/admin-list-committee-members', 'search')
             ->name('admin_search_committee_members');
+
         Route::get('committee/{committee}/admin-list-committee-members', 'index')->name('admin-list-committee-members');
 
         Route::get('committee/{committee}/admin-create-committee-members/user/{user}','create')
