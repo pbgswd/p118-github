@@ -33,7 +33,7 @@ class AdminPolicyControllerTest extends TestCase
         $policy = \App\Models\Policy::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('admin_policy_destroy', ['ids' => $policy->id]));
+            ->delete(route('admin_policy_destroy', ['id' => $policy->id]));
 
         $response->assertRedirect(route('policies_list'));
         $this->assertModelMissing($policy);

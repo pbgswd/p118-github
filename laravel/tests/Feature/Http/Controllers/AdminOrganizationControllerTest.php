@@ -35,7 +35,7 @@ class AdminOrganizationControllerTest extends TestCase
         $organization = \App\Models\Organization::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('organization_destroy', ['ids' => $organization->id]));
+            ->delete(route('organization_destroy', ['id' => $organization->id]));
 
         $response->assertRedirect(route('organizations_list'));
         $this->assertModelMissing($organization);

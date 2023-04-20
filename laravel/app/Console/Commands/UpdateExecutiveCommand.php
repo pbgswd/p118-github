@@ -40,16 +40,13 @@ class UpdateExecutiveCommand extends Command
      */
     public function handle()
     {
-
         $this->info('Update any expired executive status');
-
         Log::debug('running artisan command ' . __CLASS__);
-        //todo unknown column, end_date
-        $data = DB::select('SELECT * FROM executives WHERE end_date < now()');
+        $data = DB::select('SELECT * FROM executive_user WHERE end_date < now()');
         //todo closure
         foreach ($data as $d) {
             if ($d->current == 1) {
-                $result = DB::update('UPDATE executives SET current=0 WHERE id='.$d->id);
+                $result = DB::update('UPDATE executive_user SET current=0 WHERE id=' . $d->id);
             }
         }
     }

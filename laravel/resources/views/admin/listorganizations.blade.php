@@ -36,21 +36,29 @@
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="ids[]" value="{{$org->id}}" />
+                                        <input type="checkbox" name="id[]" value="{{$org->id}}" />
                                     </label>
                                 </div>
                             </td>
                             <td>
                                 <h4>
-                                    <a title="{{ $org->name }}" href="{{ route('organization_edit', $org->slug) }}">{{ $org->name }}</a>
+                                    <a title="{{ $org->name }}" href="{{ route('organization_edit', $org->slug) }}">
+                                        {{ $org->name }}
+                                    </a>
                                 </h4>
                                 <h6>
-                                    {{$org->all_agreements->count() ?? 0}} {{Str::plural('Agreement', $org->all_agreements->count() ?? 0)}} <br />
-                                    {{$org->attachments->count() ?? 0}} {{Str::plural('Attachment', $org->attachments->count() ?? 0)}}
+                                    {{$org->all_agreements->count() ?? 0}}
+                                    {{Str::plural('Agreement', $org->all_agreements->count() ?? 0)}}
+                                    <br />
+                                    {{$org->attachments->count() ?? 0}}
+                                    {{Str::plural('Attachment', $org->attachments->count() ?? 0)}}
                                 </h6>
                             </td>
                             <td> {{ $org->access_level }} </td>
-                            <td> {!! $org->live ? "<i class='fas fa-check'></i>" : "<i class='far fa-times-circle'></i>" !!} </td>
+                            <td>
+                                {!! $org->live ? "<i class='fas fa-check'></i>"
+                                    : "<i class='far fa-times-circle'></i>" !!}
+                            </td>
                             <td>
                                 <a href="{{ route('organization_edit', $org->slug) }}" title="Edit {{ $org->name }} ">
                                     <i class="fas fa-edit"></i>

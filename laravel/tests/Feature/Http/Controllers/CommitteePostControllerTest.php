@@ -18,7 +18,7 @@ class CommitteePostControllerTest extends TestCase
      */
     public function create_returns_an_ok_response()
     {
-        $response = $this->actingAs($this->committee_member)
+        $response = $this->actingAs($this->committee_admin_user)
             ->get(route('committee_add_public_post', [$this->committee]));
 
         $response->assertOk();
@@ -33,8 +33,13 @@ class CommitteePostControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $response = $this->actingAs($this->committee_member)
-            ->delete(route('public_committee_post_destroy', [$this->committee, $this->committeePost]));
+        $post = CommitteePost::find($this->committeePost);
+        //dd($post);
+
+        $response = $this->actingAs($this->committee_admin_user)
+            ->delete(route('public_committee_post_destroy', [$this->committee, $post]),
+            ['id' => $post->id]
+            );
 
         $response->assertRedirect(route('committee', $this->committee->slug));
         $this->assertModelMissing($this->committeePost);
@@ -59,7 +64,7 @@ class CommitteePostControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-        $response = $this->actingAs($this->committee_member)
+        $response = $this->actingAs($this->committee_admin_user)
             ->get(route('committee_post_edit_form', [$this->committee, $this->committeePost]));
 
         $response->assertOk();
@@ -72,7 +77,7 @@ class CommitteePostControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $response = $this->actingAs($this->committee_member)
+        $response = $this->actingAs($this->committee_admin_user)
             ->get(route('public_committee_post_show', [$this->committee, $this->committeePost]));
 
         $response->assertOk();
@@ -86,11 +91,14 @@ class CommitteePostControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
-        $post = CommitteePost::factory()->make();
+        //$post = CommitteePost::factory()->make();
 
-        $response = $this->actingAs($this->committee_member)
-            ->post('committee/{committee}/post/create', [
-            'post' => $post
+        $post = CommitteePost::factory()
+            ->make(['committee_id' => $this->committee->id, 'user_id' => $this->user->id]);
+
+        $response = $this->actingAs($this->committee_admin_user)
+            ->post(route('committee_store_public_post', $this->committee->slug), [
+            'post' => $post->toArray()
         ]);
 
         $response->assertRedirect(route('committee_post_edit_form', [$this->committee->slug, $post->value('slug')]));
@@ -115,13 +123,20 @@ class CommitteePostControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $response = $this->actingAs($this->committee_member)
-            ->post('committee/{committee}/post/{any_committee_post}/edit', [
-                'post' => $this->committeePost
-        ]);
 
-        $response->assertRedirect(route('committee_post_edit_form',
-            [$this->committee->slug, $this->committeePost->slug]));
+        $post = CommitteePost::find($this->committeePost);
+        $post['access_level'] = 'public';
+        $response = $this->actingAs($this->admin_user)
+            ->post(route('committee_update_public_post', [$this->committee->slug, $post[0]['slug']]), [
+                'post' => $post[0]
+        ]);
+        dump($post[0]['slug']);
+        $post = CommitteePost::latest()->first();
+        dump($post['slug']);
+        dump($this->committee->slug);
+
+        $response->assertRedirect(route('committee_post_edit_form', [$this->committee->slug, $post['slug']])
+        );
     }
 
     /**

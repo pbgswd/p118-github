@@ -23,7 +23,7 @@ class PostFactory extends Factory
     {
         //todo should user be user with permissions admin_user?
         return [
-            'user_id' => \App\Models\User::factory(),
+          //  'user_id' => \App\Models\User::factory(),
             'title' => $this->faker->sentence,
             'content' => $this->faker->text(),
             'access_level' => 'public',

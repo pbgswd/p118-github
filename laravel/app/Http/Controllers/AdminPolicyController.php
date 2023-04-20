@@ -145,7 +145,7 @@ class AdminPolicyController extends Controller
 
         /** @var Collection $policy */
         Policy::withoutGlobalScopes()
-            ->find($request->ids)
+            ->find($request->id)
             ->each(function (Policy $policy) {
                 $this->attachmentService->destroyAttachments($policy);
                 $policy->delete();

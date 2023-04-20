@@ -43,7 +43,7 @@ class DestroyVenueRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertValidationRules([
-            'ids' => 'required',
+            'id' => 'required',
         ], $actual);
     }
 

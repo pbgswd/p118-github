@@ -36,7 +36,7 @@ class AdminVenueControllerTest extends TestCase
         $venue = \App\Models\Venue::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('venue_destroy', ['ids' => $venue->id]));
+            ->delete(route('venue_destroy', ['id' => $venue->id]));
         $this->assertModelMissing($venue);
         $response->assertRedirect(route('venues_list'));
     }

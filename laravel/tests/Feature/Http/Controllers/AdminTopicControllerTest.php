@@ -35,7 +35,7 @@ class AdminTopicControllerTest extends TestCase
         $topic = \App\Models\Topic::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('topic_destroy', ['ids' => $topic->id]));
+            ->delete(route('topic_destroy', ['id' => $topic->id]));
 
         $this->assertModelMissing($topic);
         $response->assertRedirect(route('topics_list'));

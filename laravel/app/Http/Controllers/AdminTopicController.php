@@ -146,7 +146,7 @@ class AdminTopicController extends Controller
         $this->authorize('delete', Topic::class);
 
         Topic::withoutGlobalScopes()
-            ->find($request->ids)
+            ->find($request->id)
             ->each(function (Topic $topic) {
                 $topic->pages()->detach();
                 $topic->posts()->detach();
@@ -154,7 +154,7 @@ class AdminTopicController extends Controller
                 $topic->delete();
             });
 
-        Session::flash('success', Str::plural('Topic', count([$request->ids])).' deleted.');
+        Session::flash('success', Str::plural('Topic', count([$request->id])).' deleted.');
 
         return redirect()->route('topics_list');
     }

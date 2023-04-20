@@ -35,7 +35,7 @@ class AdminMeetingControllerTest extends TestCase
         $meeting = \App\Models\Meeting::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('meeting_destroy', ['ids' => $meeting]));
+            ->delete(route('meeting_destroy', ['id' => $meeting]));
         $this->assertModelMissing($meeting);
         $response->assertRedirect(route('meetings_list'));
 

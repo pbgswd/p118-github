@@ -139,10 +139,10 @@
                                     </a>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5">No Members in {{$data['committee']['name']}}</td>
-                            </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5">No Members in {{$data['committee']['name']}}</td>
+                                </tr>
                             @endforelse
                         <tr>
                             <td colspan="4">&nbsp;</td>

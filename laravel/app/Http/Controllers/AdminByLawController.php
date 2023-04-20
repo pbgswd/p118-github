@@ -155,7 +155,7 @@ class AdminByLawController extends Controller
         $this->authorize('delete', Bylaw::class);
         /** @var Collection $bylaws */
         $bylaws = Bylaw::withoutGlobalScopes()
-            ->find($request->ids)
+            ->find($request->id)
             ->each(function (Bylaw $bylaw) {
                 $this->attachmentService->destroyAttachments($bylaw);
                 $bylaw->delete();

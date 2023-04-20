@@ -43,11 +43,12 @@ class LocalSearchControllerTest extends TestCase
 
     /**
      * @test
+     * @group amsearchok
      *
      */
     public function admin_search_returns_an_ok_response()
     {
-        $post = \App\Models\Post::factory()->create();
+        $post = \App\Models\Post::factory()->create(['user_id' => $this->admin_user]);
 
         $response = $this->actingAs($this->admin_user)->post(route('admin_search'), [
             "search" => $post->title

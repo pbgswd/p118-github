@@ -39,9 +39,7 @@ class DestroyAgreementRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertValidationRules([
-            'ids' => 'required',
+            'id' => 'required',
         ], $actual);
     }
-
-    // test cases...
 }

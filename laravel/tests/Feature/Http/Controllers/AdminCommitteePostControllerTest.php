@@ -58,7 +58,8 @@ class AdminCommitteePostControllerTest extends TestCase
         $committee = \App\Models\Committee::factory()->create();
         $committeePost = \App\Models\CommitteePost::factory()->create();
 
-        $response = $this->get(route('admin_committee_post_edit', [$this->committee, 'any_committee_post' => $any_committee_post]));
+        $response = $this->get(route('admin_committee_post_edit',
+            [$this->committee, 'any_committee_post' => $any_committee_post]));
 
         $response->assertOk();
         $response->assertViewIs('admin.committee_post');

@@ -108,11 +108,12 @@ Route::middleware('web', 'auth')->group(function () {
 
     Route::controller(CNS\CommitteePostController::class)->group(function() {
         Route::get('committee/{committee}/post/create', 'create')->name('committee_add_public_post');
-        Route::post('committee/{committee}/post/create', 'store');
+        Route::post('committee/{committee}/post/create', 'store')->name('committee_store_public_post');
         Route::get('committee/{committee}/post/{committeePost}','show')->name('public_committee_post_show');
         Route::get('committee/{committee}/post/{committeePost}/edit', 'edit')->name('committee_post_edit_form');
 
-        Route::post('committee/{committee}/post/{any_committee_post}/edit', 'update');
+        Route::post('committee/{committee}/post/{any_committee_post}/edit', 'update')
+            ->name('committee_update_public_post');
 
         Route::delete('committee/{committee}/post/{committeePost}/destroy', 'destroy')
             ->name('public_committee_post_destroy');
@@ -278,7 +279,8 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
             ->name('admin_edit_committee_members');
         Route::post('committee/{committee}/admin-edit-committee-members/user/{user}','update')
             ->name('admin_update_committee_member');
-        Route::delete('committee/{committee}/admin-manage-committee-members/user/{user}/delete','destroy')
+        //todo
+        Route::delete('committee/{committee}/user/{user}/delete','destroy')
             ->name('admin_delete-committee_member');
     });
 

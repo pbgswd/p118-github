@@ -44,7 +44,7 @@
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="ids[]" value="{{$mem->id}}" />
+                                        <input type="checkbox" name="id[]" value="{{$mem->id}}" />
                                     </label>
                                 </div>
                             </td>

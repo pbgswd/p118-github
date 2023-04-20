@@ -36,7 +36,7 @@ class AdminAgreementControllerTest extends TestCase
     {
         $agreement = \App\Models\Agreement::factory()->create();
         $response = $this->actingAs( $this->admin_user)
-            ->delete(route('agreement_destroy'), ['ids' => $agreement->id]);
+            ->delete(route('agreement_destroy'), ['id' => $agreement->id]);
         $this->assertModelMissing($agreement);
         $response->assertRedirect(route('agreements_list'));
     }

@@ -205,13 +205,13 @@ class AdminAgreementController extends Controller
     {
         $this->authorize('delete', Agreement::class);
         Agreement::withoutGlobalScopes()
-            ->find($request->ids)
+            ->find($request->id)
             ->each(function (Agreement $agreement) {
                 $this->attachmentService->destroyAttachments($agreement);
                 $agreement->delete();
             });
 
-        Session::flash('success', count([$request->ids]) . Str::plural(' agreement', count([$request->ids])).
+        Session::flash('success', count([$request->id]) . Str::plural(' agreement', count([$request->id])).
             ' and any related files have been deleted.');
 
         return redirect()->route('agreements_list');

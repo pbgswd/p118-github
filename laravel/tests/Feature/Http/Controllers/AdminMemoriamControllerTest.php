@@ -34,7 +34,7 @@ class AdminMemoriamControllerTest extends TestCase
         $memoriam = \App\Models\Memoriam::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('admin_memoriam_destroy', ['ids' => $memoriam->id]));
+            ->delete(route('admin_memoriam_destroy', ['id' => $memoriam->id]));
 
         $response->assertRedirect(route('admin_memoriam_list'));
         $this->assertModelMissing($memoriam);

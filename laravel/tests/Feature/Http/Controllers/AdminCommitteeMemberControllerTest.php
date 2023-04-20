@@ -8,6 +8,7 @@ use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use App\Models\UserInfo;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 /**
@@ -36,15 +37,31 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-
  //todo get a user associated with the committee - know a user id and send it in
 
-        $response = $this->actingAs($this->admin_user)
-            ->delete(route('admin_delete-committee_member', [$this->committee, $this->committee->committee_members]));
-//user_id
-       $response->assertRedirect(route('admin-list-committee-members', $this->committee->slug));
+        //dd($this->committee->committee_members);
+      //  exit();
+//        dd(1);
+        Log::debug(['slug' => $this->committee->slug, 'user' => $this->committee->committee_members[0]->id ]);
+//todo supposed to be going in AdminCommitteeControllerMethod::destroy
 
-       // $this->assertModelMissing($this->committee->committee_members);
+        $response = $this->actingAs($this->admin_user)
+            ->delete(route('admin_delete-committee_member',
+                [
+                    'committee' => $this->committee->slug,
+                    'user' => $this->committee->committee_members[0]->id
+                ]
+            ));
+//todo member not being deleted?
+       // dd(2);
+
+Log::debug(route('admin-list-committee-members', ['committee' => $this->committee->slug]));
+// http://p118.dev/admin/committee/anti-racism-committee/admin-edit-committee-members/user/122
+
+        $this->assertModelMissing($this->committee->committee_members);
+        $response->assertRedirect(route('admin-list-committee-members', ['committee' => $this->committee->slug]));
+
+       //
     }
 
     /**

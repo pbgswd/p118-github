@@ -180,7 +180,7 @@ class AdminMemoriamController extends Controller
         $this->authorize('delete', Memoriam::class);
 //todo deal with attachments for memoriams safely
         Memoriam::withoutGlobalScopes()
-            ->find($request->ids)
+            ->find($request->id)
             ->each(function (Memoriam $memoriam) {
                 //$this->attachmentService->destroyAttachments($memoriam);
                 $memoriam->delete();

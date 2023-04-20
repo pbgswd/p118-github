@@ -158,9 +158,8 @@ class AdminMeetingController extends Controller
     public function destroy(DestroyMeetingRequest $request): RedirectResponse
     {
         $this->authorize('delete', Meeting::class);
-       // dd($request->all());
         Meeting::withoutGlobalScopes()
-            ->find($request->ids)
+            ->find($request->id)
             ->each(function (Meeting $meeting) {
                 $this->attachmentService->destroyAttachments($meeting);
                 $meeting->delete();

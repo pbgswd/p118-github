@@ -35,7 +35,7 @@ class AdminFeatureControllerTest extends TestCase
         $feature = \App\Models\Feature::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('admin_feature_destroy', ['ids' => $feature->id]));
+            ->delete(route('admin_feature_destroy', ['id' => $feature->id]));
 
         $response->assertRedirect(route('admin_features_list'));
         $this->assertModelMissing($feature);

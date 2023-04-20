@@ -6,6 +6,7 @@ use App\Models\Interfaces\HasAttachment;
 use App\Policies\CommitteePolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -128,6 +129,15 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
     public function committee_members(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->withPivot('role')->withTimestamps();
+    }
+
+
+    /**
+     * @return BelongsTo
+     */
+    public function committee_member(): BelongsToMany
+    {
+        return $this->belongsTo(User::class)->withPivot('role')->withTimestamps();
     }
 
     /**

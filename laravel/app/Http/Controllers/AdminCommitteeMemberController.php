@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Services\EmailCommitteeMembershipService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -32,6 +33,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function index(Committee $committee): View
     {
+
         $this->authorize('update', $committee);
         $data = [];
 
@@ -208,13 +210,14 @@ class AdminCommitteeMemberController extends Controller
      */
     public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
+//todo prove unit test is going in this method AdminCommitteeMemberControllerTest::destroy_returns_an_ok_response
         $this->authorize('update', $committee);
-
-        $committee->committee_members()->updateExistingPivot($user['id'],
-            ['role' => 'Past-Member']);
+        Log::debug(['slug' => $committee->slug, 'user' => $user->id ]);
+dd(999);
+        //  $committee->committee_members()->updateExistingPivot($user['id'],['role' => 'Past-Member']);
 
         $committee->committee_members()->detach($user['id']);
-
+//dd(99);
         Session::flash('success', $user->name.' was deleted from '.$committee->name);
 
         return redirect()->route('admin-list-committee-members', [$committee->slug]);

@@ -220,7 +220,7 @@ class AdminOrganizationController extends Controller
         $this->authorize('delete', Organization::class);
 //todo verify organization delete image
         Organization::withoutGlobalScopes()
-            ->find($request->ids)
+            ->find($request->id)
             ->each(static function (Organization $org) {
                 if ($org['image']) {
                     Storage::disk('public')->delete($org['image']);

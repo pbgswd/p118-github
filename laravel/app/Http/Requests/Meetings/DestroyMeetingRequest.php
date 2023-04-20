@@ -25,7 +25,7 @@ class DestroyMeetingRequest extends FormRequest
     {
 
         return [
-            'ids' => 'required',
+            'id' => 'required',
         ];
     }
 }

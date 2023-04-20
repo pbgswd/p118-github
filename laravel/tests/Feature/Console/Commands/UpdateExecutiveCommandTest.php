@@ -16,8 +16,6 @@ class UpdateExecutiveCommandTest extends TestCase
      */
     public function it_runs_successfully()
     {
-        $this->markTestIncomplete( __FUNCTION__ . ' has issues, see command, needs review, query fails');
-
         $this->artisan('executive:update')
             ->assertExitCode(0)
             ->run();

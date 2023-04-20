@@ -105,13 +105,15 @@ Log::debug('TestCase.php -- a test has started');
 
 //todo be able to retrieve committee members from the committee
 
-//todo committee posts
+        $committee = Committee::latest()->first();
 
-/*        $this->committeePost = CommitteePost::factory()
-            ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member()->id]);
+        $this->committeePost = CommitteePost::factory()
+            ->create(['committee_id' => $committee->id, 'user_id' => $this->user->id]);
+
         $this->committeePosts = CommitteePost::factory()
             ->times(3)
-            ->create(['committee_id' => $this->committee->id, 'user_id' => $this->committee_member()->id]);*/
+            ->create(['committee_id' => $committee->id, 'user_id' => $this->user->id]);
+
 
 Log::debug("End of setUp");
 Log::debug('==============================================');
