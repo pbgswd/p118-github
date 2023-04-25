@@ -108,13 +108,16 @@
                             </a>
                         </div>
                         <div class="col-12 mt-5 text-center">
-                            {{ config('app.name') }} uses
-                            <a href="https://laravel.com/" title="Laravel Framework" target="_blank">
-                                Laravel framework
-                            </a> v{{ Illuminate\Foundation\Application::VERSION }} on
-                            <a href="https://www.php.net/" title="php" target="_blank">
-                                php
-                            </a> v{{ PHP_VERSION }}.
+                            <h3>{{ config('app.name') }} uses
+                                <a href="https://laravel.com/" title="Laravel Framework" target="_blank">
+                                    Laravel framework
+                                </a> v{{ Illuminate\Foundation\Application::VERSION }} on
+                                <a href="https://www.php.net/" title="php" target="_blank">
+                                    PHP
+                                </a> version {{ PHP_VERSION }}.
+                                <br />
+                                Currently on git branch: <?php echo `git branch --show-current`; ?>
+                            </h3>
                         </div>
                     </div>
                 </main>
