@@ -3,7 +3,7 @@
 <div class="jumbotron">
     <div class="container border border-dark rounded-lg mb-3 p-3" style="background: rgba(220,220,220,0.8);">
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 mt-2">
                 <h4>
                     <a href="{{route('jobs_list')}}">
                         <i class="far fa-arrow-alt-circle-left"></i>
@@ -53,7 +53,8 @@
             </div>
         @endif
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 m-2 pr-4">
+
                 {!! $data['employment']->description !!}
             </div>
         </div>
