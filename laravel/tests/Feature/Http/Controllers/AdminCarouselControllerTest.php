@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Carousel;
 use Tests\TestCase;
 
 /**
@@ -44,16 +45,15 @@ class AdminCarouselControllerTest extends TestCase
      * @test
      * @group editok
      */
- /*   public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response()
     {
-        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
-
         $carousel = \App\Models\Carousel::factory()->create();
 
-        $response = $this->get(route('carousel.edit', [$carousel]));
+        $response = $this->actingAs($this->admin_user)
+            ->get(route('admin_carousel_edit', [$carousel]));
 
         $response->assertOk();
-    }*/
+    }
 
     /**
      * @test
@@ -87,35 +87,33 @@ class AdminCarouselControllerTest extends TestCase
      * @test
      * @group storeok
      */
-   /* public function store_returns_an_ok_response()
+   public function store_returns_an_ok_response()
     {
-       $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
         $carousel = \App\Models\Carousel::factory()->make();
-        $response = $this->actingAs($this->admin_user)->post(route('carousel.store'), [
+        $response = $this->actingAs($this->admin_user)->post(route('admin_carousel_store'), [
             'carousel' => $carousel->toArray()
         ]);
 
         $response->assertOk();
-    }*/
+    }
 
     /**
      * @test
      * @group updateok
      */
-    /*public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response()
     {
-        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
-
         $carousel = \App\Models\Carousel::factory()->create();
 
         $data = Carousel::first();
 
-        $data['description'] = 'Update to description' . $data->description;
+        $data['caption2'] = 'Update to caption2' . $data->caption2;
 
-        $response = $this->put(route('carousel.update', [$carousel]), [
-            'carousel' => $data
-        ]);
+        $response = $this->actingAs($this->admin_user)
+            ->post(route('admin_carousel_update',  [
+                'any_carousel' => $data->toArray()
+            ]));
 
         $response->assertOk();
-    }*/
+    }
 }

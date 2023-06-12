@@ -11,8 +11,6 @@ use Tests\TestCase;
  */
 class AdminByLawControllerTest extends TestCase
 {
-    //
-
     /**
      * @test
      *

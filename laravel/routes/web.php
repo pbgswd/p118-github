@@ -139,6 +139,11 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
 
     Route::controller(CNS\AdminCarouselController::class)->group(function() {
        Route::get('carousel', 'index')->name('admin_carousel_list');
+       Route::get('carousel/create', 'create')->name('admin_carousel_create');
+       Route::post('carousel/create', 'store')->name('admin_carousel_store');
+       Route::get('carousel/{any_carousel}/edit', 'edit')->name('admin_carousel_edit');
+       Route::post('carousel/{any_carousel}/edit', 'update')->name('admin_carousel_update');
+       Route::delete('carousel/delete', 'destroy')->name('admin_carousel_destroy');
     });
 
     Route::controller(CNS\AdminMemoriamController::class)->group(function(){
@@ -361,4 +366,15 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::post('bylaw/{any_bylaw}/edit', 'update');
         Route::delete('/bylaw/delete', 'destroy')->name('admin_bylaw_destroy');
     });
+
+    Route::controller(CNS\AdminQrCodeController::class)->group(function(){
+        Route::get('qrcodes/', 'index')->name('admin_qrcodes_list');
+        Route::get('qrcode/create', 'create')->name('admin_qrcode_create');
+        Route::post('qrcode/create', 'store');
+        Route::get('/qrcode/{any_qrcode}/edit', 'edit')->name('admin_qrcode_edit');
+        Route::post('qrcode/{any_qrcode}/edit', 'update');
+        Route::delete('/qrcode/delete', 'destroy')->name('admin_qrcode_destroy');
+    });
+
+
 });

@@ -21,9 +21,25 @@ class CarouselFactory extends Factory
      */
     public function definition()
     {
-        //todo build carousel db and factory
         return [
-
+            'user_id' => \App\Models\User::factory(),
+            'caption' => 'Caption '. $this->faker->words(2, true),
+            'caption2' => 'Caption 2 '. $this->faker->sentence,
+            'button' => 1,
+            'link' => $this->faker->url,
+            'align' => 'left',
+            'credit' => $this->faker->name,
+            'color' => $this->faker->hexColor,
+            'live' => 1,
+            'order' => 2,
+            'image_2000' => '2000.jpg',
+            'file_2000' => '2000'. $this->faker->md5 .'.jpg',
+            'image_1400' => '1400.jpg',
+            'file_1400' => '1400'. $this->faker->md5 .'.jpg',
+            'image_800' => '800.jpg',
+            'file_800' => '800'. $this->faker->md5 .'.jpg',
+            'image_600' => '600.jpg',
+            'file_600' => '600'. $this->faker->md5 .'.jpg',
         ];
     }
 }

@@ -13,11 +13,11 @@ class CarouselControllerTest extends TestCase
 
     /**
      * @test
+     * @group showok
      */
     public function show_returns_an_ok_response()
     {
-      //  $this->markTestIncomplete( __FUNCTION__ .' has no code.');
-        //$carousel = \App\Models\Carousel::factory()->create();
+        $carousel = \App\Models\Carousel::factory()->create();
 
         $response = $this->get(route('carousel'));
 

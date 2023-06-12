@@ -13,25 +13,28 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('carousel', function (Blueprint $table) {
+        Schema::create('carousels', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('caption');
+            $table->string('caption2');
             $table->string('link');
-            $table->string('description');
             $table->string('color');
-            $table->string('align');
             $table->string('button');
+            $table->string('align');
             $table->string('credit');
-            $table->string('live');
+            $table->tinyInteger('live');
             $table->string('order');
-            $table->string('2000_image');
-            $table->string('2000_file');
-            $table->string('1400_image');
-            $table->string('1400_file');
-            $table->string('800_image');
-            $table->string('800_file');
-            $table->string('600_image');
-            $table->string('600_file');
+
+            $table->string('image_2000');
+            $table->string('file_2000');
+            $table->string('image_1400');
+            $table->string('file_1400');
+            $table->string('image_800');
+            $table->string('file_800');
+            $table->string('image_600');
+            $table->string('file_600');
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ class Carousel extends LiveableModel implements HasAttachment
 {
     use Sortable;
     use HasFactory;
-    //migration attachment_carousel
+    //todo migration attachment_carousel
 
     /**
      * @var string
@@ -33,25 +33,23 @@ class Carousel extends LiveableModel implements HasAttachment
      * relation table attachments_carousel
      */
     public $fillable = [
-        'name',
-        'title',
-        'link',
-        'description',
-        'color',
-        'align',
+        'caption',
+        'caption2',
         'button',
+        'link',
+        'align',
         'credit',
+        'color',
         'live',
         'order',
-        '2000_image',
-        '2000_file',
-        '1400_image',
-        '1400_file',
-        '800_image',
-        '800_file',
-        '600_image',
-        '600_file',
-
+        'image_2000',
+        'file_2000',
+        'image_1400',
+        'file_1400',
+        'image_800',
+        'file_800',
+        'image_600',
+        'file_600',
     ];
 
     public $sortable = [
@@ -88,7 +86,7 @@ class Carousel extends LiveableModel implements HasAttachment
      */
     public function getAttachmentFolder(): string
     {
-        return 'public';
+        return 'carousel';
     }
 
     public function keepDissociatedAttachments(): bool
@@ -98,6 +96,6 @@ class Carousel extends LiveableModel implements HasAttachment
 
     public function getAttachmentAccessLevel(): string
     {
-        return AccessLevelConstants::MEMBERS;
+        return AccessLevelConstants::PUBLIC;
     }
 }

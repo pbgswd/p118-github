@@ -41,7 +41,10 @@ class AdminCarouselController extends Controller
      */
     public function create(): View
     {
-        $data = [];
+        $data = ['carousel' => ''];
+        $data['folder'] = 'carousel';
+        $data['tn_prefix'] = 'tn_';
+        $data['filesize'] = '';
 
         return view('admin.carousel', ['data' => $data]);
     }
@@ -54,6 +57,7 @@ class AdminCarouselController extends Controller
      */
     public function store(Request $request)
     {
+      //  dd($request->all());
 
     }
 
@@ -76,7 +80,7 @@ class AdminCarouselController extends Controller
      */
     public function edit(Carousel $carousel)
     {
-        dd(__METHOD__);
+       // dd(__METHOD__);
     }
 
     /**
