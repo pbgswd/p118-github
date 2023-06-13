@@ -139,6 +139,9 @@
             </div>
         </div>
     </div>
+    @if(config('app.debug') == 1)
+        @include('admin.admin_partials.bottom_info')
+    @endif
 </footer>
 <link rel="stylesheet" href="/css/fontawesome/fontawesome-free-5.15.2-web/css/all.min.css" />
 <script src="{{ asset('js/app.js') }}" defer></script>

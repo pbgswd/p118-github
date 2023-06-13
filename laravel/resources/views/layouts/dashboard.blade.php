@@ -77,7 +77,7 @@
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky">
-                        @include(('layouts.dashboard-list'))
+                        @include('layouts.dashboard-list')
                         <hr />
                     </div>
                 </nav>
@@ -107,18 +107,7 @@
                                 Top of page
                             </a>
                         </div>
-                        <div class="col-12 mt-5 text-center">
-                            <h3>{{ config('app.name') }} uses
-                                <a href="https://laravel.com/" title="Laravel Framework" target="_blank">
-                                    Laravel framework
-                                </a> v{{ Illuminate\Foundation\Application::VERSION }} on
-                                <a href="https://www.php.net/" title="php" target="_blank">
-                                    PHP
-                                </a> version {{ PHP_VERSION }}.
-                                <br />
-                                Currently on git branch: <?php echo `git branch --show-current`; ?>
-                            </h3>
-                        </div>
+                        @include('admin.admin_partials.bottom_info')
                     </div>
                 </main>
             </div>
