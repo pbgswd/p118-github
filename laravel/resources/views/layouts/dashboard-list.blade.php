@@ -129,6 +129,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin_faqs_list') }}">
+                        <span data-feather="file"></span>
+                        FAQs
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin_qrcodes_list') }}">
+                        <span data-feather="file"></span>
+                        QR Codes
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin_carousel_list') }}">
                         <span data-feather="file"></span>
                         Carousel Management

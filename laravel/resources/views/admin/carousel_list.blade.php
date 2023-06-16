@@ -1,10 +1,7 @@
 @extends('layouts.dashboard')
 @section('content')
 <div class="container">
-    <div class='col-4'>
-        <h2>List of slide sets</h2>
-    </div>
-    <div class="row border border-primary">
+    <div class="row">
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
                 <h1 class="display-4">Front Page Carousel</h1>
@@ -20,14 +17,11 @@
                 <p class="lead">
                     When you are ready with your 4 optimized images, create your carousel.
                 </p>
-
                 <a href="{{route('admin_carousel_create')}}">
                     Create Carousel
                 </a>
             </div>
         </div>
-
-
         <div class="col-6">
             <img src="/storage/public/qox20XLuDz6g6IAnUjisNQt8qQVOU9yJq0WqcAt5.png" class="pb-2" />
             <h4> <i class="far fa-images"></i> 2000 x 500px file, under 300kb</h4>
@@ -44,16 +38,11 @@
             <img src="/storage/public/TVWxK0pdgrqpS3Ow54mk4ZvodhKDw77SYiBaL5f5.png" class="pb-2" />
             <h4> <i class="far fa-images"></i> 600 x 500px file, under 100kb</h4>
         </div>
-
-
-
-        </div>
-
-
+    </div>
     <div class="row border border-primary p-5">
         <div class='col-12'>
             <a class="btn btn-primary" role="button" href="{{route('admin_carousel_create')}}">
                 Create new carousel</a>
         </div>
-</div>
+    </div>
 @endsection

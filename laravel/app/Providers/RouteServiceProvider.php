@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\Agreement;
 use App\Models\Bylaw;
+use App\Models\Carousel;
 use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\CommitteePostComment;
 use App\Models\Employment;
+use App\Models\Faq;
 use App\Models\Feature;
 use App\Models\Meeting;
 use App\Models\Memoriam;
@@ -15,6 +17,7 @@ use App\Models\Organization;
 use App\Models\Page;
 use App\Models\Policy;
 use App\Models\Post;
+use App\Models\Qrcode;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
@@ -86,6 +89,15 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('any_memoriam', static function ($slug) {
             return Memoriam::withoutGlobalScopes()->where('slug', $slug)->first();
+        });
+        Route::bind('any_faq', static function ($slug) {
+            return Faq::withoutGlobalScopes()->where('slug', $slug)->first();
+        });
+        Route::bind('any_carousel', static function ($id) {
+            return Carousel::withoutGlobalScopes()->findOrFail($id);
+        });
+        Route::bind('any_qrcode', static function ($id) {
+            return Qrcode::withoutGlobalScopes()->findOrFail($id);;
         });
     }
 

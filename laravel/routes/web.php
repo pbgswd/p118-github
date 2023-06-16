@@ -48,10 +48,10 @@ Route::middleware('web')->group(function () {
        Route::get('/post/{post}', 'show')->name('post_show');
     });
 
-    Route::get('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'show'])
-        ->name('invite_user_signup');
-    Route::post('/site_invitation/{inviteUser}/{password}', [CNS\InviteUserController::class, 'process_user'])
-        ->name('public_process_invitation');
+    Route::controller(CNS\InviteUserController::class)->group(function() {
+        Route::get('/site_invitation/{inviteUser}/{password}', 'show')->name('invite_user_signup');
+        Route::post('/site_invitation/{inviteUser}/{password}', 'process_user')->name('public_process_invitation');
+    });
 
     Route::get('/venues', [CNS\VenueController::class, 'list'])->name('venues');
     Route::get('/venue/{venue}', [CNS\VenueController::class, 'show'])->name('venue');
@@ -64,6 +64,17 @@ Route::middleware('web')->group(function () {
 
     Route::get('bylaws', [CNS\ByLawController::class, 'list'])->name('bylaws_list_public');
     Route::get('/bylaw/{bylaw}', [CNS\ByLawController::class, 'show'])->name('bylaw_show');
+
+    Route::controller(CNS\FaqController::class)->group(function() {
+        Route::get('/faqs', 'index')->name('faqs_list_public');
+        Route::get('/faq/{any_faq}', 'show')->name('faq_show');
+        Route::get('/faq/{faq_topic}/single/{faq_data}', 'single')->name('faq_single');
+    });
+
+    Route::controller(CNS\PostController::class)->group(function() {
+        Route::get('/posts', 'list')->name('posts');
+        Route::get('/post/{post}', 'show')->name('post_show');
+    });
 
     Route::get('/{folder}/download/{attachment}', [CNS\AttachmentController::class, 'download'])
         ->name('attachment_download')->middleware('throttle:download');
@@ -346,7 +357,6 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::post('/meeting/{any_meeting}/edit', [CNS\AdminMeetingController::class, 'update']);
     Route::delete('/meeting/delete', [CNS\AdminMeetingController::class, 'destroy'])->name('meeting_destroy');
 
-
     Route::controller(CNS\AdminEmploymentController::class)->group(function() {
         Route::get('employment-list/','index')->name('admin_employment_list');
         Route::get('employment/create','create')->name('admin_employment_create');
@@ -376,5 +386,12 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('/qrcode/delete', 'destroy')->name('admin_qrcode_destroy');
     });
 
-
+    Route::controller(CNS\AdminFaqController::class)->group(function(){
+        Route::get('faqs/', 'index')->name('admin_faqs_list');
+        Route::get('faq/create', 'create')->name('admin_faq_create');
+        Route::post('faq/create', 'store');
+        Route::get('/faq/{any_faq}/edit', 'edit')->name('admin_faq_edit');
+        Route::post('faq/{any_faq}/edit', 'update');
+        Route::delete('/faq/delete', 'destroy')->name('admin_faq_destroy');
+    });
 });

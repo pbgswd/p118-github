@@ -18,14 +18,14 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('caption');
-            $table->string('caption2');
-            $table->string('link');
-            $table->string('color');
-            $table->string('button');
-            $table->string('align');
-            $table->string('credit');
-            $table->tinyInteger('live');
-            $table->string('order');
+            $table->string('caption2')->nullable();
+            $table->string('link')->nullable();
+            $table->string('color')->nullable();
+            $table->string('button')->nullable();
+            $table->string('align')->nullable();
+            $table->string('credit')->nullable();
+            $table->boolean('live')->default(1);
+            $table->string('order')->nullable();
 
             $table->string('image_2000');
             $table->string('file_2000');
@@ -46,6 +46,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carousel');
+        Schema::dropIfExists('carousels');
     }
 };

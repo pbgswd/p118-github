@@ -2,12 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\Address;
-use App\Models\Committee;
-use App\Models\Membership;
-use App\Models\PhoneNumber;
-use App\Models\User;
-use App\Models\UserInfo;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 

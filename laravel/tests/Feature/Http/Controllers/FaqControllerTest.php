@@ -1,14 +1,10 @@
 <?php
 
 namespace Tests\Feature\Http\Controllers;
-
-use App\Models\Bylaw;
+use App\Models\Faq;
 use Tests\TestCase;
 
-/**
- * @see \App\Http\Controllers\ByLawController
- */
-class ByLawControllerTest extends TestCase
+class FaqControllerTest extends TestCase
 {
     /**
      * @test
@@ -16,12 +12,12 @@ class ByLawControllerTest extends TestCase
      */
     public function list_returns_an_ok_response()
     {
-        $bylaws = Bylaw::factory()->times(3)->create();
+        $faqs = Faq::factory()->times(3)->create();
 
-        $response = $this->get(route('bylaws_list_public'));
+        $response = $this->get(route('faqs_list_public'));
 
         $response->assertOk();
-        $response->assertViewIs('bylaws_list');
+        $response->assertViewIs('faqs');
         $response->assertViewHas('data');
     }
 
@@ -31,12 +27,12 @@ class ByLawControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $bylaw = Bylaw::factory()->create();
+        $faq = Faq::factory()->create();
 
-        $response = $this->get(route('bylaw_show', $bylaw->id));
+        $response = $this->get(route('faq_show', $faq->id));
 
         $response->assertOk();
-        $response->assertViewIs('bylaw_view');
+        $response->assertViewIs('faq_view');
         $response->assertViewHas('data');
     }
 }

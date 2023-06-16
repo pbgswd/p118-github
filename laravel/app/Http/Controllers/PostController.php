@@ -44,8 +44,7 @@ class PostController extends Controller
 
     /**
      * @param Post $post
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function show(Post $post)
     {
@@ -53,7 +52,6 @@ class PostController extends Controller
 
         if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this post.');
-
             return redirect('login');
         }
 

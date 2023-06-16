@@ -10,7 +10,6 @@ use Tests\TestCase;
 class CarouselControllerTest extends TestCase
 {
 
-
     /**
      * @test
      * @group showok

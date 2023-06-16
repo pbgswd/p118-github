@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**

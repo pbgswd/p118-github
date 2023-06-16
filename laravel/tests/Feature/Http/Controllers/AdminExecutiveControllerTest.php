@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\Executive;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
+
 //todo test to manage user exec roles
 /**
  * @see \App\Http\Controllers\AdminExecutiveController

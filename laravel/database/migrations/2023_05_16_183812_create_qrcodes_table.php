@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('qrcodes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->default(1);
-            $table->string('url');
-            $table->string('name');
+            $table->string('url')->nullable();
+            $table->string('name')->nullable();
             $table->string('file');
             $table->timestamps();
         });
