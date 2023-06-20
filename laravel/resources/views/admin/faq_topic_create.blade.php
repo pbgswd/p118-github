@@ -64,8 +64,30 @@
                 </div>
             </div>
 
+            @if($data['action'] == 'Update')
 
-            //todo faqs_data table has faq_id, question, answer, access_level, live
+                <div class="row mb-2 p-1 pr-3">
+                    @forelse ( $data['faq']['faqs_data'] as $fd )
+                        <div class="col-12 border border-dark rounded-lg p-2 m-2">
+                                <i class="fa fa-plus"></i>
+                                <i class="fa fa-minus"></i>
+                                <h3>
+                                    {{$fd->question}}
+                                </h3>
+                                <h4>
+                                    {{$fd->answer}}
+                                </h4>
+                        </div>
+                            @empty
+                        <div class="col-12 border border-dark rounded-lg p-2 m-2">
+                                <i class="fa fa-plus"></i>
+                                <i class="fa fa-minus"></i>  no Questions and answers yet.
+
+                        </div>
+                    @endforelse
+                </div>
+
+            @endif
 
 
             <div class="row mt-lg-3">

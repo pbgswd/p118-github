@@ -16,14 +16,15 @@ class FaqDataFactory extends Factory
      */
     public function definition()
     {
+
         return [
-            'faq_id' => 1,
+            'faq_id' => 3,
             'question' => 'Question ' . $this->faker->words(5, true),
             'answer' => 'Answer ' . $this->faker->paragraph,
             'access_level' => 'members',
             'live' => 1,
             'sort_order' => 100,
-
         ];
     }
+
 }

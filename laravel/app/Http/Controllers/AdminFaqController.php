@@ -77,7 +77,7 @@ class AdminFaqController extends Controller
     {
         $this->authorize('update', Faq::class);
 
-      //  $faq->load('faqs_data');
+        $faq->load(['faqs_data', 'user']);
 
         $data = [
             'faq' => $faq,
@@ -85,6 +85,8 @@ class AdminFaqController extends Controller
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
         ];
+
+        //dd($data);
         return view('admin.faq_topic_create', ['data' => $data]);
     }
 

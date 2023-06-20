@@ -34,6 +34,8 @@ class Faq extends LiveableModel implements Searchable
     use Sortable;
     use HasFactory;
 
+    protected $table = 'faqs';
+
     protected $guard_name = 'web';
 
     protected $policies = [
@@ -95,9 +97,9 @@ class Faq extends LiveableModel implements Searchable
     /**
      * @return HasMany
      */
-    public function faqs_data(): BelongsToMany
+    public function faqs_data(): HasMany
     {
-        return $this->belongsToMany(FaqData::class);
+        return $this->hasMany(FaqData::class)->orderBy('sort_order', 'desc');
     }
 
     /**
