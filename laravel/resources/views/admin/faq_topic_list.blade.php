@@ -8,7 +8,7 @@
                 FAQs have a top level topic term, with a list of questions and answers attached.
             </p>
             <a class="btn btn-primary" href="{{route('admin_faq_create')}}" role="button">
-                Create FAQ
+                Create a new FAQ
             </a>
         </div>
     </div>
@@ -51,7 +51,12 @@
                                                {{ $faq->faq_topic }}
                                             </a>
                                         </h4>
-                                        <h5>{{$faq->faqs_data->count()}} Questions & Answers</h5>
+                                        <h5>
+                                            {{$faq->faqs_data->count()}}
+                                            {{Str::plural(' Question', $faq->faqs_data->count())}}
+                                            &
+                                            {{Str::plural(' Answer', $faq->faqs_data->count())}}
+                                        </h5>
                                     </td>
                                     <td> {{ $faq->access_level }} </td>
                                     <td> {!! $faq->live ? "<i class='fas fa-check'></i>"
@@ -60,7 +65,8 @@
                                     <td>
                                         <a class="btn btn-primary" href="{{route('admin_faq_edit', $faq->slug)}}"
                                            role="button">
-                                            Edit FAQ</a>
+                                            Edit FAQ
+                                        </a>
                                     </td>
                                     <td> {{ $faq->created_at->format('F j Y H:i:s') }} </td>
                                     <td> {{ $faq->updated_at->format('F j Y H:i:s') }} </td>
