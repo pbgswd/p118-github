@@ -7,6 +7,7 @@ use App\Http\Requests\Faq\DestroyFaqRequest;
 use App\Http\Requests\Faq\StoreFaqRequest;
 use App\Http\Requests\Faq\UpdateFaqRequest;
 use App\Models\Faq;
+use App\Models\FaqData;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class AdminFaqController extends Controller
 
             $data = [
                 'faq' => new Faq(),
-                'action' => 'Save',
+                'action' => 'Create',
                 'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                     AccessLevelConstants::getConstants()),
             ];
@@ -54,14 +55,13 @@ class AdminFaqController extends Controller
     public function store(StoreFaqRequest $request): RedirectResponse
     {
         $this->authorize('create', Faq::class);
-
         $faq = new Faq($request->input('faq'));
-
         $faq->user_id = Auth::id();
-
         $faq->save();
+        $faq_data = new FaqData($request->input('faq.faq_data.new'));
+        $faq_data->faq()->associate($faq);
 
-        //todo save faq_data
+        $faq_data->save();
 
         Session::flash('success', 'You have saved a new Faq topic');
 
@@ -77,7 +77,7 @@ class AdminFaqController extends Controller
     {
         $this->authorize('update', Faq::class);
 
-        $faq->load(['faqs_data', 'user']);
+        $faq->load(['faqs_data', 'user'])->orderBy('faqs_data.sort_order', 'desc');
 
         $data = [
             'faq' => $faq,
@@ -86,26 +86,40 @@ class AdminFaqController extends Controller
                 AccessLevelConstants::getConstants()),
         ];
 
-        //dd($data);
         return view('admin.faq_topic_create', ['data' => $data]);
     }
 
     /**
      * @param UpdateFaqRequest $request
      * @param Faq $any_faq
+     * @param FaqData $any_faq
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(UpdateFaqRequest $request, Faq $any_faq): RedirectResponse
+    public function update(UpdateFaqRequest $request, Faq $any_faq, FaqData $faq_data): RedirectResponse
     {
         $this->authorize('update', Faq::class);
         $this->authorize('update', $any_faq);
 
+       // dd($request->all());
+      //  dd($any_faq);
 
         $any_faq->fill($request->faq);
         $any_faq->save();
 
-        //todo deal with faq_data
+//todo deal with faq_data
+dd($request->faq);
+
+        foreach($request->faq->faq_data as $fd)
+        {
+            $fd->save();
+        }
+
+        if($request->faq->faq_data->new->question != '') {
+            $faq_data = new FaqData($request->input('faq.faq_data.new'));
+            $faq_data->faq()->associate($any_faq);
+            $faq_data->save();
+        }
 
         Session::flash('success', 'You have updated a Faq topic');
         return redirect()->route('admin_faq_edit', [$any_faq->slug]);

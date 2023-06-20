@@ -40,7 +40,8 @@ class FaqData extends LiveableModel implements Searchable
         'question',
         'answer',
         'live',
-        'access_level'
+        'access_level',
+        'sort_order',
     ];
 
     public $sortable = [
@@ -48,6 +49,7 @@ class FaqData extends LiveableModel implements Searchable
         'answer',
         'live',
         'access_level',
+        'sort_order',
         'created_at',
         'updated_at',
     ];

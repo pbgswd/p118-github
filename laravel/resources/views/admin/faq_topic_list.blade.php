@@ -51,6 +51,7 @@
                                                {{ $faq->faq_topic }}
                                             </a>
                                         </h4>
+                                        <h5>{{$faq->faqs_data->count()}} Questions & Answers</h5>
                                     </td>
                                     <td> {{ $faq->access_level }} </td>
                                     <td> {!! $faq->live ? "<i class='fas fa-check'></i>"

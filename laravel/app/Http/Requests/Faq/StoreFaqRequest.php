@@ -24,13 +24,18 @@ class StoreFaqRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'faq.faq_topic' => 'required|unique:faqs,faq_topic|max:255',
             'faq.description' => 'required',
             'faq.access_level' => 'required|string|max:255',
             'faq.live' => 'boolean',
+            'faq.faq_data.new.question' => 'string|max:255',
+            'faq.faq_data.new.answer' => 'string',
+            'faq.faq_data.new.access_level' => 'string|max:255',
+            'faq.faq_data.new.live' => 'boolean',
+            'faq.faq_data.new.sort_order' => 'string'
         ];
     }
 
