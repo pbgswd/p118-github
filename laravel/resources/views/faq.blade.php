@@ -2,16 +2,13 @@
 @section('content')
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1 class="display-4">FAQs for IATSE Local 118</h1>
-        <p class="lead">
-            FAQs to help you.
-        </p>
-        <h2>
+
+        <h1>
             <a href="{{route('faq_show', $data['faq']->slug )}}">
                 <i class="fas fa-link"></i>
             </a>
             FAQ: {{$data['faq']->faq_topic}}
-        </h2>
+        </h1>
         <h4>
             {!! $data['faq']->description !!}
         </h4>
@@ -21,6 +18,15 @@
                Back to list of all FAQs
             </a>
         </div>
+
+        @can(['edit articles'])
+            <div class="text-right">
+                <a href="{{route('admin_faq_edit', $data['faq']->slug)}}"
+                   title="Edit {{$data['faq']->slug}}">
+                    <i class="fas fa-edit"></i> Admin Edit
+                </a>
+            </div>
+        @endcan
     </div>
 </div>
 <div class="container border border-dark rounded-lg mt-2" style="background: rgba(220,220,220,0.8);">

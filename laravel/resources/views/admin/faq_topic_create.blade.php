@@ -2,13 +2,22 @@
 @section('content')
 <div class="container">
     <div class="jumbotron jumbotron-fluid p-5">
-            <h1 class="display-4">Create/edit FAQ</h1>
-            <p class="lead">
-                FAQs have a top level topic term, with a list of questions and answers attached.
-            </p>
-            <a href="{{route('admin_faqs_list')}}">
-                List FAQs
-            </a>
+        <h1 class="display-4">Create/edit FAQ</h1>
+        <p class="lead">
+            FAQs have a top level topic term, with a list of questions and answers attached.
+        </p>
+        <a href="{{route('admin_faqs_list')}}">
+            List FAQs
+        </a>
+    </div>
+    <div class="row">
+        @if ($data['action'] == 'Update')
+            <div class="col-12 col-md-6 text-right">
+                <a href="{{route('faq_show', $data['faq']->slug)}}" title="View {{$data['faq']->faq_topic}}">
+                    <i class="fas fa-eye"></i> View on website
+                </a>
+            </div>
+        @endif
     </div>
     <div class="row">
         <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data"
@@ -69,8 +78,6 @@
                 <div class="row mb-2 p-1 pr-3">
                     @forelse ( $data['faq']['faqs_data'] as $fd )
                         <div class="col-12 border border-dark rounded-lg p-2 m-2">
-                                <i class="fa fa-plus"></i>
-                                <i class="fa fa-minus"></i>
                                 <h3>
                                     {{$fd->question}}
                                 </h3>
