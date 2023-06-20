@@ -9,6 +9,7 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\Employment;
 use App\Models\Executive;
+use App\Models\Faq;
 use App\Models\Feature;
 use App\Models\InviteUser;
 use App\Models\Meeting;
@@ -27,6 +28,7 @@ use App\Policies\CommitteePolicy;
 use App\Policies\CommitteePostPolicy;
 use App\Policies\EmploymentPolicy;
 use App\Policies\ExecutivePolicy;
+use App\Policies\FaqPolicy;
 use App\Policies\FeaturePolicy;
 use App\Policies\InviteUserPolicy;
 use App\Policies\MeetingPolicy;
@@ -66,6 +68,8 @@ class AuthServiceProvider extends ServiceProvider
         Attachment::class => AttachmentPolicy::class,
         Feature::class => FeaturePolicy::class,
         Memoriam::class => MemoriamPolicy::class,
+        Faq::class => FaqPolicy::class,
+
     ];
 
     /**

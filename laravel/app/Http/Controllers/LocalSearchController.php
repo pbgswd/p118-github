@@ -10,6 +10,8 @@ use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\Employment;
 use App\Models\Executive;
+use App\Models\Faq;
+use App\Models\FaqData;
 use App\Models\Feature;
 use App\Models\Meeting;
 use App\Models\Memoriam;
@@ -57,6 +59,8 @@ class LocalSearchController extends Controller
                 ->registerModel(User::class, 'name')
                 ->registerModel(Venue::class, ['name', 'description'])
                 ->registerModel(UserInfo::class, 'about')
+                ->registerModel(Faq::class, 'faq_topic')
+                ->registerModel(FaqData::class, ['question', 'answer'])
                 ->search($request->search),
         ];
 
@@ -146,8 +150,15 @@ class LocalSearchController extends Controller
                     $aspect->addSearchableAttribute('title')
                         ->addSearchableAttribute('content')
                         ->withoutGlobalScope(LiveScope::class);
-                })
-                ->search($request->search),
+                })->registerModel(Faq::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('faq_topic')
+                        ->addSearchableAttribute('description')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->registerModel(FaqData::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('question')
+                        ->addSearchableAttribute('answer')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->search($request->search),
         ];
 
         $data['plural'] = Str::plural('Result', count($data['results']));

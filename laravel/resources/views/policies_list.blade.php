@@ -1,26 +1,25 @@
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-scroll"></i> Policies'])
 @section('content')
+
+
 <div class="container border border-dark rounded-lg mt-3 mb-3 p-2" style="background: rgba(220,220,220,0.8);">
-    <div class="row mt-3">
-        <div class="col-12 col-md-4"></div>
-        <div class="col-12 col-md-4 text-center">
-            <h1>
-                <i class="fas fa-scroll"></i>
-                Local 118 Policies
-            </h1>
-        </div>
-        <div class="col-12 col-md-4 text-md-right">
-            <h3>
+    <div class="jumbotron-fluid text-center">
+        <h1>
+            <i class="fas fa-scroll"></i>
+            Local 118 Policies
+        </h1>
+        <h3>
                <span class="badge badge-primary badge-pill">
                    {{ $data['data']['count'] }} Policy Documents
                </span>
-            </h3>
-        </div>
-        <div class="col-12 pt-2">
-            <h4 class="font-italic">Please remember, we have pledged to keep confidential the work of this body and
-                to do all in our power to discourage and prevent violation of this requirement by brother and
-                sister members.
-            </h4>
+        </h3>
+        <div class="row mt-3">
+            <div class="col-12 pt-2">
+                <h4 class="font-italic">Please remember, we have pledged to keep confidential the work of this body and
+                    to do all in our power to discourage and prevent violation of this requirement by brother and
+                    sister members.
+                </h4>
+            </div>
         </div>
     </div>
     <div class="col-12 border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.8);">

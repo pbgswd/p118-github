@@ -114,14 +114,14 @@ class Faq extends LiveableModel implements Searchable
             return new SearchResult(
                 $this,
                 $this->title,
-                \route('admin_faq_edit', $this->id)
+                \route('admin_faq_edit', $this->slug)
             );
         }
 
         return new SearchResult(
             $this,
-            $this->title,
-            \route('faq_show', $this->id)
+            $this->faq_topic,
+            \route('faq_show', $this->slug)
         );
     }
 

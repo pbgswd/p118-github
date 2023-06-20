@@ -127,6 +127,20 @@ class ModelList
                 'pub_route' => 'venue',
                 'admin_route' => 'venue_edit',
             ],
+            'Faq' => [
+                'name' => 'Faqs',
+                'pub_route_list' => 'faqs_list_public',
+                'admin_route_list' => 'admin_faqs_list',
+                'pub_route' => 'faq_show',
+                'admin_route' => 'admin_faq_edit',
+            ],
+            'FaqData' => [
+                'name' => 'Faq Answer',
+                'pub_route_list' => 'faqs_list_public',
+                'admin_route_list' => 'admin_faqs_list',
+                'pub_route' => 'faq_show',
+                'admin_route' => 'admin_faq_edit',
+            ],
         ];
     }
 }
