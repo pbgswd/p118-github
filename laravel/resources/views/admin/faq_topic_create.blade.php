@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @section('content')
+
 <div class="container">
     <div class="jumbotron jumbotron-fluid p-5">
         <h1 class="display-4">{{$data['action']}} a FAQ</h1>
@@ -13,10 +14,10 @@
             |  <a href="{{route('faq_show', $data['faq']->slug)}}" title="View {{$data['faq']->faq_topic}}">
                 <i class="fas fa-eye"></i> View {{$data['faq']->faq_topic}} on website
             </a>
+            | <a href="{{route('admin_faq_create')}}">
+                Create new FAQ
+            </a>
         @endif
-        | <a href="{{route('admin_faq_create')}}">
-            Create new FAQ
-        </a>
     </div>
     <div class="row">
         <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data"
@@ -153,14 +154,14 @@
 <!-- begin section to be generated -->
                 <div class="row">
                     <div class="col-12 border border-dark rounded-lg p-2 m-2">
-                        New question and answer
+                        <h3>Add new question and answer</h3>
                         <div class="form-group">
                             <div class="col-lg-2">
                                 <h4>Question</h4>
                             </div>
                             <div class="col-lg-10">
                                 <input type="text" class="form-control"  placeholder="Question"
-                                       name="faq[faq_data][new][question]"
+                                       name="new[question]"
                                        value="" size="80"
                                        />
                             </div>
@@ -170,7 +171,7 @@
                                 <h4>Answer</h4>
                             </div>
                             <div class="col-lg-10">
-                                <textarea name="faq[faq_data][new][answer]" id="faq-faq_data-answer"
+                                <textarea name="new[answer]" id="faq-faq_data-answer"
                                           placeholder="Answer content"
                                           class="form-control">
                                 </textarea>
@@ -182,8 +183,8 @@
                             </div>
                             <div class="col-sm">
                                 <label>
-                                    <input name="faq[faq_data][new][live]" type="hidden" value="0" />
-                                    <input name="faq[faq_data][new][live]" type="checkbox" value="1"
+                                    <input name="new[live]" type="hidden" value="0" />
+                                    <input name="new[live]" type="checkbox" value="1"
                                     />
                                     Check now to make Live
                                 </label>
@@ -197,7 +198,7 @@
                             <div class="col-12 col-md-5 text-left">
                                 <div class="form-group">
                                     {{ select_options($data['access_levels'], old('faq.faq_data.access_level',
-                                        'public'), ['name' => 'faq[faq_data][new][access_level]',
+                                        'public'), ['name' => 'new[access_level]',
                                         'class' => 'form-control']) }}
                                 </div>
                             </div>
@@ -208,14 +209,9 @@
                             </div>
                             <div class="col-lg-10">
                                 <input type="text" class="form-control"  placeholder="Sort order: 100, 200, etc. "
-                                       name="faq[faq_data][new][sort_order]"
+                                       name="new[sort_order]"
                                        value="" size="10"
                                        />
-                            </div>
-                            <div class="input-group input-group-lg">
-                                <div class="col-12">
-                                    <h5>js hide form</h5>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -226,8 +222,20 @@
                         <i class="fas fa-edit fa-2x"></i>
                         <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
                     </div>
-                </div>
         </form>
+        <div class="col-sm"> &nbsp;</div>
+        @if ($data['action'] == 'Update')
+            <div class="col-sm" style="float:right">
+                <form name="delete" method="POST" action="{{route('admin_faq_destroy')}}">
+                    {!! csrf_field() !!}
+                    {!! method_field('DELETE') !!}
+                    <i class="far fa-trash-alt fa-2x"></i>
+                    <input type="hidden" name="id[]" value="{{ $data['faq']->id }}">
+                    <input class="btn btn-outline-danger" type="submit" value="Delete FAQ">
+                </form>
+            </div>
+        @endif
+        </div>
     </div>
 </div>
 @endsection

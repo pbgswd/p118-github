@@ -10,11 +10,18 @@
             <a class="btn btn-primary" href="{{route('admin_faq_create')}}" role="button">
                 Create a new FAQ
             </a>
+
+        </div>
+        <div class="m-2">
+            <a href="{{route('faqs_list_public')}}" title="View list of FAQs on website">
+                View list of FAQs on website
+            </a>
         </div>
     </div>
     <div class="row p-5">
         <div class='col-12'>
-            <h3>List of FAQs</h3>
+            <h3>{{$data['faqs']->count()}} FAQs</h3>
+
         </div>
         <div class='col-12'>
             <form name="delete" method="POST" action="{{route('admin_faq_destroy')}}">

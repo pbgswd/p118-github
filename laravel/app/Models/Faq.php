@@ -5,7 +5,6 @@ namespace App\Models;
 
 use App\Policies\FaqPolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
@@ -33,7 +32,7 @@ class Faq extends LiveableModel implements Searchable
 {
     use Sortable;
     use HasFactory;
-
+// Faq::factory()->has(FaqData::factory()->count(2), 'faqs_data')->count(4)->create();
     protected $table = 'faqs';
 
     protected $guard_name = 'web';

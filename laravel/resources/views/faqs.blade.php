@@ -6,7 +6,13 @@
         <p class="lead">
             {{$data['count']}} FAQs to help you.
         </p>
+        @can(['edit articles'])
+            <a href="{{route('admin_faqs_list')}}">
+                Admin List FAQs
+            </a>
+        @endcan
     </div>
+
 </div>
 <div class="container" style="background: rgba(220,220,220,0.8);">
     <div class="row">
@@ -23,8 +29,8 @@
                                     {{$f->faq_topic}}
                                 </h3>
                             </button>
-                            <h4>{!! $f->description!!}</h4>
-
+                            {!! $f->description!!}
+                            <br />
                             <a href="{{route('faq_show', $f->slug )}}">
                                 <i class="fas fa-link"></i> All {{$f->faqs_data->count()}} FAQs for
                                 {{$f->faq_topic}}
@@ -52,9 +58,7 @@
                                             <div id="collapseSub{{$fd->id}}" class="collapse mt-3 p-3"
                                                  aria-labelledby="headingSub{{$fd->id}}"
                                                  data-parent="#accordionSub">
-                                                <h4 class="pb-3">
-                                                    <i class="fas fa-info-circle"></i> {{$fd->answer}}
-                                                </h4>
+                                                {!! $fd->answer !!}
                                             </div>
                                         </div>
                                     </div>

@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AdminFaqController extends Controller
@@ -23,6 +24,7 @@ class AdminFaqController extends Controller
     public function index(): View
     {
         $data['faqs'] = Faq::withoutGlobalScopes()
+            ->orderBy('updated_at', 'desc')
             ->paginate(20);
         $data['count'] = Faq::withoutGlobalScopes()->count();
 
@@ -55,12 +57,13 @@ class AdminFaqController extends Controller
     public function store(StoreFaqRequest $request): RedirectResponse
     {
         $this->authorize('create', Faq::class);
+
         $faq = new Faq($request->input('faq'));
         $faq->user_id = Auth::id();
         $faq->save();
-        $faq_data = new FaqData($request->input('faq.faq_data.new'));
-        $faq_data->faq()->associate($faq);
 
+        $faq_data = new FaqData($request->input('new'));
+        $faq_data->faq()->associate($faq);
         $faq_data->save();
 
         Session::flash('success', 'You have saved a new Faq topic');
@@ -101,19 +104,18 @@ class AdminFaqController extends Controller
         $this->authorize('update', Faq::class);
         $this->authorize('update', $any_faq);
 
-       // dd($request->all());
-      //  dd($any_faq);
-
         $any_faq->fill($request->faq);
         $any_faq->save();
 
-//todo deal with faq_data
-dd($request->faq);
 
-        foreach($request->faq->faq_data as $fd)
-        {
-            $fd->save();
+
+        //todo sort out how to save subordinate data
+        foreach($request->faq['faq_data'] as $fd) {
+            $any_faq->faqs_data()->save($fd);
         }
+
+
+
 
         if($request->faq->faq_data->new->question != '') {
             $faq_data = new FaqData($request->input('faq.faq_data.new'));
@@ -130,13 +132,20 @@ dd($request->faq);
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function destroy(DestroyFaqRequest $any_faq): RedirectResponse
+    public function destroy(DestroyFaqRequest $request): RedirectResponse
     {
         $this->authorize('delete', Faq::class);
-//todo delete faq
-        //todo delete faq_data
 
-        Session::flash('success', 'You have deleted a Faq topic');
+        Faq::withoutGlobalScopes()
+            ->find($request->id)
+            ->each(function (Faq $faq) {
+                $faq->faqs_data()->delete();
+                $faq->delete();
+            });
+
+        Session::flash('success', 'You have deleted ' . count($request->all()) . ' Faq ' .
+            Str::plural('topic', count($request->all())));
+
         return redirect()->route('admin_faqs_list');
     }
 }

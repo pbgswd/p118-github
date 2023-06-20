@@ -24,24 +24,21 @@ class UpdateFaqRequest extends FormRequest
      */
     public function rules()
     {
-        //todo the array of faq._faq_data[]
         return [
             'faq.faq_topic' => 'required|max:255|unique:faqs,faq_topic,'.$this->route('any_faq')->slug.',slug',
             'faq.description' => 'required',
             'faq.access_level' => 'required|string|max:255',
             'faq.live' => 'boolean',
-
-
-
-
-            'faq.faq_data.new.question' => 'string|max:255|nullable',
-            'faq.faq_data.new.answer' => 'string|nullable',
-            'faq.faq_data.new.access_level' => 'string|max:255|nullable',
-            'faq.faq_data.new.live' => 'boolean|nullable',
-            'faq.faq_data.new.sort_order' => 'string|nullable'
-
-
-
+            'faq.faq_data.*.question' => 'string|max:255|nullable',
+            'faq.faq_data.*.answer' => 'string|nullable',
+            'faq.faq_data.*.access_level' => 'string|max:255|nullable',
+            'faq.faq_data.*.live' => 'boolean|nullable',
+            'faq.faq_data.*.sort_order' => 'string|nullable',
+            'new.question' => 'string|max:255|nullable',
+            'new.answer' => 'string|nullable',
+            'new.access_level' => 'string|max:255|nullable',
+            'new.live' => 'boolean|nullable',
+            'new.sort_order' => 'string|nullable'
         ];
     }
 }

@@ -9,9 +9,9 @@
             </a>
             FAQ: {{$data['faq']->faq_topic}}
         </h1>
-        <h4>
+
             {!! $data['faq']->description !!}
-        </h4>
+
 
         <div class="mt-5">
             <a class="btn btn-lg btn-primary" href="{{route('faqs_list_public')}}" role="button">
@@ -47,7 +47,7 @@
                 <div id="collapse{{$fd->id}}" class="collapse show" aria-labelledby="heading{{$fd->id}}"
                      data-parent="#accordionExample">
                     <div class="card-body">
-                       {{$fd->answer}}
+                       {!! $fd->answer !!}
                     </div>
                 </div>
 

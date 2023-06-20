@@ -11,6 +11,7 @@ use App\Services\AttachmentService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -141,7 +142,7 @@ class AdminPolicyController extends Controller
     public function destroy(AdminDestroyPolicy $request): RedirectResponse
     {
         //todo permissions for Policy controller
-        //$this->authorize('delete', Auth::user());
+        $this->authorize('delete', Auth::user());
 
         /** @var Collection $policy */
         Policy::withoutGlobalScopes()

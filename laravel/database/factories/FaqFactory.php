@@ -26,21 +26,6 @@ class FaqFactory extends Factory
             'description'  => 'description '. $this->faker->words(12, true),
             'access_level' => 'public',
             'live' => 1,
-
-            /*******
-            'faq_data' =>
-                [
-                    'faq_id' => 1,
-                    'question' => 'Question ' . $this->faker->words(5, true),
-                    'answer' => 'Answer ' . $this->faker->paragraph,
-                    'access_level' => 'members',
-                    'sort_order' => 100
-                    'live' => 1,
-                ]
-*/
-            //todo faqs_data table
-            //todo faqs_data table has faq_id, question, answer, access_level, live
-
         ];
     }
 }

@@ -31,11 +31,11 @@ class StoreFaqRequest extends FormRequest
             'faq.description' => 'required',
             'faq.access_level' => 'required|string|max:255',
             'faq.live' => 'boolean',
-            'faq.faq_data.new.question' => 'string|max:255',
-            'faq.faq_data.new.answer' => 'string',
-            'faq.faq_data.new.access_level' => 'string|max:255',
-            'faq.faq_data.new.live' => 'boolean',
-            'faq.faq_data.new.sort_order' => 'string'
+            'new.question' => 'string|max:255|nullable',
+            'new.answer' => 'string|nullable',
+            'new.access_level' => 'string|max:255|nullable',
+            'new.live' => 'boolean|nullable',
+            'new.sort_order' => 'string|nullable'
         ];
     }
 
