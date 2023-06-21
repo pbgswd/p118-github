@@ -33,6 +33,7 @@ class UpdateFaqRequest extends FormRequest
             'faq.faq_data.*.answer' => 'string|nullable',
             'faq.faq_data.*.access_level' => 'string|max:255|nullable',
             'faq.faq_data.*.live' => 'boolean|nullable',
+            'faq.faq_data.*.delete' => 'boolean|nullable',
             'faq.faq_data.*.sort_order' => 'string|nullable',
             'new.question' => 'string|max:255|nullable',
             'new.answer' => 'string|nullable',

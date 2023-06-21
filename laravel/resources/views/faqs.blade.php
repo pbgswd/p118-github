@@ -12,9 +12,8 @@
             </a>
         @endcan
     </div>
-
 </div>
-<div class="container" style="background: rgba(220,220,220,0.8);">
+<div class="container">
     <div class="row">
         <div class="col-12">
             <div class="accordion p-0" id="accordionTop">
@@ -40,7 +39,6 @@
                             <div id="collapse{{$f->slug}}" class="col-12 collapse m-0"
                                  aria-labelledby="heading{{$f->slug}}" data-parent="#accordionTop">
                                 <div class="card-body p-0">
-
                                     <div class="accordion p-0" id="accordionSub">
                                         <div class="card m-0">
                                             <div class="col-12 card-header" id="headingSub{{$fd->id}}">
@@ -81,7 +79,3 @@
             </div>
         </div>
 @endsection
-
-
-
-

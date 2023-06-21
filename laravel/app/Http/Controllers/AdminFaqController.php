@@ -95,11 +95,10 @@ class AdminFaqController extends Controller
     /**
      * @param UpdateFaqRequest $request
      * @param Faq $any_faq
-     * @param FaqData $any_faq
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(UpdateFaqRequest $request, Faq $any_faq, FaqData $faq_data): RedirectResponse
+    public function update(UpdateFaqRequest $request, Faq $any_faq): RedirectResponse
     {
         $this->authorize('update', Faq::class);
         $this->authorize('update', $any_faq);
@@ -107,18 +106,19 @@ class AdminFaqController extends Controller
         $any_faq->fill($request->faq);
         $any_faq->save();
 
+        $faq = Faq::latest()->first();
 
-
-        //todo sort out how to save subordinate data
         foreach($request->faq['faq_data'] as $fd) {
-            $any_faq->faqs_data()->save($fd);
+            if($fd['delete'] == 1) {
+                FaqData::where('id', $fd['id'])->delete();
+            } else {
+                unset($fd['delete']);
+                $faq->faqs_data()->upsert([$fd],[ 'id']);
+            }
         }
 
-
-
-
-        if($request->faq->faq_data->new->question != '') {
-            $faq_data = new FaqData($request->input('faq.faq_data.new'));
+        if($request->new['question'] != '') {
+            $faq_data = new FaqData($request->input('new'));
             $faq_data->faq()->associate($any_faq);
             $faq_data->save();
         }

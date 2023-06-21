@@ -21,7 +21,6 @@
                     <i class="fas fa-tachometer-alt"></i> Admin
                 </a>
                 @endrole
-
             </li>
             <div class="dropdown mr-1 mt-2 mt-md-0">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
@@ -29,6 +28,9 @@
                     About Us
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <a class="dropdown-item" href="{{route('faqs_list_public')}}" title="Faqs">
+                        FAQs
+                    </a>
                     <a class="dropdown-item" href="{{route('page_show', 'history')}}" title="History">
                         History
                     </a>

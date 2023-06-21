@@ -57,7 +57,10 @@
                     </div>
                 </div>
                 <h4>
-                   FAQ Questions and Answers
+                    @if($data['action'] == 'Update')
+                        {{count($data['faq']['faqs_data'])}}
+                    @endif
+                        FAQ Questions and Answers
                 </h4>
                 @if($data['action'] == 'Update')
                     <div class="row">
@@ -116,10 +119,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-lg-2">
-                                        <h4>Sort Order</h4>
+                                    <div class="col-12">
+                                        <h4>Sort Order (largest number is first)</h4>
                                     </div>
-                                    <div class="col-lg-10">
+                                    <div class="col-12">
                                         <input type="text" class="form-control"  placeholder="sort_order"
                                                name="faq[faq_data][{{$fd->id}}][sort_order]"
                                                value="{{ old('faq.faq_data.sort_order', $fd->sort_order) }}" size="80"
@@ -131,6 +134,8 @@
                                         <div class="col-12">
                                             <h4>Delete this question and answer</h4>
                                             <label>
+                                                <input name="faq[faq_data][{{$fd->id}}][delete]" type="hidden"
+                                                       value="0" />
                                                 <input name="faq[faq_data][{{$fd->id}}][delete]" type="checkbox"
                                                        value="1" style="width: 2rem; height: 2rem;" />
                                                 Check to delete, and update
@@ -142,81 +147,86 @@
                         @endforeach
                     </div>
                 @endif
-                <div class="row">
-                    <div class="col-12 border border-dark rounded-lg p-2">
-                        @if($data['action'] == "Create" || $data['faq']['faqs_data']->count() == 0)
+                @if($data['action'] == "Create" || $data['faq']['faqs_data']->count() == 0)
+                    <div class="row">
+                        <div class="col-12 p-2">
                             No Questions and answers yet.
-                        @endif
-                        <i class="fa fa-plus"></i>
-                        Add a question and answer
+                        </div>
                     </div>
-                </div>
-<!-- begin section to be generated -->
+                @endif
+            <!-- begin section to be generated -->
                 <div class="row">
-                    <div class="col-12 border border-dark rounded-lg p-2 m-2">
-                        <h3>Add new question and answer</h3>
-                        <div class="form-group">
-                            <div class="col-lg-2">
-                                <h4>Question</h4>
-                            </div>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control"  placeholder="Question"
-                                       name="new[question]"
-                                       value="" size="80"
-                                       />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-2">
-                                <h4>Answer</h4>
-                            </div>
-                            <div class="col-lg-10">
-                                <textarea name="new[answer]" id="faq-faq_data-answer"
-                                          placeholder="Answer content"
-                                          class="form-control">
-                                </textarea>
-                            </div>
-                        </div>
-                        <div class="row mt-lg-2">
-                            <div class="col-2">
-                                <h4>Live with topic</h4>
-                            </div>
-                            <div class="col-sm">
-                                <label>
-                                    <input name="new[live]" type="hidden" value="0" />
-                                    <input name="new[live]" type="checkbox" value="1"
-                                    />
-                                    Check now to make Live
-                                </label>
-                                <p>ie.: Draft or Published.</p>
-                            </div>
-                        </div>
-                        <div class="row mt-3 mb-2 pb-2 pt-2">
-                            <div class="col-12 col-md-4 text-md-right">
-                                <h4>Access Level for FAQ question & answer</h4>
-                            </div>
-                            <div class="col-12 col-md-5 text-left">
+                    <div class="col-12">
+                        <button class="btn btn-primary m-3" type="button" data-toggle="collapse"
+                                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fa fa-plus"></i>
+                            Add a question and answer
+                        </button>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
                                 <div class="form-group">
-                                    {{ select_options($data['access_levels'], old('faq.faq_data.access_level',
-                                        'public'), ['name' => 'new[access_level]',
-                                        'class' => 'form-control']) }}
+                                    <div class="col-lg-2">
+                                        <h4>Question</h4>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control"  placeholder="Question"
+                                               name="new[question]"
+                                               value="" size="80"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-12">
+                                        <h4>Answer</h4>
+                                    </div>
+                                    <div class="col-12">
+                                    <textarea name="new[answer]" id="faq-faq_data-answer"
+                                              placeholder="Answer content"
+                                              class="form-control">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="row mt-lg-2">
+                                    <div class="col-12">
+                                        <h4>Live with topic</h4>
+                                    </div>
+                                    <div class="col-12">
+                                        <label>
+                                            <input name="new[live]" type="hidden" value="0" />
+                                            <input name="new[live]" type="checkbox" value="1"
+                                            />
+                                            Check now to make Live (ie.: Draft or Published).
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-2 pb-2 pt-2">
+                                    <div class="col-12 col-md-4 text-md-right">
+                                        <h4>Access Level for FAQ question & answer</h4>
+                                    </div>
+                                    <div class="col-12 col-md-5 text-left">
+                                        <div class="form-group">
+                                            {{ select_options($data['access_levels'], old('faq.faq_data.access_level',
+                                                'public'), ['name' => 'new[access_level]',
+                                                'class' => 'form-control']) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-2">
+                                        <h4>Sort Order</h4>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control"  placeholder="Sort order: 100, 200, etc. "
+                                               name="new[sort_order]"
+                                               value="" size="10"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-lg-2">
-                                <h4>Sort Order</h4>
-                            </div>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control"  placeholder="Sort order: 100, 200, etc. "
-                                       name="new[sort_order]"
-                                       value="" size="10"
-                                       />
-                            </div>
-                        </div>
                     </div>
-    <!-- end of section to be generated -->
                 </div>
+    <!-- end of section to be generated -->
                 <div class="row mt-lg-3">
                     <div class="col-sm">
                         <i class="fas fa-edit fa-2x"></i>
