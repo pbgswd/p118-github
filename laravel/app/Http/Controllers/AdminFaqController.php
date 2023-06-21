@@ -108,6 +108,8 @@ class AdminFaqController extends Controller
 
         $faq = Faq::latest()->first();
 
+	if(isset($request->faq['faq_data'])) {
+	
         foreach($request->faq['faq_data'] as $fd) {
             if($fd['delete'] == 1) {
                 FaqData::where('id', $fd['id'])->delete();
@@ -116,6 +118,7 @@ class AdminFaqController extends Controller
                 $faq->faqs_data()->upsert([$fd],[ 'id']);
             }
         }
+	}
 
         if($request->new['question'] != '') {
             $faq_data = new FaqData($request->input('new'));

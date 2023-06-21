@@ -14,6 +14,7 @@ class AdminController extends Controller
      */
     public function index(): View
     {
+
         //Land on the home page of admin. Could have data later.
         $data = [
             ['user' => Auth::user()],

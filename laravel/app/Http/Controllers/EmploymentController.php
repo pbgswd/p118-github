@@ -14,7 +14,7 @@ class EmploymentController extends Controller
 {
     public function __construct()
     {
-        Artisan::call('employment:update-status');
+        //Artisan::call('employment:update-status');
     }
 
     /**
@@ -22,6 +22,7 @@ class EmploymentController extends Controller
      */
     public function index(): View
     {
+
         $years = DB::table('employment')
             ->select(DB::raw('DISTINCT YEAR(deadline) as year'))
             ->orderBy('year', 'desc')
