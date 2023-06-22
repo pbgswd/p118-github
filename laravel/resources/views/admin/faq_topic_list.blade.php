@@ -64,6 +64,9 @@
                                             &
                                             {{Str::plural(' Answer', $faq->faqs_data->count())}}
                                         </h5>
+                                        <h5>
+                                            Created by: {{$faq->user->name}}
+                                        </h5>
                                     </td>
                                     <td> {{ $faq->access_level }} </td>
                                     <td> {!! $faq->live ? "<i class='fas fa-check'></i>"

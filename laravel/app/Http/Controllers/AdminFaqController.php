@@ -24,6 +24,7 @@ class AdminFaqController extends Controller
     public function index(): View
     {
         $data['faqs'] = Faq::withoutGlobalScopes()
+            ->with('user')
             ->orderBy('updated_at', 'desc')
             ->paginate(20);
         $data['count'] = Faq::withoutGlobalScopes()->count();
@@ -61,10 +62,11 @@ class AdminFaqController extends Controller
         $faq = new Faq($request->input('faq'));
         $faq->user_id = Auth::id();
         $faq->save();
-
-        $faq_data = new FaqData($request->input('new'));
-        $faq_data->faq()->associate($faq);
-        $faq_data->save();
+        if($request->new['question'] != '') {
+            $faq_data = new FaqData($request->input('new'));
+            $faq_data->faq()->associate($faq);
+            $faq_data->save();
+        }
 
         Session::flash('success', 'You have saved a new Faq topic');
 
@@ -108,17 +110,16 @@ class AdminFaqController extends Controller
 
         $faq = Faq::latest()->first();
 
-	if(isset($request->faq['faq_data'])) {
-	
-        foreach($request->faq['faq_data'] as $fd) {
-            if($fd['delete'] == 1) {
-                FaqData::where('id', $fd['id'])->delete();
-            } else {
-                unset($fd['delete']);
-                $faq->faqs_data()->upsert([$fd],[ 'id']);
+        if(isset($request->faq['faq_data'])) {
+            foreach($request->faq['faq_data'] as $fd) {
+                if($fd['delete'] == 1) {
+                    FaqData::where('id', $fd['id'])->delete();
+                } else {
+                    unset($fd['delete']);
+                    $faq->faqs_data()->upsert([$fd],[ 'id']);
+                }
             }
         }
-	}
 
         if($request->new['question'] != '') {
             $faq_data = new FaqData($request->input('new'));

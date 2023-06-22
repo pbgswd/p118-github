@@ -17,6 +17,7 @@
             | <a href="{{route('admin_faq_create')}}">
                 Create new FAQ
             </a>
+            | Created by: {{$data['faq']['user']->name}}
         @endif
     </div>
     <div class="row">
