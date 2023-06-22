@@ -48,7 +48,7 @@
                                                             aria-expanded="false"
                                                             aria-controls="collapseSub{{$fd->id}}">
                                                         <h3>
-                                                            <i class="fas fa-question-circle"></i> {{$fd->question}}?
+                                                            <i class="fas fa-question-circle"></i> {{$fd->question}}
                                                         </h3>
                                                     </button>
                                                 </h2>
