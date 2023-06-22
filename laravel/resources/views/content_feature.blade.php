@@ -66,6 +66,9 @@
         <div class="col-12 border border-dark rounded-lg mb-2">
             <a href="{{route('policies_list_public')}}"><i class="fas fa-scroll"></i>  Policies</a>
         </div>
+        <div class="col-12 border border-dark rounded-lg mb-2">
+            <a href="{{route('faqs_list_public')}}"><i class="fas fa-scroll"></i> FAQs</a>
+        </div>
         <hr />
         @foreach ($data['topics'] as $t)
             <div class="col-12 border border-dark rounded-lg pt-1 mb-2">
