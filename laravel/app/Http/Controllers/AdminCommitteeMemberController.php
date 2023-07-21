@@ -211,7 +211,7 @@ class AdminCommitteeMemberController extends Controller
     public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
 //todo prove unit test is going in this method AdminCommitteeMemberControllerTest::destroy_returns_an_ok_response
-        Log::debug('In method ' . __METHOD__ . ', Line ' . __LINE__);
+
         $this->authorize('update', $committee);
 
         $committee->committee_members()->detach($user['id']);
