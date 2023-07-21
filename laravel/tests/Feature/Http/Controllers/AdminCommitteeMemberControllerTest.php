@@ -32,10 +32,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
  //todo get a user associated with the committee - know a user id and send it in
-
-        //dd($this->committee->committee_members);
-      //  exit();
-//        dd(1);
+//dd($this->committee->committee_members[0]->id);
         Log::debug(['slug' => $this->committee->slug, 'user' => $this->committee->committee_members[0]->id ]);
 //todo supposed to be going in AdminCommitteeControllerMethod::destroy
 
@@ -46,16 +43,12 @@ class AdminCommitteeMemberControllerTest extends TestCase
                     'user' => $this->committee->committee_members[0]->id
                 ]
             ));
-//todo member not being deleted?
-       // dd(2);
 
 Log::debug(route('admin-list-committee-members', ['committee' => $this->committee->slug]));
 // http://p118.dev/admin/committee/anti-racism-committee/admin-edit-committee-members/user/122
 
         $this->assertModelMissing($this->committee->committee_members);
         $response->assertRedirect(route('admin-list-committee-members', ['committee' => $this->committee->slug]));
-
-       //
     }
 
     /**

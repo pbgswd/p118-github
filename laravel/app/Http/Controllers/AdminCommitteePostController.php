@@ -46,7 +46,7 @@ class AdminCommitteePostController extends Controller
                 ->with('attachments')
                 ->sortable()
                 ->where('committee_id', $committee->id)
-                ->orderBy('created_at')
+                ->orderBy('created_at', 'desc')
                 ->paginate(10),
         ];
 

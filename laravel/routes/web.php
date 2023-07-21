@@ -68,7 +68,6 @@ Route::middleware('web')->group(function () {
     Route::controller(CNS\FaqController::class)->group(function() {
         Route::get('/faqs', 'index')->name('faqs_list_public');
         Route::get('/faq/{any_faq}', 'show')->name('faq_show');
-        Route::get('/faq/{faq_topic}/single/{faq_data}', 'single')->name('faq_single');
     });
 
     Route::controller(CNS\PostController::class)->group(function() {
@@ -341,21 +340,23 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::post('/agreement/{any_agreement}/edit', 'update');
     });
 
-    Route::get('/organizations', [CNS\AdminOrganizationController::class, 'index'])->name('organizations_list');
-    Route::get('/organization/create', [CNS\AdminOrganizationController::class, 'create'])->name('organization_create');
-    Route::post('/organization/create', [CNS\AdminOrganizationController::class, 'store']);
-    Route::get('/organization/{any_organization}/edit', [CNS\AdminOrganizationController::class, 'edit'])
-        ->name('organization_edit');
-    Route::post('/organization/{any_organization}/edit', [CNS\AdminOrganizationController::class, 'update']);
-    Route::delete('/organization/delete', [CNS\AdminOrganizationController::class, 'destroy'])
-        ->name('organization_destroy');
+    Route::controller(CNS\AdminOrganizationController::class)->group(function() {
+        Route::get('/organizations', 'index')->name('organizations_list');
+        Route::get('/organization/create', 'create')->name('organization_create');
+        Route::post('/organization/create', 'store');
+        Route::get('/organization/{any_organization}/edit', 'edit')->name('organization_edit');
+        Route::post('/organization/{any_organization}/edit', 'update');
+        Route::delete('/organization/delete', 'destroy')->name('organization_destroy');
+    });
 
-    Route::get('/meetings', [CNS\AdminMeetingController::class, 'index'])->name('meetings_list');
-    Route::get('/meeting/create', [CNS\AdminMeetingController::class, 'create'])->name('meeting_create');
-    Route::post('/meeting/create', [CNS\AdminMeetingController::class, 'store']);
-    Route::get('/meeting/{any_meeting}/edit', [CNS\AdminMeetingController::class, 'edit'])->name('meeting_edit');
-    Route::post('/meeting/{any_meeting}/edit', [CNS\AdminMeetingController::class, 'update']);
-    Route::delete('/meeting/delete', [CNS\AdminMeetingController::class, 'destroy'])->name('meeting_destroy');
+    Route::controller(CNS\AdminMeetingController::class)->group(function () {
+        Route::get('/meetings', 'index')->name('meetings_list');
+        Route::get('/meeting/create', 'create')->name('meeting_create');
+        Route::post('/meeting/create', 'store');
+        Route::get('/meeting/{any_meeting}/edit', 'edit')->name('meeting_edit');
+        Route::post('/meeting/{any_meeting}/edit', 'update');
+        Route::delete('/meeting/delete', 'destroy')->name('meeting_destroy');
+    });
 
     Route::controller(CNS\AdminEmploymentController::class)->group(function() {
         Route::get('employment-list/','index')->name('admin_employment_list');
