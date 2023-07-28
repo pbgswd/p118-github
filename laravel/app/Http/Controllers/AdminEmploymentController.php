@@ -23,7 +23,6 @@ class AdminEmploymentController extends Controller
     public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;
-        Artisan::call('employment:update-status');
     }
 
     /**
