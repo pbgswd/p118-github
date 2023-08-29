@@ -119,7 +119,6 @@ class AdminAgreementController extends Controller
      */
     public function edit(Agreement $agreement): View
     {
-       // dd($agreement);
         $this->authorize('update', Agreement::class);
 
         $agreement->load('user', 'attachments', 'organizations', 'venues');

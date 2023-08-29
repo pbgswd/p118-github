@@ -28,7 +28,12 @@ class AdminQrCodeController extends Controller
      */
     public function create(): View
     {
-        echo __METHOD__;
+        $qr = new Qrcode();
+        $data = [
+            'qrcode' => $qr,
+            'action' => 'Create',
+        ];
+        return view('admin.qrcode', ['data' => $data]);
     }
 
     /**
@@ -39,18 +44,7 @@ class AdminQrCodeController extends Controller
      */
     public function store(Request $request)
     {
-        echo __METHOD__;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Qrcode  $qrcode
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Qrcode $qrcode)
-    {
-        echo __METHOD__;
+dd($request->all());
     }
 
     /**
@@ -61,7 +55,11 @@ class AdminQrCodeController extends Controller
      */
     public function edit(Qrcode $qrcode)
     {
-        echo __METHOD__;
+        $data = [
+            'qr' => $qrcode,
+            'action' => 'Create',
+        ];
+        return view('admin.qrcode', ['data' => $data]);
     }
 
     /**

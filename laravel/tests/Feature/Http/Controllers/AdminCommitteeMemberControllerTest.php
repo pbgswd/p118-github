@@ -44,7 +44,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
                 ]
             ));
 
-Log::debug(route('admin-list-committee-members', ['committee' => $this->committee->slug]));
+// Log::debug(route('admin-list-committee-members', ['committee' => $this->committee->slug]));
 // http://p118.dev/admin/committee/anti-racism-committee/admin-edit-committee-members/user/122
 
         $this->assertModelMissing($this->committee->committee_members);
