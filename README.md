@@ -10,7 +10,8 @@
 
 ### Background
 
-IATSE Local 118 in Vancouver has a website which has served its needs well in the past. Now a new instance of the
+IATSE Local 118 in Vancouver has a website which has served its needs well 
+in the past. Now a new instance of the
 website that makes use of current software paradigms will better serve the Local. It will allow for management of more timely
 information, addition of online services and the reorganization of current ones to best suit the needs of the Local membership and public visitors of the website.
 
