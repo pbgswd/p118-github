@@ -1,7 +1,7 @@
 # Project118
 ----------------------------------------
 # IATSE Local 118 website rebuild
-
+### developed by Peter Gordon
 #### A good use case for Laravel.
 
 [iatse118.com](https://iatse118.com)
