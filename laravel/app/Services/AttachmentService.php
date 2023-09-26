@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Constants\AccessLevelConstants;
 use App\Models\Attachment;
 use App\Models\Interfaces\HasAttachment;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -93,9 +94,9 @@ class AttachmentService
     /**
      * @param Attachment $attachment
      * @param string $folder
-     * @return mixed
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function downloadAttachment(Attachment $attachment, string $folder)
+    public function downloadAttachment(Attachment $attachment, string $folder): RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
     {
         if (false === Auth::check() && $attachment->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('error', 'Please log in first and try the download link again.');

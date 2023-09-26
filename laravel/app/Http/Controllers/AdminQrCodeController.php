@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Qrcode;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -37,14 +38,18 @@ class AdminQrCodeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     *  Store a newly created resource in storage.
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
+        /*
+         * id, user_id, url, name, file, created_at, updated_at
+         */
 dd($request->all());
+
+        return redirect()->route('qr_edit', [$qr->url]);
     }
 
     /**
@@ -55,6 +60,8 @@ dd($request->all());
      */
     public function edit(Qrcode $qrcode)
     {
+
+
         $data = [
             'qr' => $qrcode,
             'action' => 'Create',
@@ -69,9 +76,11 @@ dd($request->all());
      * @param  \App\Models\Qrcode  $qrcode
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Qrcode $qrcode)
+    public function update(Request $request, Qrcode $qrcode): RedirectResponse
     {
+        //todo delete old qr, update new qr based on data
         echo __METHOD__;
+        return redirect()->route('qr_edit', [$qr->url]);
     }
 
     /**
@@ -80,8 +89,9 @@ dd($request->all());
      * @param  \App\Models\Qrcode  $qrcode
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Qrcode $qrcode)
+    public function destroy(Qrcode $qrcode): RedirectResponse
     {
         echo __METHOD__;
+        return redirect()->route('qrcodes');
     }
 }

@@ -8,7 +8,9 @@
     </div>
 
 <ul>
-    <li>Select type of QR Code</li>
+    <li>Uses <a href="https://packagist.org/packages/simplesoftwareio/simple-qrcode" target="_blank">
+            SimpleQRCode</a> </li>
+    <li>Create any qr code, text or URL</li>
     <li>Add data</li>
     <li>Hit Create button to generate qr code</li>
 </ul>
