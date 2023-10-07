@@ -19,9 +19,10 @@
                     <thead>
                         <tr>
                             <th> @sortablelink('id','#') </th>
-                            <th>   </th>
-                            <th>   </th>
-                            <th>  </th>
+                            <th>  type </th>
+                            <th>  data </th>
+                            <th> name </th>
+                            <th> live</th>
                             <th> Edit </th>
                             <th> @sortablelink('created_at', 'Created At') </th>
                             <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -30,11 +31,21 @@
                     <tbody>
                     @forelse ( $data['qrcodes'] as $f )
                         <tr>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="id[]" value="{{ $f->id }}" />
-                                </label>
-                            </div>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="id[]" value="{{ $f->id }}" />
+                                    </label>
+                                </div>
+                            </td>
+                            <td>{{$f->qrtype}}</td>
+                            <td>{{$f->qrdata}}</td>
+                            <td>{{$f->name}}</td>
+                            <td>{{$f->live}}</td>
+                            <td><a href="{{route('admin_qrcode_edit', $f->id)}}">edit</a></td>
+                            <td>{{$f->created_at}}</td>
+                            <td>{{$f->updated_at}}</td>
+
                         </tr>
                     @empty
                         <tr>

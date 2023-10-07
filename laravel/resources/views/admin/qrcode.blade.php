@@ -2,34 +2,81 @@
 @section('content')
     <div class='container'>
         <h3>
-          Create A QR Code |  <a href="{{ route('admin_qrcodes_list') }}">List qr codes
+            {{ $data['action'] }} A QR Code |  <a href="{{ route('admin_qrcodes_list') }}">List qr codes
                 <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
     </div>
 
-<ul>
-    <li>Uses <a href="https://packagist.org/packages/simplesoftwareio/simple-qrcode" target="_blank">
-            SimpleQRCode</a> </li>
-    <li>Create any qr code, text or URL</li>
-    <li>Add data</li>
-    <li>Hit Create button to generate qr code</li>
-</ul>
+    <ul>
+        <li>Uses <a href="https://packagist.org/packages/simplesoftwareio/simple-qrcode" target="_blank">
+                SimpleQRCode</a> </li>
+        <li>Create any qr code, text or URL</li>
+        <li>Add data</li>
+        <li>Add a description for reference later</li>
+        <li>Hit Create button to generate qr code</li>
+        <li>Type is hard coded to url</li>
+    </ul>
+
+    <div class="row mt-lg-3 p-6 mb-3">
+        <img src="data:image/png;base64,
+            {!! base64_encode(QrCode::format('png')
+                ->size(200)
+                ->mergeString(Storage::get('public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png'), .2)
+                ->generate('https://iatse118.com')); !!}
+        " />
+    </div>
+    @if($data['action'] == 'Edit')
+        <h2>Qr code</h2>
+            {!! QrCode::size(200)->generate($data['qrcode']->qrdata) !!}
+        <h3>{{$data['qrcode']->qrdata}}</h3>
+    @endif
 
     <form method="post" name="qrcode" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
 
+        <input type="hidden" name="qrcode[qrtype]" value="url" />
+
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-12">
-                    <h4>URL to create</h4>
+                    <h4>Data to add in QR Code</h4>
                 </div>
                 <div class="col-12">
-                    <input type="text" class="form-control"  placeholder="https://....." name="qrcode[url]"
-                           value="{{ old('qrcode.url', $data['qrcode']->url)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="https://....." name="qrcode[qrdata]"
+                           value="{{ old('qrcode.qrdata', $data['qrcode']->qrdata)}}" size="80" required/>
                 </div>
             </div>
         </div>
+
+        <div class="row mt-lg-3">
+            <div class="form-group">
+                <div class="col-12">
+                    <h4>Descriptive name for this QR Code</h4>
+                </div>
+                <div class="col-12">
+                    <input type="text" class="form-control"  placeholder="name for it....." name="qrcode[name]"
+                           value="{{ old('qrcode.name', $data['qrcode']->name)}}" size="80" required/>
+                </div>
+            </div>
+        </div>
+
+
+
+<!--
+        <div class="row mt-lg-3">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">QR type</label>
+                <select name="qrcode[qrType]" class="form-control" id="QRtypeSelect1">
+                    <option value="url">URL</option>
+                    <option value="email">Email</option>
+                    <option value="phoneNumber">Phone Number</option>
+                    <option value="SMS">SMS</option>
+                    <option value="WiFi">WiFi</option>
+                </select>
+            </div>
+        </div>
+-->
 
         <div class="col-6">
             <div class="col-lg-2">
@@ -62,7 +109,7 @@
 
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="id[]" value="" />
+                <input type="checkbox" name="id[]" value="{{$data['qrcode']->id}}" />
             </label>
         </div>
 

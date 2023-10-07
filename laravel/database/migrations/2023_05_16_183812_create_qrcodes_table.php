@@ -15,10 +15,13 @@ return new class extends Migration
     {
         Schema::create('qrcodes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->default(1);
-            $table->string('url')->nullable();
-            $table->string('name')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('qrtype');
+            $table->string('qrdata');
+            $table->string('name');
             $table->string('file');
+            $table->boolean('live')->default(1);
             $table->timestamps();
         });
     }

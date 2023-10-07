@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Qrcode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use SimpleSoftwareIO\QrCode\Facades\QrCode as QRC;
 
 class AdminQrCodeController extends Controller
 {
@@ -16,8 +19,7 @@ class AdminQrCodeController extends Controller
      */
     public function index(): View
     {
-        $data = ['qrcodes' => Qrcode::withoutGlobalScopes()
-            ->paginate(20)];
+        $data = ['qrcodes' => Qrcode::paginate(20)];
 
         return view('admin.qrcodes', ['data' => $data]);
     }
@@ -44,12 +46,21 @@ class AdminQrCodeController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        /*
-         * id, user_id, url, name, file, created_at, updated_at
-         */
-dd($request->all());
+        $qrcode = new Qrcode($request->qrcode);
+        $qrcode->user_id = Auth::id();
+        //todo create qr file
 
-        return redirect()->route('qr_edit', [$qr->url]);
+        $data = QRC::generate('Make me into a QrCode!');
+
+        //dd($data);
+
+        $qrcode->file = "fakefile.jpg";
+        $qrcode->save();
+
+        Session::flash('success', 'New QR code saved');
+
+
+        return redirect()->route('admin_qrcode_edit', [$qrcode->id]);
     }
 
     /**
@@ -60,12 +71,14 @@ dd($request->all());
      */
     public function edit(Qrcode $qrcode)
     {
-
-
+        $qrcode->load('user');
+        //todo load qr file
         $data = [
-            'qr' => $qrcode,
-            'action' => 'Create',
+            'qrcode' => $qrcode,
+            'action' => 'Edit',
         ];
+
+
         return view('admin.qrcode', ['data' => $data]);
     }
 
@@ -78,9 +91,13 @@ dd($request->all());
      */
     public function update(Request $request, Qrcode $qrcode): RedirectResponse
     {
-        //todo delete old qr, update new qr based on data
-        echo __METHOD__;
-        return redirect()->route('qr_edit', [$qr->url]);
+
+        $qrcode->fill($request->qrcode);
+        $qrcode->save();
+        //todo delete qr file
+        //todo create qr file
+        Session::flash('success', 'QR code updated');
+        return redirect()->route('admin_qrcode_edit', [$qrcode->id]);
     }
 
     /**
@@ -89,9 +106,19 @@ dd($request->all());
      * @param  \App\Models\Qrcode  $qrcode
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Qrcode $qrcode): RedirectResponse
+    public function destroy(Request $request): RedirectResponse
     {
-        echo __METHOD__;
-        return redirect()->route('qrcodes');
+
+       // dd($request->all());
+        Qrcode::find($request->id)
+            ->each(function (Qrcode $qrcode) {
+
+                //todo delete qr file
+
+                $qrcode->delete();
+            });
+
+        Session::flash('success', 'QR code deleted');
+        return redirect()->route('admin_qrcodes_list');
     }
 }

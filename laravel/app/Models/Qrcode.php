@@ -10,6 +10,19 @@ class Qrcode extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'qrtype',
+        'qrdata',
+        'name',
+        'file',
+        'live',
+        'user_id',
+    ];
+
+    protected $casts = [
+        'date' => 'datetime',
+        'live' => 'boolean',
+    ];
 
     /**
      * @return BelongsTo
