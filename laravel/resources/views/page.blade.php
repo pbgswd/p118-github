@@ -27,7 +27,7 @@
             {!! $data['page']->content !!}
         </div>
         @if(count($data['page']->attachments) > 0)
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3 mb-3">
                 <h4>
                     <i class="far fa-folder-open"></i>
                     Files

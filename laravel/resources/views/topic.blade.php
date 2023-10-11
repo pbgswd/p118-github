@@ -103,12 +103,12 @@
             </div>
         @endif
         @if(count($data['topic']->attachments) > 0)
-            <div class="row">
-                <div class="col-12 border border-dark rounded-lg pt-2 pb-2 mb-2 mb-lg-3">
-                <h4>
-                    <i class="far fa-folder-open"></i>
-                    Files
-                </h4>
+            <div class="row d-flex align-items-center justify-content-center p-2">
+                <div class="col-12 border border-dark rounded-lg pt-2 pb-2 m-2">
+                    <h4>
+                        <i class="far fa-folder-open"></i>
+                        Files
+                    </h4>
                  <ul class="list-group">
                      @forelse ($data['topic']->attachments as $ta)
                          <li class="list-group-item">

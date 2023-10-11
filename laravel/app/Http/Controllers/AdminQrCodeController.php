@@ -34,8 +34,12 @@ class AdminQrCodeController extends Controller
         $qr = new Qrcode();
         $data = [
             'qrcode' => $qr,
+            'size' => range(100, 1100, 100),
             'action' => 'Create',
         ];
+
+
+
         return view('admin.qrcode', ['data' => $data]);
     }
 
@@ -77,6 +81,7 @@ class AdminQrCodeController extends Controller
             'qrcode' => $qrcode,
             'action' => 'Edit',
         ];
+
 
 
         return view('admin.qrcode', ['data' => $data]);

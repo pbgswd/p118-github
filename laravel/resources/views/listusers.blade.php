@@ -1,7 +1,7 @@
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Members'])
 @section('content')
 <div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
-    <div class="row d-flex justify-content-around pb-md-3">
+    <div class="row d-flex justify-content-around pb-md-3 pt-3">
         <div class="col-0 col-md-4">
         </div>
         <div class="col-12 col-md-4 text-center">

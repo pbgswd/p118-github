@@ -1,4 +1,17 @@
 <footer class="container mt-2">
+    <div class="row p-2 d-flex align-items-center justify-content-center d-sm-none d-md-block">
+        <h6 class="d-flex align-items-center justify-content-center text-muted">
+            Put this page on your phone with a Qr code
+        </h6>
+        <div class="col-12 d-flex align-items-center justify-content-center m-2">
+            {!! QrCode::size(200)->generate(url()->current()) !!}
+        </div>
+        <h5 class="text-muted d-flex align-items-center justify-content-center">
+            <a href="{{url()->current()}}" title="IATSE Local 118 {{url()->current()}}">
+                {{url()->current()}}
+            </a>
+        </h5>
+    </div>
     @auth
         <div class="row p-2 d-none d-md-block d-lg-none">
             <div class="col-12 border border-secondary rounded-lg p-2 pt-3">

@@ -15,20 +15,23 @@
         <li>Add a description for reference later</li>
         <li>Hit Create button to generate qr code</li>
         <li>Type is hard coded to url</li>
+        <li>{{Request::path()}}</li>
+        <li>{{url()->full()}}</li>
+        <li>{{url()->current()}}</li>
     </ul>
 
     <div class="row mt-lg-3 p-6 mb-3">
         <img src="data:image/png;base64,
             {!! base64_encode(QrCode::format('png')
-                ->size(200)
+                ->size(300)
                 ->mergeString(Storage::get('public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png'), .2)
                 ->generate('https://iatse118.com')); !!}
         " />
     </div>
     @if($data['action'] == 'Edit')
         <h2>Qr code</h2>
-            {!! QrCode::size(200)->generate($data['qrcode']->qrdata) !!}
-        <h3>{{$data['qrcode']->qrdata}}</h3>
+            {!! QrCode::size(300)->generate(url()->current()) !!}
+        <h4>{{url()->current()}}</h4>
     @endif
 
     <form method="post" name="qrcode" action="{{ url()->current() }}" enctype="multipart/form-data"

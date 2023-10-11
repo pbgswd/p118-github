@@ -1,6 +1,6 @@
  @extends('layouts.jumbo')
 @section('content')
-    <div class="container mb-3" style="background: rgba(220,220,220,0.8);">
+    <div class="container mb-3  pt-2 pb-2" style="background: rgba(220,220,220,0.8);">
         <div class="row mt-3 m-2 border border-dark rounded-lg">
             <div class="col-12 p-2 text-center">
                 <h2>Contact IATSE Local 118</h2>
@@ -63,7 +63,7 @@
 </div>
 
 
-        <div class="row mt-2 p-2 mb-lg-5 border border-dark rounded-lg">
+        <div class="row mt-2 m-2 p-2 mb-2 border border-dark rounded-lg">
             <div class="col-12 col-md-6 p-sm-4 p-2">
                 <h4>
                     <i class="far fa-building"></i> IATSE Local 118 <br/>
