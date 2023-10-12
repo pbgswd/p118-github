@@ -62,12 +62,6 @@
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a class="nav-link" href="#">
-                        <span data-feather="file-text"></span>
-                        Telescope
-                    </a>
-                </li>
-                <li class="list-group-item">
                     <a class="nav-link"
                        href="https://analytics.google.com/analytics/web/#/a192453396p265939066/admin/streams/table/"
                        target="_blank">
@@ -89,12 +83,6 @@
                     <a class="nav-link" href="https:///bitbucket.org" target="_blank">
                         <span data-feather="file-text"></span>
                         BitBucket
-                    </a>
-                </li>
-                <li class="list-group-item">
-                    <a class="nav-link" href="https://app.asana.com/0/home/132683619818221" target="_blank">
-                        <span data-feather="file-text"></span>
-                        Asana
                     </a>
                 </li>
                 <li class="list-group-item">
@@ -143,6 +131,12 @@
                     <a class="nav-link" href="https://mailchimp.com/developer/" target="_blank">
                         <span data-feather="file-text"></span>
                         MailChimp Developers
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="nav-link" href="https://accounts.icdsoft.com/login" target="_blank">
+                        <span data-feather="file-text"></span>
+                        ICDSoft Domain mgmt
                     </a>
                 </li>
             </ul>
