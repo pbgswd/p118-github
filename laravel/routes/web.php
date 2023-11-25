@@ -39,8 +39,14 @@ Route::middleware('web')->group(function () {
 
     //Route::get('/hire-us', [CNS\HireUsController::class, 'show'])->name('hire-us'); // to be updated
 
-    Route::get('/pages', [CNS\PageController::class, 'list'])->name('pages');
-    Route::get('/page/{page}', [CNS\PageController::class, 'show'])->name('page_show');
+    Route::controller(CNS\PageController::class)->group(function() {
+
+        Route::redirect('/page/apply-for-overhire-work', "/page/not-accepting-new-hire-applications");
+        
+        Route::get('/pages', 'list')->name('pages');
+        Route::get('/page/{page}', 'show')->name('page_show');
+    });
+
 
     Route::get('/topics', [CNS\TopicController::class, 'list'])->name('topics');
     Route::get('/topic/{topic}', [CNS\TopicController::class, 'show'])->name('topic_show');
