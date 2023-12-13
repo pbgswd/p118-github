@@ -22,7 +22,7 @@
                 <img src="data:image/png;base64,
                 {!! base64_encode(QrCode::format('png')
                     ->size(300)
-                    ->mergeString(Storage::get('public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png'), .2)
+                    ->mergeString(Storage::get('public/hvkugrmHIIT9Nlzy0TI2eNTDcbPkCJ5pOdII2XU1.png'), .2)
                     ->generate('https://iatse118.com')); !!}
             " />
                 <h4>https://iatse118.com</h4>

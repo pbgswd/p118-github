@@ -56,7 +56,7 @@ class AdminQrCodeController extends Controller
 
         $size = 300;
         $format = 'png';
-        $logo = 'public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png';
+	$logo = 'public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png';
         $coverage = 0.2;
         $errorCorrection = 'H';
 
