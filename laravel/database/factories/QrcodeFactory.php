@@ -20,7 +20,7 @@ class QrcodeFactory extends Factory
             'user_id' => \App\Models\User::factory(),
             'qrdata' => $this->faker->url,
             'qrtype' => 'url',
-            'name' => $this->faker->word,
+            'name' => $this->faker->sentence(3),
             'file' => 'stored_file_' . $this->faker->md5 .'.png',
         ];
     }

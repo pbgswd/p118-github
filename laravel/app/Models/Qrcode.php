@@ -11,11 +11,8 @@ class Qrcode extends Model
     use HasFactory;
 
     protected $fillable = [
-        'qrtype',
         'qrdata',
         'name',
-        'file',
-        'user_id',
     ];
 
     protected $casts = [
@@ -37,6 +34,4 @@ class Qrcode extends Model
     {
         return 'qrcodes';
     }
-
-
 }

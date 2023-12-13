@@ -4,21 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Qrcode\DestroyQrcodeRequest;
 use App\Http\Requests\Qrcode\StoreQrcodeRequest;
+use App\Http\Requests\Qrcode\UpdateQrcodeRequest;
 use App\Models\Qrcode;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QRC;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminQrCodeController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
      * @return View
      */
     public function index(): View
@@ -29,9 +28,7 @@ class AdminQrCodeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create(): View
     {
@@ -47,13 +44,11 @@ class AdminQrCodeController extends Controller
     }
 
     /**
-     *  Store a newly created resource in storage.
-     * @param Request $request
+     * @param StoreQrcodeRequest $request
      * @return RedirectResponse
      */
     public function store(StoreQrcodeRequest $request): RedirectResponse
     {
-
         $qrcode = new Qrcode($request->qrcode);
         $directory = $qrcode->getAttachmentFolder();
 
@@ -65,20 +60,14 @@ class AdminQrCodeController extends Controller
         $coverage = 0.2;
         $errorCorrection = 'H';
 
-
-//dd(Storage::disk('local'));
-
         $data = QRC::format($format)
             ->size($size)
             ->mergeString(Storage::get($logo), $coverage)
             ->errorCorrection($errorCorrection)
             ->generate($qrcode->qrdata);
 
-        $qrcode->file = urlencode($qrcode->name) . ".png";
-
-       // $file = file($data)->store('', $directory);
-
-        Storage::disk('public')->put($directory .'/'. $qrcode->file,base64_decode($data));
+        $qrcode->file = md5($qrcode->name) . ".png";
+        Storage::disk($directory)->put($qrcode->file, $data);
 
         $qrcode->save();
 
@@ -88,12 +77,10 @@ class AdminQrCodeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Qrcode  $qrcode
-     * @return \Illuminate\Http\Response
+     * @param Qrcode $qrcode
+     * @return View
      */
-    public function edit(Qrcode $qrcode)
+    public function edit(Qrcode $qrcode): View
     {
         $qrcode->load('user');
         //todo load qr file
@@ -106,35 +93,59 @@ class AdminQrCodeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Qrcode  $qrcode
-     * @return \Illuminate\Http\Response
+     * @param UpdateQrcodeRequest $request
+     * @param Qrcode $qrcode
+     * @return RedirectResponse
      */
-    public function update(Request $request, Qrcode $qrcode): RedirectResponse
+    public function update(UpdateQrcodeRequest $request, Qrcode $qrcode): RedirectResponse
     {
-
+        $directory = $qrcode->getAttachmentFolder();
         $qrcode->fill($request->qrcode);
+
+        Storage::disk($directory)->delete($qrcode->file);
+
+        $size = 300;
+        $format = 'png';
+        $logo = 'public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png';
+        $coverage = 0.2;
+        $errorCorrection = 'H';
+
+        $data = QRC::format($format)
+            ->size($size)
+            ->mergeString(Storage::get($logo), $coverage)
+            ->errorCorrection($errorCorrection)
+            ->generate($qrcode->qrdata);
+
+        $qrcode->file = md5($qrcode->name) . ".png";
+
+        Storage::disk($directory)->put($qrcode->file, $data);
         $qrcode->save();
-        //todo delete qr file
-        //todo create qr file
+
         Session::flash('success', 'QR code updated');
         return redirect()->route('admin_qrcode_edit', [$qrcode->id]);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Qrcode  $qrcode
-     * @return \Illuminate\Http\Response
+     * @param Qrcode $qrcode
+     * @return StreamedResponse
+     */
+    public function download(Qrcode $qrcode): StreamedResponse
+    {
+        $directory = $qrcode->getAttachmentFolder();
+        //dd($qrcode);
+        return Storage::download($directory.'/'.$qrcode['file'],
+            $qrcode['name'], ['Content-Disposition' => 'inline; filename="'.$qrcode['name'].'"']);
+    }
+
+    /**
+     * @param DestroyQrcodeRequest $request
+     * @return RedirectResponse
      */
     public function destroy(DestroyQrcodeRequest $request): RedirectResponse
     {
-
         Qrcode::find($request->id)
             ->each(function (Qrcode $qrcode) {
-              //  Storage::disk('qrcodes')->delete($qrcode->file);
+               Storage::disk('qrcodes')->delete($qrcode->file);
                 $qrcode->delete();
             });
 

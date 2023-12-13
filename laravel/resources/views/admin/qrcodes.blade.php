@@ -40,7 +40,11 @@
                             <td>{{$f->qrtype}}</td>
                             <td>{{$f->qrdata}}</td>
                             <td>{{$f->name}}</td>
-                            <td><a href="{{route('admin_qrcode_edit', $f->id)}}">edit</a></td>
+                            <td>
+                                <a href="{{route('admin_qrcode_edit', $f->id)}}" title="edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
                             <td>{{$f->created_at}}</td>
                             <td>{{$f->updated_at}}</td>
 

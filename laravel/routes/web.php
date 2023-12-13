@@ -394,6 +394,8 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::get('/qrcode/{any_qrcode}/edit', 'edit')->name('admin_qrcode_edit');
         Route::post('qrcode/{any_qrcode}/edit', 'update');
         Route::delete('/qrcode/delete', 'destroy')->name('admin_qrcode_destroy');
+        Route::get('/qrcode/{any_qrcode}/download/', 'download')
+            ->name('qrcode_download')->middleware('throttle:download');
     });
 
     Route::controller(CNS\AdminFaqController::class)->group(function(){

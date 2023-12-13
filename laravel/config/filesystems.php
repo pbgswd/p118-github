@@ -114,10 +114,10 @@ return [
             'visibility' => 'public',
         ],
 
-        'qrcode' => [
+        'qrcodes' => [
             'driver' => 'local',
-            'root' => storage_path('app/qrcode'),
-            'url' => env('APP_URL').'/qrcode',
+            'root' => storage_path('app/qrcodes'),
+            'url' => env('APP_URL').'/qrcodes',
             'visibility' => 'public',
         ],
 

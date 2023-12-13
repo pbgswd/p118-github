@@ -11,9 +11,9 @@ class UpdateQrcodeRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,12 @@ class UpdateQrcodeRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'qrcode.qrtype' => 'required',
+            'qrcode.qrdata' => 'required|max:255|unique:qrcodes,qrdata,'. $this->route('any_qrcode')->qrdata.',qrdata',
+            'qrcode.name' => 'required|max:255|unique:qrcodes,name,'. $this->route('any_qrcode')->name.',name',
         ];
     }
 }

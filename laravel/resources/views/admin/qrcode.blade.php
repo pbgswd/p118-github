@@ -1,47 +1,45 @@
 @extends('layouts.dashboard')
 @section('content')
-    <div class='container'>
+    <div class='row mb-4'>
         <h3>
             {{ $data['action'] }} A QR Code |  <a href="{{ route('admin_qrcodes_list') }}">List qr codes
                 <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
     </div>
-
-    <div class="row">
-        <div class="col-sm-12 col-md-6">
-            <ul>
-                <li>Uses <a href="https://packagist.org/packages/simplesoftwareio/simple-qrcode" target="_blank">
-                        SimpleQRCode</a> </li>
-                <li>{{$data['action']}}  a qr code for a url</li>
-                <li>{{$data['action']}} link data</li>
-                <li>{{$data['action']}}  a description, used as alt tag</li>
-                <li>Make a code img like the image on the right</li>
-            </ul>
+    @if($data['action'] == 'Add')
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <ul>
+                    <li>Uses <a href="https://packagist.org/packages/simplesoftwareio/simple-qrcode" target="_blank">
+                            SimpleQRCode</a> </li>
+                    <li>{{$data['action']}}  a qr code for a url</li>
+                    <li>{{$data['action']}} link data</li>
+                    <li>{{$data['action']}}  a description, used as alt tag</li>
+                    <li>Make a code img like the image on the right</li>
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <img src="data:image/png;base64,
+                {!! base64_encode(QrCode::format('png')
+                    ->size(300)
+                    ->mergeString(Storage::get('public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png'), .2)
+                    ->generate('https://iatse118.com')); !!}
+            " />
+                <h4>https://iatse118.com</h4>
+            </div>
         </div>
-        <div class="col-sm-12 col-md-6">
-            <img src="data:image/png;base64,
-            {!! base64_encode(QrCode::format('png')
-                ->size(300)
-                ->mergeString(Storage::get('public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png'), .2)
-                ->generate('https://iatse118.com')); !!}
-        " />
-            <h4>https://iatse118.com</h4>
-        </div>
-
-
-    </div>
-
-
-
-
-
-
-    @if($data['action'] == 'Edit')
-        <h2>Qr code</h2>
-            <img src="/storage/qrcodes/{!! $data['qrcode']['file'] !!}" />
-        <h4>{{$data['qrcode']['qrdata']}}</h4>
     @endif
-
+    @if($data['action'] == 'Edit')
+            <img src="/storage/qrcodes/{!! $data['qrcode']['file'] !!}" alt="{{$data['qrcode']['name']}}" />
+        <h4>{{$data['qrcode']['qrdata']}}</h4>
+        <h3>
+            <a href="{{route('qrcode_download', $data['qrcode']['id'])}}"
+               title="download {{$data['qrcode']['name']}}"
+                target="_blank">
+                Download it
+            </a>
+        </h3>
+    @endif
     <form method="post" name="qrcode" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
@@ -86,21 +84,22 @@
             </div>
         </div>
 -->
-
         <div class="row p-2 pb-5">
 
             <div class="col-sm-12 col-md-2">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
+        </div>
     </form>
 
     @if ($data['action'] == 'Edit')
+        <div class="row p-2 pb-5">
         <form name="delete" method="POST" action="{{route('admin_qrcode_destroy')}}">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}
 
-            <div class="col-sm-12 col-md-2">
+            <div class="col-12 col-md-8">
                 Check to delete
                 <div class="checkbox">
                     <label>
@@ -109,7 +108,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 col-md-2">
+            <div class="col-12 col-md-2">
                 <i class="far fa-trash-alt fa-2x"></i>
                 <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
             </div>
