@@ -7,31 +7,39 @@
         </h3>
     </div>
 
-    <ul>
-        <li>Uses <a href="https://packagist.org/packages/simplesoftwareio/simple-qrcode" target="_blank">
-                SimpleQRCode</a> </li>
-        <li>Create any qr code, text or URL</li>
-        <li>Add data</li>
-        <li>Add a description for reference later</li>
-        <li>Hit Create button to generate qr code</li>
-        <li>Type is hard coded to url</li>
-        <li>{{Request::path()}}</li>
-        <li>{{url()->full()}}</li>
-        <li>{{url()->current()}}</li>
-    </ul>
-
-    <div class="row mt-lg-3 p-6 mb-3">
-        <img src="data:image/png;base64,
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <ul>
+                <li>Uses <a href="https://packagist.org/packages/simplesoftwareio/simple-qrcode" target="_blank">
+                        SimpleQRCode</a> </li>
+                <li>{{$data['action']}}  a qr code for a url</li>
+                <li>{{$data['action']}} link data</li>
+                <li>{{$data['action']}}  a description, used as alt tag</li>
+                <li>Make a code img like the image on the right</li>
+            </ul>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <img src="data:image/png;base64,
             {!! base64_encode(QrCode::format('png')
                 ->size(300)
                 ->mergeString(Storage::get('public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png'), .2)
                 ->generate('https://iatse118.com')); !!}
         " />
+            <h4>https://iatse118.com</h4>
+        </div>
+
+
     </div>
+
+
+
+
+
+
     @if($data['action'] == 'Edit')
         <h2>Qr code</h2>
-            {!! QrCode::size(300)->generate(url()->current()) !!}
-        <h4>{{url()->current()}}</h4>
+            <img src="/storage/qrcodes/{!! $data['qrcode']['file'] !!}" />
+        <h4>{{$data['qrcode']['qrdata']}}</h4>
     @endif
 
     <form method="post" name="qrcode" action="{{ url()->current() }}" enctype="multipart/form-data"
@@ -43,7 +51,7 @@
         <div class="row mt-lg-3">
             <div class="form-group">
                 <div class="col-12">
-                    <h4>Data to add in QR Code</h4>
+                    <h4>Data to {{strtolower($data['action'])}}  in QR Code</h4>
                 </div>
                 <div class="col-12">
                     <input type="text" class="form-control"  placeholder="https://....." name="qrcode[qrdata]"
@@ -64,13 +72,11 @@
             </div>
         </div>
 
-
-
 <!--
         <div class="row mt-lg-3">
             <div class="form-group">
                 <label for="exampleFormControlSelect1">QR type</label>
-                <select name="qrcode[qrType]" class="form-control" id="QRtypeSelect1">
+                <select name="qrcode[qrtype]" class="form-control" id="QRtypeSelect1">
                     <option value="url">URL</option>
                     <option value="email">Email</option>
                     <option value="phoneNumber">Phone Number</option>
@@ -81,40 +87,33 @@
         </div>
 -->
 
+        <div class="row p-2 pb-5">
 
-        <div class="row p-2">
-            <div class="col-12 col-md-6">
+            <div class="col-sm-12 col-md-2">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
 
-
     @if ($data['action'] == 'Edit')
-    <form name="delete" method="POST" action="{{route('admin_qrcode_destroy')}}">
-        {!! csrf_field() !!}
-        {!! method_field('DELETE') !!}
-        <div class="form-group">
-        Check to delete
+        <form name="delete" method="POST" action="{{route('admin_qrcode_destroy')}}">
+            {!! csrf_field() !!}
+            {!! method_field('DELETE') !!}
 
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="id[]" value="{{$data['qrcode']->id}}" />
-            </label>
-        </div>
+            <div class="col-sm-12 col-md-2">
+                Check to delete
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="id[]" value="{{$data['qrcode']->id}}" />
+                    </label>
+                </div>
+            </div>
 
-
-
-        <div class="row mb-lg-5">
-            <div class="col">
+            <div class="col-sm-12 col-md-2">
                 <i class="far fa-trash-alt fa-2x"></i>
                 <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
             </div>
-            <div class="col-6">
-
-            </div>
-            <div class="col"></div>
-        </div>
-    </form>
+        </form>
     @endif
+</div>
 @endsection

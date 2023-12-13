@@ -13,7 +13,7 @@ class DestroyQrcodeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,10 @@ class DestroyQrcodeRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'id' => 'required|exists:qrcodes',
         ];
     }
 }

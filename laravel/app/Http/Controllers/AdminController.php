@@ -60,7 +60,7 @@ class AdminController extends Controller
         return view('admin.admin-blank');
     }
 
-    public function getphpinfo( User $user): Bool
+    public function getphpinfo(User $user): Bool
     {
         return phpinfo();
     }

@@ -3,7 +3,7 @@
     <div class='container'>
         <h3>
            <span class="badge badge-primary badge-pill">
-               {{$data['qrcodes']->count()}} {{ Str::plural('QR code', $data['qrcodes']->count())}}
+               {{$data['count']}} {{ Str::plural('QR code', $data['count'])}}
            </span>
             | <a href="{{ route('admin_qrcode_create') }}">Create new qrcode
                 <i class="far fa-arrow-alt-circle-right"></i> </a>
@@ -22,7 +22,6 @@
                             <th>  type </th>
                             <th>  data </th>
                             <th> name </th>
-                            <th> live</th>
                             <th> Edit </th>
                             <th> @sortablelink('created_at', 'Created At') </th>
                             <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -41,7 +40,6 @@
                             <td>{{$f->qrtype}}</td>
                             <td>{{$f->qrdata}}</td>
                             <td>{{$f->name}}</td>
-                            <td>{{$f->live}}</td>
                             <td><a href="{{route('admin_qrcode_edit', $f->id)}}">edit</a></td>
                             <td>{{$f->created_at}}</td>
                             <td>{{$f->updated_at}}</td>

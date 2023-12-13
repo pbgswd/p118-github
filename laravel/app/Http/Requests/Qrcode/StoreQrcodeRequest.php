@@ -24,7 +24,7 @@ class StoreQrcodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'qrcode.qrtype' => 'required|unique:qrcodes,qrtype|max:255',
+            'qrcode.qrtype' => 'required',
             'qrcode.qrdata' => 'required|unique:qrcodes,qrdata|max:255',
             'qrcode.name' => 'required|unique:qrcodes,name|max:255',
         ];

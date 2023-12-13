@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Qrcode\DestroyQrcodeRequest;
 use App\Http\Requests\Qrcode\StoreQrcodeRequest;
 use App\Models\Qrcode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QRC;
 
@@ -21,7 +24,7 @@ class AdminQrCodeController extends Controller
     public function index(): View
     {
         $data = ['qrcodes' => Qrcode::paginate(20)];
-
+        $data['count'] = count( Qrcode::all() );
         return view('admin.qrcodes', ['data' => $data]);
     }
 
@@ -33,13 +36,12 @@ class AdminQrCodeController extends Controller
     public function create(): View
     {
         $qr = new Qrcode();
+
         $data = [
             'qrcode' => $qr,
             'size' => range(100, 1100, 100),
             'action' => 'Create',
         ];
-
-
 
         return view('admin.qrcode', ['data' => $data]);
     }
@@ -53,18 +55,34 @@ class AdminQrCodeController extends Controller
     {
 
         $qrcode = new Qrcode($request->qrcode);
+        $directory = $qrcode->getAttachmentFolder();
+
         $qrcode->user_id = Auth::id();
 
-        $data = QRC::generate($qrcode->qrdata);
+        $size = 300;
+        $format = 'png';
+        $logo = 'public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png';
+        $coverage = 0.2;
+        $errorCorrection = 'H';
 
-        dd($data);
-//todo file
-        $qrcode->file = "fakefile.jpg";
+
+//dd(Storage::disk('local'));
+
+        $data = QRC::format($format)
+            ->size($size)
+            ->mergeString(Storage::get($logo), $coverage)
+            ->errorCorrection($errorCorrection)
+            ->generate($qrcode->qrdata);
+
+        $qrcode->file = urlencode($qrcode->name) . ".png";
+
+       // $file = file($data)->store('', $directory);
+
+        Storage::disk('public')->put($directory .'/'. $qrcode->file,base64_decode($data));
 
         $qrcode->save();
 
         Session::flash('success', 'New QR code, ' . $qrcode->name . ' saved');
-
 
         return redirect()->route('admin_qrcode_edit', [$qrcode->id]);
     }
@@ -83,8 +101,6 @@ class AdminQrCodeController extends Controller
             'qrcode' => $qrcode,
             'action' => 'Edit',
         ];
-
-
 
         return view('admin.qrcode', ['data' => $data]);
     }
@@ -113,19 +129,17 @@ class AdminQrCodeController extends Controller
      * @param  \App\Models\Qrcode  $qrcode
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(DestroyQrcodeRequest $request): RedirectResponse
     {
 
-       // dd($request->all());
         Qrcode::find($request->id)
             ->each(function (Qrcode $qrcode) {
-
-                //todo delete qr file
-
+              //  Storage::disk('qrcodes')->delete($qrcode->file);
                 $qrcode->delete();
             });
 
-        Session::flash('success', 'QR code deleted');
+        Session::flash('success', count($request->id) .' QR '. Str::plural('code', count($request->id)).' deleted');
+
         return redirect()->route('admin_qrcodes_list');
     }
 }
