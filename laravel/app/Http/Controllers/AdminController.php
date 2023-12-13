@@ -6,6 +6,8 @@ use App\Models\ModelList;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use phpDocumentor\Reflection\Types\Boolean;
+use PhpParser\Node\Expr\Cast\Bool_;
 
 class AdminController extends Controller
 {
@@ -56,5 +58,10 @@ class AdminController extends Controller
         //dd($data);
 
         return view('admin.admin-blank');
+    }
+
+    public function getphpinfo( User $user): Bool
+    {
+        return phpinfo();
     }
 }

@@ -13,7 +13,7 @@ class StoreQrcodeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,12 @@ class StoreQrcodeRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'qrcode.qrtype' => 'required|unique:qrcodes,qrtype|max:255',
+            'qrcode.qrdata' => 'required|unique:qrcodes,qrdata|max:255',
+            'qrcode.name' => 'required|unique:qrcodes,name|max:255',
         ];
     }
 }

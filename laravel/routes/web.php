@@ -42,7 +42,7 @@ Route::middleware('web')->group(function () {
     Route::controller(CNS\PageController::class)->group(function() {
 
         Route::redirect('/page/apply-for-overhire-work', "/page/not-accepting-new-hire-applications");
-        
+
         Route::get('/pages', 'list')->name('pages');
         Route::get('/page/{page}', 'show')->name('page_show');
     });
@@ -154,6 +154,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
     Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');
     Route::get('/developer', [CNS\AdminController::class, 'developer'])->name('developer');
+    Route::get('/developer/phpinfo', [CNS\AdminController::class, 'getphpinfo'])->name('phpinfo');
 
     Route::controller(CNS\AdminCarouselController::class)->group(function() {
        Route::get('carousel', 'index')->name('admin_carousel_list');

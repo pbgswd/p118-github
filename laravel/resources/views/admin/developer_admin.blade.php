@@ -18,6 +18,12 @@
                     </a>
                 </li>
                 <li class="list-group-item">
+                    <a class="nav-link" href="{{route('phpinfo')}}" target="_blank">
+                        <span data-feather="file-text"></span>
+                        phpinfo();
+                    </a>
+                </li>
+                <li class="list-group-item">
                     <a class="nav-link" href="https://dev.mysql.com/doc/" target="_blank">
                         <span data-feather="file-text"></span>
                         MySQL

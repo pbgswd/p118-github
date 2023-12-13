@@ -81,20 +81,7 @@
         </div>
 -->
 
-        <div class="col-6">
-            <div class="col-lg-2">
-                <h4>Status</h4>
-            </div>
-            <div class="col-sm">
-                <label>
-                    <input name="qrcode[live]" type="hidden" value="0" />
-                    <input name="qrcode[live]" type="checkbox" value="1"
-                        {{ checked(old('qrcode.live', $data['qrcode']->live)) }} />
-                    Check now to make Live
-                </label>
-                <p>ie.: Draft or Published.</p>
-            </div>
-        </div>
+
         <div class="row p-2">
             <div class="col-12 col-md-6">
                 <i class="fas fa-edit fa-2x"></i>

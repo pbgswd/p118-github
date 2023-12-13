@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Qrcode\StoreQrcodeRequest;
 use App\Models\Qrcode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -48,20 +49,21 @@ class AdminQrCodeController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreQrcodeRequest $request): RedirectResponse
     {
+
         $qrcode = new Qrcode($request->qrcode);
         $qrcode->user_id = Auth::id();
-        //todo create qr file
 
-        $data = QRC::generate('Make me into a QrCode!');
+        $data = QRC::generate($qrcode->qrdata);
 
-        //dd($data);
-
+        dd($data);
+//todo file
         $qrcode->file = "fakefile.jpg";
+
         $qrcode->save();
 
-        Session::flash('success', 'New QR code saved');
+        Session::flash('success', 'New QR code, ' . $qrcode->name . ' saved');
 
 
         return redirect()->route('admin_qrcode_edit', [$qrcode->id]);

@@ -15,13 +15,11 @@ class Qrcode extends Model
         'qrdata',
         'name',
         'file',
-        'live',
         'user_id',
     ];
 
     protected $casts = [
         'date' => 'datetime',
-        'live' => 'boolean',
     ];
 
     /**

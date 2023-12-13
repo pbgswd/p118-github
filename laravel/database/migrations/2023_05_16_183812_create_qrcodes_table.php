@@ -17,11 +17,9 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('qrtype');
-            $table->string('qrdata');
+            $table->string('url');
             $table->string('name');
             $table->string('file');
-            $table->boolean('live')->default(1);
             $table->timestamps();
         });
     }
