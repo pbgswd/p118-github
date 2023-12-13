@@ -2,11 +2,11 @@
 @section('content')
     <div class='row mb-4'>
         <h3>
-            {{ $data['action'] }} A QR Code |  <a href="{{ route('admin_qrcodes_list') }}">List qr codes
+            {{ $data['action'] }} QR Code |  <a href="{{ route('admin_qrcodes_list') }}">List QR Codes
                 <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
     </div>
-    @if($data['action'] == 'Add')
+    @if($data['action'] == 'Create')
         <div class="row">
             <div class="col-sm-12 col-md-6">
                 <ul>
