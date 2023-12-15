@@ -6,6 +6,7 @@ use App\Models\Carousel;
 use App\Services\AttachmentService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AdminCarouselController extends Controller
 {
@@ -22,6 +23,7 @@ class AdminCarouselController extends Controller
         $this->attachmentService = $attachmentService;
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +32,9 @@ class AdminCarouselController extends Controller
     public function index(): View
     {
         $data = [];
+        $carousel = new Carousel;
+        $data['folder'] = $carousel->getAttachmentFolder();
+        $data['image_data'] = $carousel->getImageData();
 
         return view('admin.carousel_list', ['data' => $data]);
     }
@@ -41,31 +46,35 @@ class AdminCarouselController extends Controller
      */
     public function create(): View
     {
+        $carousel = new Carousel;
+
         $data = ['carousel' => ''];
-        $data['folder'] = 'carousel';
+        $data['folder'] = $carousel->getAttachmentFolder();
         $data['tn_prefix'] = 'tn_';
         $data['filesize'] = '';
+        $data['image_data'] = $carousel->getImageData();
+        $data['action'] = "Create";
 
         return view('admin.carousel', ['data' => $data]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-      //  dd($request->all());
+        $carousel = new Carousel($request);
+
+        $widths = $carousel->getImageWidthSizes();
+
+        return redirect()->route('admin_carousel_edit', [$carousel->id]);
 
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Carousel  $carousel
-     * @return \Illuminate\Http\Response
+     * @param Carousel $carousel
+     * @return void
      */
     public function show(Carousel $carousel)
     {
@@ -73,36 +82,38 @@ class AdminCarouselController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Carousel  $carousel
-     * @return \Illuminate\Http\Response
+     * @param Carousel $carousel
+     * @return View
      */
-    public function edit(Carousel $carousel)
+    public function edit(Carousel $carousel): View
     {
+        $data =[];
+        $data['action'] = "Edit";
        // dd(__METHOD__);
+        return view('admin_carousel_edit', ['data' => $data]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Carousel  $carousel
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Carousel $carousel
+     * @return RedirectResponse
      */
-    public function update(Request $request, Carousel $carousel)
+    public function update(Request $request, Carousel $carousel): RedirectResponse
     {
-        dd(__METHOD__);
+       //todo delete any current files with changes
+        //todo save changes
+        return redirect()->route('admin_carousel_edit', [$carousel->id]);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Carousel  $carousel
-     * @return \Illuminate\Http\Response
+     * @param Carousel $carousel
+     * @return RedirectResponse
      */
-    public function destroy(Carousel $carousel)
+    public function destroy(Carousel $carousel): RedirectResponse
     {
+        //todo delete 4 files
+        //todo delete data row for carousel
 
+        return redirect()->route('admin_carousel_list');
     }
 }

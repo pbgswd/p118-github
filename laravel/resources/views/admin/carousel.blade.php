@@ -4,7 +4,7 @@
 
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Carousel</h1>
+            <h1 class="display-4">{{$data['action']}} Carousel</h1>
             <p class="lead">
                 A carousel image requires four images, each for the different screen sizes of devices
                 (phones, laptops, etc). They dont need to be the same image,
@@ -23,7 +23,6 @@
             </a>
         </div>
     </div>
-
 
     <form method="post" name="carousel" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
@@ -184,80 +183,64 @@
                 </div>
             </div>
         </div>
-        <div class="row border border-3 rounded">
-            @if( isset($data['carousel']->file_2000) )
-                <div class="row mb-3">
-                    <div class="col-12 mt-5 text-center">
+        <div class="row border border-3 rounded mb-3">
+<h3>Create/Edit check for each row in carousel and present form as required </h3>
+            @foreach($data['image_data'] as $imgData)
+                @if($data['action'] == "Create")
+                    <!-- begin create section -->
+                    <div class="form-group m-3">
+                        <input type="hidden" name="carousel[image_{{$imgData['size']}}]" value="" />
+                        <input type="hidden" name="carousel[file_{{$imgData['size']}}]" value="" />
+
+                        <img src="/storage/public/{{$imgData['blank']}}" class="pb-2"/>
                         <h4>
-                            <i class="far fa-images"></i>
-                            {{ $data['carousel']->file_2000 }}
+                            <i class="far fa-images"></i> {{$imgData['size']}} file, under {{$imgData['filesize']}}kb
                         </h4>
-                        <p class="d-sm-block d-md-none">
-                            <i>(Thumbnail for mobile view)</i>
+                        <label for="exampleInputFile">
+                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                            File input
+                        </label>
+                        <input type="file" id="inputFile" name="image_{{$imgData['size']}}" />
+                        <p class="help-block">
+                            <i>Help block. Info here for the kind of image.</i>
                         </p>
                     </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-12 col-md-6 text-center d-flex align-items-center justify-content-center">
-                        <picture>
-                            <source srcset="{{asset('storage/'. $data['folder'] .'/'. $data['carousel']->file_2000)}}"
-                                    media="(min-width: 577px)">
-                            <img srcset="{{asset('storage/'. $data['folder'] . "/" .
-                                $data['tn_prefix'].$data['carousel']->file_2000)}}"
-                                alt="{{$data['carousel']->file_2000}}"
-                                class="rounded img-fluid mx-auto">
-                        </picture>
-                    </div>
-                </div>
-                <div class="col-12 text-center">
-                    <input type="hidden" name="carousel[image_2000]" value="{{$data['carousel']->image_2000}}" />
-                    <input type="hidden" name="carousel[file_2000]" value="{{$data['carousel']->file_2000}}" />
-                    <h5>
-                        {{"File Size: " . $data['filesize'] ?? ''}}
-                    </h5>
-                    <p class="d-sm-block d-md-none">
-                        <i>(Size is for full size image)</i>
-                    </p>
-                </div>
-                <div class="input-group mb-6">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <input name="carousel[delete_image]" type="checkbox" value="1" />
+                @endif
+                    <!-- edit section -->
+                @if($data['action'] == "Edit")
+                    <div class="row mb-3">
+                        <div class="col-12 col-md-6 text-center d-flex align-items-center justify-content-center">
+                            <picture>
+                                <source srcset="{{asset('storage/'. $data['folder'] .'/'. $data['carousel']->file_2000)}}"
+                                        media="(min-width: 577px)">
+                                <img srcset="{{asset('storage/'. $data['folder'] . "/" .
+                                    $data['tn_prefix'].$data['carousel']->file_2000)}}"
+                                     alt="{{$data['carousel']->file_2000}}"
+                                     class="rounded img-fluid mx-auto">
+                            </picture>
                         </div>
                     </div>
-                    <input type="text" class="form-control" aria-label="Text input with checkbox"
-                           value=" Check to delete image." size="40" readonly>
-                </div>
-            @else
-                <div class="form-group m-3">
+                    <div class="col-12 text-center">
 
-                    <img src="/storage/public/qox20XLuDz6g6IAnUjisNQt8qQVOU9yJq0WqcAt5.png" class="pb-2"/>
-                    <h4> <i class="far fa-images"></i> 2000 x 500 file, under 300kb</h4>
-                    <label for="exampleInputFile">
-                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        File input
-                    </label>
-                    <input type="file" id="inputFile" name="image" />
-                    <p class="help-block">
-                        <i>Help block. Info here for the kind of image.</i>
-                    </p>
-                </div>
-            @endif
-        </div>
-        <div class="row mt-2">
-            <div class="col-6">
-                <img src="/storage/public/C8ik1J8OqDQqsfgGUw6vt4PFLx5ukhDnbgtHLdvp.png" class="pb-2" />
-                <h4> <i class="far fa-images"></i> 1400 x 500px file, under 300kb</h4>
-            </div>
-            <div class="col-6">
-                <img src="/storage/public/hEucTumAZtAu6TFPf95ASEKhb1ped3prLplCVl52.png" class="pb-2" />
-                <h4> <i class="far fa-images"></i> 800 x 500px file, under 100kb</h4>
-            </div>
-            <div class="col-6">
-                <img src="/storage/public/TVWxK0pdgrqpS3Ow54mk4ZvodhKDw77SYiBaL5f5.png" class="pb-2" />
-                <h4> <i class="far fa-images"></i> 600 x 500px file, under 100kb</h4>
-            </div>
+                        <h5>
+                            {{"File Size: " . $data['filesize'] ?? ''}}
+                        </h5>
+                        <p class="d-sm-block d-md-none">
+                            <i>(Size is for full size image)</i>
+                        </p>
+                    </div>
+                    <div class="input-group mb-6">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input name="carousel[delete_image]" type="checkbox" value="1" />
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox"
+                               value=" Check to delete image." size="40" readonly>
+                    </div>
+                @endif
+                    <!-- end edit section -->
+            @endforeach
         </div>
         <div class="row pt-5 pl-2 m-2">
             <i class="fas fa-edit fa-2x"></i>

@@ -19,26 +19,6 @@ class CarouselController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -51,37 +31,4 @@ class CarouselController extends Controller
         return view('carousel');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Carousel $carousel
-     * @return Response
-     */
-    public function edit(Carousel $carousel)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Carousel $carousel
-     * @return Response
-     */
-    public function update(Request $request, Carousel $carousel)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Carousel $carousel
-     * @return Response
-     */
-    public function destroy(Carousel $carousel)
-    {
-        //
-    }
 }
