@@ -23,7 +23,7 @@ class AdminQrCodeController extends Controller
     public function index(): View
     {
         $data = ['qrcodes' => Qrcode::paginate(20)];
-        $data['count'] = count( Qrcode::all() );
+        $data['count'] = count( Qrcode::all());
         return view('admin.qrcodes', ['data' => $data]);
     }
 
