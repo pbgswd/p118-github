@@ -3,25 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carousel;
-use App\Services\AttachmentService;
+use App\Services\CarouselImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AdminCarouselController extends Controller
 {
-    /** @var AttachmentService */
-    private $attachmentService;
+    /**
+     * @var CarouselImageService
+     */
+    private $carouselimageservice;
 
     /**
-     * BylawController constructor.
-     *
-     * @param AttachmentService $attachmentService
+     * @param CarouselImageService $carouselimageservice
      */
-    public function __construct(AttachmentService $attachmentService)
+    public function __construct(CarouselImageService $carouselimageservice)
     {
-        $this->attachmentService = $attachmentService;
+        $this->carouselimageservice = $carouselimageservice;
     }
 
 
@@ -74,7 +75,36 @@ class AdminCarouselController extends Controller
 //todo generate thumbs
 //todo populate array to store data
 
+
+
+
+        if (null !== ($request->file('attasdf'))) {
+            $result = $this->carouselimageservice->createAttachment($request, $carousel);
+
+            if ($result) {
+                Session::flash('success', 'You uploaded '
+                    .count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
+
+
+
+
+
         $carousel->save();
+
+
+
+
+
+
+
+
+
+
         Session::flash('success', 'Carousel Slide saved');
         return redirect()->route('admin_carousel_edit', [$carousel->id]);
 
@@ -113,7 +143,7 @@ class AdminCarouselController extends Controller
         }
         $count = 0;
 
-        // use the width array above to iterate through $data['caoursel'] to count how many files there are
+        // use the width array above to iterate through $data['carousel'] to count how many files there are
         foreach($width as $w)
         {
             if(trim($data['carousel']['file_'.$w]) != '')
@@ -125,8 +155,6 @@ class AdminCarouselController extends Controller
 
         $data['count'] = $count;
 
-
-
         return view('admin.carousel', ['data' => $data]);
     }
 
@@ -135,8 +163,9 @@ class AdminCarouselController extends Controller
      * @param Carousel $carousel
      * @return RedirectResponse
      */
-    public function update(Request $request, Carousel $carousel): RedirectResponse
+    #[NoReturn] public function update(Request $request, Carousel $carousel): RedirectResponse
     {
+
        //todo delete any current files with changes
         //todo save changes
 
@@ -147,6 +176,26 @@ class AdminCarouselController extends Controller
         $data['folder'] = $carousel->getAttachmentFolder();
         $data['image_data'] = $carousel->getImageData();
         $data['tn_prefix'] = 'tn_';
+
+       // dd($request->all());
+
+         $result = $this->carouselimageservice->updateImage($request, false, [], $carousel);
+
+
+         //new files
+          if (null !== ($request->file('carousel'))) {
+            $result = $this->carouselimageservice->storeImage($request, $carousel);
+              if ($result) {
+                Session::flash('success', 'You uploaded '
+              .count($request->file('attachments')).' files');
+              } else {
+                Session::flash('error', 'You have an upload problem');
+              }
+          }
+dd($result);
+    //todo add file name assets to $carousel before save();
+
+        $carousel->save();
 
         Session::flash('success', 'Carousel Slide updated');
         return redirect()->route('admin_carousel_edit', [$carousel->id]);

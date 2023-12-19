@@ -24,6 +24,8 @@
     <form method="post" name="carousel" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
+
+
             <div class="form-group">
                 <div class="col-2">
                     <h4>Caption</h4>
@@ -37,7 +39,7 @@
                     <i>Primary text of caption.</i>
                 </p>
             </div>
-            <div class="form-group">
+    <div class="form-group">
                 <div class="col-12">
                     <h4>Sub Caption</h4>
                 </div>
@@ -61,7 +63,7 @@
                     <h4>Show the button, yes no</h4>
                 </div>
                 <div class="col-12">
-                           value={{ old('carousel.button', $data['carousel']->button??'' )}} <br />
+                           value={{ old('carousel.button', $data['carousel']->button?? '' )}} <br />
 
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="carousel[button]" id="carouselbutton1"
@@ -75,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+    <div class="form-group">
                 <div class="col-12">
                     <h4>Link</h4>
                 </div>
@@ -130,7 +132,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-12"><h4>Photo Credit</h4></div>
+                <div class="col-12">
+                    <h4>Photo Credit</h4>
+                </div>
                 <div class="col-12">
                     <input type="text" class="form-control"
                            placeholder="Name for photo credit" name="carousel[credit]"
@@ -143,25 +147,16 @@
                         <div class="form-group">
                     <input type="checkbox" class="form-control"
                              name="carousel[live]"
-                           value="{{ old('carousel.live', $data['carousel']->live?? '1' )}}" required/>
+                           value="{{ old('carousel.live', $data['carousel']->live ?? '1' )}}" />
                     <p class="help-block">
                         <i>All 4 images are required to go live</i>
                     </p>
                 </div>
             </div>
-
-            <div class="col">
-                <h4>Order, number</h4>
-                <div class="form-group">
-                    <input type="text" class="form-control"
-                           placeholder="order number, integer" name="carousel[order]"
-                           value="{{ old('carousel.order', $data['carousel']->order??'' )}}" size="80" required/>
-                    <p class="help-block">
-                        <i>Up to 6 frames in the carousel can be live. </i>
-                    </p>
-                </div>
-            </div>
         </div>
+
+
+
         @if($data['action'] == 'Edit')
             <div class="row mb-3">
                 <div class="col-12 text-light bg-info pt-2 rounded">
@@ -186,52 +181,55 @@
                         {{$imgData['size']}} file, under {{$imgData['filesize']}}kb
                     </h4>
                 </div>
-                @if( !isset($data['carousel']['file_'.$imgData['width']]) )
+                @if( strlen(trim($data['carousel']['file_'.$imgData['width']])) == 0 )
                     <div class="col p-2">
                         <img src="/storage/public/{{$imgData['blank']}}" class="pb-2"/> <br />
                         <label for="exampleInputFile">
                             <i class="fas fa-cloud-upload-alt fa-2x"></i>
                             File input
                         </label>
-                        <input type="file" id="inputFile" name="image_{{$imgData['size']}}" />
+                        <input type="file" id="inputFile" name="image_{{$imgData['width']}}" />
                         <p class="help-block">
                             <i>Help block. Info here for the kind of image.</i>
                         </p>
                     </div>
-                @endif
-                @if( isset($data['carousel']['file_'.$imgData['width']] ) )
+                @elseif( strlen(trim($data['carousel']['file_'.$imgData['width']])) != 0 )
                     <div class="col p-2">
-                    <img src="{{asset('storage/'. $data['folder']
+                        <img src="{{asset('storage/'. $data['folder']
                                 .'/'. $data['carousel']['file_'.$imgData['width']])}}"
                         media="(min-width: 577px)" />
-                    <img src="{{asset('storage/'. $data['folder'] . "/" .
+
+                        <img src="{{asset('storage/'. $data['folder'] . "/" .
                         $data['tn_prefix'].$data['carousel']['file_'.$imgData['width']])}}"
                          class="rounded img-fluid mx-auto" />
-                    <h5>
-                        {{$data['carousel']['image_'.$imgData['width']]}} <br />
-                        {{$data['carousel']['file_'.$imgData['width']]}} <br />
-                      x  File Size: {{ $data['filesize'] ?? 'xxx'}}xx
-                    </h5>
-                    <p class="d-sm-block d-md-none">
-                        <i>(Size is for full size image)</i>
-                    </p>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <input name="carousel[delete_image]" type="checkbox" value="1" />
+                        <h5>
+                            {{$data['carousel']['image_'.$imgData['width']]}} <br />
+                            {{$data['carousel']['file_'.$imgData['width']]}} <br />
+                            File Size: not calculated
+                        </h5>
+                        <p class="d-sm-block d-md-none">
+                            <i>(Size is for full size image)</i>
+                        </p>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input name="delete_image_{{$imgData['width']}}" type="checkbox"
+                                           value="1" />
+                                </div>
                             </div>
+                            <input type="text" class="form-control" aria-label="Text input with checkbox"
+                                   value=" Check to delete image." size="40" readonly>
                         </div>
-                        <input type="text" class="form-control" aria-label="Text input with checkbox"
-                               value=" Check to delete image." size="40" readonly>
+                        <input type="hidden" name="carousel[image_{{$imgData['width']}}]"
+                               value="{{$data['carousel']['image_'.$imgData['width']]}}" />
+                        <input type="hidden" name="carousel[file_{{$imgData['width']}}]"
+                               value="{{$data['carousel']['file_'.$imgData['width']]}}" />
                     </div>
-                    <input type="hidden" name="carousel[image_{{$imgData['size']}}]" value="" />
-                    <input type="hidden" name="carousel[file_{{$imgData['size']}}]" value="" />
-                </div>
                 @endif
             </div>
         @endforeach
-            <i class="fas fa-edit fa-2x"></i>
-            <input class="btn btn-primary btn-lg" type="submit" value="Add images" />
+        <i class="fas fa-edit fa-2x"></i>
+        <input class="btn btn-primary btn-lg" type="submit" value="{{$data['action']}}" />
     </form>
 </div>
 @endsection

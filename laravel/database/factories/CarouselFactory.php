@@ -19,15 +19,18 @@ class CarouselFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
+        $alignment = ['left', 'center', 'right'];
+        shuffle($alignment);
+
         return [
             'user_id' => \App\Models\User::factory(),
             'caption' => 'Caption '. $this->faker->words(2, true),
             'caption2' => 'Caption 2 '. $this->faker->sentence,
             'button' => 1,
             'link' => $this->faker->url,
-            'align' => 'left',
+            'align' => $alignment[0],
             'credit' => $this->faker->name,
             'color' => $this->faker->hexColor,
             'live' => 1,
