@@ -27,7 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::create('qrcodes', function (Blueprint $table) {
+        Schema::table('qrcodes', function (Blueprint $table) {
             $table->dropColumn('qrtype');
             $table->dropColumn('qrdata');
         });

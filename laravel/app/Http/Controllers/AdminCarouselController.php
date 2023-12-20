@@ -6,6 +6,8 @@ use App\Models\Carousel;
 use App\Services\CarouselImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -75,9 +77,6 @@ class AdminCarouselController extends Controller
 //todo generate thumbs
 //todo populate array to store data
 
-
-
-
         if (null !== ($request->file('attasdf'))) {
             $result = $this->carouselimageservice->createAttachment($request, $carousel);
 
@@ -90,19 +89,7 @@ class AdminCarouselController extends Controller
         }
 
 
-
-
-
-
         $carousel->save();
-
-
-
-
-
-
-
-
 
 
         Session::flash('success', 'Carousel Slide saved');
@@ -152,7 +139,6 @@ class AdminCarouselController extends Controller
             }
         }
 
-
         $data['count'] = $count;
 
         return view('admin.carousel', ['data' => $data]);
@@ -177,24 +163,32 @@ class AdminCarouselController extends Controller
         $data['image_data'] = $carousel->getImageData();
         $data['tn_prefix'] = 'tn_';
 
-       // dd($request->all());
-
          $result = $this->carouselimageservice->updateImage($request, false, [], $carousel);
 
+         //delete data
+         foreach($result['deleted'] as $d)
+         {
+             $carousel['image_' . $d] = '';
+             $carousel['file_' . $d] = '';
+             $carousel->save();
+         }
 
-         //new files
-          if (null !== ($request->file('carousel'))) {
-            $result = $this->carouselimageservice->storeImage($request, $carousel);
-              if ($result) {
-                Session::flash('success', 'You uploaded '
-              .count($request->file('attachments')).' files');
-              } else {
-                Session::flash('error', 'You have an upload problem');
-              }
-          }
-dd($result);
-    //todo add file name assets to $carousel before save();
+        if (null !== $result['images']) {
+            $widths = $carousel->getImageWidthSizes();
 
+            foreach($widths as $w)
+            {
+                if(isset( $result['images']['image_' . $w ])) {
+                    $carousel['image_'. $w] = $result['images']['image_' . $w ];
+                    $carousel['file_'. $w] = $result['images']['file_' . $w ];
+                }
+            }
+
+
+            Session::flash('success', 'You uploaded '. count($result['images']) . ' files');
+        } else {
+            Session::flash('error', 'You have an upload problem');
+        }
         $carousel->save();
 
         Session::flash('success', 'Carousel Slide updated');
@@ -205,11 +199,39 @@ dd($result);
      * @param Carousel $carousel
      * @return RedirectResponse
      */
-    public function destroy(Carousel $carousel): RedirectResponse
+    public function destroy(Request $request): RedirectResponse
     {
-        //todo delete 4 files
-        //todo delete data row for carousel
-        Session::flash('success', 'Carousel Slide deleted');
+
+        if(!isset($request->ids)) {
+            Session::flash('warning', 'Nothing deleted.');
+        }
+        else
+        {
+            //todo specify which image I want to delete
+            $carousel = new Carousel;
+            $widths = $carousel->getImageWidthSizes();
+            $directory = $carousel->getAttachmentFolder();
+            $carousels = Carousel::find($request->ids);
+
+            foreach($carousels as $carousel)
+            {
+                foreach($widths as $w)
+                {
+                    Storage::disk($directory)->delete( $carousel['file_' . $w] );
+                }
+                $carousel->delete();
+            }
+
+
+ /*           $carousels = Carousel::find($request->ids)
+                ->each(function (Carousel $car) {
+                    dd($car);
+                    $this->carouselimageservice->destroyImage($car,[]);
+                    $car->delete();
+                });*/
+            Session::flash('success', Str::plural('carousel', count([$carousels])) . ' and images deleted.');
+        }
+
         return redirect()->route('admin_carousel_list');
     }
 }

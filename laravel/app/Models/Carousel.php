@@ -38,7 +38,7 @@ class Carousel extends LiveableModel implements HasAttachment
         'button',
         'link',
         'align',
-        'credit',
+        'text_color',
         'color',
         'live',
         'order',

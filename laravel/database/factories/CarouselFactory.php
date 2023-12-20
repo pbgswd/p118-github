@@ -31,7 +31,7 @@ class CarouselFactory extends Factory
             'button' => 1,
             'link' => $this->faker->url,
             'align' => $alignment[0],
-            'credit' => $this->faker->name,
+            'text_color' => $this->faker->safeHexColor,
             'color' => $this->faker->hexColor,
             'live' => 1,
             'order' => 2,

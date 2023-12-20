@@ -41,48 +41,35 @@ class CarouselImageService
      */
     public function updateImage($request, bool $make_thumb, array $thumb_values): array
     {
-        $carousel = new Carousel;
-        $directory = $carousel->getAttachmentFolder();
-        $widths = $carousel->getImageWidthSizes();
+        $car = new Carousel;
+        $directory = $car->getAttachmentFolder();
+        $widths = $car->getImageWidthSizes();
 
-       // dd($request->all());
-//todo delete on update
+        $carousel['deleted'] = [];
+        $carousel['images'] = [];
+
         foreach($widths as $w) {
-            if (null !== $request['delete_image_' .$w]) {
-                Storage::disk($directory)->delete( $request['carousel']['file_'.$w] );
 
-                $deleted['files'] = $w;
+            //delete
+            if (null !== $request['delete_image_' . $w]) {
+                Storage::disk($directory)->delete( $request['carousel']['file_' . $w] );
+                $carousel['deleted'][] = $w;
             }
 
+            //upload
             if (null !== $request->file('image_' . $w)) {
-
-                $image = $request->file('image_' . $w)->store('', $directory);
-                $file_name = $request['image_'. $w]->getClientOriginalName();
-
+                $carousel['images']['file_' . $w] = $request->file('image_' . $w)->store('', $directory);
+                $carousel['images']['image_' . $w] = $request['image_'. $w]->getClientOriginalName();
             }
 
         }
 
-dd([$image, $file_name]);
-
-
-
             //ImageOptimizer::optimize(storage_path().$directory.$image);
-
-
-
            /* if ($make_thumb) {
                 $result = $this->generate_thumb($image, $directory, $thumb_values);
             }*/
+        return $carousel;
 
-
-
-        return [
-            'image' => $image ?? '',
-            'file_name' => $file_name ?? '',
-            'thumb' =>  $result ?? '',
-            'deleted' => $deleted,
-        ];
     }
 
     /**
@@ -118,8 +105,11 @@ dd([$image, $file_name]);
         $carousel = new Carousel;
         $directory = $carousel->getAttachmentFolder();
 
+      //  dd($image->);
+
+        //Storage::disk($directory)->delete( $request['carousel']['file_' . $w] );
         Storage::disk($directory)->delete($image);
-        Storage::disk($directory)->delete($thumb_values['tn_str'].$image);
+      //  Storage::disk($directory)->delete($thumb_values['tn_str'].$image);
 
         return true;
     }
