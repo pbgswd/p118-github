@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 
-class Carousel extends LiveableModel implements HasAttachment
+class Carousel extends LiveableModel
 {
     use Sortable;
     use HasFactory;
-    //todo migration attachment_carousel
 
     /**
      * @var string
@@ -26,11 +25,8 @@ class Carousel extends LiveableModel implements HasAttachment
         $this->access_level = AccessLevelConstants::PUBLIC;
     }
 
-    /*
-     * thoughts on schema
-     *  id for image to associate with image stored in attachments, added in relation?
-     * separate upload for each image.
-     * relation table attachments_carousel
+    /**
+     * @var string[]
      */
     public $fillable = [
         'caption',
@@ -52,15 +48,24 @@ class Carousel extends LiveableModel implements HasAttachment
         'file_600',
     ];
 
+    /**
+     * @var array
+     */
     public $sortable = [
 
     ];
 
+    /**
+     * @var string[]
+     */
     public $dates = [
         'created_at',
         'updated_at',
     ];
 
+    /**
+     * @var string[]
+     */
     public $casts = [
         'live' => 'boolean',
     ];
@@ -71,14 +76,6 @@ class Carousel extends LiveableModel implements HasAttachment
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function attachments(): BelongsToMany
-    {
-        return $this->belongsToMany(Attachment::class, 'attachment_carousel');
     }
 
     /**
@@ -109,36 +106,21 @@ class Carousel extends LiveableModel implements HasAttachment
     {
         $data = [];
 
-        $data[] = ['size' => '2000x500', 'width' => 2000, 'filesize' => 300, 'blank' => 'qox20XLuDz6g6IAnUjisNQt8qQVOU9yJq0WqcAt5.png'];
-        $data[] = ['size' => '1400x500', 'width' => 1400, 'filesize' => 300, 'blank' => 'C8ik1J8OqDQqsfgGUw6vt4PFLx5ukhDnbgtHLdvp.png'];
-        $data[] = ['size' => '800x500', 'width' => 800, 'filesize' => 100, 'blank' => 'hEucTumAZtAu6TFPf95ASEKhb1ped3prLplCVl52.png'];
-        $data[] = ['size' => '600x500', 'width' => 600, 'filesize' => 100, 'blank' => 'TVWxK0pdgrqpS3Ow54mk4ZvodhKDw77SYiBaL5f5.png'];
+        $data[] = ['size' => '2000x500', 'width' => 2000, 'filesize' => 300,
+            'blank' => 'qox20XLuDz6g6IAnUjisNQt8qQVOU9yJq0WqcAt5.png'];
+        $data[] = ['size' => '1400x500', 'width' => 1400, 'filesize' => 300,
+            'blank' => 'C8ik1J8OqDQqsfgGUw6vt4PFLx5ukhDnbgtHLdvp.png'];
+        $data[] = ['size' => '800x500', 'width' => 800, 'filesize' => 100,
+            'blank' => 'hEucTumAZtAu6TFPf95ASEKhb1ped3prLplCVl52.png'];
+        $data[] = ['size' => '600x500', 'width' => 600, 'filesize' => 100,
+            'blank' => 'TVWxK0pdgrqpS3Ow54mk4ZvodhKDw77SYiBaL5f5.png'];
 
         return $data;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function keepDissociatedAttachments(): bool
-    {
-        return false;
-    }
-
+    /**
+     * @return string
+     */
     public function getAttachmentAccessLevel(): string
     {
         return AccessLevelConstants::PUBLIC;

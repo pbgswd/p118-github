@@ -17,9 +17,12 @@
         <p class="lead">
             When you are ready with your 4 optimized images, create your carousel.
         </p>
-        <a href="{{route('admin_carousel_list')}}">
+        <button class="btn btn-secondary" href="{{route('admin_carousel_list')}}">
             Admin Carousel
-        </a>
+        </button>
+        <p class="help-block mt-3">
+            <i>Need help? Get in touch with the web help and he will be happy to help you out.</i>
+        </p>
     </div>
     <form method="post" name="carousel" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
@@ -48,7 +51,7 @@
                 </p>
             </div>
         </div>
-        <div class="row border border-primary rounded p-3">
+        <div class="row border border-primary rounded p-3 mb-3">
             <div class="col-12">
                 <h3>Button, link, alignment</h3>
                 <p class="help-block">
@@ -61,7 +64,7 @@
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="carousel[button]" id="carouselbutton1"
                                value="1" checked>
-                        <label class="form-check-label" for="carouselalign1">Show (default)</label>
+                        <label class="form-check-label" for="carouselalign1">Show it</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="carousel[button]" id="carouselbutton2"
@@ -74,7 +77,7 @@
                 <div class="form-group">
                     <h4>Button Link</h4>
                     <input type="text" class="form-control"
-                           placeholder="Title" name="carousel[link]"
+                           placeholder="https://........." name="carousel[link]"
                            value="{{ old('carousel.link', $data['carousel']->link??'' )}}" size="80" />
                     <p class="help-block">
                         <i>Full link to the web page the button takes you to.</i>
@@ -106,23 +109,22 @@
                         <h4>Alignment for the button</h4>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign1"
-                                   value="left" {{ old('carousel.align', $data['carousel']->align == 'left' ? 'checked' : '' )}}>
-                            <label class="form-check-label" for="carouselalign1">Left (default)</label>
+                                   value="left" {{ old('carousel.align', $data['carousel']['align'] == 'left' ? 'checked' : '' )}}>
+                            <label class="form-check-label" for="carouselalign1">Left</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign2"
-                                   value="center" {{ old('carousel.align', $data['carousel']->align == 'center' ? 'checked' : '' )}}>
+                                   value="center" {{ old('carousel.align', $data['carousel']['align'] == 'center' ? 'checked' : '' )}}>
                             <label class="form-check-label" for="carouselalign2">Center</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign3"
-                                   value="right" {{ old('carousel.align', $data['carousel']->align == 'right' ? 'checked' : '' )}}>
+                                   value="right" {{ old('carousel.align', $data['carousel']['align'] == 'right' ? 'checked' : '' )}}>
                             <label class="form-check-label" for="carouselalign3">Right</label>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="col-12">
                 <div class="form-group">
                 <h4>Button Text Colour</h4>
@@ -167,7 +169,7 @@
                     </label>
                     <input type="file" id="inputFile" name="image_{{$imgData['width']}}" />
                     <p class="help-block">
-                        <i>Help block. Info here for the kind of image.</i>
+                        <i>Help block. Info here for the kind of image. Upload a jpg or png file</i>
                     </p>
                 </div>
             @elseif( strlen(trim($data['carousel']['file_'.$imgData['width']])) != 0 )
@@ -205,7 +207,6 @@
             <div class="col-2">
                 <div class="form-group">
                 <h4>Check to make live.</h4>
-
                     <input type="checkbox" class="form-control" name="carousel[live]"
                            value="{{ old('carousel.live', $data['carousel']->live ?? '1' )}}"
                            @if(count($data['image_data']) > $data['count']) disabled @endif />
@@ -218,7 +219,6 @@
                                 {{count($data['image_data'])}} / {{$data['count']}} images.
                                 Check the box and make it live.</i>
                         @endif
-
                     </p>
                 </div>
             </div>

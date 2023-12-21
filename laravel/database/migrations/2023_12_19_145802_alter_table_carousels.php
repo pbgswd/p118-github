@@ -15,6 +15,14 @@ return new class extends Migration {
         Schema::table('carousels', function (Blueprint $table) {
             $table->dropColumn('credit');
             $table->string('text_color')->after('align')->nullable();
+            $table->string('image_2000')->nullable()->change();
+            $table->string('file_2000')->nullable()->change();
+            $table->string('image_1400')->nullable()->change();
+            $table->string('file_1400')->nullable()->change();
+            $table->string('image_800')->nullable()->change();
+            $table->string('file_800')->nullable()->change();
+            $table->string('image_600')->nullable()->change();
+            $table->string('file_600')->nullable()->change();
         });
     }
 

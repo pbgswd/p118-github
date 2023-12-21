@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Carousel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\Image\Image;
@@ -10,25 +11,36 @@ use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class CarouselImageService
 {
-    public function storeImage($request, string $dir, bool $make_thumb, array $thumb_values): array
+    /**
+     * @param $request
+     * @param bool $make_thumb
+     * @param array $thumb_values
+     * @return array
+     */
+    public function storeImage($request,  bool $make_thumb, array $thumb_values): array
     {
-        $directory = '/app/'.$dir.'/';
-        $image = '';
+        $carousel = new Carousel;
+        $directory = $carousel->getAttachmentFolder();
+        $widths = $carousel->getImageWidthSizes();
 
-        if (null !== $request->file('image')) {
-            $image = $request->file('image')->store('', $dir);
-            ImageOptimizer::optimize(storage_path().$directory.$image);
-            if ($make_thumb) {
-                $result = $this->generate_thumb($image, $dir, $thumb_values);
+        $result =[];
+
+        foreach($widths as $w)
+        {
+            if (null !== $request->file('image_'.$w)) {
+
+                $img = $request->file('image_'.$w)->store('', $directory);
+                /*
+                ImageOptimizer::optimize(storage_path().$directory.$image);
+                if ($make_thumb) {
+                    $result = $this->generate_thumb($image, $dir, $thumb_values);
+                }
+                */
+                $result[$w]['file_'.$w] = $img;
+                $result[$w]['image_'.$w] =  $request->file('image_'.$w)->getClientOriginalName();
             }
-            $file_name = $request->image->getClientOriginalName();
         }
-
-        return [
-            'image' => $image ?? '',
-            'file_name' => $file_name ?? '',
-            'thumb' =>  $result ?? '',
-        ];
+        return $result;
     }
 
     /**
@@ -105,9 +117,6 @@ class CarouselImageService
         $carousel = new Carousel;
         $directory = $carousel->getAttachmentFolder();
 
-      //  dd($image->);
-
-        //Storage::disk($directory)->delete( $request['carousel']['file_' . $w] );
         Storage::disk($directory)->delete($image);
       //  Storage::disk($directory)->delete($thumb_values['tn_str'].$image);
 
