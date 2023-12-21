@@ -94,7 +94,6 @@
                         <div style="color: {{ old('carousel.color', $data['carousel']->color??'' )}}">
                             Current button color: {{ old('carousel.color', $data['carousel']->color??'' )}}
                         </div>
-
                         @if($data['action'] == 'Edit')
                             <button class="btn m-2" style="background-color: {{ $data['carousel']->color??''}};
                                             color: {{ $data['carousel']->text_color??'' }};
@@ -109,17 +108,20 @@
                         <h4>Alignment for the button</h4>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign1"
-                                   value="left" {{ old('carousel.align', $data['carousel']['align'] == 'left' ? 'checked' : '' )}}>
+                                   value="left" {{ old('carousel.align',
+                                        $data['carousel']['align'] == 'left' ? 'checked' : '' )}}>
                             <label class="form-check-label" for="carouselalign1">Left</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign2"
-                                   value="center" {{ old('carousel.align', $data['carousel']['align'] == 'center' ? 'checked' : '' )}}>
+                                   value="center" {{ old('carousel.align',
+                                        $data['carousel']['align'] == 'center' ? 'checked' : '' )}}>
                             <label class="form-check-label" for="carouselalign2">Center</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign3"
-                                   value="right" {{ old('carousel.align', $data['carousel']['align'] == 'right' ? 'checked' : '' )}}>
+                                   value="right" {{ old('carousel.align',
+                                        $data['carousel']['align'] == 'right' ? 'checked' : '' )}}>
                             <label class="form-check-label" for="carouselalign3">Right</label>
                         </div>
                     </div>

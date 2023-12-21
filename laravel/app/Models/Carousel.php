@@ -107,13 +107,13 @@ class Carousel extends LiveableModel
         $data = [];
 
         $data[] = ['size' => '2000x500', 'width' => 2000, 'filesize' => 300,
-            'blank' => 'qox20XLuDz6g6IAnUjisNQt8qQVOU9yJq0WqcAt5.png'];
+            'blank' => 'UsXipWMoF0bNljLprHnzdxYgoHvBpIwILXGSkk9W.png'];
         $data[] = ['size' => '1400x500', 'width' => 1400, 'filesize' => 300,
-            'blank' => 'C8ik1J8OqDQqsfgGUw6vt4PFLx5ukhDnbgtHLdvp.png'];
+            'blank' => '4uFQWEZBWo7dxcA1AoKmQMKe30S2hogSPmCSEzFf.png'];
         $data[] = ['size' => '800x500', 'width' => 800, 'filesize' => 100,
-            'blank' => 'hEucTumAZtAu6TFPf95ASEKhb1ped3prLplCVl52.png'];
+            'blank' => 'sldBQCvcPt5hsALPLvUEToioZI8dWbsNFEmkSHIV.png'];
         $data[] = ['size' => '600x500', 'width' => 600, 'filesize' => 100,
-            'blank' => 'TVWxK0pdgrqpS3Ow54mk4ZvodhKDw77SYiBaL5f5.png'];
+            'blank' => '8eSKLkYt7soAjBrVnU2PBixxtBu5bbTenaF7QQ8E.png'];
 
         return $data;
     }
