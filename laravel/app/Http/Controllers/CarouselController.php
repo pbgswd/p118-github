@@ -3,32 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carousel;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class CarouselController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
 
     /**
-     * Display the specified resource.
-     *
-     * @param Carousel $carousel
-     * @return Response
+     * @return View
      */
-    public function show(Carousel $carousel): View
+    public function show(): View
     {
-        return view('carousel');
-    }
+        $carousel = Carousel::where('live', 1)
+            ->orderBy('order')
+            ->limit(6)
+            ->get();
+        $data = ['carousel' => $carousel];
+        $data['count'] = count($carousel);
 
+        return view('carousel', ['data' => $data]);
+    }
 }

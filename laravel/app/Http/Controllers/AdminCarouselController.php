@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Carousel\StoreCarouselRequest;
 use App\Models\Carousel;
 use App\Services\CarouselImageService;
 use Illuminate\Http\Request;
@@ -67,7 +68,7 @@ class AdminCarouselController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreCarouselRequest $request): RedirectResponse
     {
         $carousel = new Carousel($request->carousel);
 

@@ -11,9 +11,9 @@ class StoreCarouselRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,22 @@ class StoreCarouselRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'carousel.caption' => 'string|required|nullable|max:255',
+            'carousel.caption2' => 'string|nullable|max:255',
+            'carousel.button' => 'boolean',
+            'carousel.link' => 'string|nullable|max:255',
+            'carousel.align' => 'string|nullable|max:255',
+            'carousel.text_color' => 'string|nullable|max:255',
+            'carousel.color' => 'string|nullable|max:255',
+            'carousel.live' => 'boolean',
+            'carousel.order' => 'integer',
+            'file.image_2000' => 'file|nullable',
+            'file.image_1400' => 'file|nullable',
+            'file.image_800' => 'file|nullable',
+            'file.image_600' => 'file|nullable',
         ];
     }
 }

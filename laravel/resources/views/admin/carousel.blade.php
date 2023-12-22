@@ -169,7 +169,7 @@
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
                         File input
                     </label>
-                    <input type="file" id="inputFile" name="image_{{$imgData['width']}}" />
+                    <input type="file" id="inputFile" name="file[image_{{$imgData['width']}}]" />
                     <p class="help-block">
                         <i>Help block. Info here for the kind of image. Upload a jpg or png file</i>
                     </p>
@@ -177,17 +177,18 @@
             @elseif( strlen(trim($data['carousel']['file_'.$imgData['width']])) != 0 )
                 <div class="col p-2">
                     <img src="{{asset('storage/'. $data['folder']
-                            .'/'. $data['carousel']['file_'.$imgData['width']])}}"
+                         .'/'. $data['carousel']['file_'.$imgData['width']])}}"
                          class="rounded img-fluid mx-auto" />
                     <h5 class="mt-2">
-                        <i class="far fa-image"></i> {{$data['carousel']['image_'.$imgData['width']]}}
+                        <i class="far fa-image"></i>
+                        {{$data['carousel']['image_'.$imgData['width']]}}
                     </h5>
                     <p class="d-sm-block d-md-none">
                         <i>(Size is for full size image)</i>
                     </p>
-                    <div class="input-group"><i class='far fa-trash-alt fa-2x m-1'></i>
+                    <div class="input-group">
+                        <i class='far fa-trash-alt fa-2x m-1'></i>
                         <div class="input-group-prepend">
-
                             <div class="input-group-text">
                                 <input name="delete_image_{{$imgData['width']}}" type="checkbox" value="1" />
                             </div>
@@ -209,9 +210,15 @@
             <div class="col-2">
                 <div class="form-group">
                 <h4>Check to make live.</h4>
+
+                    <!-- make live checked persist when true  -->
+
                     <input type="checkbox" class="form-control" name="carousel[live]"
                            value="{{ old('carousel.live', $data['carousel']->live ?? '1' )}}"
-                           @if(count($data['image_data']) > $data['count']) disabled @endif />
+
+                           @if(count($data['image_data']) > $data['count']) disabled @endif
+                            @if($data['carousel']->live == '1') checked @endif
+                    />
                     <p class="help-block">
                         @if(count($data['image_data']) > $data['count'])
                             <i>The Live checkbox will be disabled until the
@@ -235,7 +242,7 @@
             <form name="delete" method="POST" action="{{route('admin_carousel_destroy')}}">
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
-                <input type="hidden" name="ids[]" value="{{$data['carousel']['id']}}">
+                <input type="hidden" name="id[]" value="{{$data['carousel']['id']}}">
                 <i class="far fa-trash-alt fa-2x"></i>
                 <input class="btn btn-outline-danger" type="submit" value="Delete">
             </form>

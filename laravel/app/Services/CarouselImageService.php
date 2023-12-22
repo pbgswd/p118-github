@@ -27,9 +27,10 @@ class CarouselImageService
 
         foreach($widths as $w)
         {
-            if (null !== $request->file('image_'.$w)) {
+            if (null !== $request->file('file.image_'.$w)) {
 
-                $img = $request->file('image_'.$w)->store('', $directory);
+                $img = $request->file('file.image_'.$w)->store('', $directory);
+
                 /*
                 ImageOptimizer::optimize(storage_path().$directory.$image);
                 if ($make_thumb) {
@@ -69,9 +70,9 @@ class CarouselImageService
             }
 
             //upload
-            if (null !== $request->file('image_' . $w)) {
-                $carousel['images']['file_' . $w] = $request->file('image_' . $w)->store('', $directory);
-                $carousel['images']['image_' . $w] = $request['image_'. $w]->getClientOriginalName();
+            if (null !== $request->file('file.image_' . $w)) {
+                $carousel['images']['file_' . $w] = $request->file('file.image_' . $w)->store('', $directory);
+                $carousel['images']['image_' . $w] = $request['file']['image_'. $w]->getClientOriginalName();
             }
 
         }

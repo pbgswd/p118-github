@@ -4,7 +4,7 @@
     <div class="row mb-5">
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-                <h1 class="display-4">Front Page Carousel</h1>
+                <h1 class="display-4">Front Page Carousel (work in progress, not ready just yet)</h1>
                 <h3>4 optimized images </h3>
                 <p class="lead">
                     A carousel image requires four images, each for the different screen sizes of devices
@@ -43,7 +43,7 @@
                         <th> @sortablelink('id','#') </th>
                         <th>  Caption </th>
                         <th>  Button </th>
-                        <th> Credit </th>
+                        <th> c </th>
                         <th> Edit </th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -55,7 +55,7 @@
                             <td>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="ids[]" value="{{ $c->id }}" />
+                                        <input type="checkbox" name="id[]" value="{{ $c->id }}" />
                                     </label>
                                 </div>
                             </td>
@@ -65,7 +65,7 @@
                                     {{ $c->color ?? 'none'}}
                                 </button>
                             </td>
-                            <td>{{$c->credit}}</td>
+                            <td>{{$c->button}}</td>
                             <td>
                                 <a href="{{route('admin_carousel_edit', $c->id)}}" title="edit">
                                     <i class="fas fa-edit"></i>
