@@ -167,7 +167,7 @@ class AdminCarouselController extends Controller
         } else {
             Session::flash('error', 'You have an upload problem');
         }
-        
+
         $carousel->save();
 
         Session::flash('success', 'Carousel Slide updated');
@@ -180,7 +180,7 @@ class AdminCarouselController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        if(!isset($request->ids)) {
+        if(!isset($request->id)) {
             Session::flash('warning', 'Nothing deleted.');
         }
         else
@@ -188,7 +188,7 @@ class AdminCarouselController extends Controller
             $carousel = new Carousel;
             $widths = $carousel->getImageWidthSizes();
             $directory = $carousel->getAttachmentFolder();
-            $carousels = Carousel::find($request->ids);
+            $carousels = Carousel::find($request->id);
 
             foreach($carousels as $carousel)
             {
