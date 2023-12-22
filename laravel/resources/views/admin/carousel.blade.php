@@ -63,12 +63,15 @@
                     <h4>Show the button, or not</h4>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="carousel[button]" id="carouselbutton1"
-                               value="1" checked>
+                               value="1"
+                            {{ old('carousel.button', $data['carousel']['button'] == '1' ? 'checked' : '' )}}
+                        >
                         <label class="form-check-label" for="carouselalign1">Show it</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="carousel[button]" id="carouselbutton2"
-                               value="0">
+                               value="0"
+                            {{ old('carousel.button', $data['carousel']['button'] == '0' ? 'checked' : '' )}}>
                         <label class="form-check-label" for="carouselalign1">Hide it</label>
                     </div>
                 </div>
@@ -105,7 +108,7 @@
                 <div class="col-3"></div>
                 <div class="form-group">
                     <div class="col">
-                        <h4>Alignment for the button</h4>
+                        <h4>Alignment for the button   {{$data['carousel']['align']}}</h4>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign1"
                                    value="left" {{ old('carousel.align',

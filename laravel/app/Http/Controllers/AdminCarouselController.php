@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Carousel\StoreCarouselRequest;
+use App\Http\Requests\Carousel\UpdateCarouselRequest;
 use App\Models\Carousel;
 use App\Services\CarouselImageService;
 use Illuminate\Http\Request;
@@ -65,7 +66,7 @@ class AdminCarouselController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreCarouselRequest $request
      * @return RedirectResponse
      */
     public function store(StoreCarouselRequest $request): RedirectResponse
@@ -110,10 +111,8 @@ class AdminCarouselController extends Controller
         $data['action'] = "Edit";
 
         // todo get actual file size of each image for data
-       //todo do count of images in the row returned to determine if all images are present for msg in view
 
-        //get an array out of the 'width' element of the data
-        $width=[];
+        $width = [];
         foreach($data['image_data'] as $w)
         {
             $width[] = $w['width'];
@@ -139,16 +138,15 @@ class AdminCarouselController extends Controller
      * @return RedirectResponse
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
-    #[NoReturn] public function update(Request $request, Carousel $carousel): RedirectResponse
+    #[NoReturn] public function update(UpdateCarouselRequest $request, Carousel $carousel): RedirectResponse
     {
-
+        $carousel->fill($request->carousel);
         $data['folder'] = $carousel->getAttachmentFolder();
         $data['image_data'] = $carousel->getImageData();
         $data['tn_prefix'] = 'tn_';
 
          $result = $this->carouselimageservice->updateImage($request, false, [], $carousel);
 
-         //delete data
          foreach($result['deleted'] as $d)
          {
              $carousel['image_' . $d] = '';
@@ -169,6 +167,7 @@ class AdminCarouselController extends Controller
         } else {
             Session::flash('error', 'You have an upload problem');
         }
+        
         $carousel->save();
 
         Session::flash('success', 'Carousel Slide updated');
