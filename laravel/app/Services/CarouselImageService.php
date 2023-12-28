@@ -38,7 +38,7 @@ class CarouselImageService
                 }
                 */
                 $result[$w]['file_'.$w] = $img;
-                $result[$w]['image_'.$w] =  $request->file('image_'.$w)->getClientOriginalName();
+                $result[$w]['image_'.$w] =  $request->file['image_'.$w]->getClientOriginalName();
             }
         }
         return $result;
