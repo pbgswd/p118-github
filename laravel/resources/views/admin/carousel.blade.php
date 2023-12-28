@@ -3,10 +3,15 @@
 <div class="container-fluid">
     <div class="jumbotron jumbotron-fluid p-3 rounded">
         <h1 class="display-4">
+            @if($data['action'] == 'Edit')
+                <i class="far fa-edit"></i>
+            @else
+                <i class="fas fa-plus-square"></i>
+            @endif
             {{$data['action']}} Carousel
         </h1>
         <p class="lead">
-            A carousel image requires four images, each for the different screen sizes of devices
+            <i class="fas fa-info-circle"></i> A carousel image requires four images, each for the different screen sizes of devices
             (phones, laptops, etc). They dont need to be the same image,
             just that there needs to be four of them.
         </p>
@@ -22,7 +27,7 @@
         </a>
         @if($data['action'] == 'Edit')
             <a class="btn btn-outline-primary" href="{{route('admin_carousel_create')}}">
-                Create a new Carousel
+                <i class="fas fa-plus-square"></i> Create a new Carousel
             </a>
         @endif
         <p class="help-block mt-3">
@@ -32,10 +37,10 @@
     <form method="post" name="carousel" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row border border-primary rounded p-3 mb-2">
+        <div class="row border border-primary rounded p-3 mb-3">
             <div class="col-12">
                 <div class="form-group">
-                    <h4>Caption</h4>
+                    <h4><i class="fas fa-comment mr-1"></i>Caption</h4>
                     <input type="text" class="form-control"
                            placeholder="Caption" name="carousel[caption]"
                            value="{{ old('carousel.caption', $data['carousel']->caption??'')}}" size="80" required/>
@@ -46,7 +51,7 @@
             </div>
             <div class="col-12">
                 <div class="form-group">
-                    <h4>Sub Caption</h4>
+                    <h4><i class="fas fa-comment mr-1"></i>Sub Caption</h4>
                     <input type="text" class="form-control"
                            placeholder="Sub Caption" name="carousel[caption2]"
                            value="{{ old('carousel.caption2', $data['carousel']->caption2??'')}}" size="80" />
@@ -58,7 +63,7 @@
         </div>
         <div class="row border border-primary rounded p-3 mb-3">
             <div class="col-12">
-                <h3>Text Caption Alignment & Colour</h3>
+                <h3><i class="fas fa-align-justify mr-1"></i> Text Caption Alignment & Colour</h3>
                 <p class="help-block">
                     <i>Make the caption work with the carousel image.</i>
                 </p>
@@ -67,18 +72,21 @@
                 <div class="col-12 mb-3">
                     <h4>Alignment for the Captions</h4>
                     <div class="form-check form-check-inline">
+                        <i class="fas fa-align-left mr-1"></i>
                         <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign1"
                                value="left" {{ old('carousel.align',
                                     $data['carousel']['align'] == 'left' ? 'checked' : '' )}}>
                         <label class="form-check-label" for="carouselalign1">Left</label>
                     </div>
                     <div class="form-check form-check-inline">
+                        <i class="fas fa-align-center mr-1"></i>
                         <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign2"
                                value="center" {{ old('carousel.align',
                                     $data['carousel']['align'] == 'center' ? 'checked' : '' )}}>
                         <label class="form-check-label" for="carouselalign2">Center</label>
                     </div>
                     <div class="form-check form-check-inline">
+                        <i class="fas fa-align-right mr-1"></i>
                         <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign3"
                                value="right" {{ old('carousel.align',
                                     $data['carousel']['align'] == 'right' ? 'checked' : '' )}}>
@@ -86,7 +94,7 @@
                     </div>
                 </div>
                 <div class="col-12 mb-3">
-                    <h4>Caption Text Colour</h4>
+                    <h4><i class="fas fa-palette mr-1"></i>Caption Text Colour</h4>
                     <label for="favcolor">Select Caption Colour</label>
                     <input type="color" id="favcolor" name="carousel[text_color]"
                            value="{{ old('carousel.text_color', $data['carousel']->text_color??'' )}}"><br>
@@ -108,7 +116,7 @@
 
                 <div class="col-12">
                     <div class="form-group">
-                        <h4>Caption Text Outline Colour</h4>
+                        <h4><i class="fas fa-palette mr-1"></i>Caption Text Outline Colour</h4>
                     <label for="favcolor">Select Caption Text Outline Colour</label>
                     <input type="color" id="favcolor" name="carousel[text_outline_color]"
                            value="{{ old('carousel.text_outline_color', $data['carousel']->text_outline_color??'' )}}">
@@ -161,9 +169,25 @@
                 </div>
             @elseif( strlen(trim($data['carousel']['file_'.$imgData['width']])) != 0 )
                 <div class="col p-2">
-                    <img src="{{asset('storage/'. $data['folder']
+
+<div class="img-fluid border border-primary p-3" style>
+    <img src="{{asset('storage/'. $data['folder']
                          .'/'. $data['carousel']['file_'.$imgData['width']])}}"
-                         class="rounded img-fluid mx-auto" />
+         class="rounded img-fluid mx-auto" />
+
+    <div class="text-{{$data['carousel']['align']}}"
+         style="color: {{$data['carousel']['text_color']}};
+                 @if($data['carousel']['text_outline_color'] !='')
+                    text-shadow: -1px 1px 0 {{$data['carousel']['text_outline_color']}},
+                        1px 1px 0 {{$data['carousel']['text_outline_color']}},
+                        1px -1px 0 {{$data['carousel']['text_outline_color']}},
+                        -1px -1px 0 {{$data['carousel']['text_outline_color']}};
+                 @endif
+        ">
+        <h2>{{$data['carousel']['caption']}}</h2>
+        <p>{{$data['carousel']['caption2']}}</p>
+    </div>
+</div>
                     <h5 class="mt-2">
                         <i class="far fa-image"></i>
                         {{$data['carousel']['image_'.$imgData['width']]}}
@@ -220,14 +244,16 @@
                 <input class="btn btn-primary btn-lg" type="submit" value="{{$data['action']}}" />
             </div>
     </form>
-            <div class="col">
-                <form name="delete" method="POST" action="{{route('admin_carousel_destroy')}}">
-                    {!! csrf_field() !!}
-                    {!! method_field('DELETE') !!}
-                    <input type="hidden" name="id[]" value="{{$data['carousel']['id']}}">
-                    <i class="far fa-trash-alt fa-2x"></i>
-                    <input class="btn btn-outline-danger" type="submit" value="Delete">
-                </form>
-            </div>
+            @if($data['action'] == 'Edit')
+                <div class="col">
+                    <form name="delete" method="POST" action="{{route('admin_carousel_destroy')}}">
+                        {!! csrf_field() !!}
+                        {!! method_field('DELETE') !!}
+                        <input type="hidden" name="id[]" value="{{$data['carousel']['id']}}">
+                        <i class="far fa-trash-alt fa-2x"></i>
+                        <input class="btn btn-outline-danger" type="submit" value="Delete">
+                    </form>
+                </div>
+            @endif
     </div>
 @endsection
