@@ -1,2 +1,2 @@
 @extends('layouts.jumbo')
-@include('layouts.carousel2')
+@include('layouts.carousel')

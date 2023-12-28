@@ -55,6 +55,7 @@ class AdminCarouselController extends Controller
         $data['carousel']['align'] = 'left';
         $data['carousel']['color'] = "#2b2be0";
         $data['carousel']['text_color'] = "#dcdce6";
+        $data['carousel']['text_outline_color'] = "#cccccc";
         $data['folder'] = $carousel->getAttachmentFolder();
         $data['tn_prefix'] = 'tn_';
         $data['filesize'] = '';
@@ -84,8 +85,8 @@ class AdminCarouselController extends Controller
         foreach($widths as $w)
         {
             if(isset($result[$w]['image_'.$w])){
-            $carousel['image_' . $w] = $result[$w]['image_'.$w];
-            $carousel['file_' . $w] = $result[$w]['file_'.$w];
+                $carousel['image_' . $w] = $result[$w]['image_'.$w];
+                $carousel['file_' . $w] = $result[$w]['file_'.$w];
             }
         }
 

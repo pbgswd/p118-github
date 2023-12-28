@@ -31,11 +31,9 @@ class Carousel extends LiveableModel
     public $fillable = [
         'caption',
         'caption2',
-        'button',
-        'link',
         'align',
         'text_color',
-        'color',
+        'text_outline_color',
         'live',
         'order',
         'image_2000',

@@ -17,9 +17,14 @@
         <p class="lead">
             When you are ready with your 4 optimized images, create your carousel.
         </p>
-        <button class="btn btn-secondary" href="{{route('admin_carousel_list')}}">
+        <a class="btn btn-outline-info" href="{{route('admin_carousel_list')}}">
             Admin Carousel
-        </button>
+        </a>
+        @if($data['action'] == 'Edit')
+            <a class="btn btn-outline-primary" href="{{route('admin_carousel_create')}}">
+                Create a new Carousel
+            </a>
+        @endif
         <p class="help-block mt-3">
             <i>Need help? Get in touch with the web help and he will be happy to help you out.</i>
         </p>
@@ -53,94 +58,71 @@
         </div>
         <div class="row border border-primary rounded p-3 mb-3">
             <div class="col-12">
-                <h3>Button, link, alignment</h3>
+                <h3>Text Caption Alignment & Colour</h3>
                 <p class="help-block">
-                    <i>Add this information for a button on the image to direct the visitor somewhere.</i>
+                    <i>Make the caption work with the carousel image.</i>
                 </p>
             </div>
-            <div class="col-12">
-                <div class="form-group">
-                    <h4>Show the button, or not</h4>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="carousel[button]" id="carouselbutton1"
-                               value="1"
-                            {{ old('carousel.button', $data['carousel']['button'] == '1' ? 'checked' : '' )}}
-                        >
-                        <label class="form-check-label" for="carouselalign1">Show it</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="carousel[button]" id="carouselbutton2"
-                               value="0"
-                            {{ old('carousel.button', $data['carousel']['button'] == '0' ? 'checked' : '' )}}>
-                        <label class="form-check-label" for="carouselalign1">Hide it</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="form-group">
-                    <h4>Button Link</h4>
-                    <input type="text" class="form-control"
-                           placeholder="https://........." name="carousel[link]"
-                           value="{{ old('carousel.link', $data['carousel']->link??'' )}}" size="80" />
-                    <p class="help-block">
-                        <i>Full link to the web page the button takes you to.</i>
-                    </p>
-                </div>
-            </div>
             <div class="row">
-                <div class="form-group">
-                    <div class="col">
-                        <h4>Button color</h4>
-                        <label for="favcolor">Select Button Colour</label>
-                        <input type="color" id="favcolor" name="carousel[color]"
-                               value="{{ old('carousel.color', $data['carousel']->color??'' )}}"><br>
-                        <div style="color: {{ old('carousel.color', $data['carousel']->color??'' )}}">
-                            Current button color: {{ old('carousel.color', $data['carousel']->color??'' )}}
+                <div class="col-12 mb-3">
+                    <h4>Alignment for the Captions</h4>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign1"
+                               value="left" {{ old('carousel.align',
+                                    $data['carousel']['align'] == 'left' ? 'checked' : '' )}}>
+                        <label class="form-check-label" for="carouselalign1">Left</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign2"
+                               value="center" {{ old('carousel.align',
+                                    $data['carousel']['align'] == 'center' ? 'checked' : '' )}}>
+                        <label class="form-check-label" for="carouselalign2">Center</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign3"
+                               value="right" {{ old('carousel.align',
+                                    $data['carousel']['align'] == 'right' ? 'checked' : '' )}}>
+                        <label class="form-check-label" for="carouselalign3">Right</label>
+                    </div>
+                </div>
+                <div class="col-12 mb-3">
+                    <h4>Caption Text Colour</h4>
+                    <label for="favcolor">Select Caption Colour</label>
+                    <input type="color" id="favcolor" name="carousel[text_color]"
+                           value="{{ old('carousel.text_color', $data['carousel']->text_color??'' )}}"><br>
+                    <div style="color: {{ old('carousel.text_color', $data['carousel']->text_color??'' )}}">
+                        Current caption color: {{ old('carousel.text_color', $data['carousel']->text_color??'' )}}
+                    </div>
+                    @if($data['action'] == 'Edit')
+                        <div style="color: {{ $data['carousel']->text_color??'' }};
+                         @if($data['carousel']['text_outline_color'] !='')
+                            text-shadow: -1px 1px 0 {{$data['carousel']['text_outline_color']}},
+                                1px 1px 0 {{$data['carousel']['text_outline_color']}},
+                                1px -1px 0 {{$data['carousel']['text_outline_color']}},
+                                -1px -1px 0 {{$data['carousel']['text_outline_color']}};
+                        @endif ">
+                            <h2>{{$data['carousel']['caption']}}</h2>
                         </div>
+                    @endif
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <h4>Caption Text Outline Colour</h4>
+                    <label for="favcolor">Select Caption Text Outline Colour</label>
+                    <input type="color" id="favcolor" name="carousel[text_outline_color]"
+                           value="{{ old('carousel.text_outline_color', $data['carousel']->text_outline_color??'' )}}">
+                    <div class="bold" style="color: {{ $data['carousel']->text_outline_color??'' }};">
+                        Current text outline color: {{ $data['carousel']->text_outline_color?? 'none'}}
+                    </div>
                         @if($data['action'] == 'Edit')
-                            <button class="btn m-2" style="background-color: {{ $data['carousel']->color??''}};
-                                            color: {{ $data['carousel']->text_color??'' }};
-                                        ">Button
-                            </button>
+                            <div style="color: {{ $data['carousel']->text_color ?? ''}};">
+                                {{$data['carousel']['caption2']}}
+                            </div>
                         @endif
                     </div>
                 </div>
-                <div class="col-3"></div>
-                <div class="form-group">
-                    <div class="col">
-                        <h4>Alignment for the button   {{$data['carousel']['align']}}</h4>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign1"
-                                   value="left" {{ old('carousel.align',
-                                        $data['carousel']['align'] == 'left' ? 'checked' : '' )}}>
-                            <label class="form-check-label" for="carouselalign1">Left</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign2"
-                                   value="center" {{ old('carousel.align',
-                                        $data['carousel']['align'] == 'center' ? 'checked' : '' )}}>
-                            <label class="form-check-label" for="carouselalign2">Center</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="carousel[align]" id="carouselalign3"
-                                   value="right" {{ old('carousel.align',
-                                        $data['carousel']['align'] == 'right' ? 'checked' : '' )}}>
-                            <label class="form-check-label" for="carouselalign3">Right</label>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="col-12">
-                <div class="form-group">
-                <h4>Button Text Colour</h4>
-                <label for="favcolor">Select Button Text Colour</label>
-                <input type="color" id="favcolor" name="carousel[text_color]"
-                       value="{{ old('carousel.text_color', $data['carousel']->text_color??'' )}}">
-                <div class="bold" style="color: {{ $data['carousel']->text_color??'' }};">
-                    Current text color: {{ $data['carousel']->color?? 'none'}}
-                </div>
-            </div>
-        </div>
         </div>
         @if($data['action'] == 'Edit')
             <div class="row mb-3 mt-3">
@@ -196,7 +178,6 @@
                                 <input name="delete_image_{{$imgData['width']}}" type="checkbox" value="1" />
                             </div>
                         </div>
-
                         <input type="text" class="form-control" aria-label="Text input with checkbox"
                                value="Check to delete image." size="40" readonly>
                     </div>
@@ -208,47 +189,45 @@
             @endif
         </div>
         @endforeach
-    </div>
-        <div class="row">
-            <div class="col-2">
-                <div class="form-group">
-                <h4>Check to make live.</h4>
-
-                    <!-- make live checked persist when true  -->
-
-                    <input type="checkbox" class="form-control" name="carousel[live]"
-                           value="{{ old('carousel.live', $data['carousel']->live ?? '1' )}}"
-
-                           @if(count($data['image_data']) > $data['count']) disabled @endif
-                            @if($data['carousel']->live == '1') checked @endif
-                    />
-                    <p class="help-block">
-                        @if(count($data['image_data']) > $data['count'])
-                            <i>The Live checkbox will be disabled until the
-                                {{count($data['image_data'])}} images have been uploaded.</i>
-                        @else
-                            <i>This carousel now has
-                                {{count($data['image_data'])}} / {{$data['count']}} images.
-                                Check the box and make it live.</i>
-                        @endif
-                    </p>
-                </div>
+    <div class="row">
+        <div class="col-4">
+            <h4>
+                Check to make live. @if(old('carousel.live', $data['carousel']->live ?? '1'))Uncheck to hide. @endif
+            </h4>
+                <input type="checkbox" class="form-control" name="carousel[live]"
+                       value="{{ old('carousel.live', $data['carousel']->live ?? '1' )}}"
+                       @if(count($data['image_data']) > $data['count']) disabled @endif
+                        @if($data['carousel']->live == '1') checked @endif
+                />
+                <p class="help-block">
+                    @if(count($data['image_data']) > $data['count'])
+                        <i>The Live checkbox will be disabled until the
+                            {{count($data['image_data'])}} images have been uploaded.</i>
+                    @else
+                        <i>This carousel now has
+                            {{count($data['image_data'])}} / {{$data['count']}} images.
+                            @if($data['carousel']->live != '1')
+                                Check the box and make it live.
+                           @endif
+                        </i>
+                    @endif
+                </p>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-primary btn-lg" type="submit" value="{{$data['action']}}" />
-    </form>
             </div>
-        <div class="col">
-            <form name="delete" method="POST" action="{{route('admin_carousel_destroy')}}">
-                {!! csrf_field() !!}
-                {!! method_field('DELETE') !!}
-                <input type="hidden" name="id[]" value="{{$data['carousel']['id']}}">
-                <i class="far fa-trash-alt fa-2x"></i>
-                <input class="btn btn-outline-danger" type="submit" value="Delete">
-            </form>
-        </div>
-</div>
+    </form>
+            <div class="col">
+                <form name="delete" method="POST" action="{{route('admin_carousel_destroy')}}">
+                    {!! csrf_field() !!}
+                    {!! method_field('DELETE') !!}
+                    <input type="hidden" name="id[]" value="{{$data['carousel']['id']}}">
+                    <i class="far fa-trash-alt fa-2x"></i>
+                    <input class="btn btn-outline-danger" type="submit" value="Delete">
+                </form>
+            </div>
+    </div>
 @endsection
