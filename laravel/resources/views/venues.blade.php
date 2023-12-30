@@ -1,7 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-<div class="jumbotron">
-    <div class="container border border-dark rounded" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded mt-3" style="background: rgba(220,220,220,0.8);">
         <div class="col-12 text-center">
             <h1>Venues</h1>
             <h4>Where we work</h4>
@@ -30,7 +29,6 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 

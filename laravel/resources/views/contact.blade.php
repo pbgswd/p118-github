@@ -1,68 +1,62 @@
  @extends('layouts.jumbo')
 @section('content')
-    <div class="container mb-3  pt-2 pb-2" style="background: rgba(220,220,220,0.8);">
+    <div class="container mb-3  pt-2 pb-2 mt-3 rounded" style="background: rgba(220,220,220,0.8);">
         <div class="row mt-3 m-2 border border-dark rounded-lg">
             <div class="col-12 p-2 text-center">
                 <h2>Contact IATSE Local 118</h2>
             </div>
         </div>
-
-
-<div style="display: inline">
-        <form class="form-horizontal" id="contact-form" role="form" action="{{route('contact')}}" method="post">
-            {!! csrf_field() !!}
-            <div class="row p-2 mb-3">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
-                    <input type="text" class="form-control" placeholder="Name" name="name"
-                           value="{{ old('name')}}" size="80" required/>
+        <div style="display: inline">
+            <form class="form-horizontal" id="contact-form" role="form" action="{{route('contact')}}" method="post">
+                {!! csrf_field() !!}
+                <div class="row p-2 mb-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                        <input type="text" class="form-control" placeholder="Name" name="name"
+                               value="{{ old('name')}}" size="80" required/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                        <input type="text" class="form-control" placeholder="you@email.com" name="email"
+                               value="{{ old('email')}}" size="80" required/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Subject</span>
+                        <input type="text" class="form-control" placeholder="Subject" name="mail_subject"
+                               value="{{ old('mail_subject')}}" size="80" required/>
+                    </div>
+                    <div class="col-12 input-group mt-2 d-flex justify-content-center">
+                        <label for="mail_body" class="col-sm-2 control-label">
+                            <h3>Message</h3>
+                        </label>
+                    </div>
+                    <div class="col-12 input-group mt-2 mb-2 d-flex justify-content-center">
+                        <textarea name="mail_body" placeholder="Message" class="form-control input-lg" rows="3"
+                        cols="100">{{old('mail_body')}}</textarea>
+                    </div>
+                    <div class="col-6">
+                        <script src="https://www.google.com/recaptcha/api.js?render=6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"></script>
+                        <script>
+                            function onSubmit(token) {
+                                document.getElementById("contact-form").submit();
+                            }
+                        </script>
+                        <button class="btn btn-primary g-recaptcha"
+                                data-sitekey="6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"
+                                data-callback='onSubmit'
+                                data-action='submit'>Submit</button>
+                    </div>
+                    <div class="col-6 text-right">
+                        <button
+                            type="reset"
+                            class="btn btn-info btn-reset"
+                            name="Reset">
+                            Reset
+                        </button>
+                    </div>
                 </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
-                    <input type="text" class="form-control" placeholder="you@email.com" name="email"
-                           value="{{ old('email')}}" size="80" required/>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Subject</span>
-                    <input type="text" class="form-control" placeholder="Subject" name="mail_subject"
-                           value="{{ old('mail_subject')}}" size="80" required/>
-                </div>
-                <div class="col-12 input-group mt-2 d-flex justify-content-center">
-                    <label for="mail_body" class="col-sm-2 control-label">
-                        <h3>Message</h3>
-                    </label>
-                </div>
-                <div class="col-12 input-group mt-2 mb-2 d-flex justify-content-center">
-                    <textarea name="mail_body" placeholder="Message" class="form-control input-lg" rows="3"
-                    cols="100">{{old('mail_body')}}</textarea>
-                </div>
-                <div class="col-6">
-                    <script src="https://www.google.com/recaptcha/api.js?render=6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"></script>
-                    <script>
-                        function onSubmit(token) {
-                            document.getElementById("contact-form").submit();
-                        }
-                    </script>
-                    <button class="btn btn-primary g-recaptcha"
-                            data-sitekey="6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"
-                            data-callback='onSubmit'
-                            data-action='submit'>Submit</button>
-                </div>
-
-                <div class="col-6 text-right">
-                    <button
-                        type="reset"
-                        class="btn btn-info btn-reset"
-                        name="Reset">
-                        Reset
-                    </button>
-                </div>
-            </div>
-        </form>
-
-</div>
-
-
+            </form>
+        </div>
         <div class="row mt-2 m-2 p-2 mb-2 border border-dark rounded-lg">
             <div class="col-12 col-md-6 p-sm-4 p-2">
                 <h4>
