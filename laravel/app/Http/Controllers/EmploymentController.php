@@ -6,7 +6,6 @@ use App\Http\Requests\Employment\QueryJobYearRequest;
 use App\Models\Employment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 

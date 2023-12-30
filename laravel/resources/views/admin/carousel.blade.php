@@ -18,6 +18,7 @@
             <li>Use your image editor to optimize the image size for delivery over the web. Reduce the file
                 size as much as possible without causing lossiness (degradation).</li>
             <li> When you are ready with your 4 optimized images, create your carousel.</li>
+            <li>Due to layout constraints, only a maximum of 6 carousels should be active.</li>
         </ul>
         <a class="btn btn-outline-info" href="{{route('admin_carousel_list')}}">
             Admin Carousel
@@ -130,7 +131,7 @@
                                 </div>
                             @endif
 
-                            <div style="color: {{ $data['carousel']->text_color ?? ''}}">
+                            <div style="color: {{ $data['carousel']->text_color ?? ''}};">
                                 {{$data['carousel']['caption2']}}
                             </div>
                         @endif
@@ -191,7 +192,7 @@
                  @endif
         ">
         <h2>{{$data['carousel']['caption']}}</h2>
-        <p>{{$data['carousel']['caption2']}}</p>
+        <p style="letter-spacing: .2rem;">{{$data['carousel']['caption2']}}</p>
     </div>
 </div>
                     <h5 class="mt-2">

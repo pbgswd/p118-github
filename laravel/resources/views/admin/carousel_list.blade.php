@@ -7,17 +7,16 @@
                 <div class="row p-4">
                     <div class="col">
                     <h1 class="display-6">Front Page Carousel</h1>
-                    <br />
-                    <h3>4 optimized images </h3>
+                    <h3>4 optimized images per carousel slide </h3>
                     <ul>
                         <li>A carousel image requires four images, each for the different
                             screen sizes of devices (phones, laptops, etc).</li>
-                        <li> They dont need to be the same image,
-                            but there needs to be four of them of the different sizes specified.</li>
-                        <li>Use your image editor to optimize the image size for delivery over the web.</li>
-                        <li>Reduce the file
-                            size as much as possible without causing lossiness (degradation).</li>
+                        <li> They dont need to be the same image, but there needs to be four of them of the different
+                            sizes specified.</li>
+                        <li>Use your desktop image editor to optimize the image size for delivery over the web.</li>
+                        <li>Reduce the file size as much as possible without causing lossiness (degradation).</li>
                         <li>When you are ready with your 4 optimized images, create your carousel.</li>
+                        <li>Due to layout constraints, only a maximum of 6 carousels should be active.</li>
                     </ul>
                     <a class="btn btn-primary" role="button" href="{{route('admin_carousel_create')}}">
                         <i class="fas fa-plus-square"></i> Create new carousel</a>
@@ -45,7 +44,7 @@
 <div class="row">
     <div class="col-12">
         <h3>
-            List of entries for front page carousel
+            {{$data['count']}} entries for front page carousel
         </h3>
     </div>
     <div class="col">
@@ -59,7 +58,8 @@
                         <tr>
                             <th> @sortablelink('id','#') </th>
                             <th>  Caption </th>
-                            <th>  Colour </th>
+                            <th>     </th>
+                            <th>  Live </th>
                             <th> Edit </th>
                             <th> @sortablelink('created_at', 'Created At') </th>
                             <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -68,7 +68,7 @@
                         <tbody>
                         @forelse ( $data['carousels'] as $c )
                             <tr>
-                                <td>
+                                <td class="p-2">
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" name="id[]" value="{{ $c->id }}" />
@@ -77,9 +77,18 @@
                                 </td>
                                 <td>{{$c->caption}}</td>
                                 <td>
-                                    <div  style="color: {{ $c->text_color ?? '' }}">
-                                        {{ $c->text_color ?? 'none'}}
-                                    </div>
+                                    @if($c->file_600 !='')
+                                        <img src="/storage/carousel/{{$c->file_600}}" height="100" />
+                                    @else
+                                        <i class="far fa-image"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($c->live == 1)
+                                        <i class="fas fa-check"></i>
+                                    @else
+                                        <i class="far fa-times-circle"></i>
+                                    @endif
                                 </td>
                                 <td>
                                     <a href="{{route('admin_carousel_edit', $c->id)}}" title="edit">

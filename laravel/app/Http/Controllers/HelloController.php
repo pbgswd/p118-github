@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carousel;
 use Illuminate\View\View;
 
 class HelloController extends Controller

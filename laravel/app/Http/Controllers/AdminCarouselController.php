@@ -35,11 +35,11 @@ class AdminCarouselController extends Controller
      */
     public function index(): View
     {
-        $data = ['carousels' => Carousel::paginate(20)];
+        $data = ['carousels' => Carousel::withoutGlobalScopes()->paginate(20)];
         $carousel = new Carousel;
         $data['folder'] = $carousel->getAttachmentFolder();
         $data['image_data'] = $carousel->getImageData();
-        $data['count'] = count($carousel->all());
+        $data['count'] =  Carousel::withoutGlobalScopes()->count();
 
         return view('admin.carousel_list', ['data' => $data]);
     }
@@ -88,7 +88,7 @@ class AdminCarouselController extends Controller
                 $carousel['file_' . $w] = $result[$w]['file_'.$w];
             }
         }
-        unset($carousel->live);
+        $carousel->live = 0;
         $carousel->save();
 
         Session::flash('success', 'Carousel Slide saved');

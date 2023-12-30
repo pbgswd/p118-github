@@ -28,7 +28,7 @@
                         <h2>
                             {{$d['caption']}}
                         </h2>
-                        <p>
+                        <p style="letter-spacing: .2rem;">
                             {{$d['caption2']}}
                         </p>
                     </div>

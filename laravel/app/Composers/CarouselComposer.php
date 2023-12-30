@@ -21,7 +21,6 @@ class CarouselComposer
     {
 
         $carousel = Carousel::where('live', 1)
-            ->orderBy('order')
             ->limit(6)
             ->get();
         $data = ['carousel' => $carousel];
