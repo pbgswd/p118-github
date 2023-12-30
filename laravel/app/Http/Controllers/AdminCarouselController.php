@@ -53,9 +53,8 @@ class AdminCarouselController extends Controller
 
         $data = ['carousel' => $carousel];
         $data['carousel']['align'] = 'left';
-        $data['carousel']['color'] = "#2b2be0";
-        $data['carousel']['text_color'] = "#dcdce6";
-        $data['carousel']['text_outline_color'] = "#cccccc";
+        $data['carousel']['text_color'] = "#FFFFFF";
+        $data['carousel']['text_outline_color'] = null;
         $data['folder'] = $carousel->getAttachmentFolder();
         $data['tn_prefix'] = 'tn_';
         $data['filesize'] = '';
@@ -89,7 +88,7 @@ class AdminCarouselController extends Controller
                 $carousel['file_' . $w] = $result[$w]['file_'.$w];
             }
         }
-
+        unset($carousel->live);
         $carousel->save();
 
         Session::flash('success', 'Carousel Slide saved');
@@ -134,7 +133,7 @@ class AdminCarouselController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param UpdateCarouselRequest $request
      * @param Carousel $carousel
      * @return RedirectResponse
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
@@ -142,6 +141,15 @@ class AdminCarouselController extends Controller
     #[NoReturn] public function update(UpdateCarouselRequest $request, Carousel $carousel): RedirectResponse
     {
         $carousel->fill($request->carousel);
+
+        if($request['unset_outline_color'] == 1) {
+            $carousel['text_outline_color'] = null;
+        }
+
+        if(!isset($request['carousel']['live'])) {
+            $carousel['live'] = 0;
+        }
+
         $data['folder'] = $carousel->getAttachmentFolder();
         $data['image_data'] = $carousel->getImageData();
         $data['tn_prefix'] = 'tn_';

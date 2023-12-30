@@ -10,18 +10,15 @@
             @endif
             {{$data['action']}} Carousel
         </h1>
-        <p class="lead">
-            <i class="fas fa-info-circle"></i> A carousel image requires four images, each for the different screen sizes of devices
-            (phones, laptops, etc). They dont need to be the same image,
-            just that there needs to be four of them.
-        </p>
-        <p class="lead">
-            Use your image editor to optimize the image size for delivery over the web. Reduce the file
-            size as much as possible without causing lossiness (degradation).
-        </p>
-        <p class="lead">
-            When you are ready with your 4 optimized images, create your carousel.
-        </p>
+        <ul>
+            <li>A carousel image requires four images, each for the different screen sizes of devices
+                (phones, laptops, etc).</li>
+            <li>They dont need to be the same image,
+                just that there needs to be four of them.</li>
+            <li>Use your image editor to optimize the image size for delivery over the web. Reduce the file
+                size as much as possible without causing lossiness (degradation).</li>
+            <li> When you are ready with your 4 optimized images, create your carousel.</li>
+        </ul>
         <a class="btn btn-outline-info" href="{{route('admin_carousel_list')}}">
             Admin Carousel
         </a>
@@ -69,7 +66,7 @@
                 </p>
             </div>
             <div class="row">
-                <div class="col-12 mb-3">
+                <div class="col-12 mb-4">
                     <h4>Alignment for the Captions</h4>
                     <div class="form-check form-check-inline">
                         <i class="fas fa-align-left mr-1"></i>
@@ -95,7 +92,7 @@
                 </div>
                 <div class="col-12 mb-3">
                     <h4><i class="fas fa-palette mr-1"></i>Caption Text Colour</h4>
-                    <label for="favcolor">Select Caption Colour</label>
+                    <label for="favcolor">Select Colour</label>
                     <input type="color" id="favcolor" name="carousel[text_color]"
                            value="{{ old('carousel.text_color', $data['carousel']->text_color??'' )}}"><br>
                     <div style="color: {{ old('carousel.text_color', $data['carousel']->text_color??'' )}}">
@@ -117,14 +114,23 @@
                 <div class="col-12">
                     <div class="form-group">
                         <h4><i class="fas fa-palette mr-1"></i>Caption Text Outline Colour</h4>
-                    <label for="favcolor">Select Caption Text Outline Colour</label>
-                    <input type="color" id="favcolor" name="carousel[text_outline_color]"
+                    <label for="favcolor">Select Colour</label>
+
+                        <input type="color" id="favcolor" name="carousel[text_outline_color]"
                            value="{{ old('carousel.text_outline_color', $data['carousel']->text_outline_color??'' )}}">
+
                     <div class="bold" style="color: {{ $data['carousel']->text_outline_color??'' }};">
-                        Current text outline color: {{ $data['carousel']->text_outline_color?? 'none'}}
+                        Current text outline color: {{ $data['carousel']->text_outline_color ?? 'none'}}
                     </div>
                         @if($data['action'] == 'Edit')
-                            <div style="color: {{ $data['carousel']->text_color ?? ''}};">
+                            @if($data['carousel']->text_outline_color !='')
+                                <div class="col-12">
+                                    Unset outline colour
+                                    <input type="checkbox" name="unset_outline_color" value="1" />
+                                </div>
+                            @endif
+
+                            <div style="color: {{ $data['carousel']->text_color ?? ''}}">
                                 {{$data['carousel']['caption2']}}
                             </div>
                         @endif
@@ -218,8 +224,9 @@
             <h4>
                 Check to make live. @if(old('carousel.live', $data['carousel']->live ?? '1'))Uncheck to hide. @endif
             </h4>
+            @if($data['carousel']->live == '1') checked @endif
                 <input type="checkbox" class="form-control" name="carousel[live]"
-                       value="{{ old('carousel.live', $data['carousel']->live ?? '1' )}}"
+                       value="1"
                        @if(count($data['image_data']) > $data['count']) disabled @endif
                         @if($data['carousel']->live == '1') checked @endif
                 />

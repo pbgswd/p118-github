@@ -47,6 +47,7 @@ class UpdateCarouselRequest extends FormRequest
             'delete_image_1400' => 'boolean',
             'delete_image_800' => 'boolean',
             'delete_image_600' => 'boolean',
+            'unset_outline_color' =>'boolean|nullable',
         ];
     }
 }
