@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Carousel\DestroyCarouselRequest;
 use App\Http\Requests\Carousel\StoreCarouselRequest;
 use App\Http\Requests\Carousel\UpdateCarouselRequest;
 use App\Models\Carousel;
@@ -93,7 +94,6 @@ class AdminCarouselController extends Controller
 
         Session::flash('success', 'Carousel Slide saved');
         return redirect()->route('admin_carousel_edit', [$carousel->id]);
-
     }
 
     /**
@@ -109,8 +109,6 @@ class AdminCarouselController extends Controller
         $data['tn_prefix'] = 'tn_';
         $data['filesize'] = '';
         $data['action'] = "Edit";
-
-        // todo get actual file size of each image for data
 
         $width = [];
         foreach($data['image_data'] as $w)
@@ -184,10 +182,10 @@ class AdminCarouselController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param DestroyCarouselRequest $request
      * @return RedirectResponse
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(DestroyCarouselRequest $request): RedirectResponse
     {
         if(!isset($request->id)) {
             Session::flash('warning', 'Nothing deleted.');
@@ -197,10 +195,11 @@ class AdminCarouselController extends Controller
             $carousel = new Carousel;
             $widths = $carousel->getImageWidthSizes();
             $directory = $carousel->getAttachmentFolder();
-            $carousels = Carousel::find($request->id);
 
-            foreach($carousels as $carousel)
+            foreach($request->id as $id)
             {
+                $carousel = Carousel::withoutGlobalScopes()->find($id);
+
                 foreach($widths as $w)
                 {
                     if(isset( $carousel['file_' . $w] )) {
@@ -210,7 +209,7 @@ class AdminCarouselController extends Controller
                 $carousel->delete();
             }
 
-            Session::flash('success', Str::plural('carousel', count([$carousels])) . ' and images deleted.');
+            Session::flash('success', Str::plural('carousel', count($request->id)) . ' and images deleted.');
         }
         return redirect()->route('admin_carousel_list');
     }
