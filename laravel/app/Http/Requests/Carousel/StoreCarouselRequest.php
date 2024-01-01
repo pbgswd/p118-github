@@ -31,10 +31,10 @@ class StoreCarouselRequest extends FormRequest
             'carousel.text_outline_color' => 'string|nullable|max:255',
             'carousel.live' => 'boolean',
             'carousel.order' => 'integer',
-            'file.image_2000' => 'file|nullable',
-            'file.image_1400' => 'file|nullable',
-            'file.image_800' => 'file|nullable',
-            'file.image_600' => 'file|nullable',
+            'file.image_2000' => 'file|max:300|nullable',
+            'file.image_1400' => 'file|max:300|nullable',
+            'file.image_800' => 'file|max:100|nullable',
+            'file.image_600' => 'file|max:100|nullable',
         ];
     }
 }
