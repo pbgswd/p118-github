@@ -107,7 +107,7 @@ class AdminCarouselController extends Controller
         $data['folder'] = $carousel->getAttachmentFolder();
         $data['image_data'] = $carousel->getImageData();
         $data['tn_prefix'] = 'tn_';
-        $data['filesize'] = '';
+        $filesize = [];
         $data['action'] = "Edit";
 
         $width = [];
@@ -115,18 +115,18 @@ class AdminCarouselController extends Controller
         {
             $width[] = $w['width'];
         }
-        $count = 0;
+        $data['count'] = 0;
 
         foreach($width as $w)
         {
-            if(trim($data['carousel']['file_'.$w]) != '')
+            if(Storage::disk('carousel')->exists($data['carousel']['file_'.$w]))
             {
-                $count++;
+                $filesize['file_'.$w] = round(Storage::disk('carousel')->size($data['carousel']['file_'.$w]) /1024, 2);
+                $data['count']++;
             }
         }
-
-        $data['count'] = $count;
-
+        $data['filesize'] =  $filesize;
+//dd($data);
         return view('admin.carousel', ['data' => $data]);
     }
 

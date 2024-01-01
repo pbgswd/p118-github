@@ -159,7 +159,10 @@
                 <div class="col-12">
                     <h4>
                         <i class="far fa-image"></i>
-                        {{$imgData['size']}} file, under {{$imgData['filesize']}}kb
+                        {{$imgData['size']}} file, must be under {{$imgData['filesize']}} kb
+                        @if($data['action'] = 'Edit')
+                            - Actual size: {{$data['filesize']['file_'.$imgData['width']]}} kb
+                        @endif
                     </h4>
                 </div>
             @if( strlen(trim($data['carousel']['file_'.$imgData['width']])) == 0 )
