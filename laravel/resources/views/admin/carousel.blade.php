@@ -180,24 +180,14 @@
             @elseif( strlen(trim($data['carousel']['file_'.$imgData['width']])) != 0 )
                 <div class="col p-2">
 
-<div class="img-fluid border border-primary p-3" style>
-    <img src="{{asset('storage/'. $data['folder']
-                         .'/'. $data['carousel']['file_'.$imgData['width']])}}"
-         class="rounded img-fluid mx-auto" />
+                    <div class="container d-flex align-items-center justify-content-center" style="position: relative;
+                    background-image: url({{'storage/'. $data['folder'] .'/'. $data['carousel']['file_'.$imgData['width']]}})">
+                        <img src="{{asset('storage/'. $data['folder']
+                            .'/'. $data['carousel']['file_'.$imgData['width']])}}"
+                             class="float-left img-fluid mx-auto  d-flex align-items-center
+                             justify-content-{{$data['carousel']['align']}}" />
+                    </div>
 
-    <div class="text-{{$data['carousel']['align']}}"
-         style="color: {{$data['carousel']['text_color']}};
-                 @if($data['carousel']['text_outline_color'] !='')
-                    text-shadow: -1px 1px 0 {{$data['carousel']['text_outline_color']}},
-                        1px 1px 0 {{$data['carousel']['text_outline_color']}},
-                        1px -1px 0 {{$data['carousel']['text_outline_color']}},
-                        -1px -1px 0 {{$data['carousel']['text_outline_color']}};
-                 @endif
-        ">
-        <h2>{{$data['carousel']['caption']}}</h2>
-        <p style="letter-spacing: .2rem;">{{$data['carousel']['caption2']}}</p>
-    </div>
-</div>
                     <h5 class="mt-2">
                         <i class="far fa-image"></i>
                         {{$data['carousel']['image_'.$imgData['width']]}}
