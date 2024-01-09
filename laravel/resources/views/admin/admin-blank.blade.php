@@ -4,27 +4,12 @@
     console.log('inside admin-blank.blade the template file');
 </script>
 
-<div id="anotherapp">
+<div class="mt-6 mb-6"><h1>Blank Page</h1></div>
+
+<div class="mt-6 pt-6" id="anotherapp">
     <form method="post" action="">
-        My name: @{{ myName }} <br />
-    <input v-model="someName" type="text" id="name" name="name"> (@{{ someName.length }} characters)
-    <textarea v-model="deckDescription" id="description" name="description"></textarea>
-    (@{{ 200 - deckDescription.length }} left)
-        <button type="submit">Create</button>
+    <textarea v-model="deckDescription" id="description" name="description" class="m-3"></textarea>
+        <button type="button" class="btn btn-primary m-2">Create</button>
     </form>
-</div>
-
-@can('edit articles')
-    can edit articles
-@endcan
-
-<input type="date" id="pick-date" name="date" />
-<div class="container mt-5">
-    container 3
-    <div class="row border border-primary">
-        <div class='col-12'>
-            x
-        </div>
-    </div>
 </div>
 @endsection

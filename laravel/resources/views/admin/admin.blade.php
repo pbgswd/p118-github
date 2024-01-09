@@ -31,6 +31,87 @@
             field above to find records.
         </h3>
     </div>
+    <div class="row border border-dark rounded-lg p-3 m-2">
+        <div class="col-12">
+            <h3>New stuff</h3>
+        </div>
+        <div class="col-4">
+            <a href="{{ route('admin_faqs_list') }}">
+                <div class="card p-3">
+                    <h5 class="card-title">FAQs</h5>
+                    <div class="card-body">
+                        Create content for any topic, especially common repeated information.
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{{ route('admin_carousel_list') }}">
+                <div class="card p-3">
+                    <h5 class="card-title">Carousel Management</h5>
+                    <div class="card-body">
+                        For fresh pics for the front page slide show, showing the world what we do.
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{{ route('admin_qrcodes_list') }}">
+                <div class="card p-3">
+                    <h5 class="card-title">QR Codes</h5>
+                    <div class="card-body">
+                       Generate QR codes as needed.
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    @role('super-admin')
+        <div class="row border border-dark rounded-lg p-3 m-2">
+            <div class="col-12">
+                <h3>Site Developer</h3>
+            </div>
+            <div class="col-4">
+                <a href="{{ route('blank') }}">
+                    <div class="card p-3">
+                        <h5 class="card-title">
+                            <span data-feather="file"></span>
+                            Blank
+                        </h5>
+                        <div class="card-body">
+                           Blank page for dev and things.
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="{{ route('developer') }}">
+                    <div class="card p-3">
+                        <h5 class="card-title">
+                            <span data-feather="file"></span>
+                            Developer Resources
+                        </h5>
+                        <div class="card-body">
+                            Links to developer tools for the site.
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="{{ route('development') }}">
+                    <div class="card p-3">
+                        <h5 class="card-title">
+                            <span data-feather="file"></span>
+                            Development Page
+                        </h5>
+                        <div class="card-body">
+                            Page for various things.
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    @endrole
     <div class="row border border-dark rounded-lg mt-3 p-lg-5 d-block d-md-none d-lg-none">
         @include(('layouts.dashboard-list'))
     </div>

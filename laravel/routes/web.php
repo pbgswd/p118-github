@@ -151,10 +151,14 @@ Route::middleware('web', 'auth')->group(function () {
  * ADMIN SECTION
  */
 Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->group(function () {
-    Route::get('/', [CNS\AdminController::class, 'index'])->name('admin');
-    Route::get('/blank', [CNS\AdminController::class, 'blank'])->name('blank');
-    Route::get('/developer', [CNS\AdminController::class, 'developer'])->name('developer');
-    Route::get('/developer/phpinfo', [CNS\AdminController::class, 'getphpinfo'])->name('phpinfo');
+
+    Route::controller(CNS\AdminController::class)->group(function() {
+        Route::get('/', 'index')->name('admin');
+        Route::get('/blank', 'blank')->name('blank');
+        Route::get('/developer', 'developer')->name('developer');
+        Route::get('/developer/phpinfo', 'getphpinfo')->name('phpinfo');
+        Route::get('/development', 'development')->name('development');
+    });
 
     Route::controller(CNS\AdminCarouselController::class)->group(function() {
        Route::get('carousel', 'index')->name('admin_carousel_list');

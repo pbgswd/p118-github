@@ -20,40 +20,6 @@
                     Admin Dashboard <span class="sr-only">(current)</span>
                 </a>
             </li>
-                @can('create articles')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('meetings_list') }}">
-                        <span data-feather="file"></span>
-                        Meeting Minutes
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin_bylaws_list') }}">
-                        <span data-feather="file"></span>
-                        Constitution & By-Laws
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('agreements_list') }}">
-                        <span data-feather="file"></span>
-                        Collective Agreements
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('policies_list') }}">
-                        <span data-feather="file"></span>
-                        Policies
-                    </a>
-                </li>
-            @endcan
-            @can('manage committee')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('committees_list') }}">
-                        <span data-feather="file"></span>
-                        Committees
-                    </a>
-                </li>
-            @endcan
             @can(['create users', 'edit users', 'delete users'])
                 <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -89,6 +55,14 @@
                     <a class="nav-link" href="{{ route('roles_list') }}">
                         <span data-feather="file"></span>
                         Website Roles
+                    </a>
+                </li>
+            @endcan
+            @can('manage committee')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('committees_list') }}">
+                        <span data-feather="file"></span>
+                        Committees
                     </a>
                 </li>
             @endcan
@@ -162,6 +136,30 @@
                     <a class="nav-link" href="{{ route('admin_employment_list') }}">
                         <span data-feather="file"></span>
                         Employment
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('meetings_list') }}">
+                        <span data-feather="file"></span>
+                        Meeting Minutes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin_bylaws_list') }}">
+                        <span data-feather="file"></span>
+                        Constitution & By-Laws
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('agreements_list') }}">
+                        <span data-feather="file"></span>
+                        Collective Agreements
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('policies_list') }}">
+                        <span data-feather="file"></span>
+                        Policies
                     </a>
                 </li>
             @endcan

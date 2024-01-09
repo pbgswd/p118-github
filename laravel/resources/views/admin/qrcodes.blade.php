@@ -5,7 +5,9 @@
            <span class="badge badge-primary badge-pill">
                {{$data['count']}} {{ Str::plural('QR code', $data['count'])}}
            </span>
-            | <a href="{{ route('admin_qrcode_create') }}">Create new qrcode
+            | <a href="{{ route('admin_qrcode_create') }}">
+                <i class="fas fa-qrcode"></i>
+                Create new qrcode
                 <i class="far fa-arrow-alt-circle-right"></i> </a>
         </h3>
     </div>

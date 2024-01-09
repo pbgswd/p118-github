@@ -58,6 +58,15 @@ class AdminController extends Controller
         return view('admin.admin-blank');
     }
 
+    public function development(): View
+    {
+        //todo method for page for development
+        //todo file upload
+        //todo image library insert image
+
+        return view('admin.admin-development');
+    }
+
     public function getphpinfo(User $user): Bool
     {
         return phpinfo();

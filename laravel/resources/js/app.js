@@ -27,6 +27,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import Vue from 'vue';
+import VueFileAgent from 'vue-file-agent';
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
+
+Vue.use(VueFileAgent);
+
+
+
+
 const app = new Vue({
     el: '#app',
 });
