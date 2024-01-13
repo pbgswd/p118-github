@@ -4,12 +4,12 @@ window.Vue = require('vue');
 
 import { createApp} from "vue";
 
-import ResendMembershipInvitation from "../components/admin/ResendMembershipInvitation";
+//import ResendMembershipInvitation from "../components/admin/ResendMembershipInvitation";
 
-console.log('from inside app.js source');
+//console.log('from inside app.js source');
 
 createApp({
     components: {
-        ResendMembershipInvitation
+  //      ResendMembershipInvitation
     }
 }).mount('#app');
