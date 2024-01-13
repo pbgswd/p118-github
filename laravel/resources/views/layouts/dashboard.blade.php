@@ -37,17 +37,17 @@
     <ul class="navbar-nav flex-row d-md-none">
         <li class="nav-item text-nowrap">
             <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
-                <svg class="bi"><use xlink:href="#search"/></svg>
+                <svg class="bi"><use xlink:href="#search"/></svg>xxx
             </button>
         </li>
         <li class="nav-item text-nowrap">
             <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <svg class="bi"><use xlink:href="#list"/></svg>
+                <svg class="bi"><use xlink:href="#list"/></svg>zzz
             </button>
         </li>
     </ul>
 
-    <div id="navbarSearch" class="navbar-search w-100 collapse">
+    <div id="navbarSearch" class="navbar-search w-100 collapse">####
         <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
     </div>
 </header>
@@ -67,17 +67,6 @@
         </div>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-
-                </div>
-            </div>
-
-
-
-
-
             @include('flash-messages')
             @yield('content')
             <div class="row mt-5 mb-5 pb-5">
