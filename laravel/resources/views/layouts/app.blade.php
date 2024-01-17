@@ -16,8 +16,6 @@
             crossorigin="anonymous">
     </script>
     <script>window.jQuery.ready || document.write('<script src="/js/jquery.slim.min.js"><\/script>')</script>
-
-
     <script src="{{asset("/js/bootstrap.bundle.min.js")}}"
             integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
             crossorigin="anonymous">
