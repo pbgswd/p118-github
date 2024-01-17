@@ -1,8 +1,8 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container mt-3 mb-3 pt-2 border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
+    <div class="container mt-3 mb-3 pt-2 border border-dark rounded mx-1 mx-auto" style="background: rgba(220,220,220,0.8);">
         <div class="row mb-2">
-            <div class="col-12 col-md-6 w-100">
+            <div class="col-12 col-md-6 w-100 flex">
                 <p>
                     <i>
                         @foreach($data['page']->topics as $pt)

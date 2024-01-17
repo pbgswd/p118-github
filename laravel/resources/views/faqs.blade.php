@@ -19,14 +19,12 @@
             <div class="accordion p-0" id="accordionTop">
                 @foreach ( $data['faqs'] as $f )
                     <a id="{{$f->slug}}"></a>
-                    <div class="card p-0">
+                    <div class="card p-0 mb-2">
                         <div class="card-header" id="heading{{$f->slug}}">
                             <button class="btn btn-link btn-block text-left" type="button" href="#{{$f->slug}}"
                                     data-toggle="collapse" data-target="#collapse{{$f->slug}}" aria-expanded="false"
                                     aria-controls="collapse{{$f->slug}}">
-                                <h3>
-                                    {{$f->faq_topic}}
-                                </h3>
+                                <h3>{{$f->faq_topic}}</h3>
                             </button>
                             {!! $f->description!!}
                             <br />

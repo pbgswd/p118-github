@@ -16,12 +16,11 @@
                 <a class="nav-link" href="{{route('landing_page')}}" title="Landing Page">
                     <i class="fas fa-home fa-2"></i>
                     Landing Page
-                </a>
-                &nbsp;
+                </a>&nbsp;
                 @hasanyrole(['super-admin|office|writer|committee'])
                 &nbsp; <a class="nav-link ml-sm-3" href="{{route('admin')}}" title="Admin">
-                    <i class="fas fa-tachometer-alt"></i> Admin
-                </a>
+                        <i class="fas fa-tachometer-alt"></i> Admin
+                    </a>
                 @endrole
             </li>
         </ul>
