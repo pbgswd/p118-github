@@ -25,7 +25,7 @@
             {{$data['policy']->title}}
         </h1>
     </div>
-    <div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded" style="background: rgba(220,220,220,0.8);">
         <div class="col-12 col-md-4 text-md-right pt-3">
             <h4>
                 From: {{$data['policy']->date->format('F j Y')}}

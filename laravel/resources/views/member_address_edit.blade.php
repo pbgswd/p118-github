@@ -1,6 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-<div class="container border border-dark rounded-lg  p-4 mb-3" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded  p-4 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row">
         <h3>
             <a href="{{route('members')}}">

@@ -1,5 +1,5 @@
 
-    <div class="col-12 border border-dark rounded-lg p-lg-4 mb-3">
+    <div class="col-12 border border-dark rounded p-lg-4 mb-3">
         @if($data['history']['birthday'] != '')
             <h2 class="pt-2">
                 <i class="fas fa-birthday-cake"></i>
@@ -18,7 +18,7 @@
             the needs of your production.
         </p>
         <p>
-            <a class="btn btn-primary btn-lg" href="{{route('page_show', 'history')}}" role="button">
+            <a class="btn btn-secondary btn-lg" href="{{route('page_show', 'history')}}" role="button">
                 Learn more &raquo;
             </a>
         </p>

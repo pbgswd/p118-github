@@ -1,13 +1,13 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container border border-dark rounded-lg p-2 mt-3" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded p-2 mt-3" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-0 col-md-4"></div>
             <div class="col-md-4 text-center">
                 <a href="{{ route('committee', $data['committeepost']->committee->slug) }}">
                     @if(null !== $data['committeepost']->committee->image)
                         <img src="{{ asset('storage/committees/'. $data['committeepost']->committee->image)}}"
-                            class="border rounded-lg img-fluid mb-2" />
+                            class="border rounded img-fluid mb-2" />
                     @endif
                     <h4>
                         {{$data['committeepost']->committee->name}}

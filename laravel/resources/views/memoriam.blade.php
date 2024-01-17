@@ -1,7 +1,7 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg pb-2" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded pb-2" style="background: rgba(220,220,220,0.8);">
         <div class="row mb-3">
             <div class="col-12 col-md-6">
                 <a href="{{route('memoriam_list')}}">In Memoriam List</a>

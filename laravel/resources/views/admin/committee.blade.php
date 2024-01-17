@@ -4,7 +4,7 @@
     @include('admin.admin_partials.admin_tinymce')
     <div class="container">
         <div class="row">
-            <div class="col border border-dark rounded-lg mr-3 p-2">
+            <div class="col border border-dark rounded mr-3 p-2">
                 <h5>
                     <a href="{{ route('committees_list') }}">
                         <i class="far fa-arrow-alt-circle-left"></i>
@@ -13,7 +13,7 @@
                 </h5>
             </div>
             @if ($data['action'] == 'Edit')
-                <div class="col border border-dark rounded-lg mr-3 p-2">
+                <div class="col border border-dark rounded mr-3 p-2">
                     <h5>
                         View
                         <a title="{{ $data['committee']->name }}"
@@ -26,7 +26,7 @@
         </div>
         @if ($data['action'] == 'Edit')
             <div class="row mb-3">
-                <div class="col border border-dark rounded-lg mt-3 mr-3 p-2">
+                <div class="col border border-dark rounded mt-3 mr-3 p-2">
                     <h5>
                         <i class="fas fa-users"></i>
                         Membership in {{ $data['committee']->name }}
@@ -41,7 +41,7 @@
                         </a>
                     </h5>
                 </div>
-                <div class="l border border-dark rounded-lg mt-3 mr-3 p-2">
+                <div class="l border border-dark rounded mt-3 mr-3 p-2">
                     <h5>
                         <a href="{{route('committee_posts_list', $data['committee']->slug)}}">
                             <i class="far fa-folder-open"></i>
@@ -115,7 +115,7 @@
                 @if(null !== $data['committee']->image)
                     <div class="col-12 mt-3 mb-3">
                         <img src="{{ asset('storage/committees/'.$data['committee']->image)}}"
-                             class="border rounded-lg img-fluid mb-2" />
+                             class="border rounded img-fluid mb-2" />
                     </div>
                     <div class="col-12 mt-3 mb-5">
                         <h4 class="mb-3">

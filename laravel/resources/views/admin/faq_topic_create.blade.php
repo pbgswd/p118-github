@@ -66,7 +66,7 @@
                 @if($data['action'] == 'Update')
                     <div class="row">
                         @foreach( $data['faq']['faqs_data'] as $fd )
-                            <div class="col-12 border border-dark rounded-lg p-2 m-2">
+                            <div class="col-12 border border-dark rounded p-2 m-2">
                                 <input type="hidden" name="faq[faq_data][{{$fd->id}}][id]" value="{{$fd->id}}" />
                                 <input type="hidden" name="faq[faq_data][{{$fd->id}}][faq_id]"
                                        value="{{$data['faq']->id}}" />

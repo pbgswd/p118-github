@@ -1,7 +1,7 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg pb-2" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded pb-2" style="background: rgba(220,220,220,0.8);">
         <div class="row mb-3">
             <div class="col-12 col-md-6">
                 <a href="{{route('venues')}}">Venues</a>
@@ -49,7 +49,7 @@
             </div>
         </div>
         @if ($data['agreements']->count() > 0)
-            <div class="row border border-dark rounded-lg mb-3 p-2">
+            <div class="row border border-dark rounded m-3 mb-3 p-2">
                 <div class="col-12">
                     <h4>
                         Agreements with {{$data['venue']->name}}

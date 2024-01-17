@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mb-3">
     @forelse($data['news']['features'] as $f)
         <div class="col-12
         @if($loop->first && $loop->count % 2)
@@ -7,7 +7,7 @@
             col-md-6
         @endif
         pt-2 mb-2">
-            <div class="col h-100 w-100 border border-dark rounded-lg pt-2 mb-2">
+            <div class="col h-100 w-100 border border-dark rounded p-2 mb-2">
                 @if($f->image)
                     <div class="col text-center d-flex justify-content-center mb-2">
                         <picture>
@@ -31,8 +31,8 @@
     @endforelse
 </div>
 <div class="row">
-    <div class="col-12 col-md-6 mb-2">
-        <div class="col border border-dark rounded w-100 h-100">
+    <div class="col-12 col-md-6">
+        <div class="col border border-dark border-1 rounded w-100 h-100 p-2 d-flex">
             <ul class="list-group list-group-flush p-0 m-0">
                 @forelse($data['news']['posts'] as $post)
                     <li class="list-group-item">
@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="col-12 col-md-6 mt-md-0">
-        <div class="col border border-dark rounded w-100 h-100">
+        <div class="col border border-dark rounded w-100 h-100 p-2">
             <ul class="list-group list-group-flush p-0 m-0">
                 @forelse($data['news']['pages'] as $page)
                     <li class="list-group-item">

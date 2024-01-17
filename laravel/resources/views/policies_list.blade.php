@@ -2,7 +2,7 @@
 @section('content')
 
 
-<div class="container border border-dark rounded-lg mt-3 mb-3 p-2" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded mt-3 mb-3 p-2" style="background: rgba(220,220,220,0.8);">
     <div class="jumbotron-fluid text-center">
         <h1>
             <i class="fas fa-scroll"></i>
@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.8);">
+    <div class="col-12 border border-dark rounded p-1" style="background: rgba(220,220,220,0.8);">
         <div class="table-responsive">
             <table class="table">
                 <thead>

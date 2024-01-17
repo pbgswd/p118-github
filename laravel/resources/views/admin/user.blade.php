@@ -45,7 +45,7 @@
     <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         @csrf
-        <div class="row border border-primary rounded-lg border-3 mt-lg-4 p-lg-1 mb-lg-3">
+        <div class="row border border-primary rounded border-3 mt-lg-4 p-lg-1 mb-lg-3">
             <div class="col-12 mt-2 mb-2">
                 <h3>Primary Contact Information</h3>
             </div>
@@ -97,7 +97,7 @@
             </div>
         </div>
         @if ($data['action'] == 'Edit')
-            <div class="row border border-primary rounded-lg border-3 mt-1 pb-3 mb-3">
+            <div class="row border border-primary rounded border-3 mt-1 pb-3 mb-3">
                 <div class="col-12 col-md-6 mt-2 mb-2">
                     <h4>Committee Memberships</h4>
                 </div>
@@ -126,7 +126,7 @@
                     @endforelse
                 </div>
             </div>
-            <div class="row border border-primary rounded-lg border-3 mt-lg-1 pb-3">
+            <div class="row border border-primary rounded border-3 mt-lg-1 pb-3">
                 <div class="col-6  mt-2 mb-2">
                     <h4>Executive Title & Email</h4>
                 </div>
@@ -157,7 +157,7 @@
                 </div>
             </div>
         @endif
-        <div class="row border border-primary rounded-lg border-3 p-lg-3 mt-3 mb-3">
+        <div class="row border border-primary rounded border-3 p-lg-3 mt-3 mb-3">
             <div class="col-12 mt-2 mb-2">
                 <h4>Member Info</h4>
             </div>
@@ -244,7 +244,7 @@
                 </textarea>
             </div>
         </div>
-        <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
+        <div class="row border border-primary rounded border-3 mt-lg-2 p-lg-2">
             <div class="col-12 mt-2 mb-2">
                 <h4>
                     Membership type & details
@@ -274,7 +274,7 @@
                 </textarea>
             </div>
         </div>
-        <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
+        <div class="row border border-primary rounded border-3 mt-lg-2 p-lg-2">
             <div class="col-12 mt-2 mb-2">
                 <h4>User website admin access roles </h4>
             </div>
@@ -308,7 +308,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="row border border-primary rounded-lg border-3 mt-lg-2 p-lg-2">
+        <div class="row border border-primary rounded border-3 mt-lg-2 p-lg-2">
             <div class="col-12 mt-2 mb-2">
                 <h4>
                     {{ $data['user']->is_banned == 1 ? "Remove suspension for" : "Suspend" }} {{$data['user']->name}}

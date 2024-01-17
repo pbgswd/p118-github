@@ -1,6 +1,6 @@
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Members'])
 @section('content')
-        <div class="container border border-dark rounded-lg mt-3" style="background: rgba(220,220,220,0.8);">
+        <div class="container border border-dark rounded mt-3" style="background: rgba(220,220,220,0.8);">
             <div class="row d-flex justify-content-around mb-2 mb-md-3">
                 <div class="col-12 col-md-4"></div>
                 <div class="col-12 col-md-4 text-center">
@@ -16,7 +16,7 @@
             </div>
             <form method="post" action="{{route('post_year')}}">
                 @csrf
-                <div class="row d-fle justify-content-around border border-dark rounded-lg pb-2 m-2 mb-3 mb-md-3">
+                <div class="row d-fle justify-content-around border border-dark rounded pb-2 m-2 mb-3 mb-md-3">
                     <div class="col-12 pt-2">
                         <h5>
                             <label for="validationDefault04">
@@ -51,7 +51,7 @@
                     </h4>
                 </div>
 
-            <div class="table-responsive border border-dark rounded-lg mb-2">
+            <div class="table-responsive border border-dark rounded mb-2">
                 <table class="table">
                     <thead>
                         <tr>

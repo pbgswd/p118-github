@@ -1,7 +1,7 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg mb-3 p-3" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded mb-3 p-3" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-12 col-md-6 mt-2">
                 <h4>

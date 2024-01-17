@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         @foreach( $data['roles'] as $i )
-            <div class="col-md-4 border border-dark rounded-lg mt-3 mr-3">
+            <div class="col-md-4 border border-dark rounded mt-3 mr-3">
                 <h2>Role: {{ $i->name }}</h2>
                 <p>Guard: {{ $i->guard_name}} </p>
                 <p>Permissions: </p>

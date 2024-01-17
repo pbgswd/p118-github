@@ -1,6 +1,6 @@
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> Agreement Postings'])
 @section('content')
-<div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row mb-3 pt-2">
         <div class="col-12 col-md-4"></div>
         <div class="col-12 col-md-4 text-center">
@@ -18,9 +18,9 @@
             </h3>
         </div>
     </div>
-    <div class="col-12 p-0 border border-dark rounded-lg mb-3" style="background: rgba(220,220,220,0.8);">
-        <div class="table-responsive">
-            <table class="table">
+    <div class="col mb-3">
+        <div class="table-responsive ">
+            <table class="table table-hover border rounded m-2">
                 <thead>
                     <tr>
                         <th> @sortablelink('title', 'Title') </th>

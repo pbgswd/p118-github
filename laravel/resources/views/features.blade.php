@@ -1,13 +1,13 @@
 @extends('layouts.jumbo')
 @section('content')
-<div class="container border border-dark rounded-lg mt-3" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded mt-3" style="background: rgba(220,220,220,0.8);">
     <div class="col-12 text-center">
         <h1>Features</h1>
     </div>
     <div class="row mb-3">
         @foreach ($data['features'] as $f)
             <div class="col-12 col-md-6 p-1">
-                <div class="col border border-dark rounded-lg w-100 h-100 p-2">
+                <div class="col border border-dark rounded w-100 h-100 p-2">
                     <a href="{{ route('feature', $f->slug) }}" title="{{ $f->title }}">
                         @if($f->image)
                             <div class="col-12 text-center d-flex align-items-center justify-content-center">

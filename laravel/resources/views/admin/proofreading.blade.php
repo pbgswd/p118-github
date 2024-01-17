@@ -26,7 +26,7 @@
 
     <form method="post" action="{{route('admin_proofreader')}}">
         @csrf
-        <div class="row d-fle justify-content-around border border-dark rounded-lg pb-2">
+        <div class="row d-fle justify-content-around border border-dark rounded pb-2">
             <div class="col-12 pt-2">
                 <h5>
                     <label for="validationDefault04">

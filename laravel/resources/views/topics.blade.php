@@ -1,6 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-12 text-center">
                 <h1>Topics</h1>

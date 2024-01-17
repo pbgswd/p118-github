@@ -1,5 +1,5 @@
 @section('content')
-<div class="col-12 p-lg-2 mt-lg-3 border border-dark rounded-lg">
+<div class="col-12 p-lg-2 mt-lg-3 border border-dark rounded">
     <h4>
         <span class="badge badge-primary badge-pill">
             {{$c->active_committee_members->count()}}

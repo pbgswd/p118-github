@@ -3,7 +3,7 @@ $committee = $data['committee'];
 ?>
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Members'])
 @section('content')
-<div class="container border border-dark rounded-lg" style="background: rgba(220,220,220,0.8); max-width:768px;">
+<div class="container border border-dark rounded" style="background: rgba(220,220,220,0.8); max-width:768px;">
 <h1 class="display-3"></h1>
     <h3>
        <span class="badge badge-primary badge-pill">
@@ -12,7 +12,7 @@ $committee = $data['committee'];
         Members in <a href="{{route('committee', $committee->slug)}}" title="Return to {{$committee->name}}">{{$committee->name}}</a>
     </h3>
 </div>
-<div class="table-responsive-md border border-dark rounded-lg p-1" style="background: rgba(220,220,220,0.8); max-width:768px; margin-left:auto; margin-right:auto;">
+<div class="table-responsive-md border border-dark rounded p-1" style="background: rgba(220,220,220,0.8); max-width:768px; margin-left:auto; margin-right:auto;">
     <table class="table table-sm ml-auto mr-auto">
         <thead>
             <tr>

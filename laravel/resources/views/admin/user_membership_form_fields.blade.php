@@ -9,7 +9,7 @@ $user_roles = $data['user_roles'];
 @section('content')
 <fieldset>
     <div class="row">
-        <div class="border border-primary rounded-lg border-3 mt-lg-2 p-2">
+        <div class="border border-primary rounded border-3 mt-lg-2 p-2">
             <div class="col-lg-12">
                 <h3>Membership</h3>
             </div>

@@ -1,6 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container border border-dark rounded-lg mt-3 mb-3 pt-2" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded mt-3 mb-3 pt-2" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-12 col-md-6">
                 <p>
@@ -29,7 +29,7 @@
                 <div class="row">
                     @forelse($data['topic']->pages as $page)
                         <div class="col-12 col-md-4 p-1">
-                            <div class="col border border-dark rounded h-100 w-100 pt-1 text-center d-flex
+                            <div class="col border border-dark rounded h-100 w-100 p-2 text-center d-flex
                             align-items-center justify-content-center">
                                 <h4>
                                     <a href="{{ route('page_show', $page->slug) }}">
@@ -65,63 +65,76 @@
         @else
             <div class="row mt-3 h-100">
                 <div class="col-12 col-md-6 p-2 h-100">
-                    <div class="col border border-dark rounded h-100 pt-2">
-                        <h5>Pages in {{$data['topic']->name}}</h5>
-                        <ul class="list-group mb-3">
-                            @forelse($data['topic']->pages as $page)
-                                <li class="list-group-item">
-                                    <a href="{{ route('page_show', $page->slug) }}">
-                                        {{$page['title']}}
-                                    </a>
-                                </li>
-                            @empty
-                                <li class="list-group-item">
-                                    No entry
-                                </li>
-                            @endforelse
-                        </ul>
+                    <div class="col-12 border border-dark rounded h-100 p-2 d-flex align-content-stretch flex-wrap">
+                        <div class="col-12">
+                            <h5>Pages in {{$data['topic']->name}}</h5>
+                        </div>
+                        <div class="col-12">
+                            <ul class="list-group mb-3">
+                                @forelse($data['topic']->pages as $page)
+                                    <li class="list-group-item">
+                                        <a href="{{ route('page_show', $page->slug) }}">
+                                            {{$page['title']}}
+                                        </a>
+                                    </li>
+                                @empty
+                                    <li class="list-group-item">
+                                        No entry
+                                    </li>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 p-2">
-                    <div class="col border border-dark rounded pt-2">
-                        <h5>Posts in {{$data['topic']->name}}</h5>
-                        <ul class="list-group mb-3">
-                            @forelse($data['topic']->posts as $post)
-                            <li class="list-group-item">
-                                <a href="{{ route('post_show', $post->slug) }}">
-                                    {{$post['title']}}
-                                </a>
-                            </li>
-                            @empty
+                    <div class="col border border-dark rounded p-2">
+                        <div class="col">
+                            <h5>Posts in {{$data['topic']->name}}</h5>
+                        </div>
+                        <div class="col">
+                            <ul class="list-group mb-3">
+                                @forelse($data['topic']->posts as $post)
                                 <li class="list-group-item">
-                                    No entry
+                                    <a href="{{ route('post_show', $post->slug) }}">
+                                        {{$post['title']}}
+                                    </a>
                                 </li>
-                            @endforelse
-                        </ul>
+                                @empty
+                                    <li class="list-group-item">
+                                        No entry
+                                    </li>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         @endif
         @if(count($data['topic']->attachments) > 0)
-            <div class="row d-flex align-items-center justify-content-center p-2">
-                <div class="col-12 border border-dark rounded-lg pt-2 pb-2 m-2">
-                    <h4>
-                        <i class="far fa-folder-open"></i>
-                        Files
-                    </h4>
-                 <ul class="list-group">
-                     @forelse ($data['topic']->attachments as $ta)
-                         <li class="list-group-item">
-                             <a href="{{route('attachment_download',
-                                [$data['topic']->getAttachmentFolder(), $ta->id])}}"
-                                title="Download {{$ta->file_name}}">
-                                 <i class="fas fa-file-download fa-1x"></i>
-                                {{$ta->description ?: $ta->file_name}}
-                             </a>
-                         </li>
-                     @empty
-                     @endforelse
-                 </ul>
+            <div class="row">
+                <div class="col border border-dark rounded m-2 p-2">
+                    <div class="col-12">
+                        <h4>
+                            <i class="far fa-folder-open"></i>
+                            Files
+                        </h4>
+                    </div>
+                    <div class="col-12">
+                        <ul class="list-group">
+                         @forelse ($data['topic']->attachments as $ta)
+                             <li class="list-group-item">
+                                 <a href="{{route('attachment_download',
+                                    [$data['topic']->getAttachmentFolder(), $ta->id])}}"
+                                    title="Download {{$ta->file_name}}">
+                                     <i class="fas fa-file-download fa-1x"></i>
+                                    {{$ta->description ?: $ta->file_name}}
+                                 </a>
+                             </li>
+                         @empty
+                         @endforelse
+                        </ul>
+                    </div>
+                </div>
             </div>
         @endif
     </div>

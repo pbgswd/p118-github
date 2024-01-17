@@ -1,6 +1,6 @@
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Members'])
 @section('content')
-<div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row d-flex justify-content-around pb-md-3 pt-3">
         <div class="col-0 col-md-4">
         </div>
@@ -17,16 +17,16 @@
             </h5>
         </div>
         <div class="col-12 text-center">
-            <h6>
-               <span class="badge badge-primary badge-pill">
+            <h2>
+               <span class="badge bg-secondary">
                    {{ $data['count'] ?? 0 }}
                </span>
                 Members
-            </h6>
+            </h2>
         </div>
     </div>
 
-    <div class="table-responsive-md border border-dark rounded-lg">
+    <div class="table-responsive-md border border-dark rounded p-1">
         <table class="table">
             <thead>
                 <tr>

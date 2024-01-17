@@ -58,7 +58,7 @@
                                                     <i class="far fa-file fa-8x"></i>
                                                 @endif
                                             @else
-                                                <img class="border rounded-lg"
+                                                <img class="border rounded"
                                                      src="{{ asset('storage/' . $a->searchable->subfolder . "/" .
                                                     $a->searchable['file']) }}" {!! $a->searchable->imagedata[0] > 400 ?
                                                     'width="400"' : '' !!} />

@@ -1,6 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-<div class="container border border-dark rounded-lg pl-lg-5 pr-lg-5 mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded pl-lg-5 pr-lg-5 mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row">
         <div class="col-12 p-2">
             <h3>
@@ -19,7 +19,7 @@
     </div>
     <div class="row d-flex justify-content-md-around mt-3 mb-2">
         @if( $data['user']->allExecutiveRoles->count() > 0 )
-            <div class="col-12 col-lg-5 border border-dark rounded-lg p-2">
+            <div class="col-12 col-lg-5 border border-dark rounded p-2">
                 <h4>
                     Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}
                 </h4>
@@ -39,7 +39,7 @@
             </div>
         @endif
         @if($data['user']->committee_memberships->count() > 0)
-            <div class="col-12 col-lg-5 border border-dark rounded-lg p-2">
+            <div class="col-12 col-lg-5 border border-dark rounded p-2">
                 <h4>
                     Membership in committees
                 </h4>

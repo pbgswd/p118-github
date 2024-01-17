@@ -10,7 +10,7 @@
         </h1>
         {!! $data['faq']->description !!}
         <div class="mt-5">
-            <a class="btn btn-lg btn-primary" href="{{route('faqs_list_public')}}" role="button">
+            <a class="btn btn-lg btn-secondary" href="{{route('faqs_list_public')}}" role="button">
                Back to list of all FAQs
             </a>
         </div>
@@ -25,7 +25,7 @@
         @endcan
     </div>
 </div>
-<div class="container border border-dark rounded-lg mt-2 pb-3">
+<div class="container border border-dark rounded mt-2 pb-3">
     <div class="row m-3">
         <h3>
             {{count($data['faq']['faqs_data'])}} Questions & Answers
@@ -33,7 +33,7 @@
     </div>
     <div class="accordion" id="accordionExample">
         @forelse ( $data['faq']['faqs_data'] as $fd )
-            <div class="card">
+            <div class="card mb-2">
                 <div class="card-header" id="heading{{$fd->id}}">
                     <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"

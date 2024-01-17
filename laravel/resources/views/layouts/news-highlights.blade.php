@@ -1,5 +1,5 @@
 <div class="row p-2">
-    <div class="col-12 border border-dark rounded-lg pl-4 pt-2 mb-2 bg-secondary text-white">
+    <div class="col-12 border border-dark rounded pl-4 pt-2 mb-2 bg-secondary text-white">
         <h2>
           News & Highlights
         </h2>

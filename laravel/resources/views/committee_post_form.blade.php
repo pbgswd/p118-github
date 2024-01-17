@@ -1,7 +1,7 @@
 @extends('layouts.jumbo',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . 'post' ])
 @section('content')
 @include('admin.admin_partials.admin_tinymce')
-<div class="container border border-dark rounded-lg mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row mt-3 mb-3">
         <div class="col-12">
             <h6>

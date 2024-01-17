@@ -1,7 +1,7 @@
 @extends('layouts.jumbo')
 @section('content')
 <div class="jumbotron">
-    <div class="container border border-dark rounded-lg mb-5" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded mb-5" style="background: rgba(220,220,220,0.8);">
         <div class="col-12 p-2">
             <h1>Welcome to {{env('APP_NAME')}}</h1>
             <h2>{{$data['invitation']->name}}</h2>

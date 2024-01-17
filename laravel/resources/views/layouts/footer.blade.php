@@ -14,7 +14,7 @@
     </div>
     @auth
         <div class="row p-2 d-none d-md-block d-lg-none">
-            <div class="col-12 border border-secondary rounded-lg p-2 pt-3">
+            <div class="col-12 border border-secondary rounded p-2 pt-3">
             <form class="form-inline" action="{{route('search')}}" method="POST">
                 {!! csrf_field() !!}
                 <div class="col-12 mb-0 mt-md-3 mb-md-3">

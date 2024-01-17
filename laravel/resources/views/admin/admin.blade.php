@@ -5,7 +5,7 @@
         <h1 class="h2">Admin Dashboard</h1>
     </div>
 <div class="container">
-    <div class="row border border-dark rounded-lg p-3">
+    <div class="row border border-dark rounded p-3">
         <div id="app"></div>
         @role('super-admin')
             <h3>
@@ -35,7 +35,7 @@
             field above to find records.
         </h3>
     </div>
-    <div class="row border border-dark rounded-lg p-3 m-2">
+    <div class="row border border-dark rounded p-3 m-2">
         <div class="col-12">
             <h3>New stuff</h3>
         </div>
@@ -71,7 +71,7 @@
         </div>
     </div>
     @role('super-admin')
-        <div class="row border border-dark rounded-lg p-3 m-2">
+        <div class="row border border-dark rounded p-3 m-2">
             <div class="col-12">
                 <h3>Site Developer</h3>
             </div>
@@ -116,7 +116,7 @@
             </div>
         </div>
     @endrole
-    <div class="row border border-dark rounded-lg mt-3 p-lg-5 d-block d-md-none d-lg-none">
+    <div class="row border border-dark rounded mt-3 p-lg-5 d-block d-md-none d-lg-none">
         @include(('layouts.dashboard-list'))
     </div>
 </div>

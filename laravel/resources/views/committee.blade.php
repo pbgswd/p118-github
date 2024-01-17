@@ -1,6 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container border border-dark rounded-lg mt-3 p-4" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded mt-3 p-4" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-12 col-md-6">
                 <h6>
@@ -22,7 +22,7 @@
             @if(null !== $data['committee']->image)
                 <div class="col-12 mb-3 pt-2 text-center">
                     <img src="{{ asset('storage/committees/'.$data['committee']->image)}}"
-                         class="border rounded-lg img-fluid mb-2" />
+                         class="border rounded img-fluid mb-2" />
                 </div>
             @endif
             <div class="col-12 pt-2 text-center">
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="row mt-3 mb-3">
-            <div class="col-12 border border-dark rounded-lg pt-2 pb-2">
+            <div class="col-12 border border-dark rounded pt-2 pb-2">
                 <h5>{{$data['committee']->name}} Executive</h5>
                 <ul class="list-group">
                     @forelse ($data['executives'] as $exec)
@@ -100,13 +100,13 @@
                 @endif
             </div>
         </div>
-        <div class="row border rounded-lg p-2 mb-3 bg-light">
+        <div class="row border rounded p-2 mb-3 bg-light">
             <div class="col-12 m-2 text-secondary">
                 <h4>Sticky Posts</h4>
             </div>
             <div class="col-12 {{ $data['sticky_posts']->count() % 2 > 0 ? 'col-md-12' : 'col-md-6' }}">
                 @forelse($data['sticky_posts'] as $sp)
-                    <div class="border border-dark rounded-lg p-4 mb-2 bg-light">
+                    <div class="border border-dark rounded p-4 mb-2 bg-light">
                         <h4>
                             <a href="{{route('public_committee_post_show', [$data['committee']->slug, $sp->slug])}}"
                                title="{{$sp->title}}">
@@ -122,7 +122,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12 border border-dark rounded-lg mt-1 p-4">
+            <div class="col-12 border border-dark rounded mt-1 p-4">
                 @forelse($data['posts'] as $p)
                     <h3>
                         <a href="{{route('public_committee_post_show', [$data['committee']->slug, $p->slug])}}"

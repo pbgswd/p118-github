@@ -12,7 +12,7 @@
             @if(null !== $data['committee']->image)
                 <div class="col-12 mt-3 mb-3">
                     <img src="{{ asset('storage/committees/'.$data['committee']->image)}}"
-                         class="border rounded-lg img-fluid" />
+                         class="border rounded img-fluid" />
                 </div>
             @endif
             <div class="col-12 col-md-4">

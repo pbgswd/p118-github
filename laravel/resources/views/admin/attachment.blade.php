@@ -107,7 +107,7 @@
             @else
                 <div class="row">
                     <div class="col-12 col-md-6">
-                        <img class="border rounded-lg m-1 img-fluid"
+                        <img class="border rounded m-1 img-fluid"
                               src="{!! asset('storage/' .
                                 $data['attachment']->subfolder . "/" . $data['attachment']['file']) .'"' !!}}"/>
                     </div>
@@ -151,7 +151,7 @@
                         <h4>Insert into content with:</h4>
 <pre>
     <code>
-&lt;img src="/storage/{{$data['attachment']->subfolder}}/{{$data['attachment']['file']}}" class="border rounded-lg m-1 img-fluid" /&gt;
+&lt;img src="/storage/{{$data['attachment']->subfolder}}/{{$data['attachment']['file']}}" class="border rounded m-1 img-fluid" /&gt;
     </code>
 </pre>
                     </div>
