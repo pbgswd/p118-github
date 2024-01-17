@@ -17,16 +17,10 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link href="{{ mix('css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <style>
-        <link href="{{ mix('css/dashboard-inline.css') }}" rel="stylesheet">
-    </style>
-
-
-    <!-- Custom styles for this template -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{{ mix('css/dashboard.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/dashboard-inline.css') }}" rel="stylesheet">
 </head>
 <body>
 @include('admin.admin_partials.darkmode')
@@ -37,17 +31,17 @@
     <ul class="navbar-nav flex-row d-md-none">
         <li class="nav-item text-nowrap">
             <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
-                <svg class="bi"><use xlink:href="#search"/></svg>xxx
+                <svg class="bi"><use xlink:href="#search"/></svg>
             </button>
         </li>
         <li class="nav-item text-nowrap">
             <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <svg class="bi"><use xlink:href="#list"/></svg>zzz
+                <svg class="bi"><use xlink:href="#list"/></svg>
             </button>
         </li>
     </ul>
 
-    <div id="navbarSearch" class="navbar-search w-100 collapse">####
+    <div id="navbarSearch" class="navbar-search w-100 collapse">
         <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
     </div>
 </header>
