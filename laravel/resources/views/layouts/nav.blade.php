@@ -1,30 +1,32 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex align-items-center pt-2">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex align-items-center mb-4">
     <a href="{{ route('hello') }}" title="{{config('app.name')}}">
         <img src="/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png"
              alt="{{config('app.name')}}"
-             class="rounded mx-2" />
+             class="navbar-brand rounded mx-2" />
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">Menus
+
+    <button class="p-2 mx-2 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">Menus
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse ml-2" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto mb-0 d-flex align-items-center">
-            <li class="nav-item mt-2 mr-2 d-flex align-items-stretch d-block d-md-none">
+            <li class="nav-item mr-2 d-flex align-items-stretch d-block d-md-none">
                 <a class="nav-link" href="{{route('landing_page')}}" title="Landing Page">
                     <i class="fas fa-home fa-2"></i>
                     Landing Page
                 </a>
                 &nbsp;
                 @hasanyrole(['super-admin|office|writer|committee'])
-                <a class="nav-link" href="{{route('admin')}}" title="Admin">
+                &nbsp; <a class="nav-link ml-sm-3" href="{{route('admin')}}" title="Admin">
                     <i class="fas fa-tachometer-alt"></i> Admin
                 </a>
                 @endrole
             </li>
         </ul>
-            <div class="btn-group mx-2 mt-2 mt-md-0" role="group">
-                <button class="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenu2"
+            <div class="btn-group mx-1 mb-1" role="group">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     About Us
                 </button>
@@ -36,8 +38,8 @@
                     <li><a class="dropdown-item" href="{{route('page_show', 'links')}}" title="Links">Links</a></li>
                 </ul>
             </div>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-secondary dropdown-toggle mx-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="btn-group mx-1 mb-1" role="group">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Membership
                 </button>
                 <ul class="dropdown-menu">
@@ -56,12 +58,12 @@
                     @endauth
                     <li><a class="dropdown-item" title="Request Representation"
                            href="{{route('page_show', 'request-representation')}}">Request Representation</a></li>
-                    <li><a class="dropdown-item" title="In Memoriam" href="{{route('memoriam_list')}}">In Memoriamz`</a></li>
+                    <li><a class="dropdown-item" title="In Memoriam" href="{{route('memoriam_list')}}">In Memoriam</a></li>
                 </ul>
             </div>
         @auth
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-secondary dropdown-toggle mx-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="btn-group mx-1 mb-1" role="group">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Benefits
                 </button>
                 <ul class="dropdown-menu">
@@ -76,7 +78,7 @@
                 </ul>
             </div>
         @endauth
-        <div class="btn-group mx-2 mt-2 mt-md-0" role="group">
+        <div class="btn-group mx-1 mb-1" role="group">
             <button class="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenu2"
                     data-bs-toggle="dropdown" aria-expanded="false">
                 Employers & Venues
@@ -99,7 +101,7 @@
         </div>
         @guest
         @else
-            <div class="btn-group mx-2 mt-2 mt-md-0" role="group">
+            <div class="btn-group mx-1 mb-1 mt-md-0" role="group">
                 <button class="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenu2"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     Members
@@ -135,7 +137,7 @@
                 </ul>
             </div>
         @endguest
-        <div class="btn-group mx-2 mt-2 mt-md-0" role="group">
+        <div class="btn-group mx-1 mb-1" role="group">
             <button class="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenu2"
                     data-bs-toggle="dropdown" aria-expanded="false">
                 Contact Us
@@ -147,34 +149,32 @@
             </ul>
         </div>
         @auth
-            <li class="nav-item mx-2 d-flex">
+            <li class="nav-item mx-1 d-flex">
                 <a class="nav-link d-none d-md-block" href="{{route('landing_page')}}" title="Landing Page">
                      <span style="color: white">
                         <i class="fas fa-home fa-lg"></i>
                      </span>
                 </a>
             </li>
-            <form class="d-flex mx-2" role="search" action="{{route('search')}}" method="POST">
+            <form class="d-flex mx-1 mb-1 mt-3 mt-md-2" role="search" action="{{route('search')}}" method="POST">
                 {!! csrf_field() !!}
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                        name="search" size="30" required>
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-
-
-                <li class="d-flex d-sm-block d-md-none mx-2">
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="btn btn-outline-success mx-3  my-sm-0" type="submit">
-                            Logout
-                        </button>
-                    </form>
-                </li>
-            @endauth
+            <li class="d-flex d-sm-block d-md-none mx-1 mb-1">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button class="btn btn-outline-success mx-3  my-sm-0" type="submit">
+                        Logout
+                    </button>
+                </form>
+            </li>
+        @endauth
             @guest
-                <li class="nav-item d-sm-block d-md-none">
-                    <a href="/login">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                <li class="nav-item d-sm-block">
+                    <a class="btn btn-outline-success my-2 my-sm-0 d-md-none" href="/login">
+                        Login
                     </a>
                 </li>
             @endguest
@@ -182,23 +182,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
+
+                <ul class="navbar-nav d-flex align-items-right">
                 <!-- Authentication Links -->
                 @guest
-                    <li class="nav-item">
-                        <a href="/login">
+                        <a class="nav-link" href="/login">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
                         </a>
-                    </li>
                 @else
-                    <li class="nav-item">
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button class="btn btn-outline-success my-2 my-sm-0 float-right" type="submit">
-                                Logout
-                            </button>
-                        </form>
-                    </li>
+                    <form class="d-flex mx-1 mb-1 mt-5 mt-md-2" id="logout-form" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button class="btn btn-outline-success float-right" type="submit">
+                            Logout
+                        </button>
+                    </form>
                 @endguest
             </ul>
         </div>
