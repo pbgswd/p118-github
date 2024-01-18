@@ -1,15 +1,14 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex align-items-center mb-4">
-    <a href="{{ route('hello') }}" title="{{config('app.name')}}">
+<nav class="navbar navbar-expand-md fixed-top bg-dark">
+    <div class="container-fluid">
+    <a href="{{ route('hello') }}" title="{{config('app.name')}}" class="navbar-brand">
         <img src="/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png"
              alt="{{config('app.name')}}"
-             class="navbar-brand rounded mx-2" />
+             class="rounded mx-2"/>
     </a>
-
     <button class="p-2 mx-2 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">Menus
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse ml-2" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto mb-0 d-flex align-items-center">
             <li class="nav-item mr-2 d-flex align-items-stretch d-block d-md-none">
@@ -132,7 +131,6 @@
                             <i class="fas fa-gavel"></i> Constitution & By-Laws</a></li>
                     <li><a class="dropdown-item" href="{{route('policies_list_public')}}" title="Policies">
                             <i class="fas fa-scroll"></i>  Policies</a></li>
-
                 </ul>
             </div>
         @endguest
@@ -155,7 +153,7 @@
                      </span>
                 </a>
             </li>
-            <form class="d-flex mx-1 mb-1 mt-3 mt-md-2" role="search" action="{{route('search')}}" method="POST">
+            <form class="d-flex mx-1 mb-1 mt-sm-3 mt-md-2" role="search" action="{{route('search')}}" method="POST">
                 {!! csrf_field() !!}
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                        name="search" size="30" required>
@@ -181,7 +179,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <!-- Right Side Of Navbar -->
-
                 <ul class="navbar-nav d-flex align-items-right">
                 <!-- Authentication Links -->
                 @guest
@@ -198,5 +195,6 @@
                 @endguest
             </ul>
         </div>
+    </div>
     </div>
 </nav>

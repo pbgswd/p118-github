@@ -1,5 +1,5 @@
 
-    <div class="col-12 border border-dark rounded p-lg-4 mb-3">
+    <div class="col-12 border border-dark rounded p-2 p-lg-4 mb-3">
         @if($data['history']['birthday'] != '')
             <h2 class="pt-2">
                 <i class="fas fa-birthday-cake"></i>

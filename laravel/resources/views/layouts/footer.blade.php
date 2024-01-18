@@ -1,14 +1,16 @@
 <footer class="container mt-2">
     <div class="row">
-        <div class="col p-2 d-flex d-sm-none d-md-block flex-wrap align-content-center text-center ">
-            <h6 class="text-muted d-flex flex-wrap align-content-center text-center d-sm-none d-md-block">
+        <div class="col-12  d-sm-none d-md-block text-break text-center">
+            <h6 class="text-muted text-center d-sm-none d-md-block">
                 Put this page on your phone with a Qr code
             </h6>
-            <div class="col-12 d-flex align-items-center justify-content-center text-center m-2">
-                {!! QrCode::size(200)->generate(url()->current()) !!}
-            </div>
-            <h5 class="text-muted d-flex flex-wrap align-content-center text-center d-sm-none d-md-block">
-                <a href="{{url()->current()}}" title="IATSE Local 118 {{url()->current()}}" class="flex-wrap">
+        </div>
+        <div class="col-12 d-flex align-items-center justify-content-center text-center m-2">
+            {!! QrCode::size(200)->generate(url()->current()) !!}
+        </div>
+        <div class="col text-center">
+            <h5 class="text-muted text-center d-sm-none d-md-block text-break">
+                <a href="{{url()->current()}}" title="IATSE Local 118 {{url()->current()}}" class="flex-wrap text-break text-center">
                     {{url()->current()}}
                 </a>
             </h5>
@@ -17,26 +19,26 @@
     @auth
         <div class="row p-2 d-none d-md-block d-lg-none">
             <div class="col-12 border border-secondary rounded p-2 pt-3">
-            <form class="form-inline" action="{{route('search')}}" method="POST">
-                {!! csrf_field() !!}
-                <div class="col-12 mb-0 mt-md-3 mb-md-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text d-none d-md-block" id="basic-addon1">
-                                <i class="fas fa-search"></i>
-                            </span>
+                <form class="form-inline" action="{{route('search')}}" method="POST">
+                    {!! csrf_field() !!}
+                    <div class="col-12 mb-0 mt-md-3 mb-md-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text d-none d-md-block" id="basic-addon1">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" placeholder="Search"
+                                   aria-label="Search" name="search" size="80" required>
                         </div>
-                        <input class="form-control" type="text" placeholder="Search"
-                               aria-label="Search" name="search" size="80" required>
                     </div>
-                </div>
-                <div class="col-12 mt-2 d-flex justify-content-end">
-                    <button type="submit" name="Submit" value="Submit"
-                            class="btn btn-success">
-                        Search
-                    </button>
-                </div>
-            </form>
+                    <div class="col-12 mt-2 d-flex justify-content-end">
+                        <button type="submit" name="Submit" value="Submit"
+                                class="btn btn-success">
+                            Search
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     @endauth
@@ -61,17 +63,14 @@
         </div>
         <div class="col-12 col-md-4 mb-3 pb-2 mt-sm-5 mt-md-0 border border-secondary rounded pt-3">
             <h5>
-                <i class="fas fa-hashtag"></i>
-                Social Media
+                <i class="fas fa-hashtag"></i> Social Media
             </h5>
-
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-center">
                     <a href="https://www.facebook.com/IATSE118" target="_blank"
                        title="IATSE Local 118 Facebook">
                         <i class="fab fa-facebook"></i> FaceBook
                     </a>
-                    &nbsp;
                     &nbsp;
                     <a href="https://www.instagram.com/iatse118/" target="_blank">
                         <i class="fab fa-instagram"></i> InstaGram

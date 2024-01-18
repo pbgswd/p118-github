@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<div class="row mb-2">
     @forelse($data['news']['features'] as $f)
         <div class="col-12
         @if($loop->first && $loop->count % 2)
@@ -31,7 +31,7 @@
     @endforelse
 </div>
 <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-12 mb-2 mb-md-0 col-md-6">
         <div class="col border border-dark border-1 rounded w-100 h-100 p-2 d-flex">
             <ul class="list-group list-group-flush p-0 m-0">
                 @forelse($data['news']['posts'] as $post)
@@ -47,7 +47,8 @@
             </ul>
         </div>
     </div>
-    <div class="col-12 col-md-6 mt-md-0">
+
+    <div class="col-12 col-md-6 mt-0">
         <div class="col border border-dark rounded w-100 h-100 p-2">
             <ul class="list-group list-group-flush p-0 m-0">
                 @forelse($data['news']['pages'] as $page)
