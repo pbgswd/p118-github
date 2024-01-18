@@ -15,6 +15,7 @@ laravel/public/mix-manifest.json
 laravel/public/css/bootstrap.min.css
 laravel/public/css/dashboard-inline.css
 laravel/public/js/color-modes.js
+laravel/public/js/color-modes.js.LICENSE.txt
 laravel/storage/*.key
 laravel/storage/app/users/*
 laravel/storage/app/public/*
