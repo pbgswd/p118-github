@@ -5,6 +5,13 @@ laravel/public/users
 laravel/public/js/tinymce.js
 laravel/public/js/app.js
 laravel/public/js/dashboard.js
+laravel/public/css/carousel.css
+laravel/public/css/dashboard.css
+laravel/public/css/email.css
+laravel/public/css/jumbotron.css
+laravel/public/js/app.js.LICENSE.txt
+laravel/public/js/google-analytics.js
+laravel/public/mix-manifest.json
 laravel/public/css/bootstrap.min.css
 laravel/public/css/dashboard-inline.css
 laravel/public/js/color-modes.js
