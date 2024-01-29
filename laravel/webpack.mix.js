@@ -10,7 +10,6 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
 mix.js('resources/js/dashboard.js', 'public/js')
     .js('resources/js/admin/color-modes.js', 'public/js')
     .js('resources/js/app.js', 'public/js')

@@ -6,7 +6,7 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue').default;
+//window.Vue = require('vue').default;
 
 /**
  * The following block of code may be used to automatically register your
@@ -27,9 +27,3 @@ window.Vue = require('vue').default;
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import Vue from 'vue';
-
-
-const app = new Vue({
-    el: '#app',
-});
