@@ -137,7 +137,7 @@ class Options
      */
     public static function committee_roles(): array
     {
-        $membership = ['Chair', 'Co-Chair', 'Secretary', 'Member', 'Ex-officio', 'Past-Member'];
+        $membership = ['Chair', 'Co-Chair', 'Alternate Chair', 'Secretary', 'Member', 'Interim Member', 'Ex-officio', 'Past-Member'];
 
         return array_combine($membership, $membership);
     }
