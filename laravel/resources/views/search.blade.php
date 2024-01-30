@@ -32,7 +32,7 @@
                             </a>
                         @endif
                         <a href="{{$r->url}}" title="{{$r->title}}">
-                             <h3>{{$r->title}}</h3>
+                            <h3>{!! $r->title !!}</h3>
                         </a>
                     </div>
                 </div>

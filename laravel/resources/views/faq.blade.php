@@ -36,7 +36,7 @@
             <div class="card mb-2">
                 <div class="card-header" id="heading{{$fd->id}}">
                     <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        <button class="btn btn-link btn-block text-left text-decoration-none" type="button" data-toggle="collapse"
                                 data-target="#collapse{{$fd->id}}" aria-expanded="true"
                                 aria-controls="collapse{{$fd->id}}">
                             <h3>

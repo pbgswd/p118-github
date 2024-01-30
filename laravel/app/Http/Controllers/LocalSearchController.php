@@ -60,7 +60,7 @@ class LocalSearchController extends Controller
                 ->registerModel(Venue::class, ['name', 'description'])
                 ->registerModel(UserInfo::class, 'about')
                 ->registerModel(Faq::class, 'faq_topic')
-                ->registerModel(FaqData::class, ['question', 'answer'])
+                //->registerModel(FaqData::class, ['question', 'answer'])
                 ->search($request->search),
         ];
 

@@ -4,13 +4,10 @@ namespace App\Models;
 
 use App\Policies\FaqPolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
-use App\Constants\AccessLevelConstants;
+use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use Kyslik\ColumnSortable\Sortable;
 
 /**
  * @property int          $id
@@ -79,7 +76,8 @@ class FaqData extends LiveableModel implements Searchable
         $modelList = new ModelList;
         $this->info = $modelList->getModelInfo('FaqData');
 
-        $data = FaqData::with('faq')->where('id', $this->faq_id)->get()->pluck('faq.slug', 'faq_id');
+        $data = FaqData::with('faq')->where('id', $this->faq_id)->get()
+            ->pluck('faq.slug', 'faq_id');
 
         if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
