@@ -53,7 +53,11 @@ class ContactController extends Controller
             return redirect()->route('contact');
         }
 
-        $cc = config('app.env') == 'local' ? [] : Options::testing_address_update_contacts();
+        if(config('app.env') == 'production') {
+            $cc = [];
+        } else {
+            $cc =  Options::testing_address_update_contacts();
+        }
 
         if ($resp->isSuccess()) {
         } else {
@@ -76,7 +80,7 @@ class ContactController extends Controller
                     $m->cc($cc, $cc);
                 }
                 $m->replyTo($request['email'], $request['name']);
-                $m->subject('Contact Page ' . $request['subject']);
+                $m->subject('Contact Page ' . $request['subject'] . " from " . $request['name']);
 
 		Session::flash('success', 'Message Sent');
 
