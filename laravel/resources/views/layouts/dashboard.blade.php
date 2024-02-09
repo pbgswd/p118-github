@@ -24,7 +24,6 @@
 </head>
 <body>
 @include('admin.admin_partials.darkmode')
-
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">IATSE Local 118</a>
 
@@ -62,6 +61,8 @@
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             @include('flash-messages')
+
+
             @yield('content')
             <div class="row mt-5 mb-5 pb-5">
                 <div class="col-12 text-center">
