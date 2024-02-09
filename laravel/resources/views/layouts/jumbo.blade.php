@@ -13,13 +13,14 @@
         <meta name="author" content="IATSE Local 118 Web Admin">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }}</title>
-        <script src="/js/bootstrap-datepicker.min.js"></script>
+        <script src="{{asset('/js/bootstrap-datepicker.min.js')}}"></script>
         <script
             src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k">
         </script>
         <script src="{{asset('/js/tinymce.js')}}"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-WS6SX6VR7N"></script>
-        <script src="/js/google-analytics.js"></script>
+        <script src="{{asset('/js/google-analytics.js')}}"></script>
+        <script src="{{asset('/js/alpine.min.js')}}" defer></script>
         <link rel="canonical" href="{{env('APP_URL')}}/">
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
