@@ -6,7 +6,6 @@
     </div>
 <div class="container">
     <div class="row border border-dark rounded p-3">
-        <div id="app"></div>
         @role('super-admin')
             <h3>
                 Members with the <strong>super-admin</strong> role can manage users, content, committees,
