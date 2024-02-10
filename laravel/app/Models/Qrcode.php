@@ -13,6 +13,7 @@ class Qrcode extends Model
     protected $fillable = [
         'qrdata',
         'name',
+        'qrtype'
     ];
 
     protected $casts = [

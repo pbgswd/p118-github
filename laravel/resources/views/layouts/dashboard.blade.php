@@ -12,7 +12,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ config('app.name') }}">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name') }}</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
@@ -24,12 +23,12 @@
     <link href="{{ mix('css/dashboard-inline.css') }}" rel="stylesheet">
 </head>
 <body>
-@include('admin.admin_partials.darkmode')
+
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="/admin">
         <img src="/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png" alt="p118" class="rounded mx-2">
     </a>
-    <ul class="navbar-nav flex-row d-md-none">
+    <ul class="navbar-nav flex-row">
         <li class="nav-item text-nowrap">
             <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false"
@@ -81,6 +80,6 @@
     </div>
 </div>
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
+@include('admin.admin_partials.darkmode')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script src="dashboard.js"></script></body>
 </html>

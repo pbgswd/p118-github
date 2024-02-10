@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('content')
-    <div class='row mb-4'>
+    <div class='row mt-2 mb-4'>
         <h3>
             <i class="fas fa-qrcode"></i>
             {{ $data['action'] }} QR Code |  <a href="{{ route('admin_qrcodes_list') }}">List QR Codes

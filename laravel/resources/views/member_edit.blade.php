@@ -1,68 +1,9 @@
-@extends('layouts.jumbo')
-@section('content')
-<div class="container border border-dark rounded pl-lg-5 pr-lg-5 mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
-    <div class="row">
-        <div class="col-12 p-2">
-            <h3>
-                <a href="{{route('members')}}">
-                    <i class="far fa-arrow-alt-circle-left"></i>
-                    Members /
-                </a>
-                <a href="{{route('member', $data['user']->id)}}">
-                    {{$data['user']->name}}
-                    @if($data['user']->membership->membership_type != 'Member')
-                        ({{$data['user']->membership->membership_type}})
-                    @endif
-                </a>
-            </h3>
-        </div>
-    </div>
-    <div class="row d-flex justify-content-md-around mt-3 mb-2">
-        @if( $data['user']->allExecutiveRoles->count() > 0 )
-            <div class="col-12 col-lg-5 border border-dark rounded p-2">
-                <h4>
-                    Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}
-                </h4>
-                <ul class="list-group">
-                    @foreach($data['user']->allExecutiveRoles as $exec)
-                        <li class="list-group-item">{{$exec->title}}
-                            {{ \Carbon\Carbon::parse($exec->pivot->end_date)->isPast() ? '':'(Currently)'}}
-                            <a href="mailto:{{$exec->email}}" title="Email {{$data['user']->name}} {{$exec->title}}
-                                at {{$exec->email}}">
-                                <i class="fas fa-envelope"></i>
-                            </a> <br />
-                            {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('M j Y')}} -
-                            {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('M j Y')}}
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if($data['user']->committee_memberships->count() > 0)
-            <div class="col-12 col-lg-5 border border-dark rounded p-2">
-                <h4>
-                    Membership in committees
-                </h4>
-                <ul class="list-group">
-                    @foreach($data['user']->committee_memberships as $m)
-                        @if($m->pivot->role != 'Past-Member')
-                            <li class="list-group-item">
-                                <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">
-                                    {{$m->name}} - {{$m->pivot->role}}
-                                </a>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-    </div>
-    <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data"
+    <form method="post" name="user" action="{{ route('member_edit', $data['user']->id) }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <input type="hidden" name="update_type" value="Profile" />
         <div class="row">
-            <div class="col-12 mt-5 mb-3">
+            <div class="col-12 mb-3">
                 <h3 class="fw-bold">
                     <i class="fas fa-user text-primary"></i>
                     Primary Contact Information
@@ -77,16 +18,17 @@
                            value="{{ old('user.email', $data['user']->email ?? '')}}" size="80" required/>
                 </div>
                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
+                    <div class="input-group mb-3">
                         <div class="input-group-text">
-                            <input name="user_info[share_email]" type="hidden" value="0" />
-                            <input name="user_info[share_email]" type="checkbox" value="1"
-                                {{ checked(old('user_info.share_email',
-                                    $data['user']->user_info->share_email ?? '')) }} />
+                            <input class="form-check-input mt-0" name="user_info[share_email]" type="checkbox" value="1"
+                                   aria-label="Checkbox for following text input"
+                                {{ checked(old('user_info.share_email', $data['user']->user_info->share_email ?? '')) }}
+                            >
                         </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox"
+                               value="Check to share email in profile" readonly>
                     </div>
-                    <input type="text" class="form-control" aria-label="Text input with checkbox"
-                           value="Share email in profile?" size="40" readonly>
+                    <input name="user_info[share_email]" type="hidden" value="0" />
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -98,17 +40,18 @@
                            size="80" maxlength="20" />
                 </div>
                 <div class="input-group mb-4 mb-lg-4">
-                    <div class="input-group-prepend">
+                    <div class="input-group mb-3">
                         <div class="input-group-text">
-                            <input name="user_info[share_phone]" type="hidden" value="0" />
-                            <input name="user_info[share_phone]" type="checkbox"
-                                   value="1"
+                            <input class="form-check-input mt-0" name="user_info[share_phone]" type="checkbox" value="1"
+                                   aria-label="Checkbox for following text input"
                                 {{ checked(old('user_info.share_phone',
-                                    $data['user']->user_info->share_phone ?? '')) }} />
+                                    $data['user']->user_info->share_phone ?? '')) }}
+                            >
                         </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox"
+                           value="Check to share phone number in profile" readonly>
+                        <input name="user_info[share_phone]" type="hidden" value="0" />
                     </div>
-                    <input type="text" class="form-control" aria-label="Text input with checkbox"
-                           value="Share phone number in profile?" size="40" readonly>
                 </div>
             </div>
             <div class="col-12 mt-md-3">
@@ -121,70 +64,36 @@
                </h5>
             </div>
         </div>
-        <div class="row d-flex justify-content-around mt-3 pt-2 mb-3">
-            <div class="col-12 col-md-4 mt-md-3">
-                <h4>
-                    <a href="{{route('member_address_edit', $data['user']->id)}}">
-                        <i class="fas fa-address-card text-success"></i>
-                        <span class="font-weight-bold">
-                            Update address
-                        </span>
-                    </a>
-                </h4>
-            </div>
 
-            <div class="col-12 col-md-4 mt-md-3">
-                <h4>
-                    <a href="{{route('member_password_edit', $data['user']->id)}}">
-                        <i class="fas fa-unlock-alt"></i>
-                        <span class="font-weight-bold">
-                            Update Password
-                        </span>
-                    </a>
-                </h4>
-            </div>
-
-            <div class="col-12 col-md-4 mt-md-3">
-                <h4>
-                    <a href="{{route('edit_emergency_contact', $data['user']->id)}}">
-                        <i class="fas fa-first-aid text-danger"></i>
-                        <span class="font-weight-bold">
-                            Update emergency contact
-                        </span>
-                    </a>
-                </h4>
-            </div>
         <div class="col-12 pt-2">
             <h3 class="mt-3 p-lg-2 fw-bold">
                 <i class="fas fa-user text-primary"></i>
                 Member Info
             </h3>
             <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input name="user_info[show_profile]" type="hidden" value="0" />
-                        <input name="user_info[show_profile]" type="checkbox" value="1"
-                            {{ checked(old('user_info.show_profile',
-                                $data['user']->user_info->show_profile ?? '')) }} />
-                    </div>
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" name="user_info[show_profile]" type="checkbox" value="1"
+                           aria-label="Checkbox for following text input"
+                        {{ checked(old('user_info.show_profile',
+                            $data['user']->user_info->show_profile ?? '')) }}
+                    >
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
-                       value="Share profile with other members?" size="40" readonly>
+                       value="Check to share your profile with members" readonly>
+                <input name="user_info[show_profile]" type="hidden" value="0" />
             </div>
             @if( isset($data['user']->user_info->image) )
                 <div class="row mb-3">
                     <div class="col-12 mt-5 text-center">
                         <h4>
                             <i class="far fa-images"></i>
-                            {{ $data['user']->user_info->file_name }}
+                            File name: {{ $data['user']->user_info->file_name }}
 
                         </h4>
                         <p class="d-sm-block d-md-none">
                             <i>(Thumbnail for mobile view)</i>
                         </p>
                     </div>
-                </div>
-
                 </div>
                 <div class="row mb-3">
                     <div class="col-0 col-md-3">
@@ -210,16 +119,15 @@
                     <p class="d-sm-block d-md-none">
                         <i>(Size is for full size image)</i>
                     </p>
-
                 </div>
                 <div class="input-group mb-6">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <input name="user_info[delete_image]" type="checkbox" value="1" />
-                        </div>
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0" name="user_info[delete_image]" type="checkbox" value="1"
+                               aria-label="Checkbox for following text input"
+                        >
                     </div>
                     <input type="text" class="form-control" aria-label="Text input with checkbox"
-                           value=" Check to delete image." size="40" readonly>
+                           value="Check to delete the current image" readonly>
                 </div>
             @else
                 <input name="user_info[delete_image]" type="hidden" value="" />
@@ -236,15 +144,15 @@
                 </div>
             @endif
             <div class="input-group mt-3 pb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input name="user_info[show_picture]" type="hidden" value="0" />
-                        <input name="user_info[show_picture]" type="checkbox" value="1"
-                            {{ checked(old('user_info.show_picture', $data['user']->user_info->show_picture ?? '')) }} />
-                    </div>
-                </div>
-                <input type="text" class="form-control" aria-label="Text input with checkbox"
-                       value="Show picture in your profile?" size="40" readonly>
+               <div class="input-group-text">
+                    <input class="form-check-input mt-0" name="user_info[show_picture]" type="checkbox" value="1"
+                           aria-label="Checkbox for following text input"
+                        {{ checked(old('user_info.show_picture', $data['user']->user_info->show_picture ?? '')) }}
+                    >
+               </div>
+               <input type="text" class="form-control" aria-label="Text input with checkbox"
+                  value="Check to show picture in your profile" readonly>
+               <input name="user_info[show_picture]" type="hidden" value="0" />
             </div>
             <h3 class="mt-2 p-2 fw-bold">
                 <i class="fas fa-user text-primary"></i>
@@ -267,8 +175,40 @@
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-primary btn-lg" type="submit" value="Update My Profile" />
             </div>
-        </div>
     </form>
 </div>
-</div>
-@endsection
+
+    @if( $data['user']->allExecutiveRoles->count() > 0 )
+        <div class="col-12 col-lg-5 border border-dark rounded p-2">
+            <h4>Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}</h4>
+            <ul class="list-group">
+                @foreach($data['user']->allExecutiveRoles as $exec)
+                    <li class="list-group-item">{{$exec->title}}
+                        {{ \Carbon\Carbon::parse($exec->pivot->end_date)->isPast() ? '':'(Currently)'}}
+                        <a href="mailto:{{$exec->email}}" title="Email {{$data['user']->name}} {{$exec->title}}
+                                at {{$exec->email}}">
+                            <i class="fas fa-envelope"></i>
+                        </a> <br />
+                        {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('M j Y')}} -
+                        {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('M j Y')}}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if($data['user']->committee_memberships->count() > 0)
+        <div class="col-12 col-lg-5 border border-dark rounded p-2">
+            <h4>Membership in committees</h4>
+            <ul class="list-group">
+                @foreach($data['user']->committee_memberships as $m)
+                    @if($m->pivot->role != 'Past-Member')
+                        <li class="list-group-item">
+                            <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">
+                                {{$m->name}} - {{$m->pivot->role}}
+                            </a>
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
+        </div>
+    @endif

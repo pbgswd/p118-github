@@ -84,7 +84,7 @@ class UserController extends Controller
         $folder = $user->getAttachmentFolder();
         $tn_prefix = Options::member_thumb_values()['tn_str'];
 
-        if ($user->user_info['image']) {
+/*        if ($user->user_info['image']) {
             if (file_exists(storage_path().'/app/'.$folder.'/'.$user->user_info['image'])) {
                 if (! file_exists(storage_path().'/app/'.$folder.'/'.$tn_prefix.$user->user_info['image'])) {
                     $service->generate_thumb($user->user_info['image'], $folder,
@@ -92,29 +92,7 @@ class UserController extends Controller
                 }
             }
             $user->user_info->thumb = $tn_prefix.$user->user_info['image'];
-        }
-
-        $data = [
-            'user' => $user,
-            'user_roles' => $member_roles,
-            'folder' => $folder,
-            'tn_prefix' => $tn_prefix,
-        ];
-
-        return view('member', ['data' => $data]);
-    }
-
-    /**
-     * @param User $user
-     * @return View
-     * @throws AuthorizationException
-     * @throws InvalidManipulation
-     */
-    public function edit(User $user): View
-    {
-        $this->authorize('update', $user);
-
-        $user->load('phone_number', 'user_info', 'membership', 'committee_memberships', 'allExecutiveRoles');
+        }*/
 
         if ($user->user_info) {
             if ($user->user_info['image']) {
@@ -134,25 +112,71 @@ class UserController extends Controller
             }
         }
 
-        $currentUser = Auth::user();
-        $roles = Role::get();
-        $user_roles = $user->getRoleNames()->toArray();
-        $user_roles = array_combine($user_roles, $user_roles);
-        $folder = $user->getAttachmentFolder();
+        $regions = $this->getFormOptions(['statesprovs']);
 
         $data = [
             'user' => $user,
-            'filesize' => $filesize ?? '',
-            'user_roles' => $user_roles,
-            'roles' => $roles,
-            'action' => 'Edit',
-            'currentUserPermissions' => $currentUser->permissions,
+            'user_roles' => $member_roles,
             'folder' => $folder,
-            'tn_prefix' => Options::member_thumb_values()['tn_str'],
+            'tn_prefix' => $tn_prefix,
+            'filesize' => $filesize ?? '',
+            'provinces' => $regions['statesprovs']['Provinces'],
+            'action' => 'Edit',
         ];
 
-        return view('member_edit', ['data' => $data]);
+        return view('member', ['data' => $data]);
     }
+
+    /**
+     * @param User $user
+     * @return View
+     * @throws AuthorizationException
+     * @throws InvalidManipulation
+     */
+
+    /*    public function edit(User $user): View
+        {
+            $this->authorize('update', $user);
+
+            $user->load('phone_number', 'user_info', 'membership', 'committee_memberships', 'allExecutiveRoles');
+
+            if ($user->user_info) {
+                if ($user->user_info['image']) {
+                    if (file_exists(storage_path().'/app/users/'.$user->user_info['image'])) {
+                        $filesize = AttachmentService::human_filesize(
+                            \filesize(\storage_path('app/users'.'/'.$user->user_info->image))) ?: null;
+
+                        if (! file_exists(storage_path().'/app/users/'.Options::member_thumb_values()['tn_str'].
+                            $user->user_info['image'])) {
+                            $this->userImageService->generate_thumb($user->user_info['image'], 'users',
+                                Options::member_thumb_values());
+                        }
+                    }
+                    $user->user_info->thumb = Options::member_thumb_values()['tn_str'].$user->user_info['image'];
+                    $user->user_info->thumb_size = AttachmentService::human_filesize(
+                        \filesize(\storage_path('app/users'.'/'.$user->user_info->thumb))) ?: null;
+                }
+            }
+
+            $currentUser = Auth::user();
+            $roles = Role::get();
+            $user_roles = $user->getRoleNames()->toArray();
+            $user_roles = array_combine($user_roles, $user_roles);
+            $folder = $user->getAttachmentFolder();
+
+            $data = [
+                'user' => $user,
+                'filesize' => $filesize ?? '',
+                'user_roles' => $user_roles,
+                'roles' => $roles,
+                'action' => 'Edit',
+                'currentUserPermissions' => $currentUser->permissions,
+                'folder' => $folder,
+                'tn_prefix' => Options::member_thumb_values()['tn_str'],
+            ];
+
+            return view('member', ['data' => $data]);
+        }*/
 
     /**
      * @param UpdateMember $userRequest
@@ -271,10 +295,10 @@ class UserController extends Controller
             $result = $this->emailMemberUpdateService->sendMessage($message, $user);
         }
 
-        Session::flash('success', 'Profile for '.$user->name.
-            ' has been edited. The office will be updated with any changes.');
+        Session::flash('success', 'Your profile has been edited. The office
+            will be updated with any changes.');
 
-        return redirect()->route('member_edit', $user->id);
+        return redirect()->route('member', $user->id);
     }
 
     /**
@@ -282,7 +306,7 @@ class UserController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function edit_address(User $user): View
+   /* public function edit_address(User $user): View
     {
         $this->authorize('update', $user);
 
@@ -297,7 +321,7 @@ class UserController extends Controller
         ];
 
         return view('member_address_edit', ['data' => $data]);
-    }
+    }*/
 
     /**
      * @param UpdateMemberAddress $userRequest
@@ -329,10 +353,10 @@ class UserController extends Controller
         }
 
         Session::flash('success', 'Your address update has been emailed to the office.');
-        return redirect()->route('member_address_edit', $user->id);
+        return redirect()->route('member', $user->id);
     }
 
-    public function edit_password(User $user): View
+   /* public function edit_password(User $user): View
     {
         $this->authorize('update', $user);
 
@@ -340,7 +364,7 @@ class UserController extends Controller
         $data['user'] = $user;
 
         return view('member_password_edit', ['data' => $data]);
-    }
+    }*/
 
     public function update_password(ProcessUserRequest $request, User $user): RedirectResponse
     {
@@ -351,7 +375,7 @@ class UserController extends Controller
 
         Session::flash('success', 'Your password has been updated.');
 
-        return redirect()->route('member_password_edit', $user->id);
+        return redirect()->route('member', $user->id);
     }
 
     /**
@@ -359,7 +383,7 @@ class UserController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-    public function edit_emergency_contact(User $user): View
+  /*  public function edit_emergency_contact(User $user): View
     {
         $this->authorize('update', $user);
 
@@ -372,7 +396,7 @@ class UserController extends Controller
         ];
 
         return view('member_emergency_edit', ['data' => $data]);
-    }
+    }*/
 
     /**
      * @param UpdateMemberEmergencyContact $userRequest
@@ -413,6 +437,6 @@ class UserController extends Controller
 
         Session::flash('success', 'Your emergency contact update has been emailed to the office.');
 
-        return redirect()->route('edit_emergency_contact', $user->id);
+        return redirect()->route('member', $user->id);
     }
 }

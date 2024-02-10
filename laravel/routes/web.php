@@ -111,11 +111,11 @@ Route::middleware('web', 'auth')->group(function () {
         Route::get('/member/{user}/edit', 'edit')->name('member_edit');
         Route::post('/member/{user}/edit', 'update');
         Route::get('/member/{user}/address/edit', 'edit_address')->name('member_address_edit');
-        Route::post('/member/{user}/address/edit', 'update_address');
+        Route::post('/member/{user}/address/edit', 'update_address')->name('update_address');
         Route::get('/member/{user}/emergency_contact/edit', 'edit_emergency_contact')->name('edit_emergency_contact');
-        Route::post('/member/{user}/emergency_contact/edit', 'update_emergency_contact');
+        Route::post('/member/{user}/emergency_contact/edit', 'update_emergency_contact')->name('update_emergency_contact');
         Route::get('/member/{user}/password', 'edit_password')->name('member_password_edit');
-        Route::post('/member/{user}/password', 'update_password');
+        Route::post('/member/{user}/password', 'update_password')->name('member_password_update');
     });
 
     Route::get('policies', [CNS\PolicyController::class, 'index'])->name('policies_list_public');

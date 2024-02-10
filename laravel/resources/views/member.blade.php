@@ -1,6 +1,6 @@
 @extends('layouts.jumbo')
 @section('content')
-    <div class="container border border-dark rounded pt-2 pb-3 my-3" style="background: rgba(220,220,220,0.8);">
+    <div class="container border border-dark rounded pt-2 pb-3 my-3">
         <div class="row p-2">
             <div class="col-12 col-md-6 w-100">
                 <h3>
@@ -22,129 +22,57 @@
                 </div>
             @endcan
         </div>
-        @if ( ($data['user']->user_info->image ?? '') && $data['user']->user_info->show_picture == 1 )
-            <div class="row mb-3">
-                <div class="col-12 d-flex align-items-center justify-content-center text-center">
-                     <picture>
-                        <source srcset="{{asset('storage/'. $data['folder'] .'/'. $data['user']->user_info->image)}}"
-                                media="(min-width: 577px)">
-                        <img srcset="{{asset('storage/'. $data['folder'] ."/". $data['tn_prefix'].
-                                        $data['user']->user_info->image)}}"
-                             alt="{{$data['user']->name}}"
-                             class="rounded img-fluid w-50">
-                    </picture>
-                </div>
+        @if (Auth::user()->id == $data['user']->id)
+            <div class="row">
+                <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">My Profile</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                            <i class="fas fa-user"></i>
+                            Edit Profile</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="emerg-tab" data-bs-toggle="tab" data-bs-target="#emerg-tab-pane" type="button" role="tab" aria-controls="emerg-tab-pane" aria-selected="false">
+                            <i class="fas fa-first-aid text-danger"></i>
+                            Emergency Contact</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane" type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false">
+                            <i class="fas fa-address-card text-success"></i>
+                            Address</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false">
+                            <i class="fas fa-unlock-alt"></i>
+                            Change Password</button>
+                    </li>
+                </ul>
             </div>
         @endif
-        <div class="row d-flex justify-content-between pt-2">
-            @if (($data['user']->user_info->share_email ?? '' ) == 1)
-                <div class="col-12 col-md-5 text-md-left">
-                    <h5>
-                        <a href="mailto:{{$data['user']->email}}" title="Email {{$data['user']->name}}">
-                            <i class="fas fa-envelope"></i>
-                            {{$data['user']->email}}
-                        </a>
-                    </h5>
-                </div>
-            @endif
-            @if (($data['user']->user_info->share_phone  ?? '' )  == 1 &&
-                !empty($data['user']->phone_number->phone_number))
-                <div class="col-12 col-md-5 text-md-right">
-                    <h5>
-                        <a href="tel:{{$data['user']->phone_number->phone_number ?? '' }}">
-                            <i class="fas fa-phone-square"></i>
-                            {{$data['user']->phone_number->phone_number ?? '' }}
-                        </a>
-                    </h5>
-                </div>
-            @endif
-        </div>
-        <div class="col-12 pt-2">
-            {!! $data['user']->user_info->about  ?? '' !!}
-        </div>
-        <div class="row d-flex justify-content-md-around px-2 mb-2">
-            @if( $data['user']->allExecutiveRoles->count() > 0 )
-                <div class="col-12 col-md-5 mb-2 p-2 border border-dark rounded">
-                    <h5>
-                        Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}
-                    </h5>
-                    <ul class="list-group">
-                        @foreach($data['user']->allExecutiveRoles as $exec)
-                           <li class="list-group-item">{{$exec->title}}
-                                {{ \Carbon\Carbon::parse($exec->pivot->end_date)->isPast() ? '':'(Currently)'}}
-                                <a href="mailto:{{$exec->email}}" title="Email {{$data['user']->name}} {{$exec->title}}
-                                    at {{$exec->email}}">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                                {{\Carbon\Carbon::parse($exec->pivot->start_date)->format('M j Y')}} -
-                                {{\Carbon\Carbon::parse($exec->pivot->end_date)->format('M j Y')}}
-                           </li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if($data['user']->committee_memberships->count() > 0)
-                <div class="col-12 col-md-5 p-2 border border-dark rounded">
-                    <h5>
-                        Membership in Committees
-                    </h5>
-                    <ul class="list-group">
-                        @foreach($data['user']->committee_memberships as $m)
-                            @if($m->pivot->role != 'Past-Member')
-                                <li class="list-group-item">
-                                    <a href="{{ route('committee', $m->slug) }}" title="{{$m->name}}">
-                                        {{$m->name}} -  {{$m->pivot->role}}
-                                    </a>
-                                </li>
-                            @endif
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-        </div>
         @if ( Auth::user()->id == $data['user']->id)
-            <div class="row d-flex justify-content-between pt-3">
-                <div class="col-12 col-md-3 text-md-left">
-                    <h5>
-                        <a href="{{route('edit_emergency_contact', $data['user']->id)}}">
-                            <i class="fas fa-first-aid text-danger"></i>
-                            <span class="font-weight-bold">
-                            Update emergency contact
-                        </span>
-                        </a>
-                    </h5>
-                </div>
-                <div class="col-12 col-md-3 text-md-center">
-                    <h5>
-                        <a href="{{route('member_edit', $data['user']->id)}}">
-                            <i class="fas fa-user"></i>
-                            <span class="font-weight-bold">
-                            Update profile
-                        </span>
-                        </a>
-                    </h5>
-                </div>
-                <div class="col-12 col-md-3 text-md-center">
-                    <h5>
-                        <a href="{{route('member_password_edit', $data['user']->id)}}">
-                            <i class="fas fa-unlock-alt"></i>
-                            <span class="font-weight-bold">
-                            Update Password
-                        </span>
-                        </a>
-                    </h5>
-                </div>
-                <div class="col-12 col-md-3 text-md-right">
-                    <h5>
-                        <a href="{{route('member_address_edit', $data['user']->id)}}">
-                            <i class="fas fa-address-card text-success"></i>
-                            <span class="font-weight-bold">
-                                Update address
-                            </span>
-                        </a>
-                    </h5>
+            <div class="row mt-5 align-top">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                        @include('member_profile')
+                    </div>
+                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                        @include('member_edit')
+                    </div>
+                    <div class="tab-pane fade" id="emerg-tab-pane" role="tabpanel" aria-labelledby="emerg-tab" tabindex="0">
+                        @include('member_emergency_edit')
+                    </div>
+                    <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="0">
+                        @include('member_address_edit')
+                    </div>
+                    <div class="tab-pane fade align-top" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
+                       @include('member_password_edit')
+                    </div>
                 </div>
             </div>
+        @else
+            @include('member_profile')
         @endif
     </div>
 @endsection
