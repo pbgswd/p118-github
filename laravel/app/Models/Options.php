@@ -147,7 +147,7 @@ class Options
      */
     public static function committee_executive_roles(): array
     {
-        $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary'];
+        $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary', 'Alternate Chair'];
 
         return array_combine($committee_executive_roles, $committee_executive_roles);
     }

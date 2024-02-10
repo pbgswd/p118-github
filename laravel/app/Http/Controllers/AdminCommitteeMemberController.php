@@ -119,10 +119,11 @@ class AdminCommitteeMemberController extends Controller
 
         $result = $this->emailCommitteeMembershipService->sendMessage($data);
 
-        Session::flash('success', 'You have added '.$user->name.' to '.$committee->name.
-            'An email notification has been sent.');
+        Session::flash('success', 'You have added ' . $user->name . ' to '.
+            $committee->name . ' An email notification has been sent.');
 
-        return redirect()->route('admin-list-committee-members', [$committee->slug, $user->id]);
+        return redirect()->route('admin-list-committee-members',
+            [$committee->slug, $user->id]);
     }
 
     /**
