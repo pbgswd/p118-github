@@ -78,7 +78,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4">No results</td>
+                                    <td colspan="5">No results</td>
                                 </tr>
                             @endforelse
                             <tr>
@@ -145,7 +145,7 @@
                                 </tr>
                             @endforelse
                         <tr>
-                            <td colspan="4">&nbsp;</td>
+                            <td colspan="5">&nbsp;</td>
                         </tr>
                     </tbody>
                 </table>
