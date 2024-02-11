@@ -82,7 +82,7 @@
                                 </tr>
                             @endforelse
                             <tr>
-                                <td colspan="4">&nbsp;</td>
+                                <td colspan="5">&nbsp;</td>
                             </tr>
                         </tbody>
                     </table>
