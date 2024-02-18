@@ -132,6 +132,13 @@ class Options
         return array_combine($membership, $membership);
     }
 
+public static function message_subscriptions(): array
+{
+    //todo data for topics members can subscribe to for email preferences
+    $data = [];
+    return $data;
+}
+
     /**
      * @return mixed
      */

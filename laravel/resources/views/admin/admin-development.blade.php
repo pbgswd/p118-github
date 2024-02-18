@@ -8,7 +8,13 @@
         <h1>Page For Development</h1>
     </div>
 </div>
-
+<div class="row mt-6 mb-6">
+    <div class="col-12">
+        <a href="{{route('admin_messages')}}">List  Messages</a>   |
+        <a href="{{route('admin_message_create')}}">Create Messages</a>
+    </div>
+</div>
+<hr />
 <div class="row mt-6 mb-6">
     <div class="col-12">
         <h1>some tailwind</h1>

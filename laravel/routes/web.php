@@ -105,6 +105,9 @@ Route::middleware('web', 'auth')->group(function () {
     Route::get('features', [CNS\FeatureController::class, 'index'])->name('features');
     Route::get('feature/{feature}', [CNS\FeatureController::class, 'show'])->name('feature');
 
+    Route::get('messages', [CNS\MessageController::class, 'index'])->name('messages');
+    Route::get('message/{message}', [CNS\MessageController::class, 'show'])->name('message');
+
     Route::controller(CNS\UserController::class)->group(function() {
         Route::get('/members', 'index')->name('members');
         Route::get('/member/{user}', 'show')->name('member');
@@ -158,6 +161,17 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::get('/developer', 'developer')->name('developer');
         Route::get('/developer/phpinfo', 'getphpinfo')->name('phpinfo');
         Route::get('/development', 'development')->name('development');
+    });
+
+    Route::controller(CNS\AdminMessageController::class)->group(function() {
+        Route::get('messages', 'index')->name('admin_messages');
+        Route::get('message/create', 'create')->name('admin_message_create');
+        Route::post('message/create', 'create')->name('admin_message_create');
+        Route::get('message/{message}/edit', 'edit')->name('admin_message_edit');
+        Route::post('message/{message}/edit', 'update')->name('admin_message_update');
+        Route::get('message/{message}/preview', 'preview')->name('admin_message_preview');
+        Route::get('message/{message}/send', 'send')->name('admin_message_send');
+        Route::delete('message/delete', 'destroy')->name('admin_message_destroy');
     });
 
     Route::controller(CNS\AdminCarouselController::class)->group(function() {

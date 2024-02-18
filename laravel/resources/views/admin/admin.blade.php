@@ -48,11 +48,15 @@
             <h3>New stuff</h3>
         </div>
         <div class="col-4">
-            <a href="">
+            <a href="{{route('admin_messages')}}">
                 <div class="card p-3 h-100">
                     <h5 class="card-title">Email</h5>
                     <div class="card-body">
                      Mailer for general communication, work in progress.
+                        <div>
+                            <a href="{{route('admin_messages')}}">List  Messages</a>   |
+                            <a href="{{route('admin_message_create')}}">Create Messages</a>
+                        </div>
                     </div>
                 </div>
             </a>
