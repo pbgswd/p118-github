@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Messages\DestroyMessageRequest;
 use App\Models\Message;
+use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,14 @@ use Illuminate\View\View;
 
 class AdminMessageController extends Controller
 {
+    /** @var AttachmentService */
+    private $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * @return View
      */
@@ -37,6 +46,9 @@ class AdminMessageController extends Controller
         $data['message'] = new Message;
         $data['action'] = 'Create';
 
+
+
+
         return view('admin.message', ['data' => $data]);
     }
 
@@ -49,6 +61,17 @@ class AdminMessageController extends Controller
         $message = new Message($request->message);
         $message['user_id'] = Auth::id();
         $message->save();
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $message);
+
+            if ($result) {
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
         Session::flash('success', 'A new message, ' . $message->subject .
             ', has been created');
         return redirect()->route('admin_message_edit', $message->id);
@@ -60,8 +83,9 @@ class AdminMessageController extends Controller
      */
     public function edit(Message $message): View
     {
-        $message->load('user');
+        $message->load('user', 'attachments');
         $data['message'] = $message;
+
         $data['action'] = 'Edit';
         return view('admin.message', ['data' => $data]);
     }
@@ -75,6 +99,19 @@ class AdminMessageController extends Controller
     {
         $message->fill($request->message);
         $message->save();
+
+        $result = $this->attachmentService->updateAttachment($request, $message);
+
+        if (null !== ($request->attachments)) {
+            $result = $this->attachmentService->createAttachment($request, $message);
+
+            if ($result) {
+                Session::flash('success', 'You uploaded '. Str::plural('file', $request->attachments));
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
         Session::flash('success', 'You have updated ' . $message->subject);
         return redirect()->route('admin_message_edit', $message->id);
     }
@@ -85,7 +122,7 @@ class AdminMessageController extends Controller
      */
     public function preview(Message $message): View
     {
-        $message->load('user');
+        $message->load('user', 'attachments');
         $data['message'] = $message;
 
         return view('admin.message_preview', ['data' => $data]);
@@ -128,7 +165,7 @@ class AdminMessageController extends Controller
         Message::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Message $message) {
-                //$this->attachmentService->destroyAttachments($memoriam);
+                $this->attachmentService->destroyAttachments($message);
                 $message->delete();
             });
 

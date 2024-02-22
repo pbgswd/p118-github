@@ -17,22 +17,21 @@
         </div>
     </div>
     <div class="row mx-4 border border-1 border-black rounded p-4">
-    <h3>Subject: </h3>
-    {{$data['message']->subject}}
-
-    <div class="row my-5">
-        <div class="col-12">
-            <h3>Message</h3>
-                {{$data['message']->content}}
+    <div class="col-12">
+        <h3>Subject: </h3>
+            {{$data['message']->subject}}
         </div>
-    </div>
-    <div class="row">
-
-        <div class="row m-4 border border-1 rounded">
-            <div class="col-12">
-                <h2>File Attachment</h2>
-
-            </div>
+        <div class="col-12 mt-5">
+            <h3>Message</h3>
+                {!! $data['message']->content !!}
+        </div>
+        <div class="col-12 mt-5">
+            <h3>File Attachments</h3>
+            @forelse ($data['message']->attachments as $ma)
+                {{$ma->file_name}}
+            @empty
+                No attachments
+            @endforelse
         </div>
     </div>
 </div>
