@@ -6,10 +6,13 @@ use App\Http\Requests\InviteUser\ProcessUserRequest;
 use App\Http\Requests\Member\UpdateMember;
 use App\Http\Requests\Member\UpdateMemberEmergencyContact;
 use App\Http\Requests\User\UpdateMemberAddress;
+use App\Models\Committee;
 use App\Models\Executive;
 use App\Models\Membership;
+use App\Models\MessageSelections;
 use App\Models\Options;
 use App\Models\PhoneNumber;
+use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Rules\Phone;
@@ -59,6 +62,8 @@ class UserController extends Controller
             ->orderBy('name')
             ->paginate(20);
 
+
+        //todo exclude suspended, verify
         $count = Membership::where('membership_type', 'Member')->count();
 
         return view('listusers', ['data' => ['users' => $users, 'count' => $count]]);
@@ -76,7 +81,8 @@ class UserController extends Controller
 
         $user->load('committee_memberships', 'phone_number',
                     'user_info', 'membership',
-                    'allExecutiveRoles');
+                    'allExecutiveRoles', 'message_frequency_preferences');
+                    //'message_selections');
 
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
@@ -114,9 +120,23 @@ class UserController extends Controller
 
         $regions = $this->getFormOptions(['statesprovs']);
 
+        //todo set default value for email frequency if not exist.
+
+       // $topics = Options::message_subscription_options();
+        $topics = Topic::where('live', '=', 1)->get();
+        $committees = Committee::where('live', '=', 1)->pluck('name', 'slug')->toArray();
+
+        $message_selections = MessageSelections::pluck('name')->toArray();
+
+
         $data = [
             'user' => $user,
             'user_roles' => $member_roles,
+            'committees' => Committee::where('live', '=', 1)->get(),
+            'message_selections' => array_combine($message_selections, $message_selections),
+            'message_frequency_preference_options' => Options::message_frequency_preference_options(),
+            'message_subscription_options' =>$topics,
+            'model_subscription_options' => Options::model_subscription_options(),
             'folder' => $folder,
             'tn_prefix' => $tn_prefix,
             'filesize' => $filesize ?? '',
@@ -247,9 +267,9 @@ class UserController extends Controller
         $thumb_vals = Options::member_thumb_values();
 
         if ($user->user_info instanceof UserInfo) {
-            //dd($user->user_info);
+
             $user_info = $userRequest['user_info'];
-            //dd($userRequest['user_info']);
+
             if (isset($user_info['delete_image'])) {
                 if (file_exists(storage_path().'/app/'.$folder.'/'.$user_info['image'])) {
                     $service->destroyImage($user_info['image'], $folder, $thumb_vals);

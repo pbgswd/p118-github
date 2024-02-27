@@ -21,10 +21,26 @@
                 </div>
             @endif
             <div class="col-12 my-4">
+                Select topic or Committee
+
+                <select class="form-select" name='name' aria-label="Default select example">
+                    <option>Open this select menu, still needs to be sorted out</option>
+                    @foreach($data['topics'] as $t)
+                        <option value="{{$t['slug']}}"
+                        @if($data['action'] == 'Edit')
+                            {{$t['slug'] == 'nothing yet' ? 'selected' : ''}}
+                        @endif
+                        >
+                            {{$t['name']}}</option>
+                    @endforeach
+                </select>
+
+                <p>Todo: menu for committees</p>
+            </div>
+            <div class="col-12 my-4">
                 <h3>Subject</h3>
                 <input x-model="subject" type="text" name="message[subject]" value="{{ old('message.subject', $data['message']->subject)}}" size="40" required />
             </div>
-
         </div>
     </div>
     <div class="row my-5">

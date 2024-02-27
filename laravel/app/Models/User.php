@@ -7,6 +7,7 @@ use App\Models\Interfaces\HasAttachment;
 use App\Policies\UserPolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -107,6 +108,15 @@ class User extends Authenticatable implements HasAttachment, Searchable
             \route('member', $this->id)
         );
     }
+
+    /**
+     * @return HasOne
+     */
+    public function message_frequency_preferences(): HasOne
+    {
+        return $this->hasOne(MessageFrequencyPreferences::class)->withDefault();
+    }
+
 
     /**
      * @return HasOne

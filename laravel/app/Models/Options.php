@@ -127,16 +127,49 @@ class Options
      */
     public static function membership_levels(): array
     {
-        $membership = ['Member', 'Office']; // 'Inactive', 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
+        $membership = ['Member', 'Office'];
+    // 'Inactive', 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
 
         return array_combine($membership, $membership);
     }
 
-public static function message_subscriptions(): array
+public static function message_frequency_preference_options(): array
 {
-    //todo data for topics members can subscribe to for email preferences
-    $data = [];
-    return $data;
+    $frequency = ['now' => "Send when published.",
+        'daily' => "Daily compilation, All messages for that day in one email.",
+        'weekly' => "All messages for that week in one email. ",
+        'unsubscribe' => "Dont email me any messages, I will check the Messages
+            archive on the website instead."
+    ];
+    return  $frequency;
+}
+
+public static function model_subscription_options():array
+{
+    $array = [
+        ['model' => 'Employment', 'name' => 'Job Postings', 'description' => 'Latest job postings'],
+        ['model' => 'Memoriam', 'name' => 'In Memoriam', 'description' => 'Notification of the passing of members'],
+        ['model' => 'Bylaw', 'name' => 'Constitution and Bylaws', 'description' => 'Updates to Constitution and Bylaws in Local 118'],
+        ['model' => 'Policy', 'name' => 'Policies', 'description' => 'Local 118 Policies'],
+        ['model' => 'Meeting', 'name' => 'Meetings and Minutes', 'description' => 'Information about meetings'],
+        ['model' => 'Venue', 'name' => 'Venues', 'description' => 'Venues where we work'],
+        ['model' => 'Organization', 'name' => 'Organizations', 'description' => 'Organizations that we work for'],
+        ['model' => 'Agreement', 'name' => 'Agreements', 'description' => 'Agreements that Local 118 works under']
+    ];
+
+    return $array;
+}
+
+
+public static function message_subscription_options(): array
+{
+    $topic_data = [
+            ['slug' => 'meetings', 'name' => "Notice of Meetings"],
+            ['slug' => 'news', 'name' => "News & Information"],
+            ['slug' => 'employment', 'name' => "Job Postings"],
+        ];
+
+    return $topic_data;
 }
 
     /**
@@ -144,7 +177,8 @@ public static function message_subscriptions(): array
      */
     public static function committee_roles(): array
     {
-        $membership = ['Chair', 'Co-Chair', 'Alternate Chair', 'Secretary', 'Member', 'Interim Member', 'Ex-officio', 'Past-Member'];
+        $membership = ['Chair', 'Co-Chair', 'Alternate Chair', 'Secretary',
+            'Member', 'Interim Member', 'Ex-officio', 'Past-Member'];
 
         return array_combine($membership, $membership);
     }

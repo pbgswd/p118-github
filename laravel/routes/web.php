@@ -105,8 +105,13 @@ Route::middleware('web', 'auth')->group(function () {
     Route::get('features', [CNS\FeatureController::class, 'index'])->name('features');
     Route::get('feature/{feature}', [CNS\FeatureController::class, 'show'])->name('feature');
 
-    Route::get('messages', [CNS\MessageController::class, 'index'])->name('messages');
-    Route::get('message/{message}', [CNS\MessageController::class, 'show'])->name('message');
+    Route::controller(CNS\MessageController::class)->group(function () {
+        Route::get('messages', 'index')->name('messages');
+        Route::get('message/{message}', 'show')->name('message');
+        Route::post('member/{user}/message_preferences', 'update')->name('update_message_preferences');
+
+    });
+
 
     Route::controller(CNS\UserController::class)->group(function() {
         Route::get('/members', 'index')->name('members');

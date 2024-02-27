@@ -35,7 +35,7 @@ class AdminTopicController extends Controller
 
         $topics = Topic::withoutGlobalScopes()
             ->sortable()
-            ->with('user', 'attachments')
+            ->with('user', 'attachments', 'pages','posts')
             ->paginate(20);
 
         return view('admin.listtopics', ['data' => ['topics' => $topics]]);

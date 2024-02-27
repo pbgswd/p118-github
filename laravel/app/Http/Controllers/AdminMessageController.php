@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Messages\DestroyMessageRequest;
 use App\Models\Message;
+use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -43,11 +44,11 @@ class AdminMessageController extends Controller
      */
     public function create(): View
     {
-        $data['message'] = new Message;
-        $data['action'] = 'Create';
-
-
-
+        $data = [
+            'topics' =>   Options::message_subscription_options(),
+            'message' => new Message,
+            'action' => 'Create'
+        ];
 
         return view('admin.message', ['data' => $data]);
     }
@@ -84,9 +85,12 @@ class AdminMessageController extends Controller
     public function edit(Message $message): View
     {
         $message->load('user', 'attachments');
-        $data['message'] = $message;
 
-        $data['action'] = 'Edit';
+        $data = [
+            'message' => $message,
+            'topics' => Options::message_subscription_options(),
+            'action' => 'Edit'
+        ];
         return view('admin.message', ['data' => $data]);
     }
 
