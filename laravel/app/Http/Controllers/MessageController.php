@@ -26,8 +26,15 @@ class MessageController extends Controller
      */
     public function index(): View
     {
-        //todo not used
-        $data = [];
+        $message = Message::sortable()
+            ->where('sent', 1)
+            ->orderBy('updated_at', 'desc')
+            ->paginate(20);
+
+        $data = [
+            'messages' => $message,
+            'count' => Message::where('sent', 1)->count()
+        ];
         return view('messages', ['data' => $data]);
     }
 
@@ -37,8 +44,11 @@ class MessageController extends Controller
      */
     public function show(Message $message): View
     {
-        // todo not used
-        $data = [];
+        $message->load('user', 'attachments');
+
+        $data = [
+            'message' => $message
+        ];
         return view('message', ['data' => $data]);
     }
 
@@ -48,7 +58,7 @@ class MessageController extends Controller
 //todo make a policy
 
         self::updateMessageFrequencyPreferences($request, $user);
-//dd( $request['message_selections']);
+
         self::updateTopicSubscriptions($user, $request['message_selections']['topic'] ?? []);
 
         self::updateModelSubscriptions($user, $request['message_selections']['model'] ?? []);
@@ -78,7 +88,7 @@ class MessageController extends Controller
 
         MessageSelection::where([
             ['user_id', '=', $user->id],
-            ['type', '=', $type ]
+            ['type', '=', $type]
         ])->delete();
 
         foreach($sub as $s)
@@ -97,7 +107,7 @@ class MessageController extends Controller
 
         MessageSelection::where([
             ['user_id', '=', $user->id],
-            ['type', '=', $type ]
+            ['type', '=', $type]
         ])->delete();
 
         foreach($sub as $s)
@@ -117,7 +127,7 @@ class MessageController extends Controller
 
         MessageSelection::where([
             ['user_id', '=', $user->id],
-            ['type', '=', $type ]
+            ['type', '=', $type]
         ])->delete();
 
         foreach($sub as $s)

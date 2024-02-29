@@ -22,8 +22,10 @@
         <script src="{{asset('/js/google-analytics.js')}}"></script>
         <script src="{{asset('/js/alpine.min.js')}}" defer></script>
         <link rel="canonical" href="{{env('APP_URL')}}/">
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">
+
         <!-- Favicons -->
         <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
         <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">

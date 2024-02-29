@@ -43,6 +43,8 @@
         <th scope="col">#</th>
         <th scope="col">Subject</th>
         <th scope="col">Author</th>
+        <th scope="col">Type</th>
+        <th scope="col">Name</th>
         <th scope="col">Priority</th>
         <th scope="col">Sent</th>
         <th scope="col">Created At</th>
@@ -76,6 +78,8 @@
                         <i class="far fa-user"></i>
                         {{$msg['user']->name}}</a>
                 </td>
+                <td>{{$msg->type}}</td>
+                <td>{{$msg->name}}</td>
                 <td class="align-content-center">
                     @if($msg['priority'] == 'now')
                         <i class="fas fa-exclamation-triangle text-danger"></i>
