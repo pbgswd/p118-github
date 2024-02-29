@@ -6,13 +6,11 @@
             <h5>Modify your preferences for email messages sent to you from IATSE Local 118.</h5>
         </div>
     </div>
-
     <div class="row mt-4">
         <div class="col-sm-12 col-md-6 pt-4 px-4">
             <h2>Message frequency preferences</h2>
             <p>The Local sends out 5-10 messages per week to members.</p>
             <p>Choose how often you want to receive messages.</p>
-
             @foreach($data['message_frequency_preference_options'] as $k => $v )
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="radio" name="preference" id="exampleRadios1"
@@ -25,7 +23,6 @@
                     <input type="hidden" name="message[frequency][{{$k}}]" value="0" />
                 </div>
             @endforeach
-
             <div x-data="TopicSelect()" class="col pt-4">
                 <h2>Topic Preferences</h2>
                 <p>Get messages for select topics</p>
@@ -51,6 +48,7 @@
         <div class="col-sm-12 col-md-6 pt-4 px-4">
             <div x-data="ModelSelect()" class="col">
                 <h2>Content Sections</h2>
+                <p>Get messages from different sections of the website.</p>
                 @foreach($data['model_subscription_options'] as $mso)
                     <div class="input-group mb-3">
                         <div class="input-group-text">
@@ -60,7 +58,6 @@
                             >
                         </div>
                         <input type="text" class="form-control" value="{{$mso['name']}} - {{$mso['description']}}" aria-label="Text input with checkbox">
-
                     </div>
                 @endforeach
                 <div class="input-group mb-3">
@@ -70,11 +67,9 @@
                     <input type="text" class="form-control bg-info-subtle" value="Select / Deselect All" aria-label="Text input with checkbox">
                 </div>
             </div>
-
-
             <div x-data="CommitteeSelect()" class="col mt-6 pt-4">
                 <h2>Committees</h2>
-                <p>Get messages from select committees</p>
+                <p>Get messages from select committees.</p>
                 @foreach($data['committees'] as $comm)
                     <div class="input-group mb-3">
                         <div class="input-group-text">
@@ -93,12 +88,8 @@
                     <input type="text" class="form-control bg-info-subtle" value="Select / Deselect All" aria-label="Text input with checkbox">
                 </div>
             </div>
-
         </div>
     </div>
-
-
-
         <div class="row">
             <div class="col-12 my-5 text-center">
                 <i class="fas fa-edit fa-2x"></i>
