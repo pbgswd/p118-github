@@ -133,44 +133,32 @@ class Options
         return array_combine($membership, $membership);
     }
 
-public static function message_frequency_preference_options(): array
-{
-    $frequency = ['now' => "Send when published.",
-        'daily' => "Daily compilation, All messages for that day in one email.",
-        'weekly' => "All messages for that week in one email. ",
-        'unsubscribe' => "Dont email me any messages, I will check the Messages
-            archive on the website instead."
-    ];
-    return  $frequency;
-}
+    public static function message_frequency_preference_options(): array
+    {
+        $frequency = ['now' => "Send when published (default option).",
+                        'daily' => "Daily compilation, All messages for that day in one email.",
+                        'weekly' => "All messages for that week in one email. ",
+                        'unsubscribe' => "Dont email me any messages, I will check the Messages archive on the website instead."
+        ];
+        return  $frequency;
+    }
 
-public static function model_subscription_options():array
-{
-    $array = [
-        ['model' => 'Employment', 'name' => 'Job Postings', 'description' => 'Latest job postings'],
-        ['model' => 'Memoriam', 'name' => 'In Memoriam', 'description' => 'Notification of the passing of members'],
-        ['model' => 'Bylaw', 'name' => 'Constitution and Bylaws', 'description' => 'Updates to Constitution and Bylaws in Local 118'],
-        ['model' => 'Policy', 'name' => 'Policies', 'description' => 'Local 118 Policies'],
-        ['model' => 'Meeting', 'name' => 'Meetings and Minutes', 'description' => 'Information about meetings'],
-        ['model' => 'Venue', 'name' => 'Venues', 'description' => 'Venues where we work'],
-        ['model' => 'Organization', 'name' => 'Organizations', 'description' => 'Organizations that we work for'],
-        ['model' => 'Agreement', 'name' => 'Agreements', 'description' => 'Agreements that Local 118 works under']
-    ];
-
-    return $array;
-}
-
-
-public static function message_subscription_options(): array
-{
-    $topic_data = [
-            ['slug' => 'meetings', 'name' => "Notice of Meetings"],
-            ['slug' => 'news', 'name' => "News & Information"],
-            ['slug' => 'employment', 'name' => "Job Postings"],
+    public static function model_subscription_options():array
+    {
+        $array = [
+            ['model' => 'Employment', 'name' => 'Job Postings', 'description' => 'Latest job postings'],
+            ['model' => 'Memoriam', 'name' => 'In Memoriam', 'description' => 'Notification of the passing of members'],
+            ['model' => 'Bylaw', 'name' => 'Constitution and Bylaws', 'description' => 'Updates to Constitution and Bylaws in Local 118'],
+            ['model' => 'Policy', 'name' => 'Policies', 'description' => 'Local 118 Policies'],
+            ['model' => 'Meeting', 'name' => 'Meetings and Minutes', 'description' => 'Information about meetings'],
+            ['model' => 'Venue', 'name' => 'Venues', 'description' => 'Venues where we work'],
+            ['model' => 'Organization', 'name' => 'Organizations', 'description' => 'Organizations that we work for'],
+            ['model' => 'Agreement', 'name' => 'Agreements', 'description' => 'Agreements that Local 118 works under'],
+            ['model' => 'Message', 'name' => 'Messages', 'description' => 'Published strictly as a message']
         ];
 
-    return $topic_data;
-}
+        return $array;
+    }
 
     /**
      * @return mixed

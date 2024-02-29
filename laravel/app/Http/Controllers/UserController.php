@@ -9,6 +9,7 @@ use App\Http\Requests\User\UpdateMemberAddress;
 use App\Models\Committee;
 use App\Models\Executive;
 use App\Models\Membership;
+use App\Models\MessageSelection;
 use App\Models\MessageSelections;
 use App\Models\Options;
 use App\Models\PhoneNumber;
@@ -122,20 +123,28 @@ class UserController extends Controller
 
         //todo set default value for email frequency if not exist.
 
-       // $topics = Options::message_subscription_options();
         $topics = Topic::where('live', '=', 1)->get();
         $committees = Committee::where('live', '=', 1)->pluck('name', 'slug')->toArray();
 
-        $message_selections = MessageSelections::pluck('name')->toArray();
+        $selected_topics = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'topic']])->pluck('name')->toArray();
+        $selected_models = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'model']])->pluck('name')->toArray();
+        $selected_committees = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'committee']])->pluck('name')->toArray();
 
+        $selections = [
+            'topics' => array_combine($selected_topics, $selected_topics),
+            'models' => array_combine($selected_models, $selected_models),
+            'committees' => array_combine($selected_committees, $selected_committees),
+        ];
+
+//todo seed the message frequency preference, look into it.
 
         $data = [
             'user' => $user,
             'user_roles' => $member_roles,
             'committees' => Committee::where('live', '=', 1)->get(),
-            'message_selections' => array_combine($message_selections, $message_selections),
+            'selections' => $selections,
             'message_frequency_preference_options' => Options::message_frequency_preference_options(),
-            'message_subscription_options' =>$topics,
+            'message_subscription_options' => $topics,
             'model_subscription_options' => Options::model_subscription_options(),
             'folder' => $folder,
             'tn_prefix' => $tn_prefix,
@@ -143,6 +152,7 @@ class UserController extends Controller
             'provinces' => $regions['statesprovs']['Provinces'],
             'action' => 'Edit',
         ];
+
 
         return view('member', ['data' => $data]);
     }

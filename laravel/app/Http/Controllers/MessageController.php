@@ -42,57 +42,25 @@ class MessageController extends Controller
         return view('message', ['data' => $data]);
     }
 
-    public function update(Request $request, Message $message, User $user, MessageSelections $messageSelections): RedirectResponse
+    public function update(Request $request, Message $message, User $user, MessageSelection $messageSelection): RedirectResponse
     {
 //todo form request validator
 //todo make a policy
 
-        MessageController:: updateMessageFrequencyPreferences($request, $user);
-        MessageController::updateTopicSubscriptions($user, $request['message_selections']['topic']);
+        self::updateMessageFrequencyPreferences($request, $user);
+//dd( $request['message_selections']);
+        self::updateTopicSubscriptions($user, $request['message_selections']['topic'] ?? []);
 
-        MessageController::updateModelSubscriptions($user, $request['message_selections']['model']);
+        self::updateModelSubscriptions($user, $request['message_selections']['model'] ?? []);
 
-        MessageController::updateCommitteeSubscriptions($user, $request['message_selections']['committee']);
-
-
-        //todo how to compare
-        $topics = Options::message_subscription_options();
-
-        foreach($topics as $t) {
-            $arr[] = $t['slug'];
-        }
-        $array_to_delete = array_diff($arr,  $request->topic_selections);
-        foreach($array_to_delete as $atd)
-        {
-            MessageSelections::where('user_id', $user->id)->where('name', $atd)->delete();
-        }
-
-
-        //todo save only new things checked
-        $array_to_save = array_intersect($arr, $request->topic_selections);
-        foreach($array_to_save as $ats)
-        {
-            $messageSelections->fill(['user_id' => $user->id, 'type' => 'topic', 'name' => $ats]);
-            $messageSelections->save();
-        }
-
-
-        $committees = Committee::where('live', '=', 1)->pluck('name', 'slug')->toArray();
-
-        //dd([$topics, $committees]);
-
-        //todo create prefs And selections rows
-        //todo save, update selections multiple selections
-
-        // $request['topic_selections']
-        // $request['committee_selections']
+        self::updateCommitteeSubscriptions($user, $request['message_selections']['committee'] ?? []);
 
         Session::flash('success', 'Your message preferences have been updated');
 
         return redirect()->route('member', $user->id);
     }
 
-    public function updateMessageFrequencyPreferences($request, $user): bool
+    public static function updateMessageFrequencyPreferences($request, $user): void
     {
 
         if ($user->message_frequency_preferences instanceof MessageFrequencyPreferences) {
@@ -102,34 +70,63 @@ class MessageController extends Controller
             $preferences = new MessageFrequencyPreferences(['preference' => $request['preference']]);
             $user->message_frequency_preferences->save($preferences);
         }
-        return true;
     }
 
-    public function updateModelSubscriptions(User $user, $sub) : bool
+    public static function updateModelSubscriptions(User $user, $sub) : void
     {
-       // dd([$sub, $user->id]);
+        $type = 'model';
 
-        MessageSelection::where('user', '=', $user->id)->delete();
-        //delete subscriptions
-        return true;
-        // insert subscriptions
+        MessageSelection::where([
+            ['user_id', '=', $user->id],
+            ['type', '=', $type ]
+        ])->delete();
+
+        foreach($sub as $s)
+        {
+            $ms = new MessageSelection;
+            $ms->user_id = $user->id;
+            $ms->type = $type;
+            $ms->name = $s;
+            $ms->save();
+        }
     }
 
-    public function updateTopicSubscriptions(User $user,$sub): bool
+    public static function updateTopicSubscriptions(User $user, $sub): void
     {
-        dd($sub);
-        //delete subscriptions
+        $type = 'topic';
 
-        // insert subscriptions
-        return true;
+        MessageSelection::where([
+            ['user_id', '=', $user->id],
+            ['type', '=', $type ]
+        ])->delete();
+
+        foreach($sub as $s)
+        {
+            $ms = new MessageSelection;
+            $ms->user_id = $user->id;
+            $ms->type = $type;
+            $ms->name = $s;
+            $ms->save();
+        }
     }
 
-    public function updateCommitteeSubscriptions(User $user,$sub): bool
+    public static function updateCommitteeSubscriptions(User $user, $sub): void
     {
-        dd($sub);
-        //delete subscriptions
 
-        // insert subscriptions
-        return true;
+        $type = 'committee';
+
+        MessageSelection::where([
+            ['user_id', '=', $user->id],
+            ['type', '=', $type ]
+        ])->delete();
+
+        foreach($sub as $s)
+        {
+            $ms = new MessageSelection;
+            $ms->user_id = $user->id;
+            $ms->type = $type;
+            $ms->name = $s;
+            $ms->save();
+        }
     }
 }

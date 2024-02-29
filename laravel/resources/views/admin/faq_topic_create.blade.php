@@ -158,8 +158,8 @@
             <!-- begin section to be generated -->
                 <div class="row">
                     <div class="col-12">
-                        <button class="btn btn-primary m-3" type="button" data-toggle="collapse"
-                                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn btn-primary m-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                aria-expanded="false" aria-controls="collapseExample">
                             <i class="fa fa-plus"></i>
                             Add a question and answer
                         </button>

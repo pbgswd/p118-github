@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Messages\DestroyMessageRequest;
+use App\Models\Committee;
 use App\Models\Message;
 use App\Models\Options;
+use App\Models\Topic;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,10 +47,14 @@ class AdminMessageController extends Controller
     public function create(): View
     {
         $data = [
-            'topics' =>   Options::message_subscription_options(),
+            'committee_subscription_options' => Committee::where('live', '=', 1)->get(),
+            'topic_subscription_options' => Topic::where('live', '=', 1)->get(),
+            'model_subscription_options' => Options::model_subscription_options(),
             'message' => new Message,
             'action' => 'Create'
         ];
+
+       // dd($data);
 
         return view('admin.message', ['data' => $data]);
     }
@@ -88,9 +94,14 @@ class AdminMessageController extends Controller
 
         $data = [
             'message' => $message,
-            'topics' => Options::message_subscription_options(),
+            'committee_subscription_options' => Committee::where('live', '=', 1)->get(),
+            'topic_subscription_options' => Topic::where('live', '=', 1)->get(),
+            'model_subscription_options' => Options::model_subscription_options(),
             'action' => 'Edit'
         ];
+
+        //dd($data['message']);
+
         return view('admin.message', ['data' => $data]);
     }
 

@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('subject')->unique();
             $table->string('slug')->unique();
             $table->text('content');
+            $table->string('type');
+            $table->string('name');
+            $table->string('url');
             $table->integer('user_id');
             $table->string('priority');
             $table->boolean('sent')->default(0);
