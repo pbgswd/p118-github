@@ -48,14 +48,12 @@ class MessageController extends Controller
         $message->load('user', 'attachments');
 
         //todo distinguish between types and pull in the data
-        $committee = '';
-        $model = '';
-        $topic = '';
+        $committee = [];
+        $model = [];
+        $topic = [];
 
         $modelSubOptions = Options::model_subscription_options();
-//dd($message->name);
 
-//dd($modelSubOptions[$row]);
         switch ($message->type) {
             case 'model':
                 $modelSubOptions = Options::model_subscription_options();
@@ -64,25 +62,27 @@ class MessageController extends Controller
 
                 $class = "App\\Models\\".$message->name;
 
-dd(['class' => $message->name, 'key' => $modelSubOptions[$row]['key']]);
+//dd(['class' => $message->name, 'key' => $modelSubOptions[$row]['key']]);
                     //key will be slug or  id
-                $model = $class::where($modelSubOptions[$row]['key'], '=', $message->slug)->get();
+                $model = $class::where($modelSubOptions[$row]['key'], '=', $message->slug)->first();
 
                 break;
             case 'topic':
-                $topic = Topic::where('slug', $message->name)->get();
-                dd($topic[0]);
+                //todo differentiate between a page or post
+                //we have nothing that gets page or post though we can have a data relation, source_url var for data pushed in to Messages model data
+                $topic = Topic::where('slug', $message->name)->first();
+             //   dd($topic[0]);
                 break;
             case 'committee':
-                $committee = Committee::where('slug', $message->name)->get();
+                $committee = Committee::where('slug', $message->name)->first();
                 break;
             default:
-                $committee = '';
-                $model = '';
-                $topic = '';
+                $committee = [];
+                $model = [];
+                $topic = [];
             break;
         }
-        dd([$message, $committee[0], $model, $topic[0]]);
+        dd([$message, $committee, $model, $topic]);
 
         $data = [
             'message' => $message
