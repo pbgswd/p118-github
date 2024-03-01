@@ -11,12 +11,12 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('message_frequency_preferences', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->references('id')->on('user');
-            $table->string('preference');
+            $table->string('preference')->default('now');
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('message_frequency_preferences');
     }
