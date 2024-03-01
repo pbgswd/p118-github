@@ -17,7 +17,7 @@
             </div>
         @endcan
     </div>
-    
+
 
     <div class="container mb-6" style="background: rgba(220,220,220,0.8); padding: 1rem;">
         <div class="row border border-dark rounded">

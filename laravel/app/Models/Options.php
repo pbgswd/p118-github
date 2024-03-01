@@ -145,16 +145,29 @@ class Options
 
     public static function model_subscription_options():array
     {
+
+        /**
+         * 'Employment',  uses id
+         * 'Memoriam',  uses slug, should be more unique
+         * 'Bylaw',  uses id
+         * 'Policy',  uses 24
+         * 'Meeting', uses id
+         * 'Venue',  uses slug
+         * 'Organization', uses slug
+         * 'Agreement',  uses id
+         * 'Message',  uses id, trying to use slug...
+         */
+
         $array = [
-            ['model' => 'Employment', 'name' => 'Job Postings', 'description' => 'Latest job postings'],
-            ['model' => 'Memoriam', 'name' => 'In Memoriam', 'description' => 'Notification of the passing of members'],
-            ['model' => 'Bylaw', 'name' => 'Constitution and Bylaws', 'description' => 'Updates to Constitution and Bylaws in Local 118'],
-            ['model' => 'Policy', 'name' => 'Policies', 'description' => 'Local 118 Policies'],
-            ['model' => 'Meeting', 'name' => 'Meetings and Minutes', 'description' => 'Information about meetings'],
-            ['model' => 'Venue', 'name' => 'Venues', 'description' => 'Venues where we work'],
-            ['model' => 'Organization', 'name' => 'Organizations', 'description' => 'Organizations that we work for'],
-            ['model' => 'Agreement', 'name' => 'Agreements', 'description' => 'Agreements that Local 118 works under'],
-            ['model' => 'Message', 'name' => 'Messages', 'description' => 'Published strictly as a message']
+            ['model' => 'Employment', 'name' => 'Job Postings', 'key' => 'id', 'description' => 'Latest job postings'],
+            ['model' => 'Memoriam', 'name' => 'In Memoriam', 'key' => 'slug', 'description' => 'Notification of the passing of members'],
+            ['model' => 'Bylaw', 'name' => 'Constitution and Bylaws', 'key' => 'id', 'description' => 'Updates to Constitution and Bylaws in Local 118'],
+            ['model' => 'Policy', 'name' => 'Policies', 'key' => 'id', 'description' => 'Local 118 Policies'],
+            ['model' => 'Meeting', 'name' => 'Meetings and Minutes', 'key' => 'id', 'description' => 'Information about meetings'],
+            ['model' => 'Venue', 'name' => 'Venues', 'key' => 'slug', 'description' => 'Venues where we work'],
+            ['model' => 'Organization', 'name' => 'Organizations', 'key' => 'slug', 'description' => 'Organizations that we work for'],
+            ['model' => 'Agreement', 'name' => 'Agreements', 'key' => 'id', 'description' => 'Agreements that Local 118 works under'],
+            ['model' => 'Message', 'name' => 'Messages', 'key' => 'id', 'description' => 'Published strictly as a message']
         ];
 
         return $array;

@@ -8,6 +8,7 @@ use App\Models\MessageFrequencyPreferences;
 use App\Models\MessageSelection;
 use App\Models\MessageSelections;
 use App\Models\Options;
+use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,43 @@ class MessageController extends Controller
     public function show(Message $message): View
     {
         $message->load('user', 'attachments');
+
+        //todo distinguish between types and pull in the data
+        $committee = '';
+        $model = '';
+        $topic = '';
+
+        $modelSubOptions = Options::model_subscription_options();
+//dd($message->name);
+
+//dd($modelSubOptions[$row]);
+        switch ($message->type) {
+            case 'model':
+                $modelSubOptions = Options::model_subscription_options();
+
+                $row = array_search($message->name, array_column($modelSubOptions, 'model' ));
+
+                $class = "App\\Models\\".$message->name;
+
+dd(['class' => $message->name, 'key' => $modelSubOptions[$row]['key']]);
+                    //key will be slug or  id
+                $model = $class::where($modelSubOptions[$row]['key'], '=', $message->slug)->get();
+
+                break;
+            case 'topic':
+                $topic = Topic::where('slug', $message->name)->get();
+                dd($topic[0]);
+                break;
+            case 'committee':
+                $committee = Committee::where('slug', $message->name)->get();
+                break;
+            default:
+                $committee = '';
+                $model = '';
+                $topic = '';
+            break;
+        }
+        dd([$message, $committee[0], $model, $topic[0]]);
 
         $data = [
             'message' => $message
