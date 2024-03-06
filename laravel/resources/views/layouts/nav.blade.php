@@ -122,9 +122,11 @@
                            title="Job Postings">
                             <i class="fas fa-hard-hat"></i>
                             Apply for Sister Local Status</a></li>
-                    <li><a class="dropdown-item" href="{{route('member', Auth::user()->id)}}"
-                           title="My Profile">
-                            <i class="fas fa-user"></i> {{ Auth::user()->name }}</a></li>
+                    <li>
+			   <a class="dropdown-item" href="/page/master-call-list"
+                           title="Master Call List">
+                            <i class="fas fa-user-friends"></i> Master Call List</a>
+	            </li>
                     <li><a class="dropdown-item" href="{{route('members')}}" title="Member list">
                             <i class="fas fa-user-friends"></i> Member List</a></li>
                     <li><a class="dropdown-item" href="{{route('bylaws_list_public')}}" title="Constitution & Bylaws">
