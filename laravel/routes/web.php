@@ -291,6 +291,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::get('/post/{any_post}/edit', 'edit')->name('post_edit');
         Route::post('/post/{any_post}/edit', 'update');
         Route::delete('/post/delete', 'destroy')->name('post_destroy');
+        Route::get('/post/{any_post}/message', 'message')->name('admin_post_message');
     });
 
     Route::controller(CNS\AttachmentController::class)->group(function() {

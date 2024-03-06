@@ -3,21 +3,33 @@
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
-    <div class="row">
-        <div class="col-12 col-md-6">
-            <h3>
+    <div class="row my-4">
+        <div class="col-12 col-md-4">
+            <h4>
                 <a href="{{ route('posts_list') }}">
                     <i class="far fa-arrow-alt-circle-left"></i>
                     List of posts
                 </a>
-            </h3>
+            </h4>
         </div>
         @if ($data['action'] == 'Edit')
-            <div class="col-12 col-md-6 text-md-right">
-                <a href="{{route('post_show', $data['post']->slug)}}"
-                   title="View {{$data['post']->title}}">
-                    <i class="fas fa-eye"></i> View on website
-                </a>
+            <div class="col-12 col-md-4 text-md-right">
+                <h4>
+                    <a href="{{route('post_show', $data['post']->slug)}}"
+                       title="View {{$data['post']->title}}">
+                        <i class="fas fa-eye"></i> View on website
+                    </a>
+                </h4>
+
+            </div>
+            <div class="col-12 col-md-4 text-md-right">
+                <h4>
+                    <a href="{{route('admin_post_message', $data['post']->slug)}}">
+                        <i class="far fa-envelope-open"></i>
+                        Send to message
+                    </a>
+                </h4>
+
             </div>
         @endif
     </div>

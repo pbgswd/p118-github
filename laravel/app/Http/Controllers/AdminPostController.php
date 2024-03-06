@@ -6,6 +6,7 @@ use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Posts\DestroyPostRequest;
 use App\Http\Requests\Posts\StorePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
+use App\Models\Message;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Services\AttachmentService;
@@ -110,6 +111,7 @@ class AdminPostController extends Controller
      */
     public function edit(Post $post):View
     {
+
         $this->authorize('update', Post::class);
 
         $post->load('user', 'attachments', 'topics');
@@ -195,4 +197,51 @@ class AdminPostController extends Controller
 
         return redirect()->route('posts_list');
     }
+
+    /**
+     * @param Post $post
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function message(Post $post): RedirectResponse
+    {
+
+        //todo get data from post, store it in message, redirect to edit message?
+
+        $this->authorize('message', Post::class);
+
+        $post->load('user', 'attachments', 'topics');
+
+        $assignedTopics = [];
+        foreach ($post->topics as $topic) {
+            $assignedTopics[] = $topic->pivot->topic_id;
+        }
+
+        $msg = new Message;
+
+        $msg->subject = 'posttitle' . md5(time()) . $post->title;
+        $msg->slug = 'postslug' . md5(time()) . $post->slug;
+        $msg->content = 'postcontent' . $post->content;
+        $msg->type = 'topic';
+        $msg->name ='test slug';
+        $msg->url = 'message/test'.$post->slug;
+        $msg->source_url = 'post/test'.$post->slug;
+        $msg->user_id = 1;
+        $msg->priority = 'regular';
+        $msg->sent = 0;
+
+        $msg->save();
+
+
+        //todo save attachments
+        //? get attachement store in messages folder?
+        // or refer to original attachment?
+
+
+        Session::flash('success', 'new message saved');
+
+        return redirect()->route('admin_message_edit', $msg->id);
+
+    }
+
 }
