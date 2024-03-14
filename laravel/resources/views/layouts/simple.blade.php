@@ -8,7 +8,6 @@
     <script src="{{asset('/js/alpine.min.js')}}" defer></script>
     <link rel="canonical" href="{{env('APP_URL')}}/">
 
-
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="{{ mix('css/jumbotron.css') }}" rel="stylesheet">

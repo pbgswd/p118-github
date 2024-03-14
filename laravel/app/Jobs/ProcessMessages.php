@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use RTL\Laravel\Log;
 
 class ProcessMessages implements ShouldQueue
 {
@@ -21,6 +22,7 @@ class ProcessMessages implements ShouldQueue
     public function __construct()
     {
         //
+
     }
 
     /**
@@ -30,6 +32,6 @@ class ProcessMessages implements ShouldQueue
      */
     public function handle()
     {
-        //
+
     }
 }

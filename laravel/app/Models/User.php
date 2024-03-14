@@ -217,6 +217,16 @@ class User extends Authenticatable implements HasAttachment, Searchable
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function message_selections(): BelongsToMany
+    {
+        //todo needs to be revised, doesnt work properly
+        return $this->belongsToMany(MessageSelection::class, 'message_selections')
+            ->withPivot('id', 'user_id', 'type', 'name');
+    }
+
+    /**
      * All historical executive roles of the given user.
      *
      * @return BelongsToMany

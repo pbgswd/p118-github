@@ -1,10 +1,10 @@
-<form method="post" name="message_preferences_edit" action="{{route('update_message_preferences', Auth::user())}}" enctype="multipart/form-data" class="needs-validation" novalidate>
+<form method="post" name="message_preferences_edit" action="{{route('update_message_preferences', Auth::user())}}"
+      enctype="multipart/form-data" class="needs-validation" novalidate>
     @csrf
     <div class="row">
         <div class="col-12 my-6 py-2 text-center align-content-center">
             <h2><i class="far fa-envelope-open"></i> Message Preferences</h2>
             <h5>Modify your preferences for email messages sent to you from IATSE Local 118.</h5>
-
             <p><a href="{{route('messages')}}">Messages Previously Sent</a></p>
         </div>
     </div>
@@ -22,29 +22,28 @@
                     <label class="form-check-label" for="exampleRadios1">
                         {{$v}}
                     </label>
-                    <input type="hidden" name="message[frequency][{{$k}}]" value="0" />
+                    <input type="hidden" name="message[frequency][{{$k}}]" value="0"/>
                 </div>
             @endforeach
             <div x-data="TopicSelect()" class="col pt-4">
                 <h2>Topic Preferences</h2>
                 <p>Get messages for select topics</p>
-                @foreach($data['message_subscription_options'] as $topic)
+                @foreach($data['topic_subscription_options'] as $topic)
                     <div class="input-group mb-3">
                         <div class="input-group-text">
-                            <input x-bind:checked="selectalltopic" class="form-check-input mt-0" id="checkbox-topic-{{$topic['slug']}}" name="message_selections[topic][]" type="checkbox"
+                            <input x-bind:checked="" class="form-check-input mt-0"
+                                   id="checkbox-topic-{{$topic['slug']}}" name="message_selections[topic][]"
+                                   type="checkbox"
                                    value="{{$topic['slug']}}" aria-label="Checkbox for following text input" readonly
-                                {{array_key_exists($topic['slug'], $data['selections']['topics']) ? 'checked' : ''}}
+                                   @if(array_key_exists($topic['slug'], $data['selections']['topics']))
+                                       checked
+                                @endif
                             >
                         </div>
-                        <input type="text" class="form-control" value="{{$topic['name']}}" aria-label="Text input with checkbox">
+                        <input type="text" class="form-control" value="{{$topic['name']}}"
+                               aria-label="Text input with checkbox">
                     </div>
                 @endforeach
-                <div class="input-group mb-3">
-                    <div class="input-group-text bg-info-subtle">
-                        <input type="checkbox" class="form-check-input mt-0" @click="selectalltopic=!selectalltopic"  aria-label="Checkbox for following text input">
-                    </div>
-                    <input type="text" class="form-control bg-info-subtle" value="Select / Deselect All" aria-label="Text input with checkbox">
-                </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-6 pt-4 px-4">
@@ -54,20 +53,17 @@
                 @foreach($data['model_subscription_options'] as $mso)
                     <div class="input-group mb-3">
                         <div class="input-group-text">
-                            <input x-bind:checked="selectallmodel" class="form-check-input mt-0" id="checkbox-model-{{$mso['model']}}"  name="message_selections[model][]"
-                                   type="checkbox" value="{{$mso['model']}}" aria-label="Checkbox for following text input"
+                            <input x-bind:checked="" class="form-check-input mt-0" id="checkbox-model-{{$mso['model']}}"
+                                   name="message_selections[model][]"
+                                   type="checkbox" value="{{$mso['model']}}"
+                                   aria-label="Checkbox for following text input"
                                 {{array_key_exists($mso['model'], $data['selections']['models']) ? 'checked' : ''}}
                             >
                         </div>
-                        <input type="text" class="form-control" value="{{$mso['name']}} - {{$mso['description']}}" aria-label="Text input with checkbox">
+                        <input type="text" class="form-control" value="{{$mso['name']}} - {{$mso['description']}}"
+                               aria-label="Text input with checkbox">
                     </div>
                 @endforeach
-                <div class="input-group mb-3">
-                    <div class="input-group-text bg-info-subtle">
-                        <input type="checkbox" class="form-check-input mt-0" @click="selectallmodel=!selectallmodel"  aria-label="Checkbox for following text input">
-                    </div>
-                    <input type="text" class="form-control bg-info-subtle" value="Select / Deselect All" aria-label="Text input with checkbox">
-                </div>
             </div>
             <div x-data="CommitteeSelect()" class="col mt-6 pt-4">
                 <h2>Committees</h2>
@@ -75,42 +71,41 @@
                 @foreach($data['committees'] as $comm)
                     <div class="input-group mb-3">
                         <div class="input-group-text">
-                            <input x-bind:checked="selectallcommittee" class="form-check-input mt-0" id="checkbox-committee-{{$comm['slug']}}" name="message_selections[committee][]"
-                                   type="checkbox" value="{{$comm['slug']}}" aria-label="Checkbox for following text input" readonly
+                            <input x-bind:checked="" class="form-check-input mt-0"
+                                   id="checkbox-committee-{{$comm['slug']}}" name="message_selections[committee][]"
+                                   type="checkbox" value="{{$comm['slug']}}"
+                                   aria-label="Checkbox for following text input" readonly
                                 {{array_key_exists($comm['slug'], $data['selections']['committees']) ? 'checked' : ''}}
                             >
                         </div>
-                        <input type="text" class="form-control" value="{{$comm['name']}}" aria-label="Text input with checkbox">
+                        <input type="text" class="form-control" value="{{$comm['name']}}"
+                               aria-label="Text input with checkbox">
                     </div>
                 @endforeach
-                <div class="input-group mb-3">
-                    <div class="input-group-text bg-info-subtle">
-                        <input type="checkbox" class="form-check-input mt-0" @click="selectallcommittee=!selectallcommittee"  aria-label="Checkbox for following text input">
-                    </div>
-                    <input type="text" class="form-control bg-info-subtle" value="Select / Deselect All" aria-label="Text input with checkbox">
-                </div>
             </div>
         </div>
     </div>
-        <div class="row">
-            <div class="col-12 my-5 text-center">
-                <i class="fas fa-edit fa-2x"></i>
-                <input class="btn btn-outline-primary" type="submit" value="Update Message Prefences" />
-            </div>
+    <div class="row">
+        <div class="col-12 my-5 text-center">
+            <i class="fas fa-edit fa-2x"></i>
+            <input class="btn btn-outline-primary" type="submit" value="Update Message Prefences"/>
         </div>
+    </div>
 </form>
 <script>
-    function TopicSelect(){
+    function TopicSelect() {
         return {
             selectalltopic: false,
         };
     }
-    function ModelSelect(){
+
+    function ModelSelect() {
         return {
             selectallmodel: false,
         };
     }
-    function CommitteeSelect(){
+
+    function CommitteeSelect() {
         return {
             selectallcommittee: false,
         };

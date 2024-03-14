@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('source_url');
             $table->integer('user_id');
             $table->string('priority');
-            $table->boolean('sent')->default(0);
+            $table->string('sent')->default('no');
             $table->timestamps();
         });
     }

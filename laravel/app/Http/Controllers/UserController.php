@@ -138,22 +138,24 @@ class UserController extends Controller
 
 //todo seed the message frequency preference, look into it.
 
+
+
         $data = [
             'user' => $user,
             'user_roles' => $member_roles,
             'committees' => Committee::where('live', '=', 1)->get(),
             'selections' => $selections,
             'message_frequency_preference_options' => Options::message_frequency_preference_options(),
-            'message_subscription_options' => $topics,
+            'topic_subscription_options' => $topics,
             'model_subscription_options' => Options::model_subscription_options(),
+            'committee_subscription_options' => Committee::where('live', '=', 1)->get(),
             'folder' => $folder,
             'tn_prefix' => $tn_prefix,
             'filesize' => $filesize ?? '',
             'provinces' => $regions['statesprovs']['Provinces'],
             'action' => 'Edit',
         ];
-
-
+       // dd([$selections['topics'], $data['selections']['topics']]);
         return view('member', ['data' => $data]);
     }
 
