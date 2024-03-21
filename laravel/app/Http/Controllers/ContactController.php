@@ -73,8 +73,7 @@ class ContactController extends Controller
                 Please wait before trying again.');
         } else {
 	  Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
-                $m->from(config('mail.from.address'), config('app.name') . 'Contact Page Message from '
-                    . $request['name']);
+                $m->from(config('mail.from.address'), config('app.name') . 'Contact Page Message from ' . $request['name']);
                 $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
                 if ($cc != '') {
                     $m->cc($cc, $cc);

@@ -136,9 +136,6 @@ class UserController extends Controller
             'committees' => array_combine($selected_committees, $selected_committees),
         ];
 
-//todo seed the message frequency preference, look into it.
-
-
 
         $data = [
             'user' => $user,
@@ -271,8 +268,7 @@ class UserController extends Controller
         } else {
             $phone = new PhoneNumber($userRequest['user_phone']);
             $user->phone_number()->save($phone);
-            $message['Phone'] = $user_phone_info['phone_number'] == ''
-                ? $user_phone_info['phone_number'] : 'number deleted';
+            $message['Phone'] = $user_phone_info['phone_number'] == '' ? $user_phone_info['phone_number'] : 'number deleted';
         }
 
         $folder = $user->getAttachmentFolder();

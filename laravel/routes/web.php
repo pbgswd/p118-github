@@ -175,6 +175,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::get('message/{message}/edit', 'edit')->name('admin_message_edit');
         Route::post('message/{message}/edit', 'update')->name('admin_message_update');
         Route::get('message/{message}/preview', 'preview')->name('admin_message_preview');
+        Route::get('message/{message}/preview_strict', 'preview_strict')->name('admin_message_preview_strict');
         Route::get('message/{message}/send', 'send')->name('admin_message_send');
         Route::delete('message/delete', 'destroy')->name('admin_message_destroy');
     });

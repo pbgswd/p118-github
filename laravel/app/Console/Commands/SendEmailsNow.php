@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\EmailQueue;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 
 class SendEmailsNow extends Command
@@ -30,7 +32,7 @@ class SendEmailsNow extends Command
     public function handle(): int
     {
        //todo select messages in queue, lined up with messages ready to go out
-
+        $messages = EmailQueue::limit(5)->get();
         $messages = Message::where('sent', '=', 'send')->get();
 
         //users that want the message now.
@@ -47,6 +49,26 @@ class SendEmailsNow extends Command
                 echo $sub->email ."\n";
                 // has subscriber been sent the message already?
                 // insert into mail queue the $message with the email address for $sub
+
+
+                //todo only build html, dont sent
+                Mail::send('emails.email_message', ['data' => $request->all()], function ($m) use ($request, $cc) {
+                    $m->from(config('mail.from.address'), config('app.name') . 'Contact Page Message from ' . $request['name']);
+                    $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
+                    if ($cc != '') {
+                        $m->cc($cc, $cc);
+                    }
+                    $m->replyTo($request['email'], $request['name']);
+                    $m->subject('Contact Page ' . $request['subject'] . " from " . $request['name']);
+                });
+                //todo with attachments.
+
+
+
+
+
+
+
             }
 
 

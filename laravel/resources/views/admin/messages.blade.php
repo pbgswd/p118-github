@@ -27,7 +27,6 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     {{ $data['total_messages'] . ' ' . Str::plural('messages', $data['total_messages']) }} in total.
     | <a href="{{route('admin_message_create')}}">Create Message</a>
@@ -35,8 +34,6 @@
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
 </div>
-
-
 <table class="table table-striped">
     <thead>
     <tr>
@@ -52,7 +49,6 @@
     </tr>
     </thead>
     <tbody>
-
         @forelse($data['messages'] as $msg)
             <tr>
                 <th scope="row">
@@ -68,7 +64,6 @@
                             </span>
                     @else
                         <a href="{{route('admin_message_edit', $msg['id'])}}">
-
                             {{$msg['subject']}}
                         </a>
                     @endif
@@ -90,7 +85,7 @@
                         {{$msg['priority']}}
                 </td>
                 <td>
-                    @if($msg['sent'] == '1')
+                    @if($msg['sent'] == 'send' || $msg['sent'] == 'sent')
                         <span class="text-secondary">
                             <i class="far fa-check-circle"></i>
                             <br />
@@ -110,8 +105,6 @@
                 <th scope="row" colspan="7">No data yet</th>
             </tr>
         @endforelse
-
-
     </tbody>
 </table>
     <div class="row mb-lg-5">
@@ -128,7 +121,4 @@
         </div>
         <div class="col"></div>
     </div>
-
-
-
 @endsection

@@ -82,7 +82,7 @@ class MessageController extends Controller
                 $topic = [];
             break;
         }
-        dd([$message, $committee, $model, $topic]);
+        //dd([$message, $committee, $model, $topic]);
 
         $data = [
             'message' => $message
@@ -93,7 +93,7 @@ class MessageController extends Controller
     public function update(Request $request, Message $message, User $user, MessageSelection $messageSelection): RedirectResponse
     {
 //todo form request validator
-//todo make a policy
+//todo make a policy for this user, only this user
 
         self::updateMessageFrequencyPreferences($request, $user);
 
@@ -110,10 +110,14 @@ class MessageController extends Controller
 
     public static function updateMessageFrequencyPreferences($request, $user): void
     {
-
         if ($user->message_frequency_preferences instanceof MessageFrequencyPreferences) {
             $user->message_frequency_preferences->fill(['preference' => $request['preference']]);
             $user->message_frequency_preferences->save();
+
+            if($request['preference'] == 'unsubscribe') {
+                MessageSelection::where('user_id', $user->id)->delete();
+                MessageFrequencyPreferences::where('user_id', $user->id)->delete();
+            }
         } else {
             $preferences = new MessageFrequencyPreferences(['preference' => $request['preference']]);
             $user->message_frequency_preferences->save($preferences);

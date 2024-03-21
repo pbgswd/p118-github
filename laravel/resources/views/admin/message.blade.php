@@ -20,8 +20,10 @@
                 </div>
             @endif
             <div class="col-12 my-4">
-                <h3 class="my-3">Select a topic, model, or committee for the message</h3>
-                <p>currently: {{$data['message']['type']}},  {{$data['message']['name']}}</p>
+                <h4 class="my-3">Select a topic, model, or committee for the message</h4>
+                @if($data['action'] == 'Edit')
+                    <p>currently: {{$data['message']['type']}},  {{$data['message']['name']}}</p>
+                @endif
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link @if($data['action'] == 'Edit') {{$data['message']['type'] == 'topic' ? 'active' : '' }} @endif" id="nav-topic-tab" data-bs-toggle="tab" data-bs-target="#nav-topic" type="button" role="tab" aria-controls="nav-topic" aria-selected="false">Topic</button>
@@ -91,7 +93,7 @@
     </div>
     <div class="row m-4 border border-1 rounded">
         <div class="col-12 p-4">
-            <h2>File Attachment</h2>
+            <h2>File Attachments</h2>
         </div>
         <div class="row mt-lg-2">
             <div class="col-md-6 p-4">
@@ -105,7 +107,7 @@
             </div>
             @if ($data['action'] == 'Edit')
                 <div class="col-md-12">
-                    <h2>Files</h2>
+                    <h2><i class="fas fa-paperclip"></i> Files</h2>
                     <table class="table table-striped table-sm">
                         <thead>
                         <tr>
@@ -174,27 +176,32 @@
     </div>
 
     <div class="row my-5">
-        <div class="col-12">
+        <div class="col-sm-12 col-md-3 mx-auto text-center">
             <i class="fas fa-edit fa-2x"></i>
-            <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
+            <input class="btn btn-outline-primary mx-2" type="submit" value="{{ $data['action'] }}" />
         </div>
-    </div>
 </form>
     @if ($data['action'] == 'Edit')
-        <div class="row my-5">
-            <div class="col-12">
-                <i class="fas fa-edit fa-2x"></i>
-                <a href="{{route('admin_message_preview', $data['message']->id)}}" class="btn btn-bd-primary">Preview before sending</a>
-            </div>
+        <div class="col-sm-12 col-md-3 mx-auto text-center">
+            <i class="fas fa-glasses fa-2x"></i>
+            <a href="{{route('admin_message_preview', $data['message']->id)}}" class="btn btn-outline-info mx-2">Preview before sending</a>
         </div>
-        <div class="row">
+        <div class="col-sm-12 col-md-3 mx-auto text-center">
             <form name="delete" method="POST" action="{{route('admin_message_destroy')}}">
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
                 <input type="hidden" name="id[]" value="{{ $data['message']->id }}">
-                <input class="btn btn-outline-danger" type="submit" value="Delete">
+                <input class="btn btn-outline-danger mx-2" type="submit" value="Delete">
             </form>
         </div>
+
+
+    <div class="row my-3">
+        <div class="col-12 text-center" style="padding-top: 6em">
+            <a class="btn btn-primary" href="{{route('admin_message_preview_strict',  $data['message']->id)}}">Email Template Preview</a>
+        </div>
+
+    </div>
     @endif
 @endsection

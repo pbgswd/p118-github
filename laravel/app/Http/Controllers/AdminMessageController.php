@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Messages\DestroyMessageRequest;
+use App\Jobs\ProcessMessages;
 use App\Models\Committee;
 use App\Models\Message;
 use App\Models\Options;
@@ -143,14 +144,23 @@ class AdminMessageController extends Controller
         return view('admin.message_preview', ['data' => $data]);
     }
 
+    public function preview_strict(Message $message): View
+    {
+        //todo sort out email queue vs message table
+        $message->load('user', 'attachments');
+        $data['message'] = $message;
+
+        return view('emails.email_message', ['data' => $data]);
+    }
+
     public function send(Message $message): RedirectResponse
     {
-       // dd($message);
+        //admin_message_send
+      //  dd($message);
 //todo select the message to send
 // get attachment
 // build data with html template for message
-// check sending priority
-// if now, send to all
+// check sending priority: if now, send to all
 // if regular, send to now
 // look at date
 // mail sending service?
@@ -158,11 +168,12 @@ class AdminMessageController extends Controller
 // weekly foreach weekly, check if a letter exists, if not crate, if exists, append msg
 // monthly foreach monthly, check if a letter exists, if not crate, if exists, append msg
 //
-
-        $message->sent = 1;
+        //
+        $message->sent = 'send'; // no, send, sent
 
         $message->save();
 
+        ProcessMessages::dispatch(['log' => 'Sending message ' . $message->subject, 'id' => $message->id]);
 
         Session::flash('success', 'The message, ' . $message->subject .
             ', has been sent to the mail queue and is going out now');

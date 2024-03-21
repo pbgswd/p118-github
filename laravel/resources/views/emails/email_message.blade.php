@@ -15,7 +15,8 @@
                       <td class="wrapper last">
                         <table class="twelve columns">
                           <tr>
-                            <td class="six sub-columns"><a href="{{Request::root()}}" title="{{env('SITE_NAME')}}"><img src="{{Request::root()}}/images/world-globe-mail-blur.jpg" alt="{{env('SITE_NAME')}}"></a>
+                      <td class="six sub-columns">
+                          <a href="{{Request::root()}}" title="{{env('SITE_NAME')}}">{{env('SITE_NAME')}}</a>
                             </td>
                             <td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
                               <span class="template-label"></span>
@@ -39,26 +40,17 @@
                 <table class="row">
                   <tr>
                     <td class="wrapper last">
-
                       <table class="twelve columns">
                         <tr>
                           <td>
-<h1>Hello {{$data['subscription_order_data']['user']['first_name']}}  {{$data['subscription_order_data']['user']['last_name']}}  </h1>
-<p class="lead">Welcome to {{env('SITE_NAME')}}.</p>			
-			             </td>
-                         <td class="expander"></td>
-			           </tr>	
-                       <tr>
-                          <td>
-Log in with your email address, using the password: {{$data['subscription_order_data']['user']['newpass']}}
+                            <h1>Message from {{$data['message']['sender']}}</h1>
+			    <p class="lead">Email: <a href="mailto:{{$data['message']['sender']}}">{{$data['message']['sender']}}</a></p>
+                            <p class="lead">Subject: {{$data['message']['subject']}}</p>
+                            <p>Message: <br />
+			    {!! $data['message']['content'] !!}
+			    </p>
                           </td>
                           <td class="expander"></td>
-                        </tr>
-			            <tr>
-			            <td>
-                           &nbsp;
-			            </td>
-                        <td class="expander"></td>
                         </tr>
                       </table>
                     </td>
