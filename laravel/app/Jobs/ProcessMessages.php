@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 
 
@@ -30,7 +31,6 @@ class ProcessMessages implements ShouldQueue
     public function __construct($taskData)
     {
         $this->taskData = $taskData;
-
     }
 
     /**
@@ -57,41 +57,18 @@ class ProcessMessages implements ShouldQueue
 
         //assuming 1 message
 
-
-        //todo only build html, dont sent
-        Mail::send('emails.email_message', ['data' => $request->all()], function ($m) use ($request, $cc) {
-            $m->from(config('mail.from.address'), config('app.name') . 'Contact Page Message from ' . $request['name']);
-            $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
-            if ($cc != '') {
-                $m->cc($cc, $cc);
-            }
-            $m->replyTo($request['email'], $request['name']);
-            $m->subject('Contact Page ' . $request['subject'] . " from " . $request['name']);
-        });
-        //todo with attachments.
-
-
-
         foreach($subscribers as $sub) {
-            //todo  build message with subscriber
-            // message body needs html template
-
-
-
-
-            // later with attachment
-            $emailMsg = new EmailQueue([
+            $emailQueueMsg = new EmailQueue([
                 'sender' => env('MAIL_FROM_ADDRESS'),
                 'recipient' => $sub->user->email,
                 'subject' => $message[0]->subject,
-                'message' => $message[0]->content,
+                'message' => View::make('emails.email_message', $message[0]),
                 'attachments' => $attachments
             ]);
 
-            $emailMsg->save();
-            //save an instance of the message in the mail queue with the subscriber email
-            Log::info('The message, ' . $message[0]->subject . ', is in the email queue to '. $sub->user->email);
+            $emailQueueMsg->save();
 
+            Log::info('The message, ' . $message[0]->subject . ', is in the email queue to '. $sub->user->email);
         }
 
         //todo artisan task sends message using EmailMessageSendService

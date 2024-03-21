@@ -195,13 +195,10 @@
                 <input class="btn btn-outline-danger mx-2" type="submit" value="Delete">
             </form>
         </div>
-
-
-    <div class="row my-3">
-        <div class="col-12 text-center" style="padding-top: 6em">
-            <a class="btn btn-primary" href="{{route('admin_message_preview_strict',  $data['message']->id)}}">Email Template Preview</a>
+        <div class="row my-3">
+            <div class="col-12 text-center" style="padding-top: 6em">
+                <a class="btn btn-primary" href="{{route('admin_message_preview_strict',  $data['message']->id)}}">Email Template Preview</a>
+            </div>
         </div>
-
-    </div>
     @endif
 @endsection

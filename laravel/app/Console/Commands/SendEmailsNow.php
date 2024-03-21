@@ -33,46 +33,45 @@ class SendEmailsNow extends Command
     {
        //todo select messages in queue, lined up with messages ready to go out
         $messages = EmailQueue::limit(5)->get();
-        $messages = Message::where('sent', '=', 'send')->get();
+        //$messages = Message::where('sent', '=', 'send')->get();
 
-        //users that want the message now.
-        $subscribers = User::with('message_frequency_preferences', 'message_selections')
-            ->whereRelation('message_frequency_preferences', 'preference', '=', 'now')
-            ->get();
+
 
         foreach($messages as $message)
         {
-            echo "type: " .$message->type . ", name: " . $message->name ."\n";
+            echo "\n EmailQueue message id: " .$message->id . ", Subject: " . $message->subject ."\n";
 
-            foreach($subscribers as $sub)
-            {
-                echo $sub->email ."\n";
+
+            if($message->attachments != '') {
+                $attachments = unserialize($message->attachments);
+                //todo prep attachments for mail message
+                foreach($attachments as $att)
+                {
+                    //todo read attachments
+                }
+            }
+
+
+                echo "\n \t" . $message->recipient . "\n";
                 // has subscriber been sent the message already?
                 // insert into mail queue the $message with the email address for $sub
 
 
-                //todo only build html, dont sent
-                Mail::send('emails.email_message', ['data' => $request->all()], function ($m) use ($request, $cc) {
-                    $m->from(config('mail.from.address'), config('app.name') . 'Contact Page Message from ' . $request['name']);
-                    $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
-                    if ($cc != '') {
-                        $m->cc($cc, $cc);
-                    }
-                    $m->replyTo($request['email'], $request['name']);
-                    $m->subject('Contact Page ' . $request['subject'] . " from " . $request['name']);
+                /**
+                Mail::send($message->message, [], function ($m) use ($message) {
+                    $m->from(config('mail.from.address'), config('app.name') . 'Subscription message local 118');
+                    $m->to($message->email, 'name of somebody');
+                    $m->replyTo($message['recipient'], 'recipient');
+                    $m->subject('IATSE Local 118: ' . $message['subject']);
+                 *
+                 *
+                 * $m->attach()
                 });
+                */
                 //todo with attachments.
 
-
-
-
-
-
-
-            }
-
-
-
+            //todo delete message
+            EmailQueue::where('id', $message->id)->delete();
         }
 
         //invoke mail sending service, send them out
