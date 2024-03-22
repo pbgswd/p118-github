@@ -180,6 +180,12 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('message/delete', 'destroy')->name('admin_message_destroy');
     });
 
+    Route::controller(CNS\AdminEmailQueueController::class)->group(function () {
+        Route::get('email_queue', 'index')->name('admin_email_queue_list');
+        Route::get('email_queue/{email_queue}/message', 'show')->name('admin_email_queue_show');
+        Route::delete('email_queue/delete', 'destroy')->name('admin_email_queue_destroy');
+    });
+
     Route::controller(CNS\AdminCarouselController::class)->group(function() {
        Route::get('carousel', 'index')->name('admin_carousel_list');
        Route::get('carousel/create', 'create')->name('admin_carousel_create');

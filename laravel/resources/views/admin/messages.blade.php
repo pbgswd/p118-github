@@ -22,6 +22,7 @@
                     <li>Messages to go out are put in a mail queue and sent out in batches</li>
                     <li>Messages will be a content type that can be viewed on the website</li>
                     <li>After messages are sent, they are 'read-only'. No editing. </li>
+                    <li><a href="{{route('admin_email_queue_list')}}">List of mail queue</a></li>
                 </ul>
             </div>
         </div>

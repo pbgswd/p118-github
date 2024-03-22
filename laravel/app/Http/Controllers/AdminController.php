@@ -14,8 +14,8 @@ class AdminController extends Controller
      */
     public function index(): View
     {
-
         //Land on the home page of admin. Could have data later.
+        //todo grab data from various models, counts, etc, put them on this page
         $data = [
             ['user' => Auth::user()],
         ];
@@ -52,9 +52,6 @@ class AdminController extends Controller
             $data[$k]['email'] = $c[2];
             $data[$k]['membership_type'] = $c[3];
         }
-
-        //dd($data);
-
         return view('admin.admin-blank');
     }
 

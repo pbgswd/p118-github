@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('recipient');
             $table->string('subject');
             $table->text('message');
-            $table->text('attachments');
+            $table->text('attachments')->nullable();
             $table->timestamps();
         });
     }

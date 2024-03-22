@@ -208,8 +208,7 @@ class AdminCarouselController extends Controller
                 }
                 $carousel->delete();
             }
-
-            Session::flash('success', Str::plural('carousel', count($request->id)) . ' and images deleted.');
+            Session::flash('success', count($request->id) . ' ' . Str::plural('carousel', count($request->id)) . ' and images deleted.');
         }
         return redirect()->route('admin_carousel_list');
     }

@@ -17,8 +17,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('employment:update-status')->daily();
+        $schedule->command('message:now')->everyMinute();
+        $schedule->command('message:daily')->dailyAt('12:00');
+        $schedule->command('message:weekly')->weeklyOn('friday', '17:00');
 
-     //   $schedule->command( Log::info('test'.time() . " " . date('l jS \of F Y h:i:s A')))->everyMinute();
+     // $schedule->command( Log::info('test'.time() . " " . date('l jS \of F Y h:i:s A')))->everyMinute();
     }
 
     /**

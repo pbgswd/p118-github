@@ -48,20 +48,21 @@
             <h3>New stuff</h3>
         </div>
         <div class="col-4">
-            <a href="{{route('admin_messages')}}">
-                <div class="card p-3 h-100">
-                    <h5 class="card-title">Email</h5>
-                    <div class="card-body">
-                     Mailer for general communication, work in progress.
-                        <div>
-                            <a href="{{route('admin_messages')}}">List  Messages</a>   |
-                            <a href="{{route('admin_message_create')}}">Create Messages</a>
-                        </div>
+            <div class="card p-3 h-100">
+                <h5 class="card-title">Email Messaging</h5>
+                <div class="card-body">
+                 Mailer for general communication, work in progress.
+                    <div class="mt-3">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="{{route('admin_messages')}}">List  Messages</a></li>
+                            <li class="list-group-item"><a href="{{route('admin_message_create')}}">Create Messages</a></li>
+                            <li class="list-group-item"><a href="{{route('admin_email_queue_list')}}">View Mail Queue</a></li>
+                        </ul>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
-        <div class="col-4">
+        <div class="col-4 h-100">
             <a href="{{ route('admin_faqs_list') }}">
                 <div class="card p-3">
                     <h5 class="card-title">FAQs</h5>
@@ -71,7 +72,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-4">
+        <div class="col-4 h-100">
             <a href="{{ route('admin_carousel_list') }}">
                 <div class="card p-3">
                     <h5 class="card-title">Carousel Management</h5>
