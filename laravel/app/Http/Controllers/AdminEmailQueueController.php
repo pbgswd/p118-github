@@ -28,9 +28,6 @@ class AdminEmailQueueController extends Controller
         return view('admin.email_queue_list', ['data' => $data]);
     }
 
-
-
-
     /**
      * Display the specified resource.
      *

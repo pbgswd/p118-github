@@ -1,11 +1,26 @@
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> Employment postings'])
 @section('content')
 <div class="container">
-        <h3>
-            {!! $data['count']  !!} Emails in the Queue at present.
-        </h3>
+    <div class="row" style="margin-top: 3rem;">
+        <div class="col-12 text-center">
+            <h4>List of messages scheduled to send to subscribers</h4>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 3rem;">
+        <div class="col-sm-12 col-md-6 mt-6">
+            <h3>
+                <a href="{{route('admin_messages')}}"><< Messages</a>
+            </h3>
+        </div>
+        <div class="col-sm-12 col-md-6 mt-6">
+            <h3>
+                {!! $data['count']  !!} messages in the queue presently.
+            </h3>
+        </div>
+
+    </div>
 </div>
-<div x-data="BoxSelect()">
+<div x-data="BoxSelect()" class="mt-6" style="margin-top: 3rem;">
     <form name="delete" method="POST" action="{{route('admin_email_queue_destroy')}}">
         {!! csrf_field() !!}
         {!! method_field('DELETE') !!}
