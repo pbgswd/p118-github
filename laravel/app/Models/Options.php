@@ -145,7 +145,6 @@ class Options
 
     public static function model_subscription_options():array
     {
-
         /**
          * 'Employment',  uses id
          * 'Memoriam',  uses slug, should be more unique
@@ -179,8 +178,7 @@ class Options
      */
     public static function committee_roles(): array
     {
-        $membership = ['Chair', 'Co-Chair', 'Alternate Chair', 'Secretary',
-            'Member', 'Interim Member', 'Ex-officio', 'Past-Member'];
+        $membership = ['Chair', 'Co-Chair', 'Alternate Chair', 'Secretary', 'Member', 'Interim Member', 'Ex-officio', 'Past-Member'];
 
         return array_combine($membership, $membership);
     }

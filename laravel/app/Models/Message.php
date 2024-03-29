@@ -68,6 +68,20 @@ class Message extends Model implements HasAttachment, Searchable
         return $this->belongsToMany(Attachment::class, 'attachment_message');
     }
 
+
+    /**
+     * @return HasOne
+     */
+    public function messageMeta(): HasOne
+    {
+        return $this->hasOne(MessageMetaData::class, 'message_id');
+    }
+
+    public function messageSending(): HasOne
+    {
+        return $this->hasOne(MessageSending::class, 'message_id');
+    }
+
     /**
      * @return string
      */
@@ -78,7 +92,7 @@ class Message extends Model implements HasAttachment, Searchable
 
     public function keepDissociatedAttachments(): bool
     {
-        return true;
+        return false;
     }
 
     public function getAttachmentAccessLevel(): string

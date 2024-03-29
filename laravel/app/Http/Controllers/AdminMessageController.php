@@ -6,12 +6,16 @@ use App\Http\Requests\Messages\DestroyMessageRequest;
 use App\Jobs\ProcessMessages;
 use App\Models\Committee;
 use App\Models\Message;
+use App\Models\MessageSelection;
+use App\Models\MessageSending;
 use App\Models\Options;
 use App\Models\Topic;
+use App\Models\User;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -31,9 +35,10 @@ class AdminMessageController extends Controller
      */
     public function index(): View
     {
+        //todo policy
         $data = [];
         $data['messages'] = Message::sortable()
-            ->with('user')
+            ->with('user', 'messageMeta', 'messageSending')
             ->orderBy('id', 'DESC')
             ->paginate(20);
 
@@ -47,15 +52,16 @@ class AdminMessageController extends Controller
      */
     public function create(): View
     {
+        //todo policy
         $data = [
-            'committee_subscription_options' => Committee::where('live', '=', 1)->get(),
-            'topic_subscription_options' => Topic::where('live', '=', 1)->get(),
+            'committee_subscription_options' => Committee::where('live', 1)->get(),
+            'topic_subscription_options' => Topic::where('live', 1)->get(),
             'model_subscription_options' => Options::model_subscription_options(),
-            'message' => new Message,
+            'message' =>  new Message,
+            'message_meta_data' => ['source_type' => 'model', 'source_type_name' => 'message'],
+            'message_sending' => 'normal',
             'action' => 'Create'
         ];
-
-       // dd($data);
 
         return view('admin.message', ['data' => $data]);
     }
@@ -66,9 +72,73 @@ class AdminMessageController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        //todo form request validator, policy
         $message = new Message($request->message);
         $message['user_id'] = Auth::id();
+
+        //todo message slug
+
         $message->save();
+
+        //$message->load('messageSending');
+
+        $message->messageSending()->create(['message_id' => $message->id,
+            'send_priority' => $request->message['message_sending']['send_priority']]);
+
+
+        //todo message_meta_data
+
+        if(!is_null($request->model_source_type_name)) {
+
+            //todo things that belong to any model
+
+            $source_type = 'model';
+            $source_type_name = $request->model_source_type_name;
+
+            $source_id = '';
+            $source_slug = '';
+            $source_url = '';
+
+            if($request->model_source_type_name == "Message") {
+                $source_id = $message->id;
+                $source_slug = '';
+                $source_url = strtolower($request->model_source_type_name) . "/" . $source_id;
+            }
+        }
+
+        if(!is_null($request->topic_source_type_name)) {
+
+            //todo things that belong to topic
+
+            $source_id = '';
+            $source_slug = '';
+            $source_url = '';
+
+            $source_type = 'topic';
+            $source_type_name = $request->topic_source_type_name;
+        }
+
+        if(!is_null($request->committee_source_type_name)) {
+
+            //todo things that belong to any committee
+
+            $source_id = '';
+            $source_slug = '';
+            $source_url = '';
+
+            $source_type = 'committee';
+            $source_type_name = $request->committee_source_type_name;
+        }
+
+        $message->messageMeta()->create(['message_id' => $message->id,
+            'source_id' => $source_id,
+            'source_slug' => $source_slug,
+            'source_type' => $source_type,
+            'source_type_name' => $source_type_name,
+            'source_url' => $source_url,
+            ]);
+
+        //todo save relation, 'messageMeta', 'messageSending'
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $message);
@@ -91,10 +161,15 @@ class AdminMessageController extends Controller
      */
     public function edit(Message $message): View
     {
-        $message->load('user', 'attachments');
+        //todo policy
+        $message->load('user', 'attachments', 'messageMeta', 'messageSending');
+
+        //todo update relations for form editing and submissions
 
         $data = [
             'message' => $message,
+            'message_meta_data' => ['source_type' => $message->messageMeta->source_type, 'source_type_name' => $message->messageMeta->source_type_name],
+            'message_sending' => $message->messageSending->send_priority,
             'committee_subscription_options' => Committee::where('live', '=', 1)->get(),
             'topic_subscription_options' => Topic::where('live', '=', 1)->get(),
             'model_subscription_options' => Options::model_subscription_options(),
@@ -113,8 +188,12 @@ class AdminMessageController extends Controller
      */
     public function update(Request $request, Message $message): RedirectResponse
     {
+        //todo form request validator, policy
+
         $message->fill($request->message);
         $message->save();
+
+        //todo update , 'messageMeta', 'messageSending' relations
 
         $result = $this->attachmentService->updateAttachment($request, $message);
 
@@ -138,45 +217,59 @@ class AdminMessageController extends Controller
      */
     public function preview(Message $message): View
     {
-        $message->load('user', 'attachments');
-        $data['message'] = $message;
+        //todo policy
+        $message->load('user', 'attachments', 'messageMeta', 'messageSending');
+        $data = [
+            'message' => $message,
+            'message_meta_data' => ['source_type' => $message->messageMeta->source_type, 'source_type_name' => $message->messageMeta->source_type_name],
+            'message_sending' => $message->messageSending->send_priority,
+         ];
+
+        //todo get attachments
+
 
         return view('admin.message_preview', ['data' => $data]);
     }
 
     public function preview_strict(Message $message): View
     {
+        //todo policy
         //todo sort out email queue vs message table
-        $message->load('user', 'attachments');
-        $data['message'] = $message;
+        $message->load('user', 'attachments', 'messageMeta', 'messageSending');
+
+        $data = [
+            'message' => $message,
+            'message_meta_data' => ['source_type' => $message->messageMeta->source_type, 'source_type_name' => $message->messageMeta->source_type_name],
+            'message_sending' => $message->messageSending->send_priority,
+            'attachments' => $message->attachments,
+        ];
 
         return view('emails.email_message', ['data' => $data]);
     }
 
     public function send(Message $message): RedirectResponse
     {
-        //admin_message_send
-      //  dd($message);
-//todo select the message to send
-// get attachment
-// build data with html template for message
-// check sending priority: if now, send to all
-// if regular, send to now
-// look at date
-// mail sending service?
-// daily foreach daily, check if a letter exists, if not crate, if exists, append msg
-// weekly foreach weekly, check if a letter exists, if not crate, if exists, append msg
-// monthly foreach monthly, check if a letter exists, if not crate, if exists, append msg
-//
-        //
-        $message->sent = 'send'; // no, send, sent
+        //todo policy
+        Log::info('About to move command to jobs table '. $message->id);
 
         $message->save();
 
+        $messageSending = MessageSending::where('message_id', $message->id)
+            ->update(
+                [
+                    'send_status_now' => 'send',
+                    'send_status_daily' => 'send',
+                    'send_status_weekly' => 'send',
+                ]
+            );
+
+        Log::info('About to execute ProcessMessages dispatch for message with id '. $message->id);
+
         ProcessMessages::dispatch(['log' => 'Sending message ' . $message->subject, 'id' => $message->id]);
 
-        Session::flash('success', 'The message, ' . $message->subject .
-            ', has been sent to the mail queue and is going out now');
+        Log::info('ProcessMessages dispatch has been executed for message with id '. $message->id);
+
+        Session::flash('success', 'The message, ' . $message->subject . ', has been sent to the mail queue and is going out now');
 
         return redirect()->route('admin_messages');
     }
@@ -188,15 +281,18 @@ class AdminMessageController extends Controller
      */
     public function destroy(DestroyMessageRequest $request): RedirectResponse
     {
+        //todo form request validator, policy
         Message::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Message $message) {
+                //todo only destroy attachments if not from other content
                 $this->attachmentService->destroyAttachments($message);
+                $message->messageMeta()->delete();
+                $message->messageSending()->delete();
                 $message->delete();
             });
 
-        Session::flash('success', 'You have deleted ' . count($request->id)
-            . ' ' . Str::plural('message', count($request->id)));
+        Session::flash('success', 'You have deleted ' . count($request->id) . ' ' . Str::plural('message', count($request->id)).'.');
 
         return redirect()->route('admin_messages');
     }

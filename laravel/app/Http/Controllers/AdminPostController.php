@@ -62,8 +62,7 @@ class AdminPostController extends Controller
                 'post' => $post,
                 'assignedTopics' => [],
                 'topics' => Topic::all(),
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),
-                    AccessLevelConstants::getConstants()),
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
                 'action' => 'Create',
                 'model_name' => 'post',
             ],
@@ -88,8 +87,7 @@ class AdminPostController extends Controller
             $result = $this->attachmentService->createAttachment($request, $post);
 
             if ($result) {
-                Session::flash('success', 'You uploaded '
-                    .count($request->file('attachments')).' files');
+                Session::flash('success', 'You uploaded ' . count($request->file('attachments')) . ' files');
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -111,7 +109,6 @@ class AdminPostController extends Controller
      */
     public function edit(Post $post):View
     {
-
         $this->authorize('update', Post::class);
 
         $post->load('user', 'attachments', 'topics');
@@ -125,8 +122,7 @@ class AdminPostController extends Controller
             'post' => $post,
             'topics' => Topic::all(),
             'assignedTopics' => $assignedTopics,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
-                AccessLevelConstants::getConstants()),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             'model_name' => 'post',
         ];
@@ -153,8 +149,7 @@ class AdminPostController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_post);
 
             if ($result) {
-                Session::flash('success', 'You uploaded '
-                    .count($request->file('attachments')).' files');
+                Session::flash('success', 'You uploaded ' . count($request->file('attachments')).' files');
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -192,8 +187,8 @@ class AdminPostController extends Controller
                 $post->topics()->detach();
                 $post->delete();
             });
-//todo change plural to singular
-        Session::flash('success', Str::plural('post', count([$request->id])).' deleted.');
+
+        Session::flash('success', 'You have deleted ' . count($request->id) . ' ' . Str::plural('post', count($request->id)) . '.');
 
         return redirect()->route('posts_list');
     }
@@ -217,6 +212,8 @@ class AdminPostController extends Controller
             $assignedTopics[] = $topic->pivot->topic_id;
         }
 
+        //todo fix after restructring in to relations
+
         $msg = new Message;
 
         $msg->subject = 'posttitle' . md5(time()) . $post->title;
@@ -232,11 +229,9 @@ class AdminPostController extends Controller
 
         $msg->save();
 
-
         //todo save attachments
         //? get attachement store in messages folder?
         // or refer to original attachment?
-
 
         Session::flash('success', 'new message saved');
 

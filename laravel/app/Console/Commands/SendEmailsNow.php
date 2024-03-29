@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\EmailQueue;
 use App\Models\Message;
+use App\Models\MessageSending;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -31,52 +32,46 @@ class SendEmailsNow extends Command
      */
     public function handle(): int
     {
-       //todo select messages in queue, lined up with messages ready to go out
         $messages = EmailQueue::limit(5)->get();
-        //$messages = Message::where('sent', '=', 'send')->get();
-
-
 
         foreach($messages as $message)
         {
             echo "\n EmailQueue message id: " .$message->id . ", Subject: " . $message->subject ."\n";
+            echo "\n \t" . $message->recipient . "\n";
 
+            // has subscriber been sent the message already? What if the content is in multiple topics?
+            // insert into mail queue the $message with the email address for $sub
 
-            if($message->attachments != '') {
+Log::info('from: ' . config('mail.from.address'));
+
+            $data['message']['sender'] = $message->sender;
+            $data['message']['subject'] = $message->subject;
+            $data['message']['content'] = $message->message;
+
+            $data['attachments'] = [];
+
+            Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message) {
+                $m->from($message->sender, config('app.name') . 'Subscription message local 118');
+                $m->to($message->recipient, 'name of recipient');
+                $m->replyTo(config('mail.from.address'), 'no reply to guy');
+                $m->subject('IATSE Local 118: ' . $message->subject);
+
                 $attachments = unserialize($message->attachments);
-                //todo prep attachments for mail message
-                foreach($attachments as $att)
-                {
-                    //todo read attachments
+                if($attachments->count() > 0) {
+
+                    foreach($attachments as $att)
+                    {
+                       $file = 'storage/app/' . $message->getAttachmentFolder() .'/' .$att->file;
+                       $mime = mime_content_type($file);
+                       $file_name = $att->file_name;
+
+                       $m->attach($file, ['as' => $file_name, 'mime' => $mime]); // yes but always hash file name
+                    }
                 }
-            }
+            });
 
-
-                echo "\n \t" . $message->recipient . "\n";
-                // has subscriber been sent the message already?
-                // insert into mail queue the $message with the email address for $sub
-
-
-                /**
-                Mail::send($message->message, [], function ($m) use ($message) {
-                    $m->from(config('mail.from.address'), config('app.name') . 'Subscription message local 118');
-                    $m->to($message->email, 'name of somebody');
-                    $m->replyTo($message['recipient'], 'recipient');
-                    $m->subject('IATSE Local 118: ' . $message['subject']);
-                 *
-                 *
-                 * $m->attach()
-                });
-                */
-                //todo with attachments.
-
-            //todo delete message
             EmailQueue::where('id', $message->id)->delete();
         }
-
-        //invoke mail sending service, send them out
-
-        //delete the rows just mailed out
 
         Log::info('SendEmailsNow has run at ' . date('l jS \of F Y h:i:s A'));
 

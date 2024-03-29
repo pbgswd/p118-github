@@ -171,7 +171,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     Route::controller(CNS\AdminMessageController::class)->group(function() {
         Route::get('messages', 'index')->name('admin_messages');
         Route::get('message/create', 'create')->name('admin_message_create');
-        Route::post('message/create', 'create')->name('admin_message_create');
+        Route::post('message/create', 'store')->name('admin_message_store');
         Route::get('message/{message}/edit', 'edit')->name('admin_message_edit');
         Route::post('message/{message}/edit', 'update')->name('admin_message_update');
         Route::get('message/{message}/preview', 'preview')->name('admin_message_preview');

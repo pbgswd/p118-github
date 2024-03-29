@@ -109,14 +109,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
         );
     }
 
-    /**
-     * @return HasOne
-     */
-    public function message_frequency_preferences(): HasOne
-    {
-        return $this->hasOne(MessageFrequencyPreferences::class)->withDefault();
-    }
-
 
     /**
      * @return HasOne
@@ -217,16 +209,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
     }
 
     /**
-     * @return BelongsToMany
-     */
-    public function message_selections(): BelongsToMany
-    {
-        //todo needs to be revised, doesnt work properly
-        return $this->belongsToMany(MessageSelection::class, 'message_selections')
-            ->withPivot('id', 'user_id', 'type', 'name');
-    }
-
-    /**
      * All historical executive roles of the given user.
      *
      * @return BelongsToMany
@@ -236,5 +218,22 @@ class User extends Authenticatable implements HasAttachment, Searchable
         return $this->belongsToMany(Executive::class, 'executive_user')
             ->whereRaw('NOW() > start_date AND NOW() < end_date')
             ->withPivot('id', 'start_date', 'end_date', 'current');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function message_selections(): hasMany
+    {
+        return $this->hasMany(MessageSelection::class, 'user_id');
+            //->withPivot('id', 'user_id', 'type', 'name');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function message_frequency_preferences(): HasOne
+    {
+        return $this->hasOne(MessageFrequencyPreferences::class)->withDefault();
     }
 }

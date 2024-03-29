@@ -3,12 +3,12 @@
 
 <div class="row">
     <div class="mx-6">
-        <h1>Messages Page</h1>
+        <h1>Messages</h1>
     </div>
 </div>
 <div class="row">
     <div class="col-12 mx-6">
-        <div class="card text-bg-info mb-3" style="max-width: 540px;">
+        <div class="card text-bg-black mb-3" style="max-width: 640px;">
             <div class="card-header">How it works</div>
             <div class="card-body">
                 <h5 class="card-title">Send messages to the general membership. </h5>
@@ -28,13 +28,16 @@
         </div>
     </div>
 </div>
-<div class="row">
-    {{ $data['total_messages'] . ' ' . Str::plural('messages', $data['total_messages']) }} in total.
-    | <a href="{{route('admin_message_create')}}">Create Message</a>
+<div class="row" style="margin-bottom: 3rem; margin-top: 3rem;">
+    <div class="col-12">
+        {{ $data['total_messages'] . ' ' . Str::plural('message', $data['total_messages']) }}.
+        | <a href="{{route('admin_message_create')}}">Create new Message</a>
+    </div>
+</div>
     <form name="delete" method="POST" action="{{route('admin_message_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
-</div>
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -68,25 +71,28 @@
                             {{$msg['subject']}}
                         </a>
                     @endif
+                    <br />
+
+                        <a href="{{env('APP_URL')}}/{{$msg->messageMeta->source_url}}">URL</a>
                 </td>
                 <td class="text-break">
                     <a href="{{route('member', $msg['user_id'])}}">
                         <i class="far fa-user"></i>
                         {{$msg['user']->name}}</a>
                 </td>
-                <td>{{$msg->type}}</td>
-                <td>{{$msg->name}}</td>
+                <td>{{$msg->messageMeta->source_type}}</td>
+                <td>{{$msg->messageMeta->source_type_name}}</td>
                 <td class="align-content-center">
-                    @if($msg['priority'] == 'now')
+                    @if($msg->messageSending->send_priority == 'now')
                         <i class="fas fa-exclamation-triangle text-danger"></i>
                     @else
                         <i class="fas fa-check-circle text-success"></i>
                     @endif
                         <br />
-                        {{$msg['priority']}}
+                        {{$msg->messageSending->send_priority}}
                 </td>
                 <td>
-                    @if($msg['sent'] == 'send' || $msg['sent'] == 'sent')
+                    @if($msg->messageSending->send_status_now == 'send' || $msg->messageSending->send_status_now == 'sent')
                         <span class="text-secondary">
                             <i class="far fa-check-circle"></i>
                             <br />
@@ -103,12 +109,12 @@
             </tr>
         @empty
             </tr>
-                <th scope="row" colspan="7">No data yet</th>
+                <th scope="row" colspan="9">No data yet</th>
             </tr>
         @endforelse
     </tbody>
 </table>
-    <div class="row mb-lg-5">
+    <div class="row my-5">
         <div class="col">
             <i class="far fa-trash-alt fa-2x"></i>
             <input class="btn btn-outline-danger" type="submit" value="Delete Selected">

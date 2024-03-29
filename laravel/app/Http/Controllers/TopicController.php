@@ -20,7 +20,7 @@ class TopicController extends Controller
             $topics = Topic::where('live', 1)
                 ->sortable()
                 ->orderBy('sort_order', 'desc')
-                ->paginate(9);
+                ->paginate(20);
         } else {
             $topics = Topic::sortable()
                 ->where([['access_level', '=', AccessLevelConstants::PUBLIC], ['live', 1]])

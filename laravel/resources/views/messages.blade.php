@@ -1,24 +1,24 @@
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-scroll"></i> Messages'])
 @section('content')
 <div class="container border border-dark rounded mt-3 mb-3 p-2" style="background: rgba(220,220,220,0.8);">
-    <div class="jumbotron-fluid text-center">
-        <h1>
-            <i class="fas fa-scroll"></i>
-            Local 118 Messages
-        </h1>
-        <h3>
-               <span class="badge badge-primary badge-pill">
-                   {{ $data['count'] }} Messages
-               </span>
-        </h3>
-        <div class="row mt-3">
-            <div class="col-12 pt-2">
-                <h4 class="font-italic"> sss
-                </h4>
+    <div class="jumbotron-fluid text-center mb-6">
+        <div class="row" style="margin-bottom: 2rem;">
+            <div class="col-12 my-3">
+                <h1>
+                    <i class="fas fa-scroll"></i>
+                    Local 118 Messages
+                </h1>
+            </div>
+            <div class="col-12 mb-6">
+                <h3>
+                   <span class="badge bg-primary">
+                       {{ $data['count'] }} Messages
+                   </span>
+                </h3>
             </div>
         </div>
     </div>
-    <div class="col-12 border border-dark rounded p-1" style="background: rgba(220,220,220,0.8);">
+    <div class="col-12 border border-dark rounded p-1 mt-6" style="background: rgba(220,220,220,0.8);">
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -32,14 +32,12 @@
                 <tbody>
                 @foreach ( $data['messages'] as $message )
                     <tr>
-                        <td>
-                            <a title="{{ $message->subject }}" href="{{route('message', $message->id)}}"> {{ $message->subject }}</a>
+                        <td class="text-left text-wrap" style="width: 50%;">
+                            <a title="{{ $message->subject }}" href="{{ route('message', $message->id) }}">{{ $message->subject }}</a>
                         </td>
-                        <td>{{$message->type}}</td>
-                        <td>{{$message->name}}</td>
-                        <td>
-                            {{ $message->updated_at->format('F j Y') }}
-                        </td>
+                        <td>{{$message->messageMeta->source_type}}</td>
+                        <td>{{$message->messageMeta->source_type_name}}</td>
+                        <td>{{ $message->updated_at->format('F j Y') }}</td>
                     </tr>
                 @endforeach
                 <tr>
