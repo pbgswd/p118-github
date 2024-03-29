@@ -1,59 +1,76 @@
 @extends('layouts.email')
 @section('content')
-  <table class="body">
-    <tr>
-      <td class="center" align="center" valign="top">
-        <center>
-
-          <table class="row header">
-            <tr>
-              <td class="center" align="center">
-                <center>
-
-                  <table class="container">
-                    <tr>
-                      <td class="wrapper last">
-                        <table class="twelve columns">
-                          <tr>
-                      <td class="six sub-columns">
-                          <a href="{{Request::root()}}" title="{{env('SITE_NAME')}}">{{env('SITE_NAME')}}</a>
-                            </td>
-                            <td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
-                              <span class="template-label"></span>
-                            </td>
-                            <td class="expander"></td>
-                          </tr>
-                        </table>
-
-                      </td>
-                    </tr>
-                  </table>
-
-                </center>
-              </td>
-            </tr>
-          </table>
-
-          <table class="container">
-            <tr>
-              <td>
+    <table class="body">
+        <tr>
+            <td>
                 <table class="row">
-                  <tr>
-                    <td class="wrapper last">
-                      <table class="twelve columns">
-                        <tr>
-                          <td>
-                            <h1>Message from {{$data['message']['sender']}}</h1>
-			    <p class="lead">Email: <a href="mailto:{{$data['message']['sender']}}">{{$data['message']['sender']}}</a></p>
-                            <p class="lead">Subject: {{$data['message']['subject']}}</p>
-                            <p>Message: <br />
-			    {!! $data['message']['content'] !!}
-			    </p>
-                          </td>
-                          <td class="expander"></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
+                    <tr>
+                        <td class="wrapper last">
+                            <table class="twelve columns">
+                                <tr>
+                                    <td>
+                                        <a href="https://iatse118.com/" title="IATSE Local 118">
+                                            <img src="https://iatse118.com/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png" style="margin-right: 1rem;"/>
+                                            <h1>email</h1>
+                                        </a>
+                                    </td>
+                                    <td class="expander"></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <hr />
+                                        <h2 class="lead" style="padding-top: 1rem; padding-bottom: 1rem;">{{$data['message']['subject']}}</h2>
+                                        <hr />
+                                    </td>
+                                    <td class="expander"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {!! $data['message']['content'] !!}
+                                    </td>
+                                    <td class="expander"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
                 </table>
+                @if(count($data['attachments']) > 0)
+                    <table class="twelve columns">
+                        <tr>
+                            <td style="padding-left: 2rem;">
+                                {{count($data['attachments'])}}
+                                {{Str::plural('attachment', count($data['attachments']))}}
+                                with this message.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="row">
+                                    <tr>
+                                        <td class="wrapper last" style="padding-left: 3rem;">
+                                            <table class="twelve columns">
+                                                <tr>
+                                                    <td colspan="12">
+                                                        <ul>
+                                                            @forelse($data['attachments'] as $att)
+                                                                <li class="list-group-item">
+                                                                    {{$att->description ? : $att->file_name}}
+                                                                </li>
+                                                            @empty
+                                                                <li class="list-group-item"> No attachments </li>
+                                                            @endforelse
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                @endif
+            </td>
+        </tr>
+    </table>
 @endsection
