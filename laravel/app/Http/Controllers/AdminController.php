@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailQueue;
+use App\Models\Message;
 use App\Models\ModelList;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +18,17 @@ class AdminController extends Controller
     {
         //Land on the home page of admin. Could have data later.
         //todo grab data from various models, counts, etc, put them on this page
+
+        $emailQueueCount = EmailQueue::count();
+        $usersCount = User::count();
+        $messagesCount = Message::count();
+
+
         $data = [
             ['user' => Auth::user()],
+            'email_queue_count' => $emailQueueCount,
+            'users_count' => $usersCount,
+            'messages_count' => $messagesCount,
         ];
 
         return view('admin.admin', ['data' => $data]);
