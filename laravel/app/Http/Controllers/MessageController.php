@@ -11,12 +11,9 @@ use App\Models\Options;
 use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use function GuzzleHttp\Promise\queue;
 
 class MessageController extends Controller
 {
@@ -27,15 +24,18 @@ class MessageController extends Controller
      */
     public function index(): View
     {
-        $message = Message::sortable()
-            ->where('sent', 1)
+        //todo where send_status_now != 'no'
+        $messages = Message::sortable()
+            ->with('user', 'attachments', 'messageMeta', 'messageSending')
+            ->whereRelation('messageSending', 'send_status_now', '!=', 'no')
             ->orderBy('updated_at', 'desc')
             ->paginate(20);
 
         $data = [
-            'messages' => $message,
-            'count' => Message::where('sent', 1)->count()
+            'messages' => $messages,
+            'count' => Message::with('messageSending')->whereRelation('messageSending', 'send_status_now', '!=', 'no')->count()
         ];
+
         return view('messages', ['data' => $data]);
     }
 
@@ -45,7 +45,7 @@ class MessageController extends Controller
      */
     public function show(Message $message): View
     {
-        $message->load('user', 'attachments');
+        $message->load('user', 'attachments','messageMeta', 'messageSending');
 
         //todo distinguish between types and pull in the data
         $committee = [];
@@ -87,6 +87,9 @@ class MessageController extends Controller
         $data = [
             'message' => $message
         ];
+
+     //  dd($data['message']->attachments);
+
         return view('message', ['data' => $data]);
     }
 

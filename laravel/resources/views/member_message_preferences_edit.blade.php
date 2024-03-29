@@ -5,7 +5,7 @@
         <div class="col-12 my-6 py-2 text-center align-content-center">
             <h2><i class="far fa-envelope-open"></i> Message Preferences</h2>
             <h5>Modify your preferences for email messages sent to you from IATSE Local 118.</h5>
-            <p><a href="{{route('messages')}}">Messages Previously Sent</a></p>
+            <h3><a class="btn btn-outline-primary" href="{{route('messages')}}">Messages Previously Sent</a></h3>
         </div>
     </div>
     <div class="row mt-4">

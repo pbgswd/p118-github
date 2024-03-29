@@ -17,17 +17,15 @@
             </div>
         @endcan
     </div>
-
-
     <div class="container mb-6" style="background: rgba(220,220,220,0.8); padding: 1rem;">
-        <div class="row border border-dark rounded">
-            <div class="col-12 m-6 h-90 w-90 mx-auto" style="padding: 1rem;">
+        <div class="row border border-dark rounded" style=" margin: 1rem;">
+            <div class="col-12 m-6 h-90 w-90 mx-auto" style="padding: 2rem;">
                 <i class="fas fa-scroll"></i>
                 {{$data['message']->subject}}
                 From: {{$data['message']->updated_at->format('F j Y')}}
                 <p>Sent by: {{$data['message']['user']->name}}</p>
-                <p> {{$data['message']->type}}</p>
-                <p>{{$data['message']->name}}</p>
+                <p>{{$data['message']->messageMeta->source_type}}</p>
+                <p>{{$data['message']->messageMeta->source_type_name}}</p>
                 <div class="p-6">
                     {!! $data['message']->content !!}
                 </div>

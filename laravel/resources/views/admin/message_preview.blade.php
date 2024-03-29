@@ -13,7 +13,7 @@
         </div>
         <div class="col-12">
             <h4>Message Sending Priority</h4>
-            {{$data['message']->priority}}
+            {{$data['message_sending']}}
         </div>
     </div>
     <div class="row mx-4 border border-1 border-black rounded p-4">
