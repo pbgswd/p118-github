@@ -216,18 +216,32 @@ class AdminPostController extends Controller
 
         $msg = new Message;
 
-        $msg->subject = 'posttitle' . md5(time()) . $post->title;
-        $msg->slug = 'postslug' . md5(time()) . $post->slug;
-        $msg->content = 'postcontent' . $post->content;
-        $msg->type = 'topic';
-        $msg->name ='test slug';
-        $msg->url = 'message/test'.$post->slug;
-        $msg->source_url = 'post/test'.$post->slug;
-        $msg->user_id = 1;
-        $msg->priority = 'regular';
-        $msg->sent = 0;
+        $msg->subject = $post->title;
+        $msg->slug = $post->slug;
+        $msg->content = $post->content;
+        $msg->user_id = Auth::id();
 
         $msg->save();
+
+
+        $msg->messageSending()->create(['message_id' => $msg->id,
+            'send_priority' => 'normal']);
+
+
+        // $msg->priority = 'regular';
+      //  $msg->sent = 0;
+
+        //todo get correct topic for data
+
+        $msg->messageMeta()->create(['message_id' => $msg->id,
+            'source_id' => $post->id,
+            'source_slug' =>  $post->slug,
+            'source_type' => 'topic',
+            'source_type_name' => 'post',
+            'source_url' => 'post/' . $post->slug,
+        ]);
+
+
 
         //todo save attachments
         //? get attachement store in messages folder?
