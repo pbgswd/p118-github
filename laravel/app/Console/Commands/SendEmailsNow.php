@@ -43,7 +43,7 @@ class SendEmailsNow extends Command
             // insert into mail queue the $message with the email address for $sub
 
 Log::info('from: ' . config('mail.from.address'));
-
+            $data['message']['id'] = $message->id;
             $data['message']['sender'] = $message->sender;
             $data['message']['subject'] = $message->subject;
             $data['message']['content'] = $message->message;
