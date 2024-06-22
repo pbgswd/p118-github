@@ -20,15 +20,15 @@ class EmailQueueFactory extends Factory
     public function definition(): array
     {
 
-        $sender = $this->faker->email;
+        $sender = $this->faker->email();
 
         return [
             'sender' => $sender,
-            'recipient' => $this->faker->email,
+            'recipient' => $this->faker->email(),
             'subject' => $this->faker->words(5, true),
             'message' => $this->faker->paragraph(5),
-            'attachments' => null, // should be serialized data $this->faker->word . time().".pdf",
-            'attachments' => null, // should be serialized data $this->faker->word . time().".pdf",
+            'attachments' => null, // should be serialized data $this->faker->word() . time().".pdf",
+            'attachments' => null, // should be serialized data $this->faker->word() . time().".pdf",
         ];
     }
 }

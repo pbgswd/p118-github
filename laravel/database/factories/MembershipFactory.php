@@ -25,8 +25,8 @@ class MembershipFactory extends Factory
         return [
             'user_id' => User::factory(),
             'membership_type' => 'Member',
-            'membership_date' => $this->faker->date,
-            'membership_expires' => $this->faker->date,
+            'membership_date' => $this->faker->date(),
+            'membership_expires' => $this->faker->date(),
             'seniority_number' => null,
             'status' => null,
             'admin_notes' => $this->faker->text(20),

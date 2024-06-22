@@ -21,7 +21,7 @@ class BylawFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => 'Bylaw '.$this->faker->name.' name',
+            'title' => 'Bylaw '.$this->faker->name().' name',
             'description' => 'Bylaw description '.$this->faker->paragraph(),
             'access_level' => 'members',
             'live' => 1,

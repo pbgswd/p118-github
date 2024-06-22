@@ -24,7 +24,7 @@ class PhoneNumberFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'phone_number' => $this->faker->phonenumber,
+            'phone_number' => $this->faker->phoneNumber(),
             'label' => null,
             'primary' => 1,
         ];

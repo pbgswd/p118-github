@@ -84,10 +84,10 @@ class AdminUserControllerTest extends TestCase
     {
         $response = $this->actingAs($this->admin_user)
             ->post('admin/user/'.$this->user->id.'/emergency_contact/edit', [
-                'emergency_contact_name' => $this->faker->name,
+                'emergency_contact_name' => $this->faker->name(),
                 'emergency_contact_phone' => '6663336666',
                 'emergency_contact_relationship' => 'spouse',
-                'message' => $this->faker->paragraph,
+                'message' => $this->faker->paragraph(),
             ]);
 
         $response->assertRedirect(route('admin_edit_emergency_contact', $this->user->id));

@@ -28,7 +28,7 @@ class VenueFactory extends Factory
             'user_id' => \App\Models\User::factory(),
             'name' => $name,
             'description' => $this->faker->text(50),
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
             'image' => '',
             'file_name' => '',
             'access_level' => 'public',

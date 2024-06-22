@@ -23,7 +23,7 @@ class PolicyFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence,
+            'title' => $this->faker->sentence(),
             'description' => $this->faker->text(200),
             'live' => 1,
             'date' => Carbon::now(),

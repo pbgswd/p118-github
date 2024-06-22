@@ -26,7 +26,7 @@ class ProofreaderFactory extends Factory
         return [
             'admin_link' => $this->faker->url(),
             'pub_link' => $this->faker->url(),
-            'title' => $this->faker->sentence,
+            'title' => $this->faker->sentence(),
             'content_type' => 'Agreement',
             'content_title' => 'Agreements',
             'user_id' => \App\Models\User::factory(),

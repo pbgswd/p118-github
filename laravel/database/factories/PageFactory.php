@@ -22,7 +22,7 @@ class PageFactory extends Factory
      */
     public function definition()
     {
-        $title = $this->faker->sentence;
+        $title = $this->faker->sentence();
 
         return [
             'user_id' => \App\Models\User::factory(),
@@ -30,8 +30,8 @@ class PageFactory extends Factory
             'slug' => Str::slug($title),
             'content' => $this->faker->text(200),
             'live' => 1,
-            'front_page' => $this->faker->boolean,
-            'landing_page' => $this->faker->boolean,
+            'front_page' => $this->faker->boolean(),
+            'landing_page' => $this->faker->boolean(),
             'access_level' => 'public',
         ];
     }
