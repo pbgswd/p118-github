@@ -118,9 +118,6 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
         return $this->belongsToMany(User::class)->withPivot('role')->withTimestamps();
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function committee_member(): BelongsToMany
     {
         return $this->belongsTo(User::class)->withPivot('role')->withTimestamps();

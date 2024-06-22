@@ -9,9 +9,6 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * @return bool
-     */
     public function before($user, $ability): bool
     {
         $test = $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('create users');
@@ -22,8 +19,6 @@ class UserPolicy
 
     /**
      * Determine whether the user can view any models users.
-     *
-     * @return bool
      */
     public function viewAny(User $user): bool
     {
@@ -33,8 +28,6 @@ class UserPolicy
 
     /**
      * Determine whether the user can view the models user.
-     *
-     * @return bool
      */
     public function view(User $loggedInUser, User $targetUser): bool
     {
@@ -53,18 +46,12 @@ class UserPolicy
         }
     }
 
-    /**
-     * @return bool
-     */
     public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
     }
 
-    /**
-     * @return bool
-     */
     public function update(User $loggedInUser, User $targetUser): bool
     {
         return $loggedInUser->id === $targetUser->id;
@@ -72,8 +59,6 @@ class UserPolicy
 
     /**
      * Determine whether the user can update the models user.
-     *
-     * @return bool
      */
     public function admin_update(User $user): bool
     {
@@ -82,8 +67,6 @@ class UserPolicy
 
     /**
      * Determine whether the user can delete the models user.
-     *
-     * @return bool
      */
     public function delete(User $user): bool
     {
@@ -93,8 +76,6 @@ class UserPolicy
 
     /**
      * Determine whether the user can restore the models user.
-     *
-     * @return bool
      */
     public function restore(User $user): bool
     {
@@ -103,8 +84,6 @@ class UserPolicy
 
     /**
      * Determine whether the user can permanently delete the models user.
-     *
-     * @return bool
      */
     public function forceDelete(User $user): bool
     {

@@ -26,9 +26,6 @@ class AttachmentController extends Controller
         $this->attachmentService = $attachmentService;
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function download(string $folder, Attachment $attachment): RedirectResponse
     {
         return $this->attachmentService->downloadAttachment($attachment, $folder);

@@ -15,7 +15,6 @@ class AttachmentPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -34,8 +33,6 @@ class AttachmentPolicy
 
     /**
      * Determine whether the user can view the attachment.
-     *
-     * @return mixed
      */
     public function view(User $user, Attachment $attachment): bool
     {
@@ -43,7 +40,6 @@ class AttachmentPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -60,7 +56,6 @@ class AttachmentPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -79,7 +74,6 @@ class AttachmentPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -98,7 +92,6 @@ class AttachmentPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -117,7 +110,6 @@ class AttachmentPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */

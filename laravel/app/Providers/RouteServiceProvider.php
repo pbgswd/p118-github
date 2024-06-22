@@ -120,8 +120,6 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define the routes for the application.
-     *
-     * @return void
      */
     public function map(): void
     {
@@ -137,8 +135,6 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes all receive session state, CSRF protection, etc.
      * namespace commented out in Laravel 8 Spark upgrade
-     *
-     * @return void
      */
     protected function mapWebRoutes(): void
     {
@@ -152,8 +148,6 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      * namespace commented out in Laravel 8 Spark upgrade
-     *
-     * @return void
      */
     protected function mapApiRoutes(): void
     {

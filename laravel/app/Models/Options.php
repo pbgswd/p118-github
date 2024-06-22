@@ -105,9 +105,6 @@ class Options
         return array_combine($levels, $levels);
     }
 
-    /**
-     * @return mixed
-     */
     public static function membership_levels(): array
     {
         $membership = ['Member', 'Office'];
@@ -156,9 +153,6 @@ class Options
         return $array;
     }
 
-    /**
-     * @return mixed
-     */
     public static function committee_roles(): array
     {
         $membership = ['Chair', 'Co-Chair', 'Alternate Chair', 'Secretary', 'Member', 'Interim Member', 'Ex-officio', 'Past-Member'];
@@ -166,9 +160,6 @@ class Options
         return array_combine($membership, $membership);
     }
 
-    /**
-     * @return mixed
-     */
     public static function committee_executive_roles(): array
     {
         $committee_executive_roles = ['Chair', 'Co-Chair', 'Secretary', 'Alternate Chair'];
@@ -176,9 +167,6 @@ class Options
         return array_combine($committee_executive_roles, $committee_executive_roles);
     }
 
-    /**
-     * @return mixed
-     */
     public static function phone_label(): array
     {
         $phone_labels = ['cel', 'home', 'work', 'other'];

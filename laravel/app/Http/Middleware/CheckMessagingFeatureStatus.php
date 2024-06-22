@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 
 class CheckMessagingFeatureStatus
 {
-    /**
-     * @return RedirectResponse
-     */
     public function handle(Request $request, Closure $next): RedirectResponse
     {
         if (env('ENABLE_MESSAGING_FEATURE') == 0) {

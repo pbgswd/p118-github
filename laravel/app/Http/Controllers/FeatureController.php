@@ -25,8 +25,6 @@ class FeatureController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function show(Feature $feature): View
     {

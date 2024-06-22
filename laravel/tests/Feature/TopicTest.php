@@ -12,8 +12,6 @@ class TopicTest extends TestCase
 {
     /**
      * Insert topics into topics table.
-     *
-     * @return void
      */
     //    use RefreshDatabase; // deletes all data
     public function testBasicTest(): void

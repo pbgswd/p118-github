@@ -30,7 +30,6 @@ class LiveableModel extends Model
     /**
      * @param  string|array  $relations
      * @param  string|array  $scopes
-     * @return $this
      */
     public function loadWithoutGlobalScopes($relations, $scopes = []): self
     {

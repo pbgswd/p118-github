@@ -10,7 +10,6 @@ class TopicPolicy
     use HandlesAuthorization;
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -22,8 +21,6 @@ class TopicPolicy
 
     /**
      * Determine whether the user can view the topics.
-     *
-     * @return mixed
      */
     public function view(User $user, Topics $topics): bool
     {
@@ -31,7 +28,6 @@ class TopicPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -41,7 +37,6 @@ class TopicPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -51,7 +46,6 @@ class TopicPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -61,7 +55,6 @@ class TopicPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -71,7 +64,6 @@ class TopicPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */

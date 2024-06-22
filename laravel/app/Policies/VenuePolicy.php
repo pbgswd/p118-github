@@ -11,7 +11,6 @@ class VenuePolicy
     use HandlesAuthorization;
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -27,7 +26,6 @@ class VenuePolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -37,7 +35,6 @@ class VenuePolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -47,7 +44,6 @@ class VenuePolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -57,7 +53,6 @@ class VenuePolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -67,7 +62,6 @@ class VenuePolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */

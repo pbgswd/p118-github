@@ -77,8 +77,6 @@ class EmploymentController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return Response
      */
     public function show(Employment $employment): View
     {

@@ -27,9 +27,6 @@ class TopicController extends Controller
         return view('topics', ['data' => ['topics' => $topics]]);
     }
 
-    /**
-     * @return View
-     */
     public function show(Topic $topic): View
     {
         if (Auth::check() === false && $topic->access_level != AccessLevelConstants::PUBLIC) {

@@ -13,8 +13,6 @@ class AdminEmailQueueController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -32,7 +30,6 @@ class AdminEmailQueueController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\EmailQueue  $emailQueue
-     * @return \Illuminate\Http\Response
      */
     public function show(EmailQueue $email_queue): View
     {
@@ -57,7 +54,6 @@ class AdminEmailQueueController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\EmailQueue  $emailQueue
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request): RedirectResponse
     {

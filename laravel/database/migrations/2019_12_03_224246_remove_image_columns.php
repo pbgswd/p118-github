@@ -8,8 +8,6 @@ return new class extends Migration
 {
     /**
      * Run the migration.
-     *
-     * @return void
      */
     public function up(): void
     {
@@ -31,8 +29,6 @@ return new class extends Migration
 
     /**
      * Reverse the migration.
-     *
-     * @return void
      */
     public function down(): void
     {

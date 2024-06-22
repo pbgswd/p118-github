@@ -60,9 +60,6 @@ class AdminProofReaderController extends Controller
         return view('admin.proofreading', ['data' => $data]);
     }
 
-    /**
-     * @return View
-     */
     public function update(Request $request, Proofreader $proofReader): View
     {
 

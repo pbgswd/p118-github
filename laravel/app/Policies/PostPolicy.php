@@ -11,7 +11,6 @@ class PostPolicy
     use HandlesAuthorization;
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -23,8 +22,6 @@ class PostPolicy
 
     /**
      * Determine whether the user can view the post.
-     *
-     * @return mixed
      */
     public function view(User $user, Post $post): bool
     {
@@ -34,7 +31,6 @@ class PostPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -44,7 +40,6 @@ class PostPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -54,7 +49,6 @@ class PostPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -64,7 +58,6 @@ class PostPolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -74,17 +67,11 @@ class PostPolicy
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
 
-    /**
-     * @return bool
-     */
     public function restore(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
 
-    /**
-     * @return bool
-     */
     public function forceDelete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);

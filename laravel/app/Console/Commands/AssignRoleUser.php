@@ -23,8 +23,6 @@ class AssignRoleUser extends AccessControl
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle(): void
     {

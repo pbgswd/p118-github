@@ -66,9 +66,6 @@ class Faq extends LiveableModel implements Searchable
         return 'slug';
     }
 
-    /**
-     * @return mixed
-     */
     public function setFaqTopicAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');

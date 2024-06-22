@@ -10,9 +10,6 @@ class MemoriamPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * @return bool
-     */
     public function before($user, $ability): bool
     {
         $test = $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('create users');
@@ -23,8 +20,6 @@ class MemoriamPolicy
 
     /**
      * Determine whether the user can view any models.
-     *
-     * @return mixed
      */
     public function viewAny(User $user): bool
     {
@@ -34,8 +29,6 @@ class MemoriamPolicy
 
     /**
      * Determine whether the user can view the model.
-     *
-     * @return mixed
      */
     public function view(User $user, Memoriam $memoriam): bool
     {
@@ -44,8 +37,6 @@ class MemoriamPolicy
 
     /**
      * Determine whether the user can create models.
-     *
-     * @return mixed
      */
     public function create(User $user): bool
     {
@@ -53,36 +44,24 @@ class MemoriamPolicy
             $user->hasPermissionTo('create users');
     }
 
-    /**
-     * @return bool
-     */
     public function update(User $user, Memoriam $memoriam): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
     }
 
-    /**
-     * @return bool
-     */
     public function delete(User $user, Memoriam $memoriam): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
     }
 
-    /**
-     * @return bool
-     */
     public function restore(User $user, Memoriam $memoriam): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
     }
 
-    /**
-     * @return bool
-     */
     public function forceDelete(User $user, Memoriam $memoriam): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||

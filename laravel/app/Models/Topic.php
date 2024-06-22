@@ -105,9 +105,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
         return 'slug';
     }
 
-    /**
-     * @return mixed
-     */
     public function setNameAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');

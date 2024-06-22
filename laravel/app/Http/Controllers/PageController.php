@@ -28,7 +28,6 @@ class PageController extends Controller
     }
 
     /**
-     * @return Response
      *
      * @throws AuthorizationException
      */

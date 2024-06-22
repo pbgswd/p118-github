@@ -83,9 +83,6 @@ class Attachment extends Model implements Searchable
         );
     }
 
-    /**
-     * @return $this
-     */
     public function setCalculatedProperties(): self
     {
         $this->path_info = \pathinfo(\storage_path('app/'.$this->subfolder).'/'.$this->file);

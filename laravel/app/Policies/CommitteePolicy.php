@@ -16,18 +16,12 @@ class CommitteePolicy
             $user->hasAnyPermission(['create committee', 'manage committee', 'delete committee']);
     }
 
-    /**
-     * @return bool
-     */
     public function view(User $user, Committee $committee): bool
     {
         return $user->hasAnyRole(['super-admin', 'writer', 'committee']) ||
             $user->hasAnyPermission(['create committee', 'manage committee']);
     }
 
-    /**
-     * @return bool
-     */
     public function create(User $user): bool
     {
         return $user->hasAnyRole(['super-admin']) ||
@@ -43,7 +37,6 @@ class CommitteePolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -54,7 +47,6 @@ class CommitteePolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */
@@ -65,7 +57,6 @@ class CommitteePolicy
     }
 
     /**
-     * @return bool
      *
      * @throws \Exception
      */

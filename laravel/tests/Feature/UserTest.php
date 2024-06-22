@@ -9,8 +9,6 @@ class UserTest extends TestCase
 {
     /**
      * Some work with users
-     *
-     * @return void
      */
     //    use RefreshDatabase; // deletes all data
     public function testBasicTest(): void

@@ -28,7 +28,6 @@ class PagePolicy
     }
 
     /**
-     * @return bool
      *
      * @throws Exception
      */
@@ -37,33 +36,21 @@ class PagePolicy
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
 
-    /**
-     * @return bool
-     */
     public function update(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);
     }
 
-    /**
-     * @return bool
-     */
     public function delete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
 
-    /**
-     * @return bool
-     */
     public function restore(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
 
-    /**
-     * @return bool
-     */
     public function forceDelete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
