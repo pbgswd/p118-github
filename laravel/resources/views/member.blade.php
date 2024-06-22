@@ -43,12 +43,13 @@
                             <i class="fas fa-address-card text-success"></i>
                             Address</button>
                     </li>
+                    @if (env('ENABLE_MESSAGING_FEATURE') == 1)
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="message-tab" data-bs-toggle="tab" data-bs-target="#message-tab-pane" type="button" role="tab" aria-controls="message-tab-pane" aria-selected="false">
                             <i class="far fa-envelope-open"></i>
                             Message Preferences</button>
                     </li>
-
+                    @endif
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false">
                             <i class="fas fa-unlock-alt"></i>

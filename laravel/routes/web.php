@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers as CNS;
+use App\Http\Middleware\CheckMessagingFeatureStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route; //Controller Name Space
 
@@ -106,10 +107,9 @@ Route::middleware('web', 'auth')->group(function () {
     Route::get('feature/{feature}', [CNS\FeatureController::class, 'show'])->name('feature');
 
     Route::controller(CNS\MessageController::class)->group(function () {
-        Route::get('messages', 'index')->name('messages');
-        Route::get('message/{message}', 'show')->name('message');
-        Route::post('member/{user}/message_preferences', 'update')->name('update_message_preferences');
-
+        Route::get('messages', 'index')->name('messages')->middleware(CheckMessagingFeatureStatus::class);
+        Route::get('message/{message}', 'show')->name('message')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::post('member/{user}/message_preferences', 'update')->name('update_message_preferences')->middleware(CheckMessagingFeatureStatus::class);;
     });
 
 
@@ -169,21 +169,21 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     });
 
     Route::controller(CNS\AdminMessageController::class)->group(function() {
-        Route::get('messages', 'index')->name('admin_messages');
-        Route::get('message/create', 'create')->name('admin_message_create');
-        Route::post('message/create', 'store')->name('admin_message_store');
-        Route::get('message/{message}/edit', 'edit')->name('admin_message_edit');
-        Route::post('message/{message}/edit', 'update')->name('admin_message_update');
-        Route::get('message/{message}/preview', 'preview')->name('admin_message_preview');
-        Route::get('message/{message}/preview_strict', 'preview_strict')->name('admin_message_preview_strict');
-        Route::get('message/{message}/send', 'send')->name('admin_message_send');
-        Route::delete('message/delete', 'destroy')->name('admin_message_destroy');
+        Route::get('messages', 'index')->name('admin_messages')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::get('message/create', 'create')->name('admin_message_create')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::post('message/create', 'store')->name('admin_message_store')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::get('message/{message}/edit', 'edit')->name('admin_message_edit')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::post('message/{message}/edit', 'update')->name('admin_message_update')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::get('message/{message}/preview', 'preview')->name('admin_message_preview')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::get('message/{message}/preview_strict', 'preview_strict')->name('admin_message_preview_strict')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::get('message/{message}/send', 'send')->name('admin_message_send')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::delete('message/delete', 'destroy')->name('admin_message_destroy')->middleware(CheckMessagingFeatureStatus::class);;
     });
 
     Route::controller(CNS\AdminEmailQueueController::class)->group(function () {
-        Route::get('email_queue', 'index')->name('admin_email_queue_list');
-        Route::get('email_queue/{email_queue}/message', 'show')->name('admin_email_queue_show');
-        Route::delete('email_queue/delete', 'destroy')->name('admin_email_queue_destroy');
+        Route::get('email_queue', 'index')->name('admin_email_queue_list')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::get('email_queue/{email_queue}/message', 'show')->name('admin_email_queue_show')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::delete('email_queue/delete', 'destroy')->name('admin_email_queue_destroy')->middleware(CheckMessagingFeatureStatus::class);;
     });
 
     Route::controller(CNS\AdminCarouselController::class)->group(function() {

@@ -61,23 +61,25 @@
         <div class="col-12">
             <h3>New stuff</h3>
         </div>
-        <div class="col-4">
-            <div class="card p-3 h-100">
-                <h5 class="card-title">Email Messaging</h5>
-                <div class="card-body">
-                 Mailer for general communication, work in progress.
-                    <div class="mt-3">
-                        <ul class="list-group">
-                            <li class="list-group-item"><a href="{{route('admin_messages')}}">List Messages
-                                ( {{$data['messages_count']}} {{Str::plural('message', $data['messages_count'])}} )</a></li>
-                            <li class="list-group-item"><a href="{{route('admin_message_create')}}">Create Messages</a></li>
-                            <li class="list-group-item"><a href="{{route('admin_email_queue_list')}}">View Mail Queue</a></li>
-                            <li class="list-group-item">{{$data['email_queue_count']}} messages currently in the queue</li>
-                        </ul>
+        @if(env('ENABLE_MESSAGING_FEATURE')==1)
+            <div class="col-4">
+                <div class="card p-3 h-100">
+                    <h5 class="card-title">Email Messaging</h5>
+                    <div class="card-body">
+                     Mailer for general communication, work in progress.
+                        <div class="mt-3">
+                            <ul class="list-group">
+                                <li class="list-group-item"><a href="{{route('admin_messages')}}">List Messages
+                                    ( {{$data['messages_count']}} {{Str::plural('message', $data['messages_count'])}} )</a></li>
+                                <li class="list-group-item"><a href="{{route('admin_message_create')}}">Create Messages</a></li>
+                                <li class="list-group-item"><a href="{{route('admin_email_queue_list')}}">View Mail Queue</a></li>
+                                <li class="list-group-item">{{$data['email_queue_count']}} messages currently in the queue</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
         <div class="col-4 h-100">
             <a href="{{ route('admin_faqs_list') }}">
                 <div class="card p-3">
@@ -98,7 +100,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-4 mt-2">
+        <div class="col-4 mt-2 h-100">
             <a href="{{ route('admin_qrcodes_list') }}">
                 <div class="card p-3">
                     <h5 class="card-title">QR Codes</h5>
