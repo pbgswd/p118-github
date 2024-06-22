@@ -36,7 +36,26 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->configureRateLimiting();
+        RateLimiter::for('post', function (Request $request) {
+            return [
+                Limit::perMinute(10)->by(optional($request->email) ?: $request->ip()),
+                Limit::perMinute(60),
+            ];
+        });
+
+        RateLimiter::for('global', function (Request $request) {
+            return [
+                Limit::perMinute(90)->by($request->ip()),
+                Limit::perMinute(1500),
+            ];
+        });
+
+        RateLimiter::for('download', function (Request $request) {
+            return [
+                Limit::perMinute(10)->by($request->ip()),
+                Limit::perMinute(20),
+            ];
+        });
 
         parent::boot();
 
@@ -142,34 +161,5 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
              //
             ->group(base_path('routes/api.php'));
-    }
-
-    /**
-     * Configure the rate limiters for the application.
-     *
-     * @return void
-     */
-    protected function configureRateLimiting()
-    {
-        RateLimiter::for('post', function (Request $request) {
-            return [
-                Limit::perMinute(10)->by(optional($request->email) ?: $request->ip()),
-                Limit::perMinute(60),
-            ];
-        });
-
-        RateLimiter::for('global', function (Request $request) {
-            return [
-                Limit::perMinute(90)->by($request->ip()),
-                Limit::perMinute(1500),
-            ];
-        });
-
-        RateLimiter::for('download', function (Request $request) {
-            return [
-                Limit::perMinute(10)->by($request->ip()),
-                Limit::perMinute(20),
-            ];
-        });
     }
 }
