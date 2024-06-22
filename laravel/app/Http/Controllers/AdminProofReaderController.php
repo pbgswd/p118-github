@@ -63,7 +63,7 @@ class AdminProofReaderController extends Controller
     /**
      * @return View
      */
-    public function update(Request $request, Proofreader $proofReader)
+    public function update(Request $request, Proofreader $proofReader): View
     {
 
         //todo form request validator

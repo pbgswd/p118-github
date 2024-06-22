@@ -12,7 +12,7 @@ class Phone implements Rule
      * @param  string  $attribute
      * @param  mixed  $value
      */
-    public function passes($attribute, $value): bool
+    public function passes(string $attribute, $value): bool
     {
         return preg_match('/^[0-9]*$/', trim($value))
             && strlen(trim($value)) >= 10

@@ -93,7 +93,7 @@ class AttachmentService
     /**
      * @param  int  $decimals
      */
-    public static function human_filesize($bytes, $decimals = 2): string
+    public static function human_filesize($bytes, int $decimals = 2): string
     {
         $factor = \floor((\strlen($bytes) - 1) / 3);
 

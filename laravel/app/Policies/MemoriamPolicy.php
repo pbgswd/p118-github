@@ -13,7 +13,7 @@ class MemoriamPolicy
     /**
      * @return bool
      */
-    public function before($user, $ability)
+    public function before($user, $ability): bool
     {
         $test = $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('create users');
         if ($test) {

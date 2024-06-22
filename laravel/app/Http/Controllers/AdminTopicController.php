@@ -40,7 +40,7 @@ class AdminTopicController extends Controller
         return view('admin.listtopics', ['data' => ['topics' => $topics]]);
     }
 
-    public function create()
+    public function create(): View
     {
         $this->authorize('create', Topic::class);
 

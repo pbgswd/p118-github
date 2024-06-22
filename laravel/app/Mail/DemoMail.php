@@ -27,7 +27,7 @@ class DemoMail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): static
     {
         return $this->subject('mail from peter local p118')
             ->view('emails.demoMail');

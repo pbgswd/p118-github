@@ -56,7 +56,7 @@ class CommitteePostPolicy
      * @param  CommitteePost  $committeePost
      * @return mixed
      */
-    public function delete(User $user, $committeePost): bool
+    public function delete(User $user, CommitteePost $committeePost): bool
     {
         return ($user->id == $committeePost->user_id) ||
             $user->hasPermissionTo('manage committee') ||

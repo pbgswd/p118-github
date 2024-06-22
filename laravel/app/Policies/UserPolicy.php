@@ -12,7 +12,7 @@ class UserPolicy
     /**
      * @return bool
      */
-    public function before($user, $ability)
+    public function before($user, $ability): bool
     {
         $test = $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('create users');
         if ($test) {
@@ -75,7 +75,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function admin_update(User $user)
+    public function admin_update(User $user): bool
     {
         return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('edit users');
     }

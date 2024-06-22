@@ -18,7 +18,7 @@ trait ModifiesInputTrait
      * @param  string[]  $keys
      * @return mixed[]
      */
-    public function all($keys = null): array
+    public function all(array $keys = null): array
     {
         // $this->all() can be called many times, but we only want to modify the data once.
         if (! $this->isInputModified) {

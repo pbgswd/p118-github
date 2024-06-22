@@ -12,7 +12,7 @@ class InviteUserPolicy
     /**
      * @return bool
      */
-    public function before($user)
+    public function before($user): bool
     {
         $test = $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('create users');
         if ($test) {
