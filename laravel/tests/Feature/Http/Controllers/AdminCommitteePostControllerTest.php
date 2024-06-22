@@ -14,7 +14,7 @@ class AdminCommitteePostControllerTest extends TestCase
      *
      * @group createok
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->get(route('admin_committee_post', [$this->committee]));
         $response->assertOk();
@@ -25,7 +25,7 @@ class AdminCommitteePostControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $this->markTestIncomplete(__FUNCTION__.' has issues.');
 
@@ -38,7 +38,7 @@ class AdminCommitteePostControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteePostController::class,
@@ -50,7 +50,7 @@ class AdminCommitteePostControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $this->markTestIncomplete(__FUNCTION__.' has issues.');
 
@@ -70,7 +70,7 @@ class AdminCommitteePostControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->get(route('committee_posts_list', [$this->committee]));
         $response->assertOk();
@@ -81,7 +81,7 @@ class AdminCommitteePostControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $this->markTestIncomplete(__FUNCTION__.' has issues.');
 
@@ -96,7 +96,7 @@ class AdminCommitteePostControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteePostController::class,
@@ -108,7 +108,7 @@ class AdminCommitteePostControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $this->markTestIncomplete(__FUNCTION__.' has issues.');
 
@@ -124,7 +124,7 @@ class AdminCommitteePostControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteePostController::class,

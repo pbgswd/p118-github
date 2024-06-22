@@ -12,7 +12,7 @@ class ReInviteUserControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $this->markTestSkipped(__FUNCTION__.' for reinvite user has not been written yet, has no code');
 

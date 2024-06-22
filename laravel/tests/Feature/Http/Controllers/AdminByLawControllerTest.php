@@ -14,7 +14,7 @@ class AdminByLawControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('admin_bylaw_create'));
 
@@ -28,7 +28,7 @@ class AdminByLawControllerTest extends TestCase
      *
      * @group
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $bylaw = \App\Models\Bylaw::factory()->create();
 
@@ -44,7 +44,7 @@ class AdminByLawControllerTest extends TestCase
      *
      * @group
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminByLawController::class,
@@ -56,7 +56,7 @@ class AdminByLawControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $bylaw = \App\Models\Bylaw::factory()->create();
 
@@ -73,7 +73,7 @@ class AdminByLawControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $bylaws = \App\Models\Bylaw::factory()->times(3)->create();
 
@@ -89,7 +89,7 @@ class AdminByLawControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $bylaw = \App\Models\Bylaw::factory()->make();
 
@@ -105,7 +105,7 @@ class AdminByLawControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminByLawController::class,
@@ -119,7 +119,7 @@ class AdminByLawControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $bylaw = \App\Models\Bylaw::factory()->create();
 
@@ -140,7 +140,7 @@ class AdminByLawControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminByLawController::class,

@@ -14,7 +14,7 @@ class FeatureControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $features = \App\Models\Feature::factory()->times(3)->create();
 
@@ -28,7 +28,7 @@ class FeatureControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $feature = \App\Models\Feature::factory()->create();
 

@@ -18,7 +18,7 @@ class AdminPageControllerTest extends TestCase
      *
      * @group createok
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('page_create'));
@@ -33,7 +33,7 @@ class AdminPageControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $page = \App\Models\Page::factory()->create();
 
@@ -46,7 +46,7 @@ class AdminPageControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminPageController::class,
@@ -60,7 +60,7 @@ class AdminPageControllerTest extends TestCase
      *
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $page = \App\Models\Page::factory()->create();
 
@@ -77,7 +77,7 @@ class AdminPageControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $pages = \App\Models\Page::factory()->times(3)->create();
 
@@ -93,7 +93,7 @@ class AdminPageControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $page = \App\Models\Page::factory()->make();
 
@@ -110,7 +110,7 @@ class AdminPageControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminPageController::class,
@@ -124,7 +124,7 @@ class AdminPageControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $page = \App\Models\Page::factory()->create();
         $data = Page::first();
@@ -140,7 +140,7 @@ class AdminPageControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminPageController::class,

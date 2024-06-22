@@ -23,7 +23,7 @@ class TopicFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $title = $this->faker->text(20);
 

@@ -17,7 +17,7 @@ class AdminProofReaderControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $proofreaders = \App\Models\Proofreader::factory()->times(3)->create();
 
@@ -35,7 +35,7 @@ class AdminProofReaderControllerTest extends TestCase
      *
      * @group entityok
      */
-    public function index_by_entity_returns_an_ok_response()
+    public function index_by_entity_returns_an_ok_response(): void
     {
         $proof = Proofreader::factory()->make();
 
@@ -58,7 +58,7 @@ class AdminProofReaderControllerTest extends TestCase
      *
      * @group syncok
      */
-    public function sync_returns_an_ok_response()
+    public function sync_returns_an_ok_response(): void
     {
 
         $response = $this->actingAs($this->admin_user)
@@ -72,7 +72,7 @@ class AdminProofReaderControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
 
         $types = ['CommitteePost', 'Post', 'Meeting', 'Feature'];

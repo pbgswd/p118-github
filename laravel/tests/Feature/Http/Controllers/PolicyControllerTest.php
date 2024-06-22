@@ -14,7 +14,7 @@ class PolicyControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $policies = \App\Models\Policy::factory()->times(3)->create();
 
@@ -28,7 +28,7 @@ class PolicyControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $policy = \App\Models\Policy::factory()->create();
 

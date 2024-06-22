@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         // add role
         Schema::table('users_committees_pivot', function (Blueprint $table) {
@@ -24,7 +24,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         //drop role
         Schema::table('users_committees_pivot', function (Blueprint $table) {

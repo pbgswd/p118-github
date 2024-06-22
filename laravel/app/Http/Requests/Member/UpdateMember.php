@@ -11,7 +11,7 @@ class UpdateMember extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class UpdateMember extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'user.email' => 'required|max:255|unique:users,email,'.$this->route('user')->id.',id',

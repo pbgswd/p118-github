@@ -14,7 +14,7 @@ class FaqDataFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'question' => 'Question '.$this->faker->words(5, true),

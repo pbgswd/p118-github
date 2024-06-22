@@ -12,7 +12,7 @@ class CommitteeControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('committees'));
@@ -27,7 +27,7 @@ class CommitteeControllerTest extends TestCase
      *
      * @group showok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('committee', $this->committee->slug));

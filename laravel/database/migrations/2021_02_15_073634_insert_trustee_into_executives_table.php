@@ -9,7 +9,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         DB::table('executives')->insert(
             [['title' => 'Trustee',
@@ -25,7 +25,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         $result = DB::table('executives')->where('title', 'Trustee')->get();
         DB::table('executive_user')->where('executive_id', $result->id)->delete();

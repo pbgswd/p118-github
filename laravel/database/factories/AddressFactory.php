@@ -12,7 +12,7 @@ class AddressFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'unit' => $this->faker->randomElement([$this->faker->numberBetween(1, 20), ' ']),

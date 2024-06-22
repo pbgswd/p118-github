@@ -26,7 +26,7 @@ class AssignRoleUser extends AccessControl
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         if ($this->argument('email') || $this->argument('role_name')) {
             $user = User::where('email', $this->argument('email'))->first();

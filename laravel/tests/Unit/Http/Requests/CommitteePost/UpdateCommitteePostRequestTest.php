@@ -22,7 +22,7 @@ class UpdateCommitteePostRequestTest extends TestCase
     /**
      * @test
      */
-    public function authorize()
+    public function authorize(): void
     {
         $actual = $this->subject->authorize();
 
@@ -32,7 +32,7 @@ class UpdateCommitteePostRequestTest extends TestCase
     /**
      * @test
      */
-    public function rules()
+    public function rules(): void
     {
         $this->markTestSkipped(__FUNCTION__.' in '.__FILE__.' cannot be tested without context');
 

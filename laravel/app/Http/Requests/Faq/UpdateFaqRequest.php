@@ -11,7 +11,7 @@ class UpdateFaqRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class UpdateFaqRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'faq.faq_topic' => 'required|max:255|unique:faqs,faq_topic,'.$this->route('any_faq')->slug.',slug',

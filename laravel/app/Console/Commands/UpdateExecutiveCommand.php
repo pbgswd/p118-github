@@ -37,7 +37,7 @@ class UpdateExecutiveCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('Update any expired executive status');
         Log::debug('running artisan command '.__CLASS__);

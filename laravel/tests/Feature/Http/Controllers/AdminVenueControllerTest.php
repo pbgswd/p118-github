@@ -18,7 +18,7 @@ class AdminVenueControllerTest extends TestCase
      *
      * @group createok
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('venue_create'));
@@ -33,7 +33,7 @@ class AdminVenueControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $venue = \App\Models\Venue::factory()->create();
 
@@ -48,7 +48,7 @@ class AdminVenueControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminVenueController::class,
@@ -62,7 +62,7 @@ class AdminVenueControllerTest extends TestCase
      *
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $venue = \App\Models\Venue::factory()->create();
 
@@ -79,7 +79,7 @@ class AdminVenueControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $venues = \App\Models\Venue::factory()->times(3)->create();
 
@@ -96,7 +96,7 @@ class AdminVenueControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $venue = \App\Models\Venue::factory()->make();
 
@@ -114,7 +114,7 @@ class AdminVenueControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminVenueController::class,
@@ -128,7 +128,7 @@ class AdminVenueControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $venue = \App\Models\Venue::factory()->create();
 
@@ -147,7 +147,7 @@ class AdminVenueControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminVenueController::class,

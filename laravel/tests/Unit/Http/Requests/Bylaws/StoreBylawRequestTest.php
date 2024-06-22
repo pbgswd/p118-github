@@ -22,7 +22,7 @@ class StoreBylawRequestTest extends TestCase
     /**
      * @test
      */
-    public function authorize()
+    public function authorize(): void
     {
         //
 
@@ -34,7 +34,7 @@ class StoreBylawRequestTest extends TestCase
     /**
      * @test
      */
-    public function rules()
+    public function rules(): void
     {
         //
 

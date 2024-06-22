@@ -15,7 +15,7 @@ class ByLawControllerTest extends TestCase
      *
      * @group listok
      */
-    public function list_returns_an_ok_response()
+    public function list_returns_an_ok_response(): void
     {
         $bylaws = Bylaw::factory()->times(3)->create();
 
@@ -31,7 +31,7 @@ class ByLawControllerTest extends TestCase
      *
      * @group showok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $bylaw = Bylaw::factory()->create();
 

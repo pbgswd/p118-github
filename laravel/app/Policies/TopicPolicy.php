@@ -14,7 +14,7 @@ class TopicPolicy
      *
      * @throws \Exception
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) ||
             $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
@@ -25,7 +25,7 @@ class TopicPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Topics $topics)
+    public function view(User $user, Topics $topics): bool
     {
         //public
     }
@@ -35,7 +35,7 @@ class TopicPolicy
      *
      * @throws \Exception
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
@@ -45,7 +45,7 @@ class TopicPolicy
      *
      * @throws \Exception
      */
-    public function update(User $user)
+    public function update(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);
     }
@@ -55,7 +55,7 @@ class TopicPolicy
      *
      * @throws \Exception
      */
-    public function delete(User $user)
+    public function delete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
@@ -65,7 +65,7 @@ class TopicPolicy
      *
      * @throws \Exception
      */
-    public function restore(User $user)
+    public function restore(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
@@ -75,7 +75,7 @@ class TopicPolicy
      *
      * @throws \Exception
      */
-    public function forceDelete(User $user)
+    public function forceDelete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }

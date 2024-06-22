@@ -16,7 +16,7 @@ class AdminOrganizationControllerTest extends TestCase
      *
      * @group createok
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingas($this->admin_user)->get(route('organization_create'));
 
@@ -30,7 +30,7 @@ class AdminOrganizationControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
 
         $organization = \App\Models\Organization::factory()->create();
@@ -47,7 +47,7 @@ class AdminOrganizationControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminOrganizationController::class,
@@ -61,7 +61,7 @@ class AdminOrganizationControllerTest extends TestCase
      *
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $organization = \App\Models\Organization::factory()->create();
 
@@ -79,7 +79,7 @@ class AdminOrganizationControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $organizations = \App\Models\Organization::factory()->times(3)->create();
 
@@ -96,7 +96,7 @@ class AdminOrganizationControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $organization = \App\Models\Organization::factory()->make();
 
@@ -114,7 +114,7 @@ class AdminOrganizationControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminOrganizationController::class,
@@ -128,7 +128,7 @@ class AdminOrganizationControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $organization = \App\Models\Organization::factory()->create();
 
@@ -145,7 +145,7 @@ class AdminOrganizationControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminOrganizationController::class,

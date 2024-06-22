@@ -14,7 +14,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function list_returns_an_ok_response()
+    public function list_returns_an_ok_response(): void
     {
         $organizations = \App\Models\Organization::factory()->times(3)->create();
 
@@ -28,7 +28,7 @@ class OrganizationControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $organization = \App\Models\Organization::factory()->create();
 

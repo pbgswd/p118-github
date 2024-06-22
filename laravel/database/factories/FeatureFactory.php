@@ -13,7 +13,7 @@ class FeatureFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'title' => 'Feature title '.$this->faker->word(),

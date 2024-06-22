@@ -14,7 +14,7 @@ class InviteUserControllerTest extends TestCase
      *
      * @group createok
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('invite-new-user'));
         $response->assertOk();
@@ -27,7 +27,7 @@ class InviteUserControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $inviteUser = \App\Models\InviteUser::factory()->create();
         $response = $this->actingAs($this->admin_user)
@@ -40,7 +40,7 @@ class InviteUserControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\InviteUserController::class,
@@ -52,7 +52,7 @@ class InviteUserControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $inviteUsers = \App\Models\InviteUser::factory()->times(3)->create();
         $response = $this->actingAs($this->admin_user)->get(route('admin_list_invited_users'));
@@ -66,7 +66,7 @@ class InviteUserControllerTest extends TestCase
      *
      * @group listimportok
      */
-    public function list_import_returns_an_ok_response()
+    public function list_import_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('list_import'));
         $response->assertOk();
@@ -77,7 +77,7 @@ class InviteUserControllerTest extends TestCase
     /**
      * @test
      */
-    public function process_import_invitation_returns_an_ok_response()
+    public function process_import_invitation_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('process_import_invitation'));
         $response->assertRedirect(route('list_import'));
@@ -88,7 +88,7 @@ class InviteUserControllerTest extends TestCase
      *
      * @group processok
      */
-    public function process_user_returns_an_ok_response()
+    public function process_user_returns_an_ok_response(): void
     {
         $inviteUser = \App\Models\InviteUser::factory()->create();
         $response = $this->get(route('invite_user_signup', [
@@ -114,7 +114,7 @@ class InviteUserControllerTest extends TestCase
     /**
      * @test
      */
-    public function process_user_validates_with_a_form_request()
+    public function process_user_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\InviteUserController::class,
@@ -128,7 +128,7 @@ class InviteUserControllerTest extends TestCase
      *
      * @group showinvitationok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $inviteUser = \App\Models\InviteUser::factory()->create();
         $response = $this->get(route('invite_user_signup', [
@@ -147,7 +147,7 @@ class InviteUserControllerTest extends TestCase
      *
      * @group storeinvitedok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $inviteUser = \App\Models\InviteUser::factory()->create();
 
@@ -161,7 +161,7 @@ class InviteUserControllerTest extends TestCase
     /**
      * @test
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\InviteUserController::class,

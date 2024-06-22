@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('topics', function (Blueprint $table) {
             $table->dropColumn('image');
@@ -34,7 +34,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('topics', function (Blueprint $table) {
             $table->string('image')->nullable()->after('description');

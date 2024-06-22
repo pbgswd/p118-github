@@ -16,7 +16,7 @@ class UserControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->user)->get(route('members'));
         $response->assertOk();
@@ -29,7 +29,7 @@ class UserControllerTest extends TestCase
      *
      * @group show
      */
-    public function not_authenticated_index_returns_a_response()
+    public function not_authenticated_index_returns_a_response(): void
     {
         Auth::logout();
         $response = $this->get(route('members'));
@@ -39,7 +39,7 @@ class UserControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->user)->get(route('member_edit', [$this->user]));
 
@@ -51,7 +51,7 @@ class UserControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_address_returns_an_ok_response()
+    public function edit_address_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->user)->get(route('member_address_edit', [$this->user]));
 
@@ -63,7 +63,7 @@ class UserControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_emergency_contact_returns_an_ok_response()
+    public function edit_emergency_contact_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->user)->get(route('edit_emergency_contact', [$this->user]));
 
@@ -75,7 +75,7 @@ class UserControllerTest extends TestCase
     /**
      * @test
      */
-    public function edit_password_returns_an_ok_response()
+    public function edit_password_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->user)->get(route('member_password_edit', [$this->user]));
 
@@ -89,7 +89,7 @@ class UserControllerTest extends TestCase
      *
      * @group show
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->user)->get(route('member', [$this->user]));
 
@@ -103,7 +103,7 @@ class UserControllerTest extends TestCase
      *
      * @group submit
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->user)->get(route('member_edit', [$this->user]));
 
@@ -130,7 +130,7 @@ class UserControllerTest extends TestCase
      *
      * @group submit
      */
-    public function original_update_returns_an_ok_response()
+    public function original_update_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->user)->post(env('APP_URL').'/member/'.$this->user->id.'/edit', [
             'user' => ['email' => $this->faker->email(),
@@ -151,7 +151,7 @@ class UserControllerTest extends TestCase
      *
      * @group form-request
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\UserController::class,
@@ -165,7 +165,7 @@ class UserControllerTest extends TestCase
      *
      * @group address
      */
-    public function update_address_returns_an_ok_response()
+    public function update_address_returns_an_ok_response(): void
     {
         $address = Address::factory()->make();
 
@@ -183,7 +183,7 @@ class UserControllerTest extends TestCase
      *
      * @group form-request
      */
-    public function update_address_validates_with_a_form_request()
+    public function update_address_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\UserController::class,
@@ -197,7 +197,7 @@ class UserControllerTest extends TestCase
      *
      * @group emergency
      */
-    public function update_emergency_contact_returns_an_ok_response()
+    public function update_emergency_contact_returns_an_ok_response(): void
     {
         $data = [
             'emergency_contact_name' => $this->faker->name(),
@@ -219,7 +219,7 @@ class UserControllerTest extends TestCase
      *
      * @group password
      */
-    public function update_emergency_contact_validates_with_a_form_request()
+    public function update_emergency_contact_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\UserController::class,
@@ -233,7 +233,7 @@ class UserControllerTest extends TestCase
      *
      * @group password
      */
-    public function update_password_returns_an_ok_response()
+    public function update_password_returns_an_ok_response(): void
     {
         $password = $this->faker->password();
         $data = [
@@ -258,7 +258,7 @@ class UserControllerTest extends TestCase
      *
      * @group password
      */
-    public function update_password_validates_with_a_form_request()
+    public function update_password_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\UserController::class,

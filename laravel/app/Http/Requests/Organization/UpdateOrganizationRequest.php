@@ -24,7 +24,7 @@ class UpdateOrganizationRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'organization.name' => 'required|max:255|unique:organizations,name,'.$this->route('any_organization')->slug.',slug',

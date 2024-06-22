@@ -15,7 +15,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group createok
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('admin_create_committee_members', [$this->committee, $this->user]));
@@ -30,7 +30,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         //todo get a user associated with the committee - know a user id and send it in
         //dd($this->committee->committee_members[0]->id);
@@ -57,7 +57,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteeMemberController::class,
@@ -71,7 +71,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('admin_edit_committee_members', [$this->committee, $this->user]));
@@ -86,7 +86,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('admin-list-committee-members', [$this->committee]));
@@ -101,7 +101,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group searchok
      */
-    public function search_returns_an_ok_response()
+    public function search_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->post(route('admin_search_committee_members', $this->committee),
@@ -119,7 +119,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group searchok
      */
-    public function search_validates_with_a_form_request()
+    public function search_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteeMemberController::class,
@@ -133,7 +133,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->post(route('admin_create_committee_members', [$this->committee, $this->user]),
@@ -149,7 +149,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteeMemberController::class,
@@ -163,7 +163,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         //todo update a member's status
         $response = $this->actingAs($this->admin_user)
@@ -181,7 +181,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteeMemberController::class,

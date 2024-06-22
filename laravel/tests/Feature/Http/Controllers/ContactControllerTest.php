@@ -14,7 +14,7 @@ class ContactControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $response = $this->get(route('contact'));
         $response->assertOk();
@@ -25,7 +25,7 @@ class ContactControllerTest extends TestCase
     /**
      * @test
      */
-    public function submit_returns_an_ok_response()
+    public function submit_returns_an_ok_response(): void
     {
         $this->markTestIncomplete(__FUNCTION__.' has issues. -- needs g-recaptcha-response');
         $contact = \App\Models\Contact::factory()->make();
@@ -39,7 +39,7 @@ class ContactControllerTest extends TestCase
     /**
      * @test
      */
-    public function submit_validates_with_a_form_request()
+    public function submit_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\ContactController::class,

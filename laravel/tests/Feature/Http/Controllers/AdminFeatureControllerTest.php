@@ -17,7 +17,7 @@ class AdminFeatureControllerTest extends TestCase
      *
      * @group createok
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('admin_feature_create'));
@@ -32,7 +32,7 @@ class AdminFeatureControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $feature = \App\Models\Feature::factory()->create();
 
@@ -48,7 +48,7 @@ class AdminFeatureControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminFeatureController::class,
@@ -62,7 +62,7 @@ class AdminFeatureControllerTest extends TestCase
      *
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $feature = \App\Models\Feature::factory()->create();
 
@@ -79,7 +79,7 @@ class AdminFeatureControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $features = \App\Models\Feature::factory()->times(3)->create();
 
@@ -96,7 +96,7 @@ class AdminFeatureControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $feature = Feature::factory()->make();
 
@@ -113,7 +113,7 @@ class AdminFeatureControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminFeatureController::class,
@@ -127,7 +127,7 @@ class AdminFeatureControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $feature = \App\Models\Feature::factory()->create();
 
@@ -149,7 +149,7 @@ class AdminFeatureControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminFeatureController::class,

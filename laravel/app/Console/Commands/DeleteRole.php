@@ -25,7 +25,7 @@ class DeleteRole extends AccessControl
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         if ($this->argument('role_name')) {
             $role = Role::where('name', $this->argument('role_name'))->first();

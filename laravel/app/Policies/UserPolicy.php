@@ -25,7 +25,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
        $user->hasPermissionTo('create users');
@@ -36,7 +36,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function view(User $loggedInUser, User $targetUser)
+    public function view(User $loggedInUser, User $targetUser): bool
     {
         $test = ($loggedInUser->id === $targetUser->id) || $loggedInUser->can('edit users') ||
             ($targetUser->user_info->show_profile ?? 0) == 1;
@@ -56,7 +56,7 @@ class UserPolicy
     /**
      * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
@@ -65,7 +65,7 @@ class UserPolicy
     /**
      * @return bool
      */
-    public function update(User $loggedInUser, User $targetUser)
+    public function update(User $loggedInUser, User $targetUser): bool
     {
         return $loggedInUser->id === $targetUser->id;
     }
@@ -85,7 +85,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function delete(User $user)
+    public function delete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('delete users');
@@ -96,7 +96,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function restore(User $user)
+    public function restore(User $user): bool
     {
         return $user->hasRole('super-admin');
     }
@@ -106,7 +106,7 @@ class UserPolicy
      *
      * @return bool
      */
-    public function forceDelete(User $user)
+    public function forceDelete(User $user): bool
     {
         return $user->hasRole('super-admin');
     }

@@ -11,7 +11,7 @@ class QrcodeControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_example(): void
     {
         $response = $this->get('/');
 

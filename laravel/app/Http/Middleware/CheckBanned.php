@@ -15,7 +15,7 @@ class CheckBanned
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return Response|RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): \Symfony\Component\HttpFoundation\Response
     {
         if (auth()->check() && (auth()->user()->is_banned == 1)) {
             auth()->logout();

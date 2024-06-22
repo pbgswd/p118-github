@@ -13,7 +13,7 @@ class UserTest extends TestCase
      * @return void
      */
     //    use RefreshDatabase; // deletes all data
-    public function testBasicTest()
+    public function testBasicTest(): void
     {
         $response = $this->get('/');
         if ($response->assertStatus(Response::HTTP_OK)) {

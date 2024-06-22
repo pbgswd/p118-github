@@ -26,7 +26,7 @@ class MemoriamPolicy
      *
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
@@ -37,7 +37,7 @@ class MemoriamPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Memoriam $memoriam)
+    public function view(User $user, Memoriam $memoriam): bool
     {
         //
     }
@@ -47,7 +47,7 @@ class MemoriamPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
@@ -56,7 +56,7 @@ class MemoriamPolicy
     /**
      * @return bool
      */
-    public function update(User $user, Memoriam $memoriam)
+    public function update(User $user, Memoriam $memoriam): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
@@ -65,7 +65,7 @@ class MemoriamPolicy
     /**
      * @return bool
      */
-    public function delete(User $user, Memoriam $memoriam)
+    public function delete(User $user, Memoriam $memoriam): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
@@ -74,7 +74,7 @@ class MemoriamPolicy
     /**
      * @return bool
      */
-    public function restore(User $user, Memoriam $memoriam)
+    public function restore(User $user, Memoriam $memoriam): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
@@ -83,7 +83,7 @@ class MemoriamPolicy
     /**
      * @return bool
      */
-    public function forceDelete(User $user, Memoriam $memoriam)
+    public function forceDelete(User $user, Memoriam $memoriam): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');

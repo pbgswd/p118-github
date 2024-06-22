@@ -26,7 +26,7 @@ class AttachPermissionRole extends AccessControl
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         if ($this->argument('permission_name') || $this->argument('role_name')) {
             $permission = Permission::where('name', $this->argument('permission_name'))->first();

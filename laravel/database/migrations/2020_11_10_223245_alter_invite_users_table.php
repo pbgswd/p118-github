@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('invite_users', function (Blueprint $table) {
             $table->string('membership_type')
@@ -25,7 +25,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('invite_users', function (Blueprint $table) {
             $table->dropColumn('membership_type');

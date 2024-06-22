@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         // in_menu allow-comments to front_page landing_page
         Schema::table('posts', function (Blueprint $table) {
@@ -25,7 +25,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         //front_page landing_page to in_menu allow-comments
         Schema::table('posts', function (Blueprint $table) {

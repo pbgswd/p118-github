@@ -15,7 +15,7 @@ class CommitteePostControllerTest extends TestCase
      *
      * @group createok
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->committee_admin_user)
             ->get(route('committee_add_public_post', [$this->committee]));
@@ -31,7 +31,7 @@ class CommitteePostControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $post = CommitteePost::find($this->committeePost);
         //dd($post);
@@ -50,7 +50,7 @@ class CommitteePostControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\CommitteePostController::class,
@@ -64,7 +64,7 @@ class CommitteePostControllerTest extends TestCase
      *
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->committee_admin_user)
             ->get(route('committee_post_edit_form', [$this->committee, $this->committeePost]));
@@ -78,7 +78,7 @@ class CommitteePostControllerTest extends TestCase
      *
      * @group showok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->committee_admin_user)
             ->get(route('public_committee_post_show', [$this->committee, $this->committeePost]));
@@ -93,7 +93,7 @@ class CommitteePostControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         //$post = CommitteePost::factory()->make();
 
@@ -113,7 +113,7 @@ class CommitteePostControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\CommitteePostController::class,
@@ -127,7 +127,7 @@ class CommitteePostControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
 
         $post = CommitteePost::find($this->committeePost);
@@ -150,7 +150,7 @@ class CommitteePostControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\CommitteePostController::class,

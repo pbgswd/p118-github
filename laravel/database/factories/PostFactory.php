@@ -12,7 +12,7 @@ class PostFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         //todo should user be user with permissions admin_user?
         return [

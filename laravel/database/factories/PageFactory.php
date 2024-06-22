@@ -13,7 +13,7 @@ class PageFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $title = $this->faker->sentence();
 

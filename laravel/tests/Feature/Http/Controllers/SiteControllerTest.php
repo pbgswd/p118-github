@@ -12,7 +12,7 @@ class SiteControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $user = \App\Models\User::factory()->create();
 

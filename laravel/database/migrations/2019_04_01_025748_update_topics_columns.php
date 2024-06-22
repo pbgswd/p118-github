@@ -10,7 +10,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         DB::statement('ALTER TABLE topics CHANGE live live TINYINT UNSIGNED NOT NULL DEFAULT 0');
         DB::statement('ALTER TABLE topics CHANGE in_menu in_menu TINYINT UNSIGNED NOT NULL DEFAULT 0');
@@ -22,7 +22,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('topics', function ($table) {
             $table->dropColumn('live');

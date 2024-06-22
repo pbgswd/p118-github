@@ -12,7 +12,7 @@ class RoleControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('roles_list'));

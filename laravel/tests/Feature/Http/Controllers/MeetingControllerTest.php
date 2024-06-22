@@ -12,7 +12,7 @@ class MeetingControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $meetings = \App\Models\Meeting::factory()->times(3)->create();
         $response = $this->actingAs($this->user)->get(route('list_meetings'));
@@ -26,7 +26,7 @@ class MeetingControllerTest extends TestCase
      *
      * @indexyearok
      */
-    public function index_by_year_returns_an_ok_response()
+    public function index_by_year_returns_an_ok_response(): void
     {
         $meeting = \App\Models\Meeting::factory()->create();
         $meetings = \App\Models\Meeting::factory()->times(3)->create();
@@ -39,7 +39,7 @@ class MeetingControllerTest extends TestCase
     /**
      * @test
      */
-    public function post_year_returns_an_ok_response()
+    public function post_year_returns_an_ok_response(): void
     {
         $meeting = \App\Models\Meeting::factory()->create();
         $year = date_format($meeting->date, 'Y');
@@ -52,7 +52,7 @@ class MeetingControllerTest extends TestCase
     /**
      * @test
      */
-    public function post_year_validates_with_a_form_request()
+    public function post_year_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\MeetingController::class,
@@ -66,7 +66,7 @@ class MeetingControllerTest extends TestCase
      *
      * @showok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $meeting = \App\Models\Meeting::factory()->create();
         $response = $this->actingAs($this->user)->get(route('meeting', [$meeting->id]));

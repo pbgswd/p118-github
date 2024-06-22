@@ -12,7 +12,7 @@ class UpdateExecutiveCommandTest extends TestCase
     /**
      * @test
      */
-    public function it_runs_successfully()
+    public function it_runs_successfully(): void
     {
         $this->artisan('executive:update')
             ->assertExitCode(0)

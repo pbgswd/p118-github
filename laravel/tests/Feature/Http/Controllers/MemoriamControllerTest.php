@@ -14,7 +14,7 @@ class MemoriamControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         //  $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
@@ -31,7 +31,7 @@ class MemoriamControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         //  $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 

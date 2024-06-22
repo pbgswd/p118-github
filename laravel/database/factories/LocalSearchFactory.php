@@ -12,7 +12,7 @@ class LocalSearchFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             //todo there may be nothing to add for this factory, just leaving it in for now.

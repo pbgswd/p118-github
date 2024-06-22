@@ -26,7 +26,7 @@ class FaqPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Faq $faq)
+    public function view(User $user, Faq $faq): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }

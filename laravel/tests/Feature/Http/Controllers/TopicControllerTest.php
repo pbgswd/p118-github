@@ -12,7 +12,7 @@ class TopicControllerTest extends TestCase
     /**
      * @test
      */
-    public function list_returns_an_ok_response()
+    public function list_returns_an_ok_response(): void
     {
         $topics = \App\Models\Topic::factory()->times(3)->create();
         $response = $this->get(route('topics'));
@@ -26,7 +26,7 @@ class TopicControllerTest extends TestCase
      *
      * @showok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $topic = \App\Models\Topic::factory()->create();
         $response = $this->get(route('topic_show', [$topic]));

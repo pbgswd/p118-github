@@ -25,7 +25,7 @@ class DeletePermission extends AccessControl
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         if ($this->argument('permission_name')) {
             $perm = Permission::where('name', $this->argument('permission_name'))->first();

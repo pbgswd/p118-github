@@ -14,7 +14,7 @@ class LocalSearchControllerTest extends TestCase
      *
      * @group adminsearchreturnsok
      */
-    public function admin_attachment_search_returns_an_ok_response()
+    public function admin_attachment_search_returns_an_ok_response(): void
     {
         $attachment = \App\Models\Attachment::factory()->create();
 
@@ -31,7 +31,7 @@ class LocalSearchControllerTest extends TestCase
     /**
      * @test
      */
-    public function admin_attachment_search_validates_with_a_form_request()
+    public function admin_attachment_search_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\LocalSearchController::class,
@@ -45,7 +45,7 @@ class LocalSearchControllerTest extends TestCase
      *
      * @group amsearchok
      */
-    public function admin_search_returns_an_ok_response()
+    public function admin_search_returns_an_ok_response(): void
     {
         $post = \App\Models\Post::factory()->create(['user_id' => $this->admin_user]);
 
@@ -61,7 +61,7 @@ class LocalSearchControllerTest extends TestCase
     /**
      * @test
      */
-    public function admin_search_validates_with_a_form_request()
+    public function admin_search_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\LocalSearchController::class,
@@ -73,7 +73,7 @@ class LocalSearchControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_validates_with_a_form_request()
+    public function index_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\LocalSearchController::class,

@@ -15,7 +15,7 @@ class FaqFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         $topic = 'Topic '.$this->faker->words(2, true);
 

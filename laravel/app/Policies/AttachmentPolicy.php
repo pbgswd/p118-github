@@ -19,7 +19,7 @@ class AttachmentPolicy
      *
      * @throws \Exception
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         //todo https://laravel.com/docs/6.x/authorization#policy-responses
 
@@ -37,7 +37,7 @@ class AttachmentPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Attachment $attachment)
+    public function view(User $user, Attachment $attachment): bool
     {
         //
     }
@@ -47,7 +47,7 @@ class AttachmentPolicy
      *
      * @throws \Exception
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         // admin policy
         if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
@@ -64,7 +64,7 @@ class AttachmentPolicy
      *
      * @throws \Exception
      */
-    public function update(User $user, Attachment $attachment)
+    public function update(User $user, Attachment $attachment): bool
     {
         // admin policy
         if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
@@ -83,7 +83,7 @@ class AttachmentPolicy
      *
      * @throws \Exception
      */
-    public function delete(User $user, Attachment $attachment)
+    public function delete(User $user, Attachment $attachment): bool
     {
         // admin policy
         if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
@@ -102,7 +102,7 @@ class AttachmentPolicy
      *
      * @throws \Exception
      */
-    public function restore(User $user, Attachment $attachment)
+    public function restore(User $user, Attachment $attachment): bool
     {
         // admin policy
         if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {
@@ -121,7 +121,7 @@ class AttachmentPolicy
      *
      * @throws \Exception
      */
-    public function forceDelete(User $user, Attachment $attachment)
+    public function forceDelete(User $user, Attachment $attachment): bool
     {
         // admin policy
         if ($user->hasAnyRole(['super-admin', 'moderator', 'writer'])) {

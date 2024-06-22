@@ -14,7 +14,7 @@ class BylawPolicy
      *
      * @throws \Exception
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) ||
             $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
@@ -23,7 +23,7 @@ class BylawPolicy
     /**
      * @return bool
      */
-    public function view(User $user)
+    public function view(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
@@ -33,7 +33,7 @@ class BylawPolicy
      *
      * @throws \Exception
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
@@ -41,7 +41,7 @@ class BylawPolicy
     /**
      * @return bool
      */
-    public function update(User $user)
+    public function update(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);
     }
@@ -49,7 +49,7 @@ class BylawPolicy
     /**
      * @return bool
      */
-    public function delete(User $user)
+    public function delete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
@@ -57,7 +57,7 @@ class BylawPolicy
     /**
      * @return bool
      */
-    public function restore(User $user)
+    public function restore(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
@@ -65,7 +65,7 @@ class BylawPolicy
     /**
      * @return bool
      */
-    public function forceDelete(User $user)
+    public function forceDelete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }

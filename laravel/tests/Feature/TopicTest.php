@@ -16,7 +16,7 @@ class TopicTest extends TestCase
      * @return void
      */
     //    use RefreshDatabase; // deletes all data
-    public function testBasicTest()
+    public function testBasicTest(): void
     {
         //todo this is an old test, it can be thrown out
 

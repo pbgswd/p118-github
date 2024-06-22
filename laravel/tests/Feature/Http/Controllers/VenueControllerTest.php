@@ -12,7 +12,7 @@ class VenueControllerTest extends TestCase
     /**
      * @test
      */
-    public function list_returns_an_ok_response()
+    public function list_returns_an_ok_response(): void
     {
         // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
@@ -28,7 +28,7 @@ class VenueControllerTest extends TestCase
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 

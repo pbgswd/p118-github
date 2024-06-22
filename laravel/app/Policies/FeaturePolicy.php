@@ -15,7 +15,7 @@ class FeaturePolicy
      *
      * @throws \Exception
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) ||
             $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
@@ -26,7 +26,7 @@ class FeaturePolicy
      *
      * @return mixed
      */
-    public function view(User $user, Feature $Feature)
+    public function view(User $user, Feature $Feature): bool
     {
         //
     }
@@ -36,7 +36,7 @@ class FeaturePolicy
      *
      * @throws \Exception
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
@@ -46,7 +46,7 @@ class FeaturePolicy
      *
      * @throws \Exception
      */
-    public function update(User $user)
+    public function update(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);
     }
@@ -56,7 +56,7 @@ class FeaturePolicy
      *
      * @throws \Exception
      */
-    public function delete(User $user)
+    public function delete(User $user): bool
     {
         // admin moderator
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
@@ -65,7 +65,7 @@ class FeaturePolicy
     /**
      * @return bool
      */
-    public function restore(User $user)
+    public function restore(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
@@ -73,7 +73,7 @@ class FeaturePolicy
     /**
      * @return bool
      */
-    public function forceDelete(User $user)
+    public function forceDelete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }

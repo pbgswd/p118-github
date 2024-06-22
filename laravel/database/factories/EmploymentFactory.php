@@ -13,7 +13,7 @@ class EmploymentFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'title' => 'Job Posting with '.$this->faker->company(),

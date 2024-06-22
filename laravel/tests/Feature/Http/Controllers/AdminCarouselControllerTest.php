@@ -15,7 +15,7 @@ class AdminCarouselControllerTest extends TestCase
      *
      * @group createok
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('admin_carousel_list'));
 
@@ -46,7 +46,7 @@ class AdminCarouselControllerTest extends TestCase
      *
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $carousel = \App\Models\Carousel::factory()->create();
 
@@ -61,7 +61,7 @@ class AdminCarouselControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('admin_carousel_list'));
 
@@ -91,7 +91,7 @@ class AdminCarouselControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $carousel = \App\Models\Carousel::factory()->make();
         $response = $this->actingAs($this->admin_user)->post(route('admin_carousel_store'), [
@@ -106,7 +106,7 @@ class AdminCarouselControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $carousel = \App\Models\Carousel::factory()->create();
 

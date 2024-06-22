@@ -12,7 +12,7 @@ class OrganizationFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $name = $this->faker->company().' organization';
         $file_name = ''; // strtolower($this->faker->text(5));

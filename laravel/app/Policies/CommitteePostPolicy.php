@@ -15,7 +15,7 @@ class CommitteePostPolicy
      *
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user;
     }
@@ -23,7 +23,7 @@ class CommitteePostPolicy
     /**
      * @return bool
      */
-    public function view(User $user)
+    public function view(User $user): bool
     {
         return $user;
     }
@@ -31,7 +31,7 @@ class CommitteePostPolicy
     /**
      * @return bool
      */
-    public function create(User $user, $committee)
+    public function create(User $user, $committee): bool
     {
         return $committee->active_committee_members->find($user->id) !== null ||
             $user->hasPermissionTo('manage committee') ||
@@ -42,7 +42,7 @@ class CommitteePostPolicy
     /**
      * @return bool
      */
-    public function update(User $user, $committeePost)
+    public function update(User $user, $committeePost): bool
     {
         return ($user->id == $committeePost->user_id) ||
             $user->hasPermissionTo('manage committee') ||
@@ -56,7 +56,7 @@ class CommitteePostPolicy
      * @param  CommitteePost  $committeePost
      * @return mixed
      */
-    public function delete(User $user, $committeePost)
+    public function delete(User $user, $committeePost): bool
     {
         return ($user->id == $committeePost->user_id) ||
             $user->hasPermissionTo('manage committee') ||

@@ -16,7 +16,7 @@ class AdminControllerTest extends TestCase
      *
      * @group blankok
      */
-    public function blank_returns_an_ok_response()
+    public function blank_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('blank'));
 
@@ -29,7 +29,7 @@ class AdminControllerTest extends TestCase
      *
      * @group devok
      */
-    public function developer_returns_an_ok_response()
+    public function developer_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('developer'));
 
@@ -42,7 +42,7 @@ class AdminControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('admin'));
 

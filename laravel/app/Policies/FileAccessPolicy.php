@@ -15,7 +15,7 @@ class FileAccessPolicy
      *
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         //
     }
@@ -25,7 +25,7 @@ class FileAccessPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Attachment $attachment)
+    public function view(User $user, Attachment $attachment): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class FileAccessPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         //
     }
@@ -45,7 +45,7 @@ class FileAccessPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Attachment $attachment)
+    public function update(User $user, Attachment $attachment): bool
     {
         //
     }
@@ -55,7 +55,7 @@ class FileAccessPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Attachment $attachment)
+    public function delete(User $user, Attachment $attachment): bool
     {
         //
     }
@@ -65,7 +65,7 @@ class FileAccessPolicy
      *
      * @return mixed
      */
-    public function restore(User $user, Attachment $attachment)
+    public function restore(User $user, Attachment $attachment): bool
     {
         //
     }
@@ -75,7 +75,7 @@ class FileAccessPolicy
      *
      * @return mixed
      */
-    public function forceDelete(User $user, Attachment $attachment)
+    public function forceDelete(User $user, Attachment $attachment): bool
     {
         //
     }

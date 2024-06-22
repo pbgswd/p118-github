@@ -16,7 +16,7 @@ class AdminCommitteeControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_returns_an_ok_response()
+    public function create_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('committee_create'));
 
@@ -30,7 +30,7 @@ class AdminCommitteeControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->committee_admin_user)
             ->delete(route('committee_destroy'), ['id' => $this->committee->id]);
@@ -42,7 +42,7 @@ class AdminCommitteeControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteeController::class,
@@ -56,7 +56,7 @@ class AdminCommitteeControllerTest extends TestCase
      *
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('committee_edit', $this->committee->slug));
 
@@ -70,7 +70,7 @@ class AdminCommitteeControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('committees_list'));
 
@@ -84,7 +84,7 @@ class AdminCommitteeControllerTest extends TestCase
      *
      * @group showok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('admin_committee_show', ['any_committee' => $this->committee->slug]));
@@ -99,7 +99,7 @@ class AdminCommitteeControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response(): void
     {
         $committee = Committee::factory()
             ->make(['user_id' => $this->user->id]);
@@ -117,7 +117,7 @@ class AdminCommitteeControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteeController::class,
@@ -131,7 +131,7 @@ class AdminCommitteeControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $data = Committee::find($this->committee->id);
 
@@ -159,7 +159,7 @@ class AdminCommitteeControllerTest extends TestCase
      *
      *  @group updateok
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminCommitteeController::class,

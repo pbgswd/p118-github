@@ -27,7 +27,7 @@ class UpdateEmploymentStatusCommand extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         Log::debug('running command '.__CLASS__.' '.date('Y-m-d H:i:s'));
 

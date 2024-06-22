@@ -14,7 +14,7 @@ class CarouselControllerTest extends TestCase
      *
      * @group showok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $carousel = \App\Models\Carousel::factory()->create();
 

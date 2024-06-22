@@ -12,7 +12,7 @@ class VenueFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $name = $this->faker->company().' hall venue';
         $slug = strtolower($name);

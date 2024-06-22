@@ -12,7 +12,7 @@ class CommitteePostFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         //todo post and user has to be associated with committee
         return [

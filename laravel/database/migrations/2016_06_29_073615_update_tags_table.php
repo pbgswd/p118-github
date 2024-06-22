@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::table('tagging_tags', function ($table) {
             $table->integer('tag_group_id')->unsigned()->nullable()->after('id');
@@ -12,7 +12,7 @@ return new class extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::disableForeignKeyConstraints();
         Schema::table('tagging_tags', function ($table) {

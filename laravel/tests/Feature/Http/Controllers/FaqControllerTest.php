@@ -12,7 +12,7 @@ class FaqControllerTest extends TestCase
      *
      * @group listok
      */
-    public function list_returns_an_ok_response()
+    public function list_returns_an_ok_response(): void
     {
         $faqs = Faq::factory()->times(3)->create();
 
@@ -28,7 +28,7 @@ class FaqControllerTest extends TestCase
      *
      * @group showok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $faq = Faq::factory()->create();
 

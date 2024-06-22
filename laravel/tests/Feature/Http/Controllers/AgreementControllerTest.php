@@ -16,7 +16,7 @@ class AgreementControllerTest extends TestCase
      *
      * @group listok
      */
-    public function list_returns_an_ok_response()
+    public function list_returns_an_ok_response(): void
     {
         $agreements = \App\Models\Agreement::factory()->times(3)->create();
 
@@ -32,7 +32,7 @@ class AgreementControllerTest extends TestCase
      *
      * @group showok
      */
-    public function show_returns_an_ok_response()
+    public function show_returns_an_ok_response(): void
     {
         $agreement = \App\Models\Agreement::factory()->create();
 

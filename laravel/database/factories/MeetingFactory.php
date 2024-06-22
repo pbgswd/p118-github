@@ -18,7 +18,7 @@ class MeetingFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $this->user = User::factory()
             ->has(UserInfo::factory(), 'user_info')

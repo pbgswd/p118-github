@@ -15,7 +15,7 @@ class PolicyPolicy
      *
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         //
     }
@@ -25,7 +25,7 @@ class PolicyPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Policy $policy)
+    public function view(User $user, Policy $policy): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class PolicyPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         //
     }
@@ -45,7 +45,7 @@ class PolicyPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Policy $policy)
+    public function update(User $user, Policy $policy): bool
     {
         //
     }
@@ -55,7 +55,7 @@ class PolicyPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Policy $policy)
+    public function delete(User $user, Policy $policy): bool
     {
         //
     }
@@ -65,7 +65,7 @@ class PolicyPolicy
      *
      * @return mixed
      */
-    public function restore(User $user, Policy $policy)
+    public function restore(User $user, Policy $policy): bool
     {
         //
     }
@@ -75,7 +75,7 @@ class PolicyPolicy
      *
      * @return mixed
      */
-    public function forceDelete(User $user, Policy $policy)
+    public function forceDelete(User $user, Policy $policy): bool
     {
         //
     }

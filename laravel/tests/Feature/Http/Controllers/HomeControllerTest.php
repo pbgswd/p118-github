@@ -17,7 +17,7 @@ class HomeControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->user)->get(route('landing_page'));
         $response->assertOk();
@@ -29,7 +29,7 @@ class HomeControllerTest extends TestCase
      *
      * @group indexnot
      */
-    public function index_unauthenticated_returns_an_ok_response()
+    public function index_unauthenticated_returns_an_ok_response(): void
     {
         Auth::logout();
         $response = $this->get(route('home'));

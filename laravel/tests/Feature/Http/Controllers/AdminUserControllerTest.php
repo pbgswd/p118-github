@@ -17,7 +17,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group edit_address_ok
      */
-    public function admin_edit_address_returns_an_ok_response()
+    public function admin_edit_address_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('admin_edit_address', $this->user->id));
@@ -32,7 +32,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group edit_emerg_ok
      */
-    public function admin_edit_emergency_contact_returns_an_ok_response()
+    public function admin_edit_emergency_contact_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->get(route('admin_edit_emergency_contact', $this->user));
@@ -47,7 +47,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group update_addr_ok
      */
-    public function admin_update_address_returns_an_ok_response()
+    public function admin_update_address_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->post('admin/user/'.$this->user->id.'/address/edit', [
@@ -66,7 +66,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group update_addr_ok
      */
-    public function admin_update_address_validates_with_a_form_request()
+    public function admin_update_address_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,
@@ -80,7 +80,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group update_emerg_ok
      */
-    public function admin_update_emergency_contact_returns_an_ok_response()
+    public function admin_update_emergency_contact_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->post('admin/user/'.$this->user->id.'/emergency_contact/edit', [
@@ -98,7 +98,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group update_emerg_ok
      */
-    public function admin_update_emergency_contact_validates_with_a_form_request()
+    public function admin_update_emergency_contact_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,
@@ -127,7 +127,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group destroyok
      */
-    public function destroy_returns_an_ok_response()
+    public function destroy_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)
             ->delete(route('user_destroy', ['id' => $this->user->id]));
@@ -140,7 +140,7 @@ class AdminUserControllerTest extends TestCase
     /**
      * @test
      */
-    public function destroy_validates_with_a_form_request()
+    public function destroy_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,
@@ -154,7 +154,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group editok
      */
-    public function edit_returns_an_ok_response()
+    public function edit_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('user_edit', $this->user));
 
@@ -168,7 +168,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group indexok
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $response = $this->actingAs($this->admin_user)->get(route('users_list'));
 
@@ -182,7 +182,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group storeok
      */
-    public function store_validates_with_a_form_request()
+    public function store_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,
@@ -196,7 +196,7 @@ class AdminUserControllerTest extends TestCase
      *
      * @group updateok
      */
-    public function update_returns_an_ok_response()
+    public function update_returns_an_ok_response(): void
     {
         $user = User::find($this->user->id);
 
@@ -226,7 +226,7 @@ class AdminUserControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_validates_with_a_form_request()
+    public function update_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
             \App\Http\Controllers\AdminUserController::class,

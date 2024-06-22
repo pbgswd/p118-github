@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class PublicContactFormTest extends TestCase
 {
-    public function testPublicContactPage()
+    public function testPublicContactPage(): void
     {
         $date = new \DateTime();
         $date->setTimezone(new \DateTimeZone('America/Vancouver'));

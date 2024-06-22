@@ -14,7 +14,7 @@ class ExecutiveControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function index_returns_an_ok_response(): void
     {
         $executives = \App\Models\Executive::factory()->times(3)->create();
         $response = $this->get(route('executive'));

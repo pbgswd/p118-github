@@ -12,7 +12,7 @@ class ExecutiveSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('executives')->insert([
             ['title' => 'President', 'email' => 'president@iatse118.com'],

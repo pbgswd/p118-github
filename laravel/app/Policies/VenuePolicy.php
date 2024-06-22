@@ -15,13 +15,13 @@ class VenuePolicy
      *
      * @throws \Exception
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) ||
             $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
     }
 
-    public function view(User $user, Venue $venue)
+    public function view(User $user, Venue $venue): bool
     {
         //public?
     }
@@ -31,7 +31,7 @@ class VenuePolicy
      *
      * @throws \Exception
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
@@ -41,7 +41,7 @@ class VenuePolicy
      *
      * @throws \Exception
      */
-    public function update(User $user)
+    public function update(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);
     }
@@ -51,7 +51,7 @@ class VenuePolicy
      *
      * @throws \Exception
      */
-    public function delete(User $user)
+    public function delete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
@@ -61,7 +61,7 @@ class VenuePolicy
      *
      * @throws \Exception
      */
-    public function restore(User $user)
+    public function restore(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
@@ -71,7 +71,7 @@ class VenuePolicy
      *
      * @throws \Exception
      */
-    public function forceDelete(User $user)
+    public function forceDelete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
