@@ -12,7 +12,7 @@ class DestroyAgreementRequestTest extends TestCase
     /** @var \App\Http\Requests\Agreements\DestroyAgreementRequest */
     private $subject;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

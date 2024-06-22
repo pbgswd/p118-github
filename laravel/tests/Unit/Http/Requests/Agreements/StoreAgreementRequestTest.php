@@ -12,7 +12,7 @@ class StoreAgreementRequestTest extends TestCase
     /** @var \App\Http\Requests\Agreements\StoreAgreementRequest */
     private $subject;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

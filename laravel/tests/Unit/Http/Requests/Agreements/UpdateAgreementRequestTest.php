@@ -12,7 +12,7 @@ class UpdateAgreementRequestTest extends TestCase
     /** @var \App\Http\Requests\Agreements\UpdateAgreementRequest */
     private $subject;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

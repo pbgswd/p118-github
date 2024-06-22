@@ -12,7 +12,7 @@ class DestroyBylawRequestTest extends TestCase
     /** @var \App\Http\Requests\Bylaws\DestroyBylawRequest */
     private $subject;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
