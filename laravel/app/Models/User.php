@@ -69,10 +69,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
         'is_banned',
     ];
 
-    protected $dates = [
-        'banned_until',
-    ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -87,6 +83,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
      * The attributes that should be cast to native types.
      */
     protected $casts = [
+        'banned_until' => 'datetime',
         'email_verified_at' => 'datetime',
     ];
 

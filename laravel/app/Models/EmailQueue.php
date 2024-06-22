@@ -23,11 +23,6 @@ class EmailQueue extends Model
     /**
      * @var string[]
      */
-    public $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
     public function getAttachmentFolder(): string
     {
         return 'messages';

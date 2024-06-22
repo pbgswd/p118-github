@@ -51,11 +51,6 @@ class FaqData extends LiveableModel implements Searchable
         'updated_at',
     ];
 
-    public $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
     public $casts = [
         'live' => 'boolean',
     ];
