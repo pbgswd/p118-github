@@ -11,7 +11,6 @@ class FeaturePolicy
     use HandlesAuthorization;
 
     /**
-     *
      * @throws \Exception
      */
     public function viewAny(User $user): bool
@@ -29,7 +28,6 @@ class FeaturePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function create(User $user): bool
@@ -38,7 +36,6 @@ class FeaturePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function update(User $user): bool
@@ -47,7 +44,6 @@ class FeaturePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function delete(User $user): bool

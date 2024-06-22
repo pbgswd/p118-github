@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Executive;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ExecutiveFactory extends Factory

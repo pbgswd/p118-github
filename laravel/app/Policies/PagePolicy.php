@@ -28,7 +28,6 @@ class PagePolicy
     }
 
     /**
-     *
      * @throws Exception
      */
     public function create(User $user): bool

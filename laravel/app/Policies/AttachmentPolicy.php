@@ -15,7 +15,6 @@ class AttachmentPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function viewAny(User $user): bool
@@ -40,7 +39,6 @@ class AttachmentPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function create(User $user): bool
@@ -56,7 +54,6 @@ class AttachmentPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function update(User $user, Attachment $attachment): bool
@@ -74,7 +71,6 @@ class AttachmentPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function delete(User $user, Attachment $attachment): bool
@@ -92,7 +88,6 @@ class AttachmentPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function restore(User $user, Attachment $attachment): bool
@@ -110,7 +105,6 @@ class AttachmentPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function forceDelete(User $user, Attachment $attachment): bool

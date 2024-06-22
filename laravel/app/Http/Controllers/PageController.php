@@ -28,7 +28,6 @@ class PageController extends Controller
     }
 
     /**
-     *
      * @throws AuthorizationException
      */
     public function show(Page $page): Response

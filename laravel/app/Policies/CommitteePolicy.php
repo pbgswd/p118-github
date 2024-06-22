@@ -37,7 +37,6 @@ class CommitteePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function delete(User $user): bool
@@ -47,7 +46,6 @@ class CommitteePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function restore(User $user): bool
@@ -57,7 +55,6 @@ class CommitteePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function forceDelete(User $user): bool

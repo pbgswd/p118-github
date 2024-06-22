@@ -10,7 +10,6 @@ class BylawPolicy
     use HandlesAuthorization;
 
     /**
-     *
      * @throws \Exception
      */
     public function viewAny(User $user): bool
@@ -25,7 +24,6 @@ class BylawPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function create(User $user): bool

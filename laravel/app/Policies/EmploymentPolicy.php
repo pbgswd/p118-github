@@ -10,7 +10,6 @@ class EmploymentPolicy
     use HandlesAuthorization;
 
     /**
-     *
      * @throws \Exception
      */
     public function viewAny(User $user): bool
@@ -28,7 +27,6 @@ class EmploymentPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function create(User $user): bool

@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\LocalSearch;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LocalSearchFactory extends Factory

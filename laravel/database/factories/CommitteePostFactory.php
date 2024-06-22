@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\CommitteePost;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommitteePostFactory extends Factory

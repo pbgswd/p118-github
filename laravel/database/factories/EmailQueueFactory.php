@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\EmailQueue;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

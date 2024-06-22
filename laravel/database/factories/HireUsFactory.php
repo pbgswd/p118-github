@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\HireUs;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HireUsFactory extends Factory

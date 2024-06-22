@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Carousel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CarouselFactory extends Factory

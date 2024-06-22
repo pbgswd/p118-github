@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Bylaw;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

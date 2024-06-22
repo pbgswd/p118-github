@@ -11,7 +11,6 @@ class PostPolicy
     use HandlesAuthorization;
 
     /**
-     *
      * @throws \Exception
      */
     public function viewAny(User $user): bool
@@ -31,7 +30,6 @@ class PostPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function create(User $user): bool
@@ -40,7 +38,6 @@ class PostPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function message(User $user): bool
@@ -49,7 +46,6 @@ class PostPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function update(User $user): bool
@@ -58,7 +54,6 @@ class PostPolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function delete(User $user): bool

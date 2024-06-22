@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Address;
-use App\Models\Meeting;
 use App\Models\Membership;
 use App\Models\PhoneNumber;
 use App\Models\User;

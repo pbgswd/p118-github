@@ -11,7 +11,6 @@ class VenuePolicy
     use HandlesAuthorization;
 
     /**
-     *
      * @throws \Exception
      */
     public function viewAny(User $user): bool
@@ -26,7 +25,6 @@ class VenuePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function create(User $user): bool
@@ -35,7 +33,6 @@ class VenuePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function update(User $user): bool
@@ -44,7 +41,6 @@ class VenuePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function delete(User $user): bool
@@ -53,7 +49,6 @@ class VenuePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function restore(User $user): bool
@@ -62,7 +57,6 @@ class VenuePolicy
     }
 
     /**
-     *
      * @throws \Exception
      */
     public function forceDelete(User $user): bool
