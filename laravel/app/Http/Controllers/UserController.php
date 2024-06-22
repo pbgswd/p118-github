@@ -6,10 +6,14 @@ use App\Http\Requests\InviteUser\ProcessUserRequest;
 use App\Http\Requests\Member\UpdateMember;
 use App\Http\Requests\Member\UpdateMemberEmergencyContact;
 use App\Http\Requests\User\UpdateMemberAddress;
+use App\Models\Committee;
 use App\Models\Executive;
 use App\Models\Membership;
+use App\Models\MessageSelection;
+use App\Models\MessageSelections;
 use App\Models\Options;
 use App\Models\PhoneNumber;
+use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Rules\Phone;
@@ -59,6 +63,8 @@ class UserController extends Controller
             ->orderBy('name')
             ->paginate(20);
 
+
+        //todo exclude suspended, verify
         $count = Membership::where('membership_type', 'Member')->count();
 
         return view('listusers', ['data' => ['users' => $users, 'count' => $count]]);
@@ -76,7 +82,8 @@ class UserController extends Controller
 
         $user->load('committee_memberships', 'phone_number',
                     'user_info', 'membership',
-                    'allExecutiveRoles');
+                    'allExecutiveRoles', 'message_frequency_preferences');
+                    //'message_selections');
 
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
@@ -114,16 +121,38 @@ class UserController extends Controller
 
         $regions = $this->getFormOptions(['statesprovs']);
 
+        //todo set default value for email frequency if not exist.
+
+        $topics = Topic::where('live', '=', 1)->get();
+        $committees = Committee::where('live', '=', 1)->pluck('name', 'slug')->toArray();
+
+        $selected_topics = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'topic']])->pluck('name')->toArray();
+        $selected_models = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'model']])->pluck('name')->toArray();
+        $selected_committees = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'committee']])->pluck('name')->toArray();
+
+        $selections = [
+            'topics' => array_combine($selected_topics, $selected_topics),
+            'models' => array_combine($selected_models, $selected_models),
+            'committees' => array_combine($selected_committees, $selected_committees),
+        ];
+
+
         $data = [
             'user' => $user,
             'user_roles' => $member_roles,
+            'committees' => Committee::where('live', '=', 1)->get(),
+            'selections' => $selections,
+            'message_frequency_preference_options' => Options::message_frequency_preference_options(),
+            'topic_subscription_options' => $topics,
+            'model_subscription_options' => Options::model_subscription_options(),
+            'committee_subscription_options' => Committee::where('live', '=', 1)->get(),
             'folder' => $folder,
             'tn_prefix' => $tn_prefix,
             'filesize' => $filesize ?? '',
             'provinces' => $regions['statesprovs']['Provinces'],
             'action' => 'Edit',
         ];
-
+       // dd([$selections['topics'], $data['selections']['topics']]);
         return view('member', ['data' => $data]);
     }
 
@@ -239,17 +268,16 @@ class UserController extends Controller
         } else {
             $phone = new PhoneNumber($userRequest['user_phone']);
             $user->phone_number()->save($phone);
-            $message['Phone'] = $user_phone_info['phone_number'] == ''
-                ? $user_phone_info['phone_number'] : 'number deleted';
+            $message['Phone'] = $user_phone_info['phone_number'] == '' ? $user_phone_info['phone_number'] : 'number deleted';
         }
 
         $folder = $user->getAttachmentFolder();
         $thumb_vals = Options::member_thumb_values();
 
         if ($user->user_info instanceof UserInfo) {
-            //dd($user->user_info);
+
             $user_info = $userRequest['user_info'];
-            //dd($userRequest['user_info']);
+
             if (isset($user_info['delete_image'])) {
                 if (file_exists(storage_path().'/app/'.$folder.'/'.$user_info['image'])) {
                     $service->destroyImage($user_info['image'], $folder, $thumb_vals);

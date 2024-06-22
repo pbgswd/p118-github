@@ -31,7 +31,9 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
+        //todo differentiate between members and public content
         //  dd([$user, $post]);
+        //return($post);
     }
 
     /**
@@ -43,6 +45,17 @@ class PostPolicy
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
+
+    /**
+     * @param User $user
+     * @return bool
+     * @throws \Exception
+     */
+    public function message(User $user)
+    {
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
+    }
+
 
     /**
      * @param User $user

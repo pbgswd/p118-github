@@ -127,9 +127,50 @@ class Options
      */
     public static function membership_levels(): array
     {
-        $membership = ['Member', 'Office']; // 'Inactive', 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
+        $membership = ['Member', 'Office'];
+    // 'Inactive', 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
 
         return array_combine($membership, $membership);
+    }
+
+    public static function message_frequency_preference_options(): array
+    {
+        $frequency = ['now' => "Send when published (default option).",
+                        'daily' => "Daily compilation, All messages for that day in one email.",
+                        'weekly' => "All messages for that week in one email. ",
+                        'unsubscribe' => "Dont email me any messages, I will check the Messages archive on the website instead."
+        ];
+        return  $frequency;
+    }
+
+    public static function model_subscription_options():array
+    {
+        /**
+         * 'Employment',  uses id
+         * 'Memoriam',  uses slug, should be more unique
+         * 'Bylaw',  uses id
+         * 'Policy',  uses 24
+         * 'Meeting', uses id
+         * 'Venue',  uses slug
+         * 'Organization', uses slug
+         * 'Agreement',  uses id
+         * 'Message',  uses id, trying to use slug...
+         */
+
+        $array = [
+            ['model' => 'Employment', 'name' => 'Job Postings', 'key' => 'id', 'description' => 'Latest job postings'],
+            ['model' => 'Bylaw', 'name' => 'Constitution and Bylaws', 'key' => 'id', 'description' => 'Updates to Constitution and Bylaws in Local 118'],
+            ['model' => 'Policy', 'name' => 'Policies', 'key' => 'id', 'description' => 'Local 118 Policies'],
+            ['model' => 'Meeting', 'name' => 'Meetings and Minutes', 'key' => 'id', 'description' => 'Information about meetings'],
+            ['model' => 'Agreement', 'name' => 'Agreements', 'key' => 'id', 'description' => 'Agreements that Local 118 works under'],
+            ['model' => 'Message', 'name' => 'Messages', 'key' => 'id', 'description' => 'Published strictly as a message'],
+            ['model' => 'Memoriam', 'name' => 'In Memoriam', 'key' => 'slug', 'description' => 'Notification of the passing of members'],
+            ['model' => 'Venue', 'name' => 'Venues', 'key' => 'slug', 'description' => 'Venues where we work'],
+            ['model' => 'Organization', 'name' => 'Organizations', 'key' => 'slug', 'description' => 'Organizations that we work for'],
+            ['model' => 'Feature', 'name' => 'Features', 'key' => 'slug', 'description' => 'Feature content'],
+        ];
+
+        return $array;
     }
 
     /**

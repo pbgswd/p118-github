@@ -121,6 +121,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'messages' => [
+            'driver' => 'local',
+            'root' => storage_path('app/messages'),
+            'url' => env('APP_URL').'/messages',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

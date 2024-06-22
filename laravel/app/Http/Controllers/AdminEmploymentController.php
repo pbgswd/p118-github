@@ -127,7 +127,7 @@ class AdminEmploymentController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_employment);
 
             if ($result) {
-                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+                Session::flash('success', 'You uploaded '.Str::plural('file', $request->file('attachments') . ' and any related files deleted.'));
             } else {
                 Session::flash('error', 'You have an upload problem');
             }

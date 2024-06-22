@@ -3,16 +3,12 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>@yield('title')</title>
-
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
-
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
         <!-- Styles -->
@@ -44,7 +40,6 @@
             }
 
             .code {
-                border-right: 2px solid;
                 font-size: 26px;
                 padding: 0 15px 0 15px;
                 text-align: center;
@@ -58,25 +53,28 @@
     </head>
     <body>
         <div class="container">
-            <div class="row d-flex justify-content-around mt-3">
-                <a href="/">
-                    <i class="fas fa-home fa-2x text-secondary"></i>
-                </a>
-
-                <a href="/login">
-                    <i class="fas fa-sign-in-alt fa-2x text-secondary"></i>
-                </a>
+            <div class="row d-flex justify-content-center text-center mt-6"  style="padding-top: 4em;">
+                <div class="col-sm-12 col-md-6 mx-auto">
+                    <a href="/">
+                        <i class="fas fa-home fa-2x text-secondary"></i> Home Page
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="/login">
+                        <i class="fas fa-sign-in-alt fa-2x text-secondary"></i> Login
+                    </a>
+                </div>
             </div>
             <div class="flex-center position-ref full-height">
                 <div class="row">
                     <div class="code">
-                        @yield('code')
+                    Error     @yield('code')
                     </div>
                     <div class="message" style="padding: 10px;">
                         @yield('message')
                     </div>
                 </div>
-                <br clear="all" />
+
             </div>
         </div>
     </body>

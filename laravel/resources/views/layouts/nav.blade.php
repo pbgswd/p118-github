@@ -5,9 +5,8 @@
              alt="{{config('app.name')}}"
              class="rounded mx-2"/>
     </a>
-    <button class="p-2 mx-2 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
-            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">Menus
-        <span class="navbar-toggler-icon"></span>
+    <button class="btn btn-outline-light p-2 mx-auto navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">Menus<span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse ml-2" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto mb-0 d-flex align-items-center">

@@ -6,6 +6,7 @@ use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Posts\DestroyPostRequest;
 use App\Http\Requests\Posts\StorePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
+use App\Models\Message;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Services\AttachmentService;
@@ -61,8 +62,7 @@ class AdminPostController extends Controller
                 'post' => $post,
                 'assignedTopics' => [],
                 'topics' => Topic::all(),
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),
-                    AccessLevelConstants::getConstants()),
+                'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
                 'action' => 'Create',
                 'model_name' => 'post',
             ],
@@ -87,8 +87,7 @@ class AdminPostController extends Controller
             $result = $this->attachmentService->createAttachment($request, $post);
 
             if ($result) {
-                Session::flash('success', 'You uploaded '
-                    .count($request->file('attachments')).' files');
+                Session::flash('success', 'You uploaded ' . count($request->file('attachments')) . ' files');
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -123,8 +122,7 @@ class AdminPostController extends Controller
             'post' => $post,
             'topics' => Topic::all(),
             'assignedTopics' => $assignedTopics,
-            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
-                AccessLevelConstants::getConstants()),
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
             'action' => 'Edit',
             'model_name' => 'post',
         ];
@@ -151,8 +149,7 @@ class AdminPostController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_post);
 
             if ($result) {
-                Session::flash('success', 'You uploaded '
-                    .count($request->file('attachments')).' files');
+                Session::flash('success', 'You uploaded ' . count($request->file('attachments')).' files');
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -190,9 +187,70 @@ class AdminPostController extends Controller
                 $post->topics()->detach();
                 $post->delete();
             });
-//todo change plural to singular
-        Session::flash('success', Str::plural('post', count([$request->id])).' deleted.');
+
+        Session::flash('success', 'You have deleted ' . count($request->id) . ' ' . Str::plural('post', count($request->id)) . '.');
 
         return redirect()->route('posts_list');
     }
+
+    /**
+     * @param Post $post
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function message(Post $post): RedirectResponse
+    {
+
+        //todo get data from post, store it in message, redirect to edit message?
+
+        $this->authorize('message', Post::class);
+
+        $post->load('user', 'attachments', 'topics');
+
+        $assignedTopics = [];
+        foreach ($post->topics as $topic) {
+            $assignedTopics[] = $topic->pivot->topic_id;
+        }
+
+        //todo fix after restructring in to relations
+
+        $msg = new Message;
+
+        $msg->subject = $post->title;
+        $msg->slug = $post->slug;
+        $msg->content = $post->content;
+        $msg->user_id = Auth::id();
+
+        $msg->save();
+
+
+        $msg->messageSending()->create(['message_id' => $msg->id,
+            'send_priority' => 'normal']);
+
+
+        // $msg->priority = 'regular';
+      //  $msg->sent = 0;
+
+        //todo get correct topic for data
+
+        $msg->messageMeta()->create(['message_id' => $msg->id,
+            'source_id' => $post->id,
+            'source_slug' =>  $post->slug,
+            'source_type' => 'topic',
+            'source_type_name' => 'post',
+            'source_url' => 'post/' . $post->slug,
+        ]);
+
+
+
+        //todo save attachments
+        //? get attachement store in messages folder?
+        // or refer to original attachment?
+
+        Session::flash('success', 'new message saved');
+
+        return redirect()->route('admin_message_edit', $msg->id);
+
+    }
+
 }

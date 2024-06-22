@@ -51,6 +51,8 @@
                             Added by: <a href="{{route('member', $i->user->id)}}" target="_blank">
                                 {{$i->user->name}}
                             </a>
+                            <p>Pages: {{$i->pages->count()}}</p>
+                            <p>Posts: {{$i->posts->count()}}</p>
                         </td>
                         <td> {{ $i->access_level }} </td>
                         <td>

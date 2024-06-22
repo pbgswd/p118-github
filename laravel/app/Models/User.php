@@ -7,6 +7,7 @@ use App\Models\Interfaces\HasAttachment;
 use App\Policies\UserPolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -107,6 +108,7 @@ class User extends Authenticatable implements HasAttachment, Searchable
             \route('member', $this->id)
         );
     }
+
 
     /**
      * @return HasOne
@@ -216,5 +218,22 @@ class User extends Authenticatable implements HasAttachment, Searchable
         return $this->belongsToMany(Executive::class, 'executive_user')
             ->whereRaw('NOW() > start_date AND NOW() < end_date')
             ->withPivot('id', 'start_date', 'end_date', 'current');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function message_selections(): hasMany
+    {
+        return $this->hasMany(MessageSelection::class, 'user_id');
+            //->withPivot('id', 'user_id', 'type', 'name');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function message_frequency_preferences(): HasOne
+    {
+        return $this->hasOne(MessageFrequencyPreferences::class)->withDefault();
     }
 }

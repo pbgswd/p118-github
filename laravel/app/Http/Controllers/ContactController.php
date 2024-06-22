@@ -53,39 +53,29 @@ class ContactController extends Controller
             return redirect()->route('contact');
         }
 
-        if(config('app.env') == 'production') {
-            $cc = [];
-        } else {
-            $cc =  Options::testing_address_update_contacts();
-        }
+        $cc = config('app.env') == 'production' ? [] : Options::testing_address_update_contacts();
 
-        if ($resp->isSuccess()) {
-        } else {
-            $errors = $resp->getErrorCodes();
-        }
+        $errors = $resp->isSuccess() ? : $resp->getErrorCodes();
 
         if (($resp->getScore() < getenv('GOOGLE_RECAPTCHA_THRESHOLD')) && config('app.env') == 'production') {
 
             $request->session()->put('submission_time', Carbon::now());
             $request->session()->put('suspicious', 'true');
 
-            Session::flash('warning', 'Your message was rejected by the Recaptcha filter.
-                Please wait before trying again.');
+            Session::flash('warning', 'Your message was rejected by the Recaptcha filter. Please wait before trying again.');
         } else {
-	  Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
-                $m->from(config('mail.from.address'), config('app.name') . 'Contact Page Message from '
-                    . $request['name']);
-                $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
-                if ($cc != '') {
-                    $m->cc($cc, $cc);
-                }
-                $m->replyTo($request['email'], $request['name']);
-                $m->subject('Contact Page ' . $request['subject'] . " from " . $request['name']);
+            Mail::send('emails.contact', ['data' => $request->all()], function ($m) use ($request, $cc) {
+                    $m->from(config('mail.from.address'), config('app.name') . 'Contact Page Message from ' . $request['name']);
+                    $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
+                    if ($cc != '') {
+                        $m->cc($cc, $cc);
+                    }
+                    $m->replyTo($request['email'], $request['name']);
+                    $m->subject('Contact Page ' . $request['subject'] . " from " . $request['name']);
 
-		Session::flash('success', 'Message Sent');
-
+            Session::flash('success', 'Message Sent');
             });
-                return redirect()->route('contact');
         }
+        return redirect()->route('contact');
     }
 }

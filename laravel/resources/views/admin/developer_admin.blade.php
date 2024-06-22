@@ -2,11 +2,11 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <h2 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             <span>
                 Web Developer Resources
             </span>
-        </h6>
+        </h2>
     </div>
     <div class="row">
         <div class="col-sm">
@@ -49,16 +49,10 @@
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a class="nav-link" href="https://getbootstrap.com/" target="_blank">
-                        <span data-feather="file-text"></span>
-                        Twitter Bootstrap
-                    </a>
-                </li>
-                <li class="list-group-item">
                     <a class="nav-link"
-                       href="https://getbootstrap.com/docs/4.6/getting-started/introduction/" target="_blank">
+                       href="https://getbootstrap.com/docs/5.3/" target="_blank">
                         <span data-feather="file-text"></span>
-                        Twitter Bootstrap 4.6 Documentation
+                        Bootstrap 5.3 Documentation
                     </a>
                 </li>
                 <li class="list-group-item">
@@ -110,9 +104,9 @@
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a class="nav-link" href="https://vuejs.org/" target="_blank">
+                    <a class="nav-link" href="https://alpinejs.dev/" target="_blank">
                         <span data-feather="file-text"></span>
-                        Vue.js
+                        Alpine.js
                     </a>
                 </li>
                 <li class="list-group-item">
