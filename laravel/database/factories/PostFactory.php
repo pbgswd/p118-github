@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
 {
@@ -23,13 +23,13 @@ class PostFactory extends Factory
     {
         //todo should user be user with permissions admin_user?
         return [
-          //  'user_id' => \App\Models\User::factory(),
+            //  'user_id' => \App\Models\User::factory(),
             'title' => $this->faker->sentence,
             'content' => $this->faker->text(),
             'access_level' => 'public',
             'live' => 1,
             'front_page' => $this->faker->boolean,
-            'landing_page'=> $this->faker->boolean,
+            'landing_page' => $this->faker->boolean,
         ];
     }
 }

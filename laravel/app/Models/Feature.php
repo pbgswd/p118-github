@@ -52,9 +52,6 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         'landing_page',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -75,19 +72,11 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         );
     }
 
-    /**
-     * @return string
-     */
     public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    /**
-     * @param $value
-     *
-     * @return string
-     */
     public function setTitleAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
@@ -95,17 +84,11 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         return $this->attributes['title'] = $value;
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_feature');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'public';

@@ -14,23 +14,23 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int          $id
- * @property string       $title
- * @property string       $description
- * @property string       $url
- * @property bool      $live
- * @property bool      $status
- * @property User         $user
- * @property int          $user_id
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property string $url
+ * @property bool $live
+ * @property bool $status
+ * @property User $user
+ * @property int $user_id
  * @property Attachment[] $attachments
- * @property DateTime     $deadline
- * @property DateTime     $created_at
- * @property DateTime     $updated_at
+ * @property DateTime $deadline
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
  */
 class Employment extends LiveableModel implements HasAttachment, Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     protected $table = 'employment';
 
@@ -61,9 +61,6 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
         'status' => 'boolean',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -84,25 +81,16 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
         );
     }
 
-    /**
-     * @return HasOne
-     */
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_employment');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'employment';

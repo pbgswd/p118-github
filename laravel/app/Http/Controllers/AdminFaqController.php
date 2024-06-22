@@ -17,9 +17,6 @@ use Illuminate\View\View;
 
 class AdminFaqController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         $data['faqs'] = Faq::withoutGlobalScopes()
@@ -28,30 +25,27 @@ class AdminFaqController extends Controller
             ->paginate(20);
         $data['count'] = Faq::withoutGlobalScopes()->count();
 
-        return view('admin.faq_topic_list',['data' => $data]);
+        return view('admin.faq_topic_list', ['data' => $data]);
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
     {
         $this->authorize('create', Faq::class);
 
-            $data = [
-                'faq' => new Faq(),
-                'action' => 'Create',
-                'access_levels' => array_combine(AccessLevelConstants::getConstants(),
-                    AccessLevelConstants::getConstants()),
-            ];
+        $data = [
+            'faq' => new Faq(),
+            'action' => 'Create',
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
+        ];
 
-        return view('admin.faq_topic_create',['data' => $data]);
+        return view('admin.faq_topic_create', ['data' => $data]);
     }
 
     /**
-     * @param StoreFaqRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreFaqRequest $request): RedirectResponse
@@ -61,7 +55,7 @@ class AdminFaqController extends Controller
         $faq = new Faq($request->input('faq'));
         $faq->user_id = Auth::id();
         $faq->save();
-        if($request->new['question'] != '') {
+        if ($request->new['question'] != '') {
             $faq_data = new FaqData($request->input('new'));
             $faq_data->faq()->associate($faq);
             $faq_data->save();
@@ -73,8 +67,6 @@ class AdminFaqController extends Controller
     }
 
     /**
-     * @param Faq $faq
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Faq $faq): View
@@ -94,9 +86,6 @@ class AdminFaqController extends Controller
     }
 
     /**
-     * @param UpdateFaqRequest $request
-     * @param Faq $any_faq
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateFaqRequest $request, Faq $any_faq): RedirectResponse
@@ -109,30 +98,31 @@ class AdminFaqController extends Controller
 
         $faq = Faq::latest()->first();
 
-        if(isset($request->faq['faq_data'])) {
-            foreach($request->faq['faq_data'] as $fd) {
-                if($fd['delete'] == 1) {
+        if (isset($request->faq['faq_data'])) {
+            foreach ($request->faq['faq_data'] as $fd) {
+                if ($fd['delete'] == 1) {
                     FaqData::where('id', $fd['id'])->delete();
                 } else {
                     unset($fd['delete']);
-                    $faq->faqs_data()->upsert([$fd],[ 'id']);
+                    $faq->faqs_data()->upsert([$fd], ['id']);
                 }
             }
         }
 
-        if($request->new['question'] != '') {
+        if ($request->new['question'] != '') {
             $faq_data = new FaqData($request->input('new'));
             $faq_data->faq()->associate($any_faq);
             $faq_data->save();
         }
 
         Session::flash('success', 'You have updated a Faq topic');
+
         return redirect()->route('admin_faq_edit', [$any_faq->slug]);
     }
 
     /**
-     * @param DestroyFaqRequest $any_faq
-     * @return RedirectResponse
+     * @param  DestroyFaqRequest  $any_faq
+     *
      * @throws AuthorizationException
      */
     public function destroy(DestroyFaqRequest $request): RedirectResponse
@@ -146,7 +136,7 @@ class AdminFaqController extends Controller
                 $faq->delete();
             });
 
-        Session::flash('success', 'You have deleted ' . count($request->all()) . ' Faq ' .
+        Session::flash('success', 'You have deleted '.count($request->all()).' Faq '.
             Str::plural('topic', count($request->all())));
 
         return redirect()->route('admin_faqs_list');

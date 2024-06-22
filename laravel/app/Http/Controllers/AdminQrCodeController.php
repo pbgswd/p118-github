@@ -17,19 +17,14 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminQrCodeController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         $data = ['qrcodes' => Qrcode::paginate(20)];
-        $data['count'] = count( Qrcode::all());
+        $data['count'] = count(Qrcode::all());
+
         return view('admin.qrcodes', ['data' => $data]);
     }
 
-    /**
-     * @return View
-     */
     public function create(): View
     {
         $qr = new Qrcode();
@@ -43,10 +38,6 @@ class AdminQrCodeController extends Controller
         return view('admin.qrcode', ['data' => $data]);
     }
 
-    /**
-     * @param StoreQrcodeRequest $request
-     * @return RedirectResponse
-     */
     public function store(StoreQrcodeRequest $request): RedirectResponse
     {
         $qrcode = new Qrcode($request->qrcode);
@@ -56,7 +47,7 @@ class AdminQrCodeController extends Controller
 
         $size = 300;
         $format = 'png';
-	    $logo = 'public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png';
+        $logo = 'public/pXtRRslxfpjHCyakkCXrufsP43qtBN4EwkXxjnQz.png';
         $coverage = 0.2;
         $errorCorrection = 'H';
 
@@ -66,20 +57,16 @@ class AdminQrCodeController extends Controller
             ->errorCorrection($errorCorrection)
             ->generate($qrcode->qrdata);
 
-        $qrcode->file = md5($qrcode->name) . ".png";
+        $qrcode->file = md5($qrcode->name).'.png';
         Storage::disk($directory)->put($qrcode->file, $data);
 
         $qrcode->save();
 
-        Session::flash('success', 'New QR code, ' . $qrcode->name . ' saved');
+        Session::flash('success', 'New QR code, '.$qrcode->name.' saved');
 
         return redirect()->route('admin_qrcode_edit', [$qrcode->id]);
     }
 
-    /**
-     * @param Qrcode $qrcode
-     * @return View
-     */
     public function edit(Qrcode $qrcode): View
     {
         $qrcode->load('user');
@@ -92,11 +79,6 @@ class AdminQrCodeController extends Controller
         return view('admin.qrcode', ['data' => $data]);
     }
 
-    /**
-     * @param UpdateQrcodeRequest $request
-     * @param Qrcode $qrcode
-     * @return RedirectResponse
-     */
     public function update(UpdateQrcodeRequest $request, Qrcode $qrcode): RedirectResponse
     {
         $directory = $qrcode->getAttachmentFolder();
@@ -116,40 +98,34 @@ class AdminQrCodeController extends Controller
             ->errorCorrection($errorCorrection)
             ->generate($qrcode->qrdata);
 
-        $qrcode->file = md5($qrcode->name) . ".png";
+        $qrcode->file = md5($qrcode->name).'.png';
 
         Storage::disk($directory)->put($qrcode->file, $data);
         $qrcode->save();
 
         Session::flash('success', 'QR code updated');
+
         return redirect()->route('admin_qrcode_edit', [$qrcode->id]);
     }
 
-    /**
-     * @param Qrcode $qrcode
-     * @return StreamedResponse
-     */
     public function download(Qrcode $qrcode): StreamedResponse
     {
         $directory = $qrcode->getAttachmentFolder();
+
         //dd($qrcode);
         return Storage::download($directory.'/'.$qrcode['file'],
             $qrcode['name'], ['Content-Disposition' => 'inline; filename="'.$qrcode['name'].'"']);
     }
 
-    /**
-     * @param DestroyQrcodeRequest $request
-     * @return RedirectResponse
-     */
     public function destroy(DestroyQrcodeRequest $request): RedirectResponse
     {
         Qrcode::find($request->id)
             ->each(function (Qrcode $qrcode) {
-               Storage::disk('qrcodes')->delete($qrcode->file);
+                Storage::disk('qrcodes')->delete($qrcode->file);
                 $qrcode->delete();
             });
 
-        Session::flash('success', count($request->id) .' QR '. Str::plural('code', count($request->id)).' deleted');
+        Session::flash('success', count($request->id).' QR '.Str::plural('code', count($request->id)).' deleted');
 
         return redirect()->route('admin_qrcodes_list');
     }

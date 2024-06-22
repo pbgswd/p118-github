@@ -6,7 +6,6 @@ use App\Models\Committee;
 use App\Models\Message;
 use App\Models\MessageFrequencyPreferences;
 use App\Models\MessageSelection;
-use App\Models\MessageSelections;
 use App\Models\Options;
 use App\Models\Topic;
 use App\Models\User;
@@ -33,19 +32,15 @@ class MessageController extends Controller
 
         $data = [
             'messages' => $messages,
-            'count' => Message::with('messageSending')->whereRelation('messageSending', 'send_status_now', '!=', 'no')->count()
+            'count' => Message::with('messageSending')->whereRelation('messageSending', 'send_status_now', '!=', 'no')->count(),
         ];
 
         return view('messages', ['data' => $data]);
     }
 
-    /**
-     * @param Message $message
-     * @return View
-     */
     public function show(Message $message): View
     {
-        $message->load('user', 'attachments','messageMeta', 'messageSending');
+        $message->load('user', 'attachments', 'messageMeta', 'messageSending');
 
         //todo distinguish between types and pull in the data
         $committee = [];
@@ -58,12 +53,12 @@ class MessageController extends Controller
             case 'model':
                 $modelSubOptions = Options::model_subscription_options();
 
-                $row = array_search($message->name, array_column($modelSubOptions, 'model' ));
+                $row = array_search($message->name, array_column($modelSubOptions, 'model'));
 
-                $class = "App\\Models\\".$message->name;
+                $class = 'App\\Models\\'.$message->name;
 
-//dd(['class' => $message->name, 'key' => $modelSubOptions[$row]['key']]);
-                    //key will be slug or  id
+                //dd(['class' => $message->name, 'key' => $modelSubOptions[$row]['key']]);
+                //key will be slug or  id
                 $model = $class::where($modelSubOptions[$row]['key'], '=', $message->slug)->first();
 
                 break;
@@ -71,7 +66,7 @@ class MessageController extends Controller
                 //todo differentiate between a page or post
                 //we have nothing that gets page or post though we can have a data relation, source_url var for data pushed in to Messages model data
                 $topic = Topic::where('slug', $message->name)->first();
-             //   dd($topic[0]);
+                //   dd($topic[0]);
                 break;
             case 'committee':
                 $committee = Committee::where('slug', $message->name)->first();
@@ -80,23 +75,23 @@ class MessageController extends Controller
                 $committee = [];
                 $model = [];
                 $topic = [];
-            break;
+                break;
         }
         //dd([$message, $committee, $model, $topic]);
 
         $data = [
-            'message' => $message
+            'message' => $message,
         ];
 
-     //  dd($data['message']->attachments);
+        //  dd($data['message']->attachments);
 
         return view('message', ['data' => $data]);
     }
 
     public function update(Request $request, Message $message, User $user, MessageSelection $messageSelection): RedirectResponse
     {
-//todo form request validator
-//todo make a policy for this user, only this user
+        //todo form request validator
+        //todo make a policy for this user, only this user
 
         self::updateMessageFrequencyPreferences($request, $user);
 
@@ -117,7 +112,7 @@ class MessageController extends Controller
             $user->message_frequency_preferences->fill(['preference' => $request['preference']]);
             $user->message_frequency_preferences->save();
 
-            if($request['preference'] == 'unsubscribe') {
+            if ($request['preference'] == 'unsubscribe') {
                 MessageSelection::where('user_id', $user->id)->delete();
                 MessageFrequencyPreferences::where('user_id', $user->id)->delete();
             }
@@ -127,17 +122,16 @@ class MessageController extends Controller
         }
     }
 
-    public static function updateModelSubscriptions(User $user, $sub) : void
+    public static function updateModelSubscriptions(User $user, $sub): void
     {
         $type = 'model';
 
         MessageSelection::where([
             ['user_id', '=', $user->id],
-            ['type', '=', $type]
+            ['type', '=', $type],
         ])->delete();
 
-        foreach($sub as $s)
-        {
+        foreach ($sub as $s) {
             $ms = new MessageSelection;
             $ms->user_id = $user->id;
             $ms->type = $type;
@@ -152,11 +146,10 @@ class MessageController extends Controller
 
         MessageSelection::where([
             ['user_id', '=', $user->id],
-            ['type', '=', $type]
+            ['type', '=', $type],
         ])->delete();
 
-        foreach($sub as $s)
-        {
+        foreach ($sub as $s) {
             $ms = new MessageSelection;
             $ms->user_id = $user->id;
             $ms->type = $type;
@@ -172,11 +165,10 @@ class MessageController extends Controller
 
         MessageSelection::where([
             ['user_id', '=', $user->id],
-            ['type', '=', $type]
+            ['type', '=', $type],
         ])->delete();
 
-        foreach($sub as $s)
-        {
+        foreach ($sub as $s) {
             $ms = new MessageSelection;
             $ms->user_id = $user->id;
             $ms->type = $type;

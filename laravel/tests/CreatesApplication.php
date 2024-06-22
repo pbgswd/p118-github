@@ -22,6 +22,7 @@ trait CreatesApplication
 
         return $app;
     }
+
     private function clearCache(): void
     {
         Artisan::call('cache:clear');

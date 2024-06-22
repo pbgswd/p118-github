@@ -31,27 +31,16 @@ class CommitteePostProofreaderAdapter extends BaseProofreaderAdapter
         ];
     }
 
-    /**
-     * @param $row
-     * @return string
-     */
     public function getAdminRoute($row): string
     {
         return route('admin_committee_post_edit', [$row->committee->slug, $row->slug]);
     }
 
-    /**
-     * @param $row
-     * @return string
-     */
     public function getPublicRoute($row): string
     {
         return route('public_committee_post_show', [$row->committee->slug, $row->slug]);
     }
 
-    /**
-     * @return Collection
-     */
     public function getAll(): Collection
     {
         return $this->getInstance()::with('committee')->get();

@@ -14,28 +14,29 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int            $id
- * @property string         $title
- * @property string         $description
- * @property string         $access_level
- * @property bool        $live
- * @property int            $user_id
- * @property User           $user
- * @property Attachment[]   $attachments
- * @property Venue[]        $venues
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property string $access_level
+ * @property bool $live
+ * @property int $user_id
+ * @property User $user
+ * @property Attachment[] $attachments
+ * @property Venue[] $venues
  * @property Organization[] $organizations
  * @property AgreementHandler[] $agreement_handlers
- * @property DateTime       $created_at
- * @property DateTime       $updated_at
- * @property DateTime       $from
- * @property DateTime       $until
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ * @property DateTime $from
+ * @property DateTime $until
+ *
  * @method static withoutGlobalScopes()
  * @method static whereNotIn(string $string, $map)
  */
 class Agreement extends LiveableModel implements HasAttachment, Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     protected $policies = [
         self::class => AgreementPolicy::class,
@@ -75,9 +76,6 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         $this->access_level = AccessLevelConstants::MEMBERS;
     }
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -98,49 +96,31 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         );
     }
 
-    /**
-     * @return HasOne
-     */
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_agreement')->orderBy('id', 'desc');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function agreement_handlers(): BelongsToMany
     {
         return $this->belongsToMany(AgreementHandler::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function venues(): BelongsToMany
     {
         return $this->belongsToMany(Venue::class, 'agreement_venue');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class, 'agreement_organization');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'agreements';

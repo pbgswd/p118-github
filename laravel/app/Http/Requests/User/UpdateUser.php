@@ -8,8 +8,6 @@ class UpdateUser extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -18,8 +16,6 @@ class UpdateUser extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -30,10 +26,10 @@ class UpdateUser extends FormRequest
             'user_phone.phone_number' => 'max:20',
             'user_phone.label' => 'string|nullable',
             'user_phone.primary' => 'boolean',
-            'user_info.share_email'=> 'boolean',
-            'user_info.share_phone'=> 'boolean',
-            'user_info.image'=> 'string|nullable',
-            'user_info.about'=> 'string|nullable|max:2000',
+            'user_info.share_email' => 'boolean',
+            'user_info.share_phone' => 'boolean',
+            'user_info.image' => 'string|nullable',
+            'user_info.about' => 'string|nullable|max:2000',
             'user_roles' => 'array|required',
         /**
             'user_membership.membership_date' => 'date',

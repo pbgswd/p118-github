@@ -9,16 +9,14 @@ use Illuminate\Http\Request;
 class CheckMessagingFeatureStatus
 {
     /**
-     * @param Request $request
-     * @param Closure $next
      * @return RedirectResponse
      */
-
     public function handle(Request $request, Closure $next)
     {
-        if(env('ENABLE_MESSAGING_FEATURE') == 0) {
-            return redirect("/");
+        if (env('ENABLE_MESSAGING_FEATURE') == 0) {
+            return redirect('/');
         }
+
         return $next($request);
     }
 }

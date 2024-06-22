@@ -8,7 +8,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Model
 {
-    use HasRoles;
     use HasFactory;
+    use HasRoles;
     // nothing here but there could be, such as some overall stats or activity about the website to present.
 }

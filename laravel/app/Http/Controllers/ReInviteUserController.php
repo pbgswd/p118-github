@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
 class ReInviteUserController extends Controller
 {
     /**
-     * @return RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(): RedirectResponse

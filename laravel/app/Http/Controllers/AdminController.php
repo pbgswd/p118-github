@@ -11,9 +11,6 @@ use Illuminate\View\View;
 
 class AdminController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         //Land on the home page of admin. Could have data later.
@@ -22,7 +19,6 @@ class AdminController extends Controller
         $emailQueueCount = EmailQueue::count();
         $usersCount = User::count();
         $messagesCount = Message::count();
-
 
         $data = [
             ['user' => Auth::user()],
@@ -34,18 +30,11 @@ class AdminController extends Controller
         return view('admin.admin', ['data' => $data]);
     }
 
-    /**
-     * @return View
-     */
     public function developer(): View
     {
         return view('admin.developer_admin');
     }
 
-    /**
-     * @param User $user
-     * @return View
-     */
     public function blank(User $user): View
     {
         $mod = new ModelList;
@@ -63,6 +52,7 @@ class AdminController extends Controller
             $data[$k]['email'] = $c[2];
             $data[$k]['membership_type'] = $c[3];
         }
+
         return view('admin.admin-blank');
     }
 
@@ -75,7 +65,7 @@ class AdminController extends Controller
         return view('admin.admin-development');
     }
 
-    public function getphpinfo(User $user): Bool
+    public function getphpinfo(User $user): bool
     {
         return phpinfo();
     }

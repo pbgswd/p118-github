@@ -23,9 +23,6 @@ class AdminProofReaderController extends Controller
         $this->proofreaderService = $proofreaderService;
     }
 
-    /**
-     * @return View
-     */
     public function index(): View
     {
         $data = [
@@ -36,9 +33,6 @@ class AdminProofReaderController extends Controller
         return view('admin.proofreading', ['data' => $data]);
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function sync(): RedirectResponse
     {
         $pr = new ProofreaderService;
@@ -48,10 +42,6 @@ class AdminProofReaderController extends Controller
         return redirect()->route('admin_proofreader');
     }
 
-    /**
-     * @param Request $request
-     * @return View
-     */
     public function index_by_entity(Request $request): View
     {
         //todo form request for index by entity
@@ -71,8 +61,6 @@ class AdminProofReaderController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Proofreader $proofReader
      * @return View
      */
     public function update(Request $request, Proofreader $proofReader)

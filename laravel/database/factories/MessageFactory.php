@@ -15,11 +15,9 @@ class MessageFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
-
     public function definition(): array
     {
-        $subject = 'message ' . $this->faker->sentence(4);
+        $subject = 'message '.$this->faker->sentence(4);
         $priority = ['regular', 'now'];
         shuffle($priority);
         $slug = Str::slug($subject);
@@ -27,7 +25,7 @@ class MessageFactory extends Factory
         return [
             'subject' => $subject,
             'slug' => $slug,
-            'content' => 'content ' . $this->faker->paragraphs(4, true),
+            'content' => 'content '.$this->faker->paragraphs(4, true),
             'user_id' => 1,
         ];
     }

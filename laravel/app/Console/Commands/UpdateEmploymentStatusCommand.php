@@ -29,11 +29,11 @@ class UpdateEmploymentStatusCommand extends Command
      */
     public function handle()
     {
-     Log::debug('running command ' . __CLASS__ . ' ' . date('Y-m-d H:i:s'));
+        Log::debug('running command '.__CLASS__.' '.date('Y-m-d H:i:s'));
 
         Employment::where([
             ['deadline', '<', now()],
-            ['status', '=', 1]
+            ['status', '=', 1],
         ])->update(['status' => 0]);
 
         Employment::where('deadline', '>', now())

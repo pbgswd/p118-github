@@ -9,9 +9,9 @@ use Tests\TestCase;
  */
 class CarouselControllerTest extends TestCase
 {
-
     /**
      * @test
+     *
      * @group showok
      */
     public function show_returns_an_ok_response()

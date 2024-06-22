@@ -9,19 +9,19 @@ use Tests\TestCase;
  */
 class LocalSearchControllerTest extends TestCase
 {
-
     /**
      * @test
+     *
      * @group adminsearchreturnsok
      */
     public function admin_attachment_search_returns_an_ok_response()
     {
         $attachment = \App\Models\Attachment::factory()->create();
 
-        $response = $this->actingAs( $this->admin_user)
+        $response = $this->actingAs($this->admin_user)
             ->post(route('list_attachments_search_result'), [
-                'search' => $attachment->description
-        ]);
+                'search' => $attachment->description,
+            ]);
 
         $response->assertOk();
         $response->assertViewIs('admin.list_attachments_search_result');
@@ -42,20 +42,20 @@ class LocalSearchControllerTest extends TestCase
 
     /**
      * @test
-     * @group amsearchok
      *
+     * @group amsearchok
      */
     public function admin_search_returns_an_ok_response()
     {
         $post = \App\Models\Post::factory()->create(['user_id' => $this->admin_user]);
 
         $response = $this->actingAs($this->admin_user)->post(route('admin_search'), [
-            "search" => $post->title
+            'search' => $post->title,
         ]);
 
-       $response->assertOk();
-       $response->assertViewIs('admin.search_admin');
-       $response->assertViewHas('data');
+        $response->assertOk();
+        $response->assertViewIs('admin.search_admin');
+        $response->assertViewHas('data');
     }
 
     /**

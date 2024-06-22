@@ -8,9 +8,6 @@ use Illuminate\View\View;
 
 class ByLawController extends Controller
 {
-    /**
-     * @return View
-     */
     public function list(): View
     {
         $data = [];
@@ -35,10 +32,6 @@ class ByLawController extends Controller
         return view('bylaws_list', ['data' => ['data' => $data]]);
     }
 
-    /**
-     * @param Bylaw $bylaw
-     * @return View
-     */
     public function show(Bylaw $bylaw): View
     {
         $bylaw->load('user', 'attachments');

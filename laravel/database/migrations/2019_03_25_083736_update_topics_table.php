@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -27,7 +28,7 @@ return new class extends Migration {
         Schema::table('topics', function (Blueprint $table) {
             $table->dropColumn('content');                             // drop content
             $table->dropColumn('topic_type');                          // drop content
-             // make slug unique
+            // make slug unique
         });
     }
 

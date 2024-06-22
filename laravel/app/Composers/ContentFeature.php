@@ -12,15 +12,14 @@ use Illuminate\View\View;
 
 /**
  * Class ContentFeature.
+ *
  * @property $compose
  * @property View
- * @param View $view
+ *
+ * @param  View  $view
  */
 class ContentFeature
 {
-    /**
-     * @param View $view
-     */
     public function compose(View $view)
     {
         $topics = Topic::where([['live', 1], ['landing_page', 1]])

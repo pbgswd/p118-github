@@ -26,7 +26,6 @@ class AdminTopicController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -35,7 +34,7 @@ class AdminTopicController extends Controller
 
         $topics = Topic::withoutGlobalScopes()
             ->sortable()
-            ->with('user', 'attachments', 'pages','posts')
+            ->with('user', 'attachments', 'pages', 'posts')
             ->paginate(20);
 
         return view('admin.listtopics', ['data' => ['topics' => $topics]]);
@@ -60,8 +59,6 @@ class AdminTopicController extends Controller
     }
 
     /**
-     * @param StoreTopicRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreTopicRequest $request): RedirectResponse
@@ -87,8 +84,6 @@ class AdminTopicController extends Controller
     }
 
     /**
-     * @param Topic $topic
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Topic $topic): View
@@ -106,9 +101,6 @@ class AdminTopicController extends Controller
     }
 
     /**
-     * @param UpdateTopicRequest $request
-     * @param Topic $any_topic
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateTopicRequest $request, Topic $any_topic): RedirectResponse
@@ -137,8 +129,6 @@ class AdminTopicController extends Controller
     }
 
     /**
-     * @param DestroyTopicRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyTopicRequest $request): RedirectResponse

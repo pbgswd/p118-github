@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Address;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AddressFactory extends Factory
 {
@@ -22,7 +22,7 @@ class AddressFactory extends Factory
     public function definition()
     {
         return [
-            'unit' =>  $this->faker->randomElement([$this->faker->numberBetween(1,20), " "]),
+            'unit' => $this->faker->randomElement([$this->faker->numberBetween(1, 20), ' ']),
             'street' => $this->faker->streetName(),
             'city' => $this->faker->city(),
             'province' => $this->faker->state(),

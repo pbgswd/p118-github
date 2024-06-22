@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Feature\Http\Controllers;
+
 use Tests\TestCase;
 
 /**
@@ -22,6 +23,7 @@ class MeetingControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @indexyearok
      */
     public function index_by_year_returns_an_ok_response()
@@ -42,7 +44,7 @@ class MeetingControllerTest extends TestCase
         $meeting = \App\Models\Meeting::factory()->create();
         $year = date_format($meeting->date, 'Y');
         $response = $this->actingAs($this->user)->post(route('post_year'), [
-            'year' => $year
+            'year' => $year,
         ]);
         $response->assertRedirect(route('list_meetings_year', $year));
     }
@@ -61,6 +63,7 @@ class MeetingControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @showok
      */
     public function show_returns_an_ok_response()

@@ -16,9 +16,6 @@ class EmploymentController extends Controller
         //Artisan::call('employment:update-status');
     }
 
-    /**
-     * @return View
-     */
     public function index(): View
     {
 
@@ -43,10 +40,6 @@ class EmploymentController extends Controller
         return view('employment_list', ['data' => $data]);
     }
 
-    /**
-     * @param $year
-     * @return View
-     */
     public function index_by_year($year): View
     {
         $years = DB::table('employment')
@@ -77,10 +70,6 @@ class EmploymentController extends Controller
         return view('employment_list', ['data' => $data]);
     }
 
-    /**
-     * @param QueryJobYearRequest $request
-     * @return RedirectResponse
-     */
     public function jobs_year(QueryJobYearRequest $request): RedirectResponse
     {
         return redirect()->route('list_jobs_year', $request->deadline);
@@ -89,7 +78,6 @@ class EmploymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Employment $employment
      * @return Response
      */
     public function show(Employment $employment): View

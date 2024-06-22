@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Executive;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ExecutiveFactory extends Factory
 {
@@ -22,7 +22,7 @@ class ExecutiveFactory extends Factory
     public function definition()
     {
         return [
-            'title' => 'executive title ' . $this->faker->jobTitle(),
+            'title' => 'executive title '.$this->faker->jobTitle(),
             'email' => $this->faker->email(),
         ];
     }

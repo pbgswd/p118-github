@@ -6,9 +6,6 @@ use Illuminate\View\View;
 
 class HireUsController extends Controller
 {
-    /**
-     * @return View
-     */
     public function show(): View
     {
         $data = [];

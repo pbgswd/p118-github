@@ -8,9 +8,6 @@ use Illuminate\View\View;
 
 class ExecutiveController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         /**

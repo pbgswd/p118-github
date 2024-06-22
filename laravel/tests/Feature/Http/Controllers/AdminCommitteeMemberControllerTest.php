@@ -10,9 +10,9 @@ use Tests\TestCase;
  */
 class AdminCommitteeMemberControllerTest extends TestCase
 {
-
     /**
      * @test
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -27,25 +27,26 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
- //todo get a user associated with the committee - know a user id and send it in
-//dd($this->committee->committee_members[0]->id);
-        Log::debug(['slug' => $this->committee->slug, 'user' => $this->committee->committee_members[0]->id ]);
-//todo supposed to be going in AdminCommitteeControllerMethod::destroy
+        //todo get a user associated with the committee - know a user id and send it in
+        //dd($this->committee->committee_members[0]->id);
+        Log::debug(['slug' => $this->committee->slug, 'user' => $this->committee->committee_members[0]->id]);
+        //todo supposed to be going in AdminCommitteeControllerMethod::destroy
 
         $response = $this->actingAs($this->admin_user)
             ->delete(route('admin_delete-committee_member',
                 [
                     'committee' => $this->committee->slug,
-                    'user' => $this->committee->committee_members[0]->id
+                    'user' => $this->committee->committee_members[0]->id,
                 ]
             ));
 
-// Log::debug(route('admin-list-committee-members', ['committee' => $this->committee->slug]));
-// http://p118.dev/admin/committee/anti-racism-committee/admin-edit-committee-members/user/122
+        // Log::debug(route('admin-list-committee-members', ['committee' => $this->committee->slug]));
+        // http://p118.dev/admin/committee/anti-racism-committee/admin-edit-committee-members/user/122
 
         $this->assertModelMissing($this->committee->committee_members);
         $response->assertRedirect(route('admin-list-committee-members', ['committee' => $this->committee->slug]));
@@ -53,6 +54,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
@@ -66,6 +68,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -80,6 +83,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -94,6 +98,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group searchok
      */
     public function search_returns_an_ok_response()
@@ -111,6 +116,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group searchok
      */
     public function search_validates_with_a_form_request()
@@ -124,21 +130,23 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
     {
         $response = $this->actingAs($this->admin_user)
             ->post(route('admin_create_committee_members', [$this->committee, $this->user]),
-            [
-                'role' => 'Member'
-            ]);
+                [
+                    'role' => 'Member',
+                ]);
 
         $response->assertRedirect(route('admin-list-committee-members', [$this->committee->slug, $this->user->id]));
     }
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -152,6 +160,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -160,7 +169,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
         $response = $this->actingAs($this->admin_user)
             ->post(route('admin_update_committee_member', [$this->committee, $this->committee_member]),
                 [
-                    'role' => 'Member'
+                    'role' => 'Member',
                 ]);
 
         $response->assertRedirect(route('admin-list-committee-members',
@@ -169,6 +178,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_validates_with_a_form_request()

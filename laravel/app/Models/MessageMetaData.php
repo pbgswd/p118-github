@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MessageMetaData extends Model
 {
     use HasFactory;
+
     protected $table = 'message_metadata';
 
     protected $fillable = [
@@ -16,7 +17,6 @@ class MessageMetaData extends Model
         'source_slug',
         'source_type',
         'source_type_name',
-        'source_url'
+        'source_url',
     ];
-
 }

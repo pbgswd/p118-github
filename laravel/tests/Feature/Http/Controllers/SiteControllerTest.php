@@ -9,7 +9,6 @@ use Tests\TestCase;
  */
 class SiteControllerTest extends TestCase
 {
-
     /**
      * @test
      */

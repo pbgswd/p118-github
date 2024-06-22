@@ -10,8 +10,8 @@ class MeetingPolicy
     use HandlesAuthorization;
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function viewAny(User $user)
@@ -20,17 +20,14 @@ class MeetingPolicy
             $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
     }
 
-    /**
-     * @param User $user
-     */
     public function view(User $user)
     {
         //
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function create(User $user)
@@ -39,7 +36,6 @@ class MeetingPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function update(User $user)
@@ -48,7 +44,6 @@ class MeetingPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function delete(User $user)
@@ -57,7 +52,6 @@ class MeetingPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function restore(User $user)
@@ -66,7 +60,6 @@ class MeetingPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function forceDelete(User $user)

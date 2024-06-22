@@ -10,8 +10,8 @@ class BylawPolicy
     use HandlesAuthorization;
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function viewAny(User $user)
@@ -21,7 +21,6 @@ class BylawPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function view(User $user)
@@ -30,8 +29,8 @@ class BylawPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function create(User $user)
@@ -40,7 +39,6 @@ class BylawPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function update(User $user)
@@ -49,7 +47,6 @@ class BylawPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function delete(User $user)
@@ -58,7 +55,6 @@ class BylawPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function restore(User $user)
@@ -67,7 +63,6 @@ class BylawPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function forceDelete(User $user)

@@ -9,9 +9,6 @@ use Illuminate\View\View;
 
 class OrganizationController extends Controller
 {
-    /**
-     * @return View
-     */
     public function list(): View
     {
         $data['organizations'] = Organization::where('live', 1)
@@ -24,10 +21,6 @@ class OrganizationController extends Controller
         return view('organizations', ['data' => $data]);
     }
 
-    /**
-     * @param Organization $organization
-     * @return View
-     */
     public function show(Organization $organization): View
     {
         if ($organization['image']) {

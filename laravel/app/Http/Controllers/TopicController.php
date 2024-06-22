@@ -10,9 +10,6 @@ use Illuminate\View\View;
 
 class TopicController extends Controller
 {
-    /**
-     * @return View
-     */
     public function list(): View
     {
         // public
@@ -31,12 +28,11 @@ class TopicController extends Controller
     }
 
     /**
-     * @param Topic $topic
      * @return View
      */
     public function show(Topic $topic)
     {
-        if (false === Auth::check() && $topic->access_level != AccessLevelConstants::PUBLIC) {
+        if (Auth::check() === false && $topic->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this topic.');
 
             return view('auth.login');

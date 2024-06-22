@@ -4,12 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\EmailQueue;
 use App\Models\Message;
-use App\Models\MessageSending;
-use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-
 
 class SendEmailsNow extends Command
 {
@@ -27,22 +24,18 @@ class SendEmailsNow extends Command
      */
     protected $description = 'Send queued messages to subscribers who want messages right away.';
 
-    /**
-     * @return int
-     */
     public function handle(): int
     {
         $messages = EmailQueue::limit(5)->get();
 
-        foreach($messages as $message)
-        {
-            echo "\n EmailQueue message id: " .$message->id . ", Subject: " . $message->subject ."\n";
-            echo "\n \t" . $message->recipient . "\n";
+        foreach ($messages as $message) {
+            echo "\n EmailQueue message id: ".$message->id.', Subject: '.$message->subject."\n";
+            echo "\n \t".$message->recipient."\n";
 
             // has subscriber been sent the message already? What if the content is in multiple topics?
             // insert into mail queue the $message with the email address for $sub
 
-Log::info('from: ' . config('mail.from.address'));
+            Log::info('from: '.config('mail.from.address'));
             $data['message']['id'] = $message->id;
             $data['message']['sender'] = $message->sender;
             $data['message']['subject'] = $message->subject;
@@ -51,21 +44,20 @@ Log::info('from: ' . config('mail.from.address'));
             $data['attachments'] = [];
 
             Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message) {
-                $m->from($message->sender, config('app.name') . 'Subscription message local 118');
+                $m->from($message->sender, config('app.name').'Subscription message local 118');
                 $m->to($message->recipient, 'name of recipient');
                 $m->replyTo(config('mail.from.address'), 'no reply to guy');
-                $m->subject('IATSE Local 118: ' . $message->subject);
+                $m->subject('IATSE Local 118: '.$message->subject);
 
                 $attachments = unserialize($message->attachments);
-                if($attachments->count() > 0) {
+                if ($attachments->count() > 0) {
 
-                    foreach($attachments as $att)
-                    {
-                       $file = 'storage/app/' . $message->getAttachmentFolder() .'/' .$att->file;
-                       $mime = mime_content_type($file);
-                       $file_name = $att->file_name;
+                    foreach ($attachments as $att) {
+                        $file = 'storage/app/'.$message->getAttachmentFolder().'/'.$att->file;
+                        $mime = mime_content_type($file);
+                        $file_name = $att->file_name;
 
-                       $m->attach($file, ['as' => $file_name, 'mime' => $mime]); // yes but always hash file name
+                        $m->attach($file, ['as' => $file_name, 'mime' => $mime]); // yes but always hash file name
                     }
                 }
             });
@@ -73,7 +65,7 @@ Log::info('from: ' . config('mail.from.address'));
             EmailQueue::where('id', $message->id)->delete();
         }
 
-        Log::info('SendEmailsNow has run at ' . date('l jS \of F Y h:i:s A'));
+        Log::info('SendEmailsNow has run at '.date('l jS \of F Y h:i:s A'));
 
         return Command::SUCCESS;
     }

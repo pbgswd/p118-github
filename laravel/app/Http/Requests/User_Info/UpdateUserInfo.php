@@ -24,10 +24,10 @@ class UpdateUserInfo extends FormRequest
     public function rules()
     {
         return [
-            'user_info.share_email'=> 'boolean',
-            'user_info.share_phone'=> 'boolean',
-            'user_info.image'=> 'string|nullable',
-            'user_info.about'=> 'string|max:2000|nullable',
+            'user_info.share_email' => 'boolean',
+            'user_info.share_phone' => 'boolean',
+            'user_info.image' => 'string|nullable',
+            'user_info.about' => 'string|max:2000|nullable',
         ];
     }
 }

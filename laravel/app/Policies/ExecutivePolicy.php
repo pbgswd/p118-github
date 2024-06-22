@@ -12,7 +12,6 @@ class ExecutivePolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param User $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +23,6 @@ class ExecutivePolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param User $user
      * @return mixed
      */
     public function create(User $user)
@@ -33,7 +31,6 @@ class ExecutivePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function update(User $user)
@@ -44,7 +41,6 @@ class ExecutivePolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param User $user
      * @return mixed
      */
     public function delete(User $user)
@@ -55,7 +51,6 @@ class ExecutivePolicy
     /**
      * Determine whether the user can restore the model.
      *
-     * @param User $user
      * @param  \App\Executive  $executive
      * @return mixed
      */
@@ -67,7 +62,6 @@ class ExecutivePolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param User $user
      * @param  \App\Executive  $executive
      * @return mixed
      */

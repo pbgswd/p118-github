@@ -22,8 +22,6 @@ class AdminByLawController extends Controller
 
     /**
      * BylawController constructor.
-     *
-     * @param AttachmentService $attachmentService
      */
     public function __construct(AttachmentService $attachmentService)
     {
@@ -31,7 +29,6 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -50,7 +47,6 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -67,8 +63,6 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @param StoreBylawRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreBylawRequest $request): RedirectResponse
@@ -96,8 +90,6 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @param Bylaw $bylaw
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Bylaw $bylaw): View
@@ -114,9 +106,6 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @param UpdateBylawRequest $request
-     * @param Bylaw $any_bylaw
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateBylawRequest $request, Bylaw $any_bylaw): RedirectResponse
@@ -146,8 +135,6 @@ class AdminByLawController extends Controller
     }
 
     /**
-     * @param DestroyBylawRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyBylawRequest $request): RedirectResponse
@@ -161,7 +148,7 @@ class AdminByLawController extends Controller
                 $bylaw->delete();
             });
 
-        Session::flash('success', Str::plural('bylaw', count([$bylaws])) . ' and any related files deleted.');
+        Session::flash('success', Str::plural('bylaw', count([$bylaws])).' and any related files deleted.');
 
         return redirect()->route('admin_bylaws_list');
     }

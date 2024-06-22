@@ -12,6 +12,7 @@ class ByLawControllerTest extends TestCase
 {
     /**
      * @test
+     *
      * @group listok
      */
     public function list_returns_an_ok_response()
@@ -27,6 +28,7 @@ class ByLawControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group showok
      */
     public function show_returns_an_ok_response()

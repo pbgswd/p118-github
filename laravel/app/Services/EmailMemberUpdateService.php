@@ -6,7 +6,7 @@ use App\Models\Options;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * @param Request $request
+ * @param  Request  $request
  */
 class EmailMemberUpdateService
 {
@@ -27,7 +27,7 @@ class EmailMemberUpdateService
             $cc = Options::address_update_contacts();
         }
 
-        Mail::send('emails.user_profile_update', ['data' => $message], function ($m) use ($message,
+        Mail::send('emails.user_profile_update', ['data' => $message], function ($m) use (
             $user,
             $recipient,
             $cc) {

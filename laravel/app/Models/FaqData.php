@@ -10,23 +10,23 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int          $id
- * @property string       $question
- * @property string       $answer
- * @property string       $access_level
- * @property bool         $live
- * @property DateTime     $created_at
- * @property DateTime     $updated_at
+ * @property int $id
+ * @property string $question
+ * @property string $answer
+ * @property string $access_level
+ * @property bool $live
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ *
  * @method static withoutGlobalScopes()
  */
-
-
 class FaqData extends LiveableModel implements Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     protected $guard_name = 'web';
+
     protected $table = 'faqs_data';
 
     protected $policies = [
@@ -60,17 +60,11 @@ class FaqData extends LiveableModel implements Searchable
         'live' => 'boolean',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function faq(): BelongsTo
     {
         return $this->belongsTo(Faq::class);
     }
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;

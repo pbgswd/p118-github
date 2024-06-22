@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
+
 use function array_combine;
 use function range;
 
@@ -21,9 +22,6 @@ use function range;
  */
 class Options
 {
-    /**
-     * @return array
-     */
     public static function thumb_values(): array
     {
         $arr = [
@@ -35,9 +33,6 @@ class Options
         return $arr;
     }
 
-    /**
-     * @return array
-     */
     public static function memoriam_thumb_values(): array
     {
         $arr = [
@@ -49,9 +44,6 @@ class Options
         return $arr;
     }
 
-    /**
-     * @return array
-     */
     public static function feature_thumb_values(): array
     {
         $arr = [
@@ -63,9 +55,6 @@ class Options
         return $arr;
     }
 
-    /**
-     * @return array
-     */
     public static function venue_org_thumb_values(): array
     {
         $arr = [
@@ -77,9 +66,6 @@ class Options
         return $arr;
     }
 
-    /**
-     * @return array
-     */
     public static function member_thumb_values(): array
     {
         $arr = [
@@ -112,9 +98,6 @@ class Options
         return $contacts;
     }
 
-    /**
-     * @return array
-     */
     public static function access_levels(): array
     {
         $levels = AccessLevelConstants::getConstants();
@@ -128,22 +111,23 @@ class Options
     public static function membership_levels(): array
     {
         $membership = ['Member', 'Office'];
-    // 'Inactive', 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
+        // 'Inactive', 'Suspended', 'Retired', 'Non-member', 'Client', 'Permittee'];
 
         return array_combine($membership, $membership);
     }
 
     public static function message_frequency_preference_options(): array
     {
-        $frequency = ['now' => "Send when published (default option).",
-                        'daily' => "Daily compilation, All messages for that day in one email.",
-                        'weekly' => "All messages for that week in one email. ",
-                        'unsubscribe' => "Dont email me any messages, I will check the Messages archive on the website instead."
+        $frequency = ['now' => 'Send when published (default option).',
+            'daily' => 'Daily compilation, All messages for that day in one email.',
+            'weekly' => 'All messages for that week in one email. ',
+            'unsubscribe' => 'Dont email me any messages, I will check the Messages archive on the website instead.',
         ];
-        return  $frequency;
+
+        return $frequency;
     }
 
-    public static function model_subscription_options():array
+    public static function model_subscription_options(): array
     {
         /**
          * 'Employment',  uses id
@@ -156,7 +140,6 @@ class Options
          * 'Agreement',  uses id
          * 'Message',  uses id, trying to use slug...
          */
-
         $array = [
             ['model' => 'Employment', 'name' => 'Job Postings', 'key' => 'id', 'description' => 'Latest job postings'],
             ['model' => 'Bylaw', 'name' => 'Constitution and Bylaws', 'key' => 'id', 'description' => 'Updates to Constitution and Bylaws in Local 118'],
@@ -203,9 +186,6 @@ class Options
         return array_combine($phone_labels, $phone_labels);
     }
 
-    /**
-     * @return array
-     */
     public static function state_prov(): array
     {
         $provinces = [];
@@ -226,9 +206,6 @@ class Options
         return ['Provinces' => $provinces, null => 'Other (See next field)'];
     }
 
-    /**
-     * @return array
-     */
     public static function years(): array
     {
         $currentYear = date('Y');
@@ -237,9 +214,6 @@ class Options
         return array_combine($years, $years);
     }
 
-    /**
-     * @return array
-     */
     public static function months(): array
     {
         $months = [];
@@ -259,9 +233,6 @@ class Options
         return $months;
     }
 
-    /**
-     * @return array
-     */
     public static function days(): array
     {
         $days = range(1, 31);
@@ -269,10 +240,6 @@ class Options
         return array_combine($days, $days);
     }
 
-    /**
-     * @param $class
-     * @return array
-     */
     public static function fetchOptionTypes($class): array
     {
         $sorted = $class::orderBy('sort_order')->get();

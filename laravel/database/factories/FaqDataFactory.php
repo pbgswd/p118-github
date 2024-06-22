@@ -17,12 +17,11 @@ class FaqDataFactory extends Factory
     public function definition()
     {
         return [
-            'question' => 'Question ' . $this->faker->words(5, true),
-            'answer' => 'Answer ' . $this->faker->paragraph,
+            'question' => 'Question '.$this->faker->words(5, true),
+            'answer' => 'Answer '.$this->faker->paragraph,
             'access_level' => 'public',
             'live' => 1,
             'sort_order' => 100,
         ];
     }
-
 }

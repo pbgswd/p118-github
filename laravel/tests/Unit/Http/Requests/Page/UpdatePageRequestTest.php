@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests\Page;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -27,7 +25,6 @@ class UpdatePageRequestTest extends TestCase
     public function authorize()
     {
 
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -39,7 +36,7 @@ class UpdatePageRequestTest extends TestCase
     public function rules()
     {
 
-        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cant be tested without context. Use Feature test');
+        $this->markTestSkipped(__FUNCTION__.' in '.__FILE__.' cant be tested without context. Use Feature test');
 
         $actual = $this->subject->rules();
 

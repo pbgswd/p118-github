@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\CommitteePost;
-use App\Models\Committee;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -14,7 +13,6 @@ class CommitteePostPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param User $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -23,7 +21,6 @@ class CommitteePostPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function view(User $user)
@@ -32,8 +29,6 @@ class CommitteePostPolicy
     }
 
     /**
-     * @param User $user
-     * @param $committee
      * @return bool
      */
     public function create(User $user, $committee)
@@ -45,8 +40,6 @@ class CommitteePostPolicy
     }
 
     /**
-     * @param User $user
-     * @param $committeePost
      * @return bool
      */
     public function update(User $user, $committeePost)
@@ -60,8 +53,7 @@ class CommitteePostPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param User $user
-     * @param CommitteePost $committeePost
+     * @param  CommitteePost  $committeePost
      * @return mixed
      */
     public function delete(User $user, $committeePost)

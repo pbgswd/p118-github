@@ -6,14 +6,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class DestroyBylawRequest.
+ *
  * @property int[] $id
  */
 class DestroyBylawRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -22,8 +21,6 @@ class DestroyBylawRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules(): array
     {

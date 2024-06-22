@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Topic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -37,7 +36,7 @@ class TopicFactory extends Factory
             'live' => '1',
             'sort_order' => '1000',
             'front_page' => 0,
-            'landing_page' => 0
+            'landing_page' => 0,
         ];
     }
 }

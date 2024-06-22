@@ -14,7 +14,7 @@ class ReInviteUserControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-        $this->markTestSkipped(__FUNCTION__ .' for reinvite user has not been written yet, has no code');
+        $this->markTestSkipped(__FUNCTION__.' for reinvite user has not been written yet, has no code');
 
         $inviteUsers = \App\Models\InviteUser::factory()->times(3)->create();
 

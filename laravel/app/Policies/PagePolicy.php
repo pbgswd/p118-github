@@ -6,15 +6,14 @@ use App\Models\Page;
 use App\Models\User;
 use Exception;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Support\Facades\Auth;
 
 class PagePolicy
 {
     use HandlesAuthorization;
 
     /**
-     * @param User $user
      * @return bool|void
+     *
      * @throws Exception
      */
     public function viewAny(User $user)
@@ -23,18 +22,14 @@ class PagePolicy
             $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
     }
 
-    /**
-     * @param User $user
-     * @param Page $page
-     */
     public function view(User $user, Page $page)
     {
         // no policy, public
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws Exception
      */
     public function create(User $user)
@@ -43,7 +38,6 @@ class PagePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function update(User $user)
@@ -52,7 +46,6 @@ class PagePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function delete(User $user)
@@ -61,7 +54,6 @@ class PagePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function restore(User $user)
@@ -70,7 +62,6 @@ class PagePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function forceDelete(User $user)

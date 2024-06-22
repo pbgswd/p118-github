@@ -32,7 +32,7 @@ class StoreInviteUserRequest extends FormRequest
             'invite.email' => 'required|email|min:6|max:255',
             'invite.membership_type' => 'required|string',
             'invite.message' => 'max:1024',
-            'invite.role'  => 'required|string',
+            'invite.role' => 'required|string',
         ];
     }
 

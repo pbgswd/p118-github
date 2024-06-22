@@ -27,9 +27,6 @@ class PhoneNumber extends Model implements Searchable
             'primary' => 'boolean',
         ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $user = User::where('id', $this->user_id)->first();

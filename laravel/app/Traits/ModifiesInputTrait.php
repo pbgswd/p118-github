@@ -15,8 +15,7 @@ trait ModifiesInputTrait
     /**
      * Wrapper to ensure input data is only modified once.
      *
-     * @param string[] $keys
-     *
+     * @param  string[]  $keys
      * @return mixed[]
      */
     public function all($keys = null): array

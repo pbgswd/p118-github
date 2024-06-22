@@ -11,6 +11,7 @@ class EmploymentControllerTest extends TestCase
 {
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -46,7 +47,7 @@ class EmploymentControllerTest extends TestCase
         $employments = \App\Models\Employment::factory()->times(3)->create();
         $deadline = date_format($employment->deadline, 'Y');
         $response = $this->actingAs($this->user)->post(route('jobs_year'), [
-            'deadline' => $deadline
+            'deadline' => $deadline,
         ]);
         $response->assertRedirect(route('list_jobs_year', $deadline));
     }

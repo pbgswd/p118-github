@@ -14,21 +14,21 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Class InviteUser.
  *
- * @property int       $id
- * @property int       $user_id
- * @property string    $name
- * @property string    $email
- * @property string    $password
- * @property string    $role
- * @property DateTime  $created_at
- * @property DateTime  $updated_at
+ * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $role
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
  */
 class InviteUser extends Authenticatable
 {
-    use Notifiable;
     use HasFactory;
-    use Sortable;
     use HasRoles;
+    use Notifiable;
+    use Sortable;
 
     /** @var string */
     protected $guard_name = 'web';
@@ -83,9 +83,6 @@ class InviteUser extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

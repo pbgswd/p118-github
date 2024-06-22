@@ -15,7 +15,6 @@ class EmailQueueFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     protected $model = EmailQueue::class;
 
     public function definition(): array

@@ -17,26 +17,23 @@ use Illuminate\View\View;
 class AdminExecutiveController extends Controller
 {
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
     {
         $this->authorize('viewAny', Executive::class);
-/***
-       $data = [];
-       $data['executives'] = Executive::sortable()
- * ->with('user')->orderBy('created_at', 'desc')->paginate(20);
-       $data['count'] = Executive::count();
-**/
+        /***
+               $data = [];
+               $data['executives'] = Executive::sortable()
+         * ->with('user')->orderBy('created_at', 'desc')->paginate(20);
+               $data['count'] = Executive::count();
+        **/
         $data = Executive::with('user')->get();
 
         return view('admin.executives_list', ['data' => $data]);
     }
 
     /**
-     * @param User $user
-     * @return View
      * @throws AuthorizationException
      */
     public function create(User $user): View
@@ -54,10 +51,6 @@ class AdminExecutiveController extends Controller
     }
 
     /**
-     * @param StoreAdminExecutive $request
-     * @param Executive $executive
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreAdminExecutive $request, Executive $executive, User $user): RedirectResponse
@@ -81,8 +74,6 @@ class AdminExecutiveController extends Controller
     }
 
     /**
-     * @param ExecutiveMembership $executive
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(ExecutiveMembership $executive): View
@@ -103,13 +94,10 @@ class AdminExecutiveController extends Controller
     }
 
     /**
-     * @param UpdateAdminExecutive $request
-     * @param ExecutiveMembership $executive
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateAdminExecutive $request,
-                           ExecutiveMembership $executive): RedirectResponse
+        ExecutiveMembership $executive): RedirectResponse
     {
         $this->authorize('update', Executive::class);
 
@@ -122,8 +110,6 @@ class AdminExecutiveController extends Controller
     }
 
     /**
-     * @param DestroyAdminExecutive $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyAdminExecutive $request): RedirectResponse
@@ -131,7 +117,7 @@ class AdminExecutiveController extends Controller
         $this->authorize('delete', Executive::class);
 
         ExecutiveMembership::find($request->id)
-            ->each(function(ExecutiveMembership $executive) {
+            ->each(function (ExecutiveMembership $executive) {
                 $executive->delete();
             });
 

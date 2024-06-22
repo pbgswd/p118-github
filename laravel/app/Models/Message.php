@@ -24,13 +24,9 @@ class Message extends Model implements HasAttachment, Searchable
         'user_id',
         'live',
         'priority',
-        'sent'
-        ];
+        'sent',
+    ];
 
-
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -51,27 +47,16 @@ class Message extends Model implements HasAttachment, Searchable
         );
     }
 
-
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_message');
     }
 
-
-    /**
-     * @return HasOne
-     */
     public function messageMeta(): HasOne
     {
         return $this->hasOne(MessageMetaData::class, 'message_id');
@@ -82,9 +67,6 @@ class Message extends Model implements HasAttachment, Searchable
         return $this->hasOne(MessageSending::class, 'message_id');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'messages';
@@ -99,5 +81,4 @@ class Message extends Model implements HasAttachment, Searchable
     {
         return AccessLevelConstants::MEMBERS;
     }
-
 }

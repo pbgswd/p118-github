@@ -31,9 +31,6 @@ class AdminCommitteePostController extends Controller
     }
 
     /**
-     * @param CommitteePost $committeePost
-     * @param Committee $committee
-     * @return View
      * @throws AuthorizationException
      */
     public function index(CommitteePost $committeePost, Committee $committee): View
@@ -54,8 +51,6 @@ class AdminCommitteePostController extends Controller
     }
 
     /**
-     * @param Committee $committee
-     * @return View
      * @throws AuthorizationException
      */
     public function create(Committee $committee): View
@@ -63,7 +58,7 @@ class AdminCommitteePostController extends Controller
         $this->authorize('update', $committee);
 
         $data = [
-            'post' =>  new CommitteePost,
+            'post' => new CommitteePost,
             'committee' => $committee,
             'action' => 'Create',
             'access_levels' => Options::access_levels(),
@@ -73,10 +68,6 @@ class AdminCommitteePostController extends Controller
     }
 
     /**
-     * @param StoreCommitteePostRequest $request
-     * @param Committee $committee
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreCommitteePostRequest $request, Committee $committee, User $user): RedirectResponse
@@ -106,9 +97,6 @@ class AdminCommitteePostController extends Controller
     }
 
     /**
-     * @param Committee $committee
-     * @param CommitteePost $any_committee_post
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Committee $committee, CommitteePost $any_committee_post): View
@@ -128,14 +116,10 @@ class AdminCommitteePostController extends Controller
     }
 
     /**
-     * @param UpdateCommitteePostRequest $request
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateCommitteePostRequest $request, Committee $committee,
-                           CommitteePost $committeePost): RedirectResponse
+        CommitteePost $committeePost): RedirectResponse
     {
         $this->authorize('update', $committee);
 
@@ -161,9 +145,6 @@ class AdminCommitteePostController extends Controller
     }
 
     /**
-     * @param DestroyCommitteePostRequest $request
-     * @param Committee $committee
-     * @return RedirectResponse
      * @throws Exception
      */
     public function destroy(DestroyCommitteePostRequest $request, Committee $committee): RedirectResponse

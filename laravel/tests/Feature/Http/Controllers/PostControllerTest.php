@@ -9,14 +9,12 @@ use Tests\TestCase;
  */
 class PostControllerTest extends TestCase
 {
-
-
     /**
      * @test
      */
     public function list_returns_an_ok_response()
     {
-       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $posts = \App\Models\Post::factory()->times(3)->create();
 
@@ -25,7 +23,6 @@ class PostControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('posts');
         $response->assertViewHas('data');
-
 
     }
 

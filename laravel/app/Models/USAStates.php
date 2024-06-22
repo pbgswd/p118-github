@@ -9,7 +9,6 @@ class USAStates
 {
     /**
      * @array $states
-     * @return array
      */
     public static function usa_states(): array
     {

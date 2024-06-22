@@ -22,7 +22,8 @@ class MessageMetaDataFactory extends Factory
             ['type' => 'committee', 'name' => 'training-committee'],
         ];
 
-        $selection =  $types[rand(0,2)];
+        $selection = $types[rand(0, 2)];
+
         //$selection['type'] //$selection['name']
         return [
             'message_id' => '',

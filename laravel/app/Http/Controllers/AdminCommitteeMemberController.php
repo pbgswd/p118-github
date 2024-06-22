@@ -26,8 +26,6 @@ class AdminCommitteeMemberController extends Controller
     }
 
     /**
-     * @param Committee $committee
-     * @return View
      * @throws AuthorizationException
      */
     public function index(Committee $committee): View
@@ -47,9 +45,6 @@ class AdminCommitteeMemberController extends Controller
     }
 
     /**
-     * @param SearchCommitteeMember $request
-     * @param Committee $committee
-     * @return View
      * @throws AuthorizationException
      */
     public function search(SearchCommitteeMember $request, Committee $committee): View
@@ -76,10 +71,6 @@ class AdminCommitteeMemberController extends Controller
     }
 
     /**
-     * @param Committee $committee
-     * @param User $user
-     * @return View
-     *
      * @throws AuthorizationException
      */
     public function create(Committee $committee, User $user): View
@@ -95,10 +86,6 @@ class AdminCommitteeMemberController extends Controller
     }
 
     /**
-     * @param StoreCommitteeMember $request
-     * @param Committee $committee
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreCommitteeMember $request, Committee $committee, User $user): RedirectResponse
@@ -119,17 +106,14 @@ class AdminCommitteeMemberController extends Controller
 
         $result = $this->emailCommitteeMembershipService->sendMessage($data);
 
-        Session::flash('success', 'You have added ' . $user->name . ' to '.
-            $committee->name . ' An email notification has been sent.');
+        Session::flash('success', 'You have added '.$user->name.' to '.
+            $committee->name.' An email notification has been sent.');
 
         return redirect()->route('admin-list-committee-members',
             [$committee->slug, $user->id]);
     }
 
     /**
-     * @param Committee $committee
-     * @param User $user
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Committee $committee, User $user): View
@@ -152,10 +136,6 @@ class AdminCommitteeMemberController extends Controller
     }
 
     /**
-     * @param UpdateCommitteeMember $request
-     * @param Committee $committee
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateCommitteeMember $request, Committee $committee, User $user): RedirectResponse
@@ -202,15 +182,11 @@ class AdminCommitteeMemberController extends Controller
     }
 
     /**
-     * @param DestroyCommitteeMember $request
-     * @param Committee $committee
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
-//todo prove unit test is going in this method AdminCommitteeMemberControllerTest::destroy_returns_an_ok_response
+        //todo prove unit test is going in this method AdminCommitteeMemberControllerTest::destroy_returns_an_ok_response
 
         $this->authorize('update', $committee);
 

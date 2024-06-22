@@ -2,11 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-
 use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
-
 
 /**
  * @see \App\Http\Controllers\UserController
@@ -28,6 +26,7 @@ class UserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group show
      */
     public function not_authenticated_index_returns_a_response()
@@ -87,6 +86,7 @@ class UserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group show
      */
     public function show_returns_an_ok_response()
@@ -100,6 +100,7 @@ class UserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group submit
      */
     public function update_returns_an_ok_response()
@@ -111,35 +112,34 @@ class UserControllerTest extends TestCase
         $response = $this->actingAs($this->user)->post(
             route('member_edit', $this->user),
             [
-            'user' => ['email' => $this->faker->email(),
-                    'phone_number' =>
-                    [
-                        'phone_number' => $this->faker->phoneNumber()
+                'user' => ['email' => $this->faker->email(),
+                    'phone_number' => [
+                        'phone_number' => $this->faker->phoneNumber(),
                     ],
-            ],
-            'user_info' => [
-                $this->user->user_info->toArray()
-            ],
-        ]);
+                ],
+                'user_info' => [
+                    $this->user->user_info->toArray(),
+                ],
+            ]);
 
-       $response->assertRedirect(route('member_edit', $this->user));
+        $response->assertRedirect(route('member_edit', $this->user));
     }
 
     /**
      * @test
+     *
      * @group submit
      */
     public function original_update_returns_an_ok_response()
     {
-        $response = $this->actingAs($this->user)->post(env('APP_URL').'/member/' . $this->user->id . '/edit', [
+        $response = $this->actingAs($this->user)->post(env('APP_URL').'/member/'.$this->user->id.'/edit', [
             'user' => ['email' => $this->faker->email(),
-                'phone_number' =>
-                    [
-                        'phone_number' => $this->faker->phoneNumber()
-                    ],
+                'phone_number' => [
+                    'phone_number' => $this->faker->phoneNumber(),
+                ],
             ],
             'user_info' => [
-                $this->user->user_info->toArray()
+                $this->user->user_info->toArray(),
             ],
         ]);
 
@@ -148,6 +148,7 @@ class UserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group form-request
      */
     public function update_validates_with_a_form_request()
@@ -161,6 +162,7 @@ class UserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group address
      */
     public function update_address_returns_an_ok_response()
@@ -168,16 +170,17 @@ class UserControllerTest extends TestCase
         $address = Address::factory()->make();
 
         $response = $this->actingAs($this->user)->post(
-            env('APP_URL') . '/member/' . $this->user->id . '/address/edit',
+            env('APP_URL').'/member/'.$this->user->id.'/address/edit',
             $address->toArray()
         );
-//$response->ddSession()['errors'];
+        //$response->ddSession()['errors'];
         $response->assertSessionHas('success');
         $response->assertRedirect(route('member_address_edit', $this->user->id));
     }
 
     /**
      * @test
+     *
      * @group form-request
      */
     public function update_address_validates_with_a_form_request()
@@ -191,6 +194,7 @@ class UserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group emergency
      */
     public function update_emergency_contact_returns_an_ok_response()
@@ -199,11 +203,11 @@ class UserControllerTest extends TestCase
             'emergency_contact_name' => $this->faker->name(),
             'emergency_contact_relationship' => 'spouse',
             'emergency_contact_phone' => $this->faker->phoneNumber(),
-            'message' => $this->faker->text(20)
+            'message' => $this->faker->text(20),
         ];
 
         $response = $this->actingAs($this->user)->post(
-            env('APP_URL') . '/member/' . $this->user->id . '/emergency_contact/edit',
+            env('APP_URL').'/member/'.$this->user->id.'/emergency_contact/edit',
             $data
         );
 
@@ -212,8 +216,8 @@ class UserControllerTest extends TestCase
 
     /**
      * @test
-     * @group password
      *
+     * @group password
      */
     public function update_emergency_contact_validates_with_a_form_request()
     {
@@ -226,6 +230,7 @@ class UserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group password
      */
     public function update_password_returns_an_ok_response()
@@ -233,16 +238,16 @@ class UserControllerTest extends TestCase
         $password = $this->faker->password();
         $data = [
             'password' => $password,
-            'password_confirmation' => $password
+            'password_confirmation' => $password,
         ];
 
         // this is the original provided post method, that I need to modify
-/****
-        $response = $this->actingAs($this->user)->post('member/{user}/password', [
-            // TODO: send request data
-        ]);
-***/
-        $response = $this->actingAs($this->user)->post(env('APP_URL') . '/member/' . $this->user->id . '/password',
+        /****
+                $response = $this->actingAs($this->user)->post('member/{user}/password', [
+                    // TODO: send request data
+                ]);
+        ***/
+        $response = $this->actingAs($this->user)->post(env('APP_URL').'/member/'.$this->user->id.'/password',
             $data
         );
         $response->assertRedirect(route('member_password_edit', $this->user->id));
@@ -250,6 +255,7 @@ class UserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group password
      */
     public function update_password_validates_with_a_form_request()
@@ -260,6 +266,4 @@ class UserControllerTest extends TestCase
             \App\Http\Requests\InviteUser\ProcessUserRequest::class
         );
     }
-
-
 }

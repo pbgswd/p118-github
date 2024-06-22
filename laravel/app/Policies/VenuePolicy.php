@@ -11,8 +11,8 @@ class VenuePolicy
     use HandlesAuthorization;
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function viewAny(User $user)
@@ -21,18 +21,14 @@ class VenuePolicy
             $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
     }
 
-    /**
-     * @param User $user
-     * @param Venue $venue
-     */
     public function view(User $user, Venue $venue)
     {
         //public?
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function create(User $user)
@@ -41,8 +37,8 @@ class VenuePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function update(User $user)
@@ -51,8 +47,8 @@ class VenuePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function delete(User $user)
@@ -61,8 +57,8 @@ class VenuePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function restore(User $user)
@@ -71,8 +67,8 @@ class VenuePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function forceDelete(User $user)

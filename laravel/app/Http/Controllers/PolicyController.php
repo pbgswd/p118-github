@@ -7,9 +7,6 @@ use Illuminate\View\View;
 
 class PolicyController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         //$this->authorize('viewAny', Auth::user());
@@ -25,10 +22,6 @@ class PolicyController extends Controller
         return view('policies_list', ['data' => ['data' => $data]]);
     }
 
-    /**
-     * @param Policy $policy
-     * @return View
-     */
     public function show(Policy $policy): View
     {
         $policy->load('user', 'attachments');

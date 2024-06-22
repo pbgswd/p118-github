@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class StoreFaqRequest extends FormRequest
 {
     use ModifiesInputTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -35,7 +36,7 @@ class StoreFaqRequest extends FormRequest
             'new.answer' => 'string|nullable',
             'new.access_level' => 'string|max:255|nullable',
             'new.live' => 'boolean|nullable',
-            'new.sort_order' => 'string|nullable'
+            'new.sort_order' => 'string|nullable',
         ];
     }
 

@@ -17,13 +17,13 @@ class FaqFactory extends Factory
      */
     public function definition()
     {
-        $topic = 'Topic '.  $this->faker->words(2, true);
+        $topic = 'Topic '.$this->faker->words(2, true);
 
         return [
             'user_id' => \App\Models\User::factory(),
             'faq_topic' => $topic,
             'slug' => Str::slug($topic),
-            'description'  => 'description '. $this->faker->words(12, true),
+            'description' => 'description '.$this->faker->words(12, true),
             'access_level' => 'public',
             'live' => 1,
         ];

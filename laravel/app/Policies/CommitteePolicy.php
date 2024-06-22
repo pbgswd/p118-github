@@ -10,10 +10,6 @@ class CommitteePolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * @param User $user
-     * @return bool
-     */
     public function viewAny(User $user): bool
     {
         return $user->hasAnyRole(['super-admin', 'writer', 'committee']) ||
@@ -21,8 +17,6 @@ class CommitteePolicy
     }
 
     /**
-     * @param User $user
-     * @param Committee $committee
      * @return bool
      */
     public function view(User $user, Committee $committee)
@@ -32,7 +26,6 @@ class CommitteePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function create(User $user)
@@ -41,11 +34,6 @@ class CommitteePolicy
             $user->hasPermissionTo('create committee');
     }
 
-    /**
-     * @param User $user
-     * @param Committee $committee
-     * @return bool
-     */
     public function update(User $user, Committee $committee): bool
     {
         return ($user->hasPermissionTo('manage committee') &&
@@ -55,8 +43,8 @@ class CommitteePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function delete(User $user)
@@ -66,8 +54,8 @@ class CommitteePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function restore(User $user)
@@ -77,8 +65,8 @@ class CommitteePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function forceDelete(User $user)

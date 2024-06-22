@@ -12,9 +12,6 @@ use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    /**
-     * @return View
-     */
     public function list(): View
     {
         if (Auth::check()) {
@@ -31,8 +28,8 @@ class PageController extends Controller
     }
 
     /**
-     * @param Page $page
      * @return Response
+     *
      * @throws AuthorizationException
      */
     public function show(Page $page)
@@ -40,7 +37,7 @@ class PageController extends Controller
         //todo public page policy if not public page?
         //$this->authorize('view', Page::class);
 
-        if (false === Auth::check() && $page->access_level != AccessLevelConstants::PUBLIC) {
+        if (Auth::check() === false && $page->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this page.');
 
             return redirect('login');
@@ -48,6 +45,6 @@ class PageController extends Controller
 
         $page->load('topics', 'user', 'attachments');
 
-        return view('page', ['data' =>  ['page' => $page]]);
+        return view('page', ['data' => ['page' => $page]]);
     }
 }

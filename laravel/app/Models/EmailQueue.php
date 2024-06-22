@@ -12,7 +12,6 @@ class EmailQueue extends Model
 
     protected $table = 'email_queue';
 
-
     protected $fillable = [
         'sender',
         'recipient',
@@ -20,6 +19,7 @@ class EmailQueue extends Model
         'message',
         'attachments',
     ];
+
     /**
      * @var string[]
      */
@@ -28,20 +28,13 @@ class EmailQueue extends Model
         'updated_at',
     ];
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'messages';
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_message');
     }
-
 }

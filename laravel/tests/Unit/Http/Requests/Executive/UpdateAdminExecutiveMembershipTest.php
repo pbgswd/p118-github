@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests\Executive;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -27,7 +25,6 @@ class UpdateAdminExecutiveMembershipTest extends TestCase
     public function authorize()
     {
 
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -38,7 +35,6 @@ class UpdateAdminExecutiveMembershipTest extends TestCase
      */
     public function rules()
     {
-
 
         $actual = $this->subject->rules();
 

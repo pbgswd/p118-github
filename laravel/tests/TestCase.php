@@ -3,7 +3,6 @@
 namespace Tests;
 
 use App\Models\Address;
-
 use App\Models\Committee;
 use App\Models\CommitteePost;
 use App\Models\ExecutiveMembership;
@@ -14,27 +13,25 @@ use App\Models\UserInfo;
 use Database\Seeders\AccessLevelConstantsSeeder;
 use Database\Seeders\ExecutiveSeeder;
 use Database\Seeders\RolesAndPermissionsSeeder;
+use Faker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use JMac\Testing\Traits\AdditionalAssertions;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Faker;
-
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, AdditionalAssertions;
+    use AdditionalAssertions, CreatesApplication;
     use RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-Log::debug('==============================================');
-Log::debug('TestCase.php -- a test has started');
+        Log::debug('==============================================');
+        Log::debug('TestCase.php -- a test has started');
 
         DB::connection()->enableQueryLog();
 
@@ -50,14 +47,14 @@ Log::debug('TestCase.php -- a test has started');
         $this->users = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
-            ->has(Membership::factory(),'membership')
+            ->has(Membership::factory(), 'membership')
             ->count(3)
             ->create();
 
         $this->user = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
-            ->has(Membership::factory(),'membership')
+            ->has(Membership::factory(), 'membership')
             ->has(Address::factory(), 'address')
             ->create();
 
@@ -66,7 +63,7 @@ Log::debug('TestCase.php -- a test has started');
         $this->executive_user = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
-            ->has(Membership::factory(),'membership')
+            ->has(Membership::factory(), 'membership')
             ->has(Address::factory(), 'address')
             ->create();
         $this->executive_user->assignRole('member');
@@ -75,7 +72,7 @@ Log::debug('TestCase.php -- a test has started');
             [
                 'executive_id' => 1,
                 'start_date' => date('Y-m-d'),
-                'end_date' => date('d-m-Y', strtotime('+1 year'))
+                'end_date' => date('d-m-Y', strtotime('+1 year')),
             ]
         );
         $executive->user_id = $this->executive_user->id;
@@ -86,7 +83,7 @@ Log::debug('TestCase.php -- a test has started');
         $this->admin_user = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
-            ->has(Membership::factory(),'membership')
+            ->has(Membership::factory(), 'membership')
             ->create();
 
         $this->admin_user->assignRole(['member', 'super-admin', 'committee']);
@@ -94,7 +91,7 @@ Log::debug('TestCase.php -- a test has started');
         $this->committee_admin_user = User::factory()
             ->has(UserInfo::factory(), 'user_info')
             ->has(PhoneNumber::factory(), 'phone_number')
-            ->has(Membership::factory(),'membership')
+            ->has(Membership::factory(), 'membership')
             ->create();
 
         $this->committee_admin_user->assignRole(['super-admin', 'member', 'committee']);
@@ -103,7 +100,7 @@ Log::debug('TestCase.php -- a test has started');
 
         $this->committee->committee_members()->attach($this->user->id, ['role' => 'Member']);
 
-//todo be able to retrieve committee members from the committee
+        //todo be able to retrieve committee members from the committee
 
         $committee = Committee::latest()->first();
 
@@ -114,8 +111,7 @@ Log::debug('TestCase.php -- a test has started');
             ->times(3)
             ->create(['committee_id' => $committee->id, 'user_id' => $this->user->id]);
 
-
-Log::debug("End of setUp");
-Log::debug('==============================================');
+        Log::debug('End of setUp');
+        Log::debug('==============================================');
     }
 }

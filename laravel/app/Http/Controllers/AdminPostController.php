@@ -31,8 +31,6 @@ class AdminPostController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return View
      * @throws AuthorizationException
      */
     public function index(Request $request): View
@@ -48,7 +46,6 @@ class AdminPostController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -70,8 +67,6 @@ class AdminPostController extends Controller
     }
 
     /**
-     * @param StorePostRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StorePostRequest $request): RedirectResponse
@@ -87,7 +82,7 @@ class AdminPostController extends Controller
             $result = $this->attachmentService->createAttachment($request, $post);
 
             if ($result) {
-                Session::flash('success', 'You uploaded ' . count($request->file('attachments')) . ' files');
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -103,11 +98,9 @@ class AdminPostController extends Controller
     }
 
     /**
-     * @param Post $post
-     * @return View
      * @throws AuthorizationException
      */
-    public function edit(Post $post):View
+    public function edit(Post $post): View
     {
         $this->authorize('update', Post::class);
 
@@ -131,9 +124,6 @@ class AdminPostController extends Controller
     }
 
     /**
-     * @param UpdatePostRequest $request
-     * @param Post $any_post
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdatePostRequest $request, Post $any_post): RedirectResponse
@@ -149,7 +139,7 @@ class AdminPostController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_post);
 
             if ($result) {
-                Session::flash('success', 'You uploaded ' . count($request->file('attachments')).' files');
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -172,8 +162,6 @@ class AdminPostController extends Controller
     }
 
     /**
-     * @param DestroyPostRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyPostRequest $request): RedirectResponse
@@ -188,14 +176,12 @@ class AdminPostController extends Controller
                 $post->delete();
             });
 
-        Session::flash('success', 'You have deleted ' . count($request->id) . ' ' . Str::plural('post', count($request->id)) . '.');
+        Session::flash('success', 'You have deleted '.count($request->id).' '.Str::plural('post', count($request->id)).'.');
 
         return redirect()->route('posts_list');
     }
 
     /**
-     * @param Post $post
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function message(Post $post): RedirectResponse
@@ -223,25 +209,21 @@ class AdminPostController extends Controller
 
         $msg->save();
 
-
         $msg->messageSending()->create(['message_id' => $msg->id,
             'send_priority' => 'normal']);
 
-
         // $msg->priority = 'regular';
-      //  $msg->sent = 0;
+        //  $msg->sent = 0;
 
         //todo get correct topic for data
 
         $msg->messageMeta()->create(['message_id' => $msg->id,
             'source_id' => $post->id,
-            'source_slug' =>  $post->slug,
+            'source_slug' => $post->slug,
             'source_type' => 'topic',
             'source_type_name' => 'post',
-            'source_url' => 'post/' . $post->slug,
+            'source_url' => 'post/'.$post->slug,
         ]);
-
-
 
         //todo save attachments
         //? get attachement store in messages folder?
@@ -252,5 +234,4 @@ class AdminPostController extends Controller
         return redirect()->route('admin_message_edit', $msg->id);
 
     }
-
 }

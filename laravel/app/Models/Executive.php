@@ -13,21 +13,22 @@ use Spatie\Searchable\SearchResult;
 
 /**
  * Class Executive.
- * @property int            $id
- * @property string         $title
- * @property string         $email
- * @property User           $user
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $email
+ * @property User $user
  */
 class Executive extends Model implements Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     protected $policies = [
         self::class => ExecutivePolicy::class,
     ];
 
-   protected $table = 'executives';
+    protected $table = 'executives';
 
     public $sortable = [
         'id',
@@ -37,10 +38,6 @@ class Executive extends Model implements Searchable
         'end_date',
     ];
 
-
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -61,9 +58,6 @@ class Executive extends Model implements Searchable
         );
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function user(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'executive_user')
@@ -78,9 +72,6 @@ class Executive extends Model implements Searchable
             ->with('user_info');
     }
 
-    /**
-     * @return HasOne
-     */
     public function user_info(): HasOne
     {
         return $this->hasOne(UserInfo::class)->withDefault();

@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Carousel;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CarouselFactory extends Factory
 {
@@ -16,8 +16,6 @@ class CarouselFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
@@ -26,21 +24,21 @@ class CarouselFactory extends Factory
 
         return [
             'user_id' => \App\Models\User::factory(),
-            'caption' => 'Caption '. $this->faker->words(2, true),
-            'caption2' => 'Caption 2 '. $this->faker->sentence,
+            'caption' => 'Caption '.$this->faker->words(2, true),
+            'caption2' => 'Caption 2 '.$this->faker->sentence,
             'align' => $alignment[0],
             'text_color' => $this->faker->safeHexColor,
             'text_outline_color' => $this->faker->hexColor,
             'live' => 1,
             'order' => 2,
             'image_2000' => '2000.jpg',
-            'file_2000' => '2000'. $this->faker->md5 .'.jpg',
+            'file_2000' => '2000'.$this->faker->md5.'.jpg',
             'image_1400' => '1400.jpg',
-            'file_1400' => '1400'. $this->faker->md5 .'.jpg',
+            'file_1400' => '1400'.$this->faker->md5.'.jpg',
             'image_800' => '800.jpg',
-            'file_800' => '800'. $this->faker->md5 .'.jpg',
+            'file_800' => '800'.$this->faker->md5.'.jpg',
             'image_600' => '600.jpg',
-            'file_600' => '600'. $this->faker->md5 .'.jpg',
+            'file_600' => '600'.$this->faker->md5.'.jpg',
         ];
     }
 }

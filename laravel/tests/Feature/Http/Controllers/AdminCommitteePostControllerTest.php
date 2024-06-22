@@ -9,10 +9,9 @@ use Tests\TestCase;
  */
 class AdminCommitteePostControllerTest extends TestCase
 {
-
-
     /**
      * @test
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -28,7 +27,7 @@ class AdminCommitteePostControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->markTestIncomplete(__FUNCTION__.' has issues.');
 
         $response = $this->delete(route('committee_post_destroy', [$this->committee]));
 
@@ -53,7 +52,7 @@ class AdminCommitteePostControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->markTestIncomplete(__FUNCTION__.' has issues.');
 
         $committee = \App\Models\Committee::factory()->create();
         $committeePost = \App\Models\CommitteePost::factory()->create();
@@ -68,6 +67,7 @@ class AdminCommitteePostControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -83,12 +83,12 @@ class AdminCommitteePostControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->markTestIncomplete(__FUNCTION__.' has issues.');
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/committee/{committee}/post/create', [
-            // TODO: send request data
-        ]);
+                // TODO: send request data
+            ]);
 
         $response->assertRedirect(route('admin_committee_post_edit', [$this->committee->slug, $post->slug]));
     }
@@ -110,12 +110,12 @@ class AdminCommitteePostControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->markTestIncomplete(__FUNCTION__.' has issues.');
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/committee/{committee}/post/{any_committee_post}/edit', [
-            // TODO: send request data
-        ]);
+                // TODO: send request data
+            ]);
 
         $response->assertRedirect(route('admin_committee_post_edit',
             [$committeePost->committee->slug, $committeePost->slug]));

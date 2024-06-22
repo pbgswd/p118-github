@@ -13,15 +13,12 @@ use Tests\TestCase;
  */
 class AdminAgreementControllerTest extends TestCase
 {
-
-
     /**
      * @test
-     *
      */
     public function create_returns_an_ok_response()
     {
-        $response =  $this->actingAs($this->admin_user)->get(route('agreement_create'));
+        $response = $this->actingAs($this->admin_user)->get(route('agreement_create'));
 
         $response->assertOk();
         $response->assertViewIs('admin.agreement');
@@ -30,12 +27,11 @@ class AdminAgreementControllerTest extends TestCase
 
     /**
      * @test
-     *
      */
     public function destroy_returns_an_ok_response()
     {
         $agreement = \App\Models\Agreement::factory()->create();
-        $response = $this->actingAs( $this->admin_user)
+        $response = $this->actingAs($this->admin_user)
             ->delete(route('agreement_destroy'), ['id' => $agreement->id]);
         $this->assertModelMissing($agreement);
         $response->assertRedirect(route('agreements_list'));
@@ -43,7 +39,6 @@ class AdminAgreementControllerTest extends TestCase
 
     /**
      * @test
-     *
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -56,7 +51,6 @@ class AdminAgreementControllerTest extends TestCase
 
     /**
      * @test
-     *
      */
     public function edit_returns_an_ok_response()
     {
@@ -73,7 +67,6 @@ class AdminAgreementControllerTest extends TestCase
 
     /**
      * @test
-     *
      */
     public function index_returns_an_ok_response()
     {
@@ -91,7 +84,6 @@ class AdminAgreementControllerTest extends TestCase
 
     /**
      * @test
-     *
      */
     public function store_returns_an_ok_response()
     {
@@ -100,17 +92,16 @@ class AdminAgreementControllerTest extends TestCase
             ->has(Venue::factory()->times(3))
             ->make();
 
-        $response = $this->actingAs($this->admin_user)->post(env('APP_URL') . '/admin/agreement/create',
+        $response = $this->actingAs($this->admin_user)->post(env('APP_URL').'/admin/agreement/create',
             [
-                'agreement' => $agreement->toArray()
+                'agreement' => $agreement->toArray(),
             ]);
 
-       $this->assertEquals(Session::get('success'), 'agreement posting saved');
+        $this->assertEquals(Session::get('success'), 'agreement posting saved');
     }
 
     /**
      * @test
-     *
      */
     public function store_validates_with_a_form_request()
     {
@@ -123,6 +114,7 @@ class AdminAgreementControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group admin_update
      */
     public function update_returns_an_ok_response()
@@ -131,18 +123,17 @@ class AdminAgreementControllerTest extends TestCase
 
         $data = Agreement::first();
 
-        $data['description'] = 'Modified agreement description text ' . $data->description;
+        $data['description'] = 'Modified agreement description text '.$data->description;
 
-        $response = $this->actingAs($this->admin_user)->post('admin/agreement/' . $data->id . '/edit', [
-            'agreement' => $data->toArray()
+        $response = $this->actingAs($this->admin_user)->post('admin/agreement/'.$data->id.'/edit', [
+            'agreement' => $data->toArray(),
         ]);
 
-        $response->assertRedirect(route('agreement_edit', ['any_agreement' =>$data->id]));
+        $response->assertRedirect(route('agreement_edit', ['any_agreement' => $data->id]));
     }
 
     /**
      * @test
-     *
      */
     public function update_validates_with_a_form_request()
     {

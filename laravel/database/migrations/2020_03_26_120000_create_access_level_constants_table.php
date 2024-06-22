@@ -5,11 +5,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migration.
-     *
-     * @return void
      */
     public function up(): void
     {
@@ -66,8 +65,6 @@ return new class extends Migration {
 
     /**
      * Reverse the migration.
-     *
-     * @return void
      */
     public function down(): void
     {

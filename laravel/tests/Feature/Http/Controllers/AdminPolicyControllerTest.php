@@ -13,6 +13,7 @@ class AdminPolicyControllerTest extends TestCase
 {
     /**
      * @test
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -26,6 +27,7 @@ class AdminPolicyControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
@@ -41,7 +43,6 @@ class AdminPolicyControllerTest extends TestCase
 
     /**
      * @test
-     *
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -54,6 +55,7 @@ class AdminPolicyControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -70,6 +72,7 @@ class AdminPolicyControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -86,6 +89,7 @@ class AdminPolicyControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
@@ -94,13 +98,14 @@ class AdminPolicyControllerTest extends TestCase
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/policy/create', [
-           'policy' => $policy->toArray()
-        ]);
+                'policy' => $policy->toArray(),
+            ]);
         $this->assertEquals(Session::get('success'), 'policy posting saved');
     }
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -114,6 +119,7 @@ class AdminPolicyControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -123,15 +129,16 @@ class AdminPolicyControllerTest extends TestCase
         $data = Policy::first();
 
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/policy/' . $data->id . '/edit', [
-            'policy' => $data->toArray()
-        ]);
+            ->post('admin/policy/'.$data->id.'/edit', [
+                'policy' => $data->toArray(),
+            ]);
 
         $response->assertRedirect(route('admin_policy_edit', $data->id));
     }
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_validates_with_a_form_request()

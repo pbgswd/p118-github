@@ -27,10 +27,10 @@ class ContactControllerTest extends TestCase
      */
     public function submit_returns_an_ok_response()
     {
-       $this->markTestIncomplete( __FUNCTION__ .' has issues. -- needs g-recaptcha-response');
+        $this->markTestIncomplete(__FUNCTION__.' has issues. -- needs g-recaptcha-response');
         $contact = \App\Models\Contact::factory()->make();
         $response = $this->post('contact', [
-            $contact
+            $contact,
         ]);
 
         $response->assertRedirect(route('contact'));

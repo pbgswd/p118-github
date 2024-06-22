@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Log;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -17,21 +16,21 @@ use Spatie\Searchable\SearchResult;
 /**
  * Class Attachment.
  *
- * @property int       $id
- * @property string    $file
- * @property string    $file_name
- * @property string    $subfolder
- * @property string    $description
- * @property string    $access_level
- * @property User      $user
+ * @property int $id
+ * @property string $file
+ * @property string $file_name
+ * @property string $subfolder
+ * @property string $description
+ * @property string $access_level
+ * @property User $user
  * @property Meeting[] $meetings
- * @property DateTime  $created_at
- * @property DateTime  $updated_at
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
  */
 class Attachment extends Model implements Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     /** @var string */
     public $path_info;
@@ -75,10 +74,6 @@ class Attachment extends Model implements Searchable
     ];
 
     /** @var array */
-
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         return new SearchResult(
@@ -93,31 +88,26 @@ class Attachment extends Model implements Searchable
      */
     public function setCalculatedProperties(): self
     {
-        $this->path_info = \pathinfo(\storage_path('app/' . $this->subfolder) . '/' . $this->file);
+        $this->path_info = \pathinfo(\storage_path('app/'.$this->subfolder).'/'.$this->file);
         $this->extension = $this->path_info['extension'];
 
-        if(file_exists($this->path_info['dirname'] . '/' . $this->path_info['basename'])) {
-            $this->imagedata = \getimagesize(\storage_path('app/' . $this->subfolder) . '/' . $this->file);
-            $this->filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/' . $this->subfolder)
-                . '/' . $this->file));
+        if (file_exists($this->path_info['dirname'].'/'.$this->path_info['basename'])) {
+            $this->imagedata = \getimagesize(\storage_path('app/'.$this->subfolder).'/'.$this->file);
+            $this->filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/'.$this->subfolder)
+                .'/'.$this->file));
         } else {
-            $this->imagedata = [0,0,0,'"width="0" height="0"', 'bits' => 8, 'mime' => '"application/octet-stream"'];
-            $this->filesize = "0KB";
+            $this->imagedata = [0, 0, 0, '"width="0" height="0"', 'bits' => 8, 'mime' => '"application/octet-stream"'];
+            $this->filesize = '0KB';
         }
+
         return $this;
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function meetings(): BelongsToMany
     {
         return $this->belongsToMany(Meeting::class, 'attachment_meeting');
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

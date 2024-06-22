@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Feature;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Feature;
 
 class FeatureFactory extends Factory
 {
@@ -23,7 +23,7 @@ class FeatureFactory extends Factory
     public function definition()
     {
         return [
-            'title' => 'Feature title ' . $this->faker->word(),
+            'title' => 'Feature title '.$this->faker->word(),
             'url' => $this->faker->url(),
             'content' => $this->faker->paragraph(),
             'image' => '',

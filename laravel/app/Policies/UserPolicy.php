@@ -3,17 +3,13 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Support\Facades\Request;
 
 class UserPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * @param $user
-     * @param $ability
      * @return bool
      */
     public function before($user, $ability)
@@ -26,7 +22,7 @@ class UserPolicy
 
     /**
      * Determine whether the user can view any models users.
-     * @param User $user
+     *
      * @return bool
      */
     public function viewAny(User $user)
@@ -37,8 +33,7 @@ class UserPolicy
 
     /**
      * Determine whether the user can view the models user.
-     * @param User $loggedInUser
-     * @param User $targetUser
+     *
      * @return bool
      */
     public function view(User $loggedInUser, User $targetUser)
@@ -59,7 +54,6 @@ class UserPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function create(User $user)
@@ -69,8 +63,6 @@ class UserPolicy
     }
 
     /**
-     * @param User $loggedInUser
-     * @param User $targetUser
      * @return bool
      */
     public function update(User $loggedInUser, User $targetUser)
@@ -80,7 +72,7 @@ class UserPolicy
 
     /**
      * Determine whether the user can update the models user.
-     * @param User $user
+     *
      * @return bool
      */
     public function admin_update(User $user)
@@ -90,7 +82,7 @@ class UserPolicy
 
     /**
      * Determine whether the user can delete the models user.
-     * @param User $user
+     *
      * @return bool
      */
     public function delete(User $user)
@@ -101,7 +93,7 @@ class UserPolicy
 
     /**
      * Determine whether the user can restore the models user.
-     * @param User $user
+     *
      * @return bool
      */
     public function restore(User $user)
@@ -111,7 +103,7 @@ class UserPolicy
 
     /**
      * Determine whether the user can permanently delete the models user.
-     * @param User $user
+     *
      * @return bool
      */
     public function forceDelete(User $user)

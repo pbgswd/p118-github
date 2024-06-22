@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Page;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 class PageFactory extends Factory
@@ -32,7 +32,7 @@ class PageFactory extends Factory
             'live' => 1,
             'front_page' => $this->faker->boolean,
             'landing_page' => $this->faker->boolean,
-            'access_level' => 'public'
+            'access_level' => 'public',
         ];
     }
 }

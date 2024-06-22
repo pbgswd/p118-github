@@ -12,9 +12,6 @@ class Proofreader extends Model
 
     protected $table = 'proofreader';
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

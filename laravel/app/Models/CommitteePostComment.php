@@ -12,26 +12,27 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int       $id
- * @property int       $committee_id
- * @property int       $user_id
- * @property int       $post_id
- * @property int       $parent_id
- * @property string    $content
- * @property bool   $live
- * @property DateTime  $created_at
- * @property DateTime  $updated_at
- * @property User      $comment_author
+ * @property int $id
+ * @property int $committee_id
+ * @property int $user_id
+ * @property int $post_id
+ * @property int $parent_id
+ * @property string $content
+ * @property bool $live
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ * @property User $comment_author
  * @property CommitteePost $committee_post
  * @property Committee $committee
+ *
  * @method static withoutGlobalScopes()
  */
 class CommitteePostComment extends LiveableModel implements Searchable
 {
-    use Notifiable;
     use HasFactory;
-    use Sortable;
     use HasRoles;
+    use Notifiable;
+    use Sortable;
 
     protected $guard_name = 'web';
 
@@ -59,9 +60,6 @@ class CommitteePostComment extends LiveableModel implements Searchable
         'user_id',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $committee = Committee::where('id', $this->committee_id)->first('slug');
@@ -82,25 +80,16 @@ class CommitteePostComment extends LiveableModel implements Searchable
         );
     }
 
-    /**
-     * @return HasOne
-     */
     public function comment_author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return HasOne
-     */
     public function committee_post(): HasOne
     {
         return $this->hasOne(CommitteePost::class, 'id', 'post_id');
     }
 
-    /**
-     * @return HasOne
-     */
     public function committee(): HasOne
     {
         return $this->hasOne(Committee::class, 'id', 'committee_id');

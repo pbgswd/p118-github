@@ -40,24 +40,23 @@ Route::middleware('web')->group(function () {
 
     //Route::get('/hire-us', [CNS\HireUsController::class, 'show'])->name('hire-us'); // to be updated
 
-    Route::controller(CNS\PageController::class)->group(function() {
+    Route::controller(CNS\PageController::class)->group(function () {
 
-        Route::redirect('/page/apply-for-overhire-work', "/page/not-accepting-new-hire-applications");
+        Route::redirect('/page/apply-for-overhire-work', '/page/not-accepting-new-hire-applications');
 
         Route::get('/pages', 'list')->name('pages');
         Route::get('/page/{page}', 'show')->name('page_show');
     });
 
-
     Route::get('/topics', [CNS\TopicController::class, 'list'])->name('topics');
     Route::get('/topic/{topic}', [CNS\TopicController::class, 'show'])->name('topic_show');
 
-    Route::controller(CNS\PostController::class)->group(function() {
-       Route::get('/posts', 'list')->name('posts');
-       Route::get('/post/{post}', 'show')->name('post_show');
+    Route::controller(CNS\PostController::class)->group(function () {
+        Route::get('/posts', 'list')->name('posts');
+        Route::get('/post/{post}', 'show')->name('post_show');
     });
 
-    Route::controller(CNS\InviteUserController::class)->group(function() {
+    Route::controller(CNS\InviteUserController::class)->group(function () {
         Route::get('/site_invitation/{inviteUser}/{password}', 'show')->name('invite_user_signup');
         Route::post('/site_invitation/{inviteUser}/{password}', 'process_user')->name('public_process_invitation');
     });
@@ -74,12 +73,12 @@ Route::middleware('web')->group(function () {
     Route::get('bylaws', [CNS\ByLawController::class, 'list'])->name('bylaws_list_public');
     Route::get('/bylaw/{bylaw}', [CNS\ByLawController::class, 'show'])->name('bylaw_show');
 
-    Route::controller(CNS\FaqController::class)->group(function() {
+    Route::controller(CNS\FaqController::class)->group(function () {
         Route::get('/faqs', 'index')->name('faqs_list_public');
         Route::get('/faq/{any_faq}', 'show')->name('faq_show');
     });
 
-    Route::controller(CNS\PostController::class)->group(function() {
+    Route::controller(CNS\PostController::class)->group(function () {
         Route::get('/posts', 'list')->name('posts');
         Route::get('/post/{post}', 'show')->name('post_show');
     });
@@ -96,7 +95,7 @@ Route::middleware('web', 'auth')->group(function () {
 
     Route::get('/home', [CNS\HomeController::class, 'index'])->name('home'); // redirects to home page
 
-    Route::controller(CNS\EmploymentController::class)->group(function() {
+    Route::controller(CNS\EmploymentController::class)->group(function () {
         Route::post('jobs', 'jobs_year')->name('jobs_year');
         Route::get('jobs/{deadline}', 'index_by_year')->name('list_jobs_year');
         Route::get('jobs', 'index')->name('jobs_list');
@@ -108,12 +107,11 @@ Route::middleware('web', 'auth')->group(function () {
 
     Route::controller(CNS\MessageController::class)->group(function () {
         Route::get('messages', 'index')->name('messages')->middleware(CheckMessagingFeatureStatus::class);
-        Route::get('message/{message}', 'show')->name('message')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::post('member/{user}/message_preferences', 'update')->name('update_message_preferences')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::get('message/{message}', 'show')->name('message')->middleware(CheckMessagingFeatureStatus::class);
+        Route::post('member/{user}/message_preferences', 'update')->name('update_message_preferences')->middleware(CheckMessagingFeatureStatus::class);
     });
 
-
-    Route::controller(CNS\UserController::class)->group(function() {
+    Route::controller(CNS\UserController::class)->group(function () {
         Route::get('/members', 'index')->name('members');
         Route::get('/member/{user}', 'show')->name('member');
         Route::get('/member/{user}/edit', 'edit')->name('member_edit');
@@ -132,10 +130,10 @@ Route::middleware('web', 'auth')->group(function () {
     Route::get('committees', [CNS\CommitteeController::class, 'index'])->name('committees');
     Route::get('committee/{committee}', [CNS\CommitteeController::class, 'show'])->name('committee');
 
-    Route::controller(CNS\CommitteePostController::class)->group(function() {
+    Route::controller(CNS\CommitteePostController::class)->group(function () {
         Route::get('committee/{committee}/post/create', 'create')->name('committee_add_public_post');
         Route::post('committee/{committee}/post/create', 'store')->name('committee_store_public_post');
-        Route::get('committee/{committee}/post/{committeePost}','show')->name('public_committee_post_show');
+        Route::get('committee/{committee}/post/{committeePost}', 'show')->name('public_committee_post_show');
         Route::get('committee/{committee}/post/{committeePost}/edit', 'edit')->name('committee_post_edit_form');
 
         Route::post('committee/{committee}/post/{any_committee_post}/edit', 'update')
@@ -145,7 +143,7 @@ Route::middleware('web', 'auth')->group(function () {
             ->name('public_committee_post_destroy');
     });
 
-    Route::controller(CNS\MeetingController::class)->group(function() {
+    Route::controller(CNS\MeetingController::class)->group(function () {
         Route::post('minutes', 'post_year')->name('post_year');
         Route::get('minutes/year/{year}', 'index_by_year')->name('list_meetings_year');
         Route::get('minutes', 'index')->name('list_meetings');
@@ -160,7 +158,7 @@ Route::middleware('web', 'auth')->group(function () {
  */
 Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->group(function () {
 
-    Route::controller(CNS\AdminController::class)->group(function() {
+    Route::controller(CNS\AdminController::class)->group(function () {
         Route::get('/', 'index')->name('admin');
         Route::get('/blank', 'blank')->name('blank');
         Route::get('/developer', 'developer')->name('developer');
@@ -168,34 +166,34 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::get('/development', 'development')->name('development');
     });
 
-    Route::controller(CNS\AdminMessageController::class)->group(function() {
-        Route::get('messages', 'index')->name('admin_messages')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::get('message/create', 'create')->name('admin_message_create')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::post('message/create', 'store')->name('admin_message_store')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::get('message/{message}/edit', 'edit')->name('admin_message_edit')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::post('message/{message}/edit', 'update')->name('admin_message_update')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::get('message/{message}/preview', 'preview')->name('admin_message_preview')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::get('message/{message}/preview_strict', 'preview_strict')->name('admin_message_preview_strict')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::get('message/{message}/send', 'send')->name('admin_message_send')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::delete('message/delete', 'destroy')->name('admin_message_destroy')->middleware(CheckMessagingFeatureStatus::class);;
+    Route::controller(CNS\AdminMessageController::class)->group(function () {
+        Route::get('messages', 'index')->name('admin_messages')->middleware(CheckMessagingFeatureStatus::class);
+        Route::get('message/create', 'create')->name('admin_message_create')->middleware(CheckMessagingFeatureStatus::class);
+        Route::post('message/create', 'store')->name('admin_message_store')->middleware(CheckMessagingFeatureStatus::class);
+        Route::get('message/{message}/edit', 'edit')->name('admin_message_edit')->middleware(CheckMessagingFeatureStatus::class);
+        Route::post('message/{message}/edit', 'update')->name('admin_message_update')->middleware(CheckMessagingFeatureStatus::class);
+        Route::get('message/{message}/preview', 'preview')->name('admin_message_preview')->middleware(CheckMessagingFeatureStatus::class);
+        Route::get('message/{message}/preview_strict', 'preview_strict')->name('admin_message_preview_strict')->middleware(CheckMessagingFeatureStatus::class);
+        Route::get('message/{message}/send', 'send')->name('admin_message_send')->middleware(CheckMessagingFeatureStatus::class);
+        Route::delete('message/delete', 'destroy')->name('admin_message_destroy')->middleware(CheckMessagingFeatureStatus::class);
     });
 
     Route::controller(CNS\AdminEmailQueueController::class)->group(function () {
-        Route::get('email_queue', 'index')->name('admin_email_queue_list')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::get('email_queue/{email_queue}/message', 'show')->name('admin_email_queue_show')->middleware(CheckMessagingFeatureStatus::class);;
-        Route::delete('email_queue/delete', 'destroy')->name('admin_email_queue_destroy')->middleware(CheckMessagingFeatureStatus::class);;
+        Route::get('email_queue', 'index')->name('admin_email_queue_list')->middleware(CheckMessagingFeatureStatus::class);
+        Route::get('email_queue/{email_queue}/message', 'show')->name('admin_email_queue_show')->middleware(CheckMessagingFeatureStatus::class);
+        Route::delete('email_queue/delete', 'destroy')->name('admin_email_queue_destroy')->middleware(CheckMessagingFeatureStatus::class);
     });
 
-    Route::controller(CNS\AdminCarouselController::class)->group(function() {
-       Route::get('carousel', 'index')->name('admin_carousel_list');
-       Route::get('carousel/create', 'create')->name('admin_carousel_create');
-       Route::post('carousel/create', 'store')->name('admin_carousel_store');
-       Route::get('carousel/{any_carousel}/edit', 'edit')->name('admin_carousel_edit');
-       Route::post('carousel/{any_carousel}/edit', 'update')->name('admin_carousel_update');
-       Route::delete('carousel/delete', 'destroy')->name('admin_carousel_destroy');
+    Route::controller(CNS\AdminCarouselController::class)->group(function () {
+        Route::get('carousel', 'index')->name('admin_carousel_list');
+        Route::get('carousel/create', 'create')->name('admin_carousel_create');
+        Route::post('carousel/create', 'store')->name('admin_carousel_store');
+        Route::get('carousel/{any_carousel}/edit', 'edit')->name('admin_carousel_edit');
+        Route::post('carousel/{any_carousel}/edit', 'update')->name('admin_carousel_update');
+        Route::delete('carousel/delete', 'destroy')->name('admin_carousel_destroy');
     });
 
-    Route::controller(CNS\AdminMemoriamController::class)->group(function(){
+    Route::controller(CNS\AdminMemoriamController::class)->group(function () {
         Route::get('memoriams', 'index')->name('admin_memoriam_list');
         Route::get('memoriam/create', 'create')->name('admin_memoriam_create');
         Route::post('memoriam/create', 'store');
@@ -212,7 +210,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     });
 
     Route::controller(CNS\LocalSearchController::class)->group(function () {
-        Route::post('/search','admin_search')->name('admin_search');
+        Route::post('/search', 'admin_search')->name('admin_search');
         //Route::get('/search','admin_index')->name('admin_search_show');
         Route::post('/attachment_search', 'admin_attachment_search')
             ->name('list_attachments_search_result');
@@ -237,15 +235,15 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     });
 
     Route::controller(CNS\AdminTopicController::class)->group(function () {
-        Route::get('/topics','index')->name('topics_list');
-        Route::get('/topic/create','create')->name('topic_create');
-        Route::post('/topic/create','store');
-        Route::get('/topic/{any_topic}/edit','edit')->name('topic_edit');
-        Route::post('/topic/{any_topic}/edit','update');
-        Route::delete('/topic/delete','destroy')->name('topic_destroy');
+        Route::get('/topics', 'index')->name('topics_list');
+        Route::get('/topic/create', 'create')->name('topic_create');
+        Route::post('/topic/create', 'store');
+        Route::get('/topic/{any_topic}/edit', 'edit')->name('topic_edit');
+        Route::post('/topic/{any_topic}/edit', 'update');
+        Route::delete('/topic/delete', 'destroy')->name('topic_destroy');
     });
 
-    Route::controller(CNS\AdminUserController::class)->group(function() {
+    Route::controller(CNS\AdminUserController::class)->group(function () {
         Route::get('/users', 'index')->name('users_list');
         Route::get('/user/create', 'create')->name('user_create');
         Route::post('/user/create', 'store');
@@ -282,7 +280,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
 
     Route::get('/invite-resend-list', [CNS\ReInviteUserController::class, 'index'])->name('invite-resend-list');
 
-    Route::controller(CNS\AdminPageController::class)->group(function() {
+    Route::controller(CNS\AdminPageController::class)->group(function () {
         Route::get('/pages', 'index')->name('pages_list');
         Route::get('/page/create', 'create')->name('page_create');
         Route::post('/page/create', 'store');
@@ -291,7 +289,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('/page/delete', 'destroy')->name('page_destroy');
     });
 
-    Route::controller(CNS\AdminPostController::class)->group(function() {
+    Route::controller(CNS\AdminPostController::class)->group(function () {
         Route::get('/posts', 'index')->name('posts_list');
         Route::get('/post/create', 'create')->name('post_create');
         Route::post('/post/create', 'store');
@@ -301,7 +299,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::get('/post/{any_post}/message', 'message')->name('admin_post_message');
     });
 
-    Route::controller(CNS\AttachmentController::class)->group(function() {
+    Route::controller(CNS\AttachmentController::class)->group(function () {
         Route::get('/attachments', 'index')->name('attachments_list');
         Route::get('/attachment/create', 'create')->name('attachment_create');
         Route::post('/attachment/create', 'store')->name('create_attachment');
@@ -312,7 +310,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
 
     Route::get('/roles', [CNS\RoleController::class, 'index'])->name('roles_list');
 
-    Route::controller(CNS\AdminVenueController::class)->group(function (){
+    Route::controller(CNS\AdminVenueController::class)->group(function () {
         Route::get('/venues', 'index')->name('venues_list');
         Route::get('/venue/create', 'create')->name('venue_create');
         Route::post('/venue/create', 'store');
@@ -321,25 +319,25 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('/venue/delete', 'destroy')->name('venue_destroy');
     });
 
-    Route::controller(CNS\AdminCommitteeMemberController::class)->group(function() {
+    Route::controller(CNS\AdminCommitteeMemberController::class)->group(function () {
         Route::post('committee/{committee}/admin-list-committee-members', 'search')
             ->name('admin_search_committee_members');
 
         Route::get('committee/{committee}/admin-list-committee-members', 'index')->name('admin-list-committee-members');
 
-        Route::get('committee/{committee}/admin-create-committee-members/user/{user}','create')
+        Route::get('committee/{committee}/admin-create-committee-members/user/{user}', 'create')
             ->name('admin_create_committee_members');
-        Route::post('committee/{committee}/admin-create-committee-members/user/{user}','store');
-        Route::get('committee/{committee}/admin-edit-committee-members/user/{user}','edit')
+        Route::post('committee/{committee}/admin-create-committee-members/user/{user}', 'store');
+        Route::get('committee/{committee}/admin-edit-committee-members/user/{user}', 'edit')
             ->name('admin_edit_committee_members');
-        Route::post('committee/{committee}/admin-edit-committee-members/user/{user}','update')
+        Route::post('committee/{committee}/admin-edit-committee-members/user/{user}', 'update')
             ->name('admin_update_committee_member');
         //todo
-        Route::delete('committee/{committee}/user/{user}/delete','destroy')
+        Route::delete('committee/{committee}/user/{user}/delete', 'destroy')
             ->name('admin_delete-committee_member');
     });
 
-    Route::controller(CNS\AdminCommitteeController::class)->group(function() {
+    Route::controller(CNS\AdminCommitteeController::class)->group(function () {
         Route::get('committees', 'index')->name('committees_list');
         Route::get('committee/create', 'create')->name('committee_create');
         Route::post('committee/create', 'store');
@@ -349,13 +347,13 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('committee/delete', 'destroy')->name('committee_destroy');
     });
 
-    Route::controller(CNS\AdminCommitteePostController::class)->group(function() {
-        Route::get('committee/{committee}/posts','index')->name('committee_posts_list');
-        Route::get('committee/{committee}/post/create','create')->name('admin_committee_post');
-        Route::post('committee/{committee}/post/create','store');
-        Route::get('committee/{committee}/post/{any_committee_post}/edit','edit')->name('admin_committee_post_edit');
-        Route::post('committee/{committee}/post/{any_committee_post}/edit','update');
-        Route::delete('committee/{committee}/post/delete','destroy')->name('committee_post_destroy');
+    Route::controller(CNS\AdminCommitteePostController::class)->group(function () {
+        Route::get('committee/{committee}/posts', 'index')->name('committee_posts_list');
+        Route::get('committee/{committee}/post/create', 'create')->name('admin_committee_post');
+        Route::post('committee/{committee}/post/create', 'store');
+        Route::get('committee/{committee}/post/{any_committee_post}/edit', 'edit')->name('admin_committee_post_edit');
+        Route::post('committee/{committee}/post/{any_committee_post}/edit', 'update');
+        Route::delete('committee/{committee}/post/delete', 'destroy')->name('committee_post_destroy');
     });
 
     /****
@@ -371,7 +369,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         ->name('committee_post_comment_destroy');
     ***/
 
-    Route::controller(CNS\AdminAgreementController::class)->group(function() {
+    Route::controller(CNS\AdminAgreementController::class)->group(function () {
         Route::get('agreements', 'index')->name('agreements_list');
         Route::get('agreement/create', 'create')->name('agreement_create');
         Route::post('agreement/create', 'store');
@@ -380,7 +378,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::post('/agreement/{any_agreement}/edit', 'update');
     });
 
-    Route::controller(CNS\AdminOrganizationController::class)->group(function() {
+    Route::controller(CNS\AdminOrganizationController::class)->group(function () {
         Route::get('/organizations', 'index')->name('organizations_list');
         Route::get('/organization/create', 'create')->name('organization_create');
         Route::post('/organization/create', 'store');
@@ -398,18 +396,18 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('/meeting/delete', 'destroy')->name('meeting_destroy');
     });
 
-    Route::controller(CNS\AdminEmploymentController::class)->group(function() {
-        Route::get('employment-list/','index')->name('admin_employment_list');
-        Route::get('employment/create','create')->name('admin_employment_create');
-        Route::post('employment/create','store');
-        Route::get('/employment/{any_employment}/edit','edit')
+    Route::controller(CNS\AdminEmploymentController::class)->group(function () {
+        Route::get('employment-list/', 'index')->name('admin_employment_list');
+        Route::get('employment/create', 'create')->name('admin_employment_create');
+        Route::post('employment/create', 'store');
+        Route::get('/employment/{any_employment}/edit', 'edit')
             ->name('admin_employment_edit');
-        Route::post('employment/{any_employment}/edit','update')->name('admin_employment_update');
-        Route::delete('/employment/delete','destroy')
+        Route::post('employment/{any_employment}/edit', 'update')->name('admin_employment_update');
+        Route::delete('/employment/delete', 'destroy')
             ->name('admin_employment_destroy');
     });
 
-    Route::controller(CNS\AdminByLawController::class)->group(function(){
+    Route::controller(CNS\AdminByLawController::class)->group(function () {
         Route::get('bylaws/', 'index')->name('admin_bylaws_list');
         Route::get('bylaw/create', 'create')->name('admin_bylaw_create');
         Route::post('bylaw/create', 'store');
@@ -418,7 +416,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::delete('/bylaw/delete', 'destroy')->name('admin_bylaw_destroy');
     });
 
-    Route::controller(CNS\AdminQrCodeController::class)->group(function(){
+    Route::controller(CNS\AdminQrCodeController::class)->group(function () {
         Route::get('qrcodes/', 'index')->name('admin_qrcodes_list');
         Route::get('qrcode/create', 'create')->name('admin_qrcode_create');
         Route::post('qrcode/create', 'store');
@@ -429,7 +427,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
             ->name('qrcode_download')->middleware('throttle:download');
     });
 
-    Route::controller(CNS\AdminFaqController::class)->group(function(){
+    Route::controller(CNS\AdminFaqController::class)->group(function () {
         Route::get('faqs/', 'index')->name('admin_faqs_list');
         Route::get('faq/create', 'create')->name('admin_faq_create');
         Route::post('faq/create', 'store');

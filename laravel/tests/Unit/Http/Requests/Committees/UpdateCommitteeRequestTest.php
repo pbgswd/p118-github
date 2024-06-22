@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests\Committees;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -27,7 +25,6 @@ class UpdateCommitteeRequestTest extends TestCase
     public function authorize()
     {
 
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -38,7 +35,7 @@ class UpdateCommitteeRequestTest extends TestCase
      */
     public function rules()
     {
-        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cannot be tested without context. Use Feature test');
+        $this->markTestSkipped(__FUNCTION__.' in '.__FILE__.' cannot be tested without context. Use Feature test');
 
         $actual = $this->subject->rules();
 

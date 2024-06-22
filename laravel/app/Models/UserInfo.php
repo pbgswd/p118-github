@@ -53,9 +53,6 @@ class UserInfo extends Model implements Searchable
         'share_phone' => 'boolean',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $user = User::where('id', $this->user_id)->first();
@@ -69,15 +66,12 @@ class UserInfo extends Model implements Searchable
         }
 
         return new SearchResult(
-           $user,
-           $user->name,
+            $user,
+            $user->name,
             \route('member', $this->user_id)
         );
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

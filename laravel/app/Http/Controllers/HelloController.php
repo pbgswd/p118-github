@@ -6,9 +6,6 @@ use Illuminate\View\View;
 
 class HelloController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         /**

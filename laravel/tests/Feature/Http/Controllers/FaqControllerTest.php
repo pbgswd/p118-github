@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Feature\Http\Controllers;
+
 use App\Models\Faq;
 use Tests\TestCase;
 
@@ -8,6 +9,7 @@ class FaqControllerTest extends TestCase
 {
     /**
      * @test
+     *
      * @group listok
      */
     public function list_returns_an_ok_response()
@@ -23,6 +25,7 @@ class FaqControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group showok
      */
     public function show_returns_an_ok_response()

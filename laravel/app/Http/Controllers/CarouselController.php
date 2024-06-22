@@ -7,10 +7,6 @@ use Illuminate\View\View;
 
 class CarouselController extends Controller
 {
-
-    /**
-     * @return View
-     */
     public function show(): View
     {
         $carousel = Carousel::where('live', 1)

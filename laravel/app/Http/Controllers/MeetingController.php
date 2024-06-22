@@ -10,9 +10,6 @@ use Illuminate\View\View;
 
 class MeetingController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         $pagination = 10;
@@ -42,10 +39,6 @@ class MeetingController extends Controller
         return view('list_meetings_minutes', ['data' => $data]);
     }
 
-    /**
-     * @param $year
-     * @return View
-     */
     public function index_by_year($year): View
     {
         $years = DB::table('meetings')
@@ -73,19 +66,11 @@ class MeetingController extends Controller
         return view('list_meetings_minutes', ['data' => $data]);
     }
 
-    /**
-     * @param QueryMeetingYearRequest $request
-     * @return RedirectResponse
-     */
     public function post_year(QueryMeetingYearRequest $request): RedirectResponse
     {
         return redirect()->route('list_meetings_year', $request->year);
     }
 
-    /**
-     * @param Meeting $meeting
-     * @return View
-     */
     public function show(Meeting $meeting): View
     {
         $meeting->load('user', 'attachments');

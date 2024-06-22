@@ -19,26 +19,27 @@ use Spatie\Searchable\SearchResult;
 /**
  * Class User.
  *
- * @property int           $id
- * @property string        $name
- * @property string        $email
- * @property string        $password
- * @property \DateTime     $created_at
- * @property \DateTime     $updated_at
- * @property PhoneNumber   $phone_number
- * @property UserInfo      $user_info
- * @property Address       $address
- * @property Membership    $membership
- * @property Attachment[]  $attachments
- * @property Committee[]   $committee_memberships
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
+ * @property PhoneNumber $phone_number
+ * @property UserInfo $user_info
+ * @property Address $address
+ * @property Membership $membership
+ * @property Attachment[] $attachments
+ * @property Committee[] $committee_memberships
+ *
  * @method static has(string $string)
  */
 class User extends Authenticatable implements HasAttachment, Searchable
 {
     use HasFactory;
+    use HasRoles;
     use Notifiable;
     use Sortable;
-    use HasRoles;
 
     protected $guard_name = 'web';
 
@@ -89,9 +90,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         if (request()->route()->getName() == 'admin_search') {
@@ -109,34 +107,21 @@ class User extends Authenticatable implements HasAttachment, Searchable
         );
     }
 
-
-    /**
-     * @return HasOne
-     */
     public function phone_number(): HasOne
     {
         return $this->hasOne(PhoneNumber::class);
     }
 
-    /**
-     * @return HasOne
-     */
     public function user_info(): HasOne
     {
         return $this->hasOne(UserInfo::class)->withDefault();
     }
 
-    /**
-     * @return HasOne
-     */
     public function address(): HasOne
     {
         return $this->hasOne(Address::class);
     }
 
-    /**
-     * @return HasOne
-     */
     public function membership(): HasOne
     {
         return $this->hasOne(Membership::class);
@@ -144,34 +129,22 @@ class User extends Authenticatable implements HasAttachment, Searchable
 
     /**
      * The Executive role of the given user.
-     *
-     * @return HasOne
      */
     public function executive_role(): HasOne
     {
         return $this->hasOne(ExecutiveMembership::class);
     }
 
-
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function committee_memberships(): BelongsToMany
     {
         return $this->belongsToMany(Committee::class)->withPivot('role');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'users';
@@ -189,8 +162,6 @@ class User extends Authenticatable implements HasAttachment, Searchable
 
     /**
      * Limit to current active role(s) for the given user.
-     *
-     * @return BelongsToMany
      */
     public function executive_roles(): BelongsToMany
     {
@@ -199,19 +170,15 @@ class User extends Authenticatable implements HasAttachment, Searchable
 
     /**
      * All historical executive roles of the given user.
-     *
-     * @return BelongsToMany
      */
     public function allExecutiveRoles(): BelongsToMany
     {
         return $this->belongsToMany(Executive::class, 'executive_user')
-           ->withPivot('id', 'start_date', 'end_date', 'current');
+            ->withPivot('id', 'start_date', 'end_date', 'current');
     }
 
     /**
      * All historical executive roles of the given user.
-     *
-     * @return BelongsToMany
      */
     public function currentExecutiveRoles(): BelongsToMany
     {
@@ -220,18 +187,12 @@ class User extends Authenticatable implements HasAttachment, Searchable
             ->withPivot('id', 'start_date', 'end_date', 'current');
     }
 
-    /**
-     * @return HasMany
-     */
     public function message_selections(): hasMany
     {
         return $this->hasMany(MessageSelection::class, 'user_id');
-            //->withPivot('id', 'user_id', 'type', 'name');
+        //->withPivot('id', 'user_id', 'type', 'name');
     }
 
-    /**
-     * @return HasOne
-     */
     public function message_frequency_preferences(): HasOne
     {
         return $this->hasOne(MessageFrequencyPreferences::class)->withDefault();

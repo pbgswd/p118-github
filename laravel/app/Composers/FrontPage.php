@@ -3,21 +3,15 @@
 namespace App\Composers;
 
 use App\Constants\AccessLevelConstants;
-use App\Models\Carousel;
 use App\Models\Feature;
 use App\Models\Options;
 use App\Models\Page;
 use App\Models\Post;
 use Illuminate\View\View;
-use phpDocumentor\Reflection\Types\Void_;
 
 class FrontPage
 {
-    /**
-     * @param View $view
-     * @return Void
-     */
-    public function compose(View $view): Void
+    public function compose(View $view): void
     {
         //
 

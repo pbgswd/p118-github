@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * Class StoreEmploymentRequest.
+ *
  * @property mixed[] $employment
  */
 class StoreEmploymentRequest extends FormRequest
@@ -16,8 +17,6 @@ class StoreEmploymentRequest extends FormRequest
 
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -26,8 +25,6 @@ class StoreEmploymentRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules(): array
     {

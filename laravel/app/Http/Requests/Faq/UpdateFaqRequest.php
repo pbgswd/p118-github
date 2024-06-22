@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateFaqRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -39,7 +38,7 @@ class UpdateFaqRequest extends FormRequest
             'new.answer' => 'string|nullable',
             'new.access_level' => 'string|max:255|nullable',
             'new.live' => 'boolean|nullable',
-            'new.sort_order' => 'string|nullable'
+            'new.sort_order' => 'string|nullable',
         ];
     }
 }

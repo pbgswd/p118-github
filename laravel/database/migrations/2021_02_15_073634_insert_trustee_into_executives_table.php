@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -15,7 +14,7 @@ return new class extends Migration {
         DB::table('executives')->insert(
             [['title' => 'Trustee',
                 'email' => 'trustee@iatse118.com',
-                'created_at' =>  \Carbon\Carbon::now(),
+                'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(), ],
             ]
         );

@@ -17,27 +17,28 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int                     $id
- * @property string                  $title
- * @property string                  $slug
- * @property string                  $content
- * @property bool                 $sticky
- * @property bool                 $live
- * @property bool                 $allow_comments
- * @property DateTime                $created_at
- * @property DateTime                $updated_at
- * @property User                    $creator
- * @property Committee               $committee
- * @property CommitteePostComment[]  $post_comments
- * @property int                     $committee_id
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string $content
+ * @property bool $sticky
+ * @property bool $live
+ * @property bool $allow_comments
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ * @property User $creator
+ * @property Committee $committee
+ * @property CommitteePostComment[] $post_comments
+ * @property int $committee_id
+ *
  * @method static withoutGlobalScopes()
  */
 class CommitteePost extends LiveableModel implements HasAttachment, Searchable
 {
-    use Notifiable;
     use HasFactory;
-    use Sortable;
     use HasRoles;
+    use Notifiable;
+    use Sortable;
 
     protected $guard_name = 'web';
 
@@ -58,9 +59,6 @@ class CommitteePost extends LiveableModel implements HasAttachment, Searchable
         'live' => 'boolean',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -103,11 +101,6 @@ class CommitteePost extends LiveableModel implements HasAttachment, Searchable
         return 'slug';
     }
 
-    /**
-     * @param $value
-     *
-     * @return string
-     */
     public function setTitleAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
@@ -115,49 +108,31 @@ class CommitteePost extends LiveableModel implements HasAttachment, Searchable
         return $this->attributes['title'] = $value;
     }
 
-    /**
-     * @return HasOne
-     */
     public function creator(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return HasOne
-     */
     public function committee(): HasOne
     {
         return $this->hasOne(Committee::class, 'id', 'committee_id');
     }
 
-    /**
-     * @return HasMany
-     */
     public function post_comments(): HasMany
     {
         return $this->hasMany(CommitteePostComment::class, 'post_id', 'id');
     }
 
-    /**
-     * @return HasMany
-     */
     public function admin_post_comments(): HasMany
     {
         return $this->hasMany(CommitteePostComment::class, 'post_id', 'id')->withoutGlobalScopes()->orderByDesc('updated_at');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_committee_post');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'committees';

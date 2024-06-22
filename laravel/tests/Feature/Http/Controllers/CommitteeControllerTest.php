@@ -24,11 +24,12 @@ class CommitteeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group showok
      */
     public function show_returns_an_ok_response()
     {
-       $response = $this->actingAs($this->admin_user)
+        $response = $this->actingAs($this->admin_user)
             ->get(route('committee', $this->committee->slug));
 
         $response->assertOk();

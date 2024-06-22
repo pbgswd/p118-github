@@ -14,16 +14,17 @@ use Spatie\Searchable\SearchResult;
 
 /**
  * Class Policy.
- * @property int       $id
- * @property int       $user_id
- * @property string    $title
- * @property string    $description
- * @property bool      $live
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $title
+ * @property string $description
+ * @property bool $live
  */
 class Policy extends LiveableModel implements HasAttachment, Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -45,9 +46,6 @@ class Policy extends LiveableModel implements HasAttachment, Searchable
         'live' => 'boolean',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -68,25 +66,16 @@ class Policy extends LiveableModel implements HasAttachment, Searchable
         );
     }
 
-    /**
-     * @return HasOne
-     */
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_policies');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'policies';

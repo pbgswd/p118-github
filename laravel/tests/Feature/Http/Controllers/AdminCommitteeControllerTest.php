@@ -27,6 +27,7 @@ class AdminCommitteeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
@@ -52,6 +53,7 @@ class AdminCommitteeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -65,6 +67,7 @@ class AdminCommitteeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -78,6 +81,7 @@ class AdminCommitteeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group showok
      */
     public function show_returns_an_ok_response()
@@ -92,6 +96,7 @@ class AdminCommitteeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
@@ -101,14 +106,15 @@ class AdminCommitteeControllerTest extends TestCase
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/committee/create', [
-            'committee' => $committee->toArray()
-        ]);
+                'committee' => $committee->toArray(),
+            ]);
 
-        $this->assertEquals(Session::get('success'), 'You have created a new committee, ' . $committee->name);
+        $this->assertEquals(Session::get('success'), 'You have created a new committee, '.$committee->name);
     }
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -122,6 +128,7 @@ class AdminCommitteeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -130,16 +137,16 @@ class AdminCommitteeControllerTest extends TestCase
 
         $data = [
             'slug' => $data->slug,
-            "name" => "bla bla " . $data->name,
-            "description" => 'Update to description ' . $data->description,
-            "email" => $data->email,
-            "live" => $data->live
-            ];
+            'name' => 'bla bla '.$data->name,
+            'description' => 'Update to description '.$data->description,
+            'email' => $data->email,
+            'live' => $data->live,
+        ];
 
         $response = $this->actingAs($this->committee_admin_user)
             ->post(route('admin_committee_update', $data['slug']), [
-            'committee' => $data
-        ]);
+                'committee' => $data,
+            ]);
 
         $committee = Committee::find($this->committee->id);
 
@@ -149,6 +156,7 @@ class AdminCommitteeControllerTest extends TestCase
 
     /**
      * @test
+     *
      *  @group updateok
      */
     public function update_validates_with_a_form_request()

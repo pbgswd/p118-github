@@ -19,8 +19,8 @@ class AdminEmailQueueController extends Controller
     public function index(): View
     {
         $emailQueue = EmailQueue::withoutGlobalScopes()
-        ->orderBy('updated_at', 'DESC')
-        ->paginate(20);
+            ->orderBy('updated_at', 'DESC')
+            ->paginate(20);
 
         $data['email_queue'] = $emailQueue;
         $data['count'] = EmailQueue::withoutGlobalScopes()->count();
@@ -38,7 +38,7 @@ class AdminEmailQueueController extends Controller
     {
         $attachments = '';
 
-        if(!is_null($email_queue->attachments)) {
+        if (! is_null($email_queue->attachments)) {
             unserialize($email_queue->attachments);
             //todo prep for link attachments data
         }
@@ -62,11 +62,11 @@ class AdminEmailQueueController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         EmailQueue::withoutGlobalScopes()->find($request->id)
-            ->each(function(EmailQueue $emailQueue) {
+            ->each(function (EmailQueue $emailQueue) {
                 $emailQueue->delete();
             });
 
-        Session::flash('success', count($request->id) . ' ' . Str::plural('message', count($request->id)) . ' deleted from the outgoing email queue.');
+        Session::flash('success', count($request->id).' '.Str::plural('message', count($request->id)).' deleted from the outgoing email queue.');
 
         return redirect()->route('admin_email_queue_list');
     }

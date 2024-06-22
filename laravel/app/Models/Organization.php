@@ -15,23 +15,23 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int        $id
- * @property int        $user_id
- * @property string     $name
- * @property string     $slug
- * @property string     $description
- * @property string     $url
- * @property string     $access_level
- * @property bool    $live
- * @property User       $user
- * @property DateTime   $created_at
- * @property DateTime   $updated_at
+ * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property string $slug
+ * @property string $description
+ * @property string $url
+ * @property string $access_level
+ * @property bool $live
+ * @property User $user
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
  * @property AgreementHandler $agreement_handler
  */
-class   Organization extends LiveableModel implements HasAttachment, Searchable
+class Organization extends LiveableModel implements HasAttachment, Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     protected $policies = [
         self::class => OrganizationPolicy::class,
@@ -75,9 +75,6 @@ class   Organization extends LiveableModel implements HasAttachment, Searchable
         $this->access_level = AccessLevelConstants::MEMBERS;
     }
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -106,11 +103,6 @@ class   Organization extends LiveableModel implements HasAttachment, Searchable
         return 'slug';
     }
 
-    /**
-     * @param $value
-     *
-     * @return string
-     */
     public function setNameAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
@@ -118,25 +110,16 @@ class   Organization extends LiveableModel implements HasAttachment, Searchable
         return $this->attributes['name'] = $value;
     }
 
-    /**
-     * @return HasOne
-     */
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
     }
 
-    /**
-     * @return HasOne
-     */
     public function agreement_handler(): HasOne
     {
         return $this->hasOne(AgreementHandler::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
@@ -148,9 +131,6 @@ class   Organization extends LiveableModel implements HasAttachment, Searchable
             ->orderBy('until');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function member_agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
@@ -160,9 +140,6 @@ class   Organization extends LiveableModel implements HasAttachment, Searchable
             ->orderBy('until', 'desc');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function all_agreements(): BelongsToMany
     {
         return $this->belongsToMany(Agreement::class)
@@ -170,17 +147,11 @@ class   Organization extends LiveableModel implements HasAttachment, Searchable
             ->orderBy('until', 'desc');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_organization');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'org_venue';

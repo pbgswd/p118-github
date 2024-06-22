@@ -10,7 +10,6 @@ class AdminFaqControllerTest extends TestCase
 {
     /**
      * @test
-     *
      */
     public function create_returns_an_ok_response()
     {
@@ -21,9 +20,9 @@ class AdminFaqControllerTest extends TestCase
         $response->assertViewHas('data');
     }
 
-
     /**
      * @test
+     *
      * @group
      */
     public function destroy_returns_an_ok_response()
@@ -39,6 +38,7 @@ class AdminFaqControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group
      */
     public function destroy_validates_with_a_form_request()
@@ -52,7 +52,6 @@ class AdminFaqControllerTest extends TestCase
 
     /**
      * @test
-     *
      */
     public function edit_returns_an_ok_response()
     {
@@ -68,6 +67,7 @@ class AdminFaqControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -83,6 +83,7 @@ class AdminFaqControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
@@ -90,7 +91,7 @@ class AdminFaqControllerTest extends TestCase
         $faq = \App\Models\Faq::factory()->make();
 
         $response = $this->actingAs($this->admin_user)->post('admin/faq/create', [
-            'faq' => $faq->toArray()
+            'faq' => $faq->toArray(),
         ]);
 
         $this->assertEquals(Session::get('success'), 'faq posting saved');
@@ -98,6 +99,7 @@ class AdminFaqControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -111,6 +113,7 @@ class AdminFaqControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -119,11 +122,11 @@ class AdminFaqControllerTest extends TestCase
 
         $data = Faq::first();
 
-        $data['description'] = "Description edit " . $data->description;
+        $data['description'] = 'Description edit '.$data->description;
 
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/faq/'. $data->id . '/edit', [
-                'faq' => $data->toArray()
+            ->post('admin/faq/'.$data->id.'/edit', [
+                'faq' => $data->toArray(),
             ]);
 
         $response->assertRedirect(route('admin_faq_edit', ['any_faq' => $data->id]));
@@ -131,6 +134,7 @@ class AdminFaqControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_validates_with_a_form_request()

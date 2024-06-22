@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Employment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Employment;
 
 class EmploymentFactory extends Factory
 {
@@ -23,11 +23,11 @@ class EmploymentFactory extends Factory
     public function definition()
     {
         return [
-            'title'  => 'Job Posting with ' . $this->faker->company(),
-            'description' => 'Job posting description ' . $this->faker->paragraph(),
+            'title' => 'Job Posting with '.$this->faker->company(),
+            'description' => 'Job posting description '.$this->faker->paragraph(),
             'url' => $this->faker->url(),
             'live' => 1,
-            'deadline' =>  Carbon::now()->addMonths(3),
+            'deadline' => Carbon::now()->addMonths(3),
             'user_id' => \App\Models\User::factory(),
         ];
     }

@@ -28,8 +28,6 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return View
      * @throws AuthorizationException
      */
     public function index(Request $request): View
@@ -53,7 +51,6 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -79,8 +76,6 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @param StorePageRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StorePageRequest $request): RedirectResponse
@@ -111,8 +106,6 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @param Page $page
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Page $page): View
@@ -134,9 +127,6 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @param UpdatePageRequest $request
-     * @param Page $any_page
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
@@ -172,8 +162,6 @@ class AdminPageController extends Controller
     }
 
     /**
-     * @param DestroyPageRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyPageRequest $request): RedirectResponse

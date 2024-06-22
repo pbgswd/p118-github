@@ -7,9 +7,6 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         $roles = Role::get();

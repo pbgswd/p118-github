@@ -28,7 +28,6 @@ class AdminMemoriamController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -52,7 +51,6 @@ class AdminMemoriamController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -70,8 +68,6 @@ class AdminMemoriamController extends Controller
     }
 
     /**
-     * @param StoreMemoriamRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws InvalidManipulation
      */
@@ -81,7 +77,7 @@ class AdminMemoriamController extends Controller
 
         $memoriam = new Memoriam($request->input('memoriam'));
 
-        if (null !== $request->file('image')) {
+        if ($request->file('image') !== null) {
             $folder = $memoriam->getAttachmentFolder();
             $file = $request->file('image')->store('', $folder);
             $result = $this->userImageService->updateImage($request, $folder, true, Options::memoriam_thumb_values());
@@ -97,8 +93,6 @@ class AdminMemoriamController extends Controller
     }
 
     /**
-     * @param Memoriam $memoriam
-     * @return View
      * @throws AuthorizationException
      * @throws InvalidManipulation
      */
@@ -133,9 +127,6 @@ class AdminMemoriamController extends Controller
     }
 
     /**
-     * @param UpdateMemoriamRequest $request
-     * @param Memoriam $any_memoriam
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateMemoriamRequest $request, Memoriam $any_memoriam): RedirectResponse
@@ -158,7 +149,7 @@ class AdminMemoriamController extends Controller
             }
         }
 
-        if (null !== $request->file('image')) {
+        if ($request->file('image') !== null) {
             $file = $request->file('image')->store('', $folder);
             $result = $this->userImageService->updateImage($request, $folder, true, $tn_str);
             $any_memoriam['image'] = $result['image'];
@@ -171,14 +162,12 @@ class AdminMemoriamController extends Controller
     }
 
     /**
-     * @param DestroyMemoriamRequest $request
-     * @return RedirectResponse
      * @throws \Exception
      */
     public function destroy(DestroyMemoriamRequest $request): RedirectResponse
     {
         $this->authorize('delete', Memoriam::class);
-//todo deal with attachments for memoriams safely
+        //todo deal with attachments for memoriams safely
         Memoriam::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Memoriam $memoriam) {

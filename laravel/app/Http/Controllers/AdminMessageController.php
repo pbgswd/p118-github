@@ -6,11 +6,9 @@ use App\Http\Requests\Messages\DestroyMessageRequest;
 use App\Jobs\ProcessMessages;
 use App\Models\Committee;
 use App\Models\Message;
-use App\Models\MessageSelection;
 use App\Models\MessageSending;
 use App\Models\Options;
 use App\Models\Topic;
-use App\Models\User;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,9 +28,6 @@ class AdminMessageController extends Controller
         $this->attachmentService = $attachmentService;
     }
 
-    /**
-     * @return View
-     */
     public function index(): View
     {
         //todo policy
@@ -47,9 +42,6 @@ class AdminMessageController extends Controller
         return view('admin.messages', ['data' => $data]);
     }
 
-    /**
-     * @return View
-     */
     public function create(): View
     {
         //todo policy
@@ -57,19 +49,15 @@ class AdminMessageController extends Controller
             'committee_subscription_options' => Committee::where('live', 1)->get(),
             'topic_subscription_options' => Topic::where('live', 1)->get(),
             'model_subscription_options' => Options::model_subscription_options(),
-            'message' =>  new Message,
+            'message' => new Message,
             'message_meta_data' => ['source_type' => 'model', 'source_type_name' => 'message'],
             'message_sending' => 'normal',
-            'action' => 'Create'
+            'action' => 'Create',
         ];
 
         return view('admin.message', ['data' => $data]);
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function store(Request $request): RedirectResponse
     {
         //todo form request validator, policy
@@ -85,10 +73,9 @@ class AdminMessageController extends Controller
         $message->messageSending()->create(['message_id' => $message->id,
             'send_priority' => $request->message['message_sending']['send_priority']]);
 
-
         //todo message_meta_data
 
-        if(!is_null($request->model_source_type_name)) {
+        if (! is_null($request->model_source_type_name)) {
 
             //todo things that belong to any model
 
@@ -99,14 +86,14 @@ class AdminMessageController extends Controller
             $source_slug = '';
             $source_url = '';
 
-            if($request->model_source_type_name == "Message") {
+            if ($request->model_source_type_name == 'Message') {
                 $source_id = $message->id;
                 $source_slug = '';
-                $source_url = strtolower($request->model_source_type_name) . "/" . $source_id;
+                $source_url = strtolower($request->model_source_type_name).'/'.$source_id;
             }
         }
 
-        if(!is_null($request->topic_source_type_name)) {
+        if (! is_null($request->topic_source_type_name)) {
 
             //todo things that belong to topic
 
@@ -118,7 +105,7 @@ class AdminMessageController extends Controller
             $source_type_name = $request->topic_source_type_name;
         }
 
-        if(!is_null($request->committee_source_type_name)) {
+        if (! is_null($request->committee_source_type_name)) {
 
             //todo things that belong to any committee
 
@@ -136,7 +123,7 @@ class AdminMessageController extends Controller
             'source_type' => $source_type,
             'source_type_name' => $source_type_name,
             'source_url' => $source_url,
-            ]);
+        ]);
 
         //todo save relation, 'messageMeta', 'messageSending'
 
@@ -150,15 +137,12 @@ class AdminMessageController extends Controller
             }
         }
 
-        Session::flash('success', 'A new message, ' . $message->subject .
+        Session::flash('success', 'A new message, '.$message->subject.
             ', has been created');
+
         return redirect()->route('admin_message_edit', $message->id);
     }
 
-    /**
-     * @param Message $message
-     * @return View
-     */
     public function edit(Message $message): View
     {
         //todo policy
@@ -173,7 +157,7 @@ class AdminMessageController extends Controller
             'committee_subscription_options' => Committee::where('live', '=', 1)->get(),
             'topic_subscription_options' => Topic::where('live', '=', 1)->get(),
             'model_subscription_options' => Options::model_subscription_options(),
-            'action' => 'Edit'
+            'action' => 'Edit',
         ];
 
         //dd($data['message']);
@@ -181,11 +165,6 @@ class AdminMessageController extends Controller
         return view('admin.message', ['data' => $data]);
     }
 
-    /**
-     * @param Request $request
-     * @param Message $message
-     * @return RedirectResponse
-     */
     public function update(Request $request, Message $message): RedirectResponse
     {
         //todo form request validator, policy
@@ -201,20 +180,17 @@ class AdminMessageController extends Controller
             $result = $this->attachmentService->createAttachment($request, $message);
 
             if ($result) {
-                Session::flash('success', 'You uploaded '. Str::plural('file', $request->attachments));
+                Session::flash('success', 'You uploaded '.Str::plural('file', $request->attachments));
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
         }
 
-        Session::flash('success', 'You have updated ' . $message->subject);
+        Session::flash('success', 'You have updated '.$message->subject);
+
         return redirect()->route('admin_message_edit', $message->id);
     }
 
-    /**
-     * @param Message $message
-     * @return View
-     */
     public function preview(Message $message): View
     {
         //todo policy
@@ -223,10 +199,9 @@ class AdminMessageController extends Controller
             'message' => $message,
             'message_meta_data' => ['source_type' => $message->messageMeta->source_type, 'source_type_name' => $message->messageMeta->source_type_name],
             'message_sending' => $message->messageSending->send_priority,
-         ];
+        ];
 
         //todo get attachments
-
 
         return view('admin.message_preview', ['data' => $data]);
     }
@@ -250,7 +225,7 @@ class AdminMessageController extends Controller
     public function send(Message $message): RedirectResponse
     {
         //todo policy
-        Log::info('About to move command to jobs table '. $message->id);
+        Log::info('About to move command to jobs table '.$message->id);
 
         $message->save();
 
@@ -263,22 +238,17 @@ class AdminMessageController extends Controller
                 ]
             );
 
-        Log::info('About to execute ProcessMessages dispatch for message with id '. $message->id);
+        Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
 
-        ProcessMessages::dispatch(['log' => 'Sending message ' . $message->subject, 'id' => $message->id]);
+        ProcessMessages::dispatch(['log' => 'Sending message '.$message->subject, 'id' => $message->id]);
 
-        Log::info('ProcessMessages dispatch has been executed for message with id '. $message->id);
+        Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
-        Session::flash('success', 'The message, ' . $message->subject . ', has been sent to the mail queue and is going out now');
+        Session::flash('success', 'The message, '.$message->subject.', has been sent to the mail queue and is going out now');
 
         return redirect()->route('admin_messages');
     }
 
-
-    /**
-     * @param DestroyMessageRequest $request
-     * @return RedirectResponse
-     */
     public function destroy(DestroyMessageRequest $request): RedirectResponse
     {
         //todo form request validator, policy
@@ -292,7 +262,7 @@ class AdminMessageController extends Controller
                 $message->delete();
             });
 
-        Session::flash('success', 'You have deleted ' . count($request->id) . ' ' . Str::plural('message', count($request->id)).'.');
+        Session::flash('success', 'You have deleted '.count($request->id).' '.Str::plural('message', count($request->id)).'.');
 
         return redirect()->route('admin_messages');
     }

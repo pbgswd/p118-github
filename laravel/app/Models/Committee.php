@@ -18,27 +18,28 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int              $id
- * @property string           $name
- * @property string           $slug
- * @property string           $description
- * @property string           $email
- * @property User             $creator
- * @property bool             $live
- * @property DateTime         $created_at
- * @property DateTime         $updated_at
- * @property User[]           $committee_members
- * @property User[]           $active_committee_members
- * @property CommitteePost[]  $posts
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string $description
+ * @property string $email
+ * @property User $creator
+ * @property bool $live
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ * @property User[] $committee_members
+ * @property User[] $active_committee_members
+ * @property CommitteePost[] $posts
  * @property int|mixed|string|null user_id
+ *
  * @method static withoutGlobalScopes()
  */
 class Committee extends LiveableModel implements HasAttachment, Searchable
 {
-    use Notifiable;
     use HasFactory;
-    use Sortable;
     use HasRoles;
+    use Notifiable;
+    use Sortable;
 
     protected $table = 'committees';
 
@@ -80,9 +81,6 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
         return 'slug';
     }
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -103,11 +101,6 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
         );
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
     public function setNameAttribute(string $value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
@@ -115,22 +108,15 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
         return $this->attributes['name'] = $value;
     }
 
-    /**
-     * @return HasOne
-     */
     public function creator(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function committee_members(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->withPivot('role')->withTimestamps();
     }
-
 
     /**
      * @return BelongsTo
@@ -140,9 +126,6 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
         return $this->belongsTo(User::class)->withPivot('role')->withTimestamps();
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function active_committee_members(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
@@ -156,25 +139,16 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
             ->withTimestamps();
     }
 
-    /**
-     * @return HasMany
-     */
     public function posts(): HasMany
     {
         return $this->hasMany(CommitteePost::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_committee');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'public';

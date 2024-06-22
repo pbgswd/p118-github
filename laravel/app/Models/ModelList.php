@@ -5,7 +5,6 @@ namespace App\Models;
 class ModelList
 {
     /**
-     * @param $model
      * @return string[]
      */
     public function getModelInfo(string $model): array

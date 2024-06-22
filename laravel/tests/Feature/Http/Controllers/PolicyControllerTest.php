@@ -9,7 +9,7 @@ use Tests\TestCase;
  */
 class PolicyControllerTest extends TestCase
 {
-   //
+    //
 
     /**
      * @test

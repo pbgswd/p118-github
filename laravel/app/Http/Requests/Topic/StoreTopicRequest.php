@@ -8,8 +8,6 @@ class StoreTopicRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -18,8 +16,6 @@ class StoreTopicRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -29,7 +25,7 @@ class StoreTopicRequest extends FormRequest
         return [
             'topic.name' => 'required|unique:topics,name|max:255',
             'topic.access_level' => 'required|string|max:255',
-            'topic.sort_order' =>  'required|numeric',
+            'topic.sort_order' => 'required|numeric',
             'topic.live' => 'boolean',
             'topic.description' => 'string|max:255',
             'topic.front_page' => 'boolean',

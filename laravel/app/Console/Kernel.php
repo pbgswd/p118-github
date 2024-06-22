@@ -8,11 +8,8 @@ use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
-     /**
+    /**
      * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
      */
     protected function schedule(Schedule $schedule): void
     {
@@ -21,7 +18,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('message:daily')->dailyAt('12:00');
         $schedule->command('message:weekly')->weeklyOn('friday', '17:00');
 
-     // $schedule->command( Log::info('test'.time() . " " . date('l jS \of F Y h:i:s A')))->everyMinute();
+        // $schedule->command( Log::info('test'.time() . " " . date('l jS \of F Y h:i:s A')))->everyMinute();
     }
 
     /**

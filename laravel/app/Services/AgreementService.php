@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Agreement;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class AgreementService

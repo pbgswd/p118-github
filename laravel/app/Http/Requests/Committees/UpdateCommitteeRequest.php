@@ -13,8 +13,6 @@ class UpdateCommitteeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -23,8 +21,6 @@ class UpdateCommitteeRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -32,7 +28,7 @@ class UpdateCommitteeRequest extends FormRequest
             'committee.name' => 'required|max:255|unique:committees,name,'.$this->route('any_committee')->slug.',slug',
             'committee.description' => 'required',
             'committee.email' => 'string|max:255',
-            'committee.image'=> 'file|nullable',
+            'committee.image' => 'file|nullable',
             'committee.live' => 'boolean',
         ];
     }

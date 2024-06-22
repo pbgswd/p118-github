@@ -27,7 +27,6 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -46,7 +45,6 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -68,8 +66,6 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @param StoreMeetingRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreMeetingRequest $request): RedirectResponse
@@ -87,7 +83,7 @@ class AdminMeetingController extends Controller
 
             if ($result) {
                 Session::flash('success', 'You uploaded '.
-                    count([$request->file('attachments')]) . ' files');
+                    count([$request->file('attachments')]).' files');
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -97,8 +93,6 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @param Meeting $meeting
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Meeting $meeting): View
@@ -120,9 +114,6 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @param UpdateMeetingRequest $request
-     * @param Meeting $any_meeting
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
@@ -151,8 +142,6 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @param DestroyMeetingRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyMeetingRequest $request): RedirectResponse

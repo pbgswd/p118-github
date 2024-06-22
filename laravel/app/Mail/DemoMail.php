@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -30,7 +29,7 @@ class DemoMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('mail from peter local p118' )
+        return $this->subject('mail from peter local p118')
             ->view('emails.demoMail');
     }
 }

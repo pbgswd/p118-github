@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -11,8 +10,8 @@ class TopicPolicy
     use HandlesAuthorization;
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function viewAny(User $user)
@@ -24,8 +23,6 @@ class TopicPolicy
     /**
      * Determine whether the user can view the topics.
      *
-     * @param User  $user
-     * @param Topics $topics
      * @return mixed
      */
     public function view(User $user, Topics $topics)
@@ -34,8 +31,8 @@ class TopicPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function create(User $user)
@@ -44,8 +41,8 @@ class TopicPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function update(User $user)
@@ -54,8 +51,8 @@ class TopicPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function delete(User $user)
@@ -64,8 +61,8 @@ class TopicPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function restore(User $user)
@@ -74,8 +71,8 @@ class TopicPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function forceDelete(User $user)

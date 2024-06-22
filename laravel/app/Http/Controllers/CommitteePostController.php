@@ -29,8 +29,6 @@ class CommitteePostController extends Controller
     }
 
     /**
-     * @param Committee $committee
-     * @return View
      * @throws AuthorizationException
      */
     public function create(Committee $committee): View
@@ -50,9 +48,6 @@ class CommitteePostController extends Controller
     }
 
     /**
-     * @param StoreCommitteePostRequest $request
-     * @param Committee $committee
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreCommitteePostRequest $request, Committee $committee): RedirectResponse
@@ -81,9 +76,6 @@ class CommitteePostController extends Controller
     }
 
     /**
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Committee $committee, CommitteePost $committeePost): View
@@ -102,14 +94,10 @@ class CommitteePostController extends Controller
     }
 
     /**
-     * @param UpdateCommitteePostRequest $request
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateCommitteePostRequest $request,
-                           Committee $committee, CommitteePost $committeePost): RedirectResponse
+        Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
         $this->authorize('update', [CommitteePost::class, $committeePost]);
 
@@ -132,11 +120,6 @@ class CommitteePostController extends Controller
         return redirect()->route('committee_post_edit_form', [$committee->slug, $committeePost->slug]);
     }
 
-    /**
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return View
-     */
     public function show(Committee $committee, CommitteePost $committeePost): View
     {
         $data = [];
@@ -156,14 +139,10 @@ class CommitteePostController extends Controller
     }
 
     /**
-     * @param DestroyCommitteePostRequest $request
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyCommitteePostRequest $request,
-                            Committee $committee, CommitteePost $committeePost): RedirectResponse
+        Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
         $this->authorize('delete', [CommitteePost::class, $committeePost]);
 

@@ -31,7 +31,6 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -47,7 +46,6 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -68,9 +66,8 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @param StoreOrganizationRequest $request
-     * @param UserImageService $service
-     * @return RedirectResponse
+     * @param  UserImageService  $service
+     *
      * @throws AuthorizationException
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -79,7 +76,7 @@ class AdminOrganizationController extends Controller
         $this->authorize('create', Organization::class);
         $org = new Organization($request->organization);
 
-        if (null !== $request->file('image')) {
+        if ($request->file('image') !== null) {
             $file = $request->file('image')->store('', 'public');
             $result = $this->userImageService->updateImage($request, 'public', true, Options::venue_org_thumb_values());
             $org['image'] = $result['image'];
@@ -106,8 +103,6 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @param Organization $any_organization
-     * @return View
      * @throws AuthorizationException
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -153,9 +148,6 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @param UpdateOrganizationRequest $request
-     * @param Organization $any_organization
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -176,7 +168,7 @@ class AdminOrganizationController extends Controller
             }
         }
 
-        if (null !== $request->file('image')) {
+        if ($request->file('image') !== null) {
             $file = $request->file('image')->store('', 'public');
 
             $result = $this->userImageService->updateImage($request, 'public', true, Options::venue_org_thumb_values());
@@ -187,7 +179,7 @@ class AdminOrganizationController extends Controller
 
         $any_organization->save();
 
-        if (null !== $request->id) {
+        if ($request->id !== null) {
             $any_organization->agreements()->detach($request->id);
         }
 
@@ -211,14 +203,12 @@ class AdminOrganizationController extends Controller
     }
 
     /**
-     * @param DestroyOrganizationRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyOrganizationRequest $request): RedirectResponse
     {
         $this->authorize('delete', Organization::class);
-//todo verify organization delete image
+        //todo verify organization delete image
         Organization::withoutGlobalScopes()
             ->find($request->id)
             ->each(static function (Organization $org) {
@@ -230,7 +220,7 @@ class AdminOrganizationController extends Controller
                 }
                 $org->delete();
             }
-        );
+            );
 
         Session::flash('success', Str::plural(count([$request->id]).' Organization', count([$request->id])).
             ' deleted.');

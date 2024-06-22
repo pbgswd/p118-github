@@ -46,7 +46,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -60,16 +59,13 @@ class AdminUserController extends Controller
                 'membership',
             ]
         )->sortable()
-        ->paginate(20);
+            ->paginate(20);
 
         $count = Membership::where('membership_type', 'Member')->count();
 
         return view('admin.listusers', ['data' => ['users' => $users, 'count' => $count]]);
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function create(): RedirectResponse
     {
         Session::flash('warning', 'Create method blocked off. Contact admin for support.');
@@ -111,8 +107,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @param StoreUser $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreUser $request): RedirectResponse
@@ -153,8 +147,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @param User $user
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(User $user, UserImageService $service): View
@@ -162,22 +154,22 @@ class AdminUserController extends Controller
         $this->authorize('admin_update', Auth::user());
 
         $user->load('phone_number',
-                    'user_info',
-                    'allExecutiveRoles',
-                    'committee_memberships',
-                    'membership'
-                    );
+            'user_info',
+            'allExecutiveRoles',
+            'committee_memberships',
+            'membership'
+        );
 
         if ($user->user_info) {
             if ($user->user_info['image']) {
                 if (file_exists(storage_path().'/app/users/'.$user->user_info['image'])) {
                     $filesize = AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/users'.'/'.$user->user_info->image))) ?: null;
+                        \filesize(\storage_path('app/users'.'/'.$user->user_info->image))) ?: null;
 
                     if (! file_exists(storage_path().'/app/users/'.Options::thumb_values()['tn_str'].
                         $user->user_info['image'])) {
                         $this->userImageService->generate_thumb($user->user_info['image'], 'users',
-                                Options::member_thumb_values());
+                            Options::member_thumb_values());
                     }
                 }
                 $user->user_info->thumb = Options::member_thumb_values()['tn_str'].$user->user_info['image'];
@@ -198,18 +190,14 @@ class AdminUserController extends Controller
             'action' => 'Edit',
         ];
 
-        if($user->is_banned == 1) {
-            Session::flash('error', 'NOTE: ' . $user->name . ' has been suspended from the website.');
+        if ($user->is_banned == 1) {
+            Session::flash('error', 'NOTE: '.$user->name.' has been suspended from the website.');
         }
 
         return view('admin.user', ['data' => $data]);
     }
 
     /**
-     * @param UpdateUser $request
-     * @param UserImageService $service
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws InvalidManipulation
      */
@@ -269,7 +257,7 @@ class AdminUserController extends Controller
             $user->user_info->save();
         } else {
             $user_info = new UserInfo($request->input('user_info'));
-            if (null !== $request->file) {
+            if ($request->file !== null) {
                 $user_info->image = $this->uploadImage($request);
             }
             $user->user_info()->save($user_info);
@@ -308,8 +296,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @param User $user
-     * @return View
      * @throws AuthorizationException
      */
     public function admin_edit_address(User $user): View
@@ -330,10 +316,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @param UpdateMemberAddress $userRequest
-     * @param EmailMemberUpdateAddressService $service
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function admin_update_address(
@@ -343,7 +325,7 @@ class AdminUserController extends Controller
     ): RedirectResponse {
         $this->authorize('update', $user);
         $message = [];
-//dd($userRequest->all());
+        //dd($userRequest->all());
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
 
         foreach ($addr as $k => $a) {
@@ -365,8 +347,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @param User $user
-     * @return View
      * @throws AuthorizationException
      */
     public function admin_edit_emergency_contact(User $user): View
@@ -385,10 +365,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @param UpdateMemberEmergencyContact $userRequest
-     * @param EmailMemberUpdateAddressService $service
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function admin_update_emergency_contact(
@@ -424,8 +400,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @param DestroyUser $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyUser $request): RedirectResponse
@@ -434,9 +408,9 @@ class AdminUserController extends Controller
 
         User::find($request->toArray())
             ->each(function (User $user) {
-            $user_roles = $user->getRoleNames();
+                $user_roles = $user->getRoleNames();
 
-            $user_roles = array_combine(array_values($user_roles->toArray()),$user_roles->toArray());
+                $user_roles = array_combine(array_values($user_roles->toArray()), $user_roles->toArray());
                 foreach ($user_roles as $r) {
                     $user->removeRole($r);
                 }
@@ -445,7 +419,7 @@ class AdminUserController extends Controller
                 $user->membership()->delete();
                 $user->address()->delete();
 
-                if (null != $user->user_info) {
+                if ($user->user_info != null) {
                     if ($user->user_info['image']) {
                         $this->userImageService
                             ->destroyImage($user->user_info['image'], 'users', Options::thumb_values());
@@ -453,42 +427,42 @@ class AdminUserController extends Controller
                     $user->user_info()->delete();
                 }
 
-               $user->executive_role()->delete();
+                $user->executive_role()->delete();
 
-                Log::debug('attempting to destroy user ' . $user->name . ", id:" . $user->id);
+                Log::debug('attempting to destroy user '.$user->name.', id:'.$user->id);
                 User::destroy($user->id);
             });
 
-/************
+        /************
 
-        $users = User::find($request->id->toArray());//->with('roles');
+                $users = User::find($request->id->toArray());//->with('roles');
 
-        // todo cannot delete user when user has a post, page, topic,
-        //  or is a member of a committee.
-        // todo user soft delete
+                // todo cannot delete user when user has a post, page, topic,
+                //  or is a member of a committee.
+                // todo user soft delete
 
-        foreach ($users as $user) {
-            $user_roles = $user->getRoleNames();
-            $user_roles = array_combine($user_roles, $user_roles);
+                foreach ($users as $user) {
+                    $user_roles = $user->getRoleNames();
+                    $user_roles = array_combine($user_roles, $user_roles);
 
-            foreach ($user_roles as $r) {
-                $user->removeRole($r);
-            }
+                    foreach ($user_roles as $r) {
+                        $user->removeRole($r);
+                    }
 
-            PhoneNumber::where('user_id', $user->id)->delete();
-            Membership::where('user_id', $user->id)->delete();
-            $user_info = UserInfo::where('user_id', $user->id)->first();
+                    PhoneNumber::where('user_id', $user->id)->delete();
+                    Membership::where('user_id', $user->id)->delete();
+                    $user_info = UserInfo::where('user_id', $user->id)->first();
 
-            $e = Executive::find($user->id);
-            if (null != $e) {
-                $e->delete();
-            }
-            $user->allExecutiveRoles()->detach();
-            User::destroy($user->id);
-        }
- * **/
+                    $e = Executive::find($user->id);
+                    if (null != $e) {
+                        $e->delete();
+                    }
+                    $user->allExecutiveRoles()->detach();
+                    User::destroy($user->id);
+                }
+         * **/
 
-        Session::flash('success', Str::plural('Member', count([$request->id])) . ' deleted.');
+        Session::flash('success', Str::plural('Member', count([$request->id])).' deleted.');
 
         return redirect()->route('users_list');
     }

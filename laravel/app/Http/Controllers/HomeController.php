@@ -18,9 +18,6 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function index(): RedirectResponse
     {
         return redirect('/');

@@ -9,15 +9,15 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int       $id
- * @property string    $unit
- * @property string    $street
- * @property string    $city
- * @property string    $province
- * @property string    $postal_code
- * @property string    $country
- * @property DateTime  $created_at
- * @property DateTime  $updated_at
+ * @property int $id
+ * @property string $unit
+ * @property string $street
+ * @property string $city
+ * @property string $province
+ * @property string $postal_code
+ * @property string $country
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
  */
 class Address extends Model implements Searchable
 {
@@ -42,9 +42,6 @@ class Address extends Model implements Searchable
         'country',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $user = User::where('id', $this->user_id)->first();

@@ -16,7 +16,7 @@ class MemoriamControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-      //  $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        //  $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $memoriams = \App\Models\Memoriam::factory()->times(3)->create();
 
@@ -26,7 +26,6 @@ class MemoriamControllerTest extends TestCase
         $response->assertViewIs('memoriams');
         $response->assertViewHas('data');
 
-
     }
 
     /**
@@ -34,7 +33,7 @@ class MemoriamControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-      //  $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        //  $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $memoriam = \App\Models\Memoriam::factory()->create();
 
@@ -44,8 +43,5 @@ class MemoriamControllerTest extends TestCase
         $response->assertViewIs('memoriam');
         $response->assertViewHas('data');
 
-
     }
-
-
 }

@@ -16,22 +16,23 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int           $id
- * @property string        $slug
- * @property string        $name
- * @property string        $description
- * @property string        $content
- * @property string        $access_level
- * @property bool          $live
- * @property int           $sort_order
- * @property bool          $front_page
- * @property bool          $landing_page
- * @property DateTime      $created_at
- * @property DateTime      $updated_at
- * @property User          $user
- * @property Page[]        $pages
- * @property Post[]        $posts
- * @property Attachment[]  $attachments
+ * @property int $id
+ * @property string $slug
+ * @property string $name
+ * @property string $description
+ * @property string $content
+ * @property string $access_level
+ * @property bool $live
+ * @property int $sort_order
+ * @property bool $front_page
+ * @property bool $landing_page
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ * @property User $user
+ * @property Page[] $pages
+ * @property Post[] $posts
+ * @property Attachment[] $attachments
+ *
  * @method static withoutGlobalScope()
  * @method static withoutGlobalScopes()
  */
@@ -76,9 +77,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
         'live' => 'boolean',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -108,8 +106,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     }
 
     /**
-     * @param $value
-     *
      * @return mixed
      */
     public function setNameAttribute($value): string
@@ -119,25 +115,16 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
         return $this->attributes['name'] = $value;
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function public_pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class)
@@ -147,9 +134,6 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
             ]);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function news_pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class, 'page_topic')
@@ -160,17 +144,11 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
             ->withPivot('topic_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function public_posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class)
@@ -180,17 +158,11 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
             ]);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_topic');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'public';

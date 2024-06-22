@@ -10,7 +10,6 @@ class InviteUserPolicy
     use HandlesAuthorization;
 
     /**
-     * @param $user
      * @return bool
      */
     public function before($user)
@@ -22,7 +21,6 @@ class InviteUserPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function viewAny(User $user)
@@ -32,7 +30,6 @@ class InviteUserPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function view(User $user)
@@ -42,7 +39,6 @@ class InviteUserPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function create(User $user)
@@ -52,7 +48,6 @@ class InviteUserPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function update(User $user)
@@ -62,7 +57,6 @@ class InviteUserPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function delete(User $user)
@@ -72,7 +66,6 @@ class InviteUserPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function restore(User $user)
@@ -82,7 +75,6 @@ class InviteUserPolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function forceDelete(User $user)

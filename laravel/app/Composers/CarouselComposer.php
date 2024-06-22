@@ -2,22 +2,12 @@
 
 namespace App\Composers;
 
-use App\Constants\AccessLevelConstants;
 use App\Models\Carousel;
-use App\Models\Feature;
-use App\Models\Options;
-use App\Models\Page;
-use App\Models\Post;
 use Illuminate\View\View;
-use phpDocumentor\Reflection\Types\Void_;
 
 class CarouselComposer
 {
-    /**
-     * @param View $view
-     * @return Void
-     */
-    public function compose(View $view): Void
+    public function compose(View $view): void
     {
 
         $carousel = Carousel::where('live', 1)

@@ -9,7 +9,7 @@ use Tests\TestCase;
  */
 class OrganizationControllerTest extends TestCase
 {
-  //
+    //
 
     /**
      * @test

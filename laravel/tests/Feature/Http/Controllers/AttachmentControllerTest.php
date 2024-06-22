@@ -10,14 +10,14 @@ use Tests\TestCase;
  */
 class AttachmentControllerTest extends TestCase
 {
-//todo admin attachment work
+    //todo admin attachment work
 
     /**
      * @test
      */
     public function create_returns_an_ok_response()
     {
-       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $response = $this->actingAs($this->admin_user)->get(route('attachment_create'));
 
@@ -28,11 +28,12 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-       $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        $this->markTestIncomplete(__FUNCTION__.' has issues.');
 
         $attachment = \App\Models\Attachment::factory()->create();
 
@@ -47,12 +48,12 @@ class AttachmentControllerTest extends TestCase
         │
         ╵ /var/www/project118/laravel/vendor/laravel/framework/src/Illuminate/Testing/TestResponse.php:148
         ╵ /var/www/project118/laravel/tests/Feature/Http/Controllers/AttachmentControllerTest.php:42
-
          */
     }
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
@@ -66,6 +67,7 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group downloadok
      */
     public function download_returns_an_ok_response()
@@ -82,6 +84,7 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -97,15 +100,16 @@ class AttachmentControllerTest extends TestCase
         $response->assertViewIs('admin.attachment');
         //$response->assertRedirect(route('attachments_list'));
 
-/*
-        $response->assertOk();
-        $response->assertViewIs('admin.attachment');
-        $response->assertViewHas('data');
-*/
+        /*
+                $response->assertOk();
+                $response->assertViewIs('admin.attachment');
+                $response->assertViewHas('data');
+        */
     }
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -119,11 +123,12 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
     {
-       // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
         // TODO: send request data
         $attachment = \App\Models\Attachment::factory()->make();
         $response = $this->actingAs($this->admin_user)
@@ -148,6 +153,7 @@ class AttachmentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -159,14 +165,15 @@ class AttachmentControllerTest extends TestCase
         $att = Attachment::latest()->first();
         $response = $this->actingAs($this->admin_user)
             ->post('admin/attachment/{attachment}/edit', [
-            $att
-        ]);
+                $att,
+            ]);
 
         $response->assertRedirect(route('admin_attachment_edit', $att));
     }
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_validates_with_a_form_request()

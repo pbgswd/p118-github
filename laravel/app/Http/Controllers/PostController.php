@@ -23,16 +23,12 @@ class PostController extends Controller
         $this->attachmentService = $attachmentService;
     }
 
-    /**
-     * @param Request $request
-     * @return View
-     */
     public function list(Request $request): View
     {
         if (Auth::check()) {
             $posts = Post::where('live', 1)
-            ->with('topics')
-            ->paginate(9);
+                ->with('topics')
+                ->paginate(9);
         } else {
             $posts = Post::where([['access_level', AccessLevelConstants::PUBLIC], ['live', 1]])
                 ->with('topics')
@@ -43,15 +39,15 @@ class PostController extends Controller
     }
 
     /**
-     * @param Post $post
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function show(Post $post)
     {
         // $this->authorize('view', Post::class);
 
-        if (false === Auth::check() && $post->access_level != AccessLevelConstants::PUBLIC) {
+        if (Auth::check() === false && $post->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this post.');
+
             return redirect('login');
         }
 

@@ -10,10 +10,11 @@ use Tests\TestCase;
  */
 class HomeControllerTest extends TestCase
 {
-   //
+    //
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -25,6 +26,7 @@ class HomeControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexnot
      */
     public function index_unauthenticated_returns_an_ok_response()

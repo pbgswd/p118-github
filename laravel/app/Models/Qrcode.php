@@ -13,24 +13,18 @@ class Qrcode extends Model
     protected $fillable = [
         'qrdata',
         'name',
-        'qrtype'
+        'qrtype',
     ];
 
     protected $casts = [
         'date' => 'datetime',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'qrcodes';

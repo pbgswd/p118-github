@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Executive;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -41,12 +40,12 @@ class UpdateExecutiveCommand extends Command
     public function handle()
     {
         $this->info('Update any expired executive status');
-        Log::debug('running artisan command ' . __CLASS__);
+        Log::debug('running artisan command '.__CLASS__);
         $data = DB::select('SELECT * FROM executive_user WHERE end_date < now()');
         //todo closure
         foreach ($data as $d) {
             if ($d->current == 1) {
-                $result = DB::update('UPDATE executive_user SET current=0 WHERE id=' . $d->id);
+                $result = DB::update('UPDATE executive_user SET current=0 WHERE id='.$d->id);
             }
         }
     }

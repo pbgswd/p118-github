@@ -23,7 +23,7 @@ class ProcessUserRequest extends FormRequest
      */
     public function rules()
     {
-        return  [
+        return [
 
             'password' => 'required|min:6|dumbpwd|confirmed',
         ];

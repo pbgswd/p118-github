@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Bylaw;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Bylaw;
 
 class BylawFactory extends Factory
 {
@@ -17,14 +17,12 @@ class BylawFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
         return [
-            'title' => 'Bylaw ' . $this->faker->name . ' name',
-            'description' => 'Bylaw description ' . $this->faker->paragraph(),
+            'title' => 'Bylaw '.$this->faker->name.' name',
+            'description' => 'Bylaw description '.$this->faker->paragraph(),
             'access_level' => 'members',
             'live' => 1,
             'date' => Carbon::now(),

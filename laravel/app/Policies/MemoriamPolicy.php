@@ -11,8 +11,6 @@ class MemoriamPolicy
     use HandlesAuthorization;
 
     /**
-     * @param $user
-     * @param $ability
      * @return bool
      */
     public function before($user, $ability)
@@ -26,7 +24,6 @@ class MemoriamPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -38,8 +35,6 @@ class MemoriamPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Memoriam  $memoriam
      * @return mixed
      */
     public function view(User $user, Memoriam $memoriam)
@@ -50,7 +45,6 @@ class MemoriamPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -60,8 +54,6 @@ class MemoriamPolicy
     }
 
     /**
-     * @param User $user
-     * @param Memoriam $memoriam
      * @return bool
      */
     public function update(User $user, Memoriam $memoriam)
@@ -71,8 +63,6 @@ class MemoriamPolicy
     }
 
     /**
-     * @param User $user
-     * @param Memoriam $memoriam
      * @return bool
      */
     public function delete(User $user, Memoriam $memoriam)
@@ -82,8 +72,6 @@ class MemoriamPolicy
     }
 
     /**
-     * @param User $user
-     * @param Memoriam $memoriam
      * @return bool
      */
     public function restore(User $user, Memoriam $memoriam)
@@ -93,8 +81,6 @@ class MemoriamPolicy
     }
 
     /**
-     * @param User $user
-     * @param Memoriam $memoriam
      * @return bool
      */
     public function forceDelete(User $user, Memoriam $memoriam)

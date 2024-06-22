@@ -13,7 +13,6 @@ class AdminByLawControllerTest extends TestCase
 {
     /**
      * @test
-     *
      */
     public function create_returns_an_ok_response()
     {
@@ -26,6 +25,7 @@ class AdminByLawControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group
      */
     public function destroy_returns_an_ok_response()
@@ -41,6 +41,7 @@ class AdminByLawControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group
      */
     public function destroy_validates_with_a_form_request()
@@ -54,7 +55,6 @@ class AdminByLawControllerTest extends TestCase
 
     /**
      * @test
-     *
      */
     public function edit_returns_an_ok_response()
     {
@@ -70,6 +70,7 @@ class AdminByLawControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -85,6 +86,7 @@ class AdminByLawControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
@@ -92,7 +94,7 @@ class AdminByLawControllerTest extends TestCase
         $bylaw = \App\Models\Bylaw::factory()->make();
 
         $response = $this->actingAs($this->admin_user)->post('admin/bylaw/create', [
-           'bylaw' => $bylaw->toArray()
+            'bylaw' => $bylaw->toArray(),
         ]);
 
         $this->assertEquals(Session::get('success'), 'bylaw posting saved');
@@ -100,6 +102,7 @@ class AdminByLawControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -113,6 +116,7 @@ class AdminByLawControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -121,18 +125,19 @@ class AdminByLawControllerTest extends TestCase
 
         $data = Bylaw::first();
 
-        $data['description'] = "Description edit " . $data->description;
+        $data['description'] = 'Description edit '.$data->description;
 
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/bylaw/'. $data->id . '/edit', [
-            'bylaw' => $data->toArray()
-        ]);
+            ->post('admin/bylaw/'.$data->id.'/edit', [
+                'bylaw' => $data->toArray(),
+            ]);
 
         $response->assertRedirect(route('admin_bylaw_edit', ['any_bylaw' => $data->id]));
     }
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_validates_with_a_form_request()

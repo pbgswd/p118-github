@@ -10,9 +10,6 @@ use Illuminate\View\View;
 
 class CommitteeController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         $c = Committee::with('creator', 'active_committee_members')
@@ -23,10 +20,6 @@ class CommitteeController extends Controller
         return view('committees', ['data' => ['committees' => $c]]);
     }
 
-    /**
-     * @param Committee $committee
-     * @return View
-     */
     public function show(Committee $committee): View
     {
         $data = [];

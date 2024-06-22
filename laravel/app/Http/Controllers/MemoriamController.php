@@ -8,9 +8,6 @@ use Illuminate\View\View;
 
 class MemoriamController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         $memoriam = Memoriam::sortable()
@@ -29,10 +26,6 @@ class MemoriamController extends Controller
         return view('memoriams', ['data' => $data]);
     }
 
-    /**
-     * @param Memoriam $memoriam
-     * @return View
-     */
     public function show(Memoriam $memoriam): View
     {
         $folder = $memoriam->getAttachmentFolder();

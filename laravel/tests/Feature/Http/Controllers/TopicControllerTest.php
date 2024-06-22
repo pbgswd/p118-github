@@ -9,8 +9,6 @@ use Tests\TestCase;
  */
 class TopicControllerTest extends TestCase
 {
-
-
     /**
      * @test
      */
@@ -25,6 +23,7 @@ class TopicControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @showok
      */
     public function show_returns_an_ok_response()

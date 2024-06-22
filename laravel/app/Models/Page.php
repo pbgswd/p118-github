@@ -14,28 +14,29 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int          $id
- * @property string       $slug
- * @property string       $title
- * @property string       $description
- * @property string       $content
- * @property string       $access_level
- * @property int          $sort_order
- * @property bool         $live
- * @property bool         $front_page
- * @property bool         $landing_page
- * @property User         $user
- * @property int          $user_id
- * @property Topic[]      $topics
+ * @property int $id
+ * @property string $slug
+ * @property string $title
+ * @property string $description
+ * @property string $content
+ * @property string $access_level
+ * @property int $sort_order
+ * @property bool $live
+ * @property bool $front_page
+ * @property bool $landing_page
+ * @property User $user
+ * @property int $user_id
+ * @property Topic[] $topics
  * @property Attachment[] $attachments
- * @property DateTime     $created_at
- * @property DateTime     $updated_at
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ *
  * @method static withoutGlobalScopes()
  */
 class Page extends LiveableModel implements HasAttachment, Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -71,9 +72,6 @@ class Page extends LiveableModel implements HasAttachment, Searchable
         'live' => 'boolean',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -102,11 +100,6 @@ class Page extends LiveableModel implements HasAttachment, Searchable
         return 'slug';
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
     public function setTitleAttribute(string $value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
@@ -114,33 +107,21 @@ class Page extends LiveableModel implements HasAttachment, Searchable
         return $this->attributes['title'] = $value;
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function topics(): BelongsToMany
     {
         return $this->belongsToMany(Topic::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_page');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'public';

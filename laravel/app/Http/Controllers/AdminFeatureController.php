@@ -30,8 +30,6 @@ class AdminFeatureController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return View
      * @throws AuthorizationException
      */
     public function index(Request $request): View
@@ -52,7 +50,6 @@ class AdminFeatureController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -72,9 +69,6 @@ class AdminFeatureController extends Controller
     }
 
     /**
-     * @param StoreFeatureRequest $request
-     * @param UserImageService $service
-     * @return RedirectResponse
      * @throws InvalidManipulation
      * @throws AuthorizationException
      */
@@ -84,7 +78,7 @@ class AdminFeatureController extends Controller
 
         $feature = new Feature($request->input('feature'));
 
-        if (null !== $request->file('image')) {
+        if ($request->file('image') !== null) {
             $file = $request->file('image')->store('', 'public');
 
             $result = $service->updateImage($request, 'public', true, Options::feature_thumb_values());
@@ -101,9 +95,6 @@ class AdminFeatureController extends Controller
     }
 
     /**
-     * @param Feature $feature
-     * @param UserImageService $service
-     * @return View
      * @throws AuthorizationException
      * @throws InvalidManipulation
      */
@@ -140,10 +131,6 @@ class AdminFeatureController extends Controller
     }
 
     /**
-     * @param UpdateFeatureRequest $request
-     * @param Feature $any_feature
-     * @param UserImageService $service
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws InvalidManipulation
      */
@@ -162,7 +149,7 @@ class AdminFeatureController extends Controller
                 $any_feature['file_name'] = null;
             }
         }
-        if (null !== $request->file('image')) {
+        if ($request->file('image') !== null) {
             $file = $request->file('image')->store('', 'public');
 
             $result = $service->updateImage($request, 'public', true, Options::feature_thumb_values());
@@ -179,8 +166,6 @@ class AdminFeatureController extends Controller
     }
 
     /**
-     * @param DestroyFeatureRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyFeatureRequest $request): RedirectResponse

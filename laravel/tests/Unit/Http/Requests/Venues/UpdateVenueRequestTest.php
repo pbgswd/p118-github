@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests\Venues;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -36,7 +34,7 @@ class UpdateVenueRequestTest extends TestCase
      */
     public function rules()
     {
-        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cant be tested without context. Use Feature test');
+        $this->markTestSkipped(__FUNCTION__.' in '.__FILE__.' cant be tested without context. Use Feature test');
 
         $actual = $this->subject->rules();
 

@@ -9,10 +9,11 @@ use Tests\TestCase;
  */
 class AdminOrganizationControllerTest extends TestCase
 {
-   //
+    //
 
     /**
      * @test
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -26,11 +27,11 @@ class AdminOrganizationControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
-
 
         $organization = \App\Models\Organization::factory()->create();
 
@@ -43,6 +44,7 @@ class AdminOrganizationControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
@@ -56,6 +58,7 @@ class AdminOrganizationControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -73,6 +76,7 @@ class AdminOrganizationControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -89,6 +93,7 @@ class AdminOrganizationControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
@@ -97,8 +102,8 @@ class AdminOrganizationControllerTest extends TestCase
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/organization/create', [
-            'organization' => $organization->toArray()
-        ]);
+                'organization' => $organization->toArray(),
+            ]);
 
         $this->assertEquals(\Illuminate\Support\Facades\Session::get('success'), 'You have saved a new organization');
 
@@ -106,6 +111,7 @@ class AdminOrganizationControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -119,6 +125,7 @@ class AdminOrganizationControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -126,15 +133,16 @@ class AdminOrganizationControllerTest extends TestCase
         $organization = \App\Models\Organization::factory()->create();
 
         $response = $this->actingAs($this->admin_user)
-          ->post('admin/organization/' .  $organization->slug .'/edit', [
-          'organization' => $organization->toArray()
-        ]);
+            ->post('admin/organization/'.$organization->slug.'/edit', [
+                'organization' => $organization->toArray(),
+            ]);
 
         $response->assertRedirect(route('organization_edit', $organization->slug));
     }
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_validates_with_a_form_request()

@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\LocalSearch;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LocalSearchFactory extends Factory
 {
@@ -22,7 +22,7 @@ class LocalSearchFactory extends Factory
     public function definition()
     {
         return [
-//todo there may be nothing to add for this factory, just leaving it in for now.
+            //todo there may be nothing to add for this factory, just leaving it in for now.
         ];
     }
 }

@@ -25,7 +25,6 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -45,7 +44,6 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -53,7 +51,7 @@ class AdminEmploymentController extends Controller
         $this->authorize('create', Employment::class);
 
         $data = [
-            'employment' =>  new Employment,
+            'employment' => new Employment,
             'action' => 'Add',
             'access_levels' => Options::access_levels(),
         ];
@@ -62,8 +60,6 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @param StoreEmploymentRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreEmploymentRequest $request): RedirectResponse
@@ -88,8 +84,6 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @param Employment $employment
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Employment $employment): View
@@ -108,9 +102,6 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @param UpdateEmploymentRequest $request
-     * @param Employment $any_employment
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
@@ -127,7 +118,7 @@ class AdminEmploymentController extends Controller
             $result = $this->attachmentService->createAttachment($request, $any_employment);
 
             if ($result) {
-                Session::flash('success', 'You uploaded '.Str::plural('file', $request->file('attachments') . ' and any related files deleted.'));
+                Session::flash('success', 'You uploaded '.Str::plural('file', $request->file('attachments').' and any related files deleted.'));
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -139,8 +130,6 @@ class AdminEmploymentController extends Controller
     }
 
     /**
-     * @param DestroyEmploymentRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyEmploymentRequest $request): RedirectResponse
@@ -154,7 +143,7 @@ class AdminEmploymentController extends Controller
                 $employment->delete();
             });
 
-        Session::flash('success', Str::plural(count([$request->id]).' posting' . ' and any related files deleted.'));
+        Session::flash('success', Str::plural(count([$request->id]).' posting'.' and any related files deleted.'));
 
         return redirect()->route('admin_employment_list');
     }

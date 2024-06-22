@@ -15,6 +15,7 @@ class AdminPostControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -30,6 +31,7 @@ class AdminPostControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
@@ -45,7 +47,6 @@ class AdminPostControllerTest extends TestCase
 
     /**
      * @test
-     *
      */
     public function destroy_validates_with_a_form_request()
     {
@@ -58,6 +59,7 @@ class AdminPostControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -74,6 +76,7 @@ class AdminPostControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -90,6 +93,7 @@ class AdminPostControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
@@ -97,14 +101,15 @@ class AdminPostControllerTest extends TestCase
         $post = \App\Models\Post::factory()->make();
         $response = $this->actingAs($this->admin_user)
             ->post('admin/post/create', [
-            'post' => $post->toArray()
-        ]);
+                'post' => $post->toArray(),
+            ]);
 
         $this->assertEquals(Session::get('success'), 'You have saved a new post');
     }
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -118,6 +123,7 @@ class AdminPostControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -126,19 +132,18 @@ class AdminPostControllerTest extends TestCase
 
         $data = Post::first();
 
-        $data->content = "Content update ". $data->content;
+        $data->content = 'Content update '.$data->content;
 
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/post/' . $data->slug . '/edit', [
-           'post' => $data->toArray()
-        ]);
+            ->post('admin/post/'.$data->slug.'/edit', [
+                'post' => $data->toArray(),
+            ]);
 
         $response->assertRedirect(route('post_edit', [$data->slug]));
     }
 
     /**
      * @test
-     *
      */
     public function update_validates_with_a_form_request()
     {
@@ -148,5 +153,4 @@ class AdminPostControllerTest extends TestCase
             \App\Http\Requests\Posts\UpdatePostRequest::class
         );
     }
-
 }

@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests\Committees;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -26,7 +24,6 @@ class DestroyCommitteeRequestTest extends TestCase
      */
     public function authorize()
     {
-
 
         $actual = $this->subject->authorize();
 

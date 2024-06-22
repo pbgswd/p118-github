@@ -18,7 +18,6 @@ use Illuminate\View\View;
 class AdminCommitteePostCommentController extends Controller
 {
     /**
-     * @param CommitteePost $committeePost
      * @return Application|Factory|View
      */
     public function create(CommitteePost $committeePost): View
@@ -37,7 +36,6 @@ class AdminCommitteePostCommentController extends Controller
     }
 
     /**
-     * @param CommitteePostComment $any_committee_post_comment
      * @return Application|Factory|View
      */
     public function edit(CommitteePostComment $any_committee_post_comment): View
@@ -47,18 +45,13 @@ class AdminCommitteePostCommentController extends Controller
         $data = [
             'committee_post' => $any_committee_post_comment->committee_post,
             'post_comment' => $any_committee_post_comment,
-            'committee' =>  $any_committee_post_comment->committee,
+            'committee' => $any_committee_post_comment->committee,
             'action' => 'Edit',
         ];
 
         return view('admin.committee_post_comment', ['data' => $data]);
     }
 
-    /**
-     * @param StoreCommitteePostCommentRequest $request
-     * @param CommitteePost $committeePost
-     * @return RedirectResponse
-     */
     public function store(StoreCommitteePostCommentRequest $request, CommitteePost $committeePost): RedirectResponse
     {
         $postComment = new CommitteePostComment($request->input('comment'));
@@ -75,14 +68,8 @@ class AdminCommitteePostCommentController extends Controller
         return redirect()->route('admin_committee_post_comment_edit', [$committeePost->slug, $postComment->id]);
     }
 
-    /**
-     * @param UpdateCommitteePostCommentRequest $request
-     * @param CommitteePost $committeePost
-     * @param CommitteePostComment $any_committee_post_comment
-     * @return RedirectResponse
-     */
     public function update(UpdateCommitteePostCommentRequest $request, CommitteePost $committeePost,
-                           CommitteePostComment $any_committee_post_comment): RedirectResponse
+        CommitteePostComment $any_committee_post_comment): RedirectResponse
     {
         // $this->authorize('update', Auth::user());
         $any_committee_post_comment->fill($request->input('comment'));
@@ -95,8 +82,6 @@ class AdminCommitteePostCommentController extends Controller
     }
 
     /**
-     * @param DestroyCommitteePostCommentRequest $request
-     * @return RedirectResponse
      * @throws Exception
      */
     public function destroy(DestroyCommitteePostCommentRequest $request): RedirectResponse

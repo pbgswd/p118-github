@@ -8,8 +8,6 @@ class UpdateQrcodeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -25,8 +23,8 @@ class UpdateQrcodeRequest extends FormRequest
     {
         return [
             'qrcode.qrtype' => 'required',
-            'qrcode.qrdata' => 'required|max:255|unique:qrcodes,qrdata,'. $this->route('any_qrcode')->qrdata.',qrdata',
-            'qrcode.name' => 'required|max:255|unique:qrcodes,name,'. $this->route('any_qrcode')->name.',name',
+            'qrcode.qrdata' => 'required|max:255|unique:qrcodes,qrdata,'.$this->route('any_qrcode')->qrdata.',qrdata',
+            'qrcode.name' => 'required|max:255|unique:qrcodes,name,'.$this->route('any_qrcode')->name.',name',
         ];
     }
 }

@@ -9,9 +9,9 @@ use Tests\TestCase;
  */
 class InviteUserControllerTest extends TestCase
 {
-
     /**
      * @test
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -24,13 +24,14 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
     {
         $inviteUser = \App\Models\InviteUser::factory()->create();
         $response = $this->actingAs($this->admin_user)
-            ->delete(route('invited_user_destroy',['id' => [$inviteUser->id]]));
+            ->delete(route('invited_user_destroy', ['id' => [$inviteUser->id]]));
 
         $this->assertModelMissing($inviteUser);
         $response->assertRedirect(route('admin_list_invited_users'));
@@ -62,6 +63,7 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group listimportok
      */
     public function list_import_returns_an_ok_response()
@@ -83,6 +85,7 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group processok
      */
     public function process_user_returns_an_ok_response()
@@ -90,8 +93,8 @@ class InviteUserControllerTest extends TestCase
         $inviteUser = \App\Models\InviteUser::factory()->create();
         $response = $this->get(route('invite_user_signup', [
             'inviteUser' => $inviteUser->id,
-            'password' => $inviteUser->password
-            ])
+            'password' => $inviteUser->password,
+        ])
         );
 
         $response->assertOk();
@@ -122,15 +125,16 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group showinvitationok
      */
     public function show_returns_an_ok_response()
     {
         $inviteUser = \App\Models\InviteUser::factory()->create();
         $response = $this->get(route('invite_user_signup', [
-                'inviteUser' => $inviteUser->id,
-                'password' => $inviteUser->password
-            ])
+            'inviteUser' => $inviteUser->id,
+            'password' => $inviteUser->password,
+        ])
         );
 
         $response->assertOk();
@@ -140,6 +144,7 @@ class InviteUserControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeinvitedok
      */
     public function store_returns_an_ok_response()
@@ -147,7 +152,7 @@ class InviteUserControllerTest extends TestCase
         $inviteUser = \App\Models\InviteUser::factory()->create();
 
         $response = $this->actingAs($this->admin_user)->post(route('store_invited_user'), [
-            'invite' => $inviteUser->toArray()
+            'invite' => $inviteUser->toArray(),
         ]);
 
         $response->assertRedirect(route('admin_list_invited_users'));

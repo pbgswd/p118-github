@@ -14,24 +14,25 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int           $id
- * @property string        $slug
- * @property string        $title
- * @property string        $access_level
- * @property bool          $live
- * @property bool          $front_page
- * @property bool          $landing_page
- * @property User          $user
- * @property Topic[]       $topics
- * @property Attachment[]  $attachments
- * @property DateTime      $created_at
- * @property DateTime      $updated_at
+ * @property int $id
+ * @property string $slug
+ * @property string $title
+ * @property string $access_level
+ * @property bool $live
+ * @property bool $front_page
+ * @property bool $landing_page
+ * @property User $user
+ * @property Topic[] $topics
+ * @property Attachment[] $attachments
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ *
  * @method static withoutGlobalScopes()
  */
 class Post extends LiveableModel implements HasAttachment, Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     protected $policies = [
         self::class => PostPolicy::class,
@@ -66,9 +67,6 @@ class Post extends LiveableModel implements HasAttachment, Searchable
         'landing_page',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -89,19 +87,11 @@ class Post extends LiveableModel implements HasAttachment, Searchable
         );
     }
 
-    /**
-     * @return string
-     */
     public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    /**
-     * @param $value
-     *
-     * @return string
-     */
     public function setTitleAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
@@ -109,33 +99,21 @@ class Post extends LiveableModel implements HasAttachment, Searchable
         return $this->attributes['title'] = $value;
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function topics(): BelongsToMany
     {
         return $this->belongsToMany(Topic::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_post');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'public';

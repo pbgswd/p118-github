@@ -2,13 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Membership;
-use App\Models\PhoneNumber;
-use App\Models\User;
-use App\Models\UserInfo;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Committee;
-
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommitteeFactory extends Factory
 {
@@ -21,14 +16,12 @@ class CommitteeFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition(): Array
+    public function definition(): array
     {
         return [
-            'name' => 'Committee Name ' . $this->faker->name(),
-            'description' => 'Committee description ' . $this->faker->paragraph(),
+            'name' => 'Committee Name '.$this->faker->name(),
+            'description' => 'Committee description '.$this->faker->paragraph(),
             'file_name' => null,
             'image' => null,
             'email' => $this->faker->email(),

@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests\CommitteePost;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -36,7 +34,7 @@ class UpdateCommitteePostRequestTest extends TestCase
      */
     public function rules()
     {
-       $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cannot be tested without context');
+        $this->markTestSkipped(__FUNCTION__.' in '.__FILE__.' cannot be tested without context');
 
         $actual = $this->subject->rules();
 

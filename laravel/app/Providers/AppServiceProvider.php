@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Class AppServiceProvider.
+ *
  * @property AppServiceProvider $register
  * @property AppServiceProvider $boot
  */
@@ -25,8 +25,6 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot(): void
     {

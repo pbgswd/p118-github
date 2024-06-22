@@ -23,16 +23,12 @@ class AdminPolicyController extends Controller
 
     /**
      * AdminPolicyController constructor.
-     * @param AttachmentService $attachmentService
      */
     public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;
     }
 
-    /**
-     * @return View
-     */
     public function index(): View
     {
         $data = [];
@@ -46,9 +42,6 @@ class AdminPolicyController extends Controller
         return view('admin.policies_list', ['data' => $data]);
     }
 
-    /**
-     * @return View
-     */
     public function create(): View
     {
         $data = [
@@ -60,17 +53,11 @@ class AdminPolicyController extends Controller
         return view('admin.policy', ['data' => $data]);
     }
 
-    /**
-     * @param AdminStorePolicy $request
-     * @return RedirectResponse
-     */
     public function store(AdminStorePolicy $request): RedirectResponse
     {
         $policy = new Policy($request->policy);
 
         $policy->save();
-
-
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $policy);
@@ -83,13 +70,10 @@ class AdminPolicyController extends Controller
             }
         }
         Session::flash('success', 'policy posting saved');
+
         return redirect()->route('admin_policy_edit', [$policy->id]);
     }
 
-    /**
-     * @param Policy $any_policy
-     * @return View
-     */
     public function edit(Policy $any_policy): View
     {
         $data = [
@@ -103,10 +87,6 @@ class AdminPolicyController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param AdminUpdatePolicy $request
-     * @param Policy $any_policy
-     * @return RedirectResponse
      */
     public function update(AdminUpdatePolicy $request, Policy $any_policy): RedirectResponse
     {
@@ -135,8 +115,6 @@ class AdminPolicyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param AdminDestroyPolicy $request
-     * @return RedirectResponse
      * @throws Exception
      */
     public function destroy(AdminDestroyPolicy $request): RedirectResponse

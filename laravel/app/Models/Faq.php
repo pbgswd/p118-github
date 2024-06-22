@@ -2,51 +2,49 @@
 
 namespace App\Models;
 
-
 use App\Policies\FaqPolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
-use App\Constants\AccessLevelConstants;
+use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use Kyslik\ColumnSortable\Sortable;
 
 /**
- * @property int          $id
- * @property string       $slug
- * @property string       $faq_topic
- * @property string       $description
- * @property string       $access_level
- * @property bool         $live
- * @property User         $user
- * @property int          $user_id
- * @property DateTime     $created_at
- * @property DateTime     $updated_at
+ * @property int $id
+ * @property string $slug
+ * @property string $faq_topic
+ * @property string $description
+ * @property string $access_level
+ * @property bool $live
+ * @property User $user
+ * @property int $user_id
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ *
  * @method static withoutGlobalScopes()
  */
-
-
 class Faq extends LiveableModel implements Searchable
 {
-    use Sortable;
     use HasFactory;
-// Faq::factory()->has(FaqData::factory()->count(2), 'faqs_data')->count(4)->create();
+    use Sortable;
+
+    // Faq::factory()->has(FaqData::factory()->count(2), 'faqs_data')->count(4)->create();
     protected $table = 'faqs';
 
     protected $guard_name = 'web';
 
     protected $policies = [
         self::class => FaqPolicy::class,
-        ];
+    ];
 
     public $fillable = [
         'faq_topic',
         'description',
         'live',
-        'access_level'
-        ];
+        'access_level',
+    ];
 
     public $sortable = [
         'faq_topic',
@@ -74,8 +72,6 @@ class Faq extends LiveableModel implements Searchable
     }
 
     /**
-     * @param $value
-     *
      * @return mixed
      */
     public function setFaqTopicAttribute($value): string
@@ -85,25 +81,16 @@ class Faq extends LiveableModel implements Searchable
         return $this->attributes['faq_topic'] = $value;
     }
 
-    /**
-     * @return HasOne
-     */
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return HasMany
-     */
     public function faqs_data(): HasMany
     {
         return $this->hasMany(FaqData::class)->orderBy('sort_order', 'desc');
     }
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -123,5 +110,4 @@ class Faq extends LiveableModel implements Searchable
             \route('faq_show', $this->slug)
         );
     }
-
 }

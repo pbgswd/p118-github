@@ -11,10 +11,11 @@ use Tests\TestCase;
  */
 class AdminMeetingControllerTest extends TestCase
 {
-   //
+    //
 
     /**
      * @test  * @group
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -28,6 +29,7 @@ class AdminMeetingControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
@@ -43,6 +45,7 @@ class AdminMeetingControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
@@ -56,6 +59,7 @@ class AdminMeetingControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -72,6 +76,7 @@ class AdminMeetingControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -87,6 +92,7 @@ class AdminMeetingControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
@@ -95,14 +101,15 @@ class AdminMeetingControllerTest extends TestCase
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/meeting/create', [
-            'meeting' => $meeting->toArray()
-        ]);
+                'meeting' => $meeting->toArray(),
+            ]);
 
-        $this->assertEquals(Session::get('success'),'Meeting saved');
+        $this->assertEquals(Session::get('success'), 'Meeting saved');
     }
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -116,6 +123,7 @@ class AdminMeetingControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -123,18 +131,19 @@ class AdminMeetingControllerTest extends TestCase
         $meeting = \App\Models\Meeting::factory()->create();
         $data = Meeting::first();
 
-        $data['description'] = "Updated " . $data->description;
+        $data['description'] = 'Updated '.$data->description;
 
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/meeting/'. $meeting->id . '/edit', [
-            'meeting' => $data->toArray()
-        ]);
+            ->post('admin/meeting/'.$meeting->id.'/edit', [
+                'meeting' => $data->toArray(),
+            ]);
         $response->assertRedirect(route('meeting_edit', ['any_meeting' => $data->id]));
 
     }
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_validates_with_a_form_request()

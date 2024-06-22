@@ -9,10 +9,11 @@ use Tests\TestCase;
  */
 class AgreementControllerTest extends TestCase
 {
-   //
+    //
 
     /**
      * @test
+     *
      * @group listok
      */
     public function list_returns_an_ok_response()
@@ -28,6 +29,7 @@ class AgreementControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group showok
      */
     public function show_returns_an_ok_response()
@@ -40,6 +42,4 @@ class AgreementControllerTest extends TestCase
         $response->assertViewIs('agreement_view');
         $response->assertViewHas('data');
     }
-
-
 }

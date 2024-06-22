@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 class ProofreaderService
 {
     /**
-     * @var  BaseProofreaderAdapter[]
+     * @var BaseProofreaderAdapter[]
      */
     protected $adapters = [];
 

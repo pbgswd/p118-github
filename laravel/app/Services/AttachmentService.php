@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AttachmentService
 {
-    /**
-     * @param Request $request
-     * @param HasAttachment $model
-     * @return bool
-     */
     public function createAttachment(Request $request, HasAttachment $model): bool
     {
         foreach ($request->file('attachments') as $file) {
@@ -37,11 +32,6 @@ class AttachmentService
         return true;
     }
 
-    /**
-     * @param Request $request
-     * @param HasAttachment $model
-     * @return bool
-     */
     public function updateAttachment(Request $request, HasAttachment $model): bool
     {
         if (isset($request->attachment)) {
@@ -55,6 +45,7 @@ class AttachmentService
                         Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
                         Attachment::destroy($v['id']);
                     }
+
                     continue;
                 }
 
@@ -75,10 +66,6 @@ class AttachmentService
         return false;
     }
 
-    /**
-     * @param HasAttachment $model
-     * @return bool
-     */
     public function destroyAttachments(HasAttachment $model): bool
     {
         $model->load('attachments');
@@ -91,14 +78,9 @@ class AttachmentService
         return true;
     }
 
-    /**
-     * @param Attachment $attachment
-     * @param string $folder
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
-     */
     public function downloadAttachment(Attachment $attachment, string $folder): RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
     {
-        if (false === Auth::check() && $attachment->access_level != AccessLevelConstants::PUBLIC) {
+        if (Auth::check() === false && $attachment->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('error', 'Please log in first and try the download link again.');
 
             return redirect()->route('login');
@@ -109,9 +91,7 @@ class AttachmentService
     }
 
     /**
-     * @param $bytes
-     * @param int $decimals
-     * @return string
+     * @param  int  $decimals
      */
     public static function human_filesize($bytes, $decimals = 2): string
     {

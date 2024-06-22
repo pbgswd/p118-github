@@ -3,16 +3,14 @@
 namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
-use App\Models\Interfaces\HasAttachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 
 class Carousel extends LiveableModel
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     /**
      * @var string
@@ -68,17 +66,11 @@ class Carousel extends LiveableModel
         'live' => 'boolean',
     ];
 
-    /**
-     * @return HasOne
-     */
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'carousel';
@@ -97,9 +89,6 @@ class Carousel extends LiveableModel
         return ['2000x500', '1400x500', '800x500', '600x500'];
     }
 
-    /**
-     * @return array
-     */
     public function getImageData(): array
     {
         $data = [];
@@ -116,9 +105,6 @@ class Carousel extends LiveableModel
         return $data;
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentAccessLevel(): string
     {
         return AccessLevelConstants::PUBLIC;

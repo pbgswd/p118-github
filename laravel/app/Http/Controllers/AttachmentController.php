@@ -27,8 +27,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @param string $folder
-     * @param Attachment $attachment
      * @return RedirectResponse
      */
     public function download(string $folder, Attachment $attachment)
@@ -37,8 +35,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @param Attachment $attachment
-     * @return View
      * @throws AuthorizationException
      */
     public function index(Attachment $attachment): View
@@ -54,7 +50,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -74,8 +69,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @param StoreAttachmentRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreAttachmentRequest $request): RedirectResponse
@@ -106,8 +99,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @param Attachment $attachment
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Attachment $attachment): View
@@ -133,9 +124,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @param UpdateAttachmentRequest $request
-     * @param Attachment $attachment
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateAttachmentRequest $request, Attachment $attachment): RedirectResponse
@@ -150,8 +138,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @param DestroyAttachmentRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyAttachmentRequest $request): RedirectResponse

@@ -39,11 +39,11 @@ if (! function_exists('select_options')) {
     /**
      * modified from Smarty's {{html_options}} - Smarty/plugins/function.html_options.php.
      *
-     * @param array $data Associative array of keys and display values for the dropdown options.
-     * @param mixed $selected (array or string) Key value of selected option(s).
-     * @param mixed $attributes (array or string) List of attributes for <select> tag.
-     *                          (boolean) If TRUE, open and close <select> tag will be added with no attributes.
-     *                          (boolean) If FALSE, open and close <select> tag will be omitted.
+     * @param  array  $data  Associative array of keys and display values for the dropdown options.
+     * @param  mixed  $selected  (array or string) Key value of selected option(s).
+     * @param  mixed  $attributes  (array or string) List of attributes for <select> tag.
+     *                             (boolean) If TRUE, open and close <select> tag will be added with no attributes.
+     *                             (boolean) If FALSE, open and close <select> tag will be omitted.
      *
      * @usage   {{ select_options($data['countries'], $user->country_code, ['name' => 'user[country_code]',
      * 'class' => 'xs_selectbox']) }}
@@ -87,10 +87,7 @@ if (! function_exists('select_options')) {
     }
 
     /**
-     * @param $value
-     * @param $label
-     * @param $selected
-     * @param string $optAttributes
+     * @param  string  $optAttributes
      * @return string
      */
     function _select_opt_output($value, $label, $selected, $optAttributes = '')
@@ -114,9 +111,6 @@ if (! function_exists('select_options')) {
     }
 
     /**
-     * @param $group_label
-     * @param array $subarray
-     * @param $selected
      * @return string
      */
     function _select_optgroup_output($group_label, array $subarray, $selected)

@@ -11,8 +11,7 @@ use Illuminate\View\View;
 class AgreementController extends Controller
 {
     /**
-     * @param AgreementService $service
-     * @return View
+     * @param  AgreementService  $service
      */
     /**
         public function list_demo(AgreementService $service): View
@@ -35,10 +34,6 @@ class AgreementController extends Controller
 
         }
      **/
-
-    /**
-     * @return View
-     */
     public function list(): View
     {
         $data = [];
@@ -62,10 +57,6 @@ class AgreementController extends Controller
         return view('agreements_list', ['data' => ['data' => $data]]);
     }
 
-    /**
-     * @param Agreement $agreement
-     * @return View
-     */
     public function show(Agreement $agreement): View
     {
         $agreement->load('user', 'attachments', 'organizations', 'venues');

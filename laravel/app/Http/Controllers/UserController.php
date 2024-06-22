@@ -10,7 +10,6 @@ use App\Models\Committee;
 use App\Models\Executive;
 use App\Models\Membership;
 use App\Models\MessageSelection;
-use App\Models\MessageSelections;
 use App\Models\Options;
 use App\Models\PhoneNumber;
 use App\Models\Topic;
@@ -52,7 +51,6 @@ class UserController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -63,7 +61,6 @@ class UserController extends Controller
             ->orderBy('name')
             ->paginate(20);
 
-
         //todo exclude suspended, verify
         $count = Membership::where('membership_type', 'Member')->count();
 
@@ -71,8 +68,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param User $user
-     * @return View
      * @throws AuthorizationException
      * @throws InvalidManipulation
      */
@@ -81,9 +76,9 @@ class UserController extends Controller
         $this->authorize('view', $user);
 
         $user->load('committee_memberships', 'phone_number',
-                    'user_info', 'membership',
-                    'allExecutiveRoles', 'message_frequency_preferences');
-                    //'message_selections');
+            'user_info', 'membership',
+            'allExecutiveRoles', 'message_frequency_preferences');
+        //'message_selections');
 
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
@@ -91,15 +86,15 @@ class UserController extends Controller
         $folder = $user->getAttachmentFolder();
         $tn_prefix = Options::member_thumb_values()['tn_str'];
 
-/*        if ($user->user_info['image']) {
-            if (file_exists(storage_path().'/app/'.$folder.'/'.$user->user_info['image'])) {
-                if (! file_exists(storage_path().'/app/'.$folder.'/'.$tn_prefix.$user->user_info['image'])) {
-                    $service->generate_thumb($user->user_info['image'], $folder,
-                        Options::member_thumb_values());
-                }
-            }
-            $user->user_info->thumb = $tn_prefix.$user->user_info['image'];
-        }*/
+        /*        if ($user->user_info['image']) {
+                    if (file_exists(storage_path().'/app/'.$folder.'/'.$user->user_info['image'])) {
+                        if (! file_exists(storage_path().'/app/'.$folder.'/'.$tn_prefix.$user->user_info['image'])) {
+                            $service->generate_thumb($user->user_info['image'], $folder,
+                                Options::member_thumb_values());
+                        }
+                    }
+                    $user->user_info->thumb = $tn_prefix.$user->user_info['image'];
+                }*/
 
         if ($user->user_info) {
             if ($user->user_info['image']) {
@@ -136,7 +131,6 @@ class UserController extends Controller
             'committees' => array_combine($selected_committees, $selected_committees),
         ];
 
-
         $data = [
             'user' => $user,
             'user_roles' => $member_roles,
@@ -152,13 +146,14 @@ class UserController extends Controller
             'provinces' => $regions['statesprovs']['Provinces'],
             'action' => 'Edit',
         ];
-       // dd([$selections['topics'], $data['selections']['topics']]);
+
+        // dd([$selections['topics'], $data['selections']['topics']]);
         return view('member', ['data' => $data]);
     }
 
     /**
-     * @param User $user
      * @return View
+     *
      * @throws AuthorizationException
      * @throws InvalidManipulation
      */
@@ -208,10 +203,6 @@ class UserController extends Controller
         }*/
 
     /**
-     * @param UpdateMember $userRequest
-     * @param UserImageService $service
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws InvalidManipulation
      */
@@ -312,7 +303,7 @@ class UserController extends Controller
             $user->user_info()->save($user_info);
 
             if (! file_exists(storage_path().'/app/'.$folder.'/'.$thumb_vals['tn_str']
-                . $user->user_info['image'])) {
+                .$user->user_info['image'])) {
                 $service->generate_thumb($user->user_info['image'], $folder, $thumb_vals);
             }
         }
@@ -330,40 +321,35 @@ class UserController extends Controller
     }
 
     /**
-     * @param User $user
      * @return View
+     *
      * @throws AuthorizationException
      */
-   /* public function edit_address(User $user): View
-    {
-        $this->authorize('update', $user);
+    /* public function edit_address(User $user): View
+     {
+         $this->authorize('update', $user);
 
-        $currentUser = Auth::user();
-        $regions = $this->getFormOptions(['statesprovs']);
+         $currentUser = Auth::user();
+         $regions = $this->getFormOptions(['statesprovs']);
 
-        $data = [
-            'user' => $user,
-            'action' => 'Edit',
-            'currentUserPermissions' => $currentUser->permissions,
-            'provinces' => $regions['statesprovs']['Provinces'],
-        ];
+         $data = [
+             'user' => $user,
+             'action' => 'Edit',
+             'currentUserPermissions' => $currentUser->permissions,
+             'provinces' => $regions['statesprovs']['Provinces'],
+         ];
 
-        return view('member_address_edit', ['data' => $data]);
-    }*/
+         return view('member_address_edit', ['data' => $data]);
+     }*/
 
     /**
-     * @param UpdateMemberAddress $userRequest
-     * @param EmailMemberUpdateAddressService $service
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update_address(
-       UpdateMemberAddress $userRequest,
-       EmailMemberUpdateAddressService $service,
-       User $user
-    ): RedirectResponse
-    {
+        UpdateMemberAddress $userRequest,
+        EmailMemberUpdateAddressService $service,
+        User $user
+    ): RedirectResponse {
         $this->authorize('update', $user);
         $message = [];
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
@@ -381,18 +367,19 @@ class UserController extends Controller
         }
 
         Session::flash('success', 'Your address update has been emailed to the office.');
+
         return redirect()->route('member', $user->id);
     }
 
-   /* public function edit_password(User $user): View
-    {
-        $this->authorize('update', $user);
+    /* public function edit_password(User $user): View
+     {
+         $this->authorize('update', $user);
 
-        $data['action'] = 'Edit';
-        $data['user'] = $user;
+         $data['action'] = 'Edit';
+         $data['user'] = $user;
 
-        return view('member_password_edit', ['data' => $data]);
-    }*/
+         return view('member_password_edit', ['data' => $data]);
+     }*/
 
     public function update_password(ProcessUserRequest $request, User $user): RedirectResponse
     {
@@ -407,30 +394,26 @@ class UserController extends Controller
     }
 
     /**
-     * @param User $user
      * @return View
+     *
      * @throws AuthorizationException
      */
-  /*  public function edit_emergency_contact(User $user): View
-    {
-        $this->authorize('update', $user);
+    /*  public function edit_emergency_contact(User $user): View
+      {
+          $this->authorize('update', $user);
 
-        $currentUser = Auth::user();
+          $currentUser = Auth::user();
 
-        $data = [
-            'user' => $user,
-            'action' => 'Edit',
-            'currentUserPermissions' => $currentUser->permissions,
-        ];
+          $data = [
+              'user' => $user,
+              'action' => 'Edit',
+              'currentUserPermissions' => $currentUser->permissions,
+          ];
 
-        return view('member_emergency_edit', ['data' => $data]);
-    }*/
+          return view('member_emergency_edit', ['data' => $data]);
+      }*/
 
     /**
-     * @param UpdateMemberEmergencyContact $userRequest
-     * @param EmailMemberUpdateAddressService $service
-     * @param User $user
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update_emergency_contact(
@@ -448,7 +431,6 @@ class UserController extends Controller
             ],
         ]);
          **/
-
         $message = [];
 
         $fields = ['emergency_contact_name', 'emergency_contact_relationship', 'emergency_contact_phone', 'message'];

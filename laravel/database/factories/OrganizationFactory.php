@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Organization;
-use Psy\Util\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrganizationFactory extends Factory
 {
@@ -34,7 +33,7 @@ class OrganizationFactory extends Factory
             'file_name' => '', //$file_name .'.jpg',
             'image' => '', //bcrypt($file_name).'.jpg',
             'access_level' => 'members',
-            'live' => 1
+            'live' => 1,
         ];
     }
 }

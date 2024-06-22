@@ -21,7 +21,6 @@ use Illuminate\View\View;
 class AdminCommitteeController extends Controller
 {
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -40,7 +39,6 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -58,8 +56,6 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @param StoreCommitteeRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreCommitteeRequest $request): RedirectResponse
@@ -82,8 +78,6 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @param Committee $committee
-     * @return View
      * @throws AuthorizationException
      */
     public function show(Committee $committee): View
@@ -124,8 +118,6 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @param Committee $any_committee
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Committee $any_committee): View
@@ -136,7 +128,7 @@ class AdminCommitteeController extends Controller
 
         $file_info = null;
 
-        if (null !== $any_committee['image']) {
+        if ($any_committee['image'] !== null) {
             $file_info['file_size'] = AttachmentService::human_filesize(\filesize(\storage_path('app/committees'.
                 '/'.$any_committee['image'])));
 
@@ -155,9 +147,6 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @param UpdateCommitteeRequest $request
-     * @param Committee $any_committee
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function update(UpdateCommitteeRequest $request, Committee $any_committee): RedirectResponse
@@ -187,8 +176,6 @@ class AdminCommitteeController extends Controller
     }
 
     /**
-     * @param DestroyCommitteeRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyCommitteeRequest $request): RedirectResponse
@@ -201,7 +188,7 @@ class AdminCommitteeController extends Controller
 
                 //dump($committee);
                 //dump(Auth::user()->with('membership'));
-//todo a plan to deal with orphaned committee posts other than deletion
+                //todo a plan to deal with orphaned committee posts other than deletion
                 $committee->posts()->delete();
                 // does user have the role
                 // what is the committee
@@ -225,10 +212,6 @@ class AdminCommitteeController extends Controller
         return redirect()->route('committees_list');
     }
 
-    /**
-     * @param FormRequest $request
-     * @return string
-     */
     protected function uploadImage(FormRequest $request): string
     {
         return $request->file('committee.image')->store('', 'committees');

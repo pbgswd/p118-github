@@ -25,7 +25,6 @@ use Spatie\Permission\Models\Role;
 class InviteUserController extends Controller
 {
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -54,7 +53,6 @@ class InviteUserController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -65,18 +63,15 @@ class InviteUserController extends Controller
         $invited->role = ['member' => 'member'];
         $invited->membership_type = 'Member';
 
-        return view('admin.invite_user', ['data' =>
-            ['invite' => $invited,
+        return view('admin.invite_user', ['data' => ['invite' => $invited,
             'roles' => Role::get(),
             'membership' => Options::membership_levels(),
             'action' => 'Invite',
-            ],
+        ],
         ]);
     }
 
     /**
-     * @param StoreInviteUserRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(StoreInviteUserRequest $request): RedirectResponse
@@ -93,11 +88,11 @@ class InviteUserController extends Controller
             function ($m) use ($invitation) {
                 $m->from(config('mail.from.address'), config('mail.from.name').' Website Signup');
                 $m->to($invitation['email'], $invitation['name'])
-                ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
-                ->subject('IATSE Local 118 Website Signup Invitation');
+                    ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
+                    ->subject('IATSE Local 118 Website Signup Invitation');
             });
 
-//       return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
+        //       return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
 
         Session::flash('success', 'Invitation for access sent to '.$invitation['name']);
 
@@ -105,7 +100,6 @@ class InviteUserController extends Controller
     }
 
     /**
-     * @param InviteUser $inviteUser
      * @return Factory|RedirectResponse|View
      */
     public function show(InviteUser $inviteUser): View
@@ -122,7 +116,7 @@ class InviteUserController extends Controller
                     return redirect()->route('hello');
                 }
          ***/
-        if (null !== User::where('email', $inviteUser->email)->first()) {
+        if (User::where('email', $inviteUser->email)->first() !== null) {
             Session::flash('error',
                 'The invitation is no longer valid because you have been registered. Login to continue.');
 
@@ -138,9 +132,6 @@ class InviteUserController extends Controller
         return view('site_invitation', ['data' => $data]);
     }
 
-    /**
-     * @return View
-     */
     public function list_import(): View
     {
         DB::table('import_users')
@@ -161,7 +152,6 @@ class InviteUserController extends Controller
     }
 
     /**
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function process_import_invitation(): RedirectResponse
@@ -224,11 +214,6 @@ class InviteUserController extends Controller
         return redirect()->route('list_import');
     }
 
-    /**
-     * @param ProcessUserRequest $request
-     * @param InviteUser $inviteUser
-     * @return RedirectResponse
-     */
     public function process_user(ProcessUserRequest $request, InviteUser $inviteUser): RedirectResponse
     {
         $data = [
@@ -275,26 +260,24 @@ class InviteUserController extends Controller
     }
 
     /**
-     * @param DestroyInviteUserRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyInviteUserRequest $request): RedirectResponse
     {
         $this->authorize('delete', InviteUser::class);
-/*
- * dd($request->all());
-        foreach ($request->id as $id) {
-            InviteUser::destroy($id);
-        }
-*/
+        /*
+         * dd($request->all());
+                foreach ($request->id as $id) {
+                    InviteUser::destroy($id);
+                }
+        */
 
         InviteUser::find($request->id)
             ->each(function (InviteUser $inviteUser) {
                 $inviteUser->delete();
             });
 
-        Session::flash('success', Str::plural(count([$request->id]) . ' Invitation' . ' deleted.'));
+        Session::flash('success', Str::plural(count([$request->id]).' Invitation'.' deleted.'));
 
         return redirect()->route('admin_list_invited_users');
     }

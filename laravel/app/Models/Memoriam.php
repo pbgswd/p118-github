@@ -11,8 +11,8 @@ use Spatie\Searchable\SearchResult;
 
 class Memoriam extends LiveableModel implements Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     protected $table = 'memoriams';
 
@@ -47,9 +47,6 @@ class Memoriam extends LiveableModel implements Searchable
         'live' => 'boolean',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -70,19 +67,11 @@ class Memoriam extends LiveableModel implements Searchable
         );
     }
 
-    /**
-     * @return string
-     */
     public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    /**
-     * @param $value
-     *
-     * @return string
-     */
     public function setTitleAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
@@ -90,17 +79,11 @@ class Memoriam extends LiveableModel implements Searchable
         return $this->attributes['title'] = $value;
     }
 
-    /**
-     * @return HasOne
-     */
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'memoriam';

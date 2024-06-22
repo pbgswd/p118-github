@@ -14,21 +14,21 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
- * @property int          $id
- * @property string       $title
- * @property string       $description
- * @property int          $user_id
- * @property bool      $live
- * @property User         $user
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property int $user_id
+ * @property bool $live
+ * @property User $user
  * @property Attachment[] $attachments
- * @property DateTime     $date
- * @property DateTime     $created_at
- * @property DateTime     $updated_at
+ * @property DateTime $date
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
  */
 class Meeting extends LiveableModel implements HasAttachment, Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     protected $policies = [
         self::class => MeetingPolicy::class,
@@ -59,9 +59,6 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
         'live' => 'boolean',
     ];
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -82,25 +79,16 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
         );
     }
 
-    /**
-     * @return HasOne
-     */
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_meeting');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'meetings';

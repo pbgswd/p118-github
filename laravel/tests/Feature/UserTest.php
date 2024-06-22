@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Http\Response;
-use Session;
 use Tests\TestCase;
 
 class UserTest extends TestCase

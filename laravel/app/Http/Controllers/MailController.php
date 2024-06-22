@@ -12,7 +12,7 @@ class MailController extends Controller
 
         $mailData = [
             'title' => 'mail from petrerrrr p118',
-            'body' => 'this is some sort of maildev test'
+            'body' => 'this is some sort of maildev test',
         ];
 
         Mail::to('superwebdeveloper@gmail.com')->send(new DemoMail($mailData));

@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Http\Requests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -27,7 +25,6 @@ class UpdateFeatureRequestTest extends TestCase
     public function authorize()
     {
 
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -38,12 +35,12 @@ class UpdateFeatureRequestTest extends TestCase
      */
     public function rules()
     {
-        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cant be tested without context. Use Feature test');
+        $this->markTestSkipped(__FUNCTION__.' in '.__FILE__.' cant be tested without context. Use Feature test');
 
         $actual = $this->subject->rules();
 
         $this->assertValidationRules([
-            'feature.title' =>  'required|max:255|unique:pages,title,'.$this->route('any_feature')->slug.',slug',
+            'feature.title' => 'required|max:255|unique:pages,title,'.$this->route('any_feature')->slug.',slug',
             'delete_image' => 'boolean',
             'image' => 'file|nullable',
             'feature.url' => 'string|nullable|max:255',

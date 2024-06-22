@@ -10,10 +10,9 @@ use Tests\TestCase;
  */
 class AdminCarouselControllerTest extends TestCase
 {
-
-
     /**
      * @test
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -27,22 +26,24 @@ class AdminCarouselControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
-   /* public function destroy_returns_an_ok_response()
-    {
-        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
+    /* public function destroy_returns_an_ok_response()
+     {
+         $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
 
-        $carousel = \App\Models\Carousel::factory()->create();
+         $carousel = \App\Models\Carousel::factory()->create();
 
-        $response = $this->delete(route('carousel.destroy', [$carousel]));
+         $response = $this->delete(route('carousel.destroy', [$carousel]));
 
-        $response->assertOk();
-        $this->assertModelMissing($carousel);
-    }*/
+         $response->assertOk();
+         $this->assertModelMissing($carousel);
+     }*/
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -57,6 +58,7 @@ class AdminCarouselControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -70,28 +72,30 @@ class AdminCarouselControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group showok
      */
-   /* public function show_returns_an_ok_response()
-    {
-        $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
+    /* public function show_returns_an_ok_response()
+     {
+         $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' has no code');
 
-        $carousel = \App\Models\Carousel::factory()->create();
+         $carousel = \App\Models\Carousel::factory()->create();
 
-        $response = $this->actingAs($this->admin_user)->get(route('carousel.show', [$carousel]));
+         $response = $this->actingAs($this->admin_user)->get(route('carousel.show', [$carousel]));
 
-        $response->assertOk();
-    }*/
+         $response->assertOk();
+     }*/
 
     /**
      * @test
+     *
      * @group storeok
      */
-   public function store_returns_an_ok_response()
+    public function store_returns_an_ok_response()
     {
         $carousel = \App\Models\Carousel::factory()->make();
         $response = $this->actingAs($this->admin_user)->post(route('admin_carousel_store'), [
-            'carousel' => $carousel->toArray()
+            'carousel' => $carousel->toArray(),
         ]);
 
         $response->assertOk();
@@ -99,6 +103,7 @@ class AdminCarouselControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -107,11 +112,11 @@ class AdminCarouselControllerTest extends TestCase
 
         $data = Carousel::first();
 
-        $data['caption2'] = 'Update to caption2' . $data->caption2;
+        $data['caption2'] = 'Update to caption2'.$data->caption2;
 
         $response = $this->actingAs($this->admin_user)
-            ->post(route('admin_carousel_update',  [
-                'any_carousel' => $data->toArray()
+            ->post(route('admin_carousel_update', [
+                'any_carousel' => $data->toArray(),
             ]));
 
         $response->assertOk();

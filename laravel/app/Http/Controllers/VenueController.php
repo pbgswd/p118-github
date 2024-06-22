@@ -16,9 +16,6 @@ class VenueController extends Controller
         $this->userImageService = $userImageService;
     }
 
-    /**
-     * @return View
-     */
     public function list(): View
     {
         $data['venues'] = Venue::where('live', 1)
@@ -28,12 +25,10 @@ class VenueController extends Controller
 
         $data['tn_prefix'] = Options::venue_org_thumb_values()['tn_str'];
 
-        return view('venues', ['data' =>  $data]);
+        return view('venues', ['data' => $data]);
     }
 
     /**
-     * @param Venue $venue
-     * @return View
      * @throws InvalidManipulation
      */
     public function show(Venue $venue): View

@@ -14,6 +14,7 @@ class AdminFeatureControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -28,6 +29,7 @@ class AdminFeatureControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
@@ -43,6 +45,7 @@ class AdminFeatureControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
@@ -56,6 +59,7 @@ class AdminFeatureControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -72,6 +76,7 @@ class AdminFeatureControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -88,6 +93,7 @@ class AdminFeatureControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
@@ -96,14 +102,15 @@ class AdminFeatureControllerTest extends TestCase
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/feature/create', [
-            'feature' => $feature->toArray()
-        ]);
+                'feature' => $feature->toArray(),
+            ]);
 
         $response->assertRedirect(route('admin_feature_edit', [$feature->slug]));
     }
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -117,6 +124,7 @@ class AdminFeatureControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -125,12 +133,12 @@ class AdminFeatureControllerTest extends TestCase
 
         $data = Feature::first();
 
-        $data['description'] = "feature description edit " . $data->description;
+        $data['description'] = 'feature description edit '.$data->description;
 
         $response = $this->actingAs($this->admin_user)
-            ->post('admin/feature/' . $data->slug . '/edit', [
-                'feature' => $data->toArray()
-        ]);
+            ->post('admin/feature/'.$data->slug.'/edit', [
+                'feature' => $data->toArray(),
+            ]);
 
         $response->assertRedirect(route('admin_feature_edit', ['any_feature' => $data->slug]));
 
@@ -138,6 +146,7 @@ class AdminFeatureControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_validates_with_a_form_request()

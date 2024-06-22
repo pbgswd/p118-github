@@ -15,6 +15,7 @@ class AdminEmploymentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group createok
      */
     public function create_returns_an_ok_response()
@@ -28,6 +29,7 @@ class AdminEmploymentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_returns_an_ok_response()
@@ -42,6 +44,7 @@ class AdminEmploymentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group destroyok
      */
     public function destroy_validates_with_a_form_request()
@@ -55,6 +58,7 @@ class AdminEmploymentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group editok
      */
     public function edit_returns_an_ok_response()
@@ -71,6 +75,7 @@ class AdminEmploymentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()
@@ -87,6 +92,7 @@ class AdminEmploymentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_returns_an_ok_response()
@@ -95,14 +101,15 @@ class AdminEmploymentControllerTest extends TestCase
 
         $response = $this->actingAs($this->admin_user)
             ->post('admin/employment/create', [
-            'employment' => $employment->toArray()
-        ]);
+                'employment' => $employment->toArray(),
+            ]);
 
         $this->assertEquals(Session::get('success'), 'employment posting saved');
     }
 
     /**
      * @test
+     *
      * @group storeok
      */
     public function store_validates_with_a_form_request()
@@ -116,6 +123,7 @@ class AdminEmploymentControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_returns_an_ok_response()
@@ -126,14 +134,15 @@ class AdminEmploymentControllerTest extends TestCase
 
         $response = $this->actingAs($this->admin_user)
             ->post(route('admin_employment_update', $job->id), [
-            'employment' => $job->toArray()
-        ]);
+                'employment' => $job->toArray(),
+            ]);
 
-        $response->assertRedirect(route('admin_employment_edit',  [$job->id]));
+        $response->assertRedirect(route('admin_employment_edit', [$job->id]));
     }
 
     /**
      * @test
+     *
      * @group updateok
      */
     public function update_validates_with_a_form_request()
@@ -144,6 +153,4 @@ class AdminEmploymentControllerTest extends TestCase
             \App\Http\Requests\Employment\UpdateEmploymentRequest::class
         );
     }
-
-
 }

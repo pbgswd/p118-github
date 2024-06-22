@@ -16,23 +16,24 @@ use Spatie\Searchable\SearchResult;
 /**
  * Class Bylaw.
  *
- * @property int          $id
- * @property string       $title
- * @property string       $description
- * @property string       $access_level
- * @property bool      $live
- * @property int          $user_id
- * @property User         $user
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property string $access_level
+ * @property bool $live
+ * @property int $user_id
+ * @property User $user
  * @property Attachment[] $attachments
- * @property DateTime     $created_at
- * @property DateTime     $updated_at
- * @property DateTime     $date
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
+ * @property DateTime $date
+ *
  * @method static withoutGlobalScopes()
  */
 class Bylaw extends LiveableModel implements HasAttachment, Searchable
 {
-    use Sortable;
     use HasFactory;
+    use Sortable;
 
     protected $policies = [
         self::class => BylawPolicy::class,
@@ -61,9 +62,6 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
         $this->access_level = AccessLevelConstants::MEMBERS;
     }
 
-    /**
-     * @return SearchResult
-     */
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -84,25 +82,16 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
         );
     }
 
-    /**
-     * @return HasOne
-     */
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_bylaw');
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentFolder(): string
     {
         return 'bylaws';

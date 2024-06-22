@@ -9,10 +9,11 @@ use Tests\TestCase;
  */
 class AdminControllerTest extends TestCase
 {
-   //
+    //
 
     /**
      * @test
+     *
      * @group blankok
      */
     public function blank_returns_an_ok_response()
@@ -25,6 +26,7 @@ class AdminControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group devok
      */
     public function developer_returns_an_ok_response()
@@ -37,6 +39,7 @@ class AdminControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @group indexok
      */
     public function index_returns_an_ok_response()

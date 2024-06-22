@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * Extend this class for models that have a boolean `$live` field.
  *
  * @property bool $live
+ *
  * @method static withoutGlobalScope() Builder
  */
 class LiveableModel extends Model
@@ -27,9 +28,8 @@ class LiveableModel extends Model
     }
 
     /**
-     * @param string|array $relations
-     * @param string|array $scopes
-     *
+     * @param  string|array  $relations
+     * @param  string|array  $scopes
      * @return $this
      */
     public function loadWithoutGlobalScopes($relations, $scopes = []): self

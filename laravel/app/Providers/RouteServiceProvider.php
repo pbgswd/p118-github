@@ -33,8 +33,6 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -97,7 +95,7 @@ class RouteServiceProvider extends ServiceProvider
             return Carousel::withoutGlobalScopes()->findOrFail($id);
         });
         Route::bind('any_qrcode', static function ($id) {
-            return Qrcode::withoutGlobalScopes()->findOrFail($id);;
+            return Qrcode::withoutGlobalScopes()->findOrFail($id);
         });
     }
 
@@ -120,13 +118,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes all receive session state, CSRF protection, etc.
      * namespace commented out in Laravel 8 Spark upgrade
+     *
      * @return void
      */
     protected function mapWebRoutes()
     {
         Route::middleware('web')
              //
-             ->group(base_path('routes/web.php'));
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -134,14 +133,15 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      * namespace commented out in Laravel 8 Spark upgrade
+     *
      * @return void
      */
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
+            ->middleware('api')
              //
-             ->group(base_path('routes/api.php'));
+            ->group(base_path('routes/api.php'));
     }
 
     /**

@@ -8,9 +8,6 @@ use Illuminate\View\View;
 
 class FeatureController extends Controller
 {
-    /**
-     * @return view
-     */
     public function index(): View
     {
         $features = Feature::withoutGlobalScopes()
@@ -29,7 +26,6 @@ class FeatureController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Feature  $feature
      * @return \Illuminate\Http\Response
      */
     public function show(Feature $feature): View

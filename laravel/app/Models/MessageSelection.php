@@ -11,6 +11,7 @@ class MessageSelection extends Model
     use HasFactory;
 
     protected $table = 'message_selections';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -19,10 +20,6 @@ class MessageSelection extends Model
         'name',
     ];
 
-
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

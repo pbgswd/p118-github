@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Executive;
+use App\Models\ExecutiveMembership;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ExecutiveMembership;
 
 class ExecutiveMembershipFactory extends Factory
 {
@@ -31,7 +31,7 @@ class ExecutiveMembershipFactory extends Factory
             'executive_id' => $exec->id,
             'current' => 1,
             'start_date' => Carbon::now()->subMonth(1),
-            'end_date' =>  Carbon::now()->addyears(2),
+            'end_date' => Carbon::now()->addyears(2),
             'user_id' => $user->id,
         ];
     }

@@ -2,11 +2,9 @@
 
 namespace Database\Factories;
 
-
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Policy;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 
 class PolicyFactory extends Factory
 {

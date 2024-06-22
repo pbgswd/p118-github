@@ -28,7 +28,6 @@ class AdminVenueController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function index(): View
@@ -45,7 +44,6 @@ class AdminVenueController extends Controller
     }
 
     /**
-     * @return View
      * @throws AuthorizationException
      */
     public function create(): View
@@ -63,9 +61,6 @@ class AdminVenueController extends Controller
     }
 
     /**
-     * @param StoreVenueRequest $request
-     * @param UserImageService $service
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -75,7 +70,7 @@ class AdminVenueController extends Controller
 
         $venue = new Venue($request->venue);
 
-        if (null !== $request->file('image')) {
+        if ($request->file('image') !== null) {
             $file = $request->file('image')->store('', 'public');
 
             $result = $service->updateImage($request, 'public', true, Options::venue_org_thumb_values());
@@ -104,8 +99,6 @@ class AdminVenueController extends Controller
     }
 
     /**
-     * @param Venue $any_venue
-     * @return View
      * @throws AuthorizationException
      */
     public function edit(Venue $any_venue): View
@@ -150,10 +143,6 @@ class AdminVenueController extends Controller
     }
 
     /**
-     * @param UpdateVenueRequest $request
-     * @param Venue $any_venue
-     * @param UserImageService $service
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -173,7 +162,7 @@ class AdminVenueController extends Controller
             }
         }
 
-        if (null !== $request->file('image')) {
+        if ($request->file('image') !== null) {
             $file = $request->file('image')->store('', 'public');
 
             $result = $service->updateImage($request, 'public', true, Options::venue_org_thumb_values());
@@ -184,7 +173,7 @@ class AdminVenueController extends Controller
 
         $any_venue->save();
 
-        if (null !== $request->id) {
+        if ($request->id !== null) {
             $any_venue->member_agreements()->detach($request->id);
         }
 
@@ -206,8 +195,6 @@ class AdminVenueController extends Controller
     }
 
     /**
-     * @param DestroyVenueRequest $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function destroy(DestroyVenueRequest $request): RedirectResponse

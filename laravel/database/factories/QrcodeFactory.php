@@ -21,7 +21,7 @@ class QrcodeFactory extends Factory
             'qrdata' => $this->faker->url,
             'qrtype' => 'url',
             'name' => $this->faker->sentence(3),
-            'file' => 'stored_file_' . $this->faker->md5 .'.png',
+            'file' => 'stored_file_'.$this->faker->md5.'.png',
         ];
     }
 }

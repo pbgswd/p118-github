@@ -16,7 +16,6 @@ use Illuminate\View\View;
 class CommitteePostCommentController extends Controller
 {
     /**
-     * @param CommitteePost $committeePost
      * @return Factory|View
      */
     public function create(CommitteePost $committeePost): View
@@ -35,7 +34,6 @@ class CommitteePostCommentController extends Controller
     }
 
     /**
-     * @param CommitteePostComment $any_committee_post_comment
      * @return Factory|View
      */
     public function edit(CommitteePostComment $any_committee_post_comment): View
@@ -51,21 +49,15 @@ class CommitteePostCommentController extends Controller
         $data = [
             'committee_post' => $any_committee_post_comment->committee_post,
             'post_comment' => $any_committee_post_comment,
-            'committee' =>  $any_committee_post_comment->committee,
+            'committee' => $any_committee_post_comment->committee,
             'action' => 'Edit',
         ];
 
         return view('admin.committee_post_comment', ['data' => $data]);
     }
 
-    /**
-     * @param StoreCommitteePostCommentRequest $request
-     * @param Committee $committee
-     * @param CommitteePost $committeePost
-     * @return RedirectResponse
-     */
     public function store(StoreCommitteePostCommentRequest $request,
-                          Committee $committee, CommitteePost $committeePost): RedirectResponse
+        Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
         //$this->authorize('create', Auth::user());
 
@@ -85,8 +77,8 @@ class CommitteePostCommentController extends Controller
     }
 
     /**
-     * @param UpdateCommitteePostCommentRequest $request
-     * @param CommitteePostComment $any_committee_post_comment
+     * @param  UpdateCommitteePostCommentRequest  $request
+     * @param  CommitteePostComment  $any_committee_post_comment
      * @return RedirectResponse
      */
     /***
@@ -104,7 +96,7 @@ class CommitteePostCommentController extends Controller
 ***/
 
     /**
-     * @param DestroyCommitteePostCommentRequest $request
+     * @param  DestroyCommitteePostCommentRequest  $request
      * @return RedirectResponse
      */
     /***

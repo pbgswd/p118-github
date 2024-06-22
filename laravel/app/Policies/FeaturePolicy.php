@@ -11,8 +11,8 @@ class FeaturePolicy
     use HandlesAuthorization;
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function viewAny(User $user)
@@ -24,8 +24,6 @@ class FeaturePolicy
     /**
      * Determine whether the user can view the Feature.
      *
-     * @param User $user
-     * @param Feature $Feature
      * @return mixed
      */
     public function view(User $user, Feature $Feature)
@@ -34,8 +32,8 @@ class FeaturePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function create(User $user)
@@ -44,8 +42,8 @@ class FeaturePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function update(User $user)
@@ -54,8 +52,8 @@ class FeaturePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
+     *
      * @throws \Exception
      */
     public function delete(User $user)
@@ -65,7 +63,6 @@ class FeaturePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function restore(User $user)
@@ -74,7 +71,6 @@ class FeaturePolicy
     }
 
     /**
-     * @param User $user
      * @return bool
      */
     public function forceDelete(User $user)

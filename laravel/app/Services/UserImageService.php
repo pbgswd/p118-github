@@ -14,7 +14,7 @@ class UserImageService
         $directory = '/app/'.$dir.'/';
         $image = '';
 
-        if (null !== $request->file('image')) {
+        if ($request->file('image') !== null) {
             $image = $request->file('image')->store('', $dir);
             ImageOptimizer::optimize(storage_path().$directory.$image);
             if ($make_thumb) {
@@ -26,16 +26,11 @@ class UserImageService
         return [
             'image' => $image ?? '',
             'file_name' => $file_name ?? '',
-            'thumb' =>  $result ?? '',
+            'thumb' => $result ?? '',
         ];
     }
 
     /**
-     * @param $request
-     * @param string $dir
-     * @param bool $make_thumb
-     * @param array $thumb_values
-     * @return array
      * @throws InvalidManipulation
      */
     public function updateImage($request, string $dir, bool $make_thumb, array $thumb_values): array
@@ -44,10 +39,7 @@ class UserImageService
         /** @var TYPE_NAME $directory */
         $directory = '/app/'.$dir.'/';
 
-        if (null !== $request->file('image')) {
-            /**
-             * @var $image
-             */
+        if ($request->file('image') !== null) {
             $image = $request->file('image')->store('', $dir);
 
             ImageOptimizer::optimize(storage_path().$directory.$image);
@@ -61,15 +53,11 @@ class UserImageService
         return [
             'image' => $image ?? '',
             'file_name' => $file_name ?? '',
-            'thumb' =>  $result ?? '',
+            'thumb' => $result ?? '',
         ];
     }
 
     /**
-     * @param $image
-     * @param $dir
-     * @param $thumb_values
-     * @return string
      * @throws InvalidManipulation
      */
     public function generate_thumb($image, $dir, $thumb_values): string
@@ -86,12 +74,6 @@ class UserImageService
         return $thumb_values['tn_str'].$image;
     }
 
-    /**
-     * @param string $image
-     * @param string $dir
-     * @param array $thumb_values
-     * @return bool
-     */
     public function destroyImage(string $image, string $dir, array $thumb_values): bool
     {
         Storage::disk($dir)->delete($image);
