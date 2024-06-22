@@ -9,13 +9,6 @@ use Illuminate\Support\Carbon;
 class MemoriamFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Memoriam::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array

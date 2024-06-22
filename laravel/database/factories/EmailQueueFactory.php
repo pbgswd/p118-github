@@ -10,13 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EmailQueueFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    protected $model = EmailQueue::class;
-
     public function definition(): array
     {
 

@@ -9,13 +9,6 @@ use Illuminate\Support\Carbon;
 class PolicyFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Policy::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
