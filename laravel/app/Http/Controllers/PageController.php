@@ -30,7 +30,7 @@ class PageController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function show(Page $page): Response
+    public function show(Page $page): View
     {
         //todo public page policy if not public page?
         //$this->authorize('view', Page::class);
