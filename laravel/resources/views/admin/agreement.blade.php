@@ -235,10 +235,10 @@
                                                             $attachment->description)}}" size="40"/>
                                             </td>
                                             <td>
-                                                {{ \$attachment->created_at?->toDateString() }}
+                                                {{ $attachment->created_at?->toDateString() }}
                                             </td>
                                             <td>
-                                                {{ \$attachment->updated_at?->toDateString() }}
+                                                {{ $attachment->updated_at?->toDateString() }}
                                             </td>
                                         </tr>
                                     @endforeach
