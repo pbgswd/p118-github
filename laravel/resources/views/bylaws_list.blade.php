@@ -16,7 +16,7 @@
             </h3>
         </div>
     </div>
-    <div class="table-responsive  border border-dark rounded mb-4 bg-light">
+    <div class="table-responsive border border-dark rounded mb-4 bg-light">
         <table class="table p-1">
             <thead>
                 <tr>

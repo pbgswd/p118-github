@@ -42,14 +42,14 @@ class AgreementController extends Controller
             $data['agreements'] = Agreement::where([['live', 1], ['access_level', 'public']])
                 ->orderBy('until', 'desc')
                 ->sortable()
-                ->paginate(10);
+                ->paginate(20);
 
             $data['count'] = Agreement::where([['live', 1], ['access_level', 'public']])->count();
         } else {
             $data['agreements'] = Agreement::where('live', 1)
                 ->sortable()
                 ->orderBy('until', 'desc')
-                ->paginate(10);
+                ->paginate(20);
 
             $data['count'] = Agreement::where('live', 1)->count();
         }
