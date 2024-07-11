@@ -5,30 +5,36 @@
         <div class="row">
             <div class="col-12 col-md-6 mt-2">
                 <h4>
-                    <a href="{{route('jobs_list')}}">
-                        <i class="far fa-arrow-alt-circle-left"></i>
-                        Employment postings
-                    </a>
+                    @if($data['year'] == '')
+                        <a href="{{route('jobs_list')}}">
+                            <i class="far fa-arrow-alt-circle-left"></i>
+                            Employment postings
+                        </a>
+                    @else
+                        <a href="{{route('list_jobs_year', $data['year'])}}">
+                            Back to all {{$data['year']}} Employment Postings
+                        </a>
+                    @endif
                 </h4>
             </div>
             @can(['edit articles'])
-                <div class="col-12 col-md-6 text-md-right">
+                <div class="col-12 col-md-6 text-end">
                     <a href="{{route('admin_employment_edit', $data['employment']->id)}}" title="Edit {{$data['employment']->title}}">
-                        <i class="fas fa-edit"></i> Edit
+                        <i class="fas fa-edit"></i> Admin Edit
                     </a>
                 </div>
             @endcan
         </div>
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="col-12 my-5 text-center">
                 <h1>{{$data['employment']->title}}</h1>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 text-center">
                 <h4>
                     Deadline: {{$data['employment']->deadline->format('F j Y')}}
                 </h4>
             </div>
-            <div class="col-12 col-md-6 text-md-right">
+            <div class="col-12 col-md-6 text-center">
                 <h4>Status:
                     @if($data['employment']->status == 1)
                         <i class="fas fa-check"></i> Open
@@ -39,7 +45,7 @@
             </div>
         </div>
         @if($data['employment']->url != '')
-            <div class="row mt-3 mb-lg-2">
+            <div class="row my-3">
                 <div class="col-12">
                     <h4>
                         <a href="{{$data['employment']->url}}" title="External link to {{$data['employment']->title}}" target="_blank">

@@ -20,7 +20,7 @@ class QueryJobYearRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'deadline' => 'integer|required|digits:4',
+            'year' => 'integer|required|digits:4',
         ];
     }
 }

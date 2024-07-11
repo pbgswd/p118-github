@@ -14,6 +14,7 @@ class MeetingController extends Controller
     {
         $pagination = 30;
         session()->forget('year');
+
         $years = DB::table('meetings')
             ->select(DB::raw('DISTINCT YEAR(date) as year'))
             ->orderBy('year', 'desc')
@@ -70,12 +71,14 @@ class MeetingController extends Controller
     public function post_year(QueryMeetingYearRequest $request): RedirectResponse
     {
         session(['year' => $request->year]);
+
         return redirect()->route('list_meetings_year', $request->year);
     }
 
     public function show(Meeting $meeting): View
     {
         $meeting->load('user', 'attachments');
+
         return view('meeting', ['data' => ['meeting' => $meeting,
             'year' => session('year', '')]
         ]);

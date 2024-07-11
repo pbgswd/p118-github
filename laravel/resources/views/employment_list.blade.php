@@ -4,40 +4,58 @@
     <div class="row pt-2 pb-2">
         <div class="col-12 col-md-4"></div>
         <div class="col-12 col-md-4 text-center">
-            <h1>
-                Employment Postings
-            </h1>
+            <h1>Employment Postings</h1>
         </div>
-        <div class="col-12 col-md-4 text-md-right">
-            <h3>
-                <span class="badge badge-primary badge-pill">
-                    {{ $data['count'] }}
-                    {{ Str::plural('Posting', $data['count']) }}
-                </span>
-            </h3>
-        </div>
+        @if($data['year'] == '')
+            <div class="col-12 text-center">
+                <h3>
+                   <span class="badge rounded-pill text-bg-primary">
+                       {{ $data['count'] }} Employment {{ Str::plural('Posting', $data['count']) }}
+                   </span>
+                </h3>
+            </div>
+        @endif
     </div>
     <form method="post" action="{{route('jobs_year')}}">
         @csrf
         <div class="row d-fle justify-content-around border border-dark rounded pb-2 m-2 mb-3 mb-md-3">
-            <div class="col-12 pt-2">
-                <h5>
-                    <label for="validationDefault04">
-                        View Jobs By Year
-                    </label>
-                </h5>
+            <div class="row">
+                <div class="col-12 pt-2">
+                    <h5>
+                        @if($data['year'] == '')
+                            View Employment Postings By Year
+                        @else
+                            {{ $data['count'] }} Employment Postings for {{$data['year']}}
+                        @endif
+                    </h5>
+                </div>
             </div>
-            <div class="col-12 col-md-9 mb-2">
-                <select class="custom-select" name="deadline" id="validationDefault04" required>
-                    <option selected disabled value="">Choose Year</option>
-                    @foreach($data['years'] as $year)
-                        <option value="{{$year->year}}">{{$year->year}}</option>
-                    @endforeach
-                </select>
+
+
+            <div class="row">
+                <div class="col-lg-4 col-md-12 mb-2">
+                    <select class="custom-select" name="year" id="validationDefault04" required>
+                        @if($data['year'] == '')
+                            <option selected disabled value="">Choose Year</option>
+                        @else
+                            <option selected value="{{$data['year']}}">{{$data['year']}}</option>
+                        @endif
+                        @foreach($data['years'] as $year)
+                            <option value="{{$year->year}}">{{$year->year}}</option>
+                        @endforeach
+                    </select>
+                    <button class="btn btn-outline-primary" type="submit">Submit</button>
+                </div>
             </div>
-            <div class="col-12 col-md-3">
-                <button class="btn btn-primary" type="submit">Submit</button>
-            </div>
+            @if($data['year'] != '')
+                <div class="row">
+                    <div class="col-12 text-sm-center text-lg-start">
+                        <a href="{{route('jobs_list')}}">List all Employment Positions</a>
+                    </div>
+                </div>
+            @endif
+
+
         </div>
     </form>
     @if($data['year'])
@@ -51,7 +69,7 @@
         </div>
     @endif
     <div class="row p-2">
-        <div class="table-responsive border border-dark rounded p-1"
+        <div class="table-responsive border border-dark rounded p-1 bg-light"
          style="background: rgba(220,220,220,0.8);">
             <table class="table table-sm ml-auto mr-auto">
                 <thead>

@@ -17,6 +17,7 @@ class EmploymentController extends Controller
 
     public function index(): View
     {
+        session()->forget('year');
 
         $years = DB::table('employment')
             ->select(DB::raw('DISTINCT YEAR(deadline) as year'))
@@ -27,7 +28,7 @@ class EmploymentController extends Controller
             ->where('live', '=', 1)
             ->with('attachments')
             ->orderBy('deadline', 'desc')
-            ->paginate(10);
+            ->paginate(30);
 
         $data = [
             'employment' => $jobs,
@@ -50,7 +51,7 @@ class EmploymentController extends Controller
             ->where('live', '=', 1)
             ->whereBetween('deadline', [$year.'-01-01', $year.'-12-31'])
             ->orderBy('deadline', 'asc')
-            ->paginate(10);
+            ->paginate(1000);
 
         $jobs_count = Employment::where('live', '=', 1)
             ->whereBetween('deadline', [$year.'-01-01', $year.'-12-31'])->get();
@@ -71,7 +72,8 @@ class EmploymentController extends Controller
 
     public function jobs_year(QueryJobYearRequest $request): RedirectResponse
     {
-        return redirect()->route('list_jobs_year', $request->deadline);
+        session(['year' => $request->year]);
+        return redirect()->route('list_jobs_year', $request->year);
     }
 
     /**
@@ -81,6 +83,8 @@ class EmploymentController extends Controller
     {
         $employment->load('user', 'attachments');
 
-        return view('employment', ['data' => ['employment' => $employment]]);
+        return view('employment', ['data' => ['employment' => $employment,
+            'year' => session('year', '')]
+        ]);
     }
 }
