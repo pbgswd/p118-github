@@ -9,7 +9,7 @@
                     </a>
                 </p>
             </div>
-            <div class="col-12 col-md-6 text-md-right">
+            <div class="col-12 col-md-6 text-end">
                 @can(['edit articles'])
                     <a href="{{route('topic_edit', $data['topic']->slug)}}" title="Edit {{$data['topic']->title}}">
                         <i class="fas fa-edit"></i> Edit

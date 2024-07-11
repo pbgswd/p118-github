@@ -2,22 +2,21 @@
 @section('content')
 <div class="container border border-dark rounded mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row p-2">
-        <div class="col-12 col-md-4"></div>
-        <div class="col-12 col-md-4 text-center">
+        <div class="col-12 mt-3 text-center">
             <h2>
                 <i class="fas fa-gavel"></i>
-                Constitution <br />& By-Laws
+                Constitution & By-Laws
             </h2>
         </div>
-        <div class="col-12 col-md-4 text-md-right">
+        <div class="col-12 text-center my-3">
             <h3>
-               <span class="badge badge-primary badge-pill">
+               <span class="badge rounded-pill text-bg-primary">
                    {{ $data['data']['count'] }} Bylaw {{ Str::plural('Document', $data['data']['count']) }}
                </span>
             </h3>
         </div>
     </div>
-    <div class="table-responsive  border border-dark rounded mb-4">
+    <div class="table-responsive  border border-dark rounded mb-4 bg-light">
         <table class="table p-1">
             <thead>
                 <tr>

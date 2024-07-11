@@ -12,14 +12,14 @@
                 </h4>
             </div>
             @can('edit articles')
-                <div class="col-12 pt-3 col-md-6 text-md-right">
+                <div class="col-12 pt-3 col-md-6 text-end">
                     <a href="{{route('admin_bylaw_edit', $data['bylaw']->id)}}" title="Edit {{$data['bylaw']->title}}">
                         <i class="fas fa-edit"></i> Admin Edit
                     </a>
                 </div>
             @endcan
         </div>
-        <div  class="col-12 text-center">
+        <div  class="col-12 text-center my-3">
             <h1>
                 <i class="fas fa-gavel"></i>
                 {{$data['bylaw']->title}}

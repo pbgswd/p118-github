@@ -4,25 +4,29 @@
 
 <div class="container border border-dark rounded mt-3 mb-3 p-2" style="background: rgba(220,220,220,0.8);">
     <div class="jumbotron-fluid text-center">
-        <h1>
-            <i class="fas fa-scroll"></i>
-            Local 118 Policies
-        </h1>
-        <h3>
-               <span class="badge badge-primary badge-pill">
-                   {{ $data['data']['count'] }} Policy Documents
-               </span>
-        </h3>
-        <div class="row mt-3">
-            <div class="col-12 pt-2">
-                <h4 class="font-italic">Please remember, we have pledged to keep confidential the work of this body and
+        <div class="row">
+            <div class="col-12 my-3">
+                <h1>
+                    <i class="fas fa-scroll"></i>
+                    Local 118 Policies
+                </h1>
+                <h3 class="mt-4">
+                       <span class="badge rounded-pill text-bg-primary">
+                           {{ $data['data']['count'] }} Policy Documents
+                       </span>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 my-3 pt-2">
+                <h4 class="fst-italic">Please remember, we have pledged to keep confidential the work of this body and
                     to do all in our power to discourage and prevent violation of this requirement by brother and
                     sister members.
                 </h4>
             </div>
         </div>
     </div>
-    <div class="col-12 border border-dark rounded p-1" style="background: rgba(220,220,220,0.8);">
+    <div class="col-12 border border-dark rounded p-1 bg-light" style="background: rgba(220,220,220,0.8);">
         <div class="table-responsive">
             <table class="table">
                 <thead>

@@ -15,7 +15,7 @@ class PolicyController extends Controller
             ->sortable()
             ->with('attachments')
             ->orderBy('date', 'desc')
-            ->paginate(10);
+            ->paginate(30);
 
         $data['count'] = Policy::count();
 
