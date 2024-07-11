@@ -5,14 +5,19 @@
         <div class="row d-flex justify-content-end">
             <div class="col-12 col-md-6 mt-3">
                 <h4>
-                    <a href="{{route('list_meetings')}}">
-                        <i class="far fa-arrow-alt-circle-left"></i>
-                        Meeting Minutes
-                    </a>
+                    @if($data['year'] == '')
+                        <a href="{{route('list_meetings')}}">
+                            <i class="far fa-arrow-alt-circle-left"></i>
+                            Meeting Minutes
+                        </a>
+                    @else
+                        <a href="{{route('list_meetings_year', $data['year'])}}">
+                            Back to all {{$data['year']}} Meeting Minutes
+                        </a>
+                    @endif
                 </h4>
             </div>
-            <div class="col-12 col-md-6 text-md-right">
-                <p>{{$data['meeting']->date->format('F j Y')}}</p>
+            <div class="col-12 col-md-6 mt-3 text-lg-end">
                 @can('edit articles')
                     <a href="{{route('meeting_edit', $data['meeting']->id)}}" title="Edit {{$data['meeting']->title}}">
                         <i class="fas fa-edit"></i> Admin Edit

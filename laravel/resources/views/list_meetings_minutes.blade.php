@@ -2,56 +2,67 @@
 @section('content')
         <div class="container border border-dark rounded mt-3" style="background: rgba(220,220,220,0.8);">
             <div class="row d-flex justify-content-around mb-2 mb-md-3">
-                <div class="col-12 col-md-4"></div>
-                <div class="col-12 col-md-4 text-center">
+                <div class="col-12 mt-3 text-center">
                     <h1>Meeting Minutes</h1>
                 </div>
-                <div class="col-12 col-md-4 text-md-right">
-                    <h3>
-                       <span class="badge badge-primary badge-pill">
-                           {{ $data['count'] }} Meeting {{ Str::plural('Minute', $data['count']) }}
-                       </span>
-                    </h3>
-                </div>
+                @if($data['year'] == '')
+                    <div class="col-12 text-center">
+                        <h3>
+                           <span class="badge rounded-pill text-bg-primary">
+                               {{ $data['count'] }} Meeting {{ Str::plural('Minute', $data['count']) }}
+                           </span>
+                        </h3>
+                    </div>
+                @endif
             </div>
             <form method="post" action="{{route('post_year')}}">
                 @csrf
-                <div class="row d-fle justify-content-around border border-dark rounded pb-2 m-2 mb-3 mb-md-3">
-                    <div class="col-12 pt-2">
-                        <h5>
-                            <label for="validationDefault04">
-                                View Minutes By Year
-                            </label>
-                        </h5>
+                <div class="row justify-content-around border border-dark rounded pb-2 m-2 mb-3 mb-md-3">
+                    <div class="row">
+                        <div class="col-12 pt-2">
+                            <h5>
+                                @if($data['year'] == '')
+                                   View Minutes By Year
+                                @else
+                                    {{ $data['count'] }} Meeting Minutes for {{$data['year']}}
+                                @endif
+                            </h5>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-9 mb-2">
-                        <select class="custom-select" name="year" id="validationDefault04" required>
-                            <option selected disabled value="">Choose Year</option>
-                            @foreach($data['years'] as $year)
-                                <option value="{{$year->year}}">{{$year->year}}</option>
-                            @endforeach
-                        </select>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 mb-2">
+                            <select class="custom-select" name="year" id="validationDefault04" required>
+                                @if($data['year'] == '')
+                                    <option selected disabled value="">Choose Year</option>
+                                @else
+                                    <option selected value="{{$data['year']}}">{{$data['year']}}</option>
+                                @endif
+                                @foreach($data['years'] as $year)
+                                    <option value="{{$year->year}}">{{$year->year}}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn-outline-primary" type="submit">Submit</button>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-3">
-                        <button class="btn btn-primary" type="submit">Submit</button>
-                    </div>
+                    @if($data['year'] != '')
+                        <div class="row">
+                            <div class="col-12 text-sm-center text-lg-start">
+                                <a href="{{route('list_meetings')}}">List all Meeting Minutes</a>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </form>
 
-                <div class="col-12 mt-3 mb-3 mb-md-3">
-                    <h4>
-                        @if($data['year'] !='')
-                            Meeting Minutes for
-                            <span class="font-weight-bold">
-                                {{$data['year']}}
-                            </span>
-                        @else
-                            Most recent {{$data['pagination']}} meetings
-                        @endif
-                    </h4>
-                </div>
+            <div class="col-12 mt-3">
+                <h4>
+                    @if($data['year'] =='')
+                        Most recent {{$data['pagination']}} meetings
+                    @endif
+                </h4>
+            </div>
 
-            <div class="table-responsive border border-dark rounded mb-2">
+            <div class="table-responsive border border-dark rounded bg-light">
                 <table class="table">
                     <thead>
                         <tr>

@@ -12,8 +12,8 @@ class MeetingController extends Controller
 {
     public function index(): View
     {
-        $pagination = 10;
-
+        $pagination = 30;
+        session()->forget('year');
         $years = DB::table('meetings')
             ->select(DB::raw('DISTINCT YEAR(date) as year'))
             ->orderBy('year', 'desc')
@@ -52,9 +52,10 @@ class MeetingController extends Controller
             ->whereBetween('date', [$year.'-01-01', $year.'-12-31'])
             ->with('user')
             ->orderBy('date', 'desc')
-            ->paginate(10);
+            ->paginate(1000);
 
-        $count = Meeting::withoutGlobalScopes()->whereBetween('date', [$year.'-01-01', $year.'-12-31'])->count();
+        $count = Meeting::withoutGlobalScopes()
+            ->whereBetween('date', [$year.'-01-01', $year.'-12-31'])->count();
 
         $data = [
             'meetings' => $meetings,
@@ -68,13 +69,15 @@ class MeetingController extends Controller
 
     public function post_year(QueryMeetingYearRequest $request): RedirectResponse
     {
+        session(['year' => $request->year]);
         return redirect()->route('list_meetings_year', $request->year);
     }
 
     public function show(Meeting $meeting): View
     {
         $meeting->load('user', 'attachments');
-
-        return view('meeting', ['data' => ['meeting' => $meeting]]);
+        return view('meeting', ['data' => ['meeting' => $meeting,
+            'year' => session('year', '')]
+        ]);
     }
 }
