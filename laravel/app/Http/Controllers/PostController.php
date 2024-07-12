@@ -35,7 +35,7 @@ class PostController extends Controller
                 ->paginate(9);
         }
 
-        return view('posts', ['data' => ['posts' => $posts]]);
+        return view('posts', ['data' => ['posts' => $posts, 'title' => "Posts"]]);
     }
 
     /**
@@ -52,7 +52,7 @@ class PostController extends Controller
         }
 
         $post->load('user', 'topics', 'attachments');
-        $data = ['post' => $post];
+        $data = ['post' => $post, 'title' => $post->title];
 
         return view('post', ['data' => $data]);
     }

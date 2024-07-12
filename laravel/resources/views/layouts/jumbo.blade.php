@@ -12,7 +12,7 @@
         entertainment industry, Vancouver, British Columbia, Canada">
         <meta name="author" content="IATSE Local 118 Web Admin">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name') }}</title>
+        <title>{{ config('app.name') }} {{ $data['title'] ?? ''}}</title>
         <script src="{{asset('/js/bootstrap-datepicker.min.js')}}"></script>
         <script
             src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=7mnn730lyfsp3y0qkbgx80p4156c5bb0ooa9i201b4r5by7k">

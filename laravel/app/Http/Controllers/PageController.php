@@ -24,7 +24,7 @@ class PageController extends Controller
                 ->paginate(9);
         }
 
-        return view('pages', ['data' => ['pages' => $pages]]);
+        return view('pages', ['data' => ['pages' => $pages, 'title' => "Pages"]]);
     }
 
     /**
@@ -43,6 +43,6 @@ class PageController extends Controller
 
         $page->load('topics', 'user', 'attachments');
 
-        return view('page', ['data' => ['page' => $page]]);
+        return view('page', ['data' => ['page' => $page, 'title' => $page->title]]);
     }
 }

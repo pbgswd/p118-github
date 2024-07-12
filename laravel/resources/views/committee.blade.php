@@ -3,11 +3,12 @@
     <div class="container border border-dark rounded mt-3 p-4" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-12 col-md-6">
-                <h6>
+                <h4>
                     <a href="{{route('committees')}}">
+                        <i class="far fa-arrow-alt-circle-left"></i>
                         Committees
                     </a>
-                </h6>
+                </h4>
             </div>
             @can(['manage committee'])
                 <div class="col-12 col-md-6 text-end">

@@ -17,7 +17,7 @@ class CommitteeController extends Controller
             ->sortable()
             ->paginate(10);
 
-        return view('committees', ['data' => ['committees' => $c]]);
+        return view('committees', ['data' => ['committees' => $c, 'title' => 'Committees']]);
     }
 
     public function show(Committee $committee): View
@@ -56,6 +56,7 @@ class CommitteeController extends Controller
                && $user_committee->pivot->role != 'Past-Member';
             })->isNotEmpty();
 
+            $data['title'] = $committee->name;
         return view('committee', ['data' => $data]);
     }
 }
