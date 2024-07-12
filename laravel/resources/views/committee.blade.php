@@ -38,7 +38,7 @@
         </div>
         <div class="row my-3 border border-dark rounded p-2 pb-4 text-center d-flex justify-content-center">
             <div class="row">
-                <div class="col-12 d-flex justify-content-center">
+                <div class="col-12 mt-2 d-flex justify-content-center">
                     <h4>{{$data['committee']->name}} Executive</h4>
                 </div>
                 <div class="col-12 d-flex justify-content-center">
@@ -67,24 +67,28 @@
                 </div>
             </div>
             <div class="row">
-                <h4 class="mt-3 text-center">Current Members</h4>
-                <ul class="list-group list-group-horizontal-lg">
-                    @forelse($data['committee']->active_committee_members as $mbr)
-                        <li class="list-group-item">
-                            @if($mbr->user_info->show_profile == 1)
-                                <a title="{{$mbr->name}}" href="{{route('member', $mbr->id)}}">
+                <div class="col-12 d-flex justify-content-center">
+                    <h4 class="mt-3 text-center">Current Members</h4>
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <ul class="list-group list-group-horizontal-lg">
+                        @forelse($data['committee']->active_committee_members as $mbr)
+                            <li class="list-group-item">
+                                @if($mbr->user_info->show_profile == 1)
+                                    <a title="{{$mbr->name}}" href="{{route('member', $mbr->id)}}">
+                                        {{$mbr->name}}, {{$mbr->pivot->role}}
+                                    </a>
+                                @else
                                     {{$mbr->name}}, {{$mbr->pivot->role}}
-                                </a>
-                            @else
-                                {{$mbr->name}}, {{$mbr->pivot->role}}
-                            @endif
-                        </li>
-                    @empty
-                        <li class="list-group-item">
-                            No members defined
-                        </li>
-                    @endforelse
-                </ul>
+                                @endif
+                            </li>
+                        @empty
+                            <li class="list-group-item">
+                                No members defined
+                            </li>
+                        @endforelse
+                    </ul>
+                </div>
             </div>
         </div>
 
