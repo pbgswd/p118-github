@@ -3,14 +3,16 @@
     <div class="container mt-3 mb-3 pt-2 border border-dark rounded mx-1 mx-auto" style="background: rgba(220,220,220,0.8);">
         <div class="row mb-2">
             <div class="col-12 col-md-6">
-                <p>
-                    <i>
+                <h4>
+                    <i> <i class="far fa-arrow-alt-circle-left"></i>
                         @foreach($data['page']->topics as $pt)
+
                             <a href="{{route('topic_show', $pt->slug)}}"
-                               title="{{$pt->name}}">{{$pt->name}}{{$loop->last ? '' : ','}}</a>
+                               title="{{$pt->name}}">
+                                {{$pt->name}}{{$loop->last ? '' : ','}}</a>
                         @endforeach
                     </i>
-                </p>
+                </h4>
             </div>
             @can(['edit articles'])
                 <div class="col-12 col-md-6 text-end">

@@ -3,7 +3,8 @@
     <div class="container border border-dark rounded pt-lg-2 mb-3 mt-3" style="background: rgba(220,220,220,0.8);">
         <div class="row mb-2">
             <div class="col-12 col-md-6">
-                <p>
+                <h4>
+                    <i class="far fa-arrow-alt-circle-left"></i>
                     <i>
                         @foreach ($data['post']->topics as $topic)
                             <a href="{{ route('topic_show', $topic->slug)}}">
@@ -11,7 +12,7 @@
                             </a>
                         @endforeach
                     </i>
-                </p>
+                </h4>
             </div>
             <div class="col-12 col-md-6 text-end">
                 @can(['edit articles'])

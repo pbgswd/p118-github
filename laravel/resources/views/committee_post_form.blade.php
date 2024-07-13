@@ -4,11 +4,12 @@
 <div class="container border border-dark rounded mt-3 mb-3" style="background: rgba(220,220,220,0.8);">
     <div class="row mt-3 mb-3">
         <div class="col-12">
-            <h6>
+            <h4>
                 <a href="{{ route('committee', $data['post']['committee']->slug) }}">
+                    <i class="far fa-arrow-alt-circle-left"></i>
                     {{$data['post']['committee']->name}}
                 </a>
-            </h6>
+            </h4>
         </div>
         <div class="col-12">
             <h3>
@@ -73,7 +74,7 @@
                         </div>
                     </div>
 
-                <div class="row mt-5 mb-5">
+                <div class="row mt-5 mb-3">
 
                     @if( $data['action'] == 'Edit' && count($data['post']->attachments) > 0)
                         <div class="col-12">
@@ -145,35 +146,31 @@
                         </div>
                     @endif
                 </div>
-
-
-
-
                 <div class="row d-flex justify-content-between">
-                    <div class="col-md-6 col-sm-12 mb-lg-3">
+                    <div class="col-12 col-md-6">
                         <i class="fas fa-edit fa-2x"></i>
                         <input class="btn btn-primary" type="submit" value="{{ $data['action'] }}" />
                     </div>
             </form>
-                @if ($data['action'] == 'Edit')
-                    <div class="col-md-6 col-sm-12 mb-lg-3 text-md-left">
-                         @can('manage committee')
-                             <form name="delete" method="POST" action="{{route('public_committee_post_destroy',
+                    @if ($data['action'] == 'Edit')
+                        @can('manage committee')
+                            <div class="col-12 col-md-6 text-sm-left text-md-end mt-sm-6 pr-4 mb-lg-3">
+                                <form name="delete" method="POST" action="{{route('public_committee_post_destroy',
                                 [$data['post']['committee']->slug, $data['post']->slug])}}">
-                                 {!! csrf_field() !!}
-                                 {!! method_field('DELETE') !!}
-                                <i class="far fa-trash-alt fa-2x"></i>
-                                <input type="hidden" name="id[]" value="{{ $data['post']->id }}">
-                                <input class="btn btn-outline-danger" type="submit" value="Delete">
-                            </form>
-                         @endcan
-                     </div>
-                @endif
-            </div>
+                                     {!! csrf_field() !!}
+                                     {!! method_field('DELETE') !!}
+                                    <i class="far fa-trash-alt fa-2x"></i>
+                                    <input type="hidden" name="id[]" value="{{ $data['post']->id }}">
+                                    <input class="btn btn-outline-danger" type="submit" value="Delete">
+                                </form>
+                            </div>
+                        @endcan
+                    @endif
+                </div>
         </div>
     </div>
     @if ( $data['action'] == 'Edit')
-        <div class="row mt-3 mb-3">
+        <div class="row m-3">
             Post added by {{$data['post']->creator->name}}
         </div>
     @endif
