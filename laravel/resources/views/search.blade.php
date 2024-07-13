@@ -42,7 +42,7 @@
                         <h4>
                             No results! <br />
                             Sorry that didn't get you what you were looking for. <br />
-                            You can always modify your search term and try another search.
+                            You can always modify your search term and try again.
                         </h4>
                     </div>
                 </div>
