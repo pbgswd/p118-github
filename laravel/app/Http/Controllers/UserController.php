@@ -64,7 +64,9 @@ class UserController extends Controller
         //todo exclude suspended, verify
         $count = Membership::where('membership_type', 'Member')->count();
 
-        return view('listusers', ['data' => ['users' => $users, 'count' => $count]]);
+        return view('listusers', ['data' => ['users' => $users,
+            'count' => $count,
+            'title' => "Members List"]]);
     }
 
     /**
@@ -145,6 +147,7 @@ class UserController extends Controller
             'filesize' => $filesize ?? '',
             'provinces' => $regions['statesprovs']['Provinces'],
             'action' => 'Edit',
+            'title' => $user->name
         ];
 
         // dd([$selections['topics'], $data['selections']['topics']]);

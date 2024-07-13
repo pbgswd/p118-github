@@ -3,11 +3,12 @@
     <div class="container border border-dark rounded mt-3 mb-3 pt-2" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-12 col-md-6">
-                <p>
+                <h4>
                     <a href="{{route('topics')}}" title="All Topics">
-                        Topics/
+                        <i class="far fa-arrow-alt-circle-left"></i>
+                        Topics
                     </a>
-                </p>
+                </h4>
             </div>
             <div class="col-12 col-md-6 text-end">
                 @can(['edit articles'])
@@ -28,7 +29,7 @@
             @if ($data['topic']->pages->count() > 0)
                 <div class="row">
                     @forelse($data['topic']->pages as $page)
-                        <div class="col-12 col-md-4 p-1">
+                        <div class="col-12 col-md-4 p-1  h-100">
                             <div class="col border border-dark rounded h-100 w-100 p-2 text-center d-flex
                             align-items-center justify-content-center">
                                 <h4>
@@ -45,9 +46,9 @@
             @endif
 
             @if ($data['topic']->posts->count() > 0)
-                <div class="row mt-3">
+                <div class="row mt-3  h-100">
                     @forelse($data['topic']->posts as $post)
-                        <div class="col-12 col-md-4 p-1">
+                        <div class="col-12 col-md-4 p-1  h-100">
                             <div class="col border border-dark rounded h-100 w-100 pt-1 text-center d-flex
                             align-items-center justify-content-center">
                                 <h5>
@@ -87,7 +88,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 p-2">
-                    <div class="col border border-dark rounded p-2">
+                    <div class="col border border-dark rounded p-2  h-100">
                         <div class="col">
                             <h5>Posts in {{$data['topic']->name}}</h5>
                         </div>

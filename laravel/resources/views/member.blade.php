@@ -2,7 +2,7 @@
 @section('content')
     <div class="container border border-dark rounded pt-2 pb-3 my-3">
         <div class="row p-2">
-            <div class="col-12 col-md-6 w-100">
+            <div class="col-12 col-md-6">
                 <h3>
                     <a href="{{route('members')}}">
                         <i class="far fa-arrow-alt-circle-left"></i> Members /
@@ -14,7 +14,7 @@
                 </h3>
             </div>
             @can(['edit users'])
-                <div class="col-12 col-md-6 text-md-right">
+                <div class="col-12 col-md-6 text-end">
                     <a href="{{route('user_edit', $data['user']->id)}}"
                        title="Edit {{$data['user']->name}}">
                         <i class="fas fa-edit"></i> Admin Edit
