@@ -2,12 +2,12 @@
 @section('content')
 <div class="jumbotron">
     <div class="container border border-dark rounded pb-2" style="background: rgba(220,220,220,0.8);">
-        <div class="row mb-3">
+        <div class="row mb-3 pt-2">
             <div class="col-12 col-md-6">
-                <a href="{{route('venues')}}">Venues</a>
+                <h4><a href="{{route('venues')}}"><i class="far fa-arrow-alt-circle-left"></i> Venues</a></h4>
             </div>
             @can('edit articles')
-                <div class="col-12 col-md-6 text-md-right">
+                <div class="col-12 col-md-6 text-end">
                     <a href="{{route('venue_edit', $data['venue']->slug)}}"
                        title="Edit {{$data['venue']->name}}">
                         <i class="fas fa-edit"></i> Admin Edit

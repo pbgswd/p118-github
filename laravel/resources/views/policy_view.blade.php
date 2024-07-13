@@ -11,7 +11,7 @@
             </h4>
         </div>
         @can('edit articles')
-            <div class="col-12 col-md-6 text-md-right pr-4">
+            <div class="col-12 col-md-6 text-end pr-4">
                 <a href="{{route('admin_policy_edit', $data['policy']->id)}}"
                    title="Edit {{$data['policy']->title}}">
                     <i class="fas fa-edit"></i> Admin Edit

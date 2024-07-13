@@ -13,10 +13,10 @@
                     </i>
                 </p>
             </div>
-            <div class="col-12 col-md-6 text-md-right">
+            <div class="col-12 col-md-6 text-end">
                 @can(['edit articles'])
                     <a href="{{route('post_edit', $data['post']->slug)}}" title="Edit {{$data['post']->title}}">
-                        <i class="fas fa-edit"></i> Edit
+                        <i class="fas fa-edit"></i> Admin Edit
                     </a>
                 @endcan
             </div>

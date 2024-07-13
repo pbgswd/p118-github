@@ -25,6 +25,7 @@ class ContactController extends Controller
             $data = ['contactPage' => Page::withoutGlobalScopes()
                 ->where('slug', 'contact-us')->get(), ];
         }
+        $data['title'] = 'Contact '. env('APP_NAME');
 
         return view('contact', ['data' => $data]);
     }

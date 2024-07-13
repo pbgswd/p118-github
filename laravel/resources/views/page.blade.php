@@ -2,7 +2,7 @@
 @section('content')
     <div class="container mt-3 mb-3 pt-2 border border-dark rounded mx-1 mx-auto" style="background: rgba(220,220,220,0.8);">
         <div class="row mb-2">
-            <div class="col-12 col-md-6 w-100 flex">
+            <div class="col-12 col-md-6">
                 <p>
                     <i>
                         @foreach($data['page']->topics as $pt)
@@ -13,9 +13,9 @@
                 </p>
             </div>
             @can(['edit articles'])
-                <div class="col-12 col-md-6 text-md-right">
+                <div class="col-12 col-md-6 text-end">
                     <a href="{{route('page_edit', $data['page']->slug)}}" title="Edit {{$data['page']->title}}">
-                        <i class="fas fa-edit"></i> Edit
+                        <i class="fas fa-edit"></i> Admin Edit
                     </a>
                 </div>
             @endcan

@@ -15,7 +15,7 @@
                </a>
             </div>
             @can('manage committee')
-                <div class="col-12 col-md-4 text-right">
+                <div class="col-12 col-md-4 text-end">
                     <a href="{{route('admin_committee_post_edit',
                         [$data['committeepost']->committee->slug, $data['committeepost']->slug])}}"
                        title="Edit {{$data['committeepost']->title}}">
