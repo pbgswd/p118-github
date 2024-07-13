@@ -1,4 +1,4 @@
-@extends('layouts.jumbo')
+@extends('layouts.jumbo', ['data' => ['title' => "Reset Your Password"]])
 @section('content')
 <div class="container">
     <div class="row mt-5 mb-5 pb-5 justify-content-center">

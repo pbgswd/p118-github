@@ -2,8 +2,13 @@
 @section('content')
     <div class="container mb-3  pt-2 pb-2 mt-3 rounded" style="background: rgba(220,220,220,0.8);">
         <div class="row mt-3 m-2 border border-dark rounded">
-            <div class="col-12 p-2 text-center">
-                <h2>Contact IATSE Local 118</h2>
+            <div class="col-12 p-2 px-4">
+                <h1 class="text-center py-4">Contact IATSE Local 118</h1>
+                <h4 class="">Whether you need skilled stagehands for your production or have
+                    questions about our services, we’re here to help. Reach out to us for professional,
+                    and reliable stagehand labor. We look forward to supporting your event with our experienced team.
+                    The office and Business Agent will respond to you promptly.
+                </h4>
             </div>
         </div>
         <div style="display: inline">
@@ -42,12 +47,12 @@
                                     document.getElementById("contact-form").submit();
                                 }
                             </script>
-                            <button class="btn btn-outline-primary g-recaptcha"
+                            <button class="btn btn-outline-primary g-recaptcha pb-2"
                                     data-sitekey="6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"
                                     data-callback='onSubmit'
                                     data-action='submit'>Submit</button>
                         </div>
-                        <div class="col-sm-12 col-md-6 text-center">
+                        <div class="col-sm-12 col-md-6 text-center pt-sm-2 pt-md-0">
                             <button
                                 type="reset"
                                 class="btn btn-outline-info btn-reset"

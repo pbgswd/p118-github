@@ -18,6 +18,7 @@ class FeatureController extends Controller
         $data = [
             'features' => $features,
             'thumbs' => Options::feature_thumb_values(),
+            'title' => "Feature News",
         ];
 
         return view('features', ['data' => $data]);
@@ -43,6 +44,7 @@ class FeatureController extends Controller
         $data = [
             'feature' => $feature,
             'action' => 'Edit',
+            'title' => $feature->title,
         ];
 
         return view('feature', ['data' => $data]);

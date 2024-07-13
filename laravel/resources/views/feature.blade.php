@@ -3,11 +3,16 @@
     <div class="container mt-3 mb-3 pt-2 border border-dark rounded" style="background: rgba(220,220,220,0.8);">
         <div class="row mb-2">
             <div class="col-6 text-left">
-                <a href="{{route('features')}}"
-                   title="Features">Features
-                </a>
+                <h4>
+                    <a href="{{route('features')}}"
+                       title="Features">
+                        <i class="far fa-arrow-alt-circle-left"></i>
+                        Features
+                    </a>
+                </h4>
+
             </div>
-            <div class="col-6 text-right">
+            <div class="col-6 text-end">
                 @can(['edit articles'])
                     <a href="{{route('admin_feature_edit', $data['feature']->slug)}}"
                        title="Edit {{$data['feature']->title}}">

@@ -25,6 +25,7 @@ class FaqController extends Controller
 
         $data['faqs'] = $faqs;
         $data['count'] = $count;
+        $data['title'] = 'Frequently Asked Questions';
 
         return view('faqs', ['data' => $data]);
     }
@@ -39,6 +40,7 @@ class FaqController extends Controller
 
         $faq->load(['faqs_data', 'user']);
         $data = ['faq' => $faq];
+        $data['title'] = "FAQ for " .  $faq->faq_topic;
 
         return view('faq', ['data' => $data]);
     }

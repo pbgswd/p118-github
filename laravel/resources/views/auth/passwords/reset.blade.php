@@ -1,4 +1,4 @@
-@extends('layouts.jumbo')
+@extends('layouts.jumbo', ['data' => ['title' => "Reset Your Password"]])
 
 @section('content')
 <div class="container">

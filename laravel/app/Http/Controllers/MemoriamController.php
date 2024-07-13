@@ -21,6 +21,7 @@ class MemoriamController extends Controller
             'memoriam' => $memoriam,
             'folder' => $mem->getAttachmentFolder(),
             'tn_prefix' => Options::memoriam_thumb_values()['tn_str'],
+            'title' => "In Memoriam",
         ];
 
         return view('memoriams', ['data' => $data]);
@@ -34,6 +35,7 @@ class MemoriamController extends Controller
             'memoriam' => $memoriam,
             'folder' => $folder,
             'tn_prefix' => Options::memoriam_thumb_values()['tn_str'],
+            'title' => " - " . $memoriam->title . ", In Memoriam",
         ];
 
         return view('memoriam', ['data' => $data]);

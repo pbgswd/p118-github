@@ -68,6 +68,8 @@ class LocalSearchController extends Controller
          * https://medium.com/justlaravel/search-functionality-in-laravel-a2527282150b
          */
 
+        $data['title'] = "Search Results for " . $request->search;
+
         return view('search', ['data' => $data]);
     }
 

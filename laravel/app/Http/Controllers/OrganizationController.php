@@ -17,6 +17,7 @@ class OrganizationController extends Controller
             ->paginate(9);
 
         $data['tn_prefix'] = Options::venue_org_thumb_values()['tn_str'];
+        $data['title'] = 'Organizations';
 
         return view('organizations', ['data' => $data]);
     }
@@ -39,6 +40,7 @@ class OrganizationController extends Controller
             'organization' => $organization,
             'agreements' => Auth::check() ? $organization->member_agreements()->paginate(5) :
                 $organization->agreements()->paginate(5),
+            'title' => $organization->name,
         ];
 
         return view('organization', ['data' => $data]);

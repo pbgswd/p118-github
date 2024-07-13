@@ -29,13 +29,15 @@ class ByLawController extends Controller
             $data['count'] = Bylaw::where('access_level', 'public')->count();
         }
 
-        return view('bylaws_list', ['data' => ['data' => $data]]);
+        return view('bylaws_list', ['data' => ['data' => $data,
+            'title' => 'Constitution and Bylaws']]);
     }
 
     public function show(Bylaw $bylaw): View
     {
         $bylaw->load('user', 'attachments');
 
-        return view('bylaw_view', ['data' => ['bylaw' => $bylaw]]);
+        return view('bylaw_view', ['data' => ['bylaw' => $bylaw,
+            'title' =>  $bylaw->title .' -  Constitution and Bylaws']]);
     }
 }

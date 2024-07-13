@@ -25,6 +25,8 @@ class VenueController extends Controller
 
         $data['tn_prefix'] = Options::venue_org_thumb_values()['tn_str'];
 
+        $data['title'] = "Venues";
+
         return view('venues', ['data' => $data]);
     }
 
@@ -50,6 +52,7 @@ class VenueController extends Controller
             'venue' => $venue,
             'agreements' => Auth::check() ? $venue->member_agreements()->paginate(5) :
                 $venue->agreements()->paginate(5),
+            'title' => "$venue->name",
         ];
 
         return view('venue', ['data' => $data]);

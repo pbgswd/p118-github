@@ -1,4 +1,4 @@
-@extends('layouts.jumbo')
+@extends('layouts.jumbo', ['data' =>['title' => "Members Login"]])
 @section('content')
 <div class="container">
     <div class="row mt-3 justify-content-center mb-5">

@@ -1,31 +1,32 @@
 @extends('layouts.jumbo')
 @section('content')
-
-    <div class="row mt-3">
-        <div class="col-12 col-md-6 pl-4">
-            <h4>
-                <a href="{{route('policies_list_public')}}">
-                    <i class="far fa-arrow-alt-circle-left"></i>
-                    Policies
-                </a>
-            </h4>
-        </div>
-        @can('edit articles')
-            <div class="col-12 col-md-6 text-end pr-4">
-                <a href="{{route('admin_policy_edit', $data['policy']->id)}}"
-                   title="Edit {{$data['policy']->title}}">
-                    <i class="fas fa-edit"></i> Admin Edit
-                </a>
+<div class="jumbotron">
+    <div class="container border border-dark rounded pb-2" style="background: rgba(220,220,220,0.8);">
+        <div class="row mt-3">
+            <div class="col-12 col-md-6 pl-4">
+                <h4>
+                    <a href="{{route('policies_list_public')}}">
+                        <i class="far fa-arrow-alt-circle-left"></i>
+                        Policies
+                    </a>
+                </h4>
             </div>
-        @endcan
-    </div>
-    <div class="jumbotron text-center">
+            @can('edit articles')
+                <div class="col-12 col-md-6 text-end pr-4">
+                    <a href="{{route('admin_policy_edit', $data['policy']->id)}}"
+                       title="Edit {{$data['policy']->title}}">
+                        <i class="fas fa-edit"></i> Admin Edit
+                    </a>
+                </div>
+            @endcan
+        </div>
+    <div class="col-12 text-center">
         <h1>
             <i class="fas fa-scroll"></i>
             {{$data['policy']->title}}
         </h1>
     </div>
-    <div class="container border border-dark rounded" style="background: rgba(220,220,220,0.8);">
+
         <div class="col-12 col-md-4 text-md-right pt-3">
             <h4>
                 From: {{$data['policy']->date->format('F j Y')}}
@@ -58,5 +59,6 @@
             </div>
         @endif
     </div>
-</div>
+    </div>
+
 @endsection

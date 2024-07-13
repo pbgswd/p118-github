@@ -24,6 +24,7 @@ class ExecutiveController extends Controller
             'executive' => $executive,
             'committees' => $committees,
             'trustees' => $trustees,
+            'title' => "Executive, Administrators, and Trustees"
         ];
 
         return view('executive_list', ['data' => $data]);

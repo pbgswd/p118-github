@@ -19,13 +19,15 @@ class PolicyController extends Controller
 
         $data['count'] = Policy::count();
 
-        return view('policies_list', ['data' => ['data' => $data]]);
+        return view('policies_list', ['data' => ['data' => $data,
+            'title' => "Policies"]]);
     }
 
     public function show(Policy $policy): View
     {
         $policy->load('user', 'attachments');
 
-        return view('policy_view', ['data' => ['policy' => $policy]]);
+        return view('policy_view', ['data' => ['policy' => $policy,
+            'title' => $policy->title]]);
     }
 }

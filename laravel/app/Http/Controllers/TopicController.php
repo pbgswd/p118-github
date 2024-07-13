@@ -24,7 +24,7 @@ class TopicController extends Controller
                 ->paginate(9);
         }
 
-        return view('topics', ['data' => ['topics' => $topics]]);
+        return view('topics', ['data' => ['topics' => $topics, 'title' => "Topics"]]);
     }
 
     public function show(Topic $topic): View
@@ -48,6 +48,7 @@ class TopicController extends Controller
         $data = [
             'topic' => $topic,
             'layout' => $layout,
+            'title' => $topic->name . " Topic",
         ];
 
         return view('topic', ['data' => $data]);
