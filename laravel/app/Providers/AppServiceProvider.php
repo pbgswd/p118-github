@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         require app_path('Http/view_helpers.php');
 
-        \Illuminate\Pagination\Paginator::useBootstrap();
+        Paginator::useBootstrapFive();
 
         View::composer('layouts.carousel', \App\Composers\CarouselComposer::class);
         View::composer('content_feature', \App\Composers\ContentFeature::class);
