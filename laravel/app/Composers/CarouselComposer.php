@@ -13,7 +13,7 @@ class CarouselComposer
         $carousel = Carousel::where('live', 1)
             ->limit(6)
             ->get();
-        $data = ['carousel' => $carousel];
+        $data = ['carousel' => $carousel->shuffle()];
         $data['count'] = count($carousel);
 
         $view->with('data', $data);

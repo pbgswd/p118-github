@@ -28,7 +28,7 @@ class AdminCarouselController extends Controller
     }
 
     /**
-     * @return View
+     * @return Viewcar
      */
     public function index(): View
     {
