@@ -161,7 +161,7 @@
                         <i class="far fa-image"></i>
                         {{$imgData['size']}} file, must be under {{$imgData['filesize']}} kb
                         @if($data['action'] = 'Edit')
-                            - Actual size: {{$data['filesize']['file_'.$imgData['width']]}} kb
+                            - Actual size: {{$data['filesize']['file_'.$imgData['width']] ?? ''}} kb
                         @endif
                     </h4>
                 </div>
@@ -188,10 +188,11 @@
                              justify-content-{{$data['carousel']['align']}}" />
                     </div>
 
-                    <h5 class="mt-2">
+                    <h5 class="mt-2 text-center">
                         <i class="far fa-image"></i>
                         {{$data['carousel']['image_'.$imgData['width']]}}
                     </h5>
+
                     <p class="d-sm-block d-md-none">
                         <i>(Size is for full size image)</i>
                     </p>
@@ -213,17 +214,21 @@
             @endif
         </div>
         @endforeach
-    <div class="row">
-        <div class="col-4">
-            <h4>
-                Check to make live. @if(old('carousel.live', $data['carousel']->live ?? '1'))Uncheck to hide. @endif
-            </h4>
-            @if($data['carousel']->live == '1') checked @endif
-                <input type="checkbox" class="form-control" name="carousel[live]"
-                       value="1"
-                       @if(count($data['image_data']) > $data['count']) disabled @endif
-                        @if($data['carousel']->live == '1') checked @endif
-                />
+        <div class="row mb-3 p-1 pt-3 border border-1 border-primary rounded">
+            <div class="col-12">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="carousel[live]" value="1"
+                           @if(count($data['image_data']) > $data['count']) disabled @endif
+                           @if($data['carousel']->live == '1') checked @endif
+                    />
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Check to make live. @if(old('carousel.live', $data['carousel']->live ?? '1')) @endif
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-12">
                 <p class="help-block">
                     @if(count($data['image_data']) > $data['count'])
                         <i>The Live checkbox will be disabled until the
@@ -239,6 +244,7 @@
                 </p>
             </div>
         </div>
+
         <div class="row">
             <div class="col">
                 <i class="fas fa-edit fa-2x"></i>
