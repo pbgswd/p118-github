@@ -1,3 +1,4 @@
+/*!999999\- enable the sandbox mode */ 
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -149,6 +150,18 @@ CREATE TABLE `attachment_meeting` (
   CONSTRAINT `attachments_meeting_meeting_id_foreign` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `attachment_message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `attachment_message` (
+  `attachment_id` bigint(20) unsigned NOT NULL,
+  `message_id` bigint(20) unsigned NOT NULL,
+  KEY `attachment_message_attachment_id_index` (`attachment_id`),
+  KEY `attachment_message_message_id_index` (`message_id`),
+  CONSTRAINT `attachment_message_attachment_id_foreign` FOREIGN KEY (`attachment_id`) REFERENCES `attachments` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `attachment_message_message_id_foreign` FOREIGN KEY (`message_id`) REFERENCES `messages` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `attachment_organization`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -269,21 +282,19 @@ CREATE TABLE `carousels` (
   `user_id` bigint(20) unsigned NOT NULL,
   `caption` varchar(255) NOT NULL,
   `caption2` varchar(255) DEFAULT NULL,
-  `link` varchar(255) DEFAULT NULL,
-  `color` varchar(255) DEFAULT NULL,
-  `button` varchar(255) DEFAULT NULL,
   `align` varchar(255) DEFAULT NULL,
-  `credit` varchar(255) DEFAULT NULL,
+  `text_color` varchar(255) DEFAULT NULL,
+  `text_outline_color` varchar(255) DEFAULT NULL,
   `live` tinyint(1) NOT NULL DEFAULT 1,
   `order` varchar(255) DEFAULT NULL,
-  `image_2000` varchar(255) NOT NULL,
-  `file_2000` varchar(255) NOT NULL,
-  `image_1400` varchar(255) NOT NULL,
-  `file_1400` varchar(255) NOT NULL,
-  `image_800` varchar(255) NOT NULL,
-  `file_800` varchar(255) NOT NULL,
-  `image_600` varchar(255) NOT NULL,
-  `file_600` varchar(255) NOT NULL,
+  `image_2000` varchar(255) DEFAULT NULL,
+  `file_2000` varchar(255) DEFAULT NULL,
+  `image_1400` varchar(255) DEFAULT NULL,
+  `file_1400` varchar(255) DEFAULT NULL,
+  `image_800` varchar(255) DEFAULT NULL,
+  `file_800` varchar(255) DEFAULT NULL,
+  `image_600` varchar(255) DEFAULT NULL,
+  `file_600` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -373,6 +384,21 @@ CREATE TABLE `committees` (
   UNIQUE KEY `committees_slug_unique` (`slug`),
   KEY `committees_user_id_foreign` (`user_id`),
   CONSTRAINT `committees_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `email_queue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `email_queue` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `sender` varchar(255) NOT NULL,
+  `recipient` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `attachments` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `employment`;
@@ -602,6 +628,74 @@ CREATE TABLE `memoriams` (
   CONSTRAINT `memoriams_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `message_frequency_preferences`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message_frequency_preferences` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `preference` varchar(255) NOT NULL DEFAULT 'now',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `message_metadata`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message_metadata` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `message_id` int(11) NOT NULL,
+  `source_id` int(11) DEFAULT NULL,
+  `source_slug` varchar(255) DEFAULT NULL,
+  `source_type` varchar(255) DEFAULT NULL,
+  `source_type_name` varchar(255) DEFAULT NULL,
+  `source_url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `message_selections`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message_selections` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `message_sending`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message_sending` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `message_id` int(11) NOT NULL,
+  `send_priority` varchar(255) NOT NULL DEFAULT 'normal',
+  `send_status_now` varchar(255) DEFAULT 'no',
+  `send_status_daily` varchar(255) DEFAULT 'no',
+  `send_status_weekly` varchar(255) DEFAULT 'no',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `messages` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `subject` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `content` text NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `messages_subject_unique` (`subject`),
+  UNIQUE KEY `messages_slug_unique` (`slug`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -697,10 +791,10 @@ CREATE TABLE `pages` (
   CONSTRAINT `pages_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `password_resets`;
+DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `password_resets` (
+CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -817,7 +911,8 @@ DROP TABLE IF EXISTS `qrcodes`;
 CREATE TABLE `qrcodes` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL DEFAULT 1,
-  `url` varchar(255) DEFAULT NULL,
+  `qrtype` varchar(255) NOT NULL,
+  `qrdata` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `file` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1034,105 +1129,116 @@ CREATE TABLE `venues` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1);
-INSERT INTO `migrations` VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
-INSERT INTO `migrations` VALUES (3,'2019_03_18_143208_create_topics_table',2);
-INSERT INTO `migrations` VALUES (5,'2019_03_25_083736_update_topics_table',3);
-INSERT INTO `migrations` VALUES (6,'2019_03_26_014200_create_sessions_table',4);
-INSERT INTO `migrations` VALUES (7,'2018_08_08_100000_create_telescope_entries_table',5);
-INSERT INTO `migrations` VALUES (8,'2019_04_01_025748_update_topics_columns',6);
-INSERT INTO `migrations` VALUES (9,'2019_04_01_065401_update_topic_column_scope',6);
-INSERT INTO `migrations` VALUES (10,'2019_04_10_234053_create_permission_tables',7);
-INSERT INTO `migrations` VALUES (11,'2014_01_07_073615_create_tagged_table',8);
-INSERT INTO `migrations` VALUES (12,'2014_01_07_073615_create_tags_table',8);
-INSERT INTO `migrations` VALUES (13,'2016_06_29_073615_create_tag_groups_table',8);
-INSERT INTO `migrations` VALUES (14,'2016_06_29_073615_update_tags_table',8);
-INSERT INTO `migrations` VALUES (15,'2019_04_16_014351_create_pages_table',9);
-INSERT INTO `migrations` VALUES (16,'2019_05_22_090736_users_phone',10);
-INSERT INTO `migrations` VALUES (17,'2019_05_22_085522_user_info',11);
-INSERT INTO `migrations` VALUES (18,'2019_05_22_090722_users_address',12);
-INSERT INTO `migrations` VALUES (19,'2019_05_22_092813_users_membership',12);
-INSERT INTO `migrations` VALUES (20,'2019_06_03_021943_add_user_to_pages',13);
-INSERT INTO `migrations` VALUES (21,'2019_06_03_072153_add_user_to_topics',14);
-INSERT INTO `migrations` VALUES (22,'2019_06_04_205659_alter_users_info',15);
-INSERT INTO `migrations` VALUES (23,'2019_06_04_211232_alter_memberships',16);
-INSERT INTO `migrations` VALUES (24,'2019_06_06_204333_create_attachments_table',17);
-INSERT INTO `migrations` VALUES (25,'2019_08_19_000000_create_failed_jobs_table',17);
-INSERT INTO `migrations` VALUES (26,'2019_09_10_075444_create_venues_table',17);
-INSERT INTO `migrations` VALUES (27,'2019_10_24_062043_create_page_topic_pivot_table',18);
-INSERT INTO `migrations` VALUES (38,'2019_10_25_021307_create_posts_table',19);
-INSERT INTO `migrations` VALUES (39,'2019_10_25_021338_create_posts_topic_pivot_table',19);
-INSERT INTO `migrations` VALUES (40,'2019_10_25_065951_create_page_posts_pivot_table',19);
-INSERT INTO `migrations` VALUES (42,'2019_11_06_011237_update_attachments_table',20);
-INSERT INTO `migrations` VALUES (44,'2019_11_13_052622_update_venues_table',21);
-INSERT INTO `migrations` VALUES (46,'2019_11_13_090953_update_users_info_table',22);
-INSERT INTO `migrations` VALUES (47,'2019_11_16_075308_add_preference_columns_to_users_info_table',23);
-INSERT INTO `migrations` VALUES (53,'2019_11_18_002749_create_committees_table',24);
-INSERT INTO `migrations` VALUES (54,'2019_11_21_024726_create_users_committees_pivot_table',24);
-INSERT INTO `migrations` VALUES (55,'2019_11_26_004818_update_users_committees_pivot_table',25);
-INSERT INTO `migrations` VALUES (56,'2019_11_26_004840_update_committees_table',25);
-INSERT INTO `migrations` VALUES (57,'2019_11_26_025351_delete_page_post',26);
-INSERT INTO `migrations` VALUES (58,'2019_11_29_225554_update_commttee_user',27);
-INSERT INTO `migrations` VALUES (62,'2019_12_03_224246_remove_image_columns',28);
-INSERT INTO `migrations` VALUES (63,'2019_12_04_002933_create_committee_posts_table',29);
-INSERT INTO `migrations` VALUES (64,'2019_12_04_003434_create_committe_posts_comments_table',29);
-INSERT INTO `migrations` VALUES (65,'2019_12_13_005615_create_table_organizations',30);
-INSERT INTO `migrations` VALUES (72,'2020_01_08_045020_create_meetings_table',31);
-INSERT INTO `migrations` VALUES (73,'2020_01_08_051731_create_meeting_attachments_table',31);
-INSERT INTO `migrations` VALUES (74,'2020_01_21_071359_create_attachment_meeting_table',32);
-INSERT INTO `migrations` VALUES (75,'2020_01_21_083237_add_file_column_to_attachments_table',33);
-INSERT INTO `migrations` VALUES (76,'2020_01_28_033918_add_description_subfolder_to_attachments_table',34);
-INSERT INTO `migrations` VALUES (77,'2020_01_29_030750_drop_meeting_attachments_table',35);
-INSERT INTO `migrations` VALUES (78,'2020_01_29_032225_create_employment_table',36);
-INSERT INTO `migrations` VALUES (79,'2020_01_29_221711_create_attachment_employment_table',36);
-INSERT INTO `migrations` VALUES (84,'2020_02_29_021436_create_invite_users_table',37);
-INSERT INTO `migrations` VALUES (86,'2020_02_21_001608_create_agreements_table',38);
-INSERT INTO `migrations` VALUES (87,'2020_03_10_004803_create_attachment_agreement_table',39);
-INSERT INTO `migrations` VALUES (88,'2020_03_10_013428_create_bylaws_table',40);
-INSERT INTO `migrations` VALUES (89,'2020_03_10_013444_create_attachment_bylaw_table',40);
-INSERT INTO `migrations` VALUES (90,'2020_03_20_021806_create_attachment_page_table',41);
-INSERT INTO `migrations` VALUES (91,'2020_03_20_043146_create_attachment_post_table',42);
-INSERT INTO `migrations` VALUES (92,'2020_03_20_065717_create_attachment_topic_table',43);
-INSERT INTO `migrations` VALUES (93,'2020_03_26_120000_create_access_level_constants_table',44);
-INSERT INTO `migrations` VALUES (94,'2020_04_04_012725_add_access_level_to_attachments_table',45);
-INSERT INTO `migrations` VALUES (95,'2020_04_09_225311_update_url_col_in_organizations_table',46);
-INSERT INTO `migrations` VALUES (96,'2020_04_10_195025_create_agreement_venue_table',47);
-INSERT INTO `migrations` VALUES (97,'2020_04_10_195602_create_agreement_organization_table',47);
-INSERT INTO `migrations` VALUES (98,'2020_04_14_034144_add_message_to_invite_users_table',48);
-INSERT INTO `migrations` VALUES (99,'2020_05_06_210415_remove_allowcomments_committees_table',49);
-INSERT INTO `migrations` VALUES (102,'2020_05_11_200637_create_policies_table',50);
-INSERT INTO `migrations` VALUES (103,'2020_05_11_200936_create_attachment_policies_table',50);
-INSERT INTO `migrations` VALUES (105,'2020_05_15_043305_create_executives_table',51);
-INSERT INTO `migrations` VALUES (106,'2020_06_04_205657_create_executives_users_table',51);
-INSERT INTO `migrations` VALUES (107,'2020_06_04_210341_insert_into_executives_table',51);
-INSERT INTO `migrations` VALUES (108,'2020_06_18_203215_update_agreements_in_attachments_table',52);
-INSERT INTO `migrations` VALUES (109,'2020_10_31_013506_alter_membership_table',53);
-INSERT INTO `migrations` VALUES (110,'2020_11_10_223245_alter_invite_users_table',53);
-INSERT INTO `migrations` VALUES (111,'2021_01_19_045842_add_uuid_to_failed_jobs_table',54);
-INSERT INTO `migrations` VALUES (112,'2021_01_23_004656_alter_phone_table_allow_phone_null',55);
-INSERT INTO `migrations` VALUES (113,'2021_02_01_212429_alter_posts_table_stickies',56);
-INSERT INTO `migrations` VALUES (114,'2021_02_02_072114_alter_pages_table_stickies',57);
-INSERT INTO `migrations` VALUES (115,'2021_02_02_082606_alter_topics_table_stickies',58);
-INSERT INTO `migrations` VALUES (116,'2021_02_04_003801_create_attachment_committee_table',59);
-INSERT INTO `migrations` VALUES (117,'2021_02_04_021348_alter_committees_table_add_banner',59);
-INSERT INTO `migrations` VALUES (118,'2021_02_08_065013_alter_employment_table_timestamp',60);
-INSERT INTO `migrations` VALUES (119,'2021_02_08_081241_alter_meetings_table_timestamp',60);
-INSERT INTO `migrations` VALUES (120,'2021_02_10_223621_create_features_table',61);
-INSERT INTO `migrations` VALUES (121,'2021_02_15_001350_attachment_committee_post',62);
-INSERT INTO `migrations` VALUES (122,'2021_02_15_073634_insert_trustee_into_executives_table',63);
-INSERT INTO `migrations` VALUES (123,'2021_02_19_002656_alter_table_venues',64);
-INSERT INTO `migrations` VALUES (124,'2021_02_19_074210_alter_table_organizations',65);
-INSERT INTO `migrations` VALUES (125,'2021_02_19_233611_create_memoriams_table',66);
-INSERT INTO `migrations` VALUES (126,'2021_02_25_051947_alter_tables_add_live_feature_front',67);
-INSERT INTO `migrations` VALUES (127,'2021_02_25_084457_alter_table_features_add_access_level',67);
-INSERT INTO `migrations` VALUES (128,'2021_02_26_074012_create_attachment_organization_table',68);
-INSERT INTO `migrations` VALUES (129,'2021_02_26_080519_create_attachment_venue_table',69);
-INSERT INTO `migrations` VALUES (130,'2021_03_02_051330_create_proofreader_table',70);
-INSERT INTO `migrations` VALUES (131,'2021_03_16_190639_create_jobs_table',71);
-INSERT INTO `migrations` VALUES (132,'2021_05_02_114106_create_import_users_table',72);
-INSERT INTO `migrations` VALUES (133,'2020_03_13_083515_add_description_to_tags_table',73);
-INSERT INTO `migrations` VALUES (134,'2022_04_20_223834_add_banned_until_to_users_table',73);
-INSERT INTO `migrations` VALUES (135,'2023_05_16_183812_create_qrcodes_table',74);
-INSERT INTO `migrations` VALUES (136,'2023_06_06_180258_create_carousel_table',74);
-INSERT INTO `migrations` VALUES (137,'2023_06_13_001833_create_faqs_table',74);
-INSERT INTO `migrations` VALUES (138,'2023_06_13_001940_create_faqs_data_table',74);
+/*!999999\- enable the sandbox mode */ 
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2014_10_12_000000_create_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (3,'2019_03_18_143208_create_topics_table',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'2019_03_25_083736_update_topics_table',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2019_03_26_014200_create_sessions_table',4);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'2018_08_08_100000_create_telescope_entries_table',5);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2019_04_01_025748_update_topics_columns',6);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2019_04_01_065401_update_topic_column_scope',6);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (10,'2019_04_10_234053_create_permission_tables',7);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (11,'2014_01_07_073615_create_tagged_table',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (12,'2014_01_07_073615_create_tags_table',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (13,'2016_06_29_073615_create_tag_groups_table',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (14,'2016_06_29_073615_update_tags_table',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (15,'2019_04_16_014351_create_pages_table',9);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (16,'2019_05_22_090736_users_phone',10);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (17,'2019_05_22_085522_user_info',11);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (18,'2019_05_22_090722_users_address',12);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (19,'2019_05_22_092813_users_membership',12);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (20,'2019_06_03_021943_add_user_to_pages',13);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (21,'2019_06_03_072153_add_user_to_topics',14);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (22,'2019_06_04_205659_alter_users_info',15);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (23,'2019_06_04_211232_alter_memberships',16);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (24,'2019_06_06_204333_create_attachments_table',17);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (25,'2019_08_19_000000_create_failed_jobs_table',17);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (26,'2019_09_10_075444_create_venues_table',17);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (27,'2019_10_24_062043_create_page_topic_pivot_table',18);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (38,'2019_10_25_021307_create_posts_table',19);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (39,'2019_10_25_021338_create_posts_topic_pivot_table',19);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (40,'2019_10_25_065951_create_page_posts_pivot_table',19);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (42,'2019_11_06_011237_update_attachments_table',20);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (44,'2019_11_13_052622_update_venues_table',21);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (46,'2019_11_13_090953_update_users_info_table',22);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (47,'2019_11_16_075308_add_preference_columns_to_users_info_table',23);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (53,'2019_11_18_002749_create_committees_table',24);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (54,'2019_11_21_024726_create_users_committees_pivot_table',24);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (55,'2019_11_26_004818_update_users_committees_pivot_table',25);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (56,'2019_11_26_004840_update_committees_table',25);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (57,'2019_11_26_025351_delete_page_post',26);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (58,'2019_11_29_225554_update_commttee_user',27);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (62,'2019_12_03_224246_remove_image_columns',28);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (63,'2019_12_04_002933_create_committee_posts_table',29);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (64,'2019_12_04_003434_create_committe_posts_comments_table',29);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (65,'2019_12_13_005615_create_table_organizations',30);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (72,'2020_01_08_045020_create_meetings_table',31);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (73,'2020_01_08_051731_create_meeting_attachments_table',31);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (74,'2020_01_21_071359_create_attachment_meeting_table',32);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (75,'2020_01_21_083237_add_file_column_to_attachments_table',33);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (76,'2020_01_28_033918_add_description_subfolder_to_attachments_table',34);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (77,'2020_01_29_030750_drop_meeting_attachments_table',35);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (78,'2020_01_29_032225_create_employment_table',36);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (79,'2020_01_29_221711_create_attachment_employment_table',36);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (84,'2020_02_29_021436_create_invite_users_table',37);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (86,'2020_02_21_001608_create_agreements_table',38);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (87,'2020_03_10_004803_create_attachment_agreement_table',39);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (88,'2020_03_10_013428_create_bylaws_table',40);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (89,'2020_03_10_013444_create_attachment_bylaw_table',40);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (90,'2020_03_20_021806_create_attachment_page_table',41);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (91,'2020_03_20_043146_create_attachment_post_table',42);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (92,'2020_03_20_065717_create_attachment_topic_table',43);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (93,'2020_03_26_120000_create_access_level_constants_table',44);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (94,'2020_04_04_012725_add_access_level_to_attachments_table',45);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (95,'2020_04_09_225311_update_url_col_in_organizations_table',46);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (96,'2020_04_10_195025_create_agreement_venue_table',47);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (97,'2020_04_10_195602_create_agreement_organization_table',47);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (98,'2020_04_14_034144_add_message_to_invite_users_table',48);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (99,'2020_05_06_210415_remove_allowcomments_committees_table',49);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (102,'2020_05_11_200637_create_policies_table',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (103,'2020_05_11_200936_create_attachment_policies_table',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (105,'2020_05_15_043305_create_executives_table',51);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (106,'2020_06_04_205657_create_executives_users_table',51);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (107,'2020_06_04_210341_insert_into_executives_table',51);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (108,'2020_06_18_203215_update_agreements_in_attachments_table',52);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (109,'2020_10_31_013506_alter_membership_table',53);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (110,'2020_11_10_223245_alter_invite_users_table',53);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (111,'2021_01_19_045842_add_uuid_to_failed_jobs_table',54);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (112,'2021_01_23_004656_alter_phone_table_allow_phone_null',55);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (113,'2021_02_01_212429_alter_posts_table_stickies',56);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (114,'2021_02_02_072114_alter_pages_table_stickies',57);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (115,'2021_02_02_082606_alter_topics_table_stickies',58);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (116,'2021_02_04_003801_create_attachment_committee_table',59);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (117,'2021_02_04_021348_alter_committees_table_add_banner',59);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (118,'2021_02_08_065013_alter_employment_table_timestamp',60);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (119,'2021_02_08_081241_alter_meetings_table_timestamp',60);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (120,'2021_02_10_223621_create_features_table',61);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (121,'2021_02_15_001350_attachment_committee_post',62);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (122,'2021_02_15_073634_insert_trustee_into_executives_table',63);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (123,'2021_02_19_002656_alter_table_venues',64);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (124,'2021_02_19_074210_alter_table_organizations',65);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (125,'2021_02_19_233611_create_memoriams_table',66);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (126,'2021_02_25_051947_alter_tables_add_live_feature_front',67);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (127,'2021_02_25_084457_alter_table_features_add_access_level',67);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (128,'2021_02_26_074012_create_attachment_organization_table',68);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (129,'2021_02_26_080519_create_attachment_venue_table',69);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (130,'2021_03_02_051330_create_proofreader_table',70);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (131,'2021_03_16_190639_create_jobs_table',71);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (132,'2021_05_02_114106_create_import_users_table',72);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (133,'2020_03_13_083515_add_description_to_tags_table',73);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (134,'2022_04_20_223834_add_banned_until_to_users_table',73);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (135,'2023_05_16_183812_create_qrcodes_table',74);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (136,'2023_06_06_180258_create_carousel_table',74);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (137,'2023_06_13_001833_create_faqs_table',74);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (138,'2023_06_13_001940_create_faqs_data_table',74);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (139,'2023_12_12_164241_update_qrcodes_table',75);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (142,'2023_12_19_145802_alter_table_carousels',76);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (143,'2024_02_15_174645_create_messages_table',77);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (144,'2024_02_20_155923_attachment_message',77);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (145,'2024_02_21_114141_create_message_frequency_preferences',77);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (146,'2024_02_21_115818_create_message_selections',77);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (147,'2024_03_19_152055_create_email_queue',77);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (148,'2024_03_25_213156_create_message_sending_table',77);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (149,'2024_03_25_215341_create_message_metadata_table',77);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (150,'2024_06_22_000000_rename_password_resets_table',77);
