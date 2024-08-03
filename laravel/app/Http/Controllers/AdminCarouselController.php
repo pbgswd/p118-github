@@ -113,8 +113,12 @@ class AdminCarouselController extends Controller
         $data['count'] = 0;
 
         foreach ($width as $w) {
-            if (Storage::disk('carousel')->exists($data['carousel']['file_'.$w])) {
-                $filesize['file_'.$w] = round(Storage::disk('carousel')->size($data['carousel']['file_'.$w]) / 1024, 2);
+            if (!empty($data['carousel']['file_'.$w]) &&
+                Storage::disk('carousel')
+                    ->exists($data['carousel']['file_' . $w])) {
+                $filesize['file_' . $w] =
+                    round(Storage::disk('carousel')
+                            ->size($data['carousel']['file_' . $w]) / 1024, 2);
                 $data['count']++;
             }
         }
