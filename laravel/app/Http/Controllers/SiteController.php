@@ -13,7 +13,8 @@ class SiteController extends Controller
 {
     public function index(): View
     {
-        $user = Auth::user()->load('phone_number', 'user_info');
+//        $user = Auth::user()->load('phone_number', 'user_info');
+	        $user = Auth::user();
 
         //dd(1);
         //dd(public_path());
