@@ -77,7 +77,7 @@ class UserController extends Controller
      */
     public function show(User $user, UserImageService $service): View
     {
-        $this->authorize('view', $user);
+//        $this->authorize('view', $user);
 
         $user->load('committee_memberships', 'phone_number',
             'user_info', 'membership',
@@ -213,7 +213,7 @@ class UserController extends Controller
      */
     public function update(UpdateMember $userRequest, UserImageService $service, User $user): RedirectResponse
     {
-        $this->authorize('update', $user);
+      //  $this->authorize('update', $user);
 
         $user->load('phone_number');
 
@@ -320,7 +320,7 @@ class UserController extends Controller
         }
 
         Session::flash('success', 'Your profile has been edited. The office
-            will be updated with any changes.');
+            will be updated with any change to your phone number or email address.');
 
         return redirect()->route('member', $user->id);
     }
