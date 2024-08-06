@@ -15,6 +15,7 @@
         "guzzlehttp/guzzle": "^7.3",
         "kyslik/column-sortable": "^6.5",
         "laravel/framework": "^10.48",
+        "laravel/pail": "^1.1",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
         "league/flysystem": "^3.0",
