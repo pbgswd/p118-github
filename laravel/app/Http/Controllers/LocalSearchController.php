@@ -33,6 +33,10 @@ class LocalSearchController extends Controller
 {
     use Sortable;
 
+    /**
+     * @param LocalSearchResult $request
+     * @return View
+     */
     public function index(LocalSearchResult $request): View
     {
         $data = [
@@ -160,6 +164,10 @@ class LocalSearchController extends Controller
         return view('admin.search_admin', ['data' => $data]);
     }
 
+    /**
+     * @param LocalSearchResult $request
+     * @return View
+     */
     public function admin_attachment_search(LocalSearchResult $request): View
     {
         $data = [

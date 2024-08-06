@@ -39,16 +39,15 @@ class PostController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Post $post
+     * @return View
      */
-    public function show(Post $post)
+    public function show(Post $post): View
     {
-        // $this->authorize('view', Post::class);
-
-        if (Auth::check() === false && $post->access_level != AccessLevelConstants::PUBLIC) {
+        if (Auth::check() === false
+            && $post->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this post.');
-
-            return redirect('login');
+            return view('auth.login');
         }
 
         $post->load('user', 'topics', 'attachments');

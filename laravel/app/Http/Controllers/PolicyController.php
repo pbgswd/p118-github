@@ -9,7 +9,6 @@ class PolicyController extends Controller
 {
     public function index(): View
     {
-        //$this->authorize('viewAny', Auth::user());
         $data = [];
         $data['policies'] = Policy::where('live', 1)
             ->sortable()

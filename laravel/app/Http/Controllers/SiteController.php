@@ -11,16 +11,11 @@ use Illuminate\View\View;
 
 class SiteController extends Controller
 {
+    /**
+     * @return View
+     */
     public function index(): View
     {
-//        $user = Auth::user()->load('phone_number', 'user_info');
-	        $user = Auth::user();
-
-        //dd(1);
-        //dd(public_path());
-        //dd(config('app'));
-        //      dd(config('app.url'));
-
         /**
         SitemapGenerator::create("https://iatse118.com")
             ->getSitemap()
@@ -39,6 +34,6 @@ class SiteController extends Controller
             ->writeToFile(public_path().'/sitemap.xml');
          **/
 
-        return view('site', ['data' => ['user' => $user]]);
+        return view('site', ['data' => ['user' => Auth::user()]]);
     }
 }

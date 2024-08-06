@@ -10,6 +10,9 @@ use Illuminate\View\View;
 
 class TopicController extends Controller
 {
+    /**
+     * @return View
+     */
     public function list(): View
     {
         // public
@@ -20,16 +23,20 @@ class TopicController extends Controller
                 ->paginate(20);
         } else {
             $topics = Topic::sortable()
-                ->where([['access_level', '=', AccessLevelConstants::PUBLIC], ['live', 1]])
+                ->where([['access_level', '=', AccessLevelConstants::PUBLIC],
+                    ['live', 1]
+                ])
                 ->paginate(9);
         }
 
-        return view('topics', ['data' => ['topics' => $topics, 'title' => "Topics"]]);
+        return view('topics', ['data'
+            => ['topics' => $topics, 'title' => "Topics"]]);
     }
 
     public function show(Topic $topic): View
     {
-        if (Auth::check() === false && $topic->access_level != AccessLevelConstants::PUBLIC) {
+        if (Auth::check() === false
+            && $topic->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this topic.');
 
             return view('auth.login');
