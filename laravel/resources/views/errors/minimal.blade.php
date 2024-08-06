@@ -40,13 +40,13 @@
             }
 
             .code {
-                font-size: 26px;
+                font-size: 48px;
                 padding: 0 15px 0 15px;
                 text-align: center;
             }
 
             .message {
-                font-size: 18px;
+                font-size: 24px;
                 text-align: center;
             }
         </style>
