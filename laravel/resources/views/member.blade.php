@@ -62,7 +62,13 @@
             <div class="row mt-5 align-top">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                        @include('member_profile')
+                        @if(is_null($data['user']->user_info['show_profile']))
+                            <h4>It looks like there is nothing here yet. Go  to the Edit Profile tab to add something
+                                about yourself and review the settings.
+                            </h4>
+                        @else
+                            @include('member_profile')
+                        @endif
                     </div>
                     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                         @include('member_edit')

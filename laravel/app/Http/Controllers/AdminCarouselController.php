@@ -105,12 +105,12 @@ class AdminCarouselController extends Controller
         $data['tn_prefix'] = 'tn_';
         $filesize = [];
         $data['action'] = 'Edit';
-
+        $data['count'] = 0;
         $width = [];
+
         foreach ($data['image_data'] as $w) {
             $width[] = $w['width'];
         }
-        $data['count'] = 0;
 
         foreach ($width as $w) {
             if (!empty($data['carousel']['file_'.$w]) &&
