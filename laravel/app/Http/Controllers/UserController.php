@@ -213,7 +213,7 @@ class UserController extends Controller
      */
     public function update(UpdateMember $userRequest, UserImageService $service, User $user): RedirectResponse
     {
-      //  $this->authorize('update', $user);
+//        $this->authorize('update', $user);
 
         $user->load('phone_number');
 
