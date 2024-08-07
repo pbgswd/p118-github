@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('employment:update-status')->daily();
         $schedule->command('message:now')->everyMinute();
         $schedule->command('message:daily')->dailyAt('12:00');
-        $schedule->command('message:weekly')->weeklyOn('friday', '17:00');
+        $schedule->command('message:weekly')->weeklyOn(5, '17:00'); // 5 = friday
 
         // $schedule->command( Log::info('test'.time() . " " . date('l jS \of F Y h:i:s A')))->everyMinute();
     }
