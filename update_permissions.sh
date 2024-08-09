@@ -17,6 +17,8 @@ sudo chown -R www-data:www-data bootstrap/cache
 sudo chmod -R 775 bootstrap/cache
 
 sudo chown -R www-data:www-data storage
-sudo find storage -type f -exec chmod 644 {} \;
-sudo find storage -type d -exec chmod 755 {} \;
+sudo chmod -R 775 storage
+
+#sudo find storage -type f -exec chmod 644 {} \;
+#sudo find storage -type d -exec chmod 755 {} \;
 
