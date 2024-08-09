@@ -84,7 +84,6 @@
                 <li><a class="dropdown-item" href="{{route('organizations')}}" title="Organizations">
                         <i class="fas fa-user-tie"></i>
                         Organizations</a></li>
-                <li><a class="dropdown-item" href="{{route('page_show', 'history')}}" title="History">History</a></li>
                 <li><a class="dropdown-item" href="{{route('venues')}}" title="Venues">
                         <i class="far fa-building"></i>
                         Venues</a></li>
