@@ -9,12 +9,24 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
+    /**
+     * @param $user
+     * @param $ability
+     * @return bool
+     */
     public function before($user, $ability): bool
     {
-        $test = $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('create users');
-        if ($test) {
+        $test = $user->hasRole(['super-admin', 'office'])
+            || $user->hasPermissionTo('create users');
+
+        return $test == true ? true : false;
+
+     /* if ($test) {
             return true;
         }
+        else {
+            return false;
+        }*/
     }
 
     /**
@@ -31,14 +43,16 @@ class UserPolicy
      */
     public function view(User $loggedInUser, User $targetUser): bool
     {
-        $test = ($loggedInUser->id === $targetUser->id) || $loggedInUser->can('edit users') ||
+        $test = ($loggedInUser->id === $targetUser->id)
+            || $loggedInUser->can('edit users') ||
             ($targetUser->user_info->show_profile ?? 0) == 1;
 
         if ($test) {
             return true;
         }
 
-        $test = ($loggedInUser->id != $targetUser->id) && ($loggedInUser->can('edit users') === false) &&
+        $test = ($loggedInUser->id != $targetUser->id)
+            && ($loggedInUser->can('edit users') === false) &&
             ($targetUser->user_info->show_profile ?? 0) == 0;
 
         if ($test) {
@@ -46,12 +60,21 @@ class UserPolicy
         }
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
     }
 
+    /**
+     * @param User $loggedInUser
+     * @param User $targetUser
+     * @return bool
+     */
     public function update(User $loggedInUser, User $targetUser): bool
     {
         return $loggedInUser->id === $targetUser->id;
@@ -62,7 +85,8 @@ class UserPolicy
      */
     public function admin_update(User $user): bool
     {
-        return $user->hasRole(['super-admin', 'office']) || $user->hasPermissionTo('edit users');
+        return $user->hasRole(['super-admin', 'office'])
+            || $user->hasPermissionTo('edit users');
     }
 
     /**
