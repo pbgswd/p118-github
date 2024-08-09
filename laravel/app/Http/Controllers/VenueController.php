@@ -11,6 +11,8 @@ use Spatie\Image\Exceptions\InvalidManipulation;
 
 class VenueController extends Controller
 {
+    private UserImageService $userImageService;
+
     public function __construct(UserImageService $userImageService)
     {
         $this->userImageService = $userImageService;
