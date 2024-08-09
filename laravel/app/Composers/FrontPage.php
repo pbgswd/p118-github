@@ -13,15 +13,11 @@ class FrontPage
 {
     public function compose(View $view): void
     {
-        //
-
         $posts = Post::where([['live', 1],
             ['front_page', 1],
             ['access_level', AccessLevelConstants::PUBLIC], ])
             ->orderBy('updated_at', 'desc')
             ->get();
-
-        // ['front_page', 1],
 
         $pages = Page::where([['live', 1],
             ['front_page', 1],
@@ -38,12 +34,13 @@ class FrontPage
             ->orderBy('date', 'desc')
             ->get();
 
-        $features->tn_str = Options::feature_thumb_values()['tn_str'];
-
-        $data['news'] = [
-            'posts' => $posts,
-            'pages' => $pages,
-            'features' => $features,
+        $data = [
+            'news' => [
+                'posts' => $posts,
+                'pages' => $pages,
+                'features' => $features,
+            ],
+            'options' => Options::feature_thumb_values(),
         ];
 
         $view->with('data', $data);

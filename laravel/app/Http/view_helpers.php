@@ -1,7 +1,5 @@
 <?php
 
-//view_helpers.php
-
 if (! function_exists('store_datum')) {
     function store_datum($key, $value)
     {
@@ -65,7 +63,6 @@ if (! function_exists('select_options')) {
                     }
                 }
             } elseif ($attributes !== true) {
-                //todo: todoRTL: pull 'placeholder' text from $attributes string
                 $result .= $attributes;
             }
             $result .= $required.">\n";
@@ -90,21 +87,23 @@ if (! function_exists('select_options')) {
      * @param  string  $optAttributes
      * @return string
      */
-    function _select_opt_output($value, $label, $selected, $optAttributes = '')
+    function _select_opt_output( $label, $value, $selected,  $optAttributes = '')
     {
+//dd($value);
         if (is_array($label)) {
             $html = _select_optgroup_output($value, $label, $selected);
         } else {
-            $html = '<option label="'.htmlspecialchars($label)
+
+            $html = '<option label="'.htmlspecialchars($label ?? '')
                 .'" value="'
-                .htmlspecialchars($value)
+                .htmlspecialchars($value ?? '')
                 .'" '
                 .$optAttributes;
 
             if (in_array($value, $selected)) {
                 $html .= ' selected="selected"';
             }
-            $html .= '>'.htmlspecialchars($label)."</option>\n";
+            $html .= '>'.htmlspecialchars($label ?? '')."</option>\n";
         }
 
         return $html;

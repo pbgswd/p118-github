@@ -33,18 +33,15 @@ class ContentFeature
             ->orderBy('updated_at', 'desc')
             ->with('topics')
             ->get();
-        $features = Feature::where([['live', 1], ['landing_page', 1], ['date', '<', NOW()]])
+        $features = Feature::where([['live', 1],
+                ['landing_page', 1],
+                ['date', '<', NOW()]]
+            )
             ->orderBy('date', 'desc')
             ->get();
 
-        $features->tn_str = Options::feature_thumb_values()['tn_str'];
-
         $user = Auth::user();
         $user->load('user_info');
-
-        if ($user->user_info->image) {
-            $user->user_info->thumb = Options::member_thumb_values()['tn_str'].$user->user_info->image ?? '';
-        }
 
         $data = [
             'topics' => $topics,
@@ -52,6 +49,7 @@ class ContentFeature
             'pages' => $pages,
             'features' => $features,
             'user' => $user,
+            'options' => Options::member_thumb_values(),
         ];
 
         $view->with('data', $data);

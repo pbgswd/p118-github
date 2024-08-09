@@ -5,8 +5,8 @@
                 Hi {{$data['user']->name}}
             </h3>
             <a href="{{route('member', $data['user']->id)}}" title="My Profile">
-                @if($data['user']->user_info->thumb != '')
-                    <img src="{{asset('storage/users/'. $data['user']->user_info->thumb)}}"
+                @if($data['user']->user_info->image != '')
+                    <img src="{{asset('storage/users/' . $data['options']['tn_str'] . $data['user']->user_info->image)}}"
                          class="img-fluid mb-2 rounded-circle"/>
                     <br />
                 @endif
@@ -90,7 +90,7 @@
                         <picture>
                             <source srcset="{{asset('storage/public/'. $f->image)}}"
                                     media="(min-width: 577px)">
-                            <img srcset="{{asset('storage/public/'.$data['features']->tn_str.$f->image)}}"
+                            <img srcset="{{asset('storage/public/'.$data['options']['tn_str'] . $f->image)}}"
                                  alt="{{$f->file_name}}"
                                  class="rounded img-fluid d-block">
                         </picture>
