@@ -17,22 +17,24 @@
                   enctype="multipart/form-data"
                   class="needs-validation" novalidate>
                 {!! csrf_field() !!}
-                <div class="col-12 p-3">
+                <div class="col-12 p-3 mb-6">
                     <div class="form-group">
                         <h4>
-                            <label for="role">
+                            <label for="role" class="mb-2">
                                 {{$data['action'] == 'Edit' ? 'Edit': 'Add'}}
                                 role for {{$data['user']->name}} in {{$data['committee']->name}}
                             </label>
-                            <div class="form-group">
-                                {{ select_options($data['committee_roles'],
-                                    old('role', $data['user']->committee_memberships[0]->pivot->role ?? ''),
-                                    ['name' => 'role',
-                                    'class' => 'form-control',
-                                    'placeholder' => 'Role'], $selected = ''
-                                    )
-                                }}
-                            </div>
+                        </h4>
+                                  <select class="form-select" name="role" aria-label="Default select example">
+                                    @foreach($data['committee_roles']['committee_roles'] as $k => $v)
+                                        @if($data['user']->committee_memberships[0]->pivot->role == $v)
+                                            <option value="{{$v}}" selected>{{$k}}</option>
+                                        @else
+                                            <option value="{{$v}}">{{$k}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+
                             <br />
                             @if($data['action'] == 'Edit')
                                 <i class="far fa-edit"></i>
@@ -42,32 +44,35 @@
                             <button type="submit" class="btn btn-secondary">
                                 {{$data['action']}}
                             </button>
-                        </h4>
+
                     </div>
                 </div>
             </form>
-            <div class="col-2 p-3"></div>
+        </div>
+
             @if($data['action'] == 'Edit')
-                <div class="col-2 p-3">
-                    <form method="post" name="manage_committee_members"
-                          action="{{ route('admin_delete-committee_member',
-                                    [$data['committee']->slug, $data['user']->id]) }}"
-                          enctype="multipart/form-data"
-                          class="needs-validation" novalidate>
-                        {!! csrf_field() !!}
-                        {!! method_field('DELETE') !!}
-                        <div class="form-group">
-                            <h4 class="mb-3">
-                                Delete  {{$data['user']->name}} from {{$data['committee']->name}}
-                            </h4>
-                            <input type="hidden" name="user_id" value="{{$data['user']->id}}" />
-                            <i class="far fa-trash-alt fa-2x"></i>
-                            <input class="btn btn-outline-danger" type="submit" value="Delete" />
-                        </div>
-                    </form>
+                <div class="row mt-6">
+                    <div class="col-12 p-3 mt-6">
+                        <form method="post" name="manage_committee_members"
+                              action="{{ route('admin_delete-committee_member',
+                                        [$data['committee']->slug, $data['user']->id]) }}"
+                              enctype="multipart/form-data"
+                              class="needs-validation" novalidate>
+                            {!! csrf_field() !!}
+                            {!! method_field('DELETE') !!}
+                            <div class="form-group">
+                                <h4 class="mt-4 mb-3">
+                                    Delete  {{$data['user']->name}} from {{$data['committee']->name}}
+                                </h4>
+                                <input type="hidden" name="user_id" value="{{$data['user']->id}}" />
+                                <i class="far fa-trash-alt fa-2x"></i>
+                                <input class="btn btn-outline-danger" type="submit" value="Delete" />
+                            </div>
+                        </form>
+                    </div>
                 </div>
             @endif
-        </div>
+
     <div class="row mt-lg-5">
         <div class="col-md-12">
             <a href="{{route('admin-list-committee-members', $data['committee']->slug)}}">
@@ -75,5 +80,5 @@
             </a>
         </div>
     </div>
-    </div>
+</div>
 @endsection
