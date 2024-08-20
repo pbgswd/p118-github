@@ -1,13 +1,20 @@
 @extends('layouts.jumbo',  ['title' => '<i class="fas fa-scroll"></i> Messages'])
 @section('content')
-<div class="container border border-dark rounded mt-3 mb-3 p-2" style="background: rgba(220,220,220,0.8);">
+<div class="container border border-dark rounded p-2" style="background: rgba(220,220,220,0.8);">
     <div class="jumbotron-fluid text-center mb-6">
-        <div class="row" style="margin-bottom: 2rem;">
+        <div class="row mb-2">
             <div class="col-12 my-3">
                 <h1>
                     <i class="fas fa-scroll"></i>
                     Local 118 Messages
                 </h1>
+                @can('edit articles')
+                    <div class="text-end">
+                        <a href="{{route('admin_messages')}}" title="Admin Messages">
+                            <i class="fas fa-edit"></i> Admin Messages
+                        </a>
+                    </div>
+                @endcan
             </div>
             <div class="col-12 mb-6">
                 <h3>

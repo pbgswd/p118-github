@@ -168,8 +168,10 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::get('messages', 'index')->name('admin_messages')->middleware(CheckMessagingFeatureStatus::class);
         Route::get('message/create', 'create')->name('admin_message_create')->middleware(CheckMessagingFeatureStatus::class);
         Route::post('message/create', 'store')->name('admin_message_store')->middleware(CheckMessagingFeatureStatus::class);
+
         Route::get('message/{message}/edit', 'edit')->name('admin_message_edit')->middleware(CheckMessagingFeatureStatus::class);
         Route::post('message/{message}/edit', 'update')->name('admin_message_update')->middleware(CheckMessagingFeatureStatus::class);
+
         Route::get('message/{message}/preview', 'preview')->name('admin_message_preview')->middleware(CheckMessagingFeatureStatus::class);
         Route::get('message/{message}/preview_strict', 'preview_strict')->name('admin_message_preview_strict')->middleware(CheckMessagingFeatureStatus::class);
         Route::get('message/{message}/send', 'send')->name('admin_message_send')->middleware(CheckMessagingFeatureStatus::class);
