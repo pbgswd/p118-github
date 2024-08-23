@@ -15,8 +15,14 @@
                 <div class="col-12 border border-1 rounded p-4">
                     <p>Created by: <a href="{{route('member', $data['message']->user->id)}}">
                             {{$data['message']->user->name}}</a>. |
-                    Created At: {{$data['message']->created_at->format('F j Y H:i:s') }}.  | Last Updated At: {{ $data['message']->updated_at->format('F j Y H:i:s') }}</p>
-                    <p>URL: <a href="{{env('APP_URL')}}/{{$data['message']->messageMeta->source_url}}">{{env('APP_URL')}}/{{$data['message']->messageMeta->source_url}}</a></p>
+                    Created At: {{$data['message']->created_at->format('F j Y H:i:s') }}.  |
+                        Last Updated At: {{ $data['message']->updated_at->format('F j Y H:i:s') }}
+                    </p>
+                    <p>
+                        URL: <a href="{{env('APP_URL')}}/{{$data['message']->messageMeta->source_url}}">
+                            {{env('APP_URL')}}/{{$data['message']->messageMeta->source_url}}
+                        </a>
+                    </p>
                 </div>
             @endif
             <div class="col-12 my-4">

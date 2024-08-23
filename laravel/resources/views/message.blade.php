@@ -10,9 +10,9 @@
             </h4>
         </div>
         @can('edit articles')
-            <div class="col-12 col-md-6 text-md-right pr-4">
-                <a href="{{route('admin_message_edit', $data['message']->id)}}" title="Edit {{$data['message']->subject}}">
-                    <i class="fas fa-edit"></i> Admin Edit
+            <div class="text-end">
+                <a href="{{route('admin_messages')}}" title="Admin Messages">
+                    <i class="fas fa-edit"></i> Admin Messages
                 </a>
             </div>
         @endcan
