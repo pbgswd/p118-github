@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\File;
 
 class AttachmentController extends Controller
 {
@@ -32,6 +33,8 @@ class AttachmentController extends Controller
     }
 
     /**
+     * @param Attachment $attachment
+     * @return View
      * @throws AuthorizationException
      */
     public function index(Attachment $attachment): View
@@ -45,6 +48,30 @@ class AttachmentController extends Controller
 
         return view('admin.list_attachments', ['data' => $data]);
     }
+
+    /**
+     * @param Attachment $attachment
+     * @return View
+     * @throws AuthorizationException
+     */
+    public function index_icons(Attachment $attachment): View
+    {
+        $this->authorize('viewAny', Auth::user());
+
+        $data = [];
+        $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
+
+        $data['filecount'] = Attachment::count();
+
+        $data['attachments']->each(function ($item) {
+            $item->file_type = File::extension('storage/' . $item->subfolder . '/' . $item->file);
+            $item->file_size = round(File::size('storage/' . $item->subfolder . '/' . $item->file)/1024, 2);
+        });
+
+        return view('admin.list_attachments_icons', ['data' => $data]);
+    }
+
+
 
     /**
      * @throws AuthorizationException

@@ -107,13 +107,20 @@
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        Add File(s) To Employment Posting
+                        Add File(s) To Message
                     </label>
                     <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
+            <div class="col-md-6">
+                <button class="btn btn-outline-light">Media library button, todo</button>
+            </div>
+
+        </div>
+        <div class="row mt-lg-2">
+
             @if ($data['action'] == 'Edit')
-                <div class="col-md-12">
+                <div class="col-12">
                     <h2><i class="fas fa-paperclip"></i> Files</h2>
                     <table class="table table-striped table-sm">
                         <thead>
