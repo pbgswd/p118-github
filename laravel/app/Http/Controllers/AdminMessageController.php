@@ -240,7 +240,7 @@ class AdminMessageController extends Controller
 
         Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
 
-        ProcessMessages::dispatch(['log' => 'Sending message '.$message->subject, 'id' => $message->id]);
+        ProcessMessages::dispatch(['log' => __FILE__ . " " . ' Sending the message '.$message->subject, 'id' => $message->id]);
 
         Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 

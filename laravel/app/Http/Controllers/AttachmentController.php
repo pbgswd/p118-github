@@ -6,11 +6,13 @@ use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Attachments\DestroyAttachmentRequest;
 use App\Http\Requests\Attachments\StoreAttachmentRequest;
 use App\Http\Requests\Attachments\UpdateAttachmentRequest;
+use App\Http\Requests\Request;
 use App\Models\Attachment;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -71,7 +73,28 @@ class AttachmentController extends Controller
         return view('admin.list_attachments_icons', ['data' => $data]);
     }
 
+    public function ajax_upload(Request $request) {
+        Log::info( 'peter ' . __METHOD__ . ' line ' . __LINE__ . " " . serialize($request->all()));
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
 
+            //todo options for storing image. Consider image upload service that already is there
+
+            $path = $file->store('images', 'public'); // Store in the 'images' directory in public storage
+            // Return the image path
+            return response()->json(['url' => Storage::url($path)]);
+        }
+
+        return response()->json(['error' => 'No file uploaded'], 400);
+    }
+
+    public function endless(Request $request)
+    {
+        // https://alpine-ajax.js.org/examples/infinite-scroll/
+        $this->authorize('viewAny', Auth::user());
+        Log::info( __METHOD__ . ' line ' . __LINE__ . " " . serialize($request->all()));
+
+    }
 
     /**
      * @throws AuthorizationException

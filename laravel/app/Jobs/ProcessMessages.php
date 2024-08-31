@@ -34,24 +34,30 @@ class ProcessMessages implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info('peter '.__METHOD__.' line '.__LINE__.' - Start of handle method - Process message with id of: '.$this->taskData['id']);
+        Log::info( 'peter ' . __METHOD__ . ' line ' . __LINE__ .
+            ' - Start of handle method - Process message with id of: ' .
+            $this->taskData['id']);
 
         $message = Message::where('id', $this->taskData['id'])
             ->with('attachments', 'messageMeta', 'messageSending')
             ->get();
 
-        $attachments = ! is_null($message[0]->attachments) ? serialize($message[0]->attachments) : '';
+        $attachments = ! is_null($message[0]->attachments) ?
+            serialize($message[0]->attachments) : '';
 
         if (! is_null($attachments)) {
-            Log::info('There is attachments data and its serialized length is '.strlen($attachments).' characters');
+            Log::info('There is attachments data and its serialized length is '.
+                strlen($attachments).' characters');
         } else {
-            Log::info('There is no attachment data with this message'); // 112 characters in length here
+            Log::info('There is no attachment data with this message');
+            // 112 characters in length here
         }
 
         $type = $message[0]->messageMeta->source_type;
         $name = $message[0]->messageMeta->source_type_name;
 
-        Log::info(__METHOD__.' line '.__LINE__.' - type= '.$type.', name= '.$name);
+        Log::info( __METHOD__ . ' line ' . __LINE__ . ' - type= ' . $type .
+            ', name= '.$name);
 
         $subs = User::with('message_frequency_preferences', 'message_selections')
             ->whereRelation('message_frequency_preferences', 'preference', 'now')
@@ -70,7 +76,9 @@ class ProcessMessages implements ShouldQueue
 
             $emailQueueMsg->save();
 
-            Log::info(__METHOD__.' line '.__LINE__.' - The message, '.$message[0]->subject.', is in the email queue to '.$sub->email);
+            Log::info( __METHOD__ . ' line ' . __LINE__ . ' - The message, ' .
+                $message[0]->subject .
+                ', is in the email queue to '.$sub->email );
         }
 
         $messageSending = MessageSending::where('message_id', $message[0]->id)
@@ -91,6 +99,8 @@ class ProcessMessages implements ShouldQueue
         // into mail queue that have not already
         // been pushed to the mail queue
 
-        Log::info(__METHOD__.' line '.__LINE__.' End of handle method - Process Messages Job was run '.$this->taskData['log'].'id: '.$this->taskData['id']);
+        Log::info( __METHOD__ . ' line ' . __LINE__ .
+            ' End of handle method - Process Messages Job was run ' .
+            $this->taskData['log'] . 'id: '.$this->taskData['id'] );
     }
 }

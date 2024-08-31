@@ -120,6 +120,15 @@
             </div>
             <div class="col-md-6">
                 <button class="btn btn-outline-light">Media library button, todo</button>
+
+
+                <div x-data="{ imageUrl: '' }">
+                    <input type="text" x-model="imageUrl" placeholder="Enter image URL">
+                    <img :src="imageUrl" alt="Image">
+                </div>
+
+
+
             </div>
 
         </div>
