@@ -30,7 +30,7 @@
                         <td>
                             <h4>
                                 <a title="{{ $i->title }}" href="{{ $i->url }}">
-                                    {{ $i->title }}
+                                  {{ strip_tags($i->title) }}
                                 </a>
                             </h4>
                         </td>
@@ -51,32 +51,15 @@
 
                         <td>
                             <a href="{{ $i->url }}" title="Edit {{ $i->title }}">
-                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-edit fa-lg"></i>
                             </a>
                         </td>
                         <td> {{ $i->searchable->created_at->format('F j Y H:i:s') }} </td>
                         <td> {{ $i->searchable->updated_at->format('F j Y H:i:s') }} </td>
                     </tr>
                 @endforeach
-                    <tr>
-                        <td colspan="10">&nbsp;</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col">
-            <i class="far fa-trash-alt fa-2x"></i>
-            <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
-        </div>
-        <div class="col-6">
-
-        </div>
-        <div class="col"></div>
-    </div>
-    <div class="row mt-lg-5"></div>
-</form>
-
 @endsection
