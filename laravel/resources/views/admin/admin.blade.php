@@ -162,8 +162,7 @@
                     <h5 class="card-title">Media insert</h5>
                     <div class="card-body">
                         <ul class="list-group">
-                            <li class="list-group-item"><a href="{{route('attachments_icons_list')}}">Media Modal</a></li>
-                            <li class="list-group-item"><a href="{{route('endless')}}">Endless Scrolling</a></li>
+not now
                         </ul>
                     </div>
                 </div>
