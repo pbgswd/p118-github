@@ -46,14 +46,60 @@
 
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-4 h-100">
-
-                <div class="card p-3">
-                    <h5 class="card-title">Info</h5>
-                    <div class="card-body">
-                        {{$data['users_count']}} users on the site.
+            <div class="card p-3">
+                <h5 class="card-title">Users Info</h5>
+                <div class="card-body">
+                    <div class="ul">
+                        <li>{!! $data['counts']['membership'] !!} Members</li>
+                        <li>Not including {!! $data['counts']['invite'] !!} Members with pending website invitations</li>
+                        <li>As well as {!! $data['counts']['office'] !!} Office Staff</li>
+                        <li>{{$data['counts']['executives']}} Executives</li>
+                        <li>{{$data['counts']['is_banned']}} Are banned Users</li>
+                        <li><a href="{{ route('committees_list') }}">
+                                {!! $data['counts']['committees'] !!} Committees
+                            </a>
+                        </li>
+                        <li><a href="{{ route('invite-new-user') }}">Invite new member
+                                <i class="far fa-arrow-alt-circle-right"></i>
+                            </a>
+                        </li>
                     </div>
                 </div>
-
+            </div>
+        </div>
+        <div class="col-4 h-100">
+            <div class="card p-3">
+                <h5 class="card-title">Content Info</h5>
+                <div class="card-body">
+                    <div class="ul">
+                        <li>{!! $data['counts']['pages'] !!} Pages</li>
+                        <li>{!! $data['counts']['posts'] !!} Posts</li>
+                        <li>{!! $data['counts']['topics'] !!} Topics</li>
+                        <li>{{$data['counts']['features']}} Features</li>
+                        <li>{{$data['counts']['faqs']}} FAQs</li>
+                        <li>{{$data['counts']['venues']}} Venues</li>
+                        <li>{{$data['counts']['organizations']}} Organizations</li>
+                        <li>{{$data['counts']['employments']}} Job postings</li>
+                        <li>{{$data['counts']['minutes']}} Meetings & minutes</li>
+                        <li>{{$data['counts']['bylaws']}} Bylaws</li>
+                        <li>{{$data['counts']['agreements']}} Agreements</li>
+                        <li>{{$data['counts']['policies']}} Policies</li>
+                        <li>{{$data['counts']['memoriam']}} Memorials</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 h-100">
+            <div class="card p-3">
+                <h5 class="card-title">Additional resources</h5>
+                <div class="card-body">
+                    <div class="ul">
+                        <li>{{$data['counts']['carousels']}} Carousel images</li>
+                        <li>{{$data['counts']['attachments']}} File attachments</li>
+                        <li>{{$data['counts']['proofread']}} Entries to proofread</li>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -110,6 +156,21 @@
                 </div>
             </a>
         </div>
+        <div class="col-4 mt-2 h-100">
+
+                <div class="card p-3">
+                    <h5 class="card-title">Media insert</h5>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="{{route('attachments_icons_list')}}">Media Modal</a></li>
+                            <li class="list-group-item"><a href="{{route('endless')}}">Endless Scrolling</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+        </div>
+
+
     </div>
     @role('super-admin')
         <div class="row border border-dark rounded p-3 pb-5 mt-4">
