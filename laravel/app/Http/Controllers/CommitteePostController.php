@@ -57,6 +57,7 @@ class CommitteePostController extends Controller
 
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
+        $post->author_name = Auth::user()->name;
 
         $post->save();
 

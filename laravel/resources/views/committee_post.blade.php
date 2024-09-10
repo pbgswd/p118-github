@@ -30,7 +30,7 @@
                     {{$data['committeepost']->title}}
                 </h1>
                 <h5>
-                    By {{$data['committeepost']->creator->name}},
+                    By {{ $data['committeepost']->creator->name  ?? $data['committeepost']->author_name }},
                     {{ \Carbon\Carbon::parse($data['committeepost']->updated_at)->format(' F j, Y') }}
                 </h5>
                 {!! $data['committeepost']->content !!}

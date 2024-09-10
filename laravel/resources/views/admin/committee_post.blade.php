@@ -210,7 +210,8 @@
 
     @if ($data['action'] == 'Edit')
     <div class="row mt-3 mb-3">
-        Post added by {{$data['post']->creator->name}}
+        Post originally added by
+        {{ $data['post']->creator->name ?? $data['post']->author_name ?? 'a deleted member'}}.
     </div>
     @endif
 @endsection
