@@ -46,7 +46,7 @@ class InviteUserController extends Controller
 
         $data = [];
         $data['invitations'] = $invitations;
-
+        $data['all'] = InviteUser::all();
         $data['count'] = count(InviteUser::all());
 
         return view('admin.invitations_list', ['data' => $data]);
