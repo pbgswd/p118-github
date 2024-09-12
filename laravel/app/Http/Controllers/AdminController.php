@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Agreement;
 use App\Models\Attachment;
 use App\Models\Bylaw;
 use App\Models\Carousel;
 use App\Models\Committee;
-use App\Models\Contact;
 use App\Models\EmailQueue;
 use App\Models\Employment;
 use App\Models\Executive;
@@ -32,6 +32,12 @@ use Illuminate\View\View;
 
 class AdminController extends Controller
 {
+    protected $activityLog;
+    public function __construct(ActivityLog $activityLog)
+    {
+        $this->activityLog = $activityLog;
+    }
+
     public function index(): View
     {
         //Land on the home page of admin. Could have data later.
@@ -64,8 +70,20 @@ class AdminController extends Controller
         $counts['office'] = Membership::where('membership_type', 'Office')->count();
         $counts['invite'] = count(InviteUser::all());
 
+        //todo make a dependency injection
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . " accessed the admin dashboard",
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
+
+        $activities = ActivityLog::orderBy('id', 'DESC')
+           ->limit(5)->get();
+
         $data = [
-            ['user' => Auth::user()],
+            'user' => Auth::user(),
+            'activities' => $activities,
             'email_queue_count' => $emailQueueCount,
             'counts' => $counts,
             'messages_count' => $messagesCount,
