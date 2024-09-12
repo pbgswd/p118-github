@@ -61,12 +61,7 @@
                                     <a href="mailto:{{$i->email}}">{{$i->email}}</a>
                                 </td>
                                 <td>
-                                    @if($i->remaining < 0)
-                                        expired
-                                    @else
-                                        {{$i->since}} <br />
-                                        ({{$i->remaining}} h left)
-                                    @endif
+                                    {{$i->since}}
                                 </td>
                                 <td>
                                     {{$i->membership_type}}
