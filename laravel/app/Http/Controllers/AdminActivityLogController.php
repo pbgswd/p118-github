@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\ActivityLog;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+class AdminActivityLogController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): View
+    {
+        $data['activities'] = ActivityLog::sortable()
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
+
+        return view('admin.activity_log.activity_logs_list', ['data' => $data]);
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store($request): void
+    {
+        $activityLog = new ActivityLog($request);
+        //$activityLog['ip_address'] = $_SERVER['REMOTE_ADDR'];
+      //  $activityLog['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+       // $activityLog['model'] = $request['model'];
+
+        $activityLog->save();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(ActivityLog $activityLog)
+    {
+        //
+    }
+}
