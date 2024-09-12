@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AdminActivityLogController extends Controller
@@ -52,6 +54,8 @@ class AdminActivityLogController extends Controller
      */
     public function destroy(ActivityLog $activityLog)
     {
-        //
+        Session::flash('success', 'You have deleted ' . count($activityLog->id)
+            . ' ' . Str::plural('message', count($activityLog->id)) . '.');
+        Session::flash('warning', 'not deleting yet');
     }
 }
