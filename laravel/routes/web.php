@@ -439,4 +439,9 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::post('faq/{any_faq}/edit', 'update');
         Route::delete('/faq/delete', 'destroy')->name('admin_faq_destroy');
     });
+
+    Route::controller(CNS\AdminActivityLogController::class)->group(function () {
+       Route::get('activity-logs/', 'index')->name('admin_activity_logs_list');
+       Route::delete('activity-logs/delete', 'destroy')->name('admin_activity_log_destroy');
+    });
 });

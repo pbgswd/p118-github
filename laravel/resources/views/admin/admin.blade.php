@@ -102,6 +102,46 @@
             </div>
         </div>
     </div>
+    @role('super-admin')
+    <div class="row border border-dark rounded p-3 pb-5 mt-4">
+        <div class="col-12">
+            <h3>Recent Activity</h3>
+            <a href="{{route('admin_activity_logs_list')}}">View log page</a>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Activity</th>
+                <th scope="col">ip</th>
+                <th scope="col">User Agent</th>
+                <th scope="col">Model</th>
+                <th scope="col">Created At</th>
+            </tr>
+            </thead>
+            <tbody>
+                @forelse($data['activities'] as $activity)
+                    <tr>
+                        <th scope="row">
+                           {{$activity['id']}}
+                        </th>
+                        <td>{{$activity->activity}}</td>
+                        <td>{{$activity->ip_address}}</td>
+                        <td>{{$activity->user_agent}}</td>
+                        <td>{{$activity->model}}</td>
+                        <td>{{ $activity->created_at->format('F j Y H:i:s') }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <th scope="row" colspan="9">No data yet</th>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+
+    </div>
+    @endrole
 
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12">
