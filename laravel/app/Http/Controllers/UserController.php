@@ -207,8 +207,6 @@ class UserController extends Controller
             $message['Email'] = $userRequest->user['email'];
         }
 
-
-
         $user->fill($userRequest['user']);
         $user->save();
         $user->touch();

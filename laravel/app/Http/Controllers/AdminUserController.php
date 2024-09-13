@@ -7,6 +7,7 @@ use App\Http\Requests\User\DestroyUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateMemberAddress;
 use App\Http\Requests\User\UpdateUser;
+use App\Models\ActivityLog;
 use App\Models\Executive;
 use App\Models\InviteUser;
 use App\Models\Membership;
@@ -290,7 +291,7 @@ class AdminUserController extends Controller
         if (! empty($message)) {
             $message['email'] = $user->email;
             $message['name'] = $user->name;
-            $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
+           // $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
         Session::flash('success', 'You have edited a member profile');
@@ -413,6 +414,14 @@ class AdminUserController extends Controller
             ->each(function (User $user) {
                 $user_roles = $user->getRoleNames();
 
+                //todo make a dependency injection
+                $al = new ActivityLog([
+                    'activity' => Auth::user()->name . " deleting " . $user->name,
+                    'ip_address' => $_SERVER['REMOTE_ADDR'],
+                    'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                    'model' => 'User']);
+                $al->save();
+
                 $user_roles = array_combine(array_values($user_roles->toArray()), $user_roles->toArray());
                 foreach ($user_roles as $r) {
                     $user->removeRole($r);
@@ -433,7 +442,7 @@ class AdminUserController extends Controller
                 $user->executive_role()->delete();
 //todo fix breakage when deleting user that has content such as posts, pages, etc, committee membership....
 
-                Log::debug('attempting to destroy user '.$user->name.', id:'.$user->id);
+              //  Log::debug('attempting to destroy user '.$user->name.', id:'.$user->id);
                 User::destroy($user->id);
             });
 
