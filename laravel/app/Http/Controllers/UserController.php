@@ -6,6 +6,7 @@ use App\Http\Requests\InviteUser\ProcessUserRequest;
 use App\Http\Requests\Member\UpdateMember;
 use App\Http\Requests\Member\UpdateMemberEmergencyContact;
 use App\Http\Requests\User\UpdateMemberAddress;
+use App\Models\ActivityLog;
 use App\Models\Committee;
 use App\Models\Executive;
 use App\Models\Membership;
@@ -177,6 +178,7 @@ class UserController extends Controller
     public function update(UpdateMember $userRequest, UserImageService $service,
            User $user): RedirectResponse
     {
+
 //        $this->authorize('update', $user);
 
         $user->load('phone_number');
@@ -283,6 +285,13 @@ class UserController extends Controller
             $result = $this->emailMemberUpdateService->sendMessage($message, $user);
         }
 
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . " updated their personal profile ",
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
+
         Session::flash('success', 'Your profile has been edited. The office
             will be updated with any change to your phone number or email address.');
 
@@ -316,6 +325,13 @@ class UserController extends Controller
             $result = $service->sendMessage('Member Address', $message, $user);
         }
 
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . " updated their address ",
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
+
         Session::flash('success', 'Your address update has been emailed
             to the office.');
 
@@ -333,6 +349,13 @@ class UserController extends Controller
 
         $user->fill(['password' => bcrypt($request->password)]);
         $user->save();
+
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . " updated their password ",
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
 
         Session::flash('success', 'Your password has been updated.');
 
@@ -369,6 +392,13 @@ class UserController extends Controller
             $result = $service->sendMessage('Member Emergency Contact Info',
                 $message, $user);
         }
+
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . " updated their emergency contact info",
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
 
         Session::flash('success',
             'Your emergency contact update has been emailed to the office.');
