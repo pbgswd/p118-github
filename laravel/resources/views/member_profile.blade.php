@@ -20,8 +20,7 @@
         </h5>
     </div>
 @endif
-@if (($data['user']->user_info->share_phone  ?? '' )  == 1 &&
-    !empty($data['user']->phone_number->phone_number))
+@if ($data['user']->user_info->share_phone == 1)
     <div class="col-12 text-md-center">
         <h5>
             <a href="tel:{{$data['user']->phone_number->phone_number ?? '' }}">

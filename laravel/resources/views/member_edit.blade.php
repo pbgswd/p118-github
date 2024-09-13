@@ -22,13 +22,13 @@
                         <div class="input-group-text">
                             <input class="form-check-input mt-0" name="user_info[share_email]" type="checkbox" value="1"
                                    aria-label="Checkbox for following text input"
-                                {{ checked(old('user_info.share_email', $data['user']->user_info->share_email ?? '')) }}
+                                {{$data['user']->user_info->share_email ? "checked=checked" : ''}}
                             >
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox"
                                value="Check to share email in profile" readonly>
                     </div>
-                    <input name="user_info[share_email]" type="hidden" value="0" />
+
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -44,13 +44,12 @@
                         <div class="input-group-text">
                             <input class="form-check-input mt-0" name="user_info[share_phone]" type="checkbox" value="1"
                                    aria-label="Checkbox for following text input"
-                                {{ checked(old('user_info.share_phone',
-                                    $data['user']->user_info->share_phone ?? '')) }}
+                                {{$data['user']->user_info->share_phone ? "checked=checked" : ''}}
                             >
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox"
                            value="Check to share phone number in profile" readonly>
-                        <input name="user_info[share_phone]" type="hidden" value="0" />
+
                     </div>
                 </div>
             </div>
@@ -72,15 +71,14 @@
             </h3>
             <div class="input-group mb-3">
                 <div class="input-group-text">
-                    <input class="form-check-input mt-0" name="user_info[show_profile]" type="checkbox" value="1"
-                           aria-label="Checkbox for following text input"
-                        {{ checked(old('user_info.show_profile',
-                            $data['user']->user_info->show_profile ?? '')) }}
+                  <input class="form-check-input mt-0" name="user_info[show_profile]" type="checkbox" value="1"
+                         aria-label="Checkbox for following text input"
+                      {{$data['user']->user_info->show_profile ? "checked=checked" : ''}}
                     >
                 </div>
                 <input type="text" class="form-control" aria-label="Text input with checkbox"
                        value="Check to share your profile with members" readonly>
-                <input name="user_info[show_profile]" type="hidden" value="0" />
+
             </div>
             @if( isset($data['user']->user_info->image) )
                 <div class="row mb-3">
@@ -147,12 +145,12 @@
                <div class="input-group-text">
                     <input class="form-check-input mt-0" name="user_info[show_picture]" type="checkbox" value="1"
                            aria-label="Checkbox for following text input"
-                        {{ checked(old('user_info.show_picture', $data['user']->user_info->show_picture ?? '')) }}
+                        {{$data['user']->user_info->show_picture == 1 ? "checked=checked" : ''}}
                     >
                </div>
                <input type="text" class="form-control" aria-label="Text input with checkbox"
                   value="Check to show picture in your profile" readonly>
-               <input name="user_info[show_picture]" type="hidden" value="0" />
+
             </div>
             <h3 class="mt-2 p-2 fw-bold">
                 <i class="fas fa-user text-primary"></i>

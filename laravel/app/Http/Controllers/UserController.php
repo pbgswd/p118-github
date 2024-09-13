@@ -207,6 +207,8 @@ class UserController extends Controller
             $message['Email'] = $userRequest->user['email'];
         }
 
+
+
         $user->fill($userRequest['user']);
         $user->save();
         $user->touch();
@@ -239,6 +241,15 @@ class UserController extends Controller
         if ($user->user_info instanceof UserInfo) {
 
             $user_info = $userRequest['user_info'];
+//todo user_info validation or migration update could fix the values issues here
+            $user_info['show_profile'] =
+                $userRequest['user_info']['show_profile'] ?? 0;
+            $user_info['show_picture'] =
+                $userRequest['user_info']['show_picture'] ?? 0;
+            $user_info['share_email'] =
+                $userRequest['user_info']['share_email'] ?? 0;
+            $user_info['share_phone'] =
+                $userRequest['user_info']['share_phone'] ?? 0;
 
             if (isset($user_info['delete_image'])) {
                 if (file_exists(storage_path().'/app/'.$folder.'/'.$user_info['image'])) {
@@ -289,7 +300,7 @@ class UserController extends Controller
             'activity' => Auth::user()->name . " updated their personal profile ",
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-            'model' => 'Admin']);
+            'model' => 'User']);
         $al->save();
 
         Session::flash('success', 'Your profile has been edited. The office
@@ -329,7 +340,7 @@ class UserController extends Controller
             'activity' => Auth::user()->name . " updated their address ",
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-            'model' => 'Admin']);
+            'model' => 'User']);
         $al->save();
 
         Session::flash('success', 'Your address update has been emailed
@@ -354,7 +365,7 @@ class UserController extends Controller
             'activity' => Auth::user()->name . " updated their password ",
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-            'model' => 'Admin']);
+            'model' => 'User']);
         $al->save();
 
         Session::flash('success', 'Your password has been updated.');
@@ -397,7 +408,7 @@ class UserController extends Controller
             'activity' => Auth::user()->name . " updated their emergency contact info",
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-            'model' => 'Admin']);
+            'model' => 'User']);
         $al->save();
 
         Session::flash('success',
