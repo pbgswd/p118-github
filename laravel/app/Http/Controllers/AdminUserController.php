@@ -8,6 +8,7 @@ use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\UpdateMemberAddress;
 use App\Http\Requests\User\UpdateUser;
 use App\Models\Executive;
+use App\Models\InviteUser;
 use App\Models\Membership;
 use App\Models\Options;
 use App\Models\PhoneNumber;
@@ -59,11 +60,13 @@ class AdminUserController extends Controller
                 'membership',
             ]
         )->sortable()
-            ->paginate(20);
+            ->paginate(50);
 
-        $count = Membership::where('membership_type', 'Member')->count();
+        $counts['membership'] = Membership::where('membership_type', 'Member')->count();
+        $counts['office'] = Membership::where('membership_type', 'Office')->count();
+        $counts['invite'] = count(InviteUser::all());
 
-        return view('admin.listusers', ['data' => ['users' => $users, 'count' => $count]]);
+        return view('admin.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
     }
 
     public function create(): RedirectResponse
@@ -428,6 +431,7 @@ class AdminUserController extends Controller
                 }
 
                 $user->executive_role()->delete();
+//todo fix breakage when deleting user that has content such as posts, pages, etc, committee membership....
 
                 Log::debug('attempting to destroy user '.$user->name.', id:'.$user->id);
                 User::destroy($user->id);
