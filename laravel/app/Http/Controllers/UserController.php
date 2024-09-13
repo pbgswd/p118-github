@@ -210,7 +210,7 @@ class UserController extends Controller
         $user->fill($userRequest['user']);
         $user->save();
         $user->touch();
-//todo review phone number validation
+//todo review phone number validation see app/Rules/Phone.php
         if (isset($userRequest->user_phone['phone_number'])) {
             $userRequest->validate([
                 'user_phone.phone_number' => [new Phone()],
