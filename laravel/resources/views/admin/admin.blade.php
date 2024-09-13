@@ -128,7 +128,7 @@
                         </th>
                         <td>{{$activity->activity}}</td>
                         <td>{{$activity->ip_address}}</td>
-                        <td>{{$activity->user_agent}}</td>
+                        <td class="d-inline-block">{{$activity->user_agent}}</td>
                         <td>{{$activity->model}}</td>
                         <td>{{ $activity->created_at->format('F j Y H:i:s') }}</td>
                     </tr>
