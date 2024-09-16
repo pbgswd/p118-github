@@ -4,7 +4,7 @@
         <div class="col-6">
             <h2>
                 <span class="badge rounded-pill text-bg-info">
-                   {!! $data['counts']['membership'] !!}
+                   {!! $data['counts']['membership'] ?? 0 !!}
                 </span>
                 Members.
             </h2>
