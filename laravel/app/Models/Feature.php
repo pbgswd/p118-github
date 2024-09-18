@@ -31,11 +31,6 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $casts = [
-        'date' => 'datetime',
-        'live' => 'boolean',
-    ];
-
     /**
      * The attributes that are mass assignable.
      */
@@ -51,6 +46,14 @@ class Feature extends LiveableModel implements HasAttachment, Searchable
         'front_page',
         'landing_page',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'date' => 'datetime',
+            'live' => 'boolean',
+        ];
+    }
 
     public function getSearchResult(): SearchResult
     {

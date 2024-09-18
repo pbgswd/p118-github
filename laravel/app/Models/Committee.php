@@ -56,10 +56,6 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
         'role',
     ];
 
-    protected $casts = [
-        'live' => 'boolean',
-    ];
-
     /**
      * The attributes that are mass assignable.
      */
@@ -71,6 +67,13 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
         'email',
         'live',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'live' => 'boolean',
+        ];
+    }
 
     /**
      * in urls, what field value is used to identify a Committee record?

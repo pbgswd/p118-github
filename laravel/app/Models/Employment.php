@@ -55,11 +55,14 @@ class Employment extends LiveableModel implements HasAttachment, Searchable
         'deadline',
     ];
 
-    protected $casts = [
-        'deadline' => 'datetime',
-        'live' => 'boolean',
-        'status' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'deadline' => 'datetime',
+            'live' => 'boolean',
+            'status' => 'boolean',
+        ];
+    }
 
     public function getSearchResult(): SearchResult
     {

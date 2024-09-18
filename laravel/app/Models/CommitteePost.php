@@ -53,12 +53,6 @@ class CommitteePost extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $casts = [
-        'sticky' => 'boolean',
-        'allow_comments' => 'boolean',
-        'live' => 'boolean',
-    ];
-
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;
@@ -92,6 +86,15 @@ class CommitteePost extends LiveableModel implements HasAttachment, Searchable
         'allow_comments',
         'user_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'sticky' => 'boolean',
+            'allow_comments' => 'boolean',
+            'live' => 'boolean',
+        ];
+    }
 
     /**
      * in urls, what field value is used to identify a CommitteePost record?

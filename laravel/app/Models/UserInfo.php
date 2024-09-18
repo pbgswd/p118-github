@@ -44,14 +44,19 @@ class UserInfo extends Model implements Searchable
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    protected $casts = [
-        'show_profile' => 'boolean',
-        'show_picture' => 'boolean',
-        'share_email' => 'boolean',
-        'share_phone' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'show_profile' => 'boolean',
+            'show_picture' => 'boolean',
+            'share_email' => 'boolean',
+            'share_phone' => 'boolean',
+        ];
+    }
 
     public function getSearchResult(): SearchResult
     {

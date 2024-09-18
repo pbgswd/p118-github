@@ -26,12 +26,6 @@ class Membership extends Model
     /** @var string */
     protected $guard_name = 'web';
 
-    /** @var array */
-    protected $casts = [
-        'membership_date' => 'datetime',
-        'membership_expires' => 'datetime',
-    ];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -45,4 +39,17 @@ class Membership extends Model
         'status',
         'admin_notes',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'membership_date' => 'datetime',
+            'membership_expires' => 'datetime',
+        ];
+    }
 }
