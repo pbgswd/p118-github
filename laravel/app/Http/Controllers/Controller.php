@@ -10,7 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 /**
  * @property Controller $getFormOptions
  */
-class Controller extends BaseController
+abstract class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
