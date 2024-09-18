@@ -6,7 +6,7 @@ use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Attachments\DestroyAttachmentRequest;
 use App\Http\Requests\Attachments\StoreAttachmentRequest;
 use App\Http\Requests\Attachments\UpdateAttachmentRequest;
-use App\Http\Requests\Request;
+use Illuminate\Http\Request;
 use App\Models\Attachment;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -88,12 +88,23 @@ class AttachmentController extends Controller
         return response()->json(['error' => 'No file uploaded'], 400);
     }
 
-    public function endless(Request $request)
+    public function endless ()
+    {
+        $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
+        $data['filecount'] = Attachment::count();
+        return view('admin.list_attachments_endless', ['data' => $data]);
+    }
+
+
+    public function endless_data(Request $request)
     {
         // https://alpine-ajax.js.org/examples/infinite-scroll/
-        $this->authorize('viewAny', Auth::user());
-        Log::info( __METHOD__ . ' line ' . __LINE__ . " " . serialize($request->all()));
-
+        $data = [];
+        $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
+        $data['filecount'] = Attachment::count();
+        //return view('admin.list_attachments_endless', ['data' => $data, 'records' => $data]);
+        return response()->json(['data' => $data, 'records' => $data]);
+        //Log::info( __METHOD__ . ' line ' . __LINE__ . " " . serialize($request->all()));
     }
 
     /**
