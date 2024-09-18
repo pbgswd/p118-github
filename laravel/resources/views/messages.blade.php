@@ -19,7 +19,7 @@
             <div class="col-12 mb-6">
                 <h3>
                    <span class="badge bg-primary">
-                       {{ $data['count'] }} Messages
+                       {{ $data['count'] }} {{Str::plural('Message', $data['count'])}}
                    </span>
                 </h3>
             </div>
