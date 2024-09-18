@@ -143,11 +143,27 @@ class AdminMessageController extends Controller
         return redirect()->route('admin_message_edit', $message->id);
     }
 
-    public function edit(Message $message): View
+    /**
+     * @param Message $message
+     * @return View
+     */
+    public function edit(Message $message)
     {
         //todo policy
+
         $message->load('user', 'attachments', 'messageMeta', 'messageSending');
 
+        if($message->messageSending->send_status_now == 'sent') {
+            Session::flash('warning', 'The message, '.$message->subject.
+            ', can no longer be edited because it has been sent to the mail queue');
+           // return redirect()->route('admin_messages');
+
+        }
+
+        if ($message->messageSending->send_status_now === 'sent') {
+            // Redirect back with an error message or show a message
+            return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
+        }
         //todo update relations for form editing and submissions
 
         $data = [
@@ -169,6 +185,12 @@ class AdminMessageController extends Controller
     {
         //todo form request validator, policy
 
+        $message->load('messageSending');
+
+        if ($message->messageSending->send_status_now === 'sent') {
+            // Redirect back with an error message or show a message
+            return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
+        }
         $message->fill($request->message);
         $message->save();
 
@@ -239,6 +261,10 @@ class AdminMessageController extends Controller
             );
 
         Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
+
+        ProcessMessages::dispatch(['log' => "delay message by a certain amount"])
+            ->delay(now()->isFriday('17:00'));
+            //->delay(now()->addMinutes(10));
 
         ProcessMessages::dispatch(['log' => __FILE__ . " " . ' Sending the message '.$message->subject, 'id' => $message->id]);
 
