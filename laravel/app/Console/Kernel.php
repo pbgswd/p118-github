@@ -13,13 +13,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('employment:update-status')->dailyAt('01:00');
-        //Log::info('test '.time() . " " . date('l jS \of F Y h:i:s A'));
+     //   $schedule->command('employment:update-status')->dailyAt('01:00');
+       // Log::info('Kernel.php, for running the queue '.time() . " " . date('l jS \of F Y h:i:s A'));
+
+      //  $schedule->command('message:now')->everyMinute();
         /**
-        $schedule->command('message:now')->everyMinute();
         $schedule->command('message:daily')->dailyAt('12:00');
         $schedule->command('message:weekly')->weeklyOn(5, '17:00'); // 5 = friday
-        $schedule->command('message:weekly')->weekly()->fridays()->at('17:00'); // 5 = friday
+        //$schedule->command('message:weekly')->weekly()->fridays()->at('17:00'); // 5 = friday
         **/
         // $schedule->command( Log::info('test'.time() . " " . date('l jS \of F Y h:i:s A')))->everyMinute();
     }
