@@ -159,6 +159,23 @@ class LocalSearchController extends Controller
                 })->search($request->search),
         ];
 
+        $data['models'] = ['Post','Page','Topic','Agreement','Bylaw',
+            'Employment','Meeting','Organization','Venue','User','Executive',
+            'UserInfo','Policy','Committee','CommitteePost','Feature',
+            'Memoriam','Faq','FaqData'];
+
+//todo break up big search in to individual searches, and then return that with UI context for each Model
+        $data['Posts'] = [
+            'name' => 'Posts',
+            'search' => $request->search,
+            'results' => (new Search())
+                ->registerModel(Post::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('content')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->search($request->search),
+        ];
+
         $data['plural'] = Str::plural('Result', count($data['results']));
 
         return view('admin.search_admin', ['data' => $data]);
