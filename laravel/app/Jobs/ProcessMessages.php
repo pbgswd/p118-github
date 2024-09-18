@@ -34,6 +34,7 @@ class ProcessMessages implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::info("------------------------------------------------------------------------------------------------");
         Log::info( 'peter ' . __METHOD__ . ' line ' . __LINE__ .
             ' - Start of handle method - Process message with id of: ' .
             $this->taskData['id']);
@@ -99,7 +100,7 @@ class ProcessMessages implements ShouldQueue
         // into mail queue that have not already
         // been pushed to the mail queue
 
-        Log::info( __METHOD__ . ' line ' . __LINE__ .
+        Log::info( __FILE__ . ' line ' . __LINE__ .
             ' End of handle method - Process Messages Job was run ' .
             $this->taskData['log'] . 'id: '.$this->taskData['id'] );
     }
