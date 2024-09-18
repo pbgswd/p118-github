@@ -7,6 +7,7 @@ use App\Models\Message;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class SendEmailsNow extends Command
 {
@@ -26,7 +27,10 @@ class SendEmailsNow extends Command
 
     public function handle(): int
     {
-        $messages = EmailQueue::limit(5)->get();
+        $messageLimit = 5;
+        $messages = EmailQueue::limit($messageLimit)->get();
+        Log::info("------------------------------------------------------------------------------------------------");
+        Log::info($messages->count() ." " . Str::plural('message', $messages->count()) . " selected to be sent.");
 
         foreach ($messages as $message) {
             echo "\n EmailQueue message id: ".$message->id.', Subject: '.$message->subject."\n";
@@ -35,7 +39,8 @@ class SendEmailsNow extends Command
             // has subscriber been sent the message already? What if the content is in multiple topics?
             // insert into mail queue the $message with the email address for $sub
 
-            Log::info('from: '.config('mail.from.address'));
+           // Log::info('from: '.config('mail.from.address'));
+
             $data['message']['id'] = $message->id;
             $data['message']['sender'] = $message->sender;
             $data['message']['subject'] = $message->subject;
@@ -65,7 +70,7 @@ class SendEmailsNow extends Command
             EmailQueue::where('id', $message->id)->delete();
         }
 
-        Log::info('SendEmailsNow has run at '.date('l jS \of F Y h:i:s A'));
+      //  Log::info('SendEmailsNow has run at '. date('l jS \of F Y h:i:s A') . ', ' . $messages->count() . " " . Str::plural('message', $messages->count()) .  ' selected to send');
 
         return Command::SUCCESS;
     }
