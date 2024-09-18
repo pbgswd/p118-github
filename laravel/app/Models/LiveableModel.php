@@ -24,7 +24,7 @@ class LiveableModel extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new LiveScope());
+        static::addGlobalScope(new LiveScope);
     }
 
     /**

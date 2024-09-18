@@ -54,7 +54,7 @@ class AgreementController extends Controller
             $data['count'] = Agreement::where('live', 1)->count();
         }
 
-        return view('agreements_list', ['data' => ['data' => $data, 'title' => "Collective Agreements"]]);
+        return view('agreements_list', ['data' => ['data' => $data, 'title' => 'Collective Agreements']]);
     }
 
     public function show(Agreement $agreement): View

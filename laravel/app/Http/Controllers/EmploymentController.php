@@ -35,7 +35,7 @@ class EmploymentController extends Controller
             'years' => $years,
             'year' => '',
             'count' => Employment::count(),
-            'title' => "Employment Postings",
+            'title' => 'Employment Postings',
         ];
 
         return view('employment_list', ['data' => $data]);
@@ -66,7 +66,7 @@ class EmploymentController extends Controller
             'count' => $jobs_count->count(),
             'years' => $years,
             'year' => $year,
-            'title' => $year . " Employment Postings",
+            'title' => $year.' Employment Postings',
         ];
 
         return view('employment_list', ['data' => $data]);
@@ -75,6 +75,7 @@ class EmploymentController extends Controller
     public function jobs_year(QueryJobYearRequest $request): RedirectResponse
     {
         session(['year' => $request->year]);
+
         return redirect()->route('list_jobs_year', $request->year);
     }
 
@@ -87,7 +88,7 @@ class EmploymentController extends Controller
 
         return view('employment', ['data' => ['employment' => $employment,
             'year' => session('year', ''),
-            'title' => $employment->title ." - Employment Posting",]
+            'title' => $employment->title.' - Employment Posting', ],
         ]);
     }
 }

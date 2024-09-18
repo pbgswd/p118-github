@@ -16,7 +16,7 @@ class StoreUserTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\User\StoreUser();
+        $this->subject = new \App\Http\Requests\User\StoreUser;
     }
 
     /**

@@ -16,7 +16,7 @@ class StoreMeetingRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Meetings\StoreMeetingRequest();
+        $this->subject = new \App\Http\Requests\Meetings\StoreMeetingRequest;
     }
 
     /**

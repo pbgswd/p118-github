@@ -16,7 +16,7 @@ class DestroyInviteUserRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\InviteUser\DestroyInviteUserRequest();
+        $this->subject = new \App\Http\Requests\InviteUser\DestroyInviteUserRequest;
     }
 
     /**

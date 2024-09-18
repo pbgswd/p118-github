@@ -16,7 +16,7 @@ class AdminDestroyPolicyTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Policies\AdminDestroyPolicy();
+        $this->subject = new \App\Http\Requests\Policies\AdminDestroyPolicy;
     }
 
     /**

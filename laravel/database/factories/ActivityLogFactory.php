@@ -1,8 +1,7 @@
 <?php
 
 namespace Database\Factories;
-use App\Models\ActivityLog;
-use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

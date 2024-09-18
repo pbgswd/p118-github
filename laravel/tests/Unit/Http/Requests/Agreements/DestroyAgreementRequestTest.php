@@ -16,7 +16,7 @@ class DestroyAgreementRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Agreements\DestroyAgreementRequest();
+        $this->subject = new \App\Http\Requests\Agreements\DestroyAgreementRequest;
     }
 
     /**

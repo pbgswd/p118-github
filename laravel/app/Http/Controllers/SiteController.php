@@ -11,9 +11,6 @@ use Illuminate\View\View;
 
 class SiteController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         /**

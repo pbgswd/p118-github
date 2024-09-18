@@ -16,7 +16,7 @@ class DestroyVenueRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Venues\DestroyVenueRequest();
+        $this->subject = new \App\Http\Requests\Venues\DestroyVenueRequest;
     }
 
     /**

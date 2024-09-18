@@ -16,7 +16,7 @@ class DestroyEmploymentRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Employment\DestroyEmploymentRequest();
+        $this->subject = new \App\Http\Requests\Employment\DestroyEmploymentRequest;
     }
 
     /**

@@ -4,17 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Page;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    /**
-     * @return View
-     */
     public function list(): View
     {
         if (Auth::check()) {
@@ -28,14 +23,9 @@ class PageController extends Controller
                 ->paginate(9);
         }
 
-        return view('pages', ['data'
-            => ['pages' => $pages, 'title' => "Pages"]]);
+        return view('pages', ['data' => ['pages' => $pages, 'title' => 'Pages']]);
     }
 
-    /**
-     * @param Page $page
-     * @return View
-     */
     public function show(Page $page): View
     {
         //todo public page policy if not public page?
@@ -44,13 +34,13 @@ class PageController extends Controller
         if (Auth::check() === false
             && $page->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this page.');
+
             return view('auth.login');
         }
 
         $page->load('topics', 'user', 'attachments');
 
-        return view('page', ['data'
-            => ['page' => $page, 'title' => $page->title]
+        return view('page', ['data' => ['page' => $page, 'title' => $page->title],
         ]);
     }
 }

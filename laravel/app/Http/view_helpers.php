@@ -87,9 +87,9 @@ if (! function_exists('select_options')) {
      * @param  string  $optAttributes
      * @return string
      */
-    function _select_opt_output( $label, $value, $selected,  $optAttributes = '')
+    function _select_opt_output($label, $value, $selected, $optAttributes = '')
     {
-//dd($value);
+        //dd($value);
         if (is_array($label)) {
             $html = _select_optgroup_output($value, $label, $selected);
         } else {

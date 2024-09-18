@@ -16,7 +16,7 @@ class SearchCommitteeMemberTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\CommitteeMember\SearchCommitteeMember();
+        $this->subject = new \App\Http\Requests\CommitteeMember\SearchCommitteeMember;
     }
 
     /**

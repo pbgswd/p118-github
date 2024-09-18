@@ -19,7 +19,7 @@ class PolicyController extends Controller
         $data['count'] = Policy::count();
 
         return view('policies_list', ['data' => ['data' => $data,
-            'title' => "Policies"]]);
+            'title' => 'Policies']]);
     }
 
     public function show(Policy $policy): View

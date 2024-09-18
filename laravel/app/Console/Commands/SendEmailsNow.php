@@ -29,8 +29,8 @@ class SendEmailsNow extends Command
     {
         $messageLimit = 5;
         $messages = EmailQueue::limit($messageLimit)->get();
-        Log::info("------------------------------------------------------------------------------------------------");
-        Log::info($messages->count() ." " . Str::plural('message', $messages->count()) . " selected to be sent.");
+        Log::info('------------------------------------------------------------------------------------------------');
+        Log::info($messages->count().' '.Str::plural('message', $messages->count()).' selected to be sent.');
 
         foreach ($messages as $message) {
             echo "\n EmailQueue message id: ".$message->id.', Subject: '.$message->subject."\n";
@@ -39,7 +39,7 @@ class SendEmailsNow extends Command
             // has subscriber been sent the message already? What if the content is in multiple topics?
             // insert into mail queue the $message with the email address for $sub
 
-           // Log::info('from: '.config('mail.from.address'));
+            // Log::info('from: '.config('mail.from.address'));
 
             $data['message']['id'] = $message->id;
             $data['message']['sender'] = $message->sender;
@@ -70,7 +70,7 @@ class SendEmailsNow extends Command
             EmailQueue::where('id', $message->id)->delete();
         }
 
-      //  Log::info('SendEmailsNow has run at '. date('l jS \of F Y h:i:s A') . ', ' . $messages->count() . " " . Str::plural('message', $messages->count()) .  ' selected to send');
+        //  Log::info('SendEmailsNow has run at '. date('l jS \of F Y h:i:s A') . ', ' . $messages->count() . " " . Str::plural('message', $messages->count()) .  ' selected to send');
 
         return Command::SUCCESS;
     }

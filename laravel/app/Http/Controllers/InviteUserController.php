@@ -181,7 +181,7 @@ class InviteUserController extends Controller
         $count = count($data);
 
         foreach ($data as $user) {
-            $invitation = new InviteUser();
+            $invitation = new InviteUser;
             $invitation->name = $user->name;
             $invitation->email = $user->email;
             $invitation->password = str_replace('/', '', hash::make(Str::random(8)));
@@ -227,7 +227,7 @@ class InviteUserController extends Controller
         $user->save();
         $user->assignRole($inviteUser->role);
 
-        $membership = new Membership();
+        $membership = new Membership;
         $membership->user_id = $user->id;
         $membership->membership_type = $inviteUser->membership_type;
         $user->membership()->save($membership);

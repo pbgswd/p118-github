@@ -40,8 +40,8 @@ class User extends Authenticatable implements HasAttachment, Searchable
     use HasFactory;
     use HasRoles;
     use Notifiable;
-    use Sortable;
     use SoftDeletes;
+    use Sortable;
 
     protected $guard_name = 'web';
 

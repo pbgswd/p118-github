@@ -16,7 +16,7 @@ class UpdateAdminExecutiveMembershipTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Executive\UpdateAdminExecutive();
+        $this->subject = new \App\Http\Requests\Executive\UpdateAdminExecutive;
     }
 
     /**

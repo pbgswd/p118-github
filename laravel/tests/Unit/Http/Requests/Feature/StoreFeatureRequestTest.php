@@ -16,7 +16,7 @@ class StoreFeatureRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Feature\StoreFeatureRequest();
+        $this->subject = new \App\Http\Requests\Feature\StoreFeatureRequest;
     }
 
     /**

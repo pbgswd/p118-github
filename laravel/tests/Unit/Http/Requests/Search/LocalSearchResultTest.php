@@ -16,7 +16,7 @@ class LocalSearchResultTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Search\LocalSearchResult();
+        $this->subject = new \App\Http\Requests\Search\LocalSearchResult;
     }
 
     /**

@@ -68,8 +68,8 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 4,
             'replace_placeholders' => true,
-	    'permission' => 0664,
-	    'user' => 'www-data',
+            'permission' => 0664,
+            'user' => 'www-data',
         ],
 
         'slack' => [

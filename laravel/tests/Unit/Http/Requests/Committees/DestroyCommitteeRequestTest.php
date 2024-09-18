@@ -16,7 +16,7 @@ class DestroyCommitteeRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Committees\DestroyCommitteeRequest();
+        $this->subject = new \App\Http\Requests\Committees\DestroyCommitteeRequest;
     }
 
     /**

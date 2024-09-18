@@ -6,18 +6,18 @@ use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Attachments\DestroyAttachmentRequest;
 use App\Http\Requests\Attachments\StoreAttachmentRequest;
 use App\Http\Requests\Attachments\UpdateAttachmentRequest;
-use Illuminate\Http\Request;
 use App\Models\Attachment;
 use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\File;
 
 class AttachmentController extends Controller
 {
@@ -35,8 +35,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @param Attachment $attachment
-     * @return View
      * @throws AuthorizationException
      */
     public function index(Attachment $attachment): View
@@ -52,8 +50,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * @param Attachment $attachment
-     * @return View
      * @throws AuthorizationException
      */
     public function index_icons(Attachment $attachment): View
@@ -66,21 +62,23 @@ class AttachmentController extends Controller
         $data['filecount'] = Attachment::count();
 
         $data['attachments']->each(function ($item) {
-            $item->file_type = File::extension('storage/' . $item->subfolder . '/' . $item->file);
-            $item->file_size = round(File::size('storage/' . $item->subfolder . '/' . $item->file)/1024, 2);
+            $item->file_type = File::extension('storage/'.$item->subfolder.'/'.$item->file);
+            $item->file_size = round(File::size('storage/'.$item->subfolder.'/'.$item->file) / 1024, 2);
         });
 
         return view('admin.list_attachments_icons', ['data' => $data]);
     }
 
-    public function ajax_upload(Request $request) {
-        Log::info( 'peter ' . __METHOD__ . ' line ' . __LINE__ . " " . serialize($request->all()));
+    public function ajax_upload(Request $request)
+    {
+        Log::info('peter '.__METHOD__.' line '.__LINE__.' '.serialize($request->all()));
         if ($request->hasFile('image')) {
             $file = $request->file('image');
 
             //todo options for storing image. Consider image upload service that already is there
 
             $path = $file->store('images', 'public'); // Store in the 'images' directory in public storage
+
             // Return the image path
             return response()->json(['url' => Storage::url($path)]);
         }
@@ -88,13 +86,13 @@ class AttachmentController extends Controller
         return response()->json(['error' => 'No file uploaded'], 400);
     }
 
-    public function endless ()
+    public function endless()
     {
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
         $data['filecount'] = Attachment::count();
+
         return view('admin.list_attachments_endless', ['data' => $data]);
     }
-
 
     public function endless_data(Request $request)
     {
@@ -102,6 +100,7 @@ class AttachmentController extends Controller
         $data = [];
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
         $data['filecount'] = Attachment::count();
+
         //return view('admin.list_attachments_endless', ['data' => $data, 'records' => $data]);
         return response()->json(['data' => $data, 'records' => $data]);
         //Log::info( __METHOD__ . ' line ' . __LINE__ . " " . serialize($request->all()));
@@ -138,7 +137,7 @@ class AttachmentController extends Controller
         foreach ($request->file('images') as $image) {
             $file = $image->store('', 'public');
             $imageName = $image->getClientOriginalName();
-            $attachment = new Attachment();
+            $attachment = new Attachment;
             $attachment['file_name'] = $imageName;
             $attachment['file'] = $file;
             $attachment['access_level'] = $request->attachment['access_level'];

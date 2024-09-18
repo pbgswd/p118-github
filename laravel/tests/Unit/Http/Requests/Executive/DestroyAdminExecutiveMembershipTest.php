@@ -16,7 +16,7 @@ class DestroyAdminExecutiveMembershipTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Executive\DestroyAdminExecutiveMembership();
+        $this->subject = new \App\Http\Requests\Executive\DestroyAdminExecutiveMembership;
     }
 
     /**

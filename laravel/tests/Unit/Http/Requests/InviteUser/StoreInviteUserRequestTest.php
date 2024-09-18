@@ -16,7 +16,7 @@ class StoreInviteUserRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\InviteUser\StoreInviteUserRequest();
+        $this->subject = new \App\Http\Requests\InviteUser\StoreInviteUserRequest;
     }
 
     /**

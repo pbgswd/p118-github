@@ -16,7 +16,7 @@ class UpdateOrganizationRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Organization\UpdateOrganizationRequest();
+        $this->subject = new \App\Http\Requests\Organization\UpdateOrganizationRequest;
     }
 
     /**

@@ -16,7 +16,7 @@ class UpdateBylawRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Bylaws\UpdateBylawRequest();
+        $this->subject = new \App\Http\Requests\Bylaws\UpdateBylawRequest;
     }
 
     /**

@@ -16,7 +16,7 @@ class AdminDestroyExecutiveTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Executive\AdminDestroyExecutive();
+        $this->subject = new \App\Http\Requests\Executive\AdminDestroyExecutive;
     }
 
     /**

@@ -13,14 +13,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use ReCaptcha\ReCaptcha;
-use SendGrid\Mail\TypeException;
 
 class ContactController extends Controller
 {
-    /**
-     * @param Contact $contact
-     * @return View
-     */
     public function show(Contact $contact): View
     {
         $data = [];
@@ -29,15 +24,11 @@ class ContactController extends Controller
             $data = ['contactPage' => Page::withoutGlobalScopes()
                 ->where('slug', 'contact-us')->get(), ];
         }
-        $data['title'] = 'Contact '. env('APP_NAME');
+        $data['title'] = 'Contact '.env('APP_NAME');
 
         return view('contact', ['data' => $data]);
     }
 
-    /**
-     * @param SubmitContact $request
-     * @return RedirectResponse
-     */
     public function submit(SubmitContact $request): RedirectResponse
     {
         $recaptcha = new ReCaptcha(getenv('GOOGLE_RECAPTCHA_V3_SECRET_KEY'));
@@ -71,19 +62,19 @@ class ContactController extends Controller
         } else {
             Mail::send('emails.contact', ['data' => $request->all()],
                 function ($m) use ($request, $cc) {
-                $m->from(config('mail.from.address'), config('app.name') .
-                    'Contact Page Message from '.$request['name']);
-                $m->to(config('mail.office_admin.address'),
-                    config('mail.office_admin.name'));
-                if ($cc != '') {
-                    $m->cc($cc, $cc);
-                }
-                $m->replyTo($request['email'], $request['name']);
-                $m->subject('Contact Page '.$request['subject'] . ' from ' .
-                    $request['name']);
+                    $m->from(config('mail.from.address'), config('app.name').
+                        'Contact Page Message from '.$request['name']);
+                    $m->to(config('mail.office_admin.address'),
+                        config('mail.office_admin.name'));
+                    if ($cc != '') {
+                        $m->cc($cc, $cc);
+                    }
+                    $m->replyTo($request['email'], $request['name']);
+                    $m->subject('Contact Page '.$request['subject'].' from '.
+                        $request['name']);
 
-                Session::flash('success', 'Message Sent');
-            });
+                    Session::flash('success', 'Message Sent');
+                });
         }
 
         return redirect()->route('contact');

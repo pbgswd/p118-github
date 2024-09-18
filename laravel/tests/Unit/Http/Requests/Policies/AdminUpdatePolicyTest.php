@@ -16,7 +16,7 @@ class AdminUpdatePolicyTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Policies\AdminUpdatePolicy();
+        $this->subject = new \App\Http\Requests\Policies\AdminUpdatePolicy;
     }
 
     /**

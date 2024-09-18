@@ -41,9 +41,6 @@ class AdminCarouselController extends Controller
         return view('admin.carousel_list', ['data' => $data]);
     }
 
-    /**
-     * @return View
-     */
     public function create(): View
     {
         $carousel = new Carousel;
@@ -62,10 +59,6 @@ class AdminCarouselController extends Controller
         return view('admin.carousel', ['data' => $data]);
     }
 
-    /**
-     * @param StoreCarouselRequest $request
-     * @return RedirectResponse
-     */
     public function store(StoreCarouselRequest $request): RedirectResponse
     {
         $carousel = new Carousel($request->carousel);
@@ -92,10 +85,6 @@ class AdminCarouselController extends Controller
         return redirect()->route('admin_carousel_edit', [$carousel->id]);
     }
 
-    /**
-     * @param Carousel $carousel
-     * @return View
-     */
     public function edit(Carousel $carousel): View
     {
         $carousel->load('user');
@@ -113,12 +102,12 @@ class AdminCarouselController extends Controller
         }
 
         foreach ($width as $w) {
-            if (!empty($data['carousel']['file_'.$w]) &&
+            if (! empty($data['carousel']['file_'.$w]) &&
                 Storage::disk('carousel')
-                    ->exists($data['carousel']['file_' . $w])) {
-                $filesize['file_' . $w] =
+                    ->exists($data['carousel']['file_'.$w])) {
+                $filesize['file_'.$w] =
                     round(Storage::disk('carousel')
-                            ->size($data['carousel']['file_' . $w]) / 1024, 2);
+                        ->size($data['carousel']['file_'.$w]) / 1024, 2);
                 $data['count']++;
             }
         }
@@ -128,13 +117,9 @@ class AdminCarouselController extends Controller
     }
 
     /**
-     * @param UpdateCarouselRequest $request
-     * @param Carousel $carousel
-     * @return RedirectResponse
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     #[NoReturn]
-
     public function update(UpdateCarouselRequest $request, Carousel $carousel): RedirectResponse
     {
         $carousel->fill($request->carousel);
@@ -179,10 +164,6 @@ class AdminCarouselController extends Controller
         return redirect()->route('admin_carousel_edit', [$carousel->id]);
     }
 
-    /**
-     * @param DestroyCarouselRequest $request
-     * @return RedirectResponse
-     */
     public function destroy(DestroyCarouselRequest $request): RedirectResponse
     {
         if (! isset($request->id)) {

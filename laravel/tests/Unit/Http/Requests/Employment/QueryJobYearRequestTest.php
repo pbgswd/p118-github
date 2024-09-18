@@ -16,7 +16,7 @@ class QueryJobYearRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Employment\QueryJobYearRequest();
+        $this->subject = new \App\Http\Requests\Employment\QueryJobYearRequest;
     }
 
     /**

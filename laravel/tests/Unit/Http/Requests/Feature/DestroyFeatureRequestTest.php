@@ -16,7 +16,7 @@ class DestroyFeatureRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Feature\DestroyFeatureRequest();
+        $this->subject = new \App\Http\Requests\Feature\DestroyFeatureRequest;
     }
 
     /**

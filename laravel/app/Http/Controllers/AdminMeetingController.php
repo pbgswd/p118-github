@@ -50,7 +50,7 @@ class AdminMeetingController extends Controller
     public function create(): View
     {
         $this->authorize('create', Meeting::class);
-        $meeting = new Meeting();
+        $meeting = new Meeting;
         $meeting->live = $meeting->getDefaultLiveStatus();
 
         return view(

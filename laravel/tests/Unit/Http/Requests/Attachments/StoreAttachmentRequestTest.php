@@ -16,7 +16,7 @@ class StoreAttachmentRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Attachments\StoreAttachmentRequest();
+        $this->subject = new \App\Http\Requests\Attachments\StoreAttachmentRequest;
     }
 
     /**

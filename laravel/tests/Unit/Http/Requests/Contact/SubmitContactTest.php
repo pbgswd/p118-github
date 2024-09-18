@@ -16,7 +16,7 @@ class SubmitContactTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Contact\SubmitContact();
+        $this->subject = new \App\Http\Requests\Contact\SubmitContact;
     }
 
     /**

@@ -16,7 +16,7 @@ class UpdateAttachmentRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Attachments\UpdateAttachmentRequest();
+        $this->subject = new \App\Http\Requests\Attachments\UpdateAttachmentRequest;
     }
 
     /**

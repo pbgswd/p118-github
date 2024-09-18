@@ -34,9 +34,9 @@ class ProcessMessages implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info("------------------------------------------------------------------------------------------------");
-        Log::info( 'peter ' . __METHOD__ . ' line ' . __LINE__ .
-            ' - Start of handle method - Process message with id of: ' .
+        Log::info('------------------------------------------------------------------------------------------------');
+        Log::info('peter '.__METHOD__.' line '.__LINE__.
+            ' - Start of handle method - Process message with id of: '.
             $this->taskData['id']);
 
         $message = Message::where('id', $this->taskData['id'])
@@ -57,7 +57,7 @@ class ProcessMessages implements ShouldQueue
         $type = $message[0]->messageMeta->source_type;
         $name = $message[0]->messageMeta->source_type_name;
 
-        Log::info( __METHOD__ . ' line ' . __LINE__ . ' - type= ' . $type .
+        Log::info(__METHOD__.' line '.__LINE__.' - type= '.$type.
             ', name= '.$name);
 
         $subs = User::with('message_frequency_preferences', 'message_selections')
@@ -77,9 +77,9 @@ class ProcessMessages implements ShouldQueue
 
             $emailQueueMsg->save();
 
-            Log::info( __METHOD__ . ' line ' . __LINE__ . ' - The message, ' .
-                $message[0]->subject .
-                ', is in the email queue to '.$sub->email );
+            Log::info(__METHOD__.' line '.__LINE__.' - The message, '.
+                $message[0]->subject.
+                ', is in the email queue to '.$sub->email);
         }
 
         $messageSending = MessageSending::where('message_id', $message[0]->id)
@@ -100,8 +100,8 @@ class ProcessMessages implements ShouldQueue
         // into mail queue that have not already
         // been pushed to the mail queue
 
-        Log::info( __FILE__ . ' line ' . __LINE__ .
-            ' End of handle method - Process Messages Job was run ' .
-            $this->taskData['log'] . 'id: '.$this->taskData['id'] );
+        Log::info(__FILE__.' line '.__LINE__.
+            ' End of handle method - Process Messages Job was run '.
+            $this->taskData['log'].'id: '.$this->taskData['id']);
     }
 }

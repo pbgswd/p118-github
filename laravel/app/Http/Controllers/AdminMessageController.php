@@ -144,7 +144,6 @@ class AdminMessageController extends Controller
     }
 
     /**
-     * @param Message $message
      * @return View
      */
     public function edit(Message $message)
@@ -153,10 +152,10 @@ class AdminMessageController extends Controller
 
         $message->load('user', 'attachments', 'messageMeta', 'messageSending');
 
-        if($message->messageSending->send_status_now == 'sent') {
+        if ($message->messageSending->send_status_now == 'sent') {
             Session::flash('warning', 'The message, '.$message->subject.
             ', can no longer be edited because it has been sent to the mail queue');
-           // return redirect()->route('admin_messages');
+            // return redirect()->route('admin_messages');
 
         }
 
@@ -262,11 +261,11 @@ class AdminMessageController extends Controller
 
         Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
 
-        ProcessMessages::dispatch(['log' => "delay message by a certain amount"])
+        ProcessMessages::dispatch(['log' => 'delay message by a certain amount'])
             ->delay(now()->isFriday('17:00'));
-            //->delay(now()->addMinutes(10));
+        //->delay(now()->addMinutes(10));
 
-        ProcessMessages::dispatch(['log' => __FILE__ . " " . ' Sending the message '.$message->subject, 'id' => $message->id]);
+        ProcessMessages::dispatch(['log' => __FILE__.' '.' Sending the message '.$message->subject, 'id' => $message->id]);
 
         Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 

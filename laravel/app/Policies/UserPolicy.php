@@ -9,11 +9,6 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * @param $user
-     * @param $ability
-     * @return bool
-     */
     public function before($user, $ability): bool
     {
         $test = $user->hasRole(['super-admin', 'office'])
@@ -21,12 +16,12 @@ class UserPolicy
 
         return $test == true ? true : false;
 
-     /* if ($test) {
-            return true;
-        }
-        else {
-            return false;
-        }*/
+        /* if ($test) {
+               return true;
+           }
+           else {
+               return false;
+           }*/
     }
 
     /**
@@ -60,21 +55,12 @@ class UserPolicy
         }
     }
 
-    /**
-     * @param User $user
-     * @return bool
-     */
     public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'office']) ||
             $user->hasPermissionTo('create users');
     }
 
-    /**
-     * @param User $loggedInUser
-     * @param User $targetUser
-     * @return bool
-     */
     public function update(User $loggedInUser, User $targetUser): bool
     {
         return $loggedInUser->id === $targetUser->id;

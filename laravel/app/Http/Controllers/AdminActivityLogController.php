@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -32,7 +31,7 @@ class AdminActivityLogController extends Controller
         $activityLog = new ActivityLog($request);
         //$activityLog['ip_address'] = $_SERVER['REMOTE_ADDR'];
         // $activityLog['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-       // $activityLog['model'] = $request['model'];
+        // $activityLog['model'] = $request['model'];
 
         $activityLog->save();
     }
@@ -41,8 +40,8 @@ class AdminActivityLogController extends Controller
     {
         // Step 1: Get the IDs of the latest 20 records
         $latestIds = ActivityLog::orderBy('created_at', 'desc') // Or use another column like 'id'
-        ->take(100)
-        ->pluck('id');
+            ->take(100)
+            ->pluck('id');
 
         // Step 2: Delete all records that are not in the latest 20
         ActivityLog::whereNotIn('id', $latestIds)
@@ -54,8 +53,8 @@ class AdminActivityLogController extends Controller
      */
     public function destroy(ActivityLog $activityLog)
     {
-        Session::flash('success', 'You have deleted ' . count($activityLog->id)
-            . ' ' . Str::plural('message', count($activityLog->id)) . '.');
+        Session::flash('success', 'You have deleted '.count($activityLog->id)
+            .' '.Str::plural('message', count($activityLog->id)).'.');
         Session::flash('warning', 'not deleting yet');
     }
 }

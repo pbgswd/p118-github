@@ -33,15 +33,11 @@ class LocalSearchController extends Controller
 {
     use Sortable;
 
-    /**
-     * @param LocalSearchResult $request
-     * @return View
-     */
     public function index(LocalSearchResult $request): View
     {
         $data = [
             'search' => $request->search,
-            'results' => (new Search())
+            'results' => (new Search)
                 ->registerModel(Agreement::class, ['title', 'description'])
                 ->registerModel(Bylaw::class, ['title', 'description'])
                 ->registerModel(Committee::class, ['name', 'description'])
@@ -72,7 +68,7 @@ class LocalSearchController extends Controller
          * https://medium.com/justlaravel/search-functionality-in-laravel-a2527282150b
          */
 
-        $data['title'] = "Search Results for " . $request->search;
+        $data['title'] = 'Search Results for '.$request->search;
 
         return view('search', ['data' => $data]);
     }
@@ -81,7 +77,7 @@ class LocalSearchController extends Controller
     {
         $data = [
             'search' => $request->search,
-            'results' => (new Search())
+            'results' => (new Search)
                 ->registerModel(Post::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
                         ->addSearchableAttribute('content')
@@ -159,16 +155,16 @@ class LocalSearchController extends Controller
                 })->search($request->search),
         ];
 
-        $data['models'] = ['Post','Page','Topic','Agreement','Bylaw',
-            'Employment','Meeting','Organization','Venue','User','Executive',
-            'UserInfo','Policy','Committee','CommitteePost','Feature',
-            'Memoriam','Faq','FaqData'];
+        $data['models'] = ['Post', 'Page', 'Topic', 'Agreement', 'Bylaw',
+            'Employment', 'Meeting', 'Organization', 'Venue', 'User', 'Executive',
+            'UserInfo', 'Policy', 'Committee', 'CommitteePost', 'Feature',
+            'Memoriam', 'Faq', 'FaqData'];
 
-//todo break up big search in to individual searches, and then return that with UI context for each Model
+        //todo break up big search in to individual searches, and then return that with UI context for each Model
         $data['Posts'] = [
             'name' => 'Posts',
             'search' => $request->search,
-            'results' => (new Search())
+            'results' => (new Search)
                 ->registerModel(Post::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
                         ->addSearchableAttribute('content')
@@ -181,15 +177,11 @@ class LocalSearchController extends Controller
         return view('admin.search_admin', ['data' => $data]);
     }
 
-    /**
-     * @param LocalSearchResult $request
-     * @return View
-     */
     public function admin_attachment_search(LocalSearchResult $request): View
     {
         $data = [
             'search' => $request->search,
-            'results' => (new Search())
+            'results' => (new Search)
                 ->registerModel(Attachment::class, ['file_name', 'description'])
                 ->search($request->search),
         ];

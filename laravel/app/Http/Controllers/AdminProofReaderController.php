@@ -66,7 +66,7 @@ class AdminProofReaderController extends Controller
         //todo form request validator
 
         $proofReader->user_id = Auth::id();
-        $proofReader->proofread_at = new Carbon(new \DateTime());
+        $proofReader->proofread_at = new Carbon(new \DateTime);
 
         $proofReader->save();
 

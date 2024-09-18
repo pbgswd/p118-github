@@ -33,6 +33,7 @@ use Illuminate\View\View;
 class AdminController extends Controller
 {
     protected $activityLog;
+
     public function __construct(ActivityLog $activityLog)
     {
         $this->activityLog = $activityLog;
@@ -72,14 +73,14 @@ class AdminController extends Controller
 
         //todo make a dependency injection
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . " accessed the admin dashboard",
+            'activity' => Auth::user()->name.' accessed the admin dashboard',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
         $al->save();
 
         $activities = ActivityLog::orderBy('id', 'DESC')
-           ->limit(5)->get();
+            ->limit(5)->get();
 
         $data = [
             'user' => Auth::user(),

@@ -16,7 +16,7 @@ class UpdateFeatureRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Feature\UpdateFeatureRequest();
+        $this->subject = new \App\Http\Requests\Feature\UpdateFeatureRequest;
     }
 
     /**

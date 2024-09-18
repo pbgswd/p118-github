@@ -16,7 +16,7 @@ class UpdateMemberEmergencyContactTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Member\UpdateMemberEmergencyContact();
+        $this->subject = new \App\Http\Requests\Member\UpdateMemberEmergencyContact;
     }
 
     /**

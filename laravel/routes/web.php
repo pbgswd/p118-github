@@ -41,7 +41,7 @@ Route::middleware('web')->group(function () {
     //Route::get('/hire-us', [CNS\HireUsController::class, 'show'])->name('hire-us'); // to be updated
 
     Route::controller(CNS\PageController::class)->group(function () {
-       // Route::redirect('/page/apply-for-overhire-work', '/page/not-accepting-new-hire-applications');
+        // Route::redirect('/page/apply-for-overhire-work', '/page/not-accepting-new-hire-applications');
         Route::get('/pages', 'list')->name('pages');
         Route::get('/page/{page}', 'show')->name('page_show');
     });
@@ -303,8 +303,8 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
         Route::get('/attachments', 'index')->name('attachments_list');
         Route::get('/attachments_icons', 'index_icons')->name('attachments_icons_list');
         Route::post('/attachments_ajax_upload', 'ajax_upload')->name('ajax_upload');
-        Route::get('/attachments/endless', 'endless' )->name('endless');
-        Route::get('/attachments/endless/data', 'endless_data' )->name('endless_data');
+        Route::get('/attachments/endless', 'endless')->name('endless');
+        Route::get('/attachments/endless/data', 'endless_data')->name('endless_data');
         Route::get('/attachment/create', 'create')->name('attachment_create');
         Route::post('/attachment/create', 'store')->name('create_attachment');
         Route::get('/attachment/{attachment}/edit', 'edit')->name('admin_attachment_edit');
@@ -441,7 +441,7 @@ Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->
     });
 
     Route::controller(CNS\AdminActivityLogController::class)->group(function () {
-       Route::get('activity-logs/', 'index')->name('admin_activity_logs_list');
-       Route::delete('activity-logs/delete', 'destroy')->name('admin_activity_log_destroy');
+        Route::get('activity-logs/', 'index')->name('admin_activity_logs_list');
+        Route::delete('activity-logs/delete', 'destroy')->name('admin_activity_log_destroy');
     });
 });
