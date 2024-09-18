@@ -42,7 +42,7 @@ class Agreement extends LiveableModel implements HasAttachment, Searchable
         self::class => AgreementPolicy::class,
     ];
 
-    public $sortable = [
+    public array $sortable = [
         'id',
         'title',
         'from',
