@@ -154,8 +154,8 @@ Route::middleware('web', 'auth')->group(function () {
 /**
  * ADMIN SECTION
  */
-//todo ->middleware('role:super-admin|office|committee|writer') is an L11 spatie package issue....
-Route::prefix('admin')->middleware('role:super-admin|office|committee|writer')->group(function () {
+
+Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])->group(function () {
 
     Route::controller(CNS\AdminController::class)->group(function () {
         Route::get('/', 'index')->name('admin');
