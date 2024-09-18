@@ -93,7 +93,7 @@ class Options
      */
     public static function testing_address_update_contacts(): array
     {
-        $contacts = ['pbgswd@gmail.com', 'financialsecretary@iatse118.com'];
+        $contacts = ['pbgswd@gmail.com'];
 
         return $contacts;
     }
@@ -176,7 +176,6 @@ class Options
 
     public static function state_prov(): array
     {
-        $provinces = [];
         $provinces['AB'] = 'Alberta';
         $provinces['BC'] = 'British Columbia';
         $provinces['MB'] = 'Manitoba';
