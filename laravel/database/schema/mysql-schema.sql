@@ -14,6 +14,20 @@ CREATE TABLE `access_level_constants` (
   UNIQUE KEY `access_level_constants_access_level_unique` (`access_level`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `activity_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `activity` text DEFAULT NULL,
+  `ip_address` varchar(255) DEFAULT NULL,
+  `user_agent` varchar(255) DEFAULT NULL,
+  `model` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `addresses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -331,6 +345,7 @@ CREATE TABLE `committee_posts` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `committee_id` bigint(20) unsigned NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
+  `author_name` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `content` text NOT NULL,
@@ -1075,6 +1090,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `is_banned` tinyint(4) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1242,3 +1258,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (147,'2024_03_19_15
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (148,'2024_03_25_213156_create_message_sending_table',77);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (149,'2024_03_25_215341_create_message_metadata_table',77);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (150,'2024_06_22_000000_rename_password_resets_table',77);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (151,'2024_09_09_194814_alter_table_users_add_deleted_at',78);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (152,'2024_09_10_130036_alter_table_committee_posts_add_author_name',79);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (153,'2024_09_11_193313_create_table_activity_log',80);
