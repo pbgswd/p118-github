@@ -288,6 +288,26 @@ CREATE TABLE `bylaws` (
   CONSTRAINT `bylaws_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `cache`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache` (
+  `key` varchar(255) NOT NULL,
+  `value` mediumtext NOT NULL,
+  `expiration` int(11) NOT NULL,
+  PRIMARY KEY (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `cache_locks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_locks` (
+  `key` varchar(255) NOT NULL,
+  `owner` varchar(255) NOT NULL,
+  `expiration` int(11) NOT NULL,
+  PRIMARY KEY (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `carousels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1261,3 +1281,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (150,'2024_06_22_00
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (151,'2024_09_09_194814_alter_table_users_add_deleted_at',78);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (152,'2024_09_10_130036_alter_table_committee_posts_add_author_name',79);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (153,'2024_09_11_193313_create_table_activity_log',80);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (154,'2024_09_18_194818_create_cache_table',81);
