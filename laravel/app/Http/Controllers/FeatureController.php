@@ -8,9 +8,6 @@ use Illuminate\View\View;
 
 class FeatureController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         $features = Feature::withoutGlobalScopes()
@@ -21,30 +18,26 @@ class FeatureController extends Controller
         $data = [
             'features' => $features,
             'thumbs' => Options::feature_thumb_values(),
-            'title' => "Feature News",
+            'title' => 'Feature News',
         ];
 
         return view('features', ['data' => $data]);
     }
 
-    /**
-     * @param Feature $feature
-     * @return View
-     */
     public function show(Feature $feature): View
     {
         if ($feature['image']) {
             if (file_exists(storage_path().'/app/public/'.$feature['image'])) {
                 if (! file_exists(storage_path()
-                    . '/app/public/'.Options::feature_thumb_values()['tn_str'] .
+                    .'/app/public/'.Options::feature_thumb_values()['tn_str'].
                     $feature['image'])) {
                     $this->userImageService
                         ->generate_thumb($feature['image'], 'public',
-                        Options::feature_thumb_values());
+                            Options::feature_thumb_values());
                 }
             }
             $feature->thumb = Options::feature_thumb_values()['tn_str']
-                . $feature['image'];
+                .$feature['image'];
         }
 
         $data = [

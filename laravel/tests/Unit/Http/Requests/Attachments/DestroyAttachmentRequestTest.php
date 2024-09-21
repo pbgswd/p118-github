@@ -16,7 +16,7 @@ class DestroyAttachmentRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Attachments\DestroyAttachmentRequest();
+        $this->subject = new \App\Http\Requests\Attachments\DestroyAttachmentRequest;
     }
 
     /**

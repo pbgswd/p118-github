@@ -16,7 +16,7 @@ class UpdateAgreementRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Agreements\UpdateAgreementRequest();
+        $this->subject = new \App\Http\Requests\Agreements\UpdateAgreementRequest;
     }
 
     /**

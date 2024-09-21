@@ -16,7 +16,7 @@ class StorePostRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Posts\StorePostRequest();
+        $this->subject = new \App\Http\Requests\Posts\StorePostRequest;
     }
 
     /**

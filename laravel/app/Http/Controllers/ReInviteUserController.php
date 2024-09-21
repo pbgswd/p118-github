@@ -32,7 +32,7 @@ class ReInviteUserController extends Controller
             $user = new User(array_merge(['name' => $i->name, 'email' => $i->email], ['password' => bcrypt($password)]));
             $user->save();
             $user->assignRole('member');
-            $membership = new Membership();
+            $membership = new Membership;
             $membership->user_id = $user->id;
             $membership->membership_type = 'Member';
             $user->membership()->save($membership);

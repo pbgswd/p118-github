@@ -16,7 +16,7 @@ class StoreCommitteeRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Committees\StoreCommitteeRequest();
+        $this->subject = new \App\Http\Requests\Committees\StoreCommitteeRequest;
     }
 
     /**

@@ -16,7 +16,7 @@ class DestroyBylawRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Bylaws\DestroyBylawRequest();
+        $this->subject = new \App\Http\Requests\Bylaws\DestroyBylawRequest;
     }
 
     /**

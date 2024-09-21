@@ -60,11 +60,16 @@ class Carousel extends LiveableModel
     ];
 
     /**
-     * @var string[]
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    public $casts = [
-        'live' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'live' => 'boolean',
+        ];
+    }
 
     public function user(): HasOne
     {

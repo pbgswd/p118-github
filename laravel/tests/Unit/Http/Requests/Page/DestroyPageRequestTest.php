@@ -16,7 +16,7 @@ class DestroyPageRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Page\DestroyPageRequest();
+        $this->subject = new \App\Http\Requests\Page\DestroyPageRequest;
     }
 
     /**

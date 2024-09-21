@@ -10,9 +10,7 @@ class AttachmentPolicy
 {
     use HandlesAuthorization;
 
-    public function before()
-    {
-    }
+    public function before() {}
 
     /**
      * @throws \Exception

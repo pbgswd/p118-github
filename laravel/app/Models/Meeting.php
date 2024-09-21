@@ -54,10 +54,13 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $casts = [
-        'date' => 'datetime',
-        'live' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'date' => 'datetime',
+            'live' => 'boolean',
+        ];
+    }
 
     public function getSearchResult(): SearchResult
     {

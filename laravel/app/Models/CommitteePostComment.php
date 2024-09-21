@@ -47,10 +47,6 @@ class CommitteePostComment extends LiveableModel implements Searchable
         'updated_at',
     ];
 
-    protected $casts = [
-        'live' => 'boolean',
-    ];
-
     /**
      * The attributes that are mass assignable.
      */
@@ -59,6 +55,13 @@ class CommitteePostComment extends LiveableModel implements Searchable
         'live',
         'user_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'live' => 'boolean',
+        ];
+    }
 
     public function getSearchResult(): SearchResult
     {

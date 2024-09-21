@@ -16,7 +16,7 @@ class StoreEmploymentRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Employment\StoreEmploymentRequest();
+        $this->subject = new \App\Http\Requests\Employment\StoreEmploymentRequest;
     }
 
     /**

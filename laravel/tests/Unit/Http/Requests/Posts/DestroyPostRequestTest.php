@@ -16,7 +16,7 @@ class DestroyPostRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Posts\DestroyPostRequest();
+        $this->subject = new \App\Http\Requests\Posts\DestroyPostRequest;
     }
 
     /**

@@ -16,7 +16,7 @@ class DestroyMeetingRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Meetings\DestroyMeetingRequest();
+        $this->subject = new \App\Http\Requests\Meetings\DestroyMeetingRequest;
     }
 
     /**

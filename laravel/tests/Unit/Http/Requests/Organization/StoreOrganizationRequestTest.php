@@ -16,7 +16,7 @@ class StoreOrganizationRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Organization\StoreOrganizationRequest();
+        $this->subject = new \App\Http\Requests\Organization\StoreOrganizationRequest;
     }
 
     /**

@@ -16,7 +16,7 @@ class DestroyTopicRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Topic\DestroyTopicRequest();
+        $this->subject = new \App\Http\Requests\Topic\DestroyTopicRequest;
     }
 
     /**

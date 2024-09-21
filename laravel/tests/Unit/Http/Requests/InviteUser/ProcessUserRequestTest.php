@@ -16,7 +16,7 @@ class ProcessUserRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\InviteUser\ProcessUserRequest();
+        $this->subject = new \App\Http\Requests\InviteUser\ProcessUserRequest;
     }
 
     /**

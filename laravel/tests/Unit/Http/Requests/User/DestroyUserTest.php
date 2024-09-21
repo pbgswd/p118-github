@@ -16,7 +16,7 @@ class DestroyUserTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\User\DestroyUser();
+        $this->subject = new \App\Http\Requests\User\DestroyUser;
     }
 
     /**

@@ -27,7 +27,7 @@ class VenueController extends Controller
 
         $data['tn_prefix'] = Options::venue_org_thumb_values()['tn_str'];
 
-        $data['title'] = "Venues";
+        $data['title'] = 'Venues';
 
         return view('venues', ['data' => $data]);
     }

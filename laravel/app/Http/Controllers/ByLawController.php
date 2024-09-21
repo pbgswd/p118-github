@@ -38,6 +38,6 @@ class ByLawController extends Controller
         $bylaw->load('user', 'attachments');
 
         return view('bylaw_view', ['data' => ['bylaw' => $bylaw,
-            'title' =>  $bylaw->title .' -  Constitution and Bylaws']]);
+            'title' => $bylaw->title.' -  Constitution and Bylaws']]);
     }
 }

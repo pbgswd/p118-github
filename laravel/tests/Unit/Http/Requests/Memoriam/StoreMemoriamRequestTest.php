@@ -16,7 +16,7 @@ class StoreMemoriamRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Memoriam\StoreMemoriamRequest();
+        $this->subject = new \App\Http\Requests\Memoriam\StoreMemoriamRequest;
     }
 
     /**

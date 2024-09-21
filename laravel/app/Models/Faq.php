@@ -54,9 +54,12 @@ class Faq extends LiveableModel implements Searchable
         'updated_at',
     ];
 
-    public $casts = [
-        'live' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'live' => 'boolean',
+        ];
+    }
 
     /**
      * in urls, what field value is used to identify a Faq record?

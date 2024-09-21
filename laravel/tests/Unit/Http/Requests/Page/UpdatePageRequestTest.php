@@ -16,7 +16,7 @@ class UpdatePageRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Page\UpdatePageRequest();
+        $this->subject = new \App\Http\Requests\Page\UpdatePageRequest;
     }
 
     /**

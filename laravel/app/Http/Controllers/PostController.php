@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Constants\AccessLevelConstants;
 use App\Models\Post;
 use App\Services\AttachmentService;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -35,18 +34,15 @@ class PostController extends Controller
                 ->paginate(9);
         }
 
-        return view('posts', ['data' => ['posts' => $posts, 'title' => "Posts"]]);
+        return view('posts', ['data' => ['posts' => $posts, 'title' => 'Posts']]);
     }
 
-    /**
-     * @param Post $post
-     * @return View
-     */
     public function show(Post $post): View
     {
         if (Auth::check() === false
             && $post->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('warning', 'Login to view this post.');
+
             return view('auth.login');
         }
 

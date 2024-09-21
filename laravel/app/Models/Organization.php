@@ -60,10 +60,6 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $casts = [
-        'live' => 'boolean',
-    ];
-
     /**
      * @var mixed
      */
@@ -73,6 +69,13 @@ class Organization extends LiveableModel implements HasAttachment, Searchable
     {
         parent::__construct($attributes);
         $this->access_level = AccessLevelConstants::MEMBERS;
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'live' => 'boolean',
+        ];
     }
 
     public function getSearchResult(): SearchResult

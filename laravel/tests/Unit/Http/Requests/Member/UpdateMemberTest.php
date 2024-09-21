@@ -16,7 +16,7 @@ class UpdateMemberTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Member\UpdateMember();
+        $this->subject = new \App\Http\Requests\Member\UpdateMember;
     }
 
     /**

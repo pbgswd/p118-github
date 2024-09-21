@@ -16,7 +16,7 @@ class StorePageRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Page\StorePageRequest();
+        $this->subject = new \App\Http\Requests\Page\StorePageRequest;
     }
 
     /**

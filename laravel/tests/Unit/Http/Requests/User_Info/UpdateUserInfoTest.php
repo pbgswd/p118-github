@@ -16,7 +16,7 @@ class UpdateUserInfoTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\User_Info\UpdateUserInfo();
+        $this->subject = new \App\Http\Requests\User_Info\UpdateUserInfo;
     }
 
     /**

@@ -16,7 +16,7 @@ class StoreBylawRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Bylaws\StoreBylawRequest();
+        $this->subject = new \App\Http\Requests\Bylaws\StoreBylawRequest;
     }
 
     /**

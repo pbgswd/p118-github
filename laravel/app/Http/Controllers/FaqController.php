@@ -40,7 +40,7 @@ class FaqController extends Controller
 
         $faq->load(['faqs_data', 'user']);
         $data = ['faq' => $faq];
-        $data['title'] = "FAQ for " .  $faq->faq_topic;
+        $data['title'] = 'FAQ for '.$faq->faq_topic;
 
         return view('faq', ['data' => $data]);
     }

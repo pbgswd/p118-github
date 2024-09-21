@@ -16,7 +16,7 @@ class DestroyOrganizationRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Organization\DestroyOrganizationRequest();
+        $this->subject = new \App\Http\Requests\Organization\DestroyOrganizationRequest;
     }
 
     /**

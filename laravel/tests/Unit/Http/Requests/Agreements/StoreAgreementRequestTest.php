@@ -16,7 +16,7 @@ class StoreAgreementRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Agreements\StoreAgreementRequest();
+        $this->subject = new \App\Http\Requests\Agreements\StoreAgreementRequest;
     }
 
     /**

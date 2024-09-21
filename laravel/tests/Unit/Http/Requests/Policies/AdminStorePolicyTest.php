@@ -16,7 +16,7 @@ class AdminStorePolicyTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Policies\AdminStorePolicy();
+        $this->subject = new \App\Http\Requests\Policies\AdminStorePolicy;
     }
 
     /**

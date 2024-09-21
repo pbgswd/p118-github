@@ -16,7 +16,7 @@ class QueryMeetingYearRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Meetings\QueryMeetingYearRequest();
+        $this->subject = new \App\Http\Requests\Meetings\QueryMeetingYearRequest;
     }
 
     /**

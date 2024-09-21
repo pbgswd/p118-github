@@ -51,9 +51,12 @@ class FaqData extends LiveableModel implements Searchable
         'updated_at',
     ];
 
-    public $casts = [
-        'live' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'live' => 'boolean',
+        ];
+    }
 
     public function faq(): BelongsTo
     {

@@ -40,8 +40,8 @@ class User extends Authenticatable implements HasAttachment, Searchable
     use HasFactory;
     use HasRoles;
     use Notifiable;
-    use Sortable;
     use SoftDeletes;
+    use Sortable;
 
     protected $guard_name = 'web';
 
@@ -83,12 +83,17 @@ class User extends Authenticatable implements HasAttachment, Searchable
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    protected $casts = [
-        'banned_until' => 'datetime',
-        'email_verified_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'banned_until' => 'datetime',
+            'email_verified_at' => 'datetime',
+        ];
+    }
 
     public function getSearchResult(): SearchResult
     {

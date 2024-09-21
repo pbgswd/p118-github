@@ -42,7 +42,7 @@ class CommitteePostController extends Controller
             'post' => $post,
             'action' => 'Create',
             'access_levels' => Options::access_levels(),
-            'title' => "Create a Committee Post",
+            'title' => 'Create a Committee Post',
         ];
 
         return view('committee_post_form', ['data' => $data]);
@@ -91,7 +91,7 @@ class CommitteePostController extends Controller
                 'post' => $committeePost,
                 'action' => 'Edit',
                 'access_levels' => Options::access_levels(),
-                'title' => "Edit " . $committeePost->title,
+                'title' => 'Edit '.$committeePost->title,
             ],
         ]);
     }
@@ -138,6 +138,7 @@ class CommitteePostController extends Controller
             $data['canManage'] = 1;
         }
         $data['title'] = $committeePost->title;
+
         return view('committee_post', ['data' => $data]);
     }
 

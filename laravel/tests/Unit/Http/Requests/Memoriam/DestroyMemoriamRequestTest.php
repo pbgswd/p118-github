@@ -16,7 +16,7 @@ class DestroyMemoriamRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Memoriam\DestroyMemoriamRequest();
+        $this->subject = new \App\Http\Requests\Memoriam\DestroyMemoriamRequest;
     }
 
     /**

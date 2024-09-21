@@ -10,9 +10,6 @@ use Illuminate\View\View;
 
 class TopicController extends Controller
 {
-    /**
-     * @return View
-     */
     public function list(): View
     {
         // public
@@ -24,13 +21,12 @@ class TopicController extends Controller
         } else {
             $topics = Topic::sortable()
                 ->where([['access_level', '=', AccessLevelConstants::PUBLIC],
-                    ['live', 1]
+                    ['live', 1],
                 ])
                 ->paginate(9);
         }
 
-        return view('topics', ['data'
-            => ['topics' => $topics, 'title' => "Topics"]]);
+        return view('topics', ['data' => ['topics' => $topics, 'title' => 'Topics']]);
     }
 
     public function show(Topic $topic): View
@@ -55,7 +51,7 @@ class TopicController extends Controller
         $data = [
             'topic' => $topic,
             'layout' => $layout,
-            'title' => $topic->name . " Topic",
+            'title' => $topic->name.' Topic',
         ];
 
         return view('topic', ['data' => $data]);

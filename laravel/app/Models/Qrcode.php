@@ -16,9 +16,12 @@ class Qrcode extends Model
         'qrtype',
     ];
 
-    protected $casts = [
-        'date' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'date' => 'datetime',
+        ];
+    }
 
     public function user(): BelongsTo
     {

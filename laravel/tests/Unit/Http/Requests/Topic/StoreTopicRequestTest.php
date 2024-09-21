@@ -16,7 +16,7 @@ class StoreTopicRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\Topic\StoreTopicRequest();
+        $this->subject = new \App\Http\Requests\Topic\StoreTopicRequest;
     }
 
     /**

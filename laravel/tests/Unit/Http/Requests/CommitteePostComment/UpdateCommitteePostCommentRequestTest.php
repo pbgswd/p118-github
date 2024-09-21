@@ -16,7 +16,7 @@ class UpdateCommitteePostCommentRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\CommitteePostComment\UpdateCommitteePostCommentRequest();
+        $this->subject = new \App\Http\Requests\CommitteePostComment\UpdateCommitteePostCommentRequest;
     }
 
     /**

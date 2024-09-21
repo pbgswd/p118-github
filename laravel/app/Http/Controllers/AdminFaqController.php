@@ -36,7 +36,7 @@ class AdminFaqController extends Controller
         $this->authorize('create', Faq::class);
 
         $data = [
-            'faq' => new Faq(),
+            'faq' => new Faq,
             'action' => 'Create',
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),

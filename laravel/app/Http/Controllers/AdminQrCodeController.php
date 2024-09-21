@@ -27,7 +27,7 @@ class AdminQrCodeController extends Controller
 
     public function create(): View
     {
-        $qr = new Qrcode();
+        $qr = new Qrcode;
 
         $data = [
             'qrcode' => $qr,

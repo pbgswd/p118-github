@@ -48,12 +48,6 @@ class Post extends LiveableModel implements HasAttachment, Searchable
         'updated_at',
     ];
 
-    protected $casts = [
-        'front_page' => 'boolean',
-        'landing_page' => 'boolean',
-        'live' => 'boolean',
-    ];
-
     /**
      * The attributes that are mass assignable.
      */
@@ -66,6 +60,15 @@ class Post extends LiveableModel implements HasAttachment, Searchable
         'front_page',
         'landing_page',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'front_page' => 'boolean',
+            'landing_page' => 'boolean',
+            'live' => 'boolean',
+        ];
+    }
 
     public function getSearchResult(): SearchResult
     {

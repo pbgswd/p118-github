@@ -291,7 +291,7 @@ class AdminUserController extends Controller
         if (! empty($message)) {
             $message['email'] = $user->email;
             $message['name'] = $user->name;
-           // $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
+            // $result = $this->emailMemberUpdateService->sendMessage($message, $user, $original_name);
         }
 
         Session::flash('success', 'You have edited a member profile');
@@ -380,7 +380,7 @@ class AdminUserController extends Controller
 
         $userRequest->validate([
             'emergency_contact_phone' => ['required',
-                new Phone(),
+                new Phone,
             ],
         ]);
 
@@ -416,7 +416,7 @@ class AdminUserController extends Controller
 
                 //todo make a dependency injection
                 $al = new ActivityLog([
-                    'activity' => Auth::user()->name . " deleting " . $user->name,
+                    'activity' => Auth::user()->name.' deleting '.$user->name,
                     'ip_address' => $_SERVER['REMOTE_ADDR'],
                     'user_agent' => $_SERVER['HTTP_USER_AGENT'],
                     'model' => 'User']);
@@ -440,9 +440,9 @@ class AdminUserController extends Controller
                 }
 
                 $user->executive_role()->delete();
-//todo fix breakage when deleting user that has content such as posts, pages, etc, committee membership....
+                //todo fix breakage when deleting user that has content such as posts, pages, etc, committee membership....
 
-              //  Log::debug('attempting to destroy user '.$user->name.', id:'.$user->id);
+                //  Log::debug('attempting to destroy user '.$user->name.', id:'.$user->id);
                 User::destroy($user->id);
             });
 

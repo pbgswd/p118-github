@@ -51,15 +51,18 @@ class Bylaw extends LiveableModel implements HasAttachment, Searchable
         'user_id',
     ];
 
-    protected $casts = [
-        'date' => 'datetime',
-        'live' => 'boolean',
-    ];
-
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->access_level = AccessLevelConstants::MEMBERS;
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'date' => 'datetime',
+            'live' => 'boolean',
+        ];
     }
 
     public function getSearchResult(): SearchResult

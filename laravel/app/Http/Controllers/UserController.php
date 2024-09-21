@@ -58,8 +58,8 @@ class UserController extends Controller
      */
     public function index(): View
     {
-//todo authorize is having a problem, with a few select users, and my test user
-//	$this->authorize('view', Auth::user());
+        //todo authorize is having a problem, with a few select users, and my test user
+        //	$this->authorize('view', Auth::user());
 
         $users = User::with(['user_info', 'phone_number',
             'currentExecutiveRoles', 'membership', 'committee_memberships'])
@@ -72,7 +72,7 @@ class UserController extends Controller
 
         return view('listusers', ['data' => ['users' => $users,
             'count' => $count,
-            'title' => "Members List"]]);
+            'title' => 'Members List']]);
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
      */
     public function show(User $user, UserImageService $service): View
     {
-       // $this->authorize('view', $user);
+        // $this->authorize('view', $user);
 
         $user->load('committee_memberships', 'phone_number',
             'user_info', 'membership',
@@ -94,39 +94,39 @@ class UserController extends Controller
         $folder = $user->getAttachmentFolder();
         $tn_prefix = Options::member_thumb_values()['tn_str'];
 
-/*        if ($user->user_info['image']) {
-    if (file_exists(storage_path().'/app/'.$folder.'/'.$user->user_info['image'])) {
-        if (! file_exists(storage_path().'/app/'.$folder.'/'.$tn_prefix.$user->user_info['image'])) {
-            $service->generate_thumb($user->user_info['image'], $folder,
-                Options::member_thumb_values());
-        }
-    }
-    $user->user_info->thumb = $tn_prefix.$user->user_info['image'];
-}*/
+        /*        if ($user->user_info['image']) {
+            if (file_exists(storage_path().'/app/'.$folder.'/'.$user->user_info['image'])) {
+                if (! file_exists(storage_path().'/app/'.$folder.'/'.$tn_prefix.$user->user_info['image'])) {
+                    $service->generate_thumb($user->user_info['image'], $folder,
+                        Options::member_thumb_values());
+                }
+            }
+            $user->user_info->thumb = $tn_prefix.$user->user_info['image'];
+        }*/
 
         if ($user->user_info) {
             if ($user->user_info['image']) {
-                if (file_exists(storage_path().'/app/users/' .
+                if (file_exists(storage_path().'/app/users/'.
                     $user->user_info['image'])) {
                     $filesize = AttachmentService::human_filesize(
-                        \filesize(\storage_path('app/users' . '/' .
+                        \filesize(\storage_path('app/users'.'/'.
                             $user->user_info->image))) ?: null;
 
-                    if (! file_exists(storage_path().'/app/users/' .
-                        Options::member_thumb_values()['tn_str'] .
+                    if (! file_exists(storage_path().'/app/users/'.
+                        Options::member_thumb_values()['tn_str'].
                         $user->user_info['image'])) {
                         $this->userImageService
                             ->generate_thumb($user->user_info['image'], 'users',
-                            Options::member_thumb_values());
+                                Options::member_thumb_values());
                     }
                 }
                 $user->user_info->thumb =
-                    Options::member_thumb_values()['tn_str'] .
+                    Options::member_thumb_values()['tn_str'].
                     $user->user_info['image'];
                 $user->user_info->thumb_size =
                     AttachmentService::human_filesize(
-                    \filesize(\storage_path('app/users'
-                        . '/' . $user->user_info->thumb))) ?: null;
+                        \filesize(\storage_path('app/users'
+                            .'/'.$user->user_info->thumb))) ?: null;
             }
         }
 
@@ -161,7 +161,7 @@ class UserController extends Controller
             'filesize' => $filesize ?? '',
             'provinces' => $regions['statesprovs']['Provinces'],
             'action' => 'Edit',
-            'title' => $user->name
+            'title' => $user->name,
         ];
 
         // dd([$selections['topics'], $data['selections']['topics']]);
@@ -169,17 +169,13 @@ class UserController extends Controller
     }
 
     /**
-     * @param UpdateMember $userRequest
-     * @param UserImageService $service
-     * @param User $user
-     * @return RedirectResponse
      * @throws InvalidManipulation
      */
     public function update(UpdateMember $userRequest, UserImageService $service,
-           User $user): RedirectResponse
+        User $user): RedirectResponse
     {
 
-//        $this->authorize('update', $user);
+        //        $this->authorize('update', $user);
 
         $user->load('phone_number');
 
@@ -210,10 +206,10 @@ class UserController extends Controller
         $user->fill($userRequest['user']);
         $user->save();
         $user->touch();
-//todo review phone number validation see app/Rules/Phone.php
+        //todo review phone number validation see app/Rules/Phone.php
         if (isset($userRequest->user_phone['phone_number'])) {
             $userRequest->validate([
-                'user_phone.phone_number' => [new Phone()],
+                'user_phone.phone_number' => [new Phone],
             ]);
         }
 
@@ -239,7 +235,7 @@ class UserController extends Controller
         if ($user->user_info instanceof UserInfo) {
 
             $user_info = $userRequest['user_info'];
-//todo user_info validation or migration update could fix the values issues here
+            //todo user_info validation or migration update could fix the values issues here
             $user_info['show_profile'] =
                 $userRequest['user_info']['show_profile'] ?? 0;
             $user_info['show_picture'] =
@@ -295,7 +291,7 @@ class UserController extends Controller
         }
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . " updated their personal profile ",
+            'activity' => Auth::user()->name.' updated their personal profile ',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'User']);
@@ -307,20 +303,15 @@ class UserController extends Controller
         return redirect()->route('member', $user->id);
     }
 
-    /**
-     * @param UpdateMemberAddress $userRequest
-     * @param EmailMemberUpdateAddressService $service
-     * @param User $user
-     * @return RedirectResponse
-     */
     public function update_address(
         UpdateMemberAddress $userRequest,
         EmailMemberUpdateAddressService $service,
-        User $user): RedirectResponse {
+        User $user): RedirectResponse
+    {
         //$this->authorize('update', $user);
         $message = [];
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message',
-            ];
+        ];
 
         foreach ($addr as $k => $a) {
             if ($userRequest->$a) {
@@ -335,7 +326,7 @@ class UserController extends Controller
         }
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . " updated their address ",
+            'activity' => Auth::user()->name.' updated their address ',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'User']);
@@ -347,11 +338,6 @@ class UserController extends Controller
         return redirect()->route('member', $user->id);
     }
 
-    /**
-     * @param ProcessUserRequest $request
-     * @param User $user
-     * @return RedirectResponse
-     */
     public function update_password(ProcessUserRequest $request, User $user): RedirectResponse
     {
         //$this->authorize('update', $user);
@@ -360,7 +346,7 @@ class UserController extends Controller
         $user->save();
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . " updated their password ",
+            'activity' => Auth::user()->name.' updated their password ',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'User']);
@@ -371,18 +357,13 @@ class UserController extends Controller
         return redirect()->route('member', $user->id);
     }
 
-    /**
-     * @param UpdateMemberEmergencyContact $userRequest
-     * @param EmailMemberUpdateAddressService $service
-     * @param User $user
-     * @return RedirectResponse
-     */
     public function update_emergency_contact(
         UpdateMemberEmergencyContact $userRequest,
         EmailMemberUpdateAddressService $service,
-        User $user): RedirectResponse {
+        User $user): RedirectResponse
+    {
 
-      //  $this->authorize('update', $user);
+        //  $this->authorize('update', $user);
 
         $message = [];
 
@@ -403,7 +384,7 @@ class UserController extends Controller
         }
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . " updated their emergency contact info",
+            'activity' => Auth::user()->name.' updated their emergency contact info',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'User']);

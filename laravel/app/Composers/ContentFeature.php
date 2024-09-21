@@ -34,9 +34,9 @@ class ContentFeature
             ->with('topics')
             ->get();
         $features = Feature::where([['live', 1],
-                ['landing_page', 1],
-                ['date', '<', NOW()]]
-            )
+            ['landing_page', 1],
+            ['date', '<', NOW()]]
+        )
             ->orderBy('date', 'desc')
             ->get();
 

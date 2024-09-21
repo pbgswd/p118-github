@@ -22,11 +22,6 @@ class PhoneNumber extends Model implements Searchable
 
     protected $guard_name = 'web';
 
-    protected $casts =
-        [
-            'primary' => 'boolean',
-        ];
-
     public function getSearchResult(): SearchResult
     {
         $user = User::where('id', $this->user_id)->first();
@@ -57,4 +52,11 @@ class PhoneNumber extends Model implements Searchable
             'label',
             'primary',
         ];
+
+    protected function casts(): array
+    {
+        return [
+            'primary' => 'boolean',
+        ];
+    }
 }

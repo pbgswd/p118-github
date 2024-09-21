@@ -9,7 +9,7 @@ class PublicContactFormTest extends TestCase
 {
     public function testPublicContactPage(): void
     {
-        $date = new \DateTime();
+        $date = new \DateTime;
         $date->setTimezone(new \DateTimeZone('America/Vancouver'));
         $date = $date->format('F j, Y H:i:s');
 

@@ -35,7 +35,7 @@ class MeetingController extends Controller
             'years' => $years,
             'year' => '',
             'pagination' => $pagination,
-            'title' => 'Meeting Minutes'
+            'title' => 'Meeting Minutes',
         ];
 
         return view('list_meetings_minutes', ['data' => $data]);
@@ -64,7 +64,7 @@ class MeetingController extends Controller
             'count' => $count,
             'years' => $years,
             'year' => $year,
-            'title' => $year . " Meeting Minutes"
+            'title' => $year.' Meeting Minutes',
         ];
 
         return view('list_meetings_minutes', ['data' => $data]);
@@ -82,7 +82,7 @@ class MeetingController extends Controller
         $meeting->load('user', 'attachments');
 
         return view('meeting', ['data' => ['meeting' => $meeting,
-            'year' => session('year', '') , 'title' => $meeting->title]
+            'year' => session('year', ''), 'title' => $meeting->title],
         ]);
     }
 }
