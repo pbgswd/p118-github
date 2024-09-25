@@ -19,6 +19,11 @@ sudo chmod -R 775 bootstrap/cache
 sudo chown -R www-data:www-data storage
 sudo chmod -R 775 storage
 
+
+cd public
+sudo chown www-data:www-data mix-manifest.json
+
+
 #sudo find storage -type f -exec chmod 644 {} \;
 #sudo find storage -type d -exec chmod 755 {} \;
 
