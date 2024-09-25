@@ -5,18 +5,20 @@
              alt="{{config('app.name')}}"
              class="rounded mx-2"/>
     </a>
-    <button class="btn btn-outline-light p-2 mx-auto navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
-            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">Menus<span class="navbar-toggler-icon"></span>
+    <button class="btn btn-outline-light p-2 mx-auto navbar-toggler text-light " type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        Menus
+        <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse ml-2" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto mb-0 d-flex align-items-center">
+        <ul class="navbar-nav mt-2 mr-auto mb-0 d-flex align-items-center">
             <li class="nav-item mr-2 d-flex align-items-stretch d-block d-md-none">
-                <a class="nav-link" href="{{route('landing_page')}}" title="Landing Page">
+                <a class="nav-link text-light" href="{{route('landing_page')}}" title="Landing Page">
                     <i class="fas fa-home fa-2"></i>
                     Landing Page
                 </a>&nbsp;
                 @hasanyrole(['super-admin|office|writer|committee'])
-                &nbsp; <a class="nav-link ml-sm-3" href="{{route('admin')}}" title="Admin">
+                &nbsp; <a class="nav-link ml-sm-3 text-light" href="{{route('admin')}}" title="Admin">
                         <i class="fas fa-tachometer-alt"></i> Admin
                     </a>
                 @endrole
@@ -153,13 +155,13 @@
                      </span>
                 </a>
             </li>
-            <form class="d-flex mx-1 mb-1 mt-sm-3 mt-md-2" role="search" action="{{route('search')}}" method="POST">
+            <form class="d-flex mt-2 mx-1 mb-1 mt-sm-3 mt-md-2" role="search" action="{{route('search')}}" method="POST">
                 {!! csrf_field() !!}
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                        name="search" size="30" required>
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-            <li class="d-flex d-sm-block d-md-none mx-1 mb-1">
+            <li class="d-flex d-sm-block d-md-none mt-3 mx-1 mb-1">
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button class="btn btn-outline-success mx-3  my-sm-0" type="submit">
