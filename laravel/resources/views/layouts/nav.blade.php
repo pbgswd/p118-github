@@ -1,22 +1,42 @@
-<nav class="navbar navbar-expand-md fixed-top bg-dark">
+<nav class="navbar navbar-expand-md fixed-top bg-dark pr-3">
     <div class="container-fluid">
     <a href="{{ route('hello') }}" title="{{config('app.name')}}" class="navbar-brand">
         <img src="/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png"
              alt="{{config('app.name')}}"
              class="rounded mx-2"/>
     </a>
-    <button class="btn btn-outline-light p-2 mx-auto navbar-toggler text-light " type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
+    <button class="btn btn-outline-light p-2 mx-auto navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         Menus
         <span class="navbar-toggler-icon"></span>
     </button>
+
+        @auth
+        <form id="logout-form" class="navbar-toggler" action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button class="btn btn-outline-primary" type="submit">
+                Logout
+            </button>
+        </form>
+        @endauth
+        @guest
+            <a class="btn btn-outline-primary d-md-none" href="/login">
+                    Login
+                </a>
+        @endguest
+
+
+
+
     <div class="collapse navbar-collapse ml-2" id="navbarsExampleDefault">
         <ul class="navbar-nav mt-2 mr-auto mb-0 d-flex align-items-center">
             <li class="nav-item mr-2 d-flex align-items-stretch d-block d-md-none">
+                @hasrole('member')
                 <a class="nav-link text-light" href="{{route('landing_page')}}" title="Landing Page">
                     <i class="fas fa-home fa-2"></i>
                     Landing Page
                 </a>&nbsp;
+                @endrole
                 @hasanyrole(['super-admin|office|writer|committee'])
                 &nbsp; <a class="nav-link ml-sm-3 text-light" href="{{route('admin')}}" title="Admin">
                         <i class="fas fa-tachometer-alt"></i> Admin
@@ -159,20 +179,12 @@
                 {!! csrf_field() !!}
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                        name="search" size="30" required>
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-primary" type="submit">Search</button>
             </form>
-            <li class="d-flex d-sm-block d-md-none mt-3 mx-1 mb-1">
-                <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button class="btn btn-outline-success mx-3  my-sm-0" type="submit">
-                        Logout
-                    </button>
-                </form>
-            </li>
         @endauth
             @guest
-                <li class="nav-item d-sm-block">
-                    <a class="btn btn-outline-success my-2 my-sm-0 d-md-none" href="/login">
+                <li class="nav-item d-sm-block text-start">
+                    <a class="btn btn-outline-success d-md-none" href="/login">
                         Login
                     </a>
                 </li>
