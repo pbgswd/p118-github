@@ -102,7 +102,7 @@
             </div>
         </div>
     </div>
-    @role('super-admin')
+
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12">
             <h3>Recent Activity</h3>
@@ -139,9 +139,8 @@
                 @endforelse
             </tbody>
         </table>
-
     </div>
-    @endrole
+
 
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12">
