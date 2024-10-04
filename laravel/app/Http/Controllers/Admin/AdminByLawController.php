@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Constants\AccessLevelConstants;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Bylaws\DestroyBylawRequest;
 use App\Http\Requests\Bylaws\StoreBylawRequest;
 use App\Http\Requests\Bylaws\UpdateBylawRequest;

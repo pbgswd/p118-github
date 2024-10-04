@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Memoriam\DestroyMemoriamRequest;
 use App\Http\Requests\Memoriam\StoreMemoriamRequest;
 use App\Http\Requests\Memoriam\UpdateMemoriamRequest;

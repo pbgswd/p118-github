@@ -134,4 +134,4 @@ const editorConfig = {
     }
 };
 
-ClassicEditor.create(document.querySelector('#post-content'), editorConfig);
+ClassicEditor.create(document.querySelector('#textarea'), editorConfig);

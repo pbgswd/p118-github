@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminAgreementController
+ * @see \App\Http\Controllers\Admin\AdminAgreementController
  */
 class AdminAgreementControllerTest extends TestCase
 {
@@ -43,7 +43,7 @@ class AdminAgreementControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminAgreementController::class,
+            \App\Http\Controllers\Admin\AdminAgreementController::class,
             'destroy',
             \App\Http\Requests\Agreements\DestroyAgreementRequest::class
         );
@@ -106,7 +106,7 @@ class AdminAgreementControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminAgreementController::class,
+            \App\Http\Controllers\Admin\AdminAgreementController::class,
             'store',
             \App\Http\Requests\Agreements\StoreAgreementRequest::class
         );
@@ -138,7 +138,7 @@ class AdminAgreementControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminAgreementController::class,
+            \App\Http\Controllers\Admin\AdminAgreementController::class,
             'update',
             \App\Http\Requests\Agreements\UpdateAgreementRequest::class
         );

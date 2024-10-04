@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 //todo test to manage user exec roles
 /**
- * @see \App\Http\Controllers\AdminExecutiveController
+ * @see \App\Http\Controllers\Admin\AdminExecutiveController
  */
 class AdminExecutiveControllerTest extends TestCase
 {
@@ -47,7 +47,7 @@ class AdminExecutiveControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminExecutiveController::class,
+            \App\Http\Controllers\Admin\AdminExecutiveController::class,
             'destroy',
             \App\Http\Requests\Executive\DestroyAdminExecutive::class
         );
@@ -115,7 +115,7 @@ class AdminExecutiveControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminExecutiveController::class,
+            \App\Http\Controllers\Admin\AdminExecutiveController::class,
             'store',
             \App\Http\Requests\Executive\StoreAdminExecutive::class
         );
@@ -143,7 +143,7 @@ class AdminExecutiveControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminExecutiveController::class,
+            \App\Http\Controllers\Admin\AdminExecutiveController::class,
             'update',
             \App\Http\Requests\Executive\UpdateAdminExecutive::class
         );

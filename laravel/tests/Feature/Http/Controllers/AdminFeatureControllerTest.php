@@ -6,7 +6,7 @@ use App\Models\Feature;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminFeatureController
+ * @see \App\Http\Controllers\Admin\AdminFeatureController
  */
 class AdminFeatureControllerTest extends TestCase
 {
@@ -51,7 +51,7 @@ class AdminFeatureControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminFeatureController::class,
+            \App\Http\Controllers\Admin\AdminFeatureController::class,
             'destroy',
             \App\Http\Requests\Feature\DestroyFeatureRequest::class
         );
@@ -116,7 +116,7 @@ class AdminFeatureControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminFeatureController::class,
+            \App\Http\Controllers\Admin\AdminFeatureController::class,
             'store',
             \App\Http\Requests\Feature\StoreFeatureRequest::class
         );
@@ -152,7 +152,7 @@ class AdminFeatureControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminFeatureController::class,
+            \App\Http\Controllers\Admin\AdminFeatureController::class,
             'update',
             \App\Http\Requests\Feature\UpdateFeatureRequest::class
         );

@@ -55,9 +55,11 @@
                        size="40" />
             </div>
             <div class="input-group mt-3 mb-3">
-                <h4>
-                    Add any additional info for the office about this change.
-                </h4>
+                <div class="col-12">
+                    <h4>
+                        Add any additional info for the office about this change.
+                    </h4>
+                </div>
                 <textarea name="message" id="message" class="form-control">
                     {{ old('message', $message ?? '') }}
                 </textarea>

@@ -44,7 +44,7 @@ class AdminFaqControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminFaqController::class,
+            \App\Http\Controllers\Admin\AdminFaqController::class,
             'destroy',
             \App\Http\Requests\Faq\DestroyFaqRequest::class
         );
@@ -105,7 +105,7 @@ class AdminFaqControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminFaqController::class,
+            \App\Http\Controllers\Admin\AdminFaqController::class,
             'store',
             \App\Http\Requests\Faq\StoreFaqRequest::class
         );
@@ -140,7 +140,7 @@ class AdminFaqControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminFaqController::class,
+            \App\Http\Controllers\Admin\AdminFaqController::class,
             'update',
             \App\Http\Requests\Faq\UpdateFaqRequest::class
         );

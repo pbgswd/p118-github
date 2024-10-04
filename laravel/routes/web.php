@@ -3,7 +3,9 @@
 use App\Http\Controllers as CNS;
 use App\Http\Middleware\CheckMessagingFeatureStatus;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route; //Controller Name Space
+use Illuminate\Support\Facades\Route;
+
+//Controller Name Space
 
 /*
 |--------------------------------------------------------------------------
@@ -157,7 +159,7 @@ Route::middleware('web', 'auth')->group(function () {
 
 Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])->group(function () {
 
-    Route::controller(CNS\AdminController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminController::class)->group(function () {
         Route::get('/', 'index')->name('admin');
         Route::get('/blank', 'blank')->name('blank');
         Route::get('/developer', 'developer')->name('developer');
@@ -165,7 +167,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/development', 'development')->name('development');
     });
 
-    Route::controller(CNS\AdminMessageController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminMessageController::class)->group(function () {
         Route::get('messages', 'index')->name('admin_messages')->middleware(CheckMessagingFeatureStatus::class);
         Route::get('message/create', 'create')->name('admin_message_create')->middleware(CheckMessagingFeatureStatus::class);
         Route::post('message/create', 'store')->name('admin_message_store')->middleware(CheckMessagingFeatureStatus::class);
@@ -179,13 +181,13 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('message/delete', 'destroy')->name('admin_message_destroy')->middleware(CheckMessagingFeatureStatus::class);
     });
 
-    Route::controller(CNS\AdminEmailQueueController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminEmailQueueController::class)->group(function () {
         Route::get('email_queue', 'index')->name('admin_email_queue_list')->middleware(CheckMessagingFeatureStatus::class);
         Route::get('email_queue/{email_queue}/message', 'show')->name('admin_email_queue_show')->middleware(CheckMessagingFeatureStatus::class);
         Route::delete('email_queue/delete', 'destroy')->name('admin_email_queue_destroy')->middleware(CheckMessagingFeatureStatus::class);
     });
 
-    Route::controller(CNS\AdminCarouselController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminCarouselController::class)->group(function () {
         Route::get('carousel', 'index')->name('admin_carousel_list');
         Route::get('carousel/create', 'create')->name('admin_carousel_create');
         Route::post('carousel/create', 'store')->name('admin_carousel_store');
@@ -194,7 +196,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('carousel/delete', 'destroy')->name('admin_carousel_destroy');
     });
 
-    Route::controller(CNS\AdminMemoriamController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminMemoriamController::class)->group(function () {
         Route::get('memoriams', 'index')->name('admin_memoriam_list');
         Route::get('memoriam/create', 'create')->name('admin_memoriam_create');
         Route::post('memoriam/create', 'store');
@@ -203,7 +205,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('memoriam/delete', 'destroy')->name('admin_memoriam_destroy');
     });
 
-    Route::controller(CNS\AdminProofReaderController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminProofReaderController::class)->group(function () {
         Route::get('proofreading-sync', 'sync')->name('admin_proofreader_sync');
         Route::get('proofreading', 'index')->name('admin_proofreader');
         Route::post('proofreading', 'index_by_entity')->name('index_by_entity');
@@ -217,7 +219,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
             ->name('list_attachments_search_result');
     });
 
-    Route::controller(CNS\AdminFeatureController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminFeatureController::class)->group(function () {
         Route::get('features', 'index')->name('admin_features_list');
         Route::get('feature/create', 'create')->name('admin_feature_create');
         Route::post('feature/create', 'store');
@@ -226,7 +228,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('feature/delete', 'destroy')->name('admin_feature_destroy');
     });
 
-    Route::controller(CNS\AdminPolicyController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminPolicyController::class)->group(function () {
         Route::get('/policies', 'index')->name('policies_list');
         Route::get('/policy/create', 'create')->name('admin_policy_create');
         Route::post('/policy/create', 'store');
@@ -235,7 +237,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/policy/delete', 'destroy')->name('admin_policy_destroy');
     });
 
-    Route::controller(CNS\AdminTopicController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminTopicController::class)->group(function () {
         Route::get('/topics', 'index')->name('topics_list');
         Route::get('/topic/create', 'create')->name('topic_create');
         Route::post('/topic/create', 'store');
@@ -244,7 +246,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/topic/delete', 'destroy')->name('topic_destroy');
     });
 
-    Route::controller(CNS\AdminUserController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminUserController::class)->group(function () {
         Route::get('/users', 'index')->name('users_list');
         Route::get('/user/create', 'create')->name('user_create');
         Route::post('/user/create', 'store');
@@ -258,7 +260,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/user/delete', 'destroy')->name('user_destroy');
     });
 
-    Route::controller(CNS\AdminExecutiveController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminExecutiveController::class)->group(function () {
         Route::get('/executives', 'index')->name('admin_executives_list');
         Route::get('/user/{user}/executive/create', 'create')->name('admin_executive_create');
         Route::post('/user/{user}/executive/create', 'store')->name('admin_executive_store');
@@ -281,7 +283,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
 
     Route::get('/invite-resend-list', [CNS\ReInviteUserController::class, 'index'])->name('invite-resend-list');
 
-    Route::controller(CNS\AdminPageController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminPageController::class)->group(function () {
         Route::get('/pages', 'index')->name('pages_list');
         Route::get('/page/create', 'create')->name('page_create');
         Route::post('/page/create', 'store');
@@ -290,7 +292,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/page/delete', 'destroy')->name('page_destroy');
     });
 
-    Route::controller(CNS\AdminPostController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminPostController::class)->group(function () {
         Route::get('/posts', 'index')->name('posts_list');
         Route::get('/post/create', 'create')->name('post_create');
         Route::post('/post/create', 'store');
@@ -315,7 +317,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
 
     Route::get('/roles', [CNS\RoleController::class, 'index'])->name('roles_list');
 
-    Route::controller(CNS\AdminVenueController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminVenueController::class)->group(function () {
         Route::get('/venues', 'index')->name('venues_list');
         Route::get('/venue/create', 'create')->name('venue_create');
         Route::post('/venue/create', 'store');
@@ -324,7 +326,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/venue/delete', 'destroy')->name('venue_destroy');
     });
 
-    Route::controller(CNS\AdminCommitteeMemberController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminCommitteeMemberController::class)->group(function () {
         Route::post('committee/{committee}/admin-list-committee-members', 'search')
             ->name('admin_search_committee_members');
 
@@ -342,7 +344,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
             ->name('admin_delete-committee_member');
     });
 
-    Route::controller(CNS\AdminCommitteeController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminCommitteeController::class)->group(function () {
         Route::get('committees', 'index')->name('committees_list');
         Route::get('committee/create', 'create')->name('committee_create');
         Route::post('committee/create', 'store');
@@ -352,7 +354,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('committee/delete', 'destroy')->name('committee_destroy');
     });
 
-    Route::controller(CNS\AdminCommitteePostController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminCommitteePostController::class)->group(function () {
         Route::get('committee/{committee}/posts', 'index')->name('committee_posts_list');
         Route::get('committee/{committee}/post/create', 'create')->name('admin_committee_post');
         Route::post('committee/{committee}/post/create', 'store');
@@ -374,7 +376,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         ->name('committee_post_comment_destroy');
     ***/
 
-    Route::controller(CNS\AdminAgreementController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminAgreementController::class)->group(function () {
         Route::get('agreements', 'index')->name('agreements_list');
         Route::get('agreement/create', 'create')->name('agreement_create');
         Route::post('agreement/create', 'store');
@@ -383,7 +385,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::post('/agreement/{any_agreement}/edit', 'update');
     });
 
-    Route::controller(CNS\AdminOrganizationController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminOrganizationController::class)->group(function () {
         Route::get('/organizations', 'index')->name('organizations_list');
         Route::get('/organization/create', 'create')->name('organization_create');
         Route::post('/organization/create', 'store');
@@ -392,7 +394,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/organization/delete', 'destroy')->name('organization_destroy');
     });
 
-    Route::controller(CNS\AdminMeetingController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminMeetingController::class)->group(function () {
         Route::get('/meetings', 'index')->name('meetings_list');
         Route::get('/meeting/create', 'create')->name('meeting_create');
         Route::post('/meeting/create', 'store');
@@ -401,7 +403,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/meeting/delete', 'destroy')->name('meeting_destroy');
     });
 
-    Route::controller(CNS\AdminEmploymentController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminEmploymentController::class)->group(function () {
         Route::get('employment-list/', 'index')->name('admin_employment_list');
         Route::get('employment/create', 'create')->name('admin_employment_create');
         Route::post('employment/create', 'store');
@@ -412,7 +414,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
             ->name('admin_employment_destroy');
     });
 
-    Route::controller(CNS\AdminByLawController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminByLawController::class)->group(function () {
         Route::get('bylaws/', 'index')->name('admin_bylaws_list');
         Route::get('bylaw/create', 'create')->name('admin_bylaw_create');
         Route::post('bylaw/create', 'store');
@@ -421,7 +423,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/bylaw/delete', 'destroy')->name('admin_bylaw_destroy');
     });
 
-    Route::controller(CNS\AdminQrCodeController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminQrCodeController::class)->group(function () {
         Route::get('qrcodes/', 'index')->name('admin_qrcodes_list');
         Route::get('qrcode/create', 'create')->name('admin_qrcode_create');
         Route::post('qrcode/create', 'store');
@@ -432,7 +434,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
             ->name('qrcode_download')->middleware('throttle:download');
     });
 
-    Route::controller(CNS\AdminFaqController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminFaqController::class)->group(function () {
         Route::get('faqs/', 'index')->name('admin_faqs_list');
         Route::get('faq/create', 'create')->name('admin_faq_create');
         Route::post('faq/create', 'store');
@@ -441,7 +443,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/faq/delete', 'destroy')->name('admin_faq_destroy');
     });
 
-    Route::controller(CNS\AdminActivityLogController::class)->group(function () {
+    Route::controller(CNS\Admin\AdminActivityLogController::class)->group(function () {
         Route::get('activity-logs/', 'index')->name('admin_activity_logs_list');
         Route::delete('activity-logs/delete', 'destroy')->name('admin_activity_log_destroy');
     });

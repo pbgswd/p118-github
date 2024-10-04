@@ -6,7 +6,7 @@ use App\Models\Memoriam;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminMemoriamController
+ * @see \App\Http\Controllers\Admin\AdminMemoriamController
  */
 class AdminMemoriamControllerTest extends TestCase
 {
@@ -50,7 +50,7 @@ class AdminMemoriamControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminMemoriamController::class,
+            \App\Http\Controllers\Admin\AdminMemoriamController::class,
             'destroy',
             \App\Http\Requests\Memoriam\DestroyMemoriamRequest::class
         );
@@ -116,7 +116,7 @@ class AdminMemoriamControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminMemoriamController::class,
+            \App\Http\Controllers\Admin\AdminMemoriamController::class,
             'store',
             \App\Http\Requests\Memoriam\StoreMemoriamRequest::class
         );
@@ -154,7 +154,7 @@ class AdminMemoriamControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminMemoriamController::class,
+            \App\Http\Controllers\Admin\AdminMemoriamController::class,
             'update',
             \App\Http\Requests\Memoriam\UpdateMemoriamRequest::class
         );

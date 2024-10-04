@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Viewcar;
 use App\Http\Requests\Carousel\DestroyCarouselRequest;
 use App\Http\Requests\Carousel\StoreCarouselRequest;
 use App\Http\Requests\Carousel\UpdateCarouselRequest;

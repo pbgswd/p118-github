@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Executive\DestroyAdminExecutive;
 use App\Http\Requests\Executive\StoreAdminExecutive;
 use App\Http\Requests\Executive\UpdateAdminExecutive;

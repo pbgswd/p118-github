@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Committees\DestroyCommitteeRequest;
 use App\Http\Requests\Committees\StoreCommitteeRequest;
 use App\Http\Requests\Committees\UpdateCommitteeRequest;

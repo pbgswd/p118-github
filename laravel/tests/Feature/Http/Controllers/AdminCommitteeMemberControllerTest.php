@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminCommitteeMemberController
+ * @see \App\Http\Controllers\Admin\AdminCommitteeMemberController
  */
 class AdminCommitteeMemberControllerTest extends TestCase
 {
@@ -60,7 +60,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteeMemberController::class,
+            \App\Http\Controllers\Admin\AdminCommitteeMemberController::class,
             'destroy',
             \App\Http\Requests\CommitteeMember\DestroyCommitteeMember::class
         );
@@ -122,7 +122,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
     public function search_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteeMemberController::class,
+            \App\Http\Controllers\Admin\AdminCommitteeMemberController::class,
             'search',
             \App\Http\Requests\CommitteeMember\SearchCommitteeMember::class
         );
@@ -152,7 +152,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteeMemberController::class,
+            \App\Http\Controllers\Admin\AdminCommitteeMemberController::class,
             'store',
             \App\Http\Requests\CommitteeMember\StoreCommitteeMember::class
         );
@@ -184,7 +184,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteeMemberController::class,
+            \App\Http\Controllers\Admin\AdminCommitteeMemberController::class,
             'update',
             \App\Http\Requests\CommitteeMember\UpdateCommitteeMember::class
         );

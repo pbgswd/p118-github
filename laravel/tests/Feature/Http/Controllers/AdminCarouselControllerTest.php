@@ -6,7 +6,7 @@ use App\Models\Carousel;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminCarouselController
+ * @see \App\Http\Controllers\Admin\AdminCarouselController
  */
 class AdminCarouselControllerTest extends TestCase
 {

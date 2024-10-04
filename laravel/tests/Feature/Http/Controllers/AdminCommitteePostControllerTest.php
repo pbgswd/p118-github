@@ -5,7 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminCommitteePostController
+ * @see \App\Http\Controllers\Admin\AdminCommitteePostController
  */
 class AdminCommitteePostControllerTest extends TestCase
 {
@@ -41,7 +41,7 @@ class AdminCommitteePostControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteePostController::class,
+            \App\Http\Controllers\Admin\AdminCommitteePostController::class,
             'destroy',
             \App\Http\Requests\CommitteePost\DestroyCommitteePostRequest::class
         );
@@ -99,7 +99,7 @@ class AdminCommitteePostControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteePostController::class,
+            \App\Http\Controllers\Admin\AdminCommitteePostController::class,
             'store',
             \App\Http\Requests\CommitteePost\StoreCommitteePostRequest::class
         );
@@ -127,7 +127,7 @@ class AdminCommitteePostControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteePostController::class,
+            \App\Http\Controllers\Admin\AdminCommitteePostController::class,
             'update',
             \App\Http\Requests\CommitteePost\UpdateCommitteePostRequest::class
         );

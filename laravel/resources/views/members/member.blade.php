@@ -68,30 +68,29 @@
                             </h4>
                         @else
                             @if($data['user']->user_info['show_profile'] == 1)
-                                @include('member_profile')
+                                @include('members.member_profile')
                             @endif
                         @endif
                     </div>
                     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                        @include('member_edit')
+                        @include('members.member_edit')
                     </div>
                     <div class="tab-pane fade" id="emerg-tab-pane" role="tabpanel" aria-labelledby="emerg-tab" tabindex="0">
-                        @include('member_emergency_edit')
+                        @include('members.member_emergency_edit')
                     </div>
                     <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="0">
-                        @include('member_address_edit')
+                        @include('members.member_address_edit')
                     </div>
                     <div class="tab-pane fade" id="message-tab-pane" role="tabpanel" aria-labelledby="message-tab" tabindex="0">
-                        @include('member_message_preferences_edit')
+                        @include('members.member_message_preferences_edit')
                     </div>
                     <div class="tab-pane fade align-top" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
-                        @include('member_password_edit')
+                        @include('members.member_password_edit')
                     </div>
-
                 </div>
             </div>
         @else
-            @include('member_profile')
+            @include('members.member_profile')
         @endif
     </div>
 @endsection

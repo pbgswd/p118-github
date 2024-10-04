@@ -28,7 +28,6 @@
                         <input type="text" class="form-control" aria-label="Text input with checkbox"
                                value="Check to share email in profile" readonly>
                     </div>
-
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -49,7 +48,6 @@
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox"
                            value="Check to share phone number in profile" readonly>
-
                     </div>
                 </div>
             </div>
@@ -63,7 +61,6 @@
                </h5>
             </div>
         </div>
-
         <div class="col-12 pt-2">
             <h3 class="mt-3 p-lg-2 fw-bold">
                 <i class="fas fa-user text-primary"></i>
@@ -150,32 +147,54 @@
                </div>
                <input type="text" class="form-control" aria-label="Text input with checkbox"
                   value="Check to show picture in your profile" readonly>
-
             </div>
-            <h3 class="mt-2 p-2 fw-bold">
-                <i class="fas fa-user text-primary"></i>
-                About Me
-            </h3>
-            <div class="col-12 input-group mb-3 d-flex justify-content-center">
-                @if (!optional($data['user']->user_info)->about || empty(optional($data['user']->user_info)->about))
-                    <p class="font-italic">
-                        Add something here about you such as your experience in
-                        stage and theatre, your skills. Do you have a side hustle?
-                        Got creative work? Tell us about it! Share your social media
-                        links if you like.
-                    </p>
-                @endif
-                <textarea name="user_info[about]" id="about" class="form-control">
-                    {{ old('user_info.about', $data['user']->user_info->about ?? '') }}
-                </textarea>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-12 mt-3">
+                        <h3 class="mt-2 p-2 fw-bold">
+                            <i class="fas fa-user text-primary"></i>
+                            About Me
+                        </h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="col-12 mb-4">
+                            @if (!optional($data['user']->user_info)->about || empty(optional($data['user']->user_info)->about))
+                                <p class="font-italic">
+                                    Add something here about you such as your experience in
+                                    stage and theatre, your skills. Do you have a side hustle?
+                                    Got creative work? Tell us about it! Share your social media
+                                    links if you like.
+                                </p>
+                            @endif
+                            <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                                <div class="editor-container__editor">
+                                <textarea name="memoriam[content]" id="textarea"
+                                          placeholder="Share a little about yourself" class="form-control text-black">
+                                </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="importmap">
+                            {
+                                "imports": {
+                                    "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                    "ckeditor5/": "/js/ckeditor5/"
+                                }
+                            }
+                        </script>
+                        <script>
+                            var textarea = @json($data['user']->user_info->about ?? '');
+                        </script>
+                        <script type="module" src="{{mix('js/ckeditor5/ck_main.js')}}"></script>
+                    </div>
+                </div>
             </div>
             <div class="pt-5 pl-2 m-2">
                 <i class="fas fa-edit fa-2x"></i>
-                <input class="btn btn-primary btn-lg" type="submit" value="Update My Profile" />
+                <input class="btn btn-outline-primary btn-lg" type="submit" value="Update My Profile" />
             </div>
     </form>
 </div>
-
     @if( $data['user']->allExecutiveRoles->count() > 0 )
         <div class="col-12 col-lg-5 border border-dark rounded p-2">
             <h4>Executive {{ Str::plural('Title', $data['user']->allExecutiveRoles->count()) }}</h4>

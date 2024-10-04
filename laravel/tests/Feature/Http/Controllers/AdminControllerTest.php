@@ -5,7 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminController
+ * @see \App\Http\Controllers\Admin\AdminController
  */
 class AdminControllerTest extends TestCase
 {

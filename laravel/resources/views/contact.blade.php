@@ -30,29 +30,30 @@
                         <input type="text" class="form-control" placeholder="Subject" name="mail_subject"
                                value="{{ old('mail_subject')}}" size="80" required/>
                     </div>
-                    <div class="col-12 input-group mt-2 d-flex text-center">
-                        <label for="mail_body" class="col-sm-2 control-label text-center mx-auto">
+                    <div class="col-12 mt-3 text-start">
+                        <label for="mail_body" class="col-sm-2 control-label text-start mx-auto">
                             <h3>Message</h3>
                         </label>
                     </div>
-                    <div class="col-12 input-group my-2 d-flex justify-content-center">
-                        <textarea name="mail_body" placeholder="Message" class="form-control input-lg" rows="3"
+                    <div class="col-12 input-group my-3 d-flex">
+                        <textarea name="mail_body" placeholder="Your Message" class="form-control input-lg" rows="5"
                         cols="100">{{old('mail_body')}}</textarea>
                     </div>
                     <div class="row my-4">
                         <div class="col-sm-12 col-md-6 text-center mx-auto">
-                            <script src="https://www.google.com/recaptcha/api.js?render=6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"></script>
-                            <script>
-                                function onSubmit(token) {
-                                    document.getElementById("contact-form").submit();
-                                }
-                            </script>
-                            <button class="btn btn-outline-primary g-recaptcha pb-2"
+            <script
+                src="https://www.google.com/recaptcha/api.js?render=6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"></script>
+            <script>
+                function onSubmit(token) {
+                    document.getElementById("contact-form").submit();
+                }
+            </script>
+                            <button class="btn btn-outline-primary g-recaptcha pb-2 mb-3"
                                     data-sitekey="6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A"
                                     data-callback='onSubmit'
                                     data-action='submit'>Submit</button>
                         </div>
-                        <div class="col-sm-12 col-md-6 text-center pt-sm-2 pt-md-0">
+                        <div class="col-sm-12 col-md-6 text-center mt-sm-2 pt-sm-4 pt-md-0">
                             <button
                                 type="reset"
                                 class="btn btn-outline-info btn-reset"

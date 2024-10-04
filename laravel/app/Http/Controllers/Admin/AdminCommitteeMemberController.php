@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Constants\CommitteeConstants;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CommitteeMember\DestroyCommitteeMember;
 use App\Http\Requests\CommitteeMember\SearchCommitteeMember;
 use App\Http\Requests\CommitteeMember\StoreCommitteeMember;

@@ -6,7 +6,7 @@ use App\Models\Proofreader;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminProofReaderController
+ * @see \App\Http\Controllers\Admin\AdminProofReaderController
  */
 class AdminProofReaderControllerTest extends TestCase
 {

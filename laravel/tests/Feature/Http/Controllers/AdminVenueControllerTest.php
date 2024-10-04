@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminVenueController
+ * @see \App\Http\Controllers\Admin\AdminVenueController
  */
 class AdminVenueControllerTest extends TestCase
 {
@@ -51,7 +51,7 @@ class AdminVenueControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminVenueController::class,
+            \App\Http\Controllers\Admin\AdminVenueController::class,
             'destroy',
             \App\Http\Requests\Venues\DestroyVenueRequest::class
         );
@@ -117,7 +117,7 @@ class AdminVenueControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminVenueController::class,
+            \App\Http\Controllers\Admin\AdminVenueController::class,
             'store',
             \App\Http\Requests\Venues\StoreVenueRequest::class
         );
@@ -150,7 +150,7 @@ class AdminVenueControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminVenueController::class,
+            \App\Http\Controllers\Admin\AdminVenueController::class,
             'update',
             \App\Http\Requests\Venues\UpdateVenueRequest::class
         );

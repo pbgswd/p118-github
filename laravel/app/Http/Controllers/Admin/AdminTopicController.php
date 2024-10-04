@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Constants\AccessLevelConstants;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Topic\DestroyTopicRequest;
 use App\Http\Requests\Topic\StoreTopicRequest;
 use App\Http\Requests\Topic\UpdateTopicRequest;

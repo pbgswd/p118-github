@@ -5,7 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminOrganizationController
+ * @see \App\Http\Controllers\Admin\AdminOrganizationController
  */
 class AdminOrganizationControllerTest extends TestCase
 {
@@ -50,7 +50,7 @@ class AdminOrganizationControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminOrganizationController::class,
+            \App\Http\Controllers\Admin\AdminOrganizationController::class,
             'destroy',
             \App\Http\Requests\Organization\DestroyOrganizationRequest::class
         );
@@ -117,7 +117,7 @@ class AdminOrganizationControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminOrganizationController::class,
+            \App\Http\Controllers\Admin\AdminOrganizationController::class,
             'store',
             \App\Http\Requests\Organization\StoreOrganizationRequest::class
         );
@@ -148,7 +148,7 @@ class AdminOrganizationControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminOrganizationController::class,
+            \App\Http\Controllers\Admin\AdminOrganizationController::class,
             'update',
             \App\Http\Requests\Organization\UpdateOrganizationRequest::class
         );

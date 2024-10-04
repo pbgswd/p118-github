@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminCommitteeController
+ * @see \App\Http\Controllers\Admin\AdminCommitteeController
  */
 class AdminCommitteeControllerTest extends TestCase
 {
@@ -45,7 +45,7 @@ class AdminCommitteeControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteeController::class,
+            \App\Http\Controllers\Admin\AdminCommitteeController::class,
             'destroy',
             \App\Http\Requests\Committees\DestroyCommitteeRequest::class
         );
@@ -120,7 +120,7 @@ class AdminCommitteeControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteeController::class,
+            \App\Http\Controllers\Admin\AdminCommitteeController::class,
             'store',
             \App\Http\Requests\Committees\StoreCommitteeRequest::class
         );
@@ -162,7 +162,7 @@ class AdminCommitteeControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminCommitteeController::class,
+            \App\Http\Controllers\Admin\AdminCommitteeController::class,
             'update',
             \App\Http\Requests\Committees\UpdateCommitteeRequest::class
         );

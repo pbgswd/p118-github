@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminPostController
+ * @see \App\Http\Controllers\Admin\AdminPostController
  */
 class AdminPostControllerTest extends TestCase
 {
@@ -51,7 +51,7 @@ class AdminPostControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminPostController::class,
+            \App\Http\Controllers\Admin\AdminPostController::class,
             'destroy',
             \App\Http\Requests\Posts\DestroyPostRequest::class
         );
@@ -115,7 +115,7 @@ class AdminPostControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminPostController::class,
+            \App\Http\Controllers\Admin\AdminPostController::class,
             'store',
             \App\Http\Requests\Posts\StorePostRequest::class
         );
@@ -148,7 +148,7 @@ class AdminPostControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminPostController::class,
+            \App\Http\Controllers\Admin\AdminPostController::class,
             'update',
             \App\Http\Requests\Posts\UpdatePostRequest::class
         );

@@ -6,7 +6,7 @@ use App\Models\User;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminUserController
+ * @see \App\Http\Controllers\Admin\AdminUserController
  */
 class AdminUserControllerTest extends TestCase
 {
@@ -69,7 +69,7 @@ class AdminUserControllerTest extends TestCase
     public function admin_update_address_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminUserController::class,
+            \App\Http\Controllers\Admin\AdminUserController::class,
             'admin_update_address',
             \App\Http\Requests\User\UpdateMemberAddress::class
         );
@@ -101,7 +101,7 @@ class AdminUserControllerTest extends TestCase
     public function admin_update_emergency_contact_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminUserController::class,
+            \App\Http\Controllers\Admin\AdminUserController::class,
             'admin_update_emergency_contact',
             \App\Http\Requests\Member\UpdateMemberEmergencyContact::class
         );
@@ -143,7 +143,7 @@ class AdminUserControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminUserController::class,
+            \App\Http\Controllers\Admin\AdminUserController::class,
             'destroy',
             \App\Http\Requests\User\DestroyUser::class
         );
@@ -185,7 +185,7 @@ class AdminUserControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminUserController::class,
+            \App\Http\Controllers\Admin\AdminUserController::class,
             'store',
             \App\Http\Requests\User\StoreUser::class
         );
@@ -229,7 +229,7 @@ class AdminUserControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminUserController::class,
+            \App\Http\Controllers\Admin\AdminUserController::class,
             'update',
             \App\Http\Requests\User\UpdateUser::class
         );

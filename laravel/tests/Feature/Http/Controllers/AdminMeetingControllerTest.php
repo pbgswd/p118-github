@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminMeetingController
+ * @see \App\Http\Controllers\Admin\AdminMeetingController
  */
 class AdminMeetingControllerTest extends TestCase
 {
@@ -51,7 +51,7 @@ class AdminMeetingControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminMeetingController::class,
+            \App\Http\Controllers\Admin\AdminMeetingController::class,
             'destroy',
             \App\Http\Requests\Meetings\DestroyMeetingRequest::class
         );
@@ -115,7 +115,7 @@ class AdminMeetingControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminMeetingController::class,
+            \App\Http\Controllers\Admin\AdminMeetingController::class,
             'store',
             \App\Http\Requests\Meetings\StoreMeetingRequest::class
         );
@@ -149,7 +149,7 @@ class AdminMeetingControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminMeetingController::class,
+            \App\Http\Controllers\Admin\AdminMeetingController::class,
             'update',
             \App\Http\Requests\Meetings\UpdateMeetingRequest::class
         );

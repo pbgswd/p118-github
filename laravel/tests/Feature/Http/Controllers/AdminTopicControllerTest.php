@@ -6,7 +6,7 @@ use App\Models\Topic;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminTopicController
+ * @see \App\Http\Controllers\Admin\AdminTopicController
  */
 class AdminTopicControllerTest extends TestCase
 {
@@ -51,7 +51,7 @@ class AdminTopicControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminTopicController::class,
+            \App\Http\Controllers\Admin\AdminTopicController::class,
             'destroy',
             \App\Http\Requests\Topic\DestroyTopicRequest::class
         );
@@ -117,7 +117,7 @@ class AdminTopicControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminTopicController::class,
+            \App\Http\Controllers\Admin\AdminTopicController::class,
             'store',
             \App\Http\Requests\Topic\StoreTopicRequest::class
         );
@@ -152,7 +152,7 @@ class AdminTopicControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->actingAs($this->admin_user)->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminTopicController::class,
+            \App\Http\Controllers\Admin\AdminTopicController::class,
             'update',
             \App\Http\Requests\Topic\UpdateTopicRequest::class
         );

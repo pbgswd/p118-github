@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Constants\AccessLevelConstants;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Feature\DestroyFeatureRequest;
 use App\Http\Requests\Feature\StoreFeatureRequest;
 use App\Http\Requests\Feature\UpdateFeatureRequest;

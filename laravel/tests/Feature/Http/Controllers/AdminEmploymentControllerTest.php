@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\AdminEmploymentController
+ * @see \App\Http\Controllers\Admin\AdminEmploymentController
  */
 class AdminEmploymentControllerTest extends TestCase
 {
@@ -50,7 +50,7 @@ class AdminEmploymentControllerTest extends TestCase
     public function destroy_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminEmploymentController::class,
+            \App\Http\Controllers\Admin\AdminEmploymentController::class,
             'destroy',
             \App\Http\Requests\Employment\DestroyEmploymentRequest::class
         );
@@ -115,7 +115,7 @@ class AdminEmploymentControllerTest extends TestCase
     public function store_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminEmploymentController::class,
+            \App\Http\Controllers\Admin\AdminEmploymentController::class,
             'store',
             \App\Http\Requests\Employment\StoreEmploymentRequest::class
         );
@@ -148,7 +148,7 @@ class AdminEmploymentControllerTest extends TestCase
     public function update_validates_with_a_form_request(): void
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\AdminEmploymentController::class,
+            \App\Http\Controllers\Admin\AdminEmploymentController::class,
             'update',
             \App\Http\Requests\Employment\UpdateEmploymentRequest::class
         );

@@ -11,9 +11,9 @@
                 </a>
             </h4>
         </div>
-        <div class="col-12">
+        <div class="col-12 mt-3">
             <h3>
-                {{$data['action']}} Post
+                {{$data['action']}} Committee Post
                 @if($data['action'] == "Edit")
                     <a href="{{route('public_committee_post_show',
                         [$data['post']['committee']->slug, $data['post']->slug])}}">
@@ -23,73 +23,88 @@
             </h3>
         </div>
     </div>
-    <div class="row mt-3 mb-3">
+    <div class="row my-3">
         <div class="col-12">
             <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data"
                   class="needs-validation" novalidate>
                 {!! csrf_field() !!}
                 <input type="hidden" name="post[access_level]" value="members" />
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
-                    <input type="text" class="form-control"  placeholder="Title" name="post[title]"
-                           value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                        <input type="text" class="form-control"  placeholder="Title" name="post[title]"
+                               value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
+                    </div>
+                    <h5 class="text-secondary"><i>Suggested title format:</i></h5>
+                    <p class="text-secondary">
+                        <br /><kbd>committeeItem - Month year</kbd>
+                        <i>or</i> <kbd>YWC Meeting Minutes - March 11th - 2021</kbd>
+                        <i>or</i> <kbd>YWC Report - May 2020</kbd>.
+                    </p>
                 </div>
-
-                <h5>Strongly recommended title format</h5>
-                <p>
-                    <i>The format for post title should be like this:</i>
-                    <br /><kbd>committeeItem - Month year</kbd>
-                    <i>or</i> <kbd>YWC Meeting Minutes - March 11th - 2021</kbd>
-                    <i>or</i> <kbd>YWC Report - May 2020</kbd>.
-                </p>
-
-                <label for="post-content" class="control-label">
-                    <h4>Content</h4>
-                </label>
-
-                <div class="col-12 mb-3 input-group">
-                    <textarea name="post[content]" id="post-content" placeholder="Content" class="form-control">
-                        {{old('post.content', $data['post']->content)}}
-                    </textarea>
-                </div>
-
-                    <div class="row mt-5">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="exampleInputFile">
-                                    <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                                    Attach files to this post
-                                </label>
-                                <input type="file" id="inputFile" name="attachments[]" multiple />
-                            </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-12 mt-3">
+                            <h4>Content</h4>
                         </div>
                         <div class="col-12">
-                            <h5>Strongly recommended attachment file names</h5>
-                            <p>
-                                <i>Use the date and title in the file name, like this:</i>
-                                <kbd>itemcommittee_ddmmyyyy.pdf</kbd>
-                                <i>or</i>
-                                <kbd>ReportOrganizing_01032020.pdf</kbd>.
-                            </p>
+                            <div class="col-12 mb-4">
+                                <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                                    <div class="editor-container__editor">
+                                <textarea name="post[content]" id="textarea" placeholder="Content" class="form-control text-black">
+                                </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="importmap">
+                                {
+                                    "imports": {
+                                        "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                        "ckeditor5/": "/js/ckeditor5/"
+                                    }
+                                }
+                            </script>
+                            <script>
+                                var textarea = @json($data['post']->content ?? '');
+                            </script>
+                            <script type="module" src="{{mix('js/ckeditor5/ck_main.js')}}"></script>
                         </div>
                     </div>
-
+                </div>
+                <div class="row mt-3">
+                    <h2>Files</h2>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="exampleInputFile">
+                                <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                                Attach files to this post
+                            </label>
+                            <input type="file" id="inputFile" name="attachments[]" multiple />
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3 text-secondary">
+                        <h5>Suggested attachment file name(s):</h5>
+                        <p>
+                            <kbd>itemcommittee_ddmmyyyy.pdf</kbd>
+                            <i>or</i>
+                            <kbd>ReportOrganizing_01032020.pdf</kbd>.
+                        </p>
+                    </div>
+                </div>
                 <div class="row mt-5 mb-3">
-
                     @if( $data['action'] == 'Edit' && count($data['post']->attachments) > 0)
                         <div class="col-12">
-                            <h2>Files</h2>
                             <table class="table table-striped table-sm">
                                 <thead>
-                                <tr>
-                                    <th> # </th>
-                                    <th> File </th>
-                                    <th> Access Level </th>
-                                    <th> <i class="fas fa-edit"></i> </th>
-                                    <th> Description </th>
-                                    <th> Created At </th>
-                                    <th> Updated At </th>
-                                </tr>
+                                    <tr>
+                                        <th> # </th>
+                                        <th> File </th>
+                                        <th> Access Level </th>
+                                        <th> <i class="fas fa-edit"></i> </th>
+                                        <th> Description </th>
+                                        <th> Created At </th>
+                                        <th> Updated At </th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($data['post']->attachments as $pa)
@@ -149,7 +164,7 @@
                 <div class="row d-flex justify-content-between">
                     <div class="col-12 col-md-6">
                         <i class="fas fa-edit fa-2x"></i>
-                        <input class="btn btn-primary" type="submit" value="{{ $data['action'] }}" />
+                        <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
                     </div>
             </form>
                     @if ($data['action'] == 'Edit')
