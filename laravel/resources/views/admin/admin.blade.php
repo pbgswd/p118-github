@@ -43,27 +43,28 @@
             field above to find records.
         </h3>
     </div>
-
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-4 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Users Info</h5>
                 <div class="card-body">
-                    <div class="ul">
+                    <ul class="list-group">
                         <li>{!! $data['counts']['membership'] !!} Members</li>
                         <li>Not including {!! $data['counts']['invite'] !!} Members with pending website invitations</li>
                         <li>As well as {!! $data['counts']['office'] !!} Office Staff</li>
                         <li>{{$data['counts']['executives']}} Executives</li>
                         <li>{{$data['counts']['is_banned']}} Are banned Users</li>
+                        <li><a href="{{route('admin_users_list_banned')}}">List banned Users</a></li>
                         <li><a href="{{ route('committees_list') }}">
                                 {!! $data['counts']['committees'] !!} Committees
                             </a>
                         </li>
-                        <li><a href="{{ route('invite-new-user') }}">Invite new member
+                        <li>
+                            <a href="{{ route('invite-new-user') }}">Invite new member
                                 <i class="far fa-arrow-alt-circle-right"></i>
                             </a>
                         </li>
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -71,7 +72,7 @@
             <div class="card p-3">
                 <h5 class="card-title">Content Info</h5>
                 <div class="card-body">
-                    <div class="ul">
+                    <ul class="list-group">
                         <li>{!! $data['counts']['pages'] !!} Pages</li>
                         <li>{!! $data['counts']['posts'] !!} Posts</li>
                         <li>{!! $data['counts']['topics'] !!} Topics</li>
@@ -85,30 +86,26 @@
                         <li>{{$data['counts']['agreements']}} Agreements</li>
                         <li>{{$data['counts']['policies']}} Policies</li>
                         <li>{{$data['counts']['memoriam']}} Memorials</li>
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
         <div class="col-4 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Additional resources</h5>
-                <div class="card-body">
-                    <div class="ul">
+                    <ul class="card-body">
                         <li>{{$data['counts']['carousels']}} Carousel images</li>
                         <li>{{$data['counts']['attachments']}} File attachments</li>
                         <li>{{$data['counts']['proofread']}} Entries to proofread</li>
-                    </div>
-                </div>
+                    </ul>
             </div>
         </div>
     </div>
-
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12">
             <h3>Recent Activity</h3>
             <a href="{{route('admin_activity_logs_list')}}">View log page</a>
         </div>
-
         <table class="table table-striped">
             <thead>
             <tr>
@@ -140,8 +137,6 @@
             </tbody>
         </table>
     </div>
-
-
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12">
             <h3>New stuff</h3>

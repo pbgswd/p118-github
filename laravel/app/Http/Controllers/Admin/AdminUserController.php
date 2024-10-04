@@ -70,6 +70,32 @@ class AdminUserController extends Controller
         return view('admin.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
     }
 
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function banned(): View
+    {
+        $this->authorize('viewAny', Auth::user());
+
+        $users = User::with(
+            [
+                'roles',
+                'currentExecutiveRoles',
+                'membership',
+            ]
+        )->where('is_banned', 1)
+            ->sortable()
+            ->paginate(50);
+
+        $counts['membership'] = Membership::where('membership_type', 'Member')->count();
+        $counts['office'] = Membership::where('membership_type', 'Office')->count();
+        $counts['invite'] = count(InviteUser::all());
+
+        return view('admin.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
+    }
+
+
     public function create(): RedirectResponse
     {
         Session::flash('warning', 'Create method blocked off. Contact admin for support.');

@@ -248,6 +248,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
 
     Route::controller(CNS\Admin\AdminUserController::class)->group(function () {
         Route::get('/users', 'index')->name('users_list');
+        Route::get('/users/banned', 'banned')->name('admin_users_list_banned');
         Route::get('/user/create', 'create')->name('user_create');
         Route::post('/user/create', 'store');
         Route::get('/user/{user}/address/edit', 'admin_edit_address')->name('admin_edit_address');
