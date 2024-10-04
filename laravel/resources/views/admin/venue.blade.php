@@ -35,21 +35,38 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2">
+                <div class="col-12 mt-3">
                     <h4>Description</h4>
                 </div>
-                <div class="col-lg-10">
-                    <textarea name="venue[description]" id="venue-description"
-                              placeholder="Summary content" class="form-control">
-                        {{old('venue.description', $data['venue']->description)}}
-                    </textarea>
+                <div class="col-12">
+                    <div class="col-12 mb-4">
+                        <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor">
+                                <textarea name="venue[description]" id="textarea" placeholder="Content" class="form-control text-black">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/js/ckeditor5/"
+                            }
+                        }
+                    </script>
+                    <script>
+                        var textarea = @json($data['venue']->description ?? '');
+                        var textarea1 = @json($data['textarea1'] ?? '');
+                    </script>
+                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-12">
+        <div class="row mt-4">
+            <div class="col-12 mt-4">
                 <div class="form-group">
                     @if(!isset($data['venue']->image))
                         <label for="exampleInputFile">

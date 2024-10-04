@@ -24,8 +24,8 @@
     <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row mt-lg-3"> &nbsp;</div>
-        <div class="row">
+
+        <div class="row my-3">
             <div class="form-group">
                 <div class="col-lg-2">
                     <h4>Title</h4>
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row my-3">
             <div class="form-group">
                 <div class="col-lg-8">
                     <h4>
@@ -63,7 +63,7 @@
                 </div>
             </div>
             @if ($data['action'] == 'Edit')
-                <div class="col-12 mt-2 mb-2">
+                <div class="col-12 my-4">
                     <h4>
                         Status: {!! $data['employment']->status ? "<i class='fas fa-check'></i> Open" :
                             "<i class='far fa-times-circle'></i> Closed" !!}
@@ -73,13 +73,31 @@
         </div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2">
+                <div class="col-12 mt-3">
                     <h4>Description</h4>
                 </div>
-                <div class="col-lg-10">
-                    <textarea name="employment[description]" id="employment-description" placeholder="Summary content"
-                              class="form-control">{{old('employment.description', $data['employment']->description)}}
-                    </textarea>
+                <div class="col-12">
+                    <div class="col-12 mb-4">
+                        <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor">
+                                <textarea name="employment[description]" id="textarea" placeholder="Content" class="form-control text-black">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/js/ckeditor5/"
+                            }
+                        }
+                    </script>
+                    <script>
+                        var textarea = @json($data['employment']->description ?? '');
+                        var textarea1 = @json($data['textarea1'] ?? '');
+                    </script>
+                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
         </div>
@@ -92,11 +110,11 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-2">
-            <div class="col-2">
+        <div class="row mt-4">
+            <div class="col-12">
                 <h4>Live on website</h4>
             </div>
-            <div class="col-sm">
+            <div class="col-12">
                 <label>
                     <input name="employment[live]" type="hidden" value="0" />
                     <input name="employment[live]" type="checkbox" value="1"
@@ -107,7 +125,8 @@
             </div>
         </div>
         <div class="row mt-lg-2">
-            <div class="col-md-6">
+            <h2>Files</h2>
+            <div class="col-12 my-4">
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
@@ -117,8 +136,7 @@
                 </div>
             </div>
         @if ($data['action'] == 'Edit')
-                <div class="col-md-12">
-                    <h2>Files</h2>
+                <div class="col-12 mt-3">
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>
@@ -198,7 +216,7 @@
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-    <div class="col-sm"> &nbsp;</div>
+
     @if ($data['action'] == 'Edit')
          <div class="col-sm" style="float:right">
              <form name="delete" method="POST" action="{{route('admin_employment_destroy')}}">

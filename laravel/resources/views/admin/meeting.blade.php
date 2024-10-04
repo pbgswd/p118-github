@@ -19,26 +19,26 @@
             </div>
         @endif
     </div>
-
-
-
-
     <form method="post" name="meeting" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2"><h4>Title</h4></div>
-                <div class="col-lg-10">
+                <div class="col-12 my-3">
+                    <h4>Title</h4>
+                </div>
+                <div class="col-12 my-3">
                     <input type="text" class="form-control"  placeholder="Title" name="meeting[title]"
                            value="{{ old('meeting.title', $data['meeting']->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row my-3">
             <div class="form-group">
-                <div class="col-lg-2"><h4><i class="fas fa-calendar-alt"></i> Date</h4></div>
-                <div class="col-lg-10">
+                <div class="col-12">
+                    <h4><i class="fas fa-calendar-alt"></i> Date</h4>
+                </div>
+                <div class="col-12">
                     <input
                         type="text"
                         class="form-control"
@@ -54,15 +54,46 @@
         </div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2">
-                    <h4>Description</h4>
+                <div class="col-12 mt-3">
+                    <h4>Content</h4>
                 </div>
-                <div class="col-lg-10">
-                    <textarea name="meeting[description]" id="meeting-description" placeholder="Summary content" class="form-control">{{old('meeting.description', $data['meeting']->description)}}</textarea>
+                <div class="col-12">
+                    <div class="col-12 mb-4">
+                        <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor">
+                                <textarea name="meeting[description]" id="textarea" placeholder="Content" class="form-control text-black">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/js/ckeditor5/"
+                            }
+                        }
+                    </script>
+                    <script>
+                        var textarea = @json($data['meeting']->description ?? '');
+                        var textarea1 = @json($data['textarea1'] ?? '');
+                    </script>
+                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
+        <div class="col-12">
+            <h4>Status</h4>
+        </div>
+        <div class="col-12">
+            <label>
+                <input name="meeting[live]" type="hidden" value="0" />
+                <input name="meeting[live]" type="checkbox" value="1" {{ checked( old('meeting.live', $data['meeting']->live)) }} /> Check now to make Live
+            </label>
+            <p>ie.: Draft or Published.</p>
+        </div>
+        <div class="row my-5">
+            <h4>Files</h4>
             <div class="col-12">
                 <div class="form-group">
                     <label for="exampleInputFile">
@@ -72,22 +103,10 @@
                     <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
-            <div class="col-12">
-                <h4>Status</h4>
-            </div>
-            <div class="col-12">
-                <label>
-                    <input name="meeting[live]" type="hidden" value="0" />
-                    <input name="meeting[live]" type="checkbox" value="1" {{ checked( old('meeting.live', $data['meeting']->live)) }} /> Check now to make Live
-                </label>
-                <p>ie.: Draft or Published.</p>
-            </div>
-        </div>
         </div>
         @if ($data['action'] == 'Edit')
             @if(count($data['meeting']->attachments) > 0)
-                <div class="col-md-12">
-                    <h2>Files</h2>
+                <div class="col-12">
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>
@@ -134,9 +153,13 @@
                                         {{$ma->updated_at}}
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <td colspan="7">
+                                    No attached files
+                                </td>
+                            @endforelse
                             <tr>
-                                <td colspan="5">
+                                <td colspan="7">
                                     <i class="far fa-trash-alt"></i> Select checkbox to delete a file
                                 </td>
                             </tr>
@@ -145,25 +168,23 @@
                 </div>
             @endif
         @endif
-        <div class="row mt-lg-3"> &nbsp;</div>
         <div class="row mb-lg-5">
-            <div class="col-sm">
+            <div class="col-sm-12 col-md-6 mb-sm-5 mb-md-0">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-            <div class="col-sm"></div>
-            @if ($data['action'] == 'Edit')
-                 <div class="col-sm" style="float:right">
-                     <form name="delete" method="POST" action="{{route('meeting_destroy')}}">
-                         {!! csrf_field() !!}
-                         {!! method_field('DELETE') !!}
-                        <i class="far fa-trash-alt fa-2x"></i>
-                        <input type="hidden" name="id[]" value="{{ $data['meeting']->id }}">
-                        <input class="btn btn-outline-danger" type="submit" value="Delete Meeting">
-                    </form>
-                 </div>
-            @endif
-        </div>
+    @if ($data['action'] == 'Edit')
+         <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0 text-md-end">
+             <form name="delete" method="POST" action="{{route('meeting_destroy')}}">
+                 {!! csrf_field() !!}
+                 {!! method_field('DELETE') !!}
+                <i class="far fa-trash-alt fa-2x"></i>
+                <input type="hidden" name="id[]" value="{{ $data['meeting']->id }}">
+                <input class="btn btn-outline-danger" type="submit" value="Delete Meeting">
+            </form>
+         </div>
+    @endif
+    </div>
 </div>
 @endsection

@@ -23,10 +23,12 @@
     <form method="post" name="bylaw" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
-        <div class="row mt-lg-3">
+        <div class="row my-3">
             <div class="form-group">
-                <div class="col-lg-2"><h4>Title</h4></div>
-                <div class="col-lg-10">
+                <div class="col-l2">
+                    <h4>Title</h4>
+                </div>
+                <div class="col-12">
                     <input type="text" class="form-control"
                            placeholder="Title" name="bylaw[title]"
                            value="{{ old('bylaw.title', $data['bylaw']->title)}}" size="80" required/>
@@ -35,19 +37,36 @@
         </div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2">
-                    <h4>Description</h4>
+                <div class="col-12 mt-3">
+                    <h4>Content</h4>
                 </div>
-                <div class="col-lg-10">
-                    <textarea name="bylaw[description]" id="bylaw-description"
-                              placeholder="Information about the by-law, or pasted from the pdf."
-                              class="form-control">
-                        {{old('bylaw.description', $data['bylaw']->description)}}
-                    </textarea>
+                <div class="col-12">
+                    <div class="col-12 mb-4">
+                        <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor">
+                                <textarea name="bylaw[description]" id="textarea" placeholder="Content"
+                                          class="form-control text-black">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/js/ckeditor5/"
+                            }
+                        }
+                    </script>
+                    <script>
+                        var textarea = @json( $data['bylaw']->description ?? '');
+                        var textarea1 = @json($data['textarea1'] ?? '');
+                    </script>
+                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
+        <div class="row my-3">
             <div class="col-md-6">
                 <div class="form-group">
                     <h4>Start Date of by-law</h4>
@@ -64,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
+        <div class="row my-3">
             <div class="col-md-4">
                 <div class="col-lg-2">
                     <h4>Status</h4>
@@ -79,19 +98,20 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
-            <div class="col-12 col-sm-3 align-middle">
+        <div class="row mt-3">
+            <div class="col-12 align-middle">
                 <h4>Access Level for content</h4>
             </div>
-            <div class="col-12 col-sm-3">
+            <div class="col-12">
                 <div class="form-group">
                     {{ select_options($data['access_levels'], old('post.access_level', $data['bylaw']->access_level),
                         ['name' => 'bylaw[access_level]', 'class' => 'form-control']) }}
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
-            <div class="col-md-6">
+        <div class="row mt-3">
+            <h2>Files</h2>
+            <div class="col-12">
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
@@ -101,10 +121,9 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
+        <div class="row mt-3">
             @if ($data['action'] == 'Edit')
-                    <div class="col-md-12">
-                        <h2>Files</h2>
+                    <div class="col-12">
                         <table class="table table-striped table-sm">
                             <thead>
                             <tr>
@@ -174,7 +193,7 @@
                             @endforelse
                             @if(count($data['bylaw']->attachments) > 0)
                                 <tr>
-                                    <td colspan="5">
+                                    <td colspan="7">
                                         <i class="far fa-trash-alt"></i> Select checkbox to delete a file
                                     </td>
                                 </tr>
@@ -184,15 +203,15 @@
                     </div>
             @endif
         </div>
-        <div class="row mt-lg-5 mb-lg-5">
+        <div class="row my-5">
             <div class="col-sm">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-    <div class="col-sm"> &nbsp;</div>
+
     @if ($data['action'] == 'Edit')
-         <div class="col-sm" style="float:right">
+         <div class="col-sm text-md-end">
              <form name="delete" method="POST" action="{{route('admin_bylaw_destroy')}}">
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}

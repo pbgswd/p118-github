@@ -36,14 +36,27 @@
         @include('layouts.admin-select-topics')
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2">
-                    <h4>Content</h4>
+                <h4>Content</h4>
+                <div class="editor-container editor-container_classic-editor" id="editor-container">
+                    <div class="editor-container__editor">
+                            <textarea name="page[content]" id="textarea" placeholder="Content"
+                                      class="form-control text-black">
+                            </textarea>
+                    </div>
                 </div>
-                <div class="col-lg-10">
-                    <textarea name="page[content]" id="page-content" placeholder="Content" class="form-control">
-                        {{old('page.content', $data['page']->content)}}
-                    </textarea>
-                </div>
+                <script type="importmap">
+                    {
+                        "imports": {
+                            "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                            "ckeditor5/": "/js/ckeditor5/"
+                        }
+                    }
+                </script>
+                <script>
+                    var textarea = @json($data['page']->content ?? '');
+                    var textarea1 = @json($data['textarea1'] ?? '');
+                </script>
+                <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
             </div>
         </div>
         <div class="row mt-5">
@@ -93,6 +106,7 @@
 
         </div>
         <div class="row mt-5">
+            <h2>Files</h2>
             <div class="col-12">
                 <div class="form-group">
                     <label for="exampleInputFile">
@@ -102,10 +116,7 @@
                     <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
-        </div>
-        @if( $data['action'] == 'Edit')
-            <div class="col-md-12">
-                <h2>Files</h2>
+            @if( $data['action'] == 'Edit')
                 <table class="table table-striped table-sm">
                     <thead>
                     <tr>
@@ -178,8 +189,8 @@
                     @endif
                     </tbody>
                 </table>
-            </div>
-        @endif
+            @endif
+        </div>
         <div class="row mt-5">
             <div class="col">
                 <i class="fas fa-edit fa-2x"></i>

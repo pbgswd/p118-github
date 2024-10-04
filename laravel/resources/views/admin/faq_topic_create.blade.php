@@ -23,46 +23,69 @@
     <div class="row">
         <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data"
               class="needs-validation" novalidate>
-            {!! csrf_field() !!}
-                <div class="form-group">
-                    <div class="col-12">
-                        <h4>Faq Topic</h4>
-                        <input type="text" class="form-control"  placeholder="Topic" name="faq[faq_topic]"
-                               value="{{ old('faq.faq_topic', $data['faq']->faq_topic)}}" size="80" required/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-12">
-                        <h4>Description</h4>
-                        <textarea name="faq[description]" id="faq-description" placeholder="Description content"
-                                  class="form-control">{{old('faq.description', $data['faq']->description)}}
+        {!! csrf_field() !!}
+        <div class="form-group">
+            <div class="col-12">
+                <h4>Faq Topic</h4>
+                <input type="text" class="form-control"  placeholder="Topic" name="faq[faq_topic]"
+                       value="{{ old('faq.faq_topic', $data['faq']->faq_topic)}}" size="80" required/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-12 mt-3">
+                <h4>Content</h4>
+            </div>
+            <div class="col-12">
+                <div class="col-12 mb-4">
+                    <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                        <div class="editor-container__editor">
+                        <textarea name="faq[description]" id="textarea" placeholder="Content" class="form-control text-black">
                         </textarea>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <h4>Live on website</h4>
-                    <label>
-                        <input name="faq[live]" type="hidden" value="0" />
-                        <input name="faq[live]" type="checkbox" value="1"
-                            {{ checked( old('faq.live', $data['faq']->live)) }} />
-                        Check now to make Live
-                    </label>
-                    <p>ie.: Draft or Published.</p>
-                </div>
-                <div class="col-6">
-                    <h4>Access Level for FAQ topic</h4>
-                    <div class="form-group">
-                        {{ select_options($data['access_levels'], old('faq.access_level',
-                            $data['faq']->access_level), ['name' => 'faq[access_level]',
-                            'class' => 'form-control']) }}
-                    </div>
-                </div>
-                <h4>
-                    @if($data['action'] == 'Update')
-                        {{count($data['faq']['faqs_data'])}}
-                    @endif
-                        FAQ Questions and Answers
-                </h4>
+                <script type="importmap">
+                    {
+                        "imports": {
+                            "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                            "ckeditor5/": "/js/ckeditor5/"
+                        }
+                    }
+                </script>
+                <script>
+                    var textarea = @json($data['faq']->description ?? '');
+                    var textarea1 = @json($data['textarea1'] ?? '');
+                </script>
+                <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <h4>Live on website</h4>
+        <label>
+            <input name="faq[live]" type="hidden" value="0" />
+            <input name="faq[live]" type="checkbox" value="1"
+                {{ checked( old('faq.live', $data['faq']->live)) }} />
+            Check now to make Live
+        </label>
+        <p>ie.: Draft or Published.</p>
+    </div>
+    <div class="col-6">
+        <h4>Access Level for FAQ topic</h4>
+        <div class="form-group">
+            {{ select_options($data['access_levels'], old('faq.access_level',
+                $data['faq']->access_level), ['name' => 'faq[access_level]',
+                'class' => 'form-control']) }}
+        </div>
+    </div>
+    <h4>
+        @if($data['action'] == 'Update')
+            {{count($data['faq']['faqs_data'])}}
+        @endif
+            FAQ Questions and Answers
+    </h4>
                 @if($data['action'] == 'Update')
                     <div class="row">
                         @foreach( $data['faq']['faqs_data'] as $fd )
@@ -234,7 +257,6 @@
                         <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
                     </div>
         </form>
-        <div class="col-sm"> &nbsp;</div>
         @if ($data['action'] == 'Update')
             <div class="col-sm" style="float:right">
                 <form name="delete" method="POST" action="{{route('admin_faq_destroy')}}">

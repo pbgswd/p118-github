@@ -35,20 +35,38 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+
+        <div class="row my-4">
             <div class="form-group">
-                <div class="col-12">
+                <div class="col-12 mt-3">
                     <h4>Description</h4>
                 </div>
                 <div class="col-12">
-                    <textarea name="organization[description]" id="organization-description"
-                              placeholder="Summary content" class="form-control">
-                        {{old('organization.description', $data['organization']->description)}}
-                    </textarea>
+                    <div class="col-12 mb-4">
+                        <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor">
+                                <textarea name="organization[description]" id="textarea" placeholder="Content" class="form-control text-black">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/js/ckeditor5/"
+                            }
+                        }
+                    </script>
+                    <script>
+                        var textarea = @json($data['organization']->description ?? '');
+                        var textarea1 = @json($data['textarea1'] ?? '');
+                    </script>
+                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row my-5">
             <div class="col-12">
                 <div class="form-group">
                     @if(!isset($data['organization']->image))
@@ -85,9 +103,9 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
+        <div class="row mt-3">
             <div class="form-group">
-                <div class="col-lg-8"><h4>organization Website Link</h4></div>
+                <div class="col-lg-8"><h4>Organization Website Link</h4></div>
                 <div class="col-lg-10">
                     <input type="text" class="form-control"
                            placeholder="Website Address - http://...." name="organization[url]"
@@ -95,11 +113,11 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
+        <div class="row mt-3">
             <div class="col-12 pt-3">
                 <h4>Access Level</h4>
             </div>
-            <div class="col-12 pt-3">
+            <div class="col-12">
                 <div class="form-group">
                     {{ select_options($data['access_levels'],
                         old('organization.access_level', $data['organization']->access_level),
@@ -107,7 +125,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-12">
                 <h4>Status</h4>
             </div>

@@ -24,8 +24,7 @@
     <form method="post" name="agreement" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
-
-        <div class="row mt-lg-3">
+        <div class="row mt-5">
             <div class="form-group">
                 <div class="col-12">
                     <h4>Title of Agreement</h4>
@@ -37,8 +36,11 @@
             </div>
         </div>
         @if($data['action'] == 'Edit')
-            <div class="col-12 p-3">
+
+            <div class="col-12 my-3">
                 <h4>Venues and organizations associated with this agreement:</h4>
+            </div>
+            <div class="col-12 my-3">
                 <h5>Venues</h5>
                 @forelse($data['agreement']->venues as $venue)
                     {{$venue->name}}
@@ -49,6 +51,8 @@
                 @empty
                     <i>None</i>
                 @endforelse
+            </div>
+            <div class="col-12 my-12">
                 <h5>Organizations</h5>
                 @forelse($data['agreement']->organizations as $org)
                     {{$org->name}}
@@ -60,7 +64,7 @@
                 @endforelse
             </div>
         @endif
-        <div class="col-12 mb-5">
+        <div class="col-12 my-5">
             <div class="form-group">
                 <label for="exampleFormControlSelect2">
                     <h5>
@@ -93,16 +97,33 @@
                 </select>
             </div>
         </div>
-        <div class="row mt-2">
+        <div class="row">
             <div class="form-group">
-                <div class="col-lg-2">
+                <div class="col-12 mt-3">
                     <h4>Description</h4>
                 </div>
-                <div class="col-lg-10">
-                    <textarea name="agreement[description]" id="agreement-description"
-                              placeholder="Information about the agreement, or pasted from the pdf."
-                              class="form-control">{{old('agreement.description', $data['agreement']->description)}}
-                    </textarea>
+                <div class="col-12">
+                    <div class="col-12 mb-4">
+                        <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor">
+                                <textarea name="agreement[description]" id="textarea" placeholder="Content" class="form-control text-black">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/js/ckeditor5/"
+                            }
+                        }
+                    </script>
+                    <script>
+                        var textarea = @json($data['agreement']->description ?? '');
+                        var textarea1 = @json($data['textarea1'] ?? '');
+                    </script>
+                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
         </div>
@@ -164,7 +185,8 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-3">
+        <div class="row my-5">
+            <h2>Files</h2>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputFile">
@@ -179,7 +201,6 @@
             @if(count($data['agreement']->attachments) > 0)
                 <div class="row mt-lg-3">
                     <div class="col-md-12">
-                        <h2>Files</h2>
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
@@ -243,7 +264,7 @@
                                         </tr>
                                     @endforeach
                                     <tr>
-                                        <td colspan="5">
+                                        <td colspan="7">
                                             <i class="far fa-trash-alt"></i> Select checkbox to delete a file
                                         </td>
                                     </tr>
@@ -254,16 +275,14 @@
                 </div>
             @endif
         @endif
-
         <div class="row p-2">
             <div class="col-12 col-md-6">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-
         @if ($data['action'] == 'Edit')
-             <div class="col-12 col-md-6 text-right">
+             <div class="col-12 col-md-6 text-md-end">
                  <form name="delete" method="POST" action="{{route('agreement_destroy')}}">
                      {!! csrf_field() !!}
                      {!! method_field('DELETE') !!}
@@ -273,6 +292,6 @@
                 </form>
              </div>
         @endif
-        </div>
     </div>
+</div>
 @endsection
