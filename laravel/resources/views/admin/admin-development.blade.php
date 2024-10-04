@@ -1,18 +1,15 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paint-brush"></i> Page For Development'])
 @section('content')
 <script>
     console.log('inside admin-blank.blade the template file');
 </script>
-<div class="row mt-6 mb-6" style="height: 100px">
-    <div class="col">
-        <h1>Page For Development</h1>
+
+<div class="row my-5">
+    <div class="col-12">
+        <a href="{{ route('blank') }}">Blank Page</a> | <a href="{{ route('developer') }}">Resources Page</a>
     </div>
 </div>
-
-
-
 <div class="row mb-6">
-
         <div class="col-12">
             <div class="d-block d-md-none mb-4" id="textarea_sm_container">
                 <div class="mb-5">

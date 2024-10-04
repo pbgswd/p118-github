@@ -1,4 +1,5 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="far fa-images"></i> Front Page Carousel'])
+
 @section('content')
 <div class="container">
     <div class="row mb-3">
@@ -6,7 +7,6 @@
             <div class="container container-fluid">
                 <div class="row p-4">
                     <div class="col">
-                    <h1 class="display-6">Front Page Carousel</h1>
                     <h3>4 optimized images per carousel slide </h3>
                     <ul>
                         <li>A carousel image requires four images, each for the different

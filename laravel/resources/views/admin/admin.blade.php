@@ -1,8 +1,5 @@
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-users-cog"></i> Admin Dashboard'])
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Admin Dashboard</h1>
-    </div>
 <div class="container">
     <div class="row border border-dark rounded p-3 mb-4 bg-body-secondary">
         <h2>Admin Search</h2>
@@ -92,7 +89,7 @@
         </div>
         <div class="col-4 h-100">
             <div class="card p-3">
-                <h5 class="card-title">Additional resources</h5>
+                <h5 class="card-title">Additional Resources</h5>
                     <ul class="card-body">
                         <li>{{$data['counts']['carousels']}} Carousel images</li>
                         <li>{{$data['counts']['attachments']}} File attachments</li>

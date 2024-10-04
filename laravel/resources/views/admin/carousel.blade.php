@@ -1,15 +1,7 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="far fa-images"></i>  '.  $data['action'] . ' Carousel'])
 @section('content')
 <div class="container-fluid">
     <div class="jumbotron jumbotron-fluid p-3 rounded">
-        <h1 class="display-4">
-            @if($data['action'] == 'Edit')
-                <i class="far fa-edit"></i>
-            @else
-                <i class="fas fa-plus-square"></i>
-            @endif
-            {{$data['action']}} Carousel
-        </h1>
         <ul>
             <li>A carousel image requires four images, each for the different screen sizes of devices
                 (phones, laptops, etc).</li>
@@ -38,7 +30,7 @@
         <div class="row border border-primary rounded p-3 mb-3">
             <div class="col-12">
                 <div class="form-group">
-                    <h4><i class="fas fa-comment mr-1"></i>Caption</h4>
+                    <h4><i class="fas fa-comment mr-1"></i> Caption</h4>
                     <input type="text" class="form-control"
                            placeholder="Caption" name="carousel[caption]"
                            value="{{ old('carousel.caption', $data['carousel']->caption??'')}}" size="80" required/>
@@ -49,7 +41,7 @@
             </div>
             <div class="col-12">
                 <div class="form-group">
-                    <h4><i class="fas fa-comment mr-1"></i>Sub Caption</h4>
+                    <h4><i class="fas fa-comment mr-1"></i> Sub Caption</h4>
                     <input type="text" class="form-control"
                            placeholder="Sub Caption" name="carousel[caption2]"
                            value="{{ old('carousel.caption2', $data['carousel']->caption2??'')}}" size="80" />
@@ -92,8 +84,8 @@
                     </div>
                 </div>
                 <div class="col-12 mb-3">
-                    <h4><i class="fas fa-palette mr-1"></i>Caption Text Colour</h4>
-                    <label for="favcolor">Select Colour</label>
+                    <h4><i class="fas fa-palette mr-1"></i> Caption Text Colour</h4>
+                    <label for="favcolor">Select Colour </label>
                     <input type="color" id="favcolor" name="carousel[text_color]"
                            value="{{ old('carousel.text_color', $data['carousel']->text_color??'' )}}"><br>
                     <div style="color: {{ old('carousel.text_color', $data['carousel']->text_color??'' )}}">
@@ -114,8 +106,8 @@
 
                 <div class="col-12">
                     <div class="form-group">
-                        <h4><i class="fas fa-palette mr-1"></i>Caption Text Outline Colour</h4>
-                    <label for="favcolor">Select Colour</label>
+                        <h4><i class="fas fa-palette mr-1"></i> Caption Text Outline Colour</h4>
+                    <label for="favcolor">Select Colour </label>
 
                         <input type="color" id="favcolor" name="carousel[text_outline_color]"
                            value="{{ old('carousel.text_outline_color', $data['carousel']->text_outline_color??'' )}}">

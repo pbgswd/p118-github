@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-star"></i> Feature Content'])
 @section('content')
     <div class='container'>
         <h3>

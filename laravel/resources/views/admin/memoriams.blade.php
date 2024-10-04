@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="far fa-heart"></i> In Memoriam'])
 @section('content')
     <div class='container'>
         <div class="row">
@@ -16,10 +16,7 @@
                     <i class="far fa-eye"></i>
                     View on website</a>
             </div>
-
         </div>
-
-
     </div>
     <form name="delete" method="POST" action="{{route('admin_memoriam_destroy')}}">
         {!! csrf_field() !!}

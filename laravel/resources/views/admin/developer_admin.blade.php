@@ -1,12 +1,10 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-users-cog"></i> Admin Dashboard'])
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-users-cog"></i>  Web Developer Resources'])
 @section('content')
 <div class="container">
-    <div class="row mt-5">
-        <h2>
-            <span>
-                Web Developer Resources
-            </span>
-        </h2>
+    <div class="row my-5">
+        <div class="col-12">
+            <a href="{{ route('blank') }}">Blank Page</a> | <a href="{{ route('development') }}">Development Page</a>
+        </div>
     </div>
 
     <div class="row">
@@ -99,9 +97,9 @@
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a class="nav-link" href="https://fontawesome.com/icons?d=gallery" target="_blank">
+                    <a class="nav-link" href=https://fontawesome.com/v5/search" target="_blank">
                         <span data-feather="file-text"></span>
-                        FontAwesome Icons
+                        FontAwesome Icons V5
                     </a>
                 </li>
                 <li class="list-group-item">

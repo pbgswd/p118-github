@@ -1,15 +1,7 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-book-reader"></i> Proofreader'])
 @section('content')
 <div class='container m-lg-5'>
     <div class="row border border-primary rounded mb-3">
-        <div class='col-12 col-md-6 p-3'>
-            <h3>
-                <a href="{{route('admin_proofreader')}}">
-                    <i class="fas fa-glasses"></i>
-                Proofreader
-                </a>
-            </h3>
-        </div>
         <div class='col-12 col-md-6 text-right p-3'>
             <h3>
                 <a href="{{route('admin_proofreader_sync')}}">

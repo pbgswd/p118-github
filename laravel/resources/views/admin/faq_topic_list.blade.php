@@ -1,9 +1,9 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="far fa-question-circle"></i> FAQ Topics List'])
 @section('content')
 <div class="container">
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">FAQ Topics list</h1>
+
             <p class="lead">
                 FAQs have a top level topic term, with a list of questions and answers attached.
             </p>

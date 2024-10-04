@@ -1,9 +1,7 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="far fa-question-circle"></i>  '.  $data['action'] . ' FAQ '])
 @section('content')
-
 <div class="container">
     <div class="jumbotron jumbotron-fluid p-5">
-        <h1 class="display-4">{{$data['action']}} a FAQ</h1>
         <p class="lead">
             FAQs have a top level topic term, with a list of questions and answers attached.
         </p>

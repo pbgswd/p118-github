@@ -2,10 +2,9 @@
 $invite = $data['invite'];
 $roles = $data['roles'];
 ?>
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-envelope-square"></i> Invite Member to Website'])
 @section('content')
 <div class='container mt-lg-4'>
-    <h1>Invite User</h1>
 <h3>Note: In the future, there will be a 48 hour expiry time on invitations.</h3>
         <form method="post" name="invite_user" action="{{ url()->current() }}"
               enctype="multipart/form-data" class="needs-validation" novalidate>
