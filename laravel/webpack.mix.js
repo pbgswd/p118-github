@@ -13,7 +13,6 @@ const mix = require('laravel-mix');
 mix.js('resources/js/dashboard.js', 'public/js')
     .js('resources/js/admin/color-modes.js', 'public/js')
     .js('resources/js/app.js', 'public/js')
-    .js('resources/js/tinymce.js', 'public/js')
     .js('resources/js/google-analytics.js', 'public/js')
     .js('resources/js/admin/ck_main_admin.js', 'public/js/ckeditor5')
     .js('resources/js/ck_main.js', 'public/js/ckeditor5')
