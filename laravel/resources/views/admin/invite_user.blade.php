@@ -12,14 +12,14 @@ $roles = $data['roles'];
         {!! csrf_field() !!}
             <div class="col-12 input-group mt-lg-5 mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                    <span class="input-group-text mb-2" id="inputGroup-sizing-default">Name</span>
                     <input type="text" class="form-control"  placeholder="Name" name="invite[name]"
                            value="{{ old('invite.name', $invite->name ?? '')}}" size="80" required />
                 </div>
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                    <span class="input-group-text mb-2" id="inputGroup-sizing-default">Email</span>
                     <input type="text" class="form-control"  placeholder="Email" name="invite[email]"
                            value="{{ old('invite.email', $invite->email ?? '')}}" size="80" required/>
                 </div>
@@ -45,18 +45,37 @@ $roles = $data['roles'];
             </div>
             <div class="row">
                 <div class="form-group">
-                    <div class="col-lg-2">
-                        <h4>Message</h4>
+                    <div class="col-12">
+                        <h4>Message (optional)</h4>
                     </div>
-                    <div class="col-lg-10">
-                        <textarea name="invite[message]" id="invite-message" class="form-control">
-                            {{old('invite.message', $invite->message)}}
-                        </textarea>
-                    </div>
+                        <div class="col-12">
+                            <div class="col-12 mb-4">
+                                <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                                    <div class="editor-container__editor">
+                                    <textarea name="invite[message]" id="textarea" placeholder="Content"
+                                              class="form-control text-black">
+                                    </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="importmap">
+                                {
+                                    "imports": {
+                                        "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                        "ckeditor5/": "/js/ckeditor5/"
+                                    }
+                                }
+                            </script>
+                            <script>
+                                var textarea = @json($invite->message ?? '');
+                                var textarea1 = @json($data['textarea1'] ?? '');
+                            </script>
+                            <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
+                        </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-12 mt-lg-2 p-2">
                     <h4>User website roles (admin access privileges)</h4>
                     @foreach ($data['roles'] as $role)

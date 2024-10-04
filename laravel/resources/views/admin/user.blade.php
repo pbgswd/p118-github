@@ -51,14 +51,16 @@
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                    <span class="input-group-text mb-2" id="inputGroup-sizing-default">Name</span>
                     <input type="text" class="form-control"  placeholder="Name" name="user[name]"
                            value="{{ old('user.name', $data['user']->name)}}" size="80" required/>
                 </div>
             </div>
-            <div class="col-12 input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+
+            <div class="input-group col-12 mb-3" style="margin-top: 1rem;">
+                <div class="input-group-prepend pb-2">
+                    <span class="input-group-text mb-2" id="inputGroup-sizing-default">Email</span>
+
                 <input type="text" class="form-control"  placeholder="Email" name="user[email]"
                        value="{{ old('user.email', $data['user']->email ?? null)}}" size="80" required/>
                 </div>
@@ -77,7 +79,7 @@
             </div>
             <div class="col-12 input-group mb-3 mt-2">
                 <div class="input-group-prepend">
-                   <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
+                   <span class="input-group-text mb-2" id="inputGroup-sizing-default">Phone</span>
                    <input type="tel" class="form-control"  placeholder="Phone" name="user_phone[phone_number]"
                           value="{{ old('user_phone.phone_number', $data['user']->phone_number->phone_number ?? '')}}"
                           size="80"/>
@@ -239,9 +241,27 @@
                 <h4>Member personal profile info</h4>
             </div>
             <div class="col-12">
-                <textarea name="user_info[about]" id="about" class="form-control">
-                    {{ old('user_info.about', $data['user']->user_info->about ?? '') }}
-                </textarea>
+                <div class="col-12 mb-4">
+                    <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                        <div class="editor-container__editor">
+                    <textarea name="user_info[about]" id="textarea" placeholder="Content" class="form-control text-black">
+                    </textarea>
+                        </div>
+                    </div>
+                </div>
+                <script type="importmap">
+                    {
+                        "imports": {
+                            "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                            "ckeditor5/": "/js/ckeditor5/"
+                        }
+                    }
+                </script>
+                <script>
+                    var textarea = @json($data['user']->user_info->about ?? '');
+                    var textarea1 = @json($data['textarea1'] ?? '');
+                </script>
+                <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
             </div>
         </div>
         <div class="row border border-primary rounded border-3 mt-lg-2 p-lg-2">
@@ -269,9 +289,12 @@
                     </div>
                 @endforeach
                 <h5>Admin notes:</h5>
+
                 <textarea name="user_membership[admin_notes]" id="membership_admin_notes" class="form-control">
                     {{ old('membership.admin_notes', $data['user']->membership->admin_notes ?? '') }}
                 </textarea>
+
+
             </div>
         </div>
         <div class="row border border-primary rounded border-3 mt-lg-2 p-lg-2">

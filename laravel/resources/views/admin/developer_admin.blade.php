@@ -1,13 +1,14 @@
 @extends('layouts.dashboard',  ['title' => '<i class="fas fa-users-cog"></i> Admin Dashboard'])
 @section('content')
 <div class="container">
-    <div class="row">
-        <h2 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+    <div class="row mt-5">
+        <h2>
             <span>
                 Web Developer Resources
             </span>
         </h2>
     </div>
+
     <div class="row">
         <div class="col-sm">
             <ul class="list-group flex-column mb-2">
@@ -75,6 +76,12 @@
                         Google Recaptcha V.3
                     </a>
                 </li>
+                <li class="list-group-item">
+                    <a class="nav-link" href="https://aws.amazon.com/" target="_blank">
+                        <span data-feather="file-text"></span>
+                        AWS
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="col-sm">
@@ -101,6 +108,12 @@
                     <a class="nav-link" href="https://www.tiny.cloud/" target="_blank">
                         <span data-feather="file-text"></span>
                         TinyMCE
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="nav-link" href="https://ckeditor.com/ckeditor-5/builder/" target="_blank">
+                        <span data-feather="file-text"></span>
+                        CkEditor, to replace TinyMCE
                     </a>
                 </li>
                 <li class="list-group-item">

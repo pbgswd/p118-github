@@ -5,6 +5,11 @@
     <div class="row">
         <div class="col-12 m-3">
             <p>
+            emerg cnotact
+            </p>
+        </div>
+            <div class="col-12 m-3">
+                <p>
                 <i>
                     <i class="fas fa-asterisk"></i>
                     Please note: the website does not store emergency contact information.

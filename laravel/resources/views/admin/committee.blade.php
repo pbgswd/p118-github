@@ -64,7 +64,9 @@
             @csrf
             <div class="row mt-5">
                 <div class="form-group">
-                    <div class="col-lg-2"><h5>Name</h5></div>
+                    <div class="col-lg-2">
+                        <h5>Name</h5>
+                    </div>
                     <div class="col-lg-10">
                         <input type="text" class="form-control"  placeholder="Name" name="committee[name]"
                                value="{{ old('committee.name', $data['committee']->name)}}" size="80" required/>
@@ -73,15 +75,31 @@
             </div>
             <div class="row mt-3">
                 <div class="form-group">
-                    <div class="col-12">
+                    <div class="col-12 mt-3">
                         <h5>Description</h5>
                     </div>
-                    <div class="col-12">
-                        <textarea name="committee[description]" id="committee-description"
-                                  placeholder="Summary content" class="form-control">
-                            {{old('committee.description', $data['committee']->description)}}
-                        </textarea>
+                    <div class="col-12 mb-4">
+                        <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor">
+                                <textarea name="committee[description]" id="textarea" placeholder="Content"
+                                          class="form-control text-black">
+                                </textarea>
+                            </div>
+                        </div>
                     </div>
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/js/ckeditor5/"
+                            }
+                        }
+                    </script>
+                    <script>
+                        var textarea = @json($data['committee']->description ?? '');
+                        var textarea1 = @json($data['textarea1'] ?? '');
+                    </script>
+                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
             <div class="row mt-3">
@@ -174,5 +192,4 @@
                     @endcan
                 @endif
             </div>
-        </div>
 @endsection

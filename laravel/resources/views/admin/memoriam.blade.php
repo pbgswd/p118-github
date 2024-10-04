@@ -28,8 +28,9 @@
         {!! csrf_field() !!}
         <div class="row">
             <div class="form-group">
-                <div class="col-12">
+                <div class="col-12 mt-3">
                     <h4>Title</h4>
+                    <p>Normally, a name</p>
                 </div>
                 <div class="col-12">
                     <input type="text" class="form-control"  placeholder="Title" name="memoriam[title]"
@@ -39,13 +40,31 @@
         </div>
         <div class="row">
             <div class="form-group">
-                <div class="col-lg-2">
+                <div class="col-12 mt-3">
                     <h4>Content</h4>
                 </div>
-                <div class="col-lg-10">
-                <textarea name="memoriam[content]" id="page-content" placeholder="Content" class="form-control">
-                    {{old('memoriam.content', $data['memoriam']->content)}}
-                </textarea>
+                <div class="col-12">
+                    <div class="col-12 mb-4">
+                        <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor">
+                                <textarea name="memoriam[content]" id="textarea" placeholder="Content" class="form-control text-black">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/js/ckeditor5/"
+                            }
+                        }
+                    </script>
+                    <script>
+                        var textarea = @json($data['memoriam']->content ?? '');
+                        var textarea1 = @json($data['textarea1'] ?? '');
+                    </script>
+                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
         </div>
@@ -67,24 +86,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <h4>Status</h4>
+            <div class="col-12 mt-3">
+                <h4>Status of post</h4>
             </div>
             <div class="col-12">
-                <label>
-                    <input name="memoriam[live]" type="hidden" value="0" />
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <input name="memoriam[live]" type="checkbox" value="1"
-                                {{ checked( old('memoriam.live', $data['memoriam']->live)) }} />
-                        </div>
-                        <input type="text" class="form-control" aria-label="Text input with checkbox"
-                               value="Check to make Memoriam live." size="40" readonly>
-                    </div>
-                </label>
+                <input name="memoriam[live]" type="hidden" value="0" />
+                 <div class="form-check">
+                    <input class="form-check-input" name="memoriam[live]" type="checkbox" value="1"
+                           id="flexCheckDefault"  {{ checked( old('memoriam.live', $data['memoriam']->live)) }}
+                    >
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Check to make Memoriam live.
+                    </label>
+                </div>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-5">
             <div class="col-12">
                 <div class="form-group">
                     @if(!isset($data['memoriam']->image))
@@ -116,25 +133,11 @@
                                 <input type="text" class="form-control" aria-label="Text input with checkbox"
                                        value="Check to delete image." size="40" readonly>
                             </div>
-
                         </label>
                     @endif
                 </div>
             </div>
         </div>
-<!---
-        <div class="row mt-lg-3">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="exampleInputFile">
-                        <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        Add Attachment files
-                    </label>
-                    <input type="file" id="inputFile" name="attachments[]" multiple />
-                </div>
-            </div>
-        </div>
--->
         <div class="row mt-3 pt-5">
             <div class="col-6">
                 <i class="fas fa-edit fa-2x"></i>

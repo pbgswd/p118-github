@@ -49,7 +49,6 @@
                     </p>
                 </div>
             </div>
-
         </div>
         <div class="row mt-3">
             <div class="form-group">
@@ -57,8 +56,28 @@
                     <h4>Content</h4>
                 </div>
                 <div class="col-12">
-                    <textarea name="post[content]" id="post-content" placeholder="Content"
-                              class="form-control">{{old('post.content', $data['post']->content)}}</textarea>
+                    <div class="col-12 mb-4">
+                        <div class="editor-container editor-container_classic-editor" id="editor-container">
+                            <div class="editor-container__editor">
+                                <textarea name="post[content]" id="textarea" placeholder="Content" class="form-control text-black">
+                                </textarea>
+                                <p class="muted">Please post the content of attached PDFs in the Content field.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="importmap">
+                        {
+                            "imports": {
+                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                                "ckeditor5/": "/js/ckeditor5/"
+                            }
+                        }
+                    </script>
+                    <script>
+                        var textarea = @json($data['post']->content ?? '');
+                        var textarea1 = @json($data['textarea1'] ?? '');
+                    </script>
+                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
         </div>
@@ -75,8 +94,9 @@
                 </label>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-5">
             <div class="col-12">
+                <h4>Files</h4>
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>

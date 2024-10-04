@@ -125,7 +125,9 @@ class AdminController extends Controller
         //todo file upload
         //todo image library insert image
 
-        return view('admin.admin-development');
+       $data['textarea'] = fake()->paragraph();
+
+        return view('admin.admin-development', ['data' => $data]);
     }
 
     public function getphpinfo(User $user): bool

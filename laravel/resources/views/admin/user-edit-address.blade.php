@@ -98,10 +98,12 @@
                         strtoupper($postal_code ?? '')) }}"
                         size="40" required/>
                 </div>
-                <div class="input-group mt-lg-5 mb-3">
+                <div class="col-12 mt-4 mb-3">
                     <h4>
                         Add any additional info for the office about this change.
                     </h4>
+                </div>
+                    <div class="input-group mt-3 mb-3">
                     <textarea name="message" id="message" class="form-control">
                         {{ old('message', $message ?? '') }}
                     </textarea>
