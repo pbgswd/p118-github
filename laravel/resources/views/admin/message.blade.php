@@ -78,14 +78,41 @@
             </div>
         </div>
     </div>
-    <div class="row my-5">
-        <div class="col-12">
-            <h3>Message</h3>
-            <textarea name="message[content]">
-                {{old('message.content', $data['message']->content)}}
-            </textarea>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-12 mt-3">
+                <h4>Message</h4>
+            </div>
+            <div class="col-12">
+                <div class="col-12 mb-4">
+                    <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                        <div class="editor-container__editor">
+                                <textarea name="message[content]" id="textarea" placeholder="Content" class="form-control text-black">
+                                </textarea>
+                        </div>
+                    </div>
+                </div>
+                <script type="importmap">
+                    {
+                        "imports": {
+                            "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                            "ckeditor5/": "/js/ckeditor5/"
+                        }
+                    }
+                </script>
+                <script>
+                    var textarea = @json($data['message']->content ?? '');
+                    var textarea1 = @json($data['textarea1'] ?? '');
+                </script>
+                <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
+            </div>
         </div>
     </div>
+
+
+
+
+
     <div class="row">
         <div class="col-12">
             <h4>Message Sending Priority</h4>
