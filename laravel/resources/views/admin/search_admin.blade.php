@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Search Results'])
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> Search Results For ' . $data['search']])
 @section('content')
 <div class="container">
         <h3>
@@ -7,59 +7,73 @@
            </span>
         </h3>
 </div>
-    <div class="form-group">
-        <div class="table-responsive">
-            <table class="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th> @sortablelink('title', 'Title') </th>
-                        <th> @sortablelink('access_level', 'Access Level') </th>
-                        <th> @sortablelink('live', 'Is Live?') </th>
-                        <th> @sortablelink('sort_order', 'Sort Order') </th>
-                        <th> @sortablelink('front_page', 'Front Page') </th>
-                        <th> @sortablelink('landing_page', 'Landing Page') </th>
-
-                        <th> Edit </th>
-                        <th> @sortablelink('created_at', 'Created At') </th>
-                        <th> @sortablelink('updated_at', 'Updated At') </th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach ( $data['results'] as $i )
-                    <tr>
-                        <td>
-                            <h4>
-                                <a title="{{ $i->title }}" href="{{ $i->url }}">
-                                  {{ strip_tags($i->title) }}
-                                </a>
-                            </h4>
-                        </td>
-                        <td> {{ $i->searchable->access_level }} </td>
-                        <td>
-                            {!! $i->searchable->live ? "<i class='fas fa-check'></i>" :
-                                "<i class='far fa-times-circle'></i>" !!}
-                        </td>
-                        <td> {{ $i->searchable->sort_order }} </td>
-                        <td>
-                            {!! $i->searchable->front_page ? '<i class="fas fa-check"></i>' :
-                                '<i class="far fa-times-circle"></i>' !!}
-                        </td>
-                        <td>
-                            {!! $i->searchable->landing_page ? '<i class="fas fa-check"></i>' :
-                                '<i class="far fa-times-circle"></i>' !!}
-                        </td>
-
-                        <td>
-                            <a href="{{ $i->url }}" title="Edit {{ $i->title }}">
-                                <i class="fas fa-edit fa-lg"></i>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th> @sortablelink('title', 'Title') </th>
+                    <th> @sortablelink('access_level', 'Access Level') </th>
+                    <th> @sortablelink('live', 'Is Live?') </th>
+                    <th> @sortablelink('sort_order', 'Sort Order') </th>
+                    <th> @sortablelink('front_page', 'Front Page') </th>
+                    <th> @sortablelink('landing_page', 'Landing Page') </th>
+                    <th> Edit </th>
+                    <th> @sortablelink('created_at', 'Created At') </th>
+                    <th> @sortablelink('updated_at', 'Updated At') </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach ( $data['results'] as $i )
+                <tr>
+                    <td>
+                        <h4>
+                            <a title="{{ $i->title }}" href="{{ $i->url }}">
+                              {{ strip_tags($i->title) }}
                             </a>
-                        </td>
-                        <td> {{ $i->searchable->created_at->format('F j Y H:i:s') }} </td>
-                        <td> {{ $i->searchable->updated_at->format('F j Y H:i:s') }} </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+                        </h4>
+                    </td>
+                    <td> {{ $i->searchable->access_level }} </td>
+                    <td>
+                        {!! $i->searchable->live ? "<i class='fas fa-check'></i>" :
+                            "<i class='far fa-times-circle'></i>" !!}
+                    </td>
+                    <td> {{ $i->searchable->sort_order }} </td>
+                    <td>
+                        {!! $i->searchable->front_page ? '<i class="fas fa-check"></i>' :
+                            '<i class="far fa-times-circle"></i>' !!}
+                    </td>
+                    <td>
+                        {!! $i->searchable->landing_page ? '<i class="fas fa-check"></i>' :
+                            '<i class="far fa-times-circle"></i>' !!}
+                    </td>
+
+                    <td>
+                        <a href="{{ $i->url }}" title="Edit {{ $i->title }}">
+                            <i class="fas fa-edit fa-lg"></i>
+                        </a>
+                    </td>
+                    <td> {{ $i->searchable->created_at->format('F j Y H:i:s') }} </td>
+                    <td> {{ $i->searchable->updated_at->format('F j Y H:i:s') }} </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
+
+@foreach($data['models'] as $model)
+    <h4>{{$model}}</h4>
+    <div class="row">
+        @forelse($data[$model]['results'] as $i)
+            <div class="col-12">
+                {{$i->searchable->id}}
+            </div>
+        @empty
+            <div class="col-12">
+            no results
+        </div>
+        @endforelse
+
+    </div>
+@endforeach
+
 @endsection
