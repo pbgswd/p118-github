@@ -257,6 +257,7 @@ class AdminSearchController extends Controller
     public function show(): View
     {
         $data['models'] = [];
+        $data['count'] = 0;
         $data['title'] = "Admin Search";
         return view('admin.search_admin', ['data' => $data]);
     }
