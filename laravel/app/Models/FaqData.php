@@ -75,7 +75,7 @@ class FaqData extends LiveableModel implements Searchable
             return new SearchResult(
                 $this,
                 $this->answer,
-                \route('admin_faq_edit', $data->all())
+                \route('admin_faq_edit', $this->question)
             );
         }
 

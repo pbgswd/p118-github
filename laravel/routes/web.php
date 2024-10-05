@@ -213,16 +213,10 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
     });
 
     Route::controller(CNS\Admin\AdminSearchController::class)->group(function () {
+        Route::get('/search', 'show')->name('admin_search_view');
         Route::post('/search', 'index')->name('admin_search');
         Route::post('/attachment_search', 'admin_attachment_search')
             ->name('list_attachments_search_result');
-    });
-
-    Route::controller(CNS\LocalSearchController::class)->group(function () {
-       // Route::post('/search', 'admin_search')->name('admin_search_x');
-        //Route::get('/search','admin_index')->name('admin_search_show');
-        Route::post('/attachment_search', 'admin_attachment_search')
-            ->name('list_attachments_search_result_x');
     });
 
     Route::controller(CNS\Admin\AdminFeatureController::class)->group(function () {

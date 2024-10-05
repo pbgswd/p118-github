@@ -14,7 +14,6 @@ use App\Models\Executive;
 use App\Models\Faq;
 use App\Models\FaqData;
 use App\Models\Feature;
-use App\Models\LocalSearch;
 use App\Models\Meeting;
 use App\Models\Memoriam;
 use App\Models\Organization;
@@ -25,7 +24,6 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Models\Venue;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Kyslik\ColumnSortable\Sortable;
@@ -40,106 +38,19 @@ class AdminSearchController extends Controller
      */
     public function index(AdminSearchResult $request): View
     {
-        $data = [
-            'search' => $request->search,
-            'results' => (new Search)
-                ->registerModel(Post::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('content')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Page::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('content')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Topic::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('name')
-                        ->addSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Agreement::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Bylaw::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Employment::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Meeting::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Organization::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('name')
-                        ->addSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Venue::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('name')
-                        ->addSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(User::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('name')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Executive::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addExactSearchableAttribute('email')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(UserInfo::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('about')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Policy::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addExactSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Committee::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('name')
-                        ->addSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(CommitteePost::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('content')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Feature::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('content')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Memoriam::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('title')
-                        ->addSearchableAttribute('content')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(Faq::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('faq_topic')
-                        ->addSearchableAttribute('description')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->registerModel(FaqData::class, static function (ModelSearchAspect $aspect) {
-                    $aspect->addSearchableAttribute('question')
-                        ->addSearchableAttribute('answer')
-                        ->withoutGlobalScope(LiveScope::class);
-                })->search($request->search),
-        ];
-
-        $data['models'] = ['User','UserInfo','Executive',
-            'Feature','Post', 'Page', 'Topic',
-            'Meeting','Committee', 'CommitteePost','Faq', 'FaqData',
-            'Agreement', 'Bylaw', 'Policy',
-            'Employment', 'Organization', 'Venue',
-            'Memoriam',];
-
-        //todo break up big search in to individual searches, and then return that with UI context for each Model
-
-        $data['User'] = [
+        $data = ['search' => $request->search];
+        $data['models']['User'] = [
             'name' => 'Users',
             'search' => $request->search,
             'results' => (new Search)
                 ->registerModel(User::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('name')
                         ->addSearchableAttribute('email')
+                        ->with('user_info')
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['UserInfo'] = [
+        $data['models']['UserInfo'] = [
             'name' => 'UserInfo',
             'search' => $request->search,
             'results' => (new Search)
@@ -148,7 +59,8 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Executive'] = [
+        /*
+        $data['models']['Executive'] = [
             'name' => 'Executive',
             'search' => $request->search,
             'results' => (new Search)
@@ -157,8 +69,8 @@ class AdminSearchController extends Controller
                         ->addExactSearchableAttribute('email')
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
-        ];
-        $data['Feature'] = [
+        ]; */
+        $data['models']['Feature'] = [
             'name' => 'Features',
             'search' => $request->search,
             'results' => (new Search)
@@ -168,7 +80,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Post'] = [
+        $data['models']['Post'] = [
             'name' => 'Posts',
             'search' => $request->search,
             'results' => (new Search)
@@ -178,7 +90,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Page'] = [
+        $data['models']['Page'] = [
             'name' => 'Pages',
             'search' => $request->search,
             'results' => (new Search)
@@ -188,7 +100,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Topic'] = [
+        $data['models']['Topic'] = [
             'name' => 'Topics',
             'search' => $request->search,
             'results' => (new Search)
@@ -198,7 +110,14 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Meeting'] = [
+        $data['models']['Attachment'] = [
+            'name' => 'Attachments',
+            'search' => $request->search,
+            'results' => (new Search)
+                ->registerModel(Attachment::class, ['file_name', 'description'])
+                ->search($request->search),
+        ];
+        $data['models']['Meeting'] = [
             'name' => 'Meetings',
             'search' => $request->search,
             'results' => (new Search)
@@ -208,7 +127,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Committee'] = [
+        $data['models']['Committee'] = [
             'name' => 'Committees',
             'search' => $request->search,
             'results' => (new Search)
@@ -218,7 +137,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['CommitteePost'] = [
+        $data['models']['CommitteePost'] = [
             'name' => 'Committee Posts',
             'search' => $request->search,
             'results' => (new Search)
@@ -228,7 +147,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Faq'] = [
+        $data['models']['Faq'] = [
             'name' => 'Faqs',
             'search' => $request->search,
             'results' => (new Search)
@@ -238,7 +157,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['FaqData'] = [
+        $data['models']['FaqData'] = [
             'name' => 'Faq Data',
             'search' => $request->search,
             'results' => (new Search)
@@ -248,7 +167,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Agreement'] = [
+        $data['models']['Agreement'] = [
             'name' => 'Agreements',
             'search' => $request->search,
             'results' => (new Search)
@@ -258,7 +177,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Bylaw'] = [
+        $data['models']['Bylaw'] = [
             'name' => 'Bylaws',
             'search' => $request->search,
             'results' => (new Search)
@@ -268,7 +187,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Policy'] = [
+        $data['models']['Policy'] = [
             'name' => 'Policies',
             'search' => $request->search,
             'results' => (new Search)
@@ -278,7 +197,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Employment'] = [
+        $data['models']['Employment'] = [
             'name' => 'Employment',
             'search' => $request->search,
             'results' => (new Search)
@@ -288,7 +207,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Organization'] = [
+        $data['models']['Organization'] = [
             'name' => 'Organizations',
             'search' => $request->search,
             'results' => (new Search)
@@ -298,7 +217,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Venue'] = [
+        $data['models']['Venue'] = [
             'name' => 'Venues',
             'search' => $request->search,
             'results' => (new Search)
@@ -308,7 +227,7 @@ class AdminSearchController extends Controller
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),
         ];
-        $data['Memoriam'] = [
+        $data['models']['Memoriam'] = [
             'name' => 'In Memoriam',
             'search' => $request->search,
             'results' => (new Search)
@@ -319,15 +238,34 @@ class AdminSearchController extends Controller
                 })->search($request->search),
         ];
 
+        //todo model names from each search, make jumps to content sections
 
+        $totalCount = array_reduce($data['models'], function($carry, $array) {
+            return $carry + count($array['results']);
+        }, 0);
 
-
-        $data['plural'] = Str::plural('Result', count($data['results']));
+        $data['title'] = $totalCount .' Search ' .
+            Str::plural('Result', $totalCount ?? 0 ) .
+            ' For "' . $data['search'] .'"';
 
         return view('admin.search_admin', ['data' => $data]);
     }
 
-    public function admin_attachment_search(LocalSearchResult $request): View
+    /**
+     * @return View
+     */
+    public function show(): View
+    {
+        $data['models'] = [];
+        $data['title'] = "Admin Search";
+        return view('admin.search_admin', ['data' => $data]);
+    }
+
+    /**
+     * @param AdminSearchResult $request
+     * @return View
+     */
+    public function admin_attachment_search(AdminSearchResult $request): View
     {
         $data = [
             'search' => $request->search,
@@ -335,10 +273,6 @@ class AdminSearchController extends Controller
                 ->registerModel(Attachment::class, ['file_name', 'description'])
                 ->search($request->search),
         ];
-
-        $data['plural'] = Str::plural('Result', $data['results']->count());
-
         return view('admin.list_attachments_search_result', ['data' => $data]);
     }
-
 }

@@ -94,7 +94,7 @@ class Faq extends LiveableModel implements Searchable
         if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
-                $this->title,
+                $this->faq_topic,
                 \route('admin_faq_edit', $this->slug)
             );
         }

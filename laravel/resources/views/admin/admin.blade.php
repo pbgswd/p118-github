@@ -1,8 +1,8 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-users-cog"></i> Admin Dashboard'])
+@extends('layouts.dashboard',  ['title' => '<i class="fas fa-tachometer-alt"></i></i> Admin Dashboard'])
 @section('content')
 <div class="container">
     <div class="row border border-dark rounded p-3 mb-4 bg-body-secondary">
-        <h2>Admin Search</h2>
+        <h4><i class="fas fa-search"></i> Admin Search</h4>
         <form name="adminsearch" method="post" action="/admin/search">
             @csrf
             <div class="input-group mb-3">
@@ -13,32 +13,32 @@
     </div>
     <div class="row border border-dark rounded p-3">
         @role('super-admin')
-            <h3>
+            <h5>
                 Members with the <strong>super-admin</strong> role can manage users, content, committees,
                 and all aspects of the website.
-            </h3>
+            </h5>
         @endrole
         @role('office')
-            <h3>
+            <h5>
                 Members with the <strong>office</strong> or <strong>super-admin</strong> role can manage users.
-            </h3>
+            </h5>
         @endrole
         @role('committee')
-            <h3>
+            <h5>
                 Members with the <strong>committee</strong> management  or <strong>super-admin</strong>
                 role can manage committee content, and members.
-            </h3>
+            </h5>
         @endrole
         @role('writer')
-            <h3>
+            <h5>
                 Members with the <strong>writer</strong>  or <strong>super-admin</strong> role can manage the various
                 sections of content on the website.
-            </h3>
+            </h5>
         @endrole
-        <h3>
+        <h5>
             Use the links in the menu on the left for available sections and the <strong>Search</strong> input
             field above to find records.
-        </h3>
+        </h5>
     </div>
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-4 h-100">

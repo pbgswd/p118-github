@@ -20,6 +20,13 @@
                     Admin Dashboard <span class="sr-only">(current)</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin_search_view') }}">
+                    <span data-feather="home"></span>
+                    <i class="fas fa-search"></i>
+                    Admin Search
+                </a>
+            </li>
             @can(['create users', 'edit users', 'delete users'])
                 <li class="nav-item">
                     <a class="nav-link" href="#">
