@@ -240,12 +240,12 @@ class AdminSearchController extends Controller
 
         //todo model names from each search, make jumps to content sections
 
-        $totalCount = array_reduce($data['models'], function($carry, $array) {
+        $data['count'] = array_reduce($data['models'], function($carry, $array) {
             return $carry + count($array['results']);
         }, 0);
 
-        $data['title'] = $totalCount .' Search ' .
-            Str::plural('Result', $totalCount ?? 0 ) .
+        $data['title'] = $data['count'] .' Search ' .
+            Str::plural('Result', $data['count'] ?? 0 ) .
             ' For "' . $data['search'] .'"';
 
         return view('admin.search_admin', ['data' => $data]);

@@ -97,21 +97,15 @@
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a class="nav-link" href=https://fontawesome.com/v5/search" target="_blank">
+                    <a class="nav-link" href="https://fontawesome.com/v5/search" target="_blank">
                         <span data-feather="file-text"></span>
                         FontAwesome Icons V5
                     </a>
                 </li>
                 <li class="list-group-item">
-                    <a class="nav-link" href="https://www.tiny.cloud/" target="_blank">
-                        <span data-feather="file-text"></span>
-                        TinyMCE
-                    </a>
-                </li>
-                <li class="list-group-item">
                     <a class="nav-link" href="https://ckeditor.com/ckeditor-5/builder/" target="_blank">
                         <span data-feather="file-text"></span>
-                        CkEditor, to replace TinyMCE
+                        CkEditor
                     </a>
                 </li>
                 <li class="list-group-item">
