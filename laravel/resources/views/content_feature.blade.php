@@ -84,13 +84,12 @@
         </div>
         @forelse($data['features'] as $f)
             <div class="col-12 border border-dark rounded p-2 mb-2">
-                <a name="{{$f->title}}"></a>
                 @if($f->image)
                     <div class="col-12 text-center d-flex align-items-center justify-content-center mb-2">
                         <picture>
                             <source srcset="{{asset('storage/public/'. $f->image)}}"
                                     media="(min-width: 577px)">
-                            <img srcset="{{asset('storage/public/'.$data['options']['tn_str'] . $f->image)}}"
+                            <img srcset="{{asset('storage/public/'. $data['feature_tn']['tn_str'] . $f->image)}}"
                                  alt="{{$f->file_name}}"
                                  class="rounded img-fluid d-block">
                         </picture>

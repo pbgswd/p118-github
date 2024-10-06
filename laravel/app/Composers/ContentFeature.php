@@ -50,6 +50,7 @@ class ContentFeature
             'features' => $features,
             'user' => $user,
             'options' => Options::member_thumb_values(),
+            'feature_tn' => Options::feature_thumb_values(),
         ];
 
         $view->with('data', $data);
