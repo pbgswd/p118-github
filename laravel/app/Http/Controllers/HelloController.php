@@ -15,6 +15,7 @@ class HelloController extends Controller
          **/
 
         return view('hello', ['data' =>
-            ['title' => 'Vancouver Stagehands for Theatre and Live Events']]);
+            ['title' => 'Vancouver Stagehands for Theatre and Live Events']
+        ]);
     }
 }

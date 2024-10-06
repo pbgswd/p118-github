@@ -1,7 +1,7 @@
 <footer class="container mt-2">
-    <div class="row">
-        <div class="col-12  d-sm-none d-md-block text-break text-center">
-            <h6 class="text-muted text-center d-sm-none d-md-block">
+    <div class="row d-none d-md-block">
+        <div class="col-12 text-break text-center">
+            <h6 class="text-muted text-center">
                 Put this page on your phone with a Qr code
             </h6>
         </div>
