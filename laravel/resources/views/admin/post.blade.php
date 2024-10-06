@@ -200,7 +200,7 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="5">
+                                <td colspan="7">
                                     <i class="far fa-trash-alt"></i>
                                     Select checkbox to delete a file
                                 </td>

@@ -36,7 +36,6 @@
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>
-                                <th>  &nbsp; </th>
                                 <th> @sortablelink('name', 'Name') </th>
                                 <th> @sortablelink('email', 'Email') </th>
                                 <th> Role </th>
@@ -78,12 +77,9 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5">No results</td>
+                                    <td colspan="4">No results</td>
                                 </tr>
                             @endforelse
-                            <tr>
-                                <td colspan="5">&nbsp;</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -99,7 +95,6 @@
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
-                            <th>  &nbsp; </th>
                             <th> @sortablelink('name', 'Name') </th>
                             <th> @sortablelink('email', 'Email') </th>
                             <th> Role </th>
@@ -109,8 +104,6 @@
                     <tbody>
                         @forelse ( $data['committee']['active_committee_members'] as $i )
                             <tr>
-                                <td>&nbsp;
-                                </td>
                                 <td>
                                     <h4>
                                         <a href="{{route('admin_edit_committee_members',
@@ -118,7 +111,6 @@
                                            title="Edit {{ $i['name'] }}">
                                             {{ $i['name'] }}
                                         </a>
-
                                     </h4>
                                 </td>
                                 <td>
@@ -132,36 +124,22 @@
                                     </h4>
                                 </td>
                                 <td>
-                                    <a
-                                        href="{{route('admin_edit_committee_members',
+                                    <a href="{{route('admin_edit_committee_members',
                                                 [$data['committee']['slug'], $i->id])}}" title="edit">
                                         <i class="far fa-edit"></i> Edit
                                     </a>
                                 </td>
                             </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5">No Members in {{$data['committee']['name']}}</td>
-                                </tr>
-                            @endforelse
-                        <tr>
-                            <td colspan="5">&nbsp;</td>
-                        </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4">No Members in {{$data['committee']['name']}}</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
-        @if(count($data['committee']['active_committee_members']) > 0)
-        <div class="row mb-lg-5">
-            <div class="col">
-            </div>
-            <div class="col-6">
-            </div>
-            <div class="col">
-            </div>
-        </div>
-        @endif
-        </div>
+    </div>
     <div class="row mt-lg-5 mb-lg-5">
         <div class="col-md-12">
             <a href="{{route('admin_committee_show', $data['committee']['slug'])}}">
