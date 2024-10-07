@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> Employment postings'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-list"></i> ', 'title' => 'Email queue list'])
 @section('content')
 <div class="container">
     <div class="row" style="margin-top: 3rem;">

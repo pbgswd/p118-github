@@ -1,5 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i>
-                                    Search result for Attachements and Images'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i>',
+    'title' => 'Search result for Attachements and Images'])
 @section('content')
     <div class="container">
         <div class="row">

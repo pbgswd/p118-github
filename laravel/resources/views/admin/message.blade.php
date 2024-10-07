@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-list"></i>', 'title' => ' Message'])
 @section('content')
 @include('admin.admin_partials.admin_tinymce')
 <form name="{{$data['action']}}" method="POST" action="{{url()->current()}}" enctype="multipart/form-data">

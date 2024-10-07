@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-qrcode"></i> Custom QR Codes'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-qrcode"></i>', 'title' => 'Custom QR Codes'])
 @section('content')
     <div class='container'>
         <h3 class="mb-4">

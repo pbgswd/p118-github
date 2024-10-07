@@ -1,4 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> Pending Invitations to website'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-list"></i>',
+    'title' => ' Pending Invitations to website'])
 @section('content')
     <div class="container">
             <h3>

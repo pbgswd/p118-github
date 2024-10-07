@@ -2,10 +2,8 @@
 $assigned_role = $data['assigned_role'];
 $roles = $data['roles'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>'
-                                . $data["action"] . ' Executive role for user '
-                                . ($data["action"] == 'Edit user with role of ' ? 'xx' : '')
-                                ])
+@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"] .
+    ' Executive role for user ' . ($data["action"] == 'Edit user with role of ' ? 'xx' : '')])
 @section('content')
 <div class="container">
     <form method="post" name="executive" action="{{ url()->current() }}"

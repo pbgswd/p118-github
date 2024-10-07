@@ -1,6 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> ' .
-    $data['action'] . ' ' .  $data['user']->name .
-    ' for ' . $data['committee']->name ])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-list"></i>', 'title' => $data['action'] . ' ' .
+    $data['user']->name . ' for ' . $data['committee']->name ])
 @section('content')
     <div class='container m-lg-5'>
         <div class="row">

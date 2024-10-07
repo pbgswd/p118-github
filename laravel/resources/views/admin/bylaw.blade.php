@@ -1,5 +1,5 @@
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-gavel"></i> <i class="fas fa-edit"></i>'
-                . $data["action"] . ' By-law ' . ($data["action"] == 'Edit' ? $data['bylaw']->name : '') ])
+@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-gavel"></i>', 'title' => $data["action"] .
+    ' By-law ' . ($data["action"] == 'Edit' ? $data['bylaw']->title : '') ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
     <div class="container">
@@ -19,7 +19,6 @@
                 </a>
             @endif
         </div>
-
     <form method="post" name="bylaw" action="{{ url()->current() }}"
           enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
@@ -222,5 +221,4 @@
          </div>
     @endif
     </div>
-</div>
 @endsection

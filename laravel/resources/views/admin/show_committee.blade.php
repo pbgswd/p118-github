@@ -1,5 +1,5 @@
-@extends('layouts.dashboard', ['title' => ' <i class="fas fa-users"></i> View Committee \'' .
-    $data['committee']->name .'\''])
+@extends('layouts.dashboard', ['title_icon' => ' <i class="fas fa-users"></i>', 'title' => 'View Committee ' .
+    $data['committee']->name])
 @section('content')
     <div class="container">
         <h5>

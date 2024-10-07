@@ -1,4 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> Temporary Imports'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-list"></i>', 'title' =>
+    ' Temporary Imports'])
 @section('content')
 <div class="container">
         <h3>

@@ -1,8 +1,7 @@
 <?php
-//dd($data);
 $policys = $data['policies'];
 ?>
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-scroll"></i> List Policies'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-scroll"></i>', 'title' => 'List Policies'])
 @section('content')
 <div class="container">
         <h3>

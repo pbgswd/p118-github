@@ -1,4 +1,4 @@
-@extends('layouts.dashboard', ['title' => '<i class="fas fa-search"></i> '. $data['title'] ])
+@extends('layouts.dashboard', ['title_icon' => '<i class="fas fa-search"></i>', 'title' => $data['title'] ])
 @section('content')
     <div class="container">
         <div class="row border border-dark rounded p-3 pt-4 mb-4 bg-body-secondary">

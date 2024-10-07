@@ -1,4 +1,5 @@
-
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i>',
+'title' => ' List Attachement endless'])
 
 <html>
 <head>

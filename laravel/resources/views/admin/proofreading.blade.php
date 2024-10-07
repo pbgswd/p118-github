@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-book-reader"></i> Proofreader'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-book-reader"></i>', 'title' => ' Proofreader'])
 @section('content')
 <div class='container m-lg-5'>
     <div class="row border border-primary rounded mb-3">

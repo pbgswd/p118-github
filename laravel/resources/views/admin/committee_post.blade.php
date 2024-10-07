@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post ' .
+@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"] . ' post ' .
         ($data["action"] == 'Edit' ? $data['post']->title : ' in ' . $data['committee']->name) ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')

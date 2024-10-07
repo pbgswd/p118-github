@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paint-brush"></i> Blank Page For Whatever'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paint-brush"></i>', 'title' => 'Blank Page For Whatever'])
 @section('content')
 <script>
     console.log('inside admin-blank.blade the template file');
@@ -8,8 +8,4 @@
         <a href="{{ route('developer') }}">Resources Page</a> | <a href="{{ route('development') }}">Development Page</a>
     </div>
 </div>
-
-
-
-
 @endsection

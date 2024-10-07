@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => '<i class="far fa-question-circle"></i> FAQ Topics List'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="far fa-question-circle"></i>', 'title' => 'FAQ Topics List'])
 @section('content')
 <div class="container">
     <div class="jumbotron jumbotron-fluid">

@@ -1,4 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> ' . $data['action'] . ' File'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paperclip"></i>', 'title' => $data['action'] .
+    ' File ' . $data['attachment']['file_name']])
 @section('content')
     <div class="row mb-3">
         <h4>

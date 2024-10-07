@@ -1,4 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-list"></i> List Posts for ' . $data['committee']->name])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-list"></i>', 'title' =>
+    'List Posts for ' . $data['committee']->name])
 @section('content')
 <div class="container">
     <div class="row mb-lg-2">

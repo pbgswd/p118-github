@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => '<i class="far fa-heart"></i> In Memoriam'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="far fa-heart"></i>', 'title' => ' In Memoriam'])
 @section('content')
     <div class='container'>
         <div class="row">

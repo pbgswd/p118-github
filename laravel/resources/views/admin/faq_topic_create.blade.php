@@ -1,4 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="far fa-question-circle"></i>  '.  $data['action'] . ' FAQ '])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="far fa-question-circle"></i>', 'title' => $data['action'] .
+    ' FAQ '. $data['faq']->faq_topic ?? ''])
 @section('content')
 <div class="container">
     <div class="jumbotron jumbotron-fluid p-5">

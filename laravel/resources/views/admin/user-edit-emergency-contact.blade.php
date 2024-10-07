@@ -1,5 +1,5 @@
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-first-aid text-danger"></i>     ' . $data["action"]
-            . ' Emergency Contact Info for ' . ($data["action"] == "Edit" ? $data['user']->name : '') ])
+@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-first-aid text-danger"></i>', 'title' =>
+    $data["action"] . ' Emergency Contact Info for ' . ($data["action"] == "Edit" ? $data['user']->name : '') ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
     <div class="row">

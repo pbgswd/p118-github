@@ -1,6 +1,6 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i> List Attachements and Images'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i>',
+'title' => ' List Attachements and Images'])
 @section('content')
-
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('imageInserter', () => ({
@@ -33,10 +33,6 @@
                 //         alert('Please upload an image');
                 //     }
                 // }
-
-
-
-
 
         imageUploader() {
             return {

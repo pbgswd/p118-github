@@ -4,8 +4,8 @@ $currentUserPermissions = $data['currentUserPermissions'];
 $roles = $data['roles'];
 $user_roles = $data['user_roles'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i> ' . $data["action"]
-            . ' Member ' . ($data["action"] == "Edit" ? $user->name : '') ])
+@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"]
+    . ' Member ' . ($data["action"] == "Edit" ? $user->name : '') ])
 @section('content')
 <fieldset>
     <div class="row">

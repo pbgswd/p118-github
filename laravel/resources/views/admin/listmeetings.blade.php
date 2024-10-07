@@ -1,7 +1,8 @@
 <?php
 $meetings = $data['meetings'];
 ?>
-@extends('layouts.dashboard',  ['title' => '<i class="far fa-folder-open"></i> List Meetings and Minutes'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="far fa-folder-open"></i>', 'title' =>
+    ' List Meetings and Minutes'])
 @section('content')
     <div class="container">
         <h3>

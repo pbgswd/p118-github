@@ -2,7 +2,8 @@
 $invite = $data['invite'];
 $roles = $data['roles'];
 ?>
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-envelope-square"></i> Invite Member to Website'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-envelope-square"></i>', 'title' =>
+    ' Invite Member to Website'])
 @section('content')
 <div class='container mt-lg-4'>
 <h3>Note: In the future, there will be a 48 hour expiry time on invitations.</h3>

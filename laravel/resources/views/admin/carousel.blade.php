@@ -1,4 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="far fa-images"></i>  '.  $data['action'] . ' Carousel'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="far fa-images"></i>',
+    'title' => $data['action'] . ' Carousel ' . $data['carousel']->caption ?? ''])
 @section('content')
 <div class="container-fluid">
     <div class="jumbotron jumbotron-fluid p-3 rounded">

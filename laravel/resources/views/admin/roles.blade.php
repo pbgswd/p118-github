@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fab fa-redhat"></i> Roles'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fab fa-redhat"></i>', 'title' => 'Roles'])
 @section('content')
 <div class="container">
     <div class="row">

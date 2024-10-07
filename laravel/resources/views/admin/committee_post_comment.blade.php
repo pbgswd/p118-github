@@ -3,7 +3,8 @@ $post      = $data['committee_post'];
 $comment   = $data['post_comment'];
 $committee = $data['committee'];
 ?>
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' post  comment under "' . $post->title . '" in ' . $committee->name ])
+@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"] .
+    ' post  comment under "' . $post->title . '" in ' . $committee->name ])
 @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <h3>

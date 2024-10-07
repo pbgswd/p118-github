@@ -1,5 +1,5 @@
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-address-card text-success"></i> ' . $data["action"]
-            . ' Address for ' . ($data["action"] == "Edit" ? $data['user']->name : '') ])
+@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-address-card text-success"></i>', 'title' =>
+    $data["action"] . ' Address for ' . ($data["action"] == "Edit" ? $data['user']->name : '') ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
     <div class="row">

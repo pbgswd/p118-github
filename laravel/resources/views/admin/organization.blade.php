@@ -1,5 +1,5 @@
-@extends('layouts.dashboard',  ['title' => ' <i class="fas fa-edit"></i>' . $data["action"] . ' organization '
-        . ($data["action"] == 'Edit' ? $data['organization']->name : '') ])
+@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"] .
+    ' organization ' . ($data["action"] == 'Edit' ? $data['organization']->name : '') ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">

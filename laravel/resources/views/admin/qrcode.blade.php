@@ -1,4 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-qrcode"></i>  '.  $data['action'] . ' QR Code '])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-qrcode"></i>',
+    'title' => $data['action'] . ' QR Code '])
 @section('content')
     <div class='row mt-2 mb-4'>
         <h3>

@@ -1,4 +1,5 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-users-cog"></i>  Web Developer Resources'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-users-cog"></i>',
+    'title' => 'Web Developer Resources'])
 @section('content')
 <div class="container">
     <div class="row my-5">

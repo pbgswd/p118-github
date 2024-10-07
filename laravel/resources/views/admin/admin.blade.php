@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title' => '<i class="fas fa-tachometer-alt"></i></i> Admin Dashboard'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-tachometer-alt"></i></i>', 'title' => 'Admin Dashboard'])
 @section('content')
 <div class="container">
     <div class="row border border-dark rounded p-3 mb-4 bg-body-secondary">
@@ -122,7 +122,7 @@
                         </th>
                         <td>{{$activity->activity}}</td>
                         <td>{{$activity->ip_address}}</td>
-                        <td class="d-inline-block">{{$activity->user_agent}}</td>
+                        <td class="d-inline-block text-truncate h-100">{{$activity->user_agent}}... <br /><br /><br /></td>
                         <td>{{$activity->model}}</td>
                         <td>{{ $activity->created_at->format('F j Y H:i:s') }}</td>
                     </tr>
