@@ -1,11 +1,5 @@
 @extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-tachometer-alt"></i></i>', 'title' => 'Activity Log'])
 @section('content')
-<div class="row">
-    <div class="mx-6">
-        <h1>Activity Log</h1>
-        <h5>recent activity </h5>
-    </div>
-</div>
 <form name="delete" method="POST" action="{{route('admin_activity_log_destroy')}}">
 {!! csrf_field() !!}
 {!! method_field('DELETE') !!}
