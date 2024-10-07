@@ -1,27 +1,24 @@
-<?php
-$post      = $data['committee_post'];
-$comment   = $data['post_comment'];
-$committee = $data['committee'];
-?>
 @extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"] .
-    ' post  comment under "' . $post->title . '" in ' . $committee->name ])
+    ' post  comment under "' . $data['committee_post']->title . '" in ' . $data['committee']->name ])
 @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <h3>
-        <a href="{{route('admin_committee_show', $committee->slug)}}">
+        <a href="{{route('admin_committee_show', $data['committee']->slug)}}">
             <i class="far fa-arrow-alt-circle-left"></i>
-            {{$committee->name}}
+            {{$data['committee']->name}}
         </a>
         <br />
-        <a href="{{ route('admin_committee_post_edit',[$committee->slug, $post->slug]) }}" title="Edit {{ $post->title }}">
-            <i class="fas fa-edit"></i> Back to {{$post->title}} post page
+        <a href="{{ route('admin_committee_post_edit',[$data['committee']->slug, $data['committee_post']->slug]) }}"
+           title="Edit {{ $data['committee_post']->title }}">
+            <i class="fas fa-edit"></i> Back to {{$data['committee_post']->title}} post page
         </a>
         <br />
-        <a href="{{ route('committee_posts_list', $committee->slug) }}">
+        <a href="{{ route('committee_posts_list', $data['committee']->slug) }}">
             <i class="far fa-arrow-alt-circle-left"></i> List of posts
         </a>
     </h3>
-    <form method="post" name="comment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form method="post" name="comment" action="{{ url()->current() }}"
+          enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         @if($data['action'] == 'Edit')
             <div class="row">
@@ -36,7 +33,8 @@ $committee = $data['committee'];
                     <h4>Content</h4>
                 </div>
                 <div class="col-lg-10">
-                    <textarea name="comment[content]" id="post-content" placeholder="Content" class="form-control">{{old('post.content', $data['post_comment']->content)}}</textarea>
+                    <textarea name="comment[content]" id="post-content" placeholder="Content" class="form-control">
+                        {{old('post.content', $data['post_comment']->content)}}</textarea>
                 </div>
             </div>
         </div>
@@ -48,7 +46,8 @@ $committee = $data['committee'];
                 <div class="col-sm">
                     <label>
                          <input name="comment[live]" type="hidden" value="0" />
-                         <input name="comment[live]" type="checkbox" value="1" {{ checked( old('comment.live', $data['post_comment']->live)) }} /> Check now to make Live
+                         <input name="comment[live]" type="checkbox" value="1"
+                             {{ checked( old('comment.live', $data['post_comment']->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>
@@ -72,7 +71,7 @@ $committee = $data['committee'];
                  </div>
             </div>
             <div class="row mt-lg-3 mb-lg-3">
-                Post added by {{$post->creator->name}}
+                Post added by {{$data['committee_post']->creator->name}}
             </div>
         @endif
         <div class="h-50"></div>

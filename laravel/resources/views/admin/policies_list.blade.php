@@ -1,6 +1,3 @@
-<?php
-$policys = $data['policies'];
-?>
 @extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-scroll"></i>', 'title' => 'List Policies'])
 @section('content')
 <div class="container">
@@ -18,7 +15,6 @@ $policys = $data['policies'];
 <form name="delete" method="POST" action="{{route('admin_policy_destroy')}}">
     {!! csrf_field() !!}
     {!! method_field('DELETE') !!}
-
     <div class="form-group">
         <div class="table-responsive">
             <table class="table table-striped table-sm">
@@ -34,7 +30,7 @@ $policys = $data['policies'];
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ( $policys as $a )
+                    @forelse ( $data['policies'] as $a )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -87,7 +83,7 @@ $policys = $data['policies'];
 <div class="col-12">
     <div class="list-group">
         <ul class="pagination">
-            {{ $policys->links() }}
+            {{ $data['policies']->links() }}
         </ul>
     </div>
 </div>

@@ -1,7 +1,3 @@
-<?php
-$assigned_role = $data['assigned_role'];
-$roles = $data['roles'];
-?>
 @extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"] .
     ' Executive role for user ' . ($data["action"] == 'Edit user with role of ' ? 'xx' : '')])
 @section('content')
@@ -47,10 +43,10 @@ $roles = $data['roles'];
                         @if($data['action'] == 'Create')
                             <option value="">Select Executive Role</option>
                         @endif
-                         @foreach($roles as $r)
+                         @foreach($data['roles'] as $r)
                             <option value="{{$r->id}}"
                                     @if( $data['action'] == 'Edit')
-                                        @if ($assigned_role->executive_id == $r->id )
+                                        @if ($data['assigned_role']->executive_id == $r->id )
                                             selected
                                         @endif
                                     @endif
@@ -79,7 +75,7 @@ $roles = $data['roles'];
                         data-date-startDate="-3d"
                         style='width: 300px;'
                         value="@if( $data['action'] == 'Edit')
-                        {{$assigned_role->start_date->format('Y-m-d')}}
+                        {{$data['assigned_role']->start_date->format('Y-m-d')}}
                         @else
                         {{ \Carbon\Carbon::now()->format('Y-m-d') }}
                         @endif" required
@@ -106,7 +102,7 @@ $roles = $data['roles'];
                         data-date-startDate="-3d"
                         style='width: 300px;'
                         value="@if( $data['action'] == 'Edit')
-                        {{$assigned_role->end_date->format('Y-m-d')}}
+                        {{$data['assigned_role']->end_date->format('Y-m-d')}}
                         @else
                         {{ \Carbon\Carbon::now()->add('1 year')->format('Y-m-d') }}
                         @endif" required
@@ -127,7 +123,7 @@ $roles = $data['roles'];
                  <form name="delete" method="POST" action="{{route('admin_executive_destroy')}}">
                      {!! csrf_field() !!}
                      {!! method_field('DELETE') !!}
-                     <input type="hidden" name="id[]" value="{{$assigned_role->id}}" />
+                     <input type="hidden" name="id[]" value="{{$data['assigned_role']->id}}" />
                      <i class="far fa-trash-alt fa-2x"></i>
                      <input class="btn btn-outline-danger" type="submit" value="Delete Executive Member role">
                  </form>

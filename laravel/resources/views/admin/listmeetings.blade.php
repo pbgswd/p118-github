@@ -1,6 +1,3 @@
-<?php
-$meetings = $data['meetings'];
-?>
 @extends('layouts.dashboard',  ['title_icon' => '<i class="far fa-folder-open"></i>', 'title' =>
     ' List Meetings and Minutes'])
 @section('content')
@@ -12,7 +9,7 @@ $meetings = $data['meetings'];
            Meetings and Minutes. | <a href="{{ route('meeting_create') }}">Add new entry <i class="far fa-arrow-alt-circle-right"></i></a>
         </h3>
     </div>
-@if (count($meetings) > 0)
+@if (count($data['meetings']) > 0)
     <form name="delete" method="POST" action="{{route('meeting_destroy')}}">
         {!! csrf_field() !!}
         {!! method_field('DELETE') !!}
@@ -31,7 +28,7 @@ $meetings = $data['meetings'];
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ( $meetings as $a )
+                    @foreach ( $data['meetings'] as $a )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -83,7 +80,7 @@ $meetings = $data['meetings'];
             <div class="col-6">
                 <div class="list-group">
                     <ul class="pagination">
-                        {!! $meetings->links() !!}
+                        {!! $data['meetings']->links() !!}
                     </ul>
                 </div>
             </div>

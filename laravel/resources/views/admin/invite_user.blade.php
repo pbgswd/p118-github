@@ -1,7 +1,3 @@
-<?php
-$invite = $data['invite'];
-$roles = $data['roles'];
-?>
 @extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-envelope-square"></i>', 'title' =>
     ' Invite Member to Website'])
 @section('content')
@@ -14,18 +10,16 @@ $roles = $data['roles'];
                 <div class="input-group-prepend">
                     <span class="input-group-text mb-2" id="inputGroup-sizing-default">Name</span>
                     <input type="text" class="form-control"  placeholder="Name" name="invite[name]"
-                           value="{{ old('invite.name', $invite->name ?? '')}}" size="80" required />
+                           value="{{ old('invite.name', $data['invite']->name ?? '')}}" size="80" required />
                 </div>
             </div>
             <div class="col-12 input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text mb-2" id="inputGroup-sizing-default">Email</span>
                     <input type="text" class="form-control"  placeholder="Email" name="invite[email]"
-                           value="{{ old('invite.email', $invite->email ?? '')}}" size="80" required/>
+                           value="{{ old('invite.email', $data['invite']->email ?? '')}}" size="80" required/>
                 </div>
             </div>
-
-
             <div class="row mt-lg-5 mb-lg-5">
                 <div class="col-12">
                     <h4>Membership Status, type ({{$data['invite']['membership_type']}})</h4>
@@ -67,14 +61,13 @@ $roles = $data['roles'];
                                 }
                             </script>
                             <script>
-                                var textarea = @json($invite->message ?? '');
+                                var textarea = @json($data['invite']->message ?? '');
                                 var textarea1 = @json($data['textarea1'] ?? '');
                             </script>
                             <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
                         </div>
                 </div>
             </div>
-
             <div class="row mt-3">
                 <div class="col-12 mt-lg-2 p-2">
                     <h4>User website roles (admin access privileges)</h4>
@@ -83,7 +76,7 @@ $roles = $data['roles'];
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <input name="invite[role]" type="radio" value="{{$role->name}}"
-                                        {{ checked(array_key_exists($role->name, $invite->role)) }} />
+                                        {{ checked(array_key_exists($role->name, $data['invite']->role)) }} />
                                 </div>
                             </div>
                             <input type="text" class="form-control" aria-label="Text input with checkbox"
