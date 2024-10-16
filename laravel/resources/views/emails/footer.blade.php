@@ -14,9 +14,8 @@
                         <p style="text-align:center;">
                             <b><a href="https://iatse118.com/" target="_blank" title="IATSE Local 118">https://iatse118.com/</a></b>
                             <br />
-                            Login to the website to manage your choice of message topics you subscribe to, or to unsubscribe.
                             <br /> <br />
-                            <b>Our mailing address is:</b><br />
+                            <b>Mailing address:</b><br />
                             IATSE Local 118<br />
                             #206 – 2940 Main Street<br />
                             Vancouver, BC V5T 3G3<br />
