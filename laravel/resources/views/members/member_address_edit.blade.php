@@ -83,7 +83,7 @@
                 </div>
                 <div class="col-12 mt-3">
                     <i class="fas fa-edit fa-2x"></i>
-                    <input class="btn btn-primary" type="submit" value="{{ $data['action'] }} My Address" />
+                    <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }} My Address" />
                 </div>
             </form>
         </div>

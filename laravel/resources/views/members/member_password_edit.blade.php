@@ -30,7 +30,7 @@
 
             <div class="col-12 mt-2 mb-2">
                 <i class="fas fa-edit fa-2x"></i>
-                <input class="btn btn-primary" type="submit" value="Update My Password" />
+                <input class="btn btn-outline-primary" type="submit" value="Update My Password" />
             </div>
         </div>
     </form>

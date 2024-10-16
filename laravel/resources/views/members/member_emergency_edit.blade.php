@@ -77,7 +77,7 @@
             </div>
             <div class="col-12 mt-2">
                 <i class="fas fa-edit fa-2x"></i>
-                <input class="btn btn-primary" type="submit" value="Edit My Emergency Contact Info" />
+                <input class="btn btn-outline-primary" type="submit" value="Edit My Emergency Contact Info" />
             </div>
         </div>
     </form>
