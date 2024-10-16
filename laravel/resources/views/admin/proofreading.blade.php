@@ -15,7 +15,6 @@
             </h3>
         </div>
     </div>
-
     <form method="post" action="{{route('admin_proofreader')}}">
         @csrf
         <div class="row d-fle justify-content-around border border-dark rounded pb-2">
@@ -41,7 +40,6 @@
             </div>
         </div>
     </form>
-
     @if($data['entries']->count() > 0)
         <div class="row">
             <div class='col-12 p-3'>
@@ -50,7 +48,6 @@
                 </h3>
             </div>
         </div>
-
         @forelse($data['entries'] as $row)
             <div class="row border border-primary rounded mb-3 p-1">
                 <div class='col-10 p-3
@@ -58,7 +55,6 @@
                    ( \Carbon\Carbon::parse($row->proofread_at) <
                     \Carbon\Carbon::parse($row->content_updated_at))
                 ))
-
                 @endif
                 '>
                     <h5>
@@ -99,7 +95,6 @@
                         @endif
                         <br />
                     </h5>
-
                 </div>
                 <div class="col-2 d-flex align-self-center">
                     @if($row->proofread_at !== null &&
