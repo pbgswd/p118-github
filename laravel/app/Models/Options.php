@@ -24,57 +24,47 @@ class Options
 {
     public static function thumb_values(): array
     {
-        $arr = [
+        return [
             'height' => 75,
             'width' => 75,
             'tn_str' => 'tn_75x75_',
         ];
-
-        return $arr;
     }
 
     public static function memoriam_thumb_values(): array
     {
-        $arr = [
+        return [
             'height' => 125,
             'width' => 125,
             'tn_str' => 'tn_125x125_',
         ];
-
-        return $arr;
     }
 
     public static function feature_thumb_values(): array
     {
-        $arr = [
+        return [
             'height' => 250,
             'width' => 250,
             'tn_str' => 'tn_250x250_',
         ];
-
-        return $arr;
     }
 
     public static function venue_org_thumb_values(): array
     {
-        $arr = [
+        return [
             'height' => 200,
             'width' => 200,
             'tn_str' => 'tn_200x200_',
         ];
-
-        return $arr;
     }
 
     public static function member_thumb_values(): array
     {
-        $arr = [
+        return [
             'height' => 200,
             'width' => 200,
             'tn_str' => 'tn_200x200_',
         ];
-
-        return $arr;
     }
 
     /**
@@ -82,10 +72,8 @@ class Options
      */
     public static function address_update_contacts(): array
     {
-        $contacts = ['dispatch@iatse118.com', 'payroll@iatse118.com',
+        return ['dispatch@iatse118.com', 'payroll@iatse118.com',
             'healthandwelfare@iatse118.com', 'returningofficer@iatse118.com', ];
-
-        return $contacts;
     }
 
     /**
@@ -93,9 +81,7 @@ class Options
      */
     public static function testing_address_update_contacts(): array
     {
-        $contacts = ['pbgswd@gmail.com'];
-
-        return $contacts;
+        return ['pbgswd@gmail.com'];
     }
 
     public static function access_levels(): array
@@ -115,13 +101,11 @@ class Options
 
     public static function message_frequency_preference_options(): array
     {
-        $frequency = ['now' => 'Send when published (default option).',
+        return ['now' => 'Send when published (default option).',
             'daily' => 'Daily compilation, All messages for that day in one email.',
             'weekly' => 'All messages for that week in one email. ',
             'unsubscribe' => 'Dont email me any messages, I will check the Messages archive on the website instead.',
         ];
-
-        return $frequency;
     }
 
     public static function model_subscription_options(): array
@@ -137,7 +121,7 @@ class Options
          * 'Agreement',  uses id
          * 'Message',  uses id, trying to use slug...
          */
-        $array = [
+        return [
             ['model' => 'Employment', 'name' => 'Job Postings', 'key' => 'id', 'description' => 'Latest job postings'],
             ['model' => 'Bylaw', 'name' => 'Constitution and Bylaws', 'key' => 'id', 'description' => 'Updates to Constitution and Bylaws in Local 118'],
             ['model' => 'Policy', 'name' => 'Policies', 'key' => 'id', 'description' => 'Local 118 Policies'],
@@ -149,8 +133,6 @@ class Options
             ['model' => 'Organization', 'name' => 'Organizations', 'key' => 'slug', 'description' => 'Organizations that we work for'],
             ['model' => 'Feature', 'name' => 'Features', 'key' => 'slug', 'description' => 'Feature content'],
         ];
-
-        return $array;
     }
 
     public static function committee_roles(): array

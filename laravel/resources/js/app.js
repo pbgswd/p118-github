@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 //window.Vue = require('vue').default;
 
