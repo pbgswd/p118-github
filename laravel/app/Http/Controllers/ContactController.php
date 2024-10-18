@@ -76,7 +76,6 @@ class ContactController extends Controller
                     Session::flash('success', 'Message Sent');
                 });
         }
-
         return redirect()->route('contact');
     }
 }

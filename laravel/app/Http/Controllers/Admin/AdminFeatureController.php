@@ -44,6 +44,7 @@ class AdminFeatureController extends Controller
 
         $data = [
             'features' => $features,
+            'count' => Feature::withoutGlobalScopes()->count(),
             'thumbs' => Options::feature_thumb_values(),
         ];
 

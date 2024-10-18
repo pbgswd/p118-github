@@ -91,7 +91,7 @@ class MessageController extends Controller
         //todo form request validator
         //todo make a policy for this user, only this user
 
-        self::updateMessageFrequencyPreferences($request, $user);
+        //self::updateMessageFrequencyPreferences($request, $user);
 
         self::updateTopicSubscriptions($user, $request['message_selections']['topic'] ?? []);
 
@@ -158,6 +158,7 @@ class MessageController extends Controller
 
     public static function updateCommitteeSubscriptions(User $user, $sub): void
     {
+//todo form request validator
 
         $type = 'committee';
 
@@ -166,6 +167,7 @@ class MessageController extends Controller
             ['type', '=', $type],
         ])->delete();
 
+        //todo write closure / anonymous function
         foreach ($sub as $s) {
             $ms = new MessageSelection;
             $ms->user_id = $user->id;

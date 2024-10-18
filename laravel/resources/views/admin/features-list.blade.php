@@ -3,7 +3,7 @@
     <div class='container'>
         <h3>
            <span class="badge badge-primary badge-pill">
-               {{$data['features']->count()}} {{ Str::plural('Feature', $data['features']->count())}}
+               {{$data['count']}} {{ Str::plural('Feature', $data['count'])}}
            </span>
             | <a href="{{ route('admin_feature_create') }}">Create new Feature
                 <i class="far fa-arrow-alt-circle-right"></i> </a>

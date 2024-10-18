@@ -36,7 +36,9 @@ class AdminCommitteeController extends Controller
             $m = $user->committee_memberships;
         }
 
-        return view('admin.listcommittees', ['data' => ['committees' => $c, 'manage committees' => $m]]);
+        $count = Committee::all()->count();
+
+        return view('admin.listcommittees', ['data' => ['committees' => $c, 'count' => $count, 'manage committees' => $m]]);
     }
 
     /**

@@ -44,6 +44,7 @@ class AdminMemoriamController extends Controller
 
         $data = [
             'memoriam' => $memoriam,
+            'count' => Memoriam::all()->count(),
             'folder' => $mem->getAttachmentFolder(),
             'tn_str' => Options::memoriam_thumb_values()['tn_str'],
         ];

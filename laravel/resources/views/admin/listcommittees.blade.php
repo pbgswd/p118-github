@@ -2,10 +2,7 @@
 @section('content')
     <div class="container">
         <h3>
-            <span class="badge badge-primary badge-pill">
-               {{$data['committees']->count()}}
-            </span>
-            Committees.
+            {{$data['count']}}  {{ Str::plural('Committee', $data['count'])}}
             @can('create committee')
                 |
                 <a href="{{ route('committee_create') }}">

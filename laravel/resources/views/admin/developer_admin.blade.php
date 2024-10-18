@@ -40,6 +40,13 @@
                     </a>
                 </li>
                 <li class="list-group-item">
+                    <a class="nav-link" href="https://laradock.io/" target="_blank">
+                        <span data-feather="file-text"></span>
+                        <i class="bi bi-server"></i>
+                        Laradock.io
+                    </a>
+                </li>
+                <li class="list-group-item">
                     <a class="nav-link" href="https://serversideup.net/open-source/spin/docs" target="_blank">
                         <span data-feather="file-text"></span>
                         <i class="bi bi-gear-wide-connected"></i>
@@ -159,6 +166,14 @@
                         Localhost DB
                     </a>
                 </li>
+                <li class="list-group-item">
+                    <a class="nav-link" href="https://sendgrid.com/en-us" target="_blank">
+                        <span data-feather="file-text"></span>
+                        <i class="bi bi-envelope-at"></i>
+                        SendGrid.com (free production emails)
+                    </a>
+                </li>
+
                 <li class="list-group-item">
                     <a class="nav-link" href="https://mailtrap.io/" target="_blank">
                         <span data-feather="file-text"></span>

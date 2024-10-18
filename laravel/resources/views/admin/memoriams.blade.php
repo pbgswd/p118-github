@@ -5,7 +5,7 @@
             <div class="col-12 col-md-6">
                 <h3>
                    <span class="badge badge-primary badge-pill">
-                       {{$data['memoriam']->count()}} {{ Str::plural('Memoriam', $data['memoriam']->count())}}
+                       {{$data['count']}} {{ Str::plural('Memoriam', $data['count'])}}
                    </span>
                     | <a href="{{ route('admin_memoriam_create') }}">Create new Memoriam
                         <i class="far fa-arrow-alt-circle-right"></i> </a>
