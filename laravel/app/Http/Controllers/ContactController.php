@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Contact\SubmitContact;
+use App\Models\ActivityLog;
 use App\Models\Contact;
 use App\Models\Options;
 use App\Models\Page;
@@ -74,6 +75,15 @@ class ContactController extends Controller
                         $request['name']);
 
                     Session::flash('success', 'Message Sent');
+
+                    $al = new ActivityLog([
+                        'activity' => $request['name'] .
+                            ' sent a message via the contact page',
+                        'ip_address' => $_SERVER['REMOTE_ADDR'],
+                        'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                        'model' => 'Admin']);
+                    $al->save();
+
                 });
         }
         return redirect()->route('contact');

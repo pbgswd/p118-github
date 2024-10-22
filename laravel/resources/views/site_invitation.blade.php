@@ -1,6 +1,5 @@
 @extends('layouts.invitation-layout')
 @section('content')
-
     <div class="container p-3">
         <div class="row d-flex flex-wrap align-content-center text-center">
             <div class="col-12 mt-3 text-center">
@@ -9,7 +8,6 @@
                 </a>
             </div>
         </div>
-
         <div class="row border border-dark mt-5 rounded mb-5" style="background: rgba(220,220,220,0.8);">
         <div class="col-12 p-2 mt-3 text-center">
             <h1>Welcome to {{env('APP_NAME')}}</h1>
@@ -25,23 +23,23 @@
             <form method="post" name="user" action="{{ url()->current() }}" enctype="multipart/form-data"
                   class="needs-validation" novalidate>
                 {!! csrf_field() !!}
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Password</span>
-                        </div>
-                        <input type="password" class="form-control" name="password"
-                               value="{{ old('password', $password ?? '')}}" size="80" required/>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Password</span>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Repeat Password</span>
-                        </div>
-                        <input type="password" class="form-control" name="password_confirmation"
-                               value="{{ old('password_confirmation', $password_confirmation ?? '')}}" size="80"
-                               required/>
+                    <input type="password" class="form-control" name="password"
+                           value="{{ old('password', $password ?? '')}}" size="80" required/>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Repeat Password</span>
                     </div>
+                    <input type="password" class="form-control" name="password_confirmation"
+                           value="{{ old('password_confirmation', $password_confirmation ?? '')}}" size="80"
+                           required/>
+                </div>
                 <div class="d-flex justify-content-center mt-2">
-                    <input class="btn btn-primary" type="submit" value="{{ $data['action'] }}" />
+                    <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
                 </div>
             </form>
         </div>

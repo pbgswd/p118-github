@@ -39,9 +39,7 @@
                         <tr>
                           <td>
                             <h4>Hi {{$data['invitation']['name']}}</h4>
-
                               {!! $data['invitation']['message'] ?? '' !!}
-
 			                <p class="lead">This is your invitation to join the IATSE Local 118
                                 website. </p>
                             <p class="lead">To join the website you will need to navigate to the page in the link
@@ -61,9 +59,8 @@
                                 </a>
 			                </p>
                               <p>See anything out of place? Report errors and typos to
-                                  <a href="mailto:office@iatse118.com" target="_blank" rel="noopener">
-                                      office@iatse118.com</a> Or       <a href="mailto:webster@iatse118.com" target="_blank" rel="noopener">
-                                      webster@iatse118.com</a> .
+                                 <a href="mailto:webster@iatse118.com" target="_blank" rel="noopener">
+                                  webster@iatse118.com</a>.
                               </p>
                               <p>&nbsp;</p>
                               <p>Have a great day.</p>

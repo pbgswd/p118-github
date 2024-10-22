@@ -5,7 +5,7 @@
             <div class="col-12 p-2 px-4">
                 <h1 class="text-center py-4">Contact IATSE Local 118</h1>
                 <h4 class="">Whether you need skilled stagehands for your production or have
-                    questions about our services, we’re here to help. Reach out to us for professional,
+                    questions about our services, we’re here to help. Reach out to us for professional
                     and reliable stagehand labor. We look forward to supporting your event with our experienced team.
                     The office and Business Agent will respond to you promptly.
                 </h4>
