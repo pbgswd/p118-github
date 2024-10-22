@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InviteUser\DestroyInviteUserRequest;
 use App\Http\Requests\InviteUser\ProcessUserRequest;
 use App\Http\Requests\InviteUser\StoreInviteUserRequest;
+use App\Models\ActivityLog;
 use App\Models\InviteUser;
 use App\Models\Membership;
 use App\Models\Options;
@@ -41,7 +42,8 @@ class InviteUserController extends Controller
 
         $invitations->each(function ($item) {
             $item->since = $item->updated_at->diffForHumans(Carbon::now());
-            $item->remaining = 48 - $item->updated_at->diffInHours(Carbon::now());
+            $item->remaining = 48 -
+                $item->updated_at->diffInHours(Carbon::now());
         });
 
         $data = [];
@@ -67,7 +69,7 @@ class InviteUserController extends Controller
             'roles' => Role::get(),
             'membership' => Options::membership_levels(),
             'action' => 'Invite',
-        ],
+            ],
         ]);
     }
 
@@ -78,23 +80,32 @@ class InviteUserController extends Controller
     {
         $this->authorize('create', InviteUser::class);
 
-        $invitation = new InviteUser($request->invite);
+        $invite = $request['invite'];
+        $invite['password'] = str_replace('/', '', hash::make(Str::random(8)));
 
-        $invitation->password = str_replace('/', '', hash::make(Str::random(8)));
-
+        $invitation = new InviteUser($invite);
         $invitation->save();
 
-        Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]],
+        Mail::send('emails.mail_invited_user', ['data' =>
+            ['invitation' => $invitation]],
             function ($m) use ($invitation) {
-                $m->from(config('mail.from.address'), config('mail.from.name').' Website Signup');
+                $m->from(config('mail.from.address'),
+                    config('mail.from.name').' Website Signup');
                 $m->to($invitation['email'], $invitation['name'])
                     ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
                     ->subject('IATSE Local 118 Website Signup Invitation');
             });
 
-        //       return view('emails.mail_invited_user', ['data' => ['invitation' => $invitation]]);
+        $al = new ActivityLog([
+            'activity' => 'A website invitation has been sent to ' .
+                $invitation['name'] . '.',
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'InviteUser']);
+        $al->save();
 
-        Session::flash('success', 'Invitation for access sent to '.$invitation['name']);
+        Session::flash('success', 'Invitation for access sent to ' .
+            $invitation['name']);
 
         return redirect()->route('admin_list_invited_users');
     }
@@ -104,23 +115,24 @@ class InviteUserController extends Controller
      */
     public function show(InviteUser $inviteUser): View
     {
-        // method open to whomsoever has the link
-        //todo 48 hour signup limitation of 48 hours before need to reapply
-        /***
-                $now = Carbon::now();
-                $allowedInvitationTime = 60 * 48; // 2 days
-                $interval = $now->diffInMinutes($inviteUser->updated_at);
-                if ($interval > $allowedInvitationTime) {
-                    Session::flash('error', "The invitation has expired as it is older than 48 hours.
-         * Please contact the site to get a new invitation.");
-                    return redirect()->route('hello');
-                }
-         ***/
+//todo 48 hour signup limitation of 48 hours before need to reapply
+/***
+    $now = Carbon::now();
+    $allowedInvitationTime = 60 * 48; // 2 days
+    $interval = $now->diffInMinutes($inviteUser->updated_at);
+    if ($interval > $allowedInvitationTime) {
+        Session::flash('error',
+ * "The invitation has expired as it is older than 48 hours.
+* Please contact the site to get a new invitation.");
+        return redirect()->route('hello');
+    }
+***/
         if (User::where('email', $inviteUser->email)->first() !== null) {
             Session::flash('error',
-                'The invitation is no longer valid because you have been registered. Login to continue.');
+                'The invitation is no longer valid because you have been
+                registered. Login to continue.');
 
-            return redirect()->route('hello');
+            return redirect()->route('login');
         }
 
         $data = [
@@ -184,7 +196,8 @@ class InviteUserController extends Controller
             $invitation = new InviteUser;
             $invitation->name = $user->name;
             $invitation->email = $user->email;
-            $invitation->password = str_replace('/', '', hash::make(Str::random(8)));
+            $invitation->password = str_replace('/', '',
+                hash::make(Str::random(8)));
             $invitation->membership_type = $user->membership_type;
             $invitation->role = 'member';
             $invitation->user_id = 1;
@@ -192,11 +205,14 @@ class InviteUserController extends Controller
 
             $invitation->save();
 
-            Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]],
+            Mail::send('emails.mail_invited_user', ['data' =>
+                ['invitation' => $invitation]],
                 function ($m) use ($invitation) {
-                    $m->from(config('mail.from.address'), config('mail.from.name').' Website Signup');
+                    $m->from(config('mail.from.address'),
+                        config('mail.from.name').' Website Signup');
                     $m->to($invitation['email'], $invitation['name'])
-                        ->replyTo('office@iatse118.com', 'IATSE Local 118 Office')
+                        ->replyTo('office@iatse118.com',
+                            'IATSE Local 118 Office')
                         ->subject('IATSE Local 118 Website Signup Invitation');
                 });
         }
@@ -214,7 +230,8 @@ class InviteUserController extends Controller
         return redirect()->route('list_import');
     }
 
-    public function process_user(ProcessUserRequest $request, InviteUser $inviteUser): RedirectResponse
+    public function process_user(ProcessUserRequest $request,
+                                 InviteUser $inviteUser): RedirectResponse
     {
         $data = [
             'name' => $inviteUser->name,
@@ -234,25 +251,16 @@ class InviteUserController extends Controller
 
         InviteUser::where('email', $inviteUser->email)->delete();
 
-        //todo helper method to clean out old invitations.
-        /**
-            $cleanOldInvitations = InviteUser::all();
-            foreach ($cleanOldInvitations as $c)
-            {
-                if($c->email == User::select('email')->where('email',$c->email)->get()) {
-                    InviteUser::destroy($c->id);
-                }
-            }
+        $al = new ActivityLog([
+            'activity' => $user->name .
+                ' has completed website signup',
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'InviteUser']);
+        $al->save();
 
-            $cleanOldInvitations->each(function ($item, $key) {
-            //InviteUser::where('email', User::select('email')->where('email',$item->email)->get())->delete();
-            if($item->email == User::select('email')->where('email',$item->email)->get()) {
-            InviteUser::destroy($item->id);
-            }
-            });
-         */
-        Session::flash('success', 'Thank you! Your password has now been securely stored.
-                                    You may now login with your email and password');
+        Session::flash('success', 'Thank you! Your password has now been
+            securely stored. You may now login with your email and password');
 
         Auth::logout();
 
@@ -265,19 +273,14 @@ class InviteUserController extends Controller
     public function destroy(DestroyInviteUserRequest $request): RedirectResponse
     {
         $this->authorize('delete', InviteUser::class);
-        /*
-         * dd($request->all());
-                foreach ($request->id as $id) {
-                    InviteUser::destroy($id);
-                }
-        */
 
         InviteUser::find($request->id)
             ->each(function (InviteUser $inviteUser) {
                 $inviteUser->delete();
             });
 
-        Session::flash('success', Str::plural(count([$request->id]).' Invitation'.' deleted.'));
+        Session::flash('success', Str::plural(count([$request->id]) .
+            ' Invitation'.' deleted.'));
 
         return redirect()->route('admin_list_invited_users');
     }

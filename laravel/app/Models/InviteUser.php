@@ -33,6 +33,8 @@ class InviteUser extends Authenticatable
     /** @var string */
     protected $guard_name = 'web';
 
+    protected $table = 'invite_users';
+
     /** @var array */
     protected $policies = [
         self::class => InviteUserPolicy::class,
