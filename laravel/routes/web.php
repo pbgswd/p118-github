@@ -305,15 +305,19 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
 
     Route::controller(CNS\AttachmentController::class)->group(function () {
         Route::get('/attachments', 'index')->name('attachments_list');
-        Route::get('/attachments_icons', 'index_icons')->name('attachments_icons_list');
-        Route::post('/attachments_ajax_upload', 'ajax_upload')->name('ajax_upload');
-        Route::get('/attachments/endless', 'endless')->name('endless');
-        Route::get('/attachments/endless/data', 'endless_data')->name('endless_data');
         Route::get('/attachment/create', 'create')->name('attachment_create');
         Route::post('/attachment/create', 'store')->name('create_attachment');
         Route::get('/attachment/{attachment}/edit', 'edit')->name('admin_attachment_edit');
         Route::post('/attachment/{attachment}/edit', 'update');
         Route::delete('/attachment/delete', 'destroy')->name('attachment_destroy');
+    });
+
+    //todo build out media insert and integrate into attachments and other blades and route groups as needed ##############################
+    Route::controller(CNS\AttachmentController::class)->group(function () {
+        Route::get('/attachments_icons', 'index_icons')->name('attachments_icons_list');
+        Route::post('/attachments_ajax_upload', 'ajax_upload')->name('ajax_upload');
+        Route::get('/attachments/endless', 'endless')->name('endless');
+        Route::get('/attachments/endless/data', 'endless_data')->name('endless_data');
     });
 
     Route::get('/roles', [CNS\RoleController::class, 'index'])->name('roles_list');
@@ -330,9 +334,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
     Route::controller(CNS\Admin\AdminCommitteeMemberController::class)->group(function () {
         Route::post('committee/{committee}/admin-list-committee-members', 'search')
             ->name('admin_search_committee_members');
-
         Route::get('committee/{committee}/admin-list-committee-members', 'index')->name('admin-list-committee-members');
-
         Route::get('committee/{committee}/admin-create-committee-members/user/{user}', 'create')
             ->name('admin_create_committee_members');
         Route::post('committee/{committee}/admin-create-committee-members/user/{user}', 'store');
@@ -364,18 +366,16 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('committee/{committee}/post/delete', 'destroy')->name('committee_post_destroy');
     });
 
-    /****
-    route::get('committee_post/{any_committee_post}/committee_post_comment/create',
-        [CNS\AdminCommitteePostCommentController::class, 'create'])->name('admin_committee_post_comment');
-    route::post('committee_post/{any_committee_post}/committee_post_comment/create',
-        [CNS\AdminCommitteePostCommentController::class, 'store']);
-    route::get('committee_post/{any_committee_post}/committee_post_comment/edit/{any_committee_post_comment}',
-        [CNS\AdminCommitteePostCommentController::class, 'edit'])->name('admin_committee_post_comment_edit');
-    route::post('committee_post/{any_committee_post}/committee_post_comment/edit/{any_committee_post_comment}',
-        [CNS\AdminCommitteePostCommentController::class, 'update']);
-    route::delete('committee_post_comment/delete/', [CNS\AdminCommitteePostCommentController::class, 'destroy'])
-        ->name('committee_post_comment_destroy');
-    ***/
+    /**
+    // not used
+    Route::controller(CNS\Admin\AdminCommitteePostCommentController::class)->group(function() {
+        route::get('committee_post/{any_committee_post}/committee_post_comment/create','create')->name('admin_committee_post_comment');
+        route::post('committee_post/{any_committee_post}/committee_post_comment/create', 'store');
+        route::get('committee_post/{any_committee_post}/committee_post_comment/edit/{any_committee_post_comment}', 'edit')->name('admin_committee_post_comment_edit');
+        route::post('committee_post/{any_committee_post}/committee_post_comment/edit/{any_committee_post_comment}', 'update');
+        route::delete('committee_post_comment/delete/', 'destroy')->name('committee_post_comment_destroy');
+    });
+    **/
 
     Route::controller(CNS\Admin\AdminAgreementController::class)->group(function () {
         Route::get('agreements', 'index')->name('agreements_list');

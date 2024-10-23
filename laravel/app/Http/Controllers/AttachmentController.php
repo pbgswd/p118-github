@@ -55,7 +55,7 @@ class AttachmentController extends Controller
     public function index_icons(Attachment $attachment): View
     {
         $this->authorize('viewAny', Auth::user());
-
+//todo get this moving forward ##################
         $data = [];
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
 
@@ -158,13 +158,13 @@ class AttachmentController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function edit(Attachment $attachment): View
+    public function edit(Attachment $attachment)
     {
         $this->authorize('update', Auth::user());
 
         if (! \file_exists(\storage_path('app/'.$attachment->subfolder).'/'.$attachment->file)) {
             Session::flash('error', $attachment->file_name.' was not found on the server');
-
+//todo remove this reidrect #############################################
             return \redirect()->route('attachments_list');
         } else {
             $attachment->setCalculatedProperties();

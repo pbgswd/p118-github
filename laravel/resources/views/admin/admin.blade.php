@@ -167,29 +167,18 @@
             </a>
         </div>
         <div class="col-4 mt-2 h-100">
-            <a href="{{ route('admin_qrcodes_list') }}">
-                <div class="card p-3">
-                    <h5 class="card-title">QR Codes</h5>
-                    <div class="card-body">
-                       Generate QR codes as needed.
-                    </div>
+            <div class="card p-3">
+                <h5 class="card-title">Media insert, work in progress</h5>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li><a href="{{route('attachments_icons_list')}}">attachments_icons_list</a></li>
+                        <li><a href="{{route('ajax_upload')}}">ajax_upload</a></li>
+                        <li><a href="{{route('endless')}}">endless</a></li>
+                        <li><a href="{{route('endless_data')}}">endless data</a></li>
+                    </ul>
                 </div>
-            </a>
+            </div>
         </div>
-        <div class="col-4 mt-2 h-100">
-
-                <div class="card p-3">
-                    <h5 class="card-title">Media insert</h5>
-                    <div class="card-body">
-                        <ul class="list-group">
-not now
-                        </ul>
-                    </div>
-                </div>
-
-        </div>
-
-
     </div>
     @role('super-admin')
         <div class="row border border-dark rounded p-3 pb-5 mt-4">
