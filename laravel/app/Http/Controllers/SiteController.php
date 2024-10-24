@@ -31,6 +31,6 @@ class SiteController extends Controller
             ->writeToFile(public_path().'/sitemap.xml');
          **/
 
-        return view('site', ['data' => ['user' => Auth::user()]]);
+        return view('site', ['data' => ['user' => Auth::user(), 'title' => 'Landing Page']]);
     }
 }
