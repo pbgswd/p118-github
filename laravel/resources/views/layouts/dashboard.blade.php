@@ -4,16 +4,20 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
         <link rel="stylesheet" href="/css/fontawesome/fontawesome-free-5.15.2-web/css/all.min.css" />
         <script src="{{ mix('js/color-modes.js') }}" defer></script>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.9.0/dist/cdn.min.js"></script>
+
+
         <script src="{{asset('/js/alpine.min.js')}}" defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="{{ config('app.name') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ $title ?? '' }} - {{ config('app.name') }} </title>
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
         <link href="{{ mix('css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
         <link href="{{ mix('css/dashboard.css') }}" rel="stylesheet">
         <link href="{{ mix('css/dashboard-inline.css') }}" rel="stylesheet">
         <link href="{{ mix('css/ck_style.css') }}" rel="stylesheet">

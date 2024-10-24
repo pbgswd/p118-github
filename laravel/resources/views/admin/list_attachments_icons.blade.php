@@ -1,98 +1,25 @@
 @extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i>',
 'title' => ' List Attachements and Images'])
 @section('content')
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('imageInserter', () => ({
-                imageUrl: '',
-                insertImage(imgHtml) {
-                    tinymce.get('pageTextarea').execCommand('mceInsertContent', false, imgHtml);
-                },
-                insertUrl() {
-                    if (this.imageUrl) {
-                        // Create the image HTML string
-                        const imgTag = `<img src="${this.imageUrl}" alt="Inserted Image" />`;
-                        // Insert the image HTML string into the editor content
-                        tinymce.get('pageTextarea').execCommand('mceInsertContent', false, imgTag);
-                        // Clear the input field after insertion
-                        this.imageUrl = '';
-                    } else {
-                        alert('Please enter a valid image URL');
-                    }
-                },
-                // insertUploaded() {
-                //     // insert image that got uploaded
-                //     // I want to insert an image into a textarea from file upload in Laravel using alpine.js. How do I do that?
-                //     // https://chatgpt.com/c/7983edb4-7477-4680-92c6-d4cebb5a78f7
-                //     if(this.imageUploaded) {
-                //         const imgUploaded = `<img src="${this.imageUploaded}" alt="Uploaded Image" />`;
-                //         // Insert the image HTML string into the editor content
-                //         tinymce.get('pageTextarea').execCommand('mceInsertContent', false, imgUploaded);
-                //         this.imageUploaded = '';
-                //     } else {
-                //         alert('Please upload an image');
-                //     }
-                // }
 
-        imageUploader() {
-            return {
-                uploadImage(event) {
-                    const file = event.target.files[0];
-                    if (!file) {
-                        alert('No file selected');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('image', file);
-
-                    // Send the file to the Laravel backend
-                    fetch('/attachments_ajax_upload', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: formData
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.url) {
-                                // Insert the image into TinyMCE
-                                const imgTag = `<img src="${data.url}" alt="Uploaded Image" />`;
-                                tinymce.get('editor').execCommand('mceInsertContent', false, imgTag);
-                            } else {
-                                alert('Error uploading file');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Error uploading file');
-                        });
-                }
-            }
-        }
-
-            }));
-        });
-    </script>
-
-    <div class="container mt-6">
+    <div class="container my-6">
+        <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
         <div x-data="imageInserter()">
-            <div class="row">
+            <div class="row my-5">
                 <div class="col">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Media Library
                     </button>
                 </div>
                 <div class="col">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#urlModal">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#urlModal">
                         Insert from URL
                     </button>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
                         Upload and insert image
                     </button>
                 </div>
@@ -120,7 +47,7 @@
                                                         <a href="#" data-bs-toggle="Insert {{$a->file_name}} into content"
                                                         title="Click to insert {{ $a->file_name }} into the content">
                                                             <img src="/storage/{{$a->subfolder}}/{{$a->file}}" class="w-100"
-                                                                 @click="insertImage('<img src=\'/storage/{{$a->subfolder}}/{{$a->file}}\' alt=\'{{ $a->file_name }}\' />')"/>
+                     @click="insertImage('<img src=\'/storage/{{$a->subfolder}}/{{$a->file}}\' alt=\'{{ $a->file_name }}\' />')"/>
                                                         </a>
                                                     @endif
                                                 </div>
@@ -149,7 +76,7 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -172,11 +99,11 @@
                                     <input type="text" class="form-control" name="imageUrl" id="exampleInputURL" x-model="imageUrl" aria-describedby="urlHelp">
                                     <div id="urlHelp" class="form-text">Use a fully qualified web address (https://example.com/image.jpg)</div>
                                 </div>
-                                <button type="submit" class="btn btn-outline-secondary">Submit</button>
+                                <button type="submit" class="btn btn-outline-secondary">Insert</button>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -193,48 +120,56 @@
                         </div>
                         <div class="modal-body">
 
-                                <div class="row my-3">
-                                    (Select a section to save it to)
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="public">Public</option>
-                                        <option value="pages">Pages</option>
-                                        <option value="post">Posts</option>
-                                    </select>
-                                </div>
-                                <div class="row my-3">
-                                    <label for="formFileMultiple" class="form-label">Upload files to insert</label>
-                                    <input class="form-control" type="file" id="formFileMultiple" @change="uploadImage($event)" multiple>
-                                    <button type="submit" class="btn btn-outline-secondary">Submit</button>
-                                </div>
+                            <div class="row my-3">
+                                (Select a section to save it to)
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="public">Public</option>
+                                    <option value="pages">Pages</option>
+                                    <option value="post">Posts</option>
+                                </select>
+                            </div>
+                            <div class="row my-3">
+                                <label for="formFileMultiple" class="form-label">Upload files to insert</label>
+                                <input class="form-control mb-3" type="file" id="formFileMultiple" @change="uploadImage($event)" multiple>
+
+                                <button type="submit" class="btn btn-outline-secondary">** Insert</button>
+                            </div>
 
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
-        <div class="row mb-6">
-            <!-- Textarea on the page -->
-            <div class=" col-12 mt-3">
-                <textarea id="pageTextarea" x-model="htmlContent" name="htmlContent" class="form-control" rows="5"></textarea>
+
+        <div class="row my-5">
+            <h4 class="my-4">Content</h4>
+            <div class="form-group">
+
+                <div class="editor-container editor-container_classic-editor" id="editor-container">
+                    <div class="editor-container__editor">
+                        <textarea x-model="htmlContent" name="data[content]" id="textarea" placeholder="Content"
+                                  class="form-control text-black" rows="5">
+                        </textarea>
+                    </div>
+                </div>
+                <script type="importmap">
+                    {
+                        "imports": {
+                            "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                            "ckeditor5/": "/js/ckeditor5/"
+                        }
+                    }
+                </script>
+                <script>
+                    var textarea = @json($data['content'] ?? '');
+                    var textarea1 = @json($data['textarea1'] ?? '');
+                </script>
+                <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
             </div>
         </div>
     </div>

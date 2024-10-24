@@ -13,7 +13,7 @@
                         <a href="{{ route('venue', $venue->slug) }}">
                             @if($venue->image)
                                 <img src="{{asset('storage/public/'. $data['tn_prefix'].$venue->image)}}"
-                                     class="img-fluid rounded" title="{{$venue->name}}"/>
+                                     class="img-fluid rounded mb-3" title="{{$venue->name}}"/>
                             @endif
                             <h3>{{ $venue->name }}</h3>
                         </a>

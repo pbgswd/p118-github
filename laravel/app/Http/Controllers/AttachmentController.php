@@ -55,6 +55,7 @@ class AttachmentController extends Controller
     public function index_icons(Attachment $attachment): View
     {
         $this->authorize('viewAny', Auth::user());
+
 //todo get this moving forward ##################
         $data = [];
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
@@ -65,7 +66,7 @@ class AttachmentController extends Controller
             $item->file_type = File::extension('storage/'.$item->subfolder.'/'.$item->file);
             $item->file_size = round(File::size('storage/'.$item->subfolder.'/'.$item->file) / 1024, 2);
         });
-
+        $data['content'] = fake()->paragraph();
         return view('admin.list_attachments_icons', ['data' => $data]);
     }
 

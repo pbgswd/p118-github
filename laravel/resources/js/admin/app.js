@@ -1,8 +1,5 @@
 require('./bootstrap');
 
-window.Vue = require('vue');
-
-import { createApp} from "vue";
 
 //import ResendMembershipInvitation from "../components/admin/ResendMembershipInvitation";
 

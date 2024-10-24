@@ -1,16 +1,15 @@
 @extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i>',
 'title' => ' List Attachement endless'])
+@section('content')
 
-<html>
-<head>
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.9.0/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
-</head>
-<body>
 
 
-<table>
+<a href="https://alpine-ajax.js.org/examples/infinite-scroll/"
+   target="_blank">https://alpine-ajax.js.org/examples/infinite-scroll/</a>
+<table class="table my-5">
     <thead>
     <tr>
         <th scope="col">Name</th>
@@ -34,6 +33,4 @@
             <!-- <a href="/contacts?page=1"><span aria-hidden="true">← </span> Previous</a> -->
             < href="/admin/attachments/endless?page=2">Next<span aria-hidden="true"> →</span></div></noscript>
 </table>
-
-</body>
-</html>
+@endsection

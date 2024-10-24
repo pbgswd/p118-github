@@ -125,7 +125,7 @@
     </div>
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12">
-            <h3>New stuff</h3>
+            <h3>New stuff, work in progress, not safe to use yet</h3>
         </div>
         @if(env('ENABLE_MESSAGING_FEATURE')==1)
             <div class="col-4">
@@ -146,26 +146,8 @@
                 </div>
             </div>
         @endif
-        <div class="col-4 h-100">
-            <a href="{{ route('admin_faqs_list') }}">
-                <div class="card p-3">
-                    <h5 class="card-title">FAQs</h5>
-                    <div class="card-body">
-                        Create content for any topic, especially common repeated information.
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-4 h-100">
-            <a href="{{ route('admin_carousel_list') }}">
-                <div class="card p-3">
-                    <h5 class="card-title">Carousel Management</h5>
-                    <div class="card-body">
-                        For fresh pics for the front page slide show, showing the world what we do.
-                    </div>
-                </div>
-            </a>
-        </div>
+
+
         <div class="col-4 mt-2 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Media insert, work in progress</h5>
