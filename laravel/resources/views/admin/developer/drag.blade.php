@@ -1,4 +1,4 @@
-@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paint-brush"></i>', 'title' => 'Page For Development'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paint-brush"></i>', 'title' => 'Page For Drag'])
 @section('content')
 <script>
     console.log('inside admin-blank.blade the template file');

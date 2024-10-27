@@ -67,7 +67,7 @@ class AdminUserController extends Controller
         $counts['office'] = Membership::where('membership_type', 'Office')->count();
         $counts['invite'] = count(InviteUser::all());
 
-        return view('admin.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
+        return view('admin.users.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
     }
 
 
@@ -92,7 +92,7 @@ class AdminUserController extends Controller
         $counts['office'] = Membership::where('membership_type', 'Office')->count();
         $counts['invite'] = count(InviteUser::all());
 
-        return view('admin.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
+        return view('admin.users.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
     }
 
 
@@ -224,7 +224,7 @@ class AdminUserController extends Controller
             Session::flash('error', 'NOTE: '.$user->name.' has been suspended from the website.');
         }
 
-        return view('admin.user', ['data' => $data]);
+        return view('admin.users.user', ['data' => $data]);
     }
 
     /**
@@ -342,7 +342,7 @@ class AdminUserController extends Controller
             'provinces' => $regions['statesprovs']['Provinces'],
         ];
 
-        return view('admin.user-edit-address', ['data' => $data]);
+        return view('admin.users.user-edit-address', ['data' => $data]);
     }
 
     /**
@@ -391,7 +391,7 @@ class AdminUserController extends Controller
             'currentUserPermissions' => $currentUser->permissions,
         ];
 
-        return view('admin.user-edit-emergency-contact', ['data' => $data]);
+        return view('admin.users.user-edit-emergency-contact', ['data' => $data]);
     }
 
     /**

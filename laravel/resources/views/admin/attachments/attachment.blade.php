@@ -3,8 +3,8 @@
 @section('content')
     <div class="row mb-3">
         <h4>
-        <a href="{{route('attachments_list')}}">
-            Back to Images & Attachments</a>
+            <a href="{{route('attachments_list')}}">
+                Back to Images & Attachments</a>
         </h4>
     </div>
     <form method="post" name="attachment" action="{{ url()->current() }}" enctype="multipart/form-data"
@@ -24,7 +24,7 @@
                         Upload file to server & database. Insert or attach to content after.
                         You may add many images at once.
                     </p>
-                    <h5>Access Level for content:  {{$data['attachment']->access_level}}</h5>
+                    <h5>Access Level for content: {{$data['attachment']->access_level}}</h5>
                     <div class="form-group">
                         {{ select_options($data['access_levels'],
                             old('attachment.access_level', $data['attachment']->access_level),
@@ -82,26 +82,26 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <h4>Code</h4>
-<pre>
+                        <pre>
     <code>
     &lt;a href={{env('APP_URL')}}/{{$data['attachment']->subfolder}}/download/{{$data['attachment']['id']}}"
             title="Download {!! $data['attachment']['file_name'] !!}"
             target="_blank" /&gt;
         {{$data['attachment']->extension == 'pdf' ? '<i class="far fa-file-pdf fa-4x"></i>' :
             '<i class="far fa-file fa-4x"></i>' }}
-          {{$data['attachment']->description ? : $data['attachment']->file_name}}
+        {{$data['attachment']->description ? : $data['attachment']->file_name}}
         &lt;/a&gt;
     </code>
 </pre>
                     </div>
                     <div class="col-12 col-md-6">
                         <h4>...which will appear on the page like this:</h4>
-                        <a href="{{env('APP_URL') .'/'. $data['attachment']->subfolder .'/download/'.
+                        <a href="{{env('APP_URL') .'attachment.blade.php/'. $data['attachment']->subfolder .'/download/'.
                             $data['attachment']['id']}}"
-                           title="Download {{$data['attachment']['file_name']}}" target="_blank" />
-                            {!! $data['attachment']->extension == 'pdf' ? '<i class="far fa-file-pdf fa-4x"></i>' :
-                                '<i class="far fa-file fa-4x"></i>' !!}
-                            {{$data['attachment']->description ? : $data['attachment']->file_name}}
+                           title="Download {{$data['attachment']['file_name']}}" target="_blank"/>
+                        {!! $data['attachment']->extension == 'pdf' ? '<i class="far fa-file-pdf fa-4x"></i>' :
+                            '<i class="far fa-file fa-4x"></i>' !!}
+                        {{$data['attachment']->description ? : $data['attachment']->file_name}}
                         </a>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <img class="border rounded m-1 img-fluid"
-                              src="{!! asset('storage/' .
+                             src="{!! asset('storage/' .
                                 $data['attachment']->subfolder . "/" . $data['attachment']['file']) .'"' !!}}"/>
                     </div>
                     <div class="col-12 col-md-6">
@@ -150,30 +150,30 @@
                 <div class="row">
                     <div class="col-12 mt-3 mb-1">
                         <h4>Insert into content with:</h4>
-<pre>
+                        <pre>
     <code>
 &lt;img src="/storage/{{$data['attachment']->subfolder}}/{{$data['attachment']['file']}}" class="border rounded m-1 img-fluid" /&gt;
     </code>
 </pre>
                     </div>
                 </div>
-                @endif
+            @endif
         @endif
         <div class="row mt-3 mb-5 p-4">
             <div class="col-12 col-md-6">
                 <i class="fas fa-edit fa-2x"></i>
-                <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
+                <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}"/>
             </div>
     </form>
-        @if ($data['action'] == 'Edit')
-            <div class="col-12 col-md-6" style="float:right">
-                <form name="delete" method="POST" action="{{route('attachment_destroy')}}">
-                    {!! csrf_field() !!}
-                    {!! method_field('DELETE') !!}
-                    <i class="far fa-trash-alt fa-2x"></i>
-                    <input type="hidden" name="id[]" value="{{ $data['attachment']->id }}">
-                    <input class="btn btn-outline-danger" type="submit" value="Delete">
-                </form>
-            </div>
-        @endif
+    @if ($data['action'] == 'Edit')
+        <div class="col-12 col-md-6" style="float:right">
+            <form name="delete" method="POST" action="{{route('attachment_destroy')}}">
+                {!! csrf_field() !!}
+                {!! method_field('DELETE') !!}
+                <i class="far fa-trash-alt fa-2x"></i>
+                <input type="hidden" name="id[]" value="{{ $data['attachment']->id }}">
+                <input class="btn btn-outline-danger" type="submit" value="Delete">
+            </form>
+        </div>
+    @endif
 @endsection

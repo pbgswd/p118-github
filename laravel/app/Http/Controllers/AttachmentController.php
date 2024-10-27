@@ -67,7 +67,7 @@ class AttachmentController extends Controller
             $item->file_size = round(File::size('storage/'.$item->subfolder.'/'.$item->file) / 1024, 2);
         });
         $data['content'] = fake()->paragraph();
-        return view('admin.list_attachments_icons', ['data' => $data]);
+        return view('admin.attachments.list_attachments_icons', ['data' => $data]);
     }
 
     public function ajax_upload(Request $request)
@@ -87,12 +87,12 @@ class AttachmentController extends Controller
         return response()->json(['error' => 'No file uploaded'], 400);
     }
 
-    public function endless()
+    public function endless(): View
     {
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
         $data['filecount'] = Attachment::count();
 
-        return view('admin.list_attachments_endless', ['data' => $data]);
+        return view('admin.attachments.list_attachments_endless', ['data' => $data]);
     }
 
     public function endless_data(Request $request)
@@ -116,7 +116,7 @@ class AttachmentController extends Controller
 
         $attachment = new Attachment;
 
-        return view('admin.attachment', [
+        return view('admin.attachments.attachment', [
             'data' => [
                 'attachment' => $attachment,
                 'access_levels' => array_combine(AccessLevelConstants::getConstants(),
@@ -178,7 +178,7 @@ class AttachmentController extends Controller
             'action' => 'Edit',
         ];
 
-        return view('admin.attachment', ['data' => $data]);
+        return view('admin.attachments.attachment', ['data' => $data]);
     }
 
     /**

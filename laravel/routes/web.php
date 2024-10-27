@@ -162,12 +162,11 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
     });
 
     Route::controller(CNS\Admin\AdminDeveloperController::class)->group(function () {
-        Route::get('/dev', 'developer')->name('developer');
-        Route::get('/dev/developer/phpinfo', 'getphpinfo')->name('phpinfo');
-        Route::get('/dev/development', 'development')->name('development');
+        Route::get('/dev', 'index')->name('developer');
         Route::get('/dev/drag', 'drag')->name('drag');
+        Route::get('/dev/insert', 'insert')->name('insert');
         Route::get('/dev/blank', 'blank')->name('blank');
-        Route::get('/dev/plain', 'plain')->name('plain');
+        Route::get('/dev/developer/phpinfo', 'getphpinfo')->name('phpinfo');
     });
 
     Route::controller(CNS\Admin\AdminMessageController::class)->group(function () {

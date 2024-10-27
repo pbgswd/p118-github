@@ -51,7 +51,7 @@ class InviteUserController extends Controller
         $data['all'] = InviteUser::all();
         $data['count'] = count(InviteUser::all());
 
-        return view('admin.invitations_list', ['data' => $data]);
+        return view('admin.users.invitations_list', ['data' => $data]);
     }
 
     /**
@@ -65,7 +65,7 @@ class InviteUserController extends Controller
         $invited->role = ['member' => 'member'];
         $invited->membership_type = 'Member';
 
-        return view('admin.invite_user', ['data' => ['invite' => $invited,
+        return view('admin.users.invite_user', ['data' => ['invite' => $invited,
             'roles' => Role::get(),
             'membership' => Options::membership_levels(),
             'action' => 'Invite',
@@ -160,7 +160,7 @@ class InviteUserController extends Controller
 
         $data = DB::table('import_users')->get();
 
-        return view('admin.invite_list_import', ['data' => $data]);
+        return view('admin.users.invite_list_import', ['data' => $data]);
     }
 
     /**
@@ -282,6 +282,6 @@ class InviteUserController extends Controller
         Session::flash('success', Str::plural(count([$request->id]) .
             ' Invitation'.' deleted.'));
 
-        return redirect()->route('admin_list_invited_users');
+        return redirect()->route('users.admin_list_invited_users');
     }
 }

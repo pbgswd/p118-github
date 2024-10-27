@@ -4,7 +4,8 @@
 <div class="container">
     <div class="row my-5">
         <div class="col-12">
-            <a href="{{ route('blank') }}">Blank Page</a> | <a href="{{ route('development') }}">Development Page</a>
+            <a href="{{ route('blank') }}">Blank Page</a> | <a href="{{ route('attachments_icons_list') }}">Insert img </a> |
+           <a href="{{route('drag')}}">drag</a> |
         </div>
     </div>
 

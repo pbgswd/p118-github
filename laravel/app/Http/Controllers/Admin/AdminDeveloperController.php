@@ -42,15 +42,6 @@ class AdminDeveloperController extends Controller
 
     public function index(): View
     {
-        $data = [
-            'user' => Auth::user(),
-        ];
-
-        return view('admin.developer.developer_admin', ['data' => $data]);
-    }
-
-    public function developer(): View
-    {
         return view('admin.developer.developer_admin');
     }
 
@@ -75,7 +66,7 @@ class AdminDeveloperController extends Controller
         return view('admin.developer.admin-blank');
     }
 
-    public function development(): View
+    public function insert(): View
     {
         //todo method for page for development
         //todo file upload
@@ -83,7 +74,7 @@ class AdminDeveloperController extends Controller
 
        $data['textarea'] = fake()->paragraph();
 
-        return view('admin.developer.admin-development', ['data' => $data]);
+        return view('admin.attachments.list_attachments_endless', ['data' => $data]);
     }
     public function drag(): View
     {
@@ -93,8 +84,11 @@ class AdminDeveloperController extends Controller
 
         $data['textarea'] = fake()->paragraph();
 
-        return view('admin.developer.admin-development', ['data' => $data]);
+        return view('admin.developer.drag', ['data' => $data]);
     }
+
+
+
     public function getphpinfo(User $user): bool
     {
         return phpinfo();

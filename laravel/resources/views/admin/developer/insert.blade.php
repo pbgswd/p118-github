@@ -1,7 +1,7 @@
 @extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paint-brush"></i>', 'title' => 'Page For Development'])
 @section('content')
 <script>
-    console.log('inside admin-development.blade the template file');
+    console.log('inside insert the template file');
 </script>
 
 <div class="row my-5">
