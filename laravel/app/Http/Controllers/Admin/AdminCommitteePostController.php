@@ -48,7 +48,7 @@ class AdminCommitteePostController extends Controller
                 ->paginate(10),
         ];
 
-        return view('admin.committee_posts_list', ['data' => $data]);
+        return view('admin.committee.committee_posts_list', ['data' => $data]);
     }
 
     /**
@@ -65,7 +65,7 @@ class AdminCommitteePostController extends Controller
             'access_levels' => Options::access_levels(),
         ];
 
-        return view('admin.committee_post', ['data' => $data]);
+        return view('admin.committee.committee_post', ['data' => $data]);
     }
 
     /**
@@ -113,7 +113,7 @@ class AdminCommitteePostController extends Controller
             'access_levels' => Options::access_levels(),
         ];
 
-        return view('admin.committee_post', ['data' => $data]);
+        return view('admin.committee.committee_post', ['data' => $data]);
     }
 
     /**

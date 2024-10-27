@@ -42,7 +42,7 @@ class AdminCommitteeMemberController extends Controller
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
         $data['search'] = [];
 
-        return view('admin.committee_members_list', ['data' => $data]);
+        return view('admin.committee.committee_members_list', ['data' => $data]);
     }
 
     /**
@@ -133,7 +133,7 @@ class AdminCommitteeMemberController extends Controller
         $data['user'] = $user;
         $data['action'] = 'Edit';
 
-        return view('admin.committee_manage_membership', ['data' => $data]);
+        return view('admin.committee.committee_manage_membership', ['data' => $data]);
     }
 
     /**

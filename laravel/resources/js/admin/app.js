@@ -1,12 +1,3 @@
-require('./bootstrap');
+require('../bootstrap');
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
-
-//import ResendMembershipInvitation from "../components/admin/ResendMembershipInvitation";
-
-//console.log('from inside app.js source');
-
-createApp({
-    components: {
-  //      ResendMembershipInvitation
-    }
-}).mount('#app');

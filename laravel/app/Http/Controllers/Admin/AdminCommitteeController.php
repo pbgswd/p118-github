@@ -38,7 +38,7 @@ class AdminCommitteeController extends Controller
 
         $count = Committee::all()->count();
 
-        return view('admin.listcommittees', ['data' => ['committees' => $c, 'count' => $count, 'manage committees' => $m]]);
+        return view('admin.committee.listcommittees', ['data' => ['committees' => $c, 'count' => $count, 'manage committees' => $m]]);
     }
 
     /**
@@ -55,7 +55,7 @@ class AdminCommitteeController extends Controller
             'action' => 'Create',
         ];
 
-        return view('admin.committee', ['data' => $data]);
+        return view('admin.committee.committee', ['data' => $data]);
     }
 
     /**
@@ -117,7 +117,7 @@ class AdminCommitteeController extends Controller
             'canManage' => $canManage,
         ];
 
-        return view('admin.show_committee', ['data' => $data]);
+        return view('admin.committee.show_committee', ['data' => $data]);
     }
 
     /**
@@ -139,7 +139,7 @@ class AdminCommitteeController extends Controller
                 $any_committee['image']);
         }
 
-        return view('admin.committee', [
+        return view('admin.committee.committee', [
             'data' => [
                 'committee' => $any_committee,
                 'file_info' => $file_info,

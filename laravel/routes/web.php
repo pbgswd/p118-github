@@ -92,8 +92,7 @@ Route::middleware('web')->group(function () {
  */
 Route::middleware('web', 'auth')->group(function () {
     Route::get('/site', [CNS\SiteController::class, 'index'])->name('landing_page');
-
-    Route::get('/home', [CNS\HomeController::class, 'index'])->name('home'); // redirects to home page
+    Route::get('/home', [CNS\HomeController::class, 'index'])->name('home');
 
     Route::controller(CNS\EmploymentController::class)->group(function () {
         Route::post('jobs', 'jobs_year')->name('jobs_year');
@@ -156,15 +155,19 @@ Route::middleware('web', 'auth')->group(function () {
 /**
  * ADMIN SECTION
  */
-
 Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])->group(function () {
 
     Route::controller(CNS\Admin\AdminController::class)->group(function () {
         Route::get('/', 'index')->name('admin');
-        Route::get('/blank', 'blank')->name('blank');
-        Route::get('/developer', 'developer')->name('developer');
-        Route::get('/developer/phpinfo', 'getphpinfo')->name('phpinfo');
-        Route::get('/development', 'development')->name('development');
+    });
+
+    Route::controller(CNS\Admin\AdminDeveloperController::class)->group(function () {
+        Route::get('/dev', 'developer')->name('developer');
+        Route::get('/dev/developer/phpinfo', 'getphpinfo')->name('phpinfo');
+        Route::get('/dev/development', 'development')->name('development');
+        Route::get('/dev/drag', 'drag')->name('drag');
+        Route::get('/dev/blank', 'blank')->name('blank');
+        Route::get('/dev/plain', 'plain')->name('plain');
     });
 
     Route::controller(CNS\Admin\AdminMessageController::class)->group(function () {

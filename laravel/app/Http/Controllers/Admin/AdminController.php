@@ -35,9 +35,9 @@ class AdminController extends Controller
 {
     protected $activityLog;
 
-    public function __construct(ActivityLog $activityLog)
+    public function __construct()
     {
-        $this->activityLog = $activityLog;
+
     }
 
     public function index(): View
@@ -72,9 +72,9 @@ class AdminController extends Controller
         $counts['office'] = Membership::where('membership_type', 'Office')->count();
         $counts['invite'] = count(InviteUser::all());
 
-        //todo make a dependency injection
+        //todo look at events in Laravel https://laravel.com/docs/11.x/events
         $al = new ActivityLog([
-            'activity' => Auth::user()->name.' accessed the admin dashboard',
+            'activity' => Auth::user()->name . ' accessed the admin dashboard',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
@@ -92,47 +92,5 @@ class AdminController extends Controller
         ];
 
         return view('admin.admin', ['data' => $data]);
-    }
-
-    public function developer(): View
-    {
-        return view('admin.developer_admin');
-    }
-
-    public function blank(User $user): View
-    {
-        $mod = new ModelList;
-        $arr = ModelList::getModelList();
-
-        $csv = [];
-        // $lines = file('../../files/Local118-CSV-Membership.csv', FILE_IGNORE_NEW_LINES);
-        $lines = [];
-        foreach ($lines as $key => $value) {
-            $csv[$key] = str_getcsv($value);
-        }
-
-        foreach ($csv as $k => $c) {
-            $data[$k]['name'] = $c[0].' '.$c[1];
-            $data[$k]['email'] = $c[2];
-            $data[$k]['membership_type'] = $c[3];
-        }
-
-        return view('admin.admin-blank');
-    }
-
-    public function development(): View
-    {
-        //todo method for page for development
-        //todo file upload
-        //todo image library insert image
-
-       $data['textarea'] = fake()->paragraph();
-
-        return view('admin.admin-development', ['data' => $data]);
-    }
-
-    public function getphpinfo(User $user): bool
-    {
-        return phpinfo();
     }
 }

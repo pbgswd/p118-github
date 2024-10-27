@@ -1,15 +1,18 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="auto">
     <head>
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="{{ mix('js/admin/app.js') }}" defer></script>
+
         <link rel="stylesheet" href="/css/fontawesome/fontawesome-free-5.15.2-web/css/all.min.css" />
-        <script src="{{ mix('js/color-modes.js') }}" defer></script>
+
+        <script src="{{ mix('js/admin/color-modes.js') }}" defer></script>
 
         <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+
         <script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.9.0/dist/cdn.min.js"></script>
 
-
         <script src="{{asset('/js/alpine.min.js')}}" defer></script>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="{{ config('app.name') }}">
@@ -19,8 +22,11 @@
         <link href="{{ mix('css/bootstrap.min.css') }}" rel="stylesheet">
 
         <link href="{{ mix('css/dashboard.css') }}" rel="stylesheet">
+
         <link href="{{ mix('css/dashboard-inline.css') }}" rel="stylesheet">
+
         <link href="{{ mix('css/ck_style.css') }}" rel="stylesheet">
+
         <link rel="stylesheet" href="/css/ckeditor5.css">
     </head>
     <body>
