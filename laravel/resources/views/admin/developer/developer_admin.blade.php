@@ -3,12 +3,21 @@
 @section('content')
 <div class="container">
     <div class="row my-5">
-        <div class="col-12">
-            <a href="{{ route('blank') }}">Blank Page</a> | <a href="{{ route('attachments_icons_list') }}">Insert img </a> |
-           <a href="{{route('drag')}}">drag</a> |
+        <div class="col-12 col-md-6">
+            <h3>Experiments pages</h3>
+            <a href="{{ route('blank') }}">Blank Page</a> | <a href="{{route('drag')}}">drag</a> |
+            <a href="{{route('datepicker')}}">Calendar DatePicker</a>
+        </div>
+        <div class="col-12 col-md-6">
+            <h3>attachment work</h3>
+            <a href="{{route('attachments_icons_list')}}">Media manager page (icons)</a> |
+            <a href="{{route('endless')}}">Endless page </a>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-12">
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm">
             <ul class="list-group flex-column mb-2">
@@ -174,7 +183,6 @@
                         SendGrid.com (free production emails)
                     </a>
                 </li>
-
                 <li class="list-group-item">
                     <a class="nav-link" href="https://mailtrap.io/" target="_blank">
                         <span data-feather="file-text"></span>
@@ -204,6 +212,14 @@
                     </a>
                 </li>
             </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
         </div>
     </div>
 </div>

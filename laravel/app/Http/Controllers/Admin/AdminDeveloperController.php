@@ -87,10 +87,13 @@ class AdminDeveloperController extends Controller
         return view('admin.developer.drag', ['data' => $data]);
     }
 
-
-
     public function getphpinfo(User $user): bool
     {
         return phpinfo();
+    }
+
+    public function datepicker(User $user): View
+    {
+        return view('admin.developer.datepicker');
     }
 }

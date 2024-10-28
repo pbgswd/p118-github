@@ -8,10 +8,8 @@
         <script src="{{ mix('js/admin/color-modes.js') }}" defer></script>
 
         <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
-
-        <script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.9.0/dist/cdn.min.js"></script>
-
-        <script src="{{asset('/js/alpine.min.js')}}" defer></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.10.0/dist/cdn.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,9 +84,10 @@
                 </main>
             </div>
         </div>
-        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/jquery-3.7.1.min.js"></script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
         @include('admin.admin_partials.darkmode')
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script src="dashboard.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script src="/js/admin/dashboard.js"></script>
 
     </body>
 </html>

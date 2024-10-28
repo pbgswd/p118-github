@@ -166,6 +166,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/dev/drag', 'drag')->name('drag');
         Route::get('/dev/insert', 'insert')->name('insert');
         Route::get('/dev/blank', 'blank')->name('blank');
+        Route::get('/dev/datepicker', 'datepicker')->name('datepicker');
         Route::get('/dev/developer/phpinfo', 'getphpinfo')->name('phpinfo');
     });
 
@@ -317,8 +318,8 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
     //todo build out media insert and integrate into attachments and other blades and route groups as needed ##############################
     Route::controller(CNS\AttachmentController::class)->group(function () {
         Route::get('/attachments_icons', 'index_icons')->name('attachments_icons_list');
-        Route::post('/attachments_ajax_upload', 'ajax_upload')->name('ajax_upload');
         Route::get('/attachments/endless', 'endless')->name('endless');
+        Route::post('/attachments_ajax_upload', 'ajax_upload')->name('ajax_upload');
         Route::get('/attachments/endless/data', 'endless_data')->name('endless_data');
     });
 

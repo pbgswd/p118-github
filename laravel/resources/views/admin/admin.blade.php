@@ -102,26 +102,6 @@
         <div class="col-12">
             <h3>Recent Activity | <a href="{{route('admin_activity_logs_list')}}">View log page</a></h3>
         </div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Activity</th>
-                <th scope="col">Created At</th>
-            </tr>
-            </thead>
-            <tbody>
-                @forelse($data['activities'] as $activity)
-                    <tr>
-                        <td>{{$activity->activity}}</td>
-                        <td>{{ $activity->created_at->format('F j Y H:i:s') }}</td>
-                    </tr>
-                @empty
-                    <tr>
-                        <th scope="row" colspan="9">No data yet</th>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
     </div>
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12">
@@ -194,7 +174,7 @@
                 </a>
             </div>
             <div class="col-4">
-                <a href="{{ route('development') }}">
+                <a href="{{ route('developer') }}">
                     <div class="card p-3">
                         <h5 class="card-title">
                             <span data-feather="file"></span>

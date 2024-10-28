@@ -37,23 +37,9 @@ class AttachmentController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function index(Attachment $attachment): View
-    {
-        $this->authorize('viewAny', Auth::user());
-
-        $data = [];
-        $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
-
-        $data['filecount'] = Attachment::count();
-
-        return view('admin.list_attachments', ['data' => $data]);
-    }
-
-    /**
-     * @throws AuthorizationException
-     */
     public function index_icons(Attachment $attachment): View
     {
+        Log::info('peter ' . __METHOD__ . ' line ' . __LINE__);
         $this->authorize('viewAny', Auth::user());
 
 //todo get this moving forward ##################
@@ -89,8 +75,12 @@ class AttachmentController extends Controller
 
     public function endless(): View
     {
+       // Log::info('peter ' . __METHOD__ . ' line ' . __LINE__);
+        $pagination = 30;
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
         $data['filecount'] = Attachment::count();
+
+        $data['pages'] = intval(round(ceil($data['filecount']/$pagination),0));
 
         return view('admin.attachments.list_attachments_endless', ['data' => $data]);
     }
@@ -99,12 +89,42 @@ class AttachmentController extends Controller
     {
         // https://alpine-ajax.js.org/examples/infinite-scroll/
         $data = [];
+        $pagination = 30;
+        $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')
+            ->paginate($pagination);
+        $data['filecount'] = Attachment::count();
+        $data['pages'] = intval(round(ceil($data['filecount']/$pagination),0));
+
+        return response()->json(['data' => $data, 'records' => $data]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function index(Attachment $attachment): View
+    {
+        $this->authorize('viewAny', Auth::user());
+
+        $data = [];
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
+
         $data['filecount'] = Attachment::count();
 
-        //return view('admin.list_attachments_endless', ['data' => $data, 'records' => $data]);
-        return response()->json(['data' => $data, 'records' => $data]);
-        //Log::info( __METHOD__ . ' line ' . __LINE__ . " " . serialize($request->all()));
+        return view('admin.list_attachments', ['data' => $data]);
     }
 
     /**

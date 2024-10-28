@@ -42,9 +42,6 @@ class AdminController extends Controller
 
     public function index(): View
     {
-        //Land on the home page of admin. Could have data later.
-        //todo grab data from various models, counts, etc, put them on this page
-
         $emailQueueCount = EmailQueue::count();
         $messagesCount = Message::count();
 
