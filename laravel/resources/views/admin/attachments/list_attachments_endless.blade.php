@@ -21,8 +21,8 @@
         <td>Active</td>
     </tr>
     </tbody>
-
-
+    <div id="pagination" x-init x-intersect="$ajax('/admin/attachments/endless/data?page=2', { target: 'records pagination' })">
+    </div>
     <noscript>
         <div>Page 1 of {{$data['pages']}}</div>
         <div>
@@ -31,6 +31,5 @@
             <a href="/admin/attachments/endless?page=2">Next<span aria-hidden="true"> →</span></div>
     </noscript>
 </table>
-    <div id="pagination" x-init x-intersect="$ajax('/admin/attachments/endless/data?page=2', { target: 'records pagination' })">
-    </div>
+
 @endsection

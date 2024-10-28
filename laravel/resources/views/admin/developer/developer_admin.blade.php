@@ -163,6 +163,13 @@
                     </a>
                 </li>
                 <li class="list-group-item">
+                    <a class="nav-link" href="https://jquery.com/download/" target="_blank">
+                        <span data-feather="file-text"></span>
+                        <i class="bi bi-filetype-js"></i>
+                        JQuery
+                    </a>
+                </li>
+                <li class="list-group-item">
                     <a class="nav-link" href="https://www.vultr.com/" target="_blank">
                         <span data-feather="file-text"></span>
                         <i class="bi bi-cloud"></i>
