@@ -19,6 +19,7 @@
         "laravel/ui": "^4.4",
         "league/flysystem": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "livewire/livewire": "^3.5",
         "nesbot/carbon": "^2.57",
         "predis/predis": "^1.1",
         "rtconner/laravel-tagging": "^4.1",

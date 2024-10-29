@@ -49,6 +49,7 @@ class AttachmentController extends Controller
         $data['filecount'] = Attachment::count();
 
         $data['attachments']->each(function ($item) {
+            //todo have a thumb size for every image asset
             $item->file_type = File::extension('storage/'.$item->subfolder.'/'.$item->file);
             $item->file_size = round(File::size('storage/'.$item->subfolder.'/'.$item->file) / 1024, 2);
         });
@@ -75,14 +76,7 @@ class AttachmentController extends Controller
 
     public function endless(): View
     {
-       // Log::info('peter ' . __METHOD__ . ' line ' . __LINE__);
-        $pagination = 30;
-        $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
-        $data['filecount'] = Attachment::count();
-
-        $data['pages'] = intval(round(ceil($data['filecount']/$pagination),0));
-
-        return view('admin.attachments.list_attachments_endless', ['data' => $data]);
+        return view('admin.attachments.list_attachments_endless');
     }
 
     public function endless_data(Request $request)
@@ -98,20 +92,6 @@ class AttachmentController extends Controller
         return response()->json(['data' => $data, 'records' => $data]);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * @throws AuthorizationException
      */
@@ -124,7 +104,7 @@ class AttachmentController extends Controller
 
         $data['filecount'] = Attachment::count();
 
-        return view('admin.list_attachments', ['data' => $data]);
+        return view('admin.attachments.list_attachments', ['data' => $data]);
     }
 
     /**

@@ -36,33 +36,14 @@
                             <div class="modal-body">
                                 <div class="row m-2 p-2 border border-secondary">Filter by date, type, search</div>
                                 <div class="row justify-content-center">
-                                    @forelse ( $data['attachments'] as $a )
-                                        <div class="col-sm-12 col-md-2 m-2 p-4 border border-secondary">
-                                            <div class="row mb-3">
-                                                <div class="col-12">
-                                                    @if($a->file_type == 'pdf')
-                                                        <i class="fas fa-file-pdf fa-2x"></i>
-                                                    @endif
-                                                    @if(in_array(strtolower($a->file_type), ['jpg','jpeg','png','gif',]))
-                                                        <a href="#" data-bs-toggle="Insert {{$a->file_name}} into content"
-                                                        title="Click to insert {{ $a->file_name }} into the content">
-                                                            <img src="/storage/{{$a->subfolder}}/{{$a->file}}" class="w-100"
-                     @click="insertImage('<img src=\'/storage/{{$a->subfolder}}/{{$a->file}}\' alt=\'{{ $a->file_name }}\' />')"/>
-                                                        </a>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="row text-break">
-                                                {{$a->access_level}}, {{ $a->file_type}}, <br />
-                                                {{$a->file_size}} Kb <br />
-                                                <a href="{{ route('admin_attachment_edit', $a->id) }}" title="Edit {{ $a->file_name }}">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        <div class="row">No data</div>
-                                    @endforelse
+
+
+
+                                                    <livewire:admin.endless-media />
+
+
+
+
                                 </div>
                                 <noscript>
                                     <div class="row mt-2">
