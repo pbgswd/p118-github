@@ -86,28 +86,8 @@ class Attachment extends Model implements Searchable
     }
 
     public function setFileTypeAttribute($value) {
-        //todo do actual work to get the file_type of an uploaded file, none of this actually works yet
         //todo set to image, pdf, zip, binary, file
-        $this->attributes['file_type'] = $value;
 
-        $file_extension = File::extension('storage/public/' . $file);
-        $file_type = in_array(strtolower($file_extension),
-            ['jpg','jpeg','png','gif','webp','svg']) ? 'image': '';
-        if(strtolower($file_extension)  == 'bin'){
-            $file_type = 'binary';
-        }
-        if(strtolower($file_extension) == 'pdf'){
-            $file_type = 'pdf';
-        }
-        if(strtolower($file_extension) == 'zip'){
-            $file_type = 'zip';
-        }
-        if($file_type == ''){
-            $file_type = 'file';
-        }
-        $attachment['file_type'] = $file_type;
-
-        return $this->file_type;
     }
 
     public function setCalculatedProperties(): self
