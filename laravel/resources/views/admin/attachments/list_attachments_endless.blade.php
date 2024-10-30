@@ -35,7 +35,11 @@
                         <div class="row m-2 p-2 border border-secondary">
                             Filter by date, type, search
                         </div>
-                        <livewire:admin.endless-media />
+
+
+                            <livewire:admin.endless-media />
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
