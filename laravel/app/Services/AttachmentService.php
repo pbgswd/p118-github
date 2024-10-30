@@ -8,6 +8,7 @@ use App\Models\Interfaces\HasAttachment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,6 +24,24 @@ class AttachmentService
             $attachment['file_name'] = $file->getClientOriginalName();
             $attachment['file'] = $file->store('', $model->getAttachmentFolder());
             $attachment['subfolder'] = $model->getAttachmentFolder();
+
+            $file_extension = File::extension('storage/'.
+                $attachment['subfolder'] . '/' . $attachment['file']);
+            $file_type = in_array(strtolower($file_extension),
+                ['jpg','jpeg','png','gif','webp','svg']) ? 'image': '';
+            if(strtolower($file_extension)  == 'bin'){
+                $file_type = 'binary';
+            }
+            if(strtolower($file_extension) == 'pdf'){
+                $file_type = 'pdf';
+            }
+            if(strtolower($file_extension) == 'zip'){
+                $file_type = 'zip';
+            }
+            if($file_type == ''){
+                $file_type = 'file';
+            }
+            $attachment['file_type'] = $file_type;
 
             $attachment->save();
 

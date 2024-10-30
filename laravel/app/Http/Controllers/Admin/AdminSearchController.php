@@ -271,9 +271,10 @@ class AdminSearchController extends Controller
         $data = [
             'search' => $request->search,
             'results' => (new Search)
-                ->registerModel(Attachment::class, ['file_name', 'description'])
+                ->registerModel(Attachment::class, ['file_name', 'description',
+                    'file_type'])
                 ->search($request->search),
         ];
-        return view('admin.list_attachments_search_result', ['data' => $data]);
+        return view('admin.attachments.list_attachments_search_result', ['data' => $data]);
     }
 }

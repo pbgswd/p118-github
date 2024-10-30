@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\File;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -56,6 +57,7 @@ class Attachment extends Model implements Searchable
         'id',
         'file_name',
         'access_level',
+        'file-type',
         'created_at',
         'updated_at',
     ];
@@ -83,6 +85,31 @@ class Attachment extends Model implements Searchable
         );
     }
 
+    public function setFileTypeAttribute($value) {
+        //todo do actual work to get the file_type of an uploaded file, none of this actually works yet
+        //todo set to image, pdf, zip, binary, file
+        $this->attributes['file_type'] = $value;
+
+        $file_extension = File::extension('storage/public/' . $file);
+        $file_type = in_array(strtolower($file_extension),
+            ['jpg','jpeg','png','gif','webp','svg']) ? 'image': '';
+        if(strtolower($file_extension)  == 'bin'){
+            $file_type = 'binary';
+        }
+        if(strtolower($file_extension) == 'pdf'){
+            $file_type = 'pdf';
+        }
+        if(strtolower($file_extension) == 'zip'){
+            $file_type = 'zip';
+        }
+        if($file_type == ''){
+            $file_type = 'file';
+        }
+        $attachment['file_type'] = $file_type;
+
+        return $this->file_type;
+    }
+
     public function setCalculatedProperties(): self
     {
         $this->path_info = \pathinfo(\storage_path('app/'.$this->subfolder).'/'.$this->file);
@@ -98,11 +125,6 @@ class Attachment extends Model implements Searchable
         }
 
         return $this;
-    }
-
-    public function meetings(): BelongsToMany
-    {
-        return $this->belongsToMany(Meeting::class, 'attachment_meeting');
     }
 
     public function user(): BelongsTo

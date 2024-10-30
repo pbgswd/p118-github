@@ -44,15 +44,6 @@ class AttachmentController extends Controller
 
 //todo get this moving forward ##################
         $data = [];
-        $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
-
-        $data['filecount'] = Attachment::count();
-
-        $data['attachments']->each(function ($item) {
-            //todo have a thumb size for every image asset
-            $item->file_type = File::extension('storage/'.$item->subfolder.'/'.$item->file);
-            $item->file_size = round(File::size('storage/'.$item->subfolder.'/'.$item->file) / 1024, 2);
-        });
         $data['content'] = fake()->paragraph();
         return view('admin.attachments.list_attachments_icons', ['data' => $data]);
     }
@@ -141,6 +132,24 @@ class AttachmentController extends Controller
             $attachment = new Attachment;
             $attachment['file_name'] = $imageName;
             $attachment['file'] = $file;
+
+            $file_extension = File::extension('storage/public/' . $file);
+            $file_type = in_array(strtolower($file_extension),
+                ['jpg','jpeg','png','gif','webp','svg']) ? 'image': '';
+            if(strtolower($file_extension)  == 'bin'){
+                $file_type = 'binary';
+            }
+            if(strtolower($file_extension) == 'pdf'){
+                $file_type = 'pdf';
+            }
+            if(strtolower($file_extension) == 'zip'){
+                $file_type = 'zip';
+            }
+            if($file_type == ''){
+                $file_type = 'file';
+            }
+            $attachment['file_type'] = $file_type;
+
             $attachment['access_level'] = $request->attachment['access_level'];
             $attachment['user_id'] = Auth::id();
             $attachment->save();

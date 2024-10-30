@@ -45,7 +45,7 @@
                             <i class="fas fa-info-circle"></i>
                             File Info
                         </h2>
-                        <ul class="list-group-flush">
+                        <ul class="list-group">
                             <li class="list-group-item">Location:
                                 <a href="{{env('APP_URL') .'/storage/'. $data['attachment']->subfolder .'/'.
                                     $data['attachment']['file']}}" target="_blank">{{env('APP_URL') .'/storage/'.
@@ -65,7 +65,9 @@
                                     Download {{$data['attachment']['file_name']}}
                                 </a>
                             </li>
-                            <li class="list-group-item">File Type: {{$data['attachment']->extension}}</li>
+                            <li class="list-group-item">
+                                File Type: {{$data['attachment']->file_type}}, ({{$data['attachment']->extension}})
+                            </li>
                             <li class="list-group-item">
                                 Last Updated: {{$data['attachment']->updated_at->format('F j Y H:i:s')}}
                             </li>
