@@ -1,12 +1,3 @@
-.carousel {
-  background: #343a40;
-}
+.carousel{background:#343a40}.carousel-item .img-fluid{width:100%}.carousel-item a{display:block;width:100%}
 
-.carousel-item .img-fluid {
-  width: 100%;
-}
-
-.carousel-item a {
-  display: block;
-  width: 100%;
-}
+/*# sourceMappingURL=carousel.css.map*/
