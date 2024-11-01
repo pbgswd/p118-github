@@ -160,4 +160,4 @@
 <link rel="stylesheet" href="/css/fontawesome/fontawesome-free-5.15.2-web/css/all.min.css" />
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script src="/js/jquery-3.7.1.min.js"></script>
-<script src="/js/bootstrap.bundle.min.js"></script>
+
