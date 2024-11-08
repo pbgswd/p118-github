@@ -83,7 +83,7 @@
         <script src="/js/jquery-3.7.1.min.js"></script>
         <script src="/js/bootstrap.bundle.min.js"></script>
         @include('admin.admin_partials.darkmode')
-        <script src="/js/admin/dashboard.js"></script>
+        <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
 
     </body>
 </html>

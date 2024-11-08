@@ -61,7 +61,7 @@
                         var textarea = @json($data['venue']->description ?? '');
                         var textarea1 = @json($data['textarea1'] ?? '');
                     </script>
-                    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
+                    <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
         </div>

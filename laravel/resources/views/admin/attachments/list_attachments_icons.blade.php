@@ -36,7 +36,9 @@
                             <div class="modal-body">
                                 <div class="row m-2 p-2 border border-secondary">Filter by date, type, search</div>
                                 <div class="row justify-content-center">
+
                                     <livewire:admin.endless-media />
+
                                 </div>
                                 <noscript>
                                     <div class="row mt-2">

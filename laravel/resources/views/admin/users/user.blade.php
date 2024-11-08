@@ -261,7 +261,7 @@
                     var textarea = @json($data['user']->user_info->about ?? '');
                     var textarea1 = @json($data['textarea1'] ?? '');
                 </script>
-                <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
+                <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
             </div>
         </div>
         <div class="row border border-primary rounded border-3 mt-lg-2 p-lg-2">

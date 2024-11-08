@@ -9,43 +9,7 @@
         <a href="{{ route('blank') }}">Blank Page</a> | <a href="{{ route('developer') }}">Resources Page</a>
     </div>
 </div>
-<div class="row mb-6">
-        <div class="col-12">
-            <div class="d-block d-md-none mb-4" id="textarea_sm_container">
-                <div class="mb-5">
-                    <textarea name="post[content]" id="textarea-sm" placeholder="Content" class="form-control">
-                        {{$data['textarea']}}
-                    </textarea>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 mb-4">
-            <div class="d-none d-md-block col editor-container editor-container_classic-editor" id="editor-container">
-                <div class="editor-container__editor">
-                    <textarea name="post[content]" id="textarea" placeholder="Content" class="form-control text-black">
-                    </textarea>
-                </div>
-            </div>
-        </div>
 
-    <script type="importmap">
-        {
-            "imports": {
-                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
-                "ckeditor5/": "/js/ckeditor5/"
-            }
-        }
-    </script>
-    <script>
-        var textarea = @json($data['textarea'] ?? '');
-        var textarea1 = @json($data['textarea1'] ?? '');
-    </script>
-    <script type="module" src="{{mix('js/ckeditor5/ck_main_admin.js')}}"></script>
-
-
-
-
-</div>
 
 <div class="row border rounded mt-6 mb-3 p-3">
     <div class="col-12">
