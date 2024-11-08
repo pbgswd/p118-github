@@ -35,13 +35,14 @@
                 sections of content on the website.
             </h5>
         @endrole
-        <h5>
+        <p>
             Use the links in the menu on the left for available sections and the <strong>Search</strong> input
             field above to find records.
-        </h5>
+        </p>
     </div>
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
-        <div class="col-4 h-100">
+        <h4 class="text-center">Site content information</h4>
+        <div class="col-sm-12 col-md-4 mb-3 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Users Info</h5>
                 <div class="card-body">
@@ -65,7 +66,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4 h-100">
+        <div class="col-sm-12 col-md-4 mb-3 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Content Info</h5>
                 <div class="card-body">
@@ -87,7 +88,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4 h-100">
+        <div class="col-sm-12 col-md-4  mb-3 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Additional Resources</h5>
                     <ul class="card-body">
@@ -108,7 +109,7 @@
             <h3>New stuff, work in progress, not safe to use yet</h3>
         </div>
         @if(env('ENABLE_MESSAGING_FEATURE')==1)
-            <div class="col-4">
+            <div class="col-sm-12 col-md-4 mb-3 ">
                 <div class="card p-3 h-100">
                     <h5 class="card-title">Email Messaging</h5>
                     <div class="card-body">
@@ -128,7 +129,7 @@
         @endif
 
 
-        <div class="col-4 mt-2 h-100">
+        <div class="col-sm-12 col-md-4 mb-3 mt-2 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Media insert, work in progress</h5>
                 <div class="card-body">
@@ -147,7 +148,7 @@
             <div class="col-12">
                 <h3>Site Developer</h3>
             </div>
-            <div class="col-4">
+            <div class="col-sm-12 col-md-4 mb-3 ">
                 <a href="{{ route('blank') }}">
                     <div class="card p-3">
                         <h5 class="card-title">
@@ -160,7 +161,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-4">
+            <div class="col-sm-12 col-md-4 mb-3 ">
                 <a href="{{ route('developer') }}">
                     <div class="card p-3">
                         <h5 class="card-title">
@@ -173,7 +174,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-4">
+            <div class="col-sm-12 col-md-4 mb-3 ">
                 <a href="{{ route('developer') }}">
                     <div class="card p-3">
                         <h5 class="card-title">
