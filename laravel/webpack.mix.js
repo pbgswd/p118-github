@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 mix.js('resources/js/admin/dashboard.js', 'public/js/admin')
     .js('resources/js/admin/color-modes.js', 'public/js/admin')
     .js('resources/js/admin/app.js', 'public/js/admin')
-    .js('resources/js/admin/ck_main_admin.js', 'public/js/ckeditor5')
+    .js('resources/js/admin/ck_main_admin.js', 'public/js/admin/ckeditor5')
     .js('resources/js/app.js', 'public/js')
     .js('resources/js/ck_main.js', 'public/js/ckeditor5')
     .sass('resources/sass/carousel.scss', 'public/css')

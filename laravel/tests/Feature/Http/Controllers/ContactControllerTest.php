@@ -9,8 +9,6 @@ use Tests\TestCase;
  */
 class ContactControllerTest extends TestCase
 {
-    //
-
     /**
      * @test
      */

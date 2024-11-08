@@ -39,10 +39,8 @@ class AttachmentController extends Controller
      */
     public function index_icons(Attachment $attachment): View
     {
-        Log::info('peter ' . __METHOD__ . ' line ' . __LINE__);
         $this->authorize('viewAny', Auth::user());
 
-//todo get this moving forward ##################
         $data = [];
         $data['content'] = fake()->paragraph();
         return view('admin.attachments.list_attachments_icons', ['data' => $data]);

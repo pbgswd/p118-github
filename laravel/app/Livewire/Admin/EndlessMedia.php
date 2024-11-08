@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\Attachment;
 use Illuminate\Support\Facades\File;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class EndlessMedia extends Component
@@ -11,7 +12,7 @@ class EndlessMedia extends Component
 
     public $perPage = 10;
 
-    public function render()
+    public function render(): View
     {
         $attachments = Attachment::with('user')->where('file_type', 'image')
             ->orderBy('id', 'ASC')->paginate($this->perPage);
