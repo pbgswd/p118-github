@@ -57,7 +57,7 @@ class Attachment extends Model implements Searchable
         'id',
         'file_name',
         'access_level',
-        'file-type',
+        'file_type',
         'created_at',
         'updated_at',
     ];
@@ -70,6 +70,7 @@ class Attachment extends Model implements Searchable
     protected $fillable = [
         'file',
         'file_name',
+        'file_type',
         'subfolder',
         'description',
         'access_level',
@@ -85,10 +86,6 @@ class Attachment extends Model implements Searchable
         );
     }
 
-    public function setFileTypeAttribute($value) {
-        //todo set to image, pdf, zip, binary, file
-
-    }
 
     public function setCalculatedProperties(): self
     {

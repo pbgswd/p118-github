@@ -29,6 +29,7 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 
 class AdminDeveloperController extends Controller
@@ -47,22 +48,6 @@ class AdminDeveloperController extends Controller
 
     public function blank(User $user): View
     {
-        $mod = new ModelList;
-        $arr = ModelList::getModelList();
-
-        $csv = [];
-        // $lines = file('../../files/Local118-CSV-Membership.csv', FILE_IGNORE_NEW_LINES);
-        $lines = [];
-        foreach ($lines as $key => $value) {
-            $csv[$key] = str_getcsv($value);
-        }
-
-        foreach ($csv as $k => $c) {
-            $data[$k]['name'] = $c[0].' '.$c[1];
-            $data[$k]['email'] = $c[2];
-            $data[$k]['membership_type'] = $c[3];
-        }
-
         return view('admin.developer.admin-blank');
     }
 

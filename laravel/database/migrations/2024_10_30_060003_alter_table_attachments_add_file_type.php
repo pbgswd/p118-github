@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Attachment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\File;
@@ -15,27 +16,24 @@ return new class extends Migration
         Schema::table('attachments', function (Blueprint $table) {
             $table->string('file_type')->after('file')->nullable();
         });
-        //seed the data here and now
-        $attachments = \App\Models\Attachment::all();
-        foreach ($attachments as $attachment) {
-            $file_extension = File::extension('storage/'.$attachment->subfolder.'/'.$attachment->file);
-            $file_type = in_array(strtolower($file_extension), ['jpg','jpeg','png','gif','webp','svg']) ? 'image': '';
-            if(strtolower($file_extension)  == 'bin'){
-                $file_type = 'binary';
-            }
-            if(strtolower($file_extension) == 'pdf'){
-                $file_type = 'pdf';
-            }
-            if(strtolower($file_extension) == 'zip'){
-                $file_type = 'zip';
-            }
-            if($file_type == ''){
-                $file_type = 'file';
-            }
 
-            $attachment->file_type = $file_type;
-            $attachment->save();
+        $attachments = Attachment::where('file_type', null)->get();
+
+        $fileTypes = [
+            'pdf' => 'pdf',
+            'zip' => 'zip',
+            'bin' => 'binary',
+        ];
+
+        foreach ($attachments as $att) {
+            $file_extension = strtolower(File::extension('storage/' . $att->subfolder . '/' . $att->file));
+            $file_type = $fileTypes[$file_extension] ?? (
+            in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']) ? 'image' : 'file'
+            );
+            $att->description = "description";
+            $att->update(['file_type' => $file_type]);
         }
+
     }
 
     /**
