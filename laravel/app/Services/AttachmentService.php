@@ -21,26 +21,21 @@ class AttachmentService
             $attachment->user_id = Auth::id();
             $attachment->access_level = $model->getAttachmentAccessLevel();
 
+            $fileTypes = [
+                'pdf' => 'pdf',
+                'zip' => 'zip',
+                'bin' => 'binary',
+            ];
+//todo move to mutator method in Attachment Model, called setFileTypeAttribute
             $attachment['file_name'] = $file->getClientOriginalName();
             $attachment['file'] = $file->store('', $model->getAttachmentFolder());
             $attachment['subfolder'] = $model->getAttachmentFolder();
 
-            $file_extension = File::extension('storage/'.
-                $attachment['subfolder'] . '/' . $attachment['file']);
-            $file_type = in_array(strtolower($file_extension),
-                ['jpg','jpeg','png','gif','webp','svg']) ? 'image': '';
-            if(strtolower($file_extension)  == 'bin'){
-                $file_type = 'binary';
-            }
-            if(strtolower($file_extension) == 'pdf'){
-                $file_type = 'pdf';
-            }
-            if(strtolower($file_extension) == 'zip'){
-                $file_type = 'zip';
-            }
-            if($file_type == ''){
-                $file_type = 'file';
-            }
+            $file_extension = strtolower(File::extension('storage/' . $attachment->subfolder . '/' . $attachment->file));
+            $file_type = $fileTypes[$file_extension] ?? (
+                in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']) ? 'image' : 'file'
+            );
+
             $attachment['file_type'] = $file_type;
 
             $attachment->save();

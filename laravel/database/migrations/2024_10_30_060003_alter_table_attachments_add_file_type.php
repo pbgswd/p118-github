@@ -30,7 +30,7 @@ return new class extends Migration
             $file_type = $fileTypes[$file_extension] ?? (
             in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']) ? 'image' : 'file'
             );
-            $att->description = "description";
+
             $att->update(['file_type' => $file_type]);
         }
 
