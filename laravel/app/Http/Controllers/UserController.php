@@ -184,22 +184,17 @@ class UserController extends Controller
 
         if ($userRequest->user['email'] != $user->email) {
             //todo forbid change to admin role email unless you already have that association
-
             $user->load('currentExecutiveRoles');
-
             $execEmails = Executive::pluck('email')->toArray();
 
             if (in_array($userRequest->user['email'], $execEmails)) {
                 // dd('user wants to change email to '. $userRequest->user['email']);
-
                 /**
                  * if user already has an exec email associated with him
                  * allow user to change email to exec email
-                 *
                  * ??  decorator pattern
                  */
             }
-
             $message['Email'] = $userRequest->user['email'];
         }
 
@@ -233,7 +228,6 @@ class UserController extends Controller
         $thumb_vals = Options::member_thumb_values();
 
         if ($user->user_info instanceof UserInfo) {
-
             $user_info = $userRequest['user_info'];
             //todo user_info validation or migration update could fix the values issues here
             $user_info['show_profile'] =

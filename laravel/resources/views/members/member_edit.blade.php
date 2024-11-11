@@ -168,7 +168,7 @@
                             @endif
                             <div class=" col editor-container editor-container_classic-editor" id="editor-container">
                                 <div class="editor-container__editor">
-                                <textarea name="memoriam[content]" id="textarea"
+                                <textarea name="user_info[about]" id="textarea"
                                           placeholder="Share a little about yourself" class="form-control text-black">
                                 </textarea>
                                 </div>
