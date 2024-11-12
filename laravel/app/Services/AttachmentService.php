@@ -18,31 +18,14 @@ class AttachmentService
     {
         foreach ($request->file('attachments') as $file) {
             $attachment = new Attachment;
-            $attachment->user_id = Auth::id();
-            $attachment->access_level = $model->getAttachmentAccessLevel();
-
-            $fileTypes = [
-                'pdf' => 'pdf',
-                'zip' => 'zip',
-                'bin' => 'binary',
-            ];
-//todo move to mutator method in Attachment Model, called setFileTypeAttribute
+            $attachment['user_id']  = Auth::id();
+            $attachment['access_level']= $model->getAttachmentAccessLevel();
             $attachment['file_name'] = $file->getClientOriginalName();
-            $attachment['file'] = $file->store('', $model->getAttachmentFolder());
             $attachment['subfolder'] = $model->getAttachmentFolder();
-
-            $file_extension = strtolower(File::extension('storage/' . $attachment->subfolder . '/' . $attachment->file));
-            $file_type = $fileTypes[$file_extension] ?? (
-                in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']) ? 'image' : 'file'
-            );
-
-            $attachment['file_type'] = $file_type;
-
+            $attachment['file'] = $file->store('', $attachment['subfolder']);
             $attachment->save();
-
             $model->attachments()->attach($attachment);
         }
-
         return true;
     }
 

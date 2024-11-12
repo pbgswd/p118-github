@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -86,6 +87,23 @@ class Attachment extends Model implements Searchable
         );
     }
 
+    public function setFileAttribute($value): void
+    {
+        $fileTypes = [
+            'pdf' => 'pdf',
+            'zip' => 'zip',
+            'bin' => 'binary',
+        ];
+        if(!$this->attributes['subfolder']) {
+           throw new \Exception('file subfolder not set');
+        }
+        $file_extension = strtolower(File::extension('storage/' . $this->attributes['subfolder'] . '/' . $value));
+
+        $this->file_type = $fileTypes[$file_extension] ?? (
+            in_array($file_extension,['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']) ? 'image' : 'file');
+        $this->attributes['file'] = $value;
+    }
+
 
     public function setCalculatedProperties(): self
     {
@@ -96,6 +114,7 @@ class Attachment extends Model implements Searchable
             $this->imagedata = \getimagesize(\storage_path('app/'.$this->subfolder).'/'.$this->file);
             $this->filesize = AttachmentService::human_filesize(\filesize(\storage_path('app/'.$this->subfolder)
                 .'/'.$this->file));
+
         } else {
             $this->imagedata = [0, 0, 0, '"width="0" height="0"', 'bits' => 8, 'mime' => '"application/octet-stream"'];
             $this->filesize = '0KB';

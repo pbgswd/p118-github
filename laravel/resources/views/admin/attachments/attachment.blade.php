@@ -119,7 +119,7 @@
                             <i class="far fa-file-image"></i>
                             Image Info
                         </h3>
-                        <ul class="list-group-flush">
+                        <ul class="list-group-flush lh-lg">
                             <li class="list-group-item">Location:
                                 <a href="{{env('APP_URL') .'/storage/'. $data['attachment']->subfolder .'/'.
                                     $data['attachment']['file']}}" target="_blank">
@@ -138,7 +138,8 @@
                                 </a>
                             </li>
                             <li class="list-group-item">Uploaded File Name: {{$data['attachment']['file']}}</li>
-                            <li class="list-group-item">File Type: {{$data['attachment']->extension}}</li>
+                            <li class="list-group-item">File Type: {{$data['attachment']->file_type}},
+                                ( {{$data['attachment']->extension}} )</li>
                             <li class="list-group-item">Width: {{$data['attachment']->imagedata[0]}} px</li>
                             <li class="list-group-item">Height: {{$data['attachment']->imagedata[1]}} px</li>
                             <li class="list-group-item">Mime Type: {{$data['attachment']->imagedata['mime']}}</li>

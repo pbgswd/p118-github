@@ -125,32 +125,18 @@ class AttachmentController extends Controller
         $attachment = '';
 
         foreach ($request->file('images') as $image) {
-            $file = $image->store('', 'public');
-            $imageName = $image->getClientOriginalName();
-            $attachment = new Attachment;
-            $attachment['file_name'] = $imageName;
-            $attachment['file'] = $file;
 
-            $file_extension = File::extension('storage/public/' . $file);
-            $file_type = in_array(strtolower($file_extension),
-                ['jpg','jpeg','png','gif','webp','svg']) ? 'image': '';
-            if(strtolower($file_extension)  == 'bin'){
-                $file_type = 'binary';
-            }
-            if(strtolower($file_extension) == 'pdf'){
-                $file_type = 'pdf';
-            }
-            if(strtolower($file_extension) == 'zip'){
-                $file_type = 'zip';
-            }
-            if($file_type == ''){
-                $file_type = 'file';
-            }
-            $attachment['file_type'] = $file_type;
+            $attachment = new Attachment;
+
+            $attachment['subfolder'] = 'public';
+            $attachment['file'] = $image->store('', $attachment['subfolder']);
+
+            $attachment['file_name'] = $image->getClientOriginalName();
 
             $attachment['access_level'] = $request->attachment['access_level'];
             $attachment['user_id'] = Auth::id();
-            $attachment->save();
+
+           $attachment->save();
         }
 
         Session::flash('success', Str::plural(count($request->images).
