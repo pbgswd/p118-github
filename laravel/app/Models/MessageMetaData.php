@@ -19,4 +19,9 @@ class MessageMetaData extends Model
         'source_type_name',
         'source_url',
     ];
+
+    public function message(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Message::class);
+    }
 }

@@ -24,13 +24,12 @@ class AdminEmailQueueController extends Controller
         $data['email_queue'] = $emailQueue;
         $data['count'] = EmailQueue::withoutGlobalScopes()->count();
 
-        return view('admin.email_queue_list', ['data' => $data]);
+        return view('admin.messages.email_queue_list', ['data' => $data]);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\EmailQueue  $emailQueue
+     * @param EmailQueue $email_queue
+     * @return View
      */
     public function show(EmailQueue $email_queue): View
     {
@@ -52,9 +51,8 @@ class AdminEmailQueueController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\EmailQueue  $emailQueue
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function destroy(Request $request): RedirectResponse
     {
@@ -63,7 +61,9 @@ class AdminEmailQueueController extends Controller
                 $emailQueue->delete();
             });
 
-        Session::flash('success', count($request->id).' '.Str::plural('message', count($request->id)).' deleted from the outgoing email queue.');
+        Session::flash('success', count($request->id) . ' ' .
+            Str::plural('message', count($request->id)) .
+            ' deleted from the outgoing email queue.');
 
         return redirect()->route('admin_email_queue_list');
     }

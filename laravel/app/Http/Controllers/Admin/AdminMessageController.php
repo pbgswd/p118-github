@@ -40,7 +40,7 @@ class AdminMessageController extends Controller
 
         $data['total_messages'] = Message::all()->count();
 
-        return view('admin.messages', ['data' => $data]);
+        return view('admin.messages.messages', ['data' => $data]);
     }
 
     public function create(): View
@@ -56,7 +56,7 @@ class AdminMessageController extends Controller
             'action' => 'Create',
         ];
 
-        return view('admin.message', ['data' => $data]);
+        return view('admin.messages.message', ['data' => $data]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -178,7 +178,7 @@ class AdminMessageController extends Controller
 
         //dd($data['message']);
 
-        return view('admin.message', ['data' => $data]);
+        return view('admin.messages.message', ['data' => $data]);
     }
 
     public function update(Request $request, Message $message): RedirectResponse
@@ -225,7 +225,7 @@ class AdminMessageController extends Controller
 
         //todo get attachments
 
-        return view('admin.message_preview', ['data' => $data]);
+        return view('admin.messages.message_preview', ['data' => $data]);
     }
 
     public function preview_strict(Message $message): View
@@ -236,9 +236,10 @@ class AdminMessageController extends Controller
 
         $data = [
             'message' => $message,
-            'message_meta_data' => ['source_type' => $message->messageMeta->source_type, 'source_type_name' => $message->messageMeta->source_type_name],
-            'message_sending' => $message->messageSending->send_priority,
-            'attachments' => $message->attachments,
+            'message_meta_data' => ['source_type' => $message->messageMeta->source_type,
+                'source_type_name' => $message->messageMeta->source_type_name],
+                'message_sending' => $message->messageSending->send_priority,
+                'attachments' => $message->attachments,
         ];
 
         return view('emails.email_message', ['data' => $data]);
@@ -288,7 +289,8 @@ class AdminMessageController extends Controller
                 $message->delete();
             });
 
-        Session::flash('success', 'You have deleted '.count($request->id).' '.Str::plural('message', count($request->id)).'.');
+        Session::flash('success', 'You have deleted '.count($request->id) .' '.
+            Str::plural('message', count($request->id)).'.');
 
         return redirect()->route('admin_messages');
     }

@@ -26,12 +26,12 @@ class MessageMetaDataFactory extends Factory
 
         //$selection['type'] //$selection['name']
         return [
-            'message_id' => '',
-            'source_id' => 11,
-            'source_slug' => '',
+            'message_id' => $msg->id,
+            'source_id' => null,
+            'source_slug' => $msg->slug,
             'source_type' => 'model',
             'source_type_name' => 'message',
-            'source_url' => '',
+            'source_url' => null,
 
         ];
     }

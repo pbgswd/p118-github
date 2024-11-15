@@ -47,7 +47,7 @@
         <th scope="col">Author</th>
         <th scope="col">Type</th>
         <th scope="col">Name</th>
-        <th scope="col">Priority</th>
+
         <th scope="col">Sent</th>
         <th scope="col">Created At</th>
         <th scope="col">Updated At</th>
@@ -82,15 +82,7 @@
                 </td>
                 <td>{{$msg->messageMeta->source_type}}</td>
                 <td>{{$msg->messageMeta->source_type_name}}</td>
-                <td class="align-content-center">
-                    @if($msg->messageSending->send_priority == 'now')
-                        <i class="fas fa-exclamation-triangle text-danger"></i>
-                    @else
-                        <i class="fas fa-check-circle text-success"></i>
-                    @endif
-                        <br />
-                        {{$msg->messageSending->send_priority}}
-                </td>
+
                 <td>
                     @if($msg->messageSending->send_status_now == 'send' || $msg->messageSending->send_status_now == 'sent')
                         <span class="text-secondary">
