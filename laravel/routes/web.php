@@ -171,18 +171,18 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
     });
 
     Route::controller(CNS\Admin\AdminMessageController::class)->group(function () {
-        Route::get('messages', 'index')->name('admin_messages')->middleware(CheckMessagingFeatureStatus::class);
-        Route::get('message/create', 'create')->name('admin_message_create')->middleware(CheckMessagingFeatureStatus::class);
-        Route::post('message/create', 'store')->name('admin_message_store')->middleware(CheckMessagingFeatureStatus::class);
+        Route::get('messages', 'index')->name('admin_messages');
+        Route::get('message/create', 'create')->name('admin_message_create');
+        Route::post('message/create', 'store')->name('admin_message_store');
 
-        Route::get('message/{message}/edit', 'edit')->name('admin_message_edit')->middleware(CheckMessagingFeatureStatus::class);
-        Route::post('message/{message}/edit', 'update')->name('admin_message_update')->middleware(CheckMessagingFeatureStatus::class);
+        Route::get('message/{message}/edit', 'edit')->name('admin_message_edit');
+        Route::post('message/{message}/edit', 'update')->name('admin_message_update');
 
-        Route::get('message/{message}/preview', 'preview')->name('admin_message_preview')->middleware(CheckMessagingFeatureStatus::class);
-        Route::get('message/{message}/preview_strict', 'preview_strict')->name('admin_message_preview_strict')->middleware(CheckMessagingFeatureStatus::class);
-        Route::get('message/{message}/send', 'send')->name('admin_message_send')->middleware(CheckMessagingFeatureStatus::class);
-        Route::delete('message/delete', 'destroy')->name('admin_message_destroy')->middleware(CheckMessagingFeatureStatus::class);
-    });
+        Route::get('message/{message}/preview', 'preview')->name('admin_message_preview');
+        Route::get('message/{message}/preview_strict', 'preview_strict')->name('admin_message_preview_strict');
+        Route::get('message/{message}/send', 'send')->name('admin_message_send');
+        Route::delete('message/delete', 'destroy')->name('admin_message_destroy');
+    })->middleware(CheckMessagingFeatureStatus::class);
 
     Route::controller(CNS\Admin\AdminEmailQueueController::class)->group(function () {
         Route::get('email_queue', 'index')->name('admin_email_queue_list')->middleware(CheckMessagingFeatureStatus::class);

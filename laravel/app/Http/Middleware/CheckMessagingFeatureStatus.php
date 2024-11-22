@@ -3,17 +3,16 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckMessagingFeatureStatus
 {
-    public function handle(Request $request, Closure $next): \Symfony\Component\HttpFoundation\Response // changed from RedirectResponse
+    public function handle(Request $request, Closure $next): Response
     {
         if (env('ENABLE_MESSAGING_FEATURE') == 0) {
             return redirect('/');
         }
-
         return $next($request);
     }
 }

@@ -109,28 +109,6 @@
         </div>
     </div>
 
-
-
-
-
-    <div class="row">
-        <div class="col-12">
-            <h4>Message Sending Priority</h4>
-            <p>Send out based on the schedule based on user preferences, OR send to all immediately.</p>
-        </div>
-        <div class="col-12">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="message[message_sending][send_priority]" id="inlineRadio1"
-                       value="normal" {{ old('message.message_sending.send_priority', $data['message_sending'] == 'normal' ? 'checked' : '')}}>
-                <label class="form-check-label" for="inlineRadio1">Normal</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="message[message_sending][send_priority]" id="inlineRadio2"
-                       value="now" {{ old('message.message_sending.send_priority', $data['message_sending'] == 'now' ? 'checked' : '')}}>
-                <label class="form-check-label" for="inlineRadio2">Now</label>
-            </div>
-        </div>
-    </div>
     <div class="row m-4 border border-1 rounded">
         <div class="col-12 p-4">
             <h2>File Attachments</h2>

@@ -263,11 +263,9 @@ class AdminMessageController extends Controller
 
         Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
 
-        ProcessMessages::dispatch(['log' => 'delay message by a certain amount'])
-            ->delay(now()->isFriday('17:00'));
+        //ProcessMessages::dispatch(['log' => 'delay message by a certain amount'])->delay(now()->isFriday('17:00'));
         //->delay(now()->addMinutes(10));
-
-        ProcessMessages::dispatch(['log' => __FILE__.' '.' Sending the message '.$message->subject, 'id' => $message->id]);
+        //ProcessMessages::dispatch(['log' => __FILE__.' '.' Sending the message '.$message->subject, 'id' => $message->id]);
 
         Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
