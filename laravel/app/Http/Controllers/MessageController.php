@@ -23,14 +23,14 @@ class MessageController extends Controller
     {
         //todo where send_status_now != 'no'
         $messages = Message::sortable()
-            ->with('user', 'attachments', 'messageMeta', 'messageSending')
-            ->whereRelation('messageSending', 'send_status_now', '!=', 'no')
+            ->with('user', 'attachments')
+            ->where('state', '!=', 'not_sent')
             ->orderBy('updated_at', 'desc')
             ->paginate(20);
 
         $data = [
             'messages' => $messages,
-            'count' => Message::with('messageSending')->whereRelation('messageSending', 'send_status_now', '!=', 'no')->count(),
+            'count' => Message::where('state', '!=', 'not_sent')->count(),
         ];
 
         return view('messages', ['data' => $data]);
@@ -38,7 +38,7 @@ class MessageController extends Controller
 
     public function show(Message $message): View
     {
-        $message->load('user', 'attachments', 'messageMeta', 'messageSending');
+        $message->load('user', 'attachments');
 
         //todo distinguish between types and pull in the data
         $committee = [];

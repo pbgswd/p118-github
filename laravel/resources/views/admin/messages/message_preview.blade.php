@@ -11,10 +11,7 @@
                 <p>Created At: {{$data['message']->created_at->format('F j Y H:i:s') }}</p>
                 <p>Last Updated At: {{ $data['message']->updated_at->format('F j Y H:i:s') }}</p>
         </div>
-        <div class="col-12">
-            <h4>Message Sending Priority</h4>
-            {{$data['message_sending']}}
-        </div>
+
     </div>
     <div class="row mx-4 border border-1 border-black rounded p-4">
     <div class="col-12">

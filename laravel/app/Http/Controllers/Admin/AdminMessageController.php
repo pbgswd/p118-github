@@ -7,7 +7,6 @@ use App\Http\Requests\Messages\DestroyMessageRequest;
 use App\Jobs\ProcessMessages;
 use App\Models\Committee;
 use App\Models\Message;
-use App\Models\MessageSending;
 use App\Models\Options;
 use App\Models\Topic;
 use App\Services\AttachmentService;
@@ -34,7 +33,7 @@ class AdminMessageController extends Controller
         //todo policy
         $data = [];
         $data['messages'] = Message::sortable()
-            ->with('user', 'messageMeta', 'messageSending')
+            ->with('user')
             ->orderBy('id', 'DESC')
             ->paginate(20);
 
@@ -68,11 +67,6 @@ class AdminMessageController extends Controller
         //todo message slug
 
         $message->save();
-
-        //$message->load('messageSending');
-
-        $message->messageSending()->create(['message_id' => $message->id,
-            'send_priority' => $request->message['message_sending']['send_priority']]);
 
         //todo message_meta_data
 
@@ -151,32 +145,35 @@ class AdminMessageController extends Controller
     {
         //todo policy
 
-        $message->load('user', 'attachments', 'messageMeta', 'messageSending');
+        $message->load('user', 'attachments');
 
-        if ($message->messageSending->send_status_now == 'sent') {
+        if ($message->state == 'sent') {
             Session::flash('warning', 'The message, '.$message->subject.
             ', can no longer be edited because it has been sent to the mail queue');
             // return redirect()->route('admin_messages');
 
         }
 
-        if ($message->messageSending->send_status_now === 'sent') {
+        if ($message->state === 'sent') {
             // Redirect back with an error message or show a message
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
         //todo update relations for form editing and submissions
 
+        $message->section = $message->section ?? '';
+
         $data = [
             'message' => $message,
-            'message_meta_data' => ['source_type' => $message->messageMeta->source_type, 'source_type_name' => $message->messageMeta->source_type_name],
-            'message_sending' => $message->messageSending->send_priority,
-            'committee_subscription_options' => Committee::where('live', '=', 1)->get(),
-            'topic_subscription_options' => Topic::where('live', '=', 1)->get(),
+         //todo update it
+            ////   'message_meta_data' => ['source_type' => $message->messageMeta->source_type, 'source_type_name' => $message->messageMeta->source_type_name],
+
+            'committee_subscription_options' => Committee::where('live', 1)->get(),
+            'topic_subscription_options' => Topic::where('live', 1)->get(),
             'model_subscription_options' => Options::model_subscription_options(),
             'action' => 'Edit',
         ];
 
-        //dd($data['message']);
+      //  dd($data);
 
         return view('admin.messages.message', ['data' => $data]);
     }
@@ -185,9 +182,8 @@ class AdminMessageController extends Controller
     {
         //todo form request validator, policy
 
-        $message->load('messageSending');
 
-        if ($message->messageSending->send_status_now === 'sent') {
+        if ($message->state === 'sent') {
             // Redirect back with an error message or show a message
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
@@ -216,11 +212,10 @@ class AdminMessageController extends Controller
     public function preview(Message $message): View
     {
         //todo policy
-        $message->load('user', 'attachments', 'messageMeta', 'messageSending');
+        $message->load('user', 'attachments');
         $data = [
             'message' => $message,
-            'message_meta_data' => ['source_type' => $message->messageMeta->source_type, 'source_type_name' => $message->messageMeta->source_type_name],
-            'message_sending' => $message->messageSending->send_priority,
+            'message_meta_data' => ['source_type' => $message->section, 'source_type_name' => $message->category],
         ];
 
         //todo get attachments
@@ -249,17 +244,9 @@ class AdminMessageController extends Controller
     {
         //todo policy
         Log::info('About to move command to jobs table '.$message->id);
-
+        $message->state = 'send';
         $message->save();
 
-        $messageSending = MessageSending::where('message_id', $message->id)
-            ->update(
-                [
-                    'send_status_now' => 'send',
-                    'send_status_daily' => 'send',
-                    'send_status_weekly' => 'send',
-                ]
-            );
 
         Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
 

@@ -82,25 +82,17 @@
                 </td>
                 <td>{{$msg->messageMeta->source_type}}</td>
                 <td>{{$msg->messageMeta->source_type_name}}</td>
-
                 <td>
-                    @if($msg->messageSending->send_status_now == 'send' || $msg->messageSending->send_status_now == 'sent')
-                        <span class="text-secondary">
-                            <i class="far fa-check-circle"></i>
-                            <br />
-                            Sent
-                        </span>
-                    @else
-                        <a href="{{route('admin_message_edit', $msg['id'])}}" title="Edit {{$msg['subject']}}">
-                            <i class="fas fa-edit"></i><br /> Not yet. Edit
-                        </a>
-                    @endif
+                    {{$msg->state}}
+                    <a href="{{route('admin_message_edit', $msg['id'])}}" title="Edit {{$msg['subject']}}">
+                        <i class="fas fa-edit"></i><br /> Not yet. Edit
+                    </a>
                 </td>
                 <td>{{ $msg->created_at->format('F j Y H:i:s') }}</td>
                 <td>{{ $msg->updated_at->format('F j Y H:i:s') }}</td>
             </tr>
         @empty
-            </tr>
+            <tr>
                 <th scope="row" colspan="9">No data yet</th>
             </tr>
         @endforelse

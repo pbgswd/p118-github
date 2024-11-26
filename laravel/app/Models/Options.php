@@ -99,15 +99,6 @@ class Options
         return array_combine($membership, $membership);
     }
 
-    public static function message_frequency_preference_options(): array
-    {
-        return ['now' => 'Send when published (default option).',
-            'daily' => 'Daily compilation, All messages for that day in one email.',
-            'weekly' => 'All messages for that week in one email. ',
-            'unsubscribe' => 'Dont email me any messages, I will check the Messages archive on the website instead.',
-        ];
-    }
-
     public static function model_subscription_options(): array
     {
         /**

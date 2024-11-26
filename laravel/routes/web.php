@@ -105,10 +105,10 @@ Route::middleware('web', 'auth')->group(function () {
     Route::get('feature/{feature}', [CNS\FeatureController::class, 'show'])->name('feature');
 
     Route::controller(CNS\MessageController::class)->group(function () {
-        Route::get('messages', 'index')->name('messages')->middleware(CheckMessagingFeatureStatus::class);
-        Route::get('message/{message}', 'show')->name('message')->middleware(CheckMessagingFeatureStatus::class);
-        Route::post('member/{user}/message_preferences', 'update')->name('update_message_preferences')->middleware(CheckMessagingFeatureStatus::class);
-    });
+        Route::get('messages', 'index')->name('messages');
+        Route::get('message/{message}', 'show')->name('message');
+        Route::post('member/{user}/message_preferences', 'update')->name('update_message_preferences');
+    })->middleware(CheckMessagingFeatureStatus::class);
 
     Route::controller(CNS\UserController::class)->group(function () {
         Route::get('/members', 'index')->name('members');
@@ -185,10 +185,10 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
     })->middleware(CheckMessagingFeatureStatus::class);
 
     Route::controller(CNS\Admin\AdminEmailQueueController::class)->group(function () {
-        Route::get('email_queue', 'index')->name('admin_email_queue_list')->middleware(CheckMessagingFeatureStatus::class);
-        Route::get('email_queue/{email_queue}/message', 'show')->name('admin_email_queue_show')->middleware(CheckMessagingFeatureStatus::class);
-        Route::delete('email_queue/delete', 'destroy')->name('admin_email_queue_destroy')->middleware(CheckMessagingFeatureStatus::class);
-    });
+        Route::get('email_queue', 'index')->name('admin_email_queue_list');
+        Route::get('email_queue/{email_queue}/message', 'show')->name('admin_email_queue_show');
+        Route::delete('email_queue/delete', 'destroy')->name('admin_email_queue_destroy');
+    })->middleware(CheckMessagingFeatureStatus::class);
 
     Route::controller(CNS\Admin\AdminCarouselController::class)->group(function () {
         Route::get('carousel', 'index')->name('admin_carousel_list');

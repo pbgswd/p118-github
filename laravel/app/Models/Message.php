@@ -57,14 +57,9 @@ class Message extends Model implements HasAttachment, Searchable
         return $this->belongsToMany(Attachment::class, 'attachment_message');
     }
 
-    public function messageMeta(): HasOne
+    public function email_queue(): BelongsToMany
     {
-        return $this->hasOne(MessageMetaData::class, 'message_id');
-    }
-
-    public function messageSending(): HasOne
-    {
-        return $this->hasOne(MessageSending::class, 'message_id');
+        return $this->belongsToMany(EmailQueue::class, 'message_id');
     }
 
     public function getAttachmentFolder(): string

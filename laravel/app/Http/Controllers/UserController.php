@@ -85,7 +85,7 @@ class UserController extends Controller
 
         $user->load('committee_memberships', 'phone_number',
             'user_info', 'membership',
-            'allExecutiveRoles', 'message_frequency_preferences');
+            'allExecutiveRoles');
         //'message_selections');
 
         $member_roles = $user->getRoleNames()->toArray();
@@ -132,8 +132,6 @@ class UserController extends Controller
 
         $regions = $this->getFormOptions(['statesprovs']);
 
-        //todo set default value for email frequency if not exist.
-
         $topics = Topic::where('live', '=', 1)->get();
         $committees = Committee::where('live', '=', 1)->pluck('name', 'slug')->toArray();
 
@@ -152,7 +150,6 @@ class UserController extends Controller
             'user_roles' => $member_roles,
             'committees' => Committee::where('live', '=', 1)->get(),
             'selections' => $selections,
-            'message_frequency_preference_options' => Options::message_frequency_preference_options(),
             'topic_subscription_options' => $topics,
             'model_subscription_options' => Options::model_subscription_options(),
             'committee_subscription_options' => Committee::where('live', '=', 1)->get(),

@@ -13,11 +13,8 @@ class EmailQueue extends Model
     protected $table = 'email_queue';
 
     protected $fillable = [
-        'sender',
-        'recipient',
-        'subject',
-        'message',
-        'attachments',
+        'message_id',
+        'user_id',
     ];
 
     /**
