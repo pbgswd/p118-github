@@ -24,8 +24,8 @@
                 {{$data['message']->subject}}
                 From: {{$data['message']->updated_at->format('F j Y')}}
                 <p>Sent by: {{$data['message']['user']->name}}</p>
-                <p>{{$data['message']->messageMeta->source_type}}</p>
-                <p>{{$data['message']->messageMeta->source_type_name}}</p>
+                <p>{{$data['message']->section}}</p>
+                <p>{{$data['message']->category}}</p>
                 <div class="p-6">
                     {!! $data['message']->content !!}
                 </div>

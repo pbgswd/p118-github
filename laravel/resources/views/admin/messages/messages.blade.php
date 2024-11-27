@@ -73,15 +73,15 @@
                         </a>
                     @endif
                     <br />
-                    <a href="{{env('APP_URL')}}/{{$msg->messageMeta->source_url}}">URL</a>
+                    <a href="{{env('APP_URL')}}/{{$msg->messageMeta->source_url ?? ''}}">URL</a>
                 </td>
                 <td class="text-break">
                     <a href="{{route('member', $msg['user_id'])}}">
                         <i class="far fa-user"></i>
                         {{$msg['user']->name}}</a>
                 </td>
-                <td>{{$msg->messageMeta->source_type}}</td>
-                <td>{{$msg->messageMeta->source_type_name}}</td>
+                <td>{{$msg->section}}</td>
+                <td>{{$msg->category}}</td>
                 <td>
                     {{$msg->state}}
                     <a href="{{route('admin_message_edit', $msg['id'])}}" title="Edit {{$msg['subject']}}">

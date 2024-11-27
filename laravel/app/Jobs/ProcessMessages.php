@@ -40,7 +40,7 @@ class ProcessMessages implements ShouldQueue
             $this->taskData['id']);
 
         $message = Message::where('id', $this->taskData['id'])
-            ->with('attachments', 'messageMeta', 'messageSending')
+            ->with('attachments')
             ->get();
 
         $attachments = ! is_null($message[0]->attachments) ?
@@ -54,40 +54,29 @@ class ProcessMessages implements ShouldQueue
             // 112 characters in length here
         }
 
-        $type = $message[0]->messageMeta->source_type;
-        $name = $message[0]->messageMeta->source_type_name;
 
-        Log::info(__METHOD__.' line '.__LINE__.' - type= '.$type.
-            ', name= '.$name);
 
-        $subs = User::with('message_frequency_preferences', 'message_selections')
-            ->whereRelation('message_frequency_preferences', 'preference', 'now')
-            ->whereRelation('message_selections', 'type', $type, 'name', $name)
+        Log::info(__METHOD__.' line '.__LINE__.' - section= '.$message[0]->section.
+            ', category= '.$message[0]->category);
+
+        $subs = User::with('message_selections', 'type', $message[0]->section, 'name', $message[0]->category)
             ->get();
 
         //todo change column name in email_queue, it is content, not message
         foreach ($subs as $sub) {
             $emailQueueMsg = new EmailQueue([
-                'sender' => env('MAIL_FROM_ADDRESS'),
-                'recipient' => $sub->email,
-                'subject' => $message[0]->subject,
-                'message' => $message[0]->content,
-                'attachments' => $attachments,
+                'message_id' => $message[0]->id,
+                'user_id' => $subs->id,
             ]);
 
             $emailQueueMsg->save();
 
             Log::info(__METHOD__.' line '.__LINE__.' - The message, '.
                 $message[0]->subject.
-                ', is in the email queue to '.$sub->email);
+                ', is in the email queue');
         }
 
-        $messageSending = MessageSending::where('message_id', $message[0]->id)
-            ->update(
-                [
-                    'send_status_now' => 'sent',
-                ]
-            );
+
 
         //todo when the mail queue has been done, set the message send_status_now to sent
 

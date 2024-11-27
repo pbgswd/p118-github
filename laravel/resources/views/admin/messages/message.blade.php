@@ -19,9 +19,9 @@
                         Last Updated At: {{ $data['message']->updated_at->format('F j Y H:i:s') }}
                     </p>
                     <p>
-                        URL: <a href="{{env('APP_URL')}}/{{$data['message']->messageMeta->source_url}}">
-                            {{env('APP_URL')}}/{{$data['message']->messageMeta->source_url}}
-                        </a>
+                        URL: <a href="{{env('APP_URL')}}/{{$data['message']->source_url ?? ''}}">
+                            {{env('APP_URL')}}/{{$data['message']->source_url ?? ''}}
+                        </a> TODO FIX
                     </p>
                 </div>
             @endif

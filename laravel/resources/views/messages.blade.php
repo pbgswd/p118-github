@@ -42,8 +42,8 @@
                         <td class="text-left text-wrap" style="width: 50%;">
                             <a title="{{ $message->subject }}" href="{{ route('message', $message->id) }}">{{ $message->subject }}</a>
                         </td>
-                        <td>{{$message->messageMeta->source_type}}</td>
-                        <td>{{$message->messageMeta->source_type_name}}</td>
+                        <td>{{$message->section}}</td>
+                        <td>{{$message->category}}</td>
                         <td>{{ $message->updated_at->format('F j Y') }}</td>
                     </tr>
                 @endforeach

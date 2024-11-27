@@ -227,14 +227,11 @@ class AdminMessageController extends Controller
     {
         //todo policy
         //todo sort out email queue vs message table
-        $message->load('user', 'attachments', 'messageMeta', 'messageSending');
+        $message->load('user', 'attachments');
 
         $data = [
             'message' => $message,
-            'message_meta_data' => ['source_type' => $message->messageMeta->source_type,
-                'source_type_name' => $message->messageMeta->source_type_name],
-                'message_sending' => $message->messageSending->send_priority,
-                'attachments' => $message->attachments,
+            'attachments' => $message->attachments,
         ];
 
         return view('emails.email_message', ['data' => $data]);
