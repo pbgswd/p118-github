@@ -34,51 +34,44 @@ class SendEmailsNow extends Command
         if($message) {
             $message->load('user', 'attachments');
 
-            $subs = EmailQueue::with('user')
+            $data['message']['id'] = $message->id;
+            $data['message']['slug'] = $message->slug;
+            $data['message']['sender'] = env('MAIL_FROM_ADDRESS');
+            $data['message']['subject'] = $message->subject;
+            $data['message']['content'] = $message->content;
+            $data['attachments'] = $message->attachments ?? 0;
+
+            $subs = EmailQueue::distinct()->with('user')
                 ->where('message_id', $message->id)
                 ->limit($messageLimit)
                 ->get();
 
             foreach($subs as $sub) {
-
-                $data['message']['id'] = $message->id;
-                $data['message']['slug'] = $message->slug;
-                $data['message']['sender'] = env('MAIL_FROM_ADDRESS');
-                $data['message']['subject'] = $message->subject;
-                $data['message']['content'] = $message->content;
-
-                $data['attachments'] = $message->attachments ?? 0;
-
                 Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message, $sub, $data) {
                     $m->from(env('MAIL_FROM_ADDRESS'), config('app.name').'Subscription message local 118');
                     $m->to($sub->user->email, $sub->user->name);
                     $m->replyTo(config('mail.from.address'), 'no reply');
-                    $m->subject('IATSE Local 118: '.$message->subject);
-
-                    Log::info('attachment count is: ' . $message->attachments->count() );
+                    $m->subject($message->subject);
 
                     if ($message->attachments->count() > 0) {
-
                         foreach ($message->attachments as $att) {
                             $file = 'storage/app/'.$message->getAttachmentFolder().'/'.$att->file;
                             $mime = mime_content_type($file);
                             $file_name = $att->file_name;
-
                             $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
                         }
                     }
                 });
-
                 $message->increment('count');
-
-                EmailQueue::where('user_id', $sub->user->id)->delete();
-
+                EmailQueue::where('user_id', $sub->user->id)
+                    ->where('message_id', $message->id)->delete();
             }
-            if($subs->count() == 0) {
+            $count = EmailQueue::where('message_id', $message->id)->count();
+            if($count == 0) {
                 $message->state = 'sent';
                 $message->save();
             }
-            return Command::SUCCESS;
         }
+        return Command::SUCCESS;
     }
 }
