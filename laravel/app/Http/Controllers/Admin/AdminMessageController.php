@@ -230,12 +230,11 @@ class AdminMessageController extends Controller
         Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
 
        // ProcessMessages::dispatch(['id' => $message->id]);
-//todo this is wrong, not working
+        // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
+
         $subs = User::whereHas('message_selections', function ($query) use ($message) {
             $query->where('type', $message->section)->where('name', $message->category);
         })->get();
-
-
 
         foreach ($subs as $sub) {
             $emailQueueMsg = new EmailQueue([
@@ -244,8 +243,6 @@ class AdminMessageController extends Controller
             ]);
             $emailQueueMsg->save();
         }
-
-        Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
         Session::flash('success', 'The message, '.$message->subject.', has been sent to the mail queue and is going out now');
 

@@ -28,48 +28,57 @@ class SendEmailsNow extends Command
     public function handle(): int
     {
         $messageLimit = 5;
+
         $message = Message::where('state', 'sending')->first();
 
-        $subs = EmailQueue::with('user')->where('message_id', $message->id)->limit($messageLimit)->get();
+        if($message) {
+            $message->load('user', 'attachments');
 
-        foreach($subs as $sub) {
+            $subs = EmailQueue::with('user')
+                ->where('message_id', $message->id)
+                ->limit($messageLimit)
+                ->get();
 
-            $data['message']['id'] = $message->id;
-            $data['message']['slug'] = $message->slug;
-            $data['message']['sender'] = env('MAIL_FROM_ADDRESS');
-            $data['message']['subject'] = $message->subject;
-            $data['message']['content'] = $message->content;
+            foreach($subs as $sub) {
 
-            $data['attachments'] = [];
+                $data['message']['id'] = $message->id;
+                $data['message']['slug'] = $message->slug;
+                $data['message']['sender'] = env('MAIL_FROM_ADDRESS');
+                $data['message']['subject'] = $message->subject;
+                $data['message']['content'] = $message->content;
 
-            Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message, $sub) {
-                $m->from(env('MAIL_FROM_ADDRESS'), config('app.name').'Subscription message local 118');
-                $m->to($sub->user->email, $sub->user->name);
-                $m->replyTo(config('mail.from.address'), 'no reply to guy');
-                $m->subject('IATSE Local 118: '.$message->subject);
+                $data['attachments'] = $message->attachments ?? 0;
 
-/*
- *                 $attachments = unserialize($message->attachments);
-                if ($attachments->count() > 0) {
+                Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message, $sub, $data) {
+                    $m->from(env('MAIL_FROM_ADDRESS'), config('app.name').'Subscription message local 118');
+                    $m->to($sub->user->email, $sub->user->name);
+                    $m->replyTo(config('mail.from.address'), 'no reply');
+                    $m->subject('IATSE Local 118: '.$message->subject);
 
-                    foreach ($attachments as $att) {
-                        $file = 'storage/app/'.$message->getAttachmentFolder().'/'.$att->file;
-                        $mime = mime_content_type($file);
-                        $file_name = $att->file_name;
+                    Log::info('attachment count is: ' . $message->attachments->count() );
 
-                        $m->attach($file, ['as' => $file_name, 'mime' => $mime]); // yes but always hash file name
+                    if ($message->attachments->count() > 0) {
+
+                        foreach ($message->attachments as $att) {
+                            $file = 'storage/app/'.$message->getAttachmentFolder().'/'.$att->file;
+                            $mime = mime_content_type($file);
+                            $file_name = $att->file_name;
+
+                            $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
+                        }
                     }
-                }*/
+                });
 
-            });
+                $message->increment('count');
 
-            EmailQueue::where('id', $message->id)->delete();
-//todo update the count of the messages sent
+                EmailQueue::where('user_id', $sub->user->id)->delete();
+
+            }
+            if($subs->count() == 0) {
+                $message->state = 'sent';
+                $message->save();
+            }
+            return Command::SUCCESS;
         }
-        //todo if there are no more messages to send, set state to sent
-
-        //  Log::info('SendEmailsNow has run at '. date('l jS \of F Y h:i:s A') . ', ' . $messages->count() . " " . Str::plural('message', $messages->count()) .  ' selected to send');
-
-        return Command::SUCCESS;
     }
 }

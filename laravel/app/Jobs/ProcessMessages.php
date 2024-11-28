@@ -9,7 +9,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
 class ProcessMessages implements ShouldQueue
@@ -33,44 +32,25 @@ class ProcessMessages implements ShouldQueue
      */
     public function handle(): void
     {
-        $message = Message::where('id', $this->taskData['id'])
-            ->with('attachments')
-            ->get();
+        Log::info('About to move command to jobs table '.$message->id);
+        $message->state = 'sending';
+        $message->save();
 
-        Log::info('subject: ' . $message->subject);
+        Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
 
-        Log::info(__METHOD__.' line '.__LINE__.' - section= '.$message->section.
-            ', category= '.$message->category);
+        // ProcessMessages::dispatch(['id' => $message->id]);
+        // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
-        $subs = User::whereHas('message_selections', function ($query) {
-            $query->where('type', 'model')
-                ->where('name', 'message');
+        $subs = User::whereHas('message_selections', function ($query) use ($message) {
+            $query->where('type', $message->section)->where('name', $message->category);
         })->get();
-
 
         foreach ($subs as $sub) {
             $emailQueueMsg = new EmailQueue([
                 'message_id' => $message->id,
-                'user_id' => $subs->id,
+                'user_id' => $sub->id,
             ]);
             $emailQueueMsg->save();
         }
-
-
-
-        //todo when the mail queue has been done, set the message send_status_now to sent
-
-        //todo select the message to send
-        // get attachment
-        // build data with html template for message
-        // check sending priority: if now, send to all
-
-        //todo load messages for subscribers
-        // into mail queue that have not already
-        // been pushed to the mail queue
-
-        Log::info(__FILE__.' line '.__LINE__.
-            ' End of handle method - Process Messages Job was run '.
-            $this->taskData['log'].'id: '.$this->taskData['id']);
     }
 }
