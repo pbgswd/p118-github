@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
 
-        Schema::dropIfExists('message_metatdata'); //delete model
+        Schema::dropIfExists('message_metadata'); //delete model
         Schema::dropIfExists('message_sending'); //delete model
         Schema::dropIfExists('message_frequency_preferences'); //delete model
         Schema::dropIfExists('email_queue'); //delete model

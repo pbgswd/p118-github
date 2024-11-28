@@ -33,7 +33,8 @@
                                 <tr>
                                     <td style="text-align:center;">
                                         <h5 class="lead" style="padding-top: 1rem; padding-bottom: 1rem; text-align:center;">
-                                            <a href="{{route('message', $data['message']['id'])}}" title="Link to {{$data['message']['subject']}}" target="_blank">
+                                            <a href="{{route('message', [$data['message']['id'], $data['message']['slug']])}}"
+                                               title="Link to {{$data['message']['subject']}}" target="_blank">
                                                 link to message on website >>
                                             </a>
                                         </h5>

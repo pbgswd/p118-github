@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\EmailQueue;
+use App\Models\Message;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -17,35 +18,30 @@ class AdminEmailQueueController extends Controller
      */
     public function index(): View
     {
-        $emailQueue = EmailQueue::withoutGlobalScopes()
+        $emailQueue = Message::where('state', 'sending')
             ->orderBy('updated_at', 'DESC')
             ->paginate(20);
 
         $data['email_queue'] = $emailQueue;
-        $data['count'] = EmailQueue::withoutGlobalScopes()->count();
+        $data['count'] = $emailQueue->count();
 
         return view('admin.messages.email_queue_list', ['data' => $data]);
     }
 
     /**
-     * @param EmailQueue $email_queue
+     * @param Message $message
      * @return View
      */
-    public function show(EmailQueue $email_queue): View
+    public function show(Message $message): View
     {
-        $attachments = '';
-
-        if (! is_null($email_queue->attachments)) {
-            unserialize($email_queue->attachments);
-            //todo prep for link attachments data
-        }
+        $message->load('user', 'attachments');
 
         $data = [
-            'message' => $email_queue,
-            'attachments' => $attachments,
+            'message' => $message,
+            'attachments' => $message->attachments,
         ];
 
-        $data['message']['content'] = $email_queue->message;
+        $data['message']['content'] = $message->content;
 
         return view('emails.email_message', ['data' => $data]);
     }
@@ -56,8 +52,9 @@ class AdminEmailQueueController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        EmailQueue::withoutGlobalScopes()->find($request->id)
-            ->each(function (EmailQueue $emailQueue) {
+        //todo hide this method as content will be immutable except for development work
+        Message::find($request->id)
+            ->each(function (Message $emailQueue) {
                 $emailQueue->delete();
             });
 

@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Messages\DestroyMessageRequest;
 use App\Jobs\ProcessMessages;
 use App\Models\Committee;
+use App\Models\EmailQueue;
 use App\Models\Message;
 use App\Models\Options;
 use App\Models\Topic;
+use App\Models\User;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,6 +40,10 @@ class AdminMessageController extends Controller
             ->paginate(20);
 
         $data['total_messages'] = Message::all()->count();
+        $data['total_emails_sent'] = Message::sum('count');
+        $data['not_sent'] = Message::where('state', 'not_sent')->count();
+        $data['sending'] = Message::where('state', 'sending')->count();
+        $data['sent'] = Message::where('state', 'sent')->count();
 
         return view('admin.messages.messages', ['data' => $data]);
     }
@@ -64,11 +70,10 @@ class AdminMessageController extends Controller
         $message = new Message($request->message);
         $message['user_id'] = Auth::id();
 
-        //todo message slug
+    //todo slug, source_url
 
         $message->save();
 
-        //todo message_meta_data
 
         if (! is_null($request->model_source_type_name)) {
 
@@ -112,15 +117,8 @@ class AdminMessageController extends Controller
             $source_type_name = $request->committee_source_type_name;
         }
 
-        $message->messageMeta()->create(['message_id' => $message->id,
-            'source_id' => $source_id,
-            'source_slug' => $source_slug,
-            'source_type' => $source_type,
-            'source_type_name' => $source_type_name,
-            'source_url' => $source_url,
-        ]);
 
-        //todo save relation, 'messageMeta', 'messageSending'
+
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $message);
@@ -151,29 +149,20 @@ class AdminMessageController extends Controller
             Session::flash('warning', 'The message, '.$message->subject.
             ', can no longer be edited because it has been sent to the mail queue');
             // return redirect()->route('admin_messages');
-
         }
 
         if ($message->state === 'sent') {
             // Redirect back with an error message or show a message
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
-        //todo update relations for form editing and submissions
-
-        $message->section = $message->section ?? '';
 
         $data = [
             'message' => $message,
-         //todo update it
-            ////   'message_meta_data' => ['source_type' => $message->messageMeta->source_type, 'source_type_name' => $message->messageMeta->source_type_name],
-
             'committee_subscription_options' => Committee::where('live', 1)->get(),
             'topic_subscription_options' => Topic::where('live', 1)->get(),
             'model_subscription_options' => Options::model_subscription_options(),
             'action' => 'Edit',
         ];
-
-      //  dd($data);
 
         return view('admin.messages.message', ['data' => $data]);
     }
@@ -182,15 +171,13 @@ class AdminMessageController extends Controller
     {
         //todo form request validator, policy
 
-
         if ($message->state === 'sent') {
             // Redirect back with an error message or show a message
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
+
         $message->fill($request->message);
         $message->save();
-
-        //todo update , 'messageMeta', 'messageSending' relations
 
         $result = $this->attachmentService->updateAttachment($request, $message);
 
@@ -206,7 +193,7 @@ class AdminMessageController extends Controller
 
         Session::flash('success', 'You have updated '.$message->subject);
 
-        return redirect()->route('admin_message_edit', $message->id);
+        return redirect()->route('admin_message_edit', [$message->id, $message->slug]);
     }
 
     public function preview(Message $message): View
@@ -225,15 +212,11 @@ class AdminMessageController extends Controller
 
     public function preview_strict(Message $message): View
     {
-        //todo policy
-        //todo sort out email queue vs message table
         $message->load('user', 'attachments');
-
         $data = [
             'message' => $message,
             'attachments' => $message->attachments,
         ];
-
         return view('emails.email_message', ['data' => $data]);
     }
 
@@ -241,15 +224,26 @@ class AdminMessageController extends Controller
     {
         //todo policy
         Log::info('About to move command to jobs table '.$message->id);
-        $message->state = 'send';
+        $message->state = 'sending';
         $message->save();
-
 
         Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
 
-        //ProcessMessages::dispatch(['log' => 'delay message by a certain amount'])->delay(now()->isFriday('17:00'));
-        //->delay(now()->addMinutes(10));
-        //ProcessMessages::dispatch(['log' => __FILE__.' '.' Sending the message '.$message->subject, 'id' => $message->id]);
+       // ProcessMessages::dispatch(['id' => $message->id]);
+//todo this is wrong, not working
+        $subs = User::whereHas('message_selections', function ($query) use ($message) {
+            $query->where('type', $message->section)->where('name', $message->category);
+        })->get();
+
+
+
+        foreach ($subs as $sub) {
+            $emailQueueMsg = new EmailQueue([
+                'message_id' => $message->id,
+                'user_id' => $sub->id,
+            ]);
+            $emailQueueMsg->save();
+        }
 
         Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
@@ -266,8 +260,6 @@ class AdminMessageController extends Controller
             ->each(function (Message $message) {
                 //todo only destroy attachments if not from other content
                 $this->attachmentService->destroyAttachments($message);
-                $message->messageMeta()->delete();
-                $message->messageSending()->delete();
                 $message->delete();
             });
 

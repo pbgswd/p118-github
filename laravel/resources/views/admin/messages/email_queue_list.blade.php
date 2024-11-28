@@ -1,11 +1,6 @@
-@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-list"></i> ', 'title' => 'Email queue list'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="far fa-paper-plane"></i> ', 'title' => 'List of messages in email queue'])
 @section('content')
 <div class="container">
-    <div class="row" style="margin-top: 3rem;">
-        <div class="col-12 text-center">
-            <h4>List of messages scheduled to send to subscribers</h4>
-        </div>
-    </div>
     <div class="row" style="margin-top: 3rem;">
         <div class="col-sm-12 col-md-6 mt-6">
             <h3>
@@ -14,10 +9,9 @@
         </div>
         <div class="col-sm-12 col-md-6 mt-6">
             <h3>
-                {!! $data['count']  !!} messages in the queue presently.
+                {{$data['count']}} {{ Str::plural('message', $data['count']) }} in the email queue currently.
             </h3>
         </div>
-
     </div>
 </div>
 <div x-data="BoxSelect()" class="mt-6" style="margin-top: 3rem;">
@@ -29,13 +23,9 @@
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
-                            <th> @sortablelink('id','#') </th>
-                            <th> @sortablelink('sender', 'Sender') </th>
-                            <th> @sortablelink('recipient', 'Recipient') </th>
+                            <th> @sortablelink('id','Id') </th>
                             <th> @sortablelink('subject', 'Subject') </th>
-                            <th> @sortablelink('message', 'Message') </th>
-                            <th>Attachments
-                            </th>
+                            <th> @sortablelink('count', 'Count') </th>
                             <th> @sortablelink('created_at', 'Created At') </th>
                             <th> @sortablelink('updated_at', 'Updated At') </th>
                         </tr>
@@ -51,22 +41,11 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{ $eq->sender }}
-                                </td>
-                                <td>
-                                    {{$eq->recipient}}
-                                </td>
-                                <td>
                                     <a href="{{route('admin_email_queue_show', $eq->id)}}">
                                         {{$eq->subject}}
                                     </a>
                                 </td>
-                                <td>
-                                    {!! Str::limit($eq->message, 30, ' ...') !!}
-                                </td>
-                                <td>
-                                    attachments<br /> count
-                                </td>
+                                <td> {{ $eq->count }} </td>
                                 <td> {{ $eq->created_at->format('F j Y H:i:s') }} </td>
                                 <td> {{ $eq->updated_at->format('F j Y H:i:s') }} </td>
                             </tr>
@@ -84,13 +63,13 @@
                             @endif
                         @empty
                             <tr>
-                                <td colspan="9" class="px-2">
-                                    No messages in the queue present.
+                                <td colspan="5" class="px-2">
+                                    No messages in the queue at present.
                                 </td>
                             </tr>
                         @endforelse
                         <tr>
-                            <td colspan="9">&nbsp;</td>
+                            <td colspan="5">&nbsp;</td>
                         </tr>
                     </tbody>
                 </table>

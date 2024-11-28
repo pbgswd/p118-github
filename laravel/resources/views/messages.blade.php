@@ -40,7 +40,7 @@
                 @foreach ( $data['messages'] as $message )
                     <tr>
                         <td class="text-left text-wrap" style="width: 50%;">
-                            <a title="{{ $message->subject }}" href="{{ route('message', $message->id) }}">{{ $message->subject }}</a>
+                            <a title="{{ $message->subject }}" href="{{ route('message', [$message->id, $message->slug]) }}">{{ $message->subject }}</a>
                         </td>
                         <td>{{$message->section}}</td>
                         <td>{{$message->category}}</td>

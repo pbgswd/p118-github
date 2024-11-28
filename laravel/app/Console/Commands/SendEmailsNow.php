@@ -28,33 +28,28 @@ class SendEmailsNow extends Command
     public function handle(): int
     {
         $messageLimit = 5;
-        $messages = EmailQueue::limit($messageLimit)->get();
-        Log::info('------------------------------------------------------------------------------------------------');
-        Log::info($messages->count().' '.Str::plural('message', $messages->count()).' selected to be sent.');
+        $message = Message::where('state', 'sending')->first();
 
-        foreach ($messages as $message) {
-            echo "\n EmailQueue message id: ".$message->id.', Subject: '.$message->subject."\n";
-            echo "\n \t".$message->recipient."\n";
+        $subs = EmailQueue::with('user')->where('message_id', $message->id)->limit($messageLimit)->get();
 
-            // has subscriber been sent the message already? What if the content is in multiple topics?
-            // insert into mail queue the $message with the email address for $sub
-
-            // Log::info('from: '.config('mail.from.address'));
+        foreach($subs as $sub) {
 
             $data['message']['id'] = $message->id;
-            $data['message']['sender'] = $message->sender;
+            $data['message']['slug'] = $message->slug;
+            $data['message']['sender'] = env('MAIL_FROM_ADDRESS');
             $data['message']['subject'] = $message->subject;
-            $data['message']['content'] = $message->message;
+            $data['message']['content'] = $message->content;
 
             $data['attachments'] = [];
 
-            Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message) {
-                $m->from($message->sender, config('app.name').'Subscription message local 118');
-                $m->to($message->recipient, 'name of recipient');
+            Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message, $sub) {
+                $m->from(env('MAIL_FROM_ADDRESS'), config('app.name').'Subscription message local 118');
+                $m->to($sub->user->email, $sub->user->name);
                 $m->replyTo(config('mail.from.address'), 'no reply to guy');
                 $m->subject('IATSE Local 118: '.$message->subject);
 
-                $attachments = unserialize($message->attachments);
+/*
+ *                 $attachments = unserialize($message->attachments);
                 if ($attachments->count() > 0) {
 
                     foreach ($attachments as $att) {
@@ -64,11 +59,14 @@ class SendEmailsNow extends Command
 
                         $m->attach($file, ['as' => $file_name, 'mime' => $mime]); // yes but always hash file name
                     }
-                }
+                }*/
+
             });
 
             EmailQueue::where('id', $message->id)->delete();
+//todo update the count of the messages sent
         }
+        //todo if there are no more messages to send, set state to sent
 
         //  Log::info('SendEmailsNow has run at '. date('l jS \of F Y h:i:s A') . ', ' . $messages->count() . " " . Str::plural('message', $messages->count()) .  ' selected to send');
 

@@ -19,12 +19,25 @@ class Message extends Model implements HasAttachment, Searchable
     use Sortable;
 
     protected $fillable = [
+        'source_url',
+        'section',
+        'category',
         'subject',
+        'slug',
         'content',
         'user_id',
-        'live',
-        'priority',
-        'sent',
+        'count',
+        'state',
+    ];
+
+    public $sortable = [
+        'id',
+        'section',
+        'category',
+        'user_id',
+        'count',
+        'created_at',
+        'updated_at',
     ];
 
     public function getSearchResult(): SearchResult

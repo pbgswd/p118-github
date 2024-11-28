@@ -192,14 +192,8 @@ class User extends Authenticatable implements HasAttachment, Searchable
             ->withPivot('id', 'start_date', 'end_date', 'current');
     }
 
-    public function message_selections(): hasMany
+    public function message_selections(): HasMany
     {
-        return $this->hasMany(MessageSelection::class, 'user_id');
-        //->withPivot('id', 'user_id', 'type', 'name');
-    }
-
-    public function message_frequency_preferences(): HasOne
-    {
-        return $this->hasOne(MessageFrequencyPreferences::class)->withDefault();
+        return $this->hasMany(MessageSelection::class, 'user_id', 'id');
     }
 }

@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Models\EmailQueue;
 use App\Models\Message;
-use App\Models\MessageSending;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -15,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProcessMessages implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable;
 
     /**
      * Create a new job instance.
@@ -34,46 +33,27 @@ class ProcessMessages implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info('------------------------------------------------------------------------------------------------');
-        Log::info('peter '.__METHOD__.' line '.__LINE__.
-            ' - Start of handle method - Process message with id of: '.
-            $this->taskData['id']);
-
         $message = Message::where('id', $this->taskData['id'])
             ->with('attachments')
             ->get();
 
-        $attachments = ! is_null($message[0]->attachments) ?
-            serialize($message[0]->attachments) : '';
+        Log::info('subject: ' . $message->subject);
 
-        if (! is_null($attachments)) {
-            Log::info('There is attachments data and its serialized length is '.
-                strlen($attachments).' characters');
-        } else {
-            Log::info('There is no attachment data with this message');
-            // 112 characters in length here
-        }
+        Log::info(__METHOD__.' line '.__LINE__.' - section= '.$message->section.
+            ', category= '.$message->category);
 
+        $subs = User::whereHas('message_selections', function ($query) {
+            $query->where('type', 'model')
+                ->where('name', 'message');
+        })->get();
 
 
-        Log::info(__METHOD__.' line '.__LINE__.' - section= '.$message[0]->section.
-            ', category= '.$message[0]->category);
-
-        $subs = User::with('message_selections', 'type', $message[0]->section, 'name', $message[0]->category)
-            ->get();
-
-        //todo change column name in email_queue, it is content, not message
         foreach ($subs as $sub) {
             $emailQueueMsg = new EmailQueue([
-                'message_id' => $message[0]->id,
+                'message_id' => $message->id,
                 'user_id' => $subs->id,
             ]);
-
             $emailQueueMsg->save();
-
-            Log::info(__METHOD__.' line '.__LINE__.' - The message, '.
-                $message[0]->subject.
-                ', is in the email queue');
         }
 
 

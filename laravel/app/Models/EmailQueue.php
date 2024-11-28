@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Kyslik\ColumnSortable\Sortable;
 
 class EmailQueue extends Model
 {
     use HasFactory;
+    use Sortable;
 
     protected $table = 'email_queue';
 
@@ -17,16 +20,23 @@ class EmailQueue extends Model
         'user_id',
     ];
 
-    /**
-     * @var string[]
-     */
-    public function getAttachmentFolder(): string
+    public $sortable = [
+        'id',
+        'section',
+        'category',
+        'user_id',
+        'count',
+        'created_at',
+        'updated_at',
+    ];
+
+    public function user(): BelongsTo
     {
-        return 'messages';
+        return $this->belongsTo(User::class);
     }
 
-    public function attachments(): BelongsToMany
+    public function message(): BelongsTo
     {
-        return $this->belongsToMany(Attachment::class, 'attachment_message');
+        return $this->belongsTo(Message::class);
     }
 }
