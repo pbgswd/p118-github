@@ -32,7 +32,9 @@ class ProcessMessages implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info('About to move command to jobs table '.$message->id);
+
+
+        //todo
         $message->state = 'sending';
         $message->save();
 
@@ -41,7 +43,8 @@ class ProcessMessages implements ShouldQueue
         // ProcessMessages::dispatch(['id' => $message->id]);
         // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
-        $subs = User::whereHas('message_selections', function ($query) use ($message) {
+        $subs = User::where( 'is_banned', '!=', 1)
+            ->whereHas('message_selections', function ($query) use ($message) {
             $query->where('type', $message->section)->where('name', $message->category);
         })->get();
 
@@ -52,5 +55,7 @@ class ProcessMessages implements ShouldQueue
             ]);
             $emailQueueMsg->save();
         }
+
+
     }
 }

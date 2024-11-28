@@ -71,9 +71,9 @@
                 <h5 class="card-title">Content Info</h5>
                 <div class="card-body">
                     <ul class="list-group">
-                        <li>{!! $data['counts']['pages'] !!} Pages</li>
-                        <li>{!! $data['counts']['posts'] !!} Posts</li>
-                        <li>{!! $data['counts']['topics'] !!} Topics</li>
+                        <li>{{ $data['counts']['pages'] }} Pages</li>
+                        <li>{{ $data['counts']['posts'] }} Posts</li>
+                        <li>{{ $data['counts']['topics'] }} Topics</li>
                         <li>{{$data['counts']['features']}} Features</li>
                         <li>{{$data['counts']['faqs']}} FAQs</li>
                         <li>{{$data['counts']['venues']}} Venues</li>
@@ -84,6 +84,7 @@
                         <li>{{$data['counts']['agreements']}} Agreements</li>
                         <li>{{$data['counts']['policies']}} Policies</li>
                         <li>{{$data['counts']['memoriam']}} Memorials</li>
+                        <li>{{$data['counts']['total_messages']}} Messages</li>
                     </ul>
                 </div>
             </div>
@@ -101,11 +102,6 @@
     </div>
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12">
-            <h3>Recent Activity | <a href="{{route('admin_activity_logs_list')}}">View log page</a></h3>
-        </div>
-    </div>
-    <div class="row border border-dark rounded p-3 pb-5 mt-4">
-        <div class="col-12">
             <h3>New stuff, work in progress, not safe to use yet</h3>
         </div>
         @if(env('ENABLE_MESSAGING_FEATURE')==1)
@@ -118,18 +114,22 @@
                             <ul class="list-group">
                                 <li class="list-group-item"><a href="{{route('admin_messages')}}">List Messages
                                     ( {{$data['messages_count']}} {{Str::plural('message', $data['messages_count'])}} )</a></li>
-                                <li class="list-group-item"><a href="{{route('admin_message_create')}}">Create Messages</a></li>
+                                <li class="list-group-item"><a href="{{route('admin_message_create')}}">Create Message</a></li>
                                 <li class="list-group-item"><a href="{{route('admin_email_queue_list')}}">View Mail Queue</a></li>
-                                <li class="list-group-item">{{$data['email_queue_count']}} messages currently in the queue</li>
+                                <li class="list-group-item">{{$data['counts']['total_messages']}} Total messages</li>
+                                <li class="list-group-item">{{$data['counts']['total_emails_sent']}} Emails sent</li>
+                                <li class="list-group-item">{{$data['counts']['not_sent']}}
+                                    {{Str::plural('Message', $data['counts']['not_sent'])}} not yet sent</li>
+                                <li class="list-group-item">{{$data['counts']['sending']}}
+                                    {{Str::plural('Message', $data['counts']['sending'])}} going out now</li>
+                                <li class="list-group-item">{{$data['counts']['sent']}} Messages sent</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         @endif
-
-
-        <div class="col-sm-12 col-md-4 mb-3 mt-2 h-100">
+        <div class="col-sm-12 col-md-4 mb-3 mt-sm-2 mt-md-0 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Media insert, work in progress</h5>
                 <div class="card-body">

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\EmailQueue;
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;

@@ -1,8 +1,7 @@
-@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-envelope-open-text"></i>>', 'title' => ' Messages'])
+@extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-envelope-open-text"></i>', 'title' => ' Messages'])
 @section('content')
 <div class="row">
     <div class="mx-6">
-        <h1>Messages</h1>
         <h5>Send messages to the general membership. </h5>
     </div>
 </div>

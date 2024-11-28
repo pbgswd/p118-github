@@ -27,6 +27,12 @@
                     Admin Search
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin_activity_logs_list')}}">
+                    <i class="fas fa-th-list"></i>
+                    Activity Log
+                </a>
+            </li>
             @can(['create users', 'edit users', 'delete users'])
                 <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -85,6 +91,13 @@
                     ProofReader
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin_messages') }}">
+                        <span data-feather="file"></span>
+                        Messages
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('topics_list') }}">
                         <span data-feather="file"></span>

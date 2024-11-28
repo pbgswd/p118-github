@@ -69,6 +69,12 @@ class AdminController extends Controller
         $counts['office'] = Membership::where('membership_type', 'Office')->count();
         $counts['invite'] = count(InviteUser::all());
 
+        $counts['total_messages'] = Message::all()->count();
+        $counts['total_emails_sent'] = Message::sum('count');
+        $counts['not_sent'] = Message::where('state', 'not_sent')->count();
+        $counts['sending'] = Message::where('state', 'sending')->count();
+        $counts['sent'] = Message::where('state', 'sent')->count();
+
         //todo look at events in Laravel https://laravel.com/docs/11.x/events
         $al = new ActivityLog([
             'activity' => Auth::user()->name . ' accessed the admin dashboard',

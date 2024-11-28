@@ -50,7 +50,7 @@ class AdminMessageController extends Controller
 
     public function create(): View
     {
-        //todo policy
+        //todo policy, intitial state for pull down menus
         $data = [
             'committee_subscription_options' => Committee::where('live', 1)->get(),
             'topic_subscription_options' => Topic::where('live', 1)->get(),
@@ -118,8 +118,6 @@ class AdminMessageController extends Controller
         }
 
 
-
-
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $message);
 
@@ -145,10 +143,11 @@ class AdminMessageController extends Controller
 
         $message->load('user', 'attachments');
 
-        if ($message->state == 'sent') {
+        if ($message->state == 'sending') {
             Session::flash('warning', 'The message, '.$message->subject.
             ', can no longer be edited because it has been sent to the mail queue');
             // return redirect()->route('admin_messages');
+            return redirect()->back()->with('error', 'You cannot edit content because it has been sent to the mail queue.');
         }
 
         if ($message->state === 'sent') {
@@ -198,14 +197,10 @@ class AdminMessageController extends Controller
 
     public function preview(Message $message): View
     {
-        //todo policy
         $message->load('user', 'attachments');
         $data = [
             'message' => $message,
-            'message_meta_data' => ['source_type' => $message->section, 'source_type_name' => $message->category],
         ];
-
-        //todo get attachments
 
         return view('admin.messages.message_preview', ['data' => $data]);
     }
@@ -227,12 +222,12 @@ class AdminMessageController extends Controller
         $message->state = 'sending';
         $message->save();
 
-        Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
-
-       // ProcessMessages::dispatch(['id' => $message->id]);
+        // Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
+        // ProcessMessages::dispatch(['id' => $message->id]);
         // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
-        $subs = User::whereHas('message_selections', function ($query) use ($message) {
+        $subs = User::where( 'is_banned', '!=', 1)
+            ->whereHas('message_selections', function ($query) use ($message) {
             $query->where('type', $message->section)->where('name', $message->category);
         })->get();
 
@@ -252,6 +247,7 @@ class AdminMessageController extends Controller
     public function destroy(DestroyMessageRequest $request): RedirectResponse
     {
         //todo form request validator, policy
+
         Message::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Message $message) {
