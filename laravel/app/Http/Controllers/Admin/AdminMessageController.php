@@ -8,6 +8,7 @@ use App\Jobs\ProcessMessages;
 use App\Models\Committee;
 use App\Models\EmailQueue;
 use App\Models\Message;
+use App\Models\MessageCategory;
 use App\Models\Options;
 use App\Models\Topic;
 use App\Models\User;
@@ -141,7 +142,14 @@ class AdminMessageController extends Controller
     {
         //todo policy
 
-        $message->load('user', 'attachments');
+        $message->load(['user', 'attachments']);
+
+        $message_categories = MessageCategory::where('message_id', $message->id)->get();
+
+
+
+ //todo sort out message_categories data so it can be handled by the blade template
+
 
         if ($message->state == 'sending') {
             Session::flash('warning', 'The message, '.$message->subject.
@@ -157,6 +165,7 @@ class AdminMessageController extends Controller
 
         $data = [
             'message' => $message,
+            'message_categories' => $message_categories,
             'committee_subscription_options' => Committee::where('live', 1)->get(),
             'topic_subscription_options' => Topic::where('live', 1)->get(),
             'model_subscription_options' => Options::model_subscription_options(),
@@ -174,30 +183,33 @@ class AdminMessageController extends Controller
             // Redirect back with an error message or show a message
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
-//todo set value for section, category.
-        // And what if I wanted to have a message associated with more than one section and category?
-        // model_source_type_name || topic_source_type_name || committee_source_type_name
+        $message->fill($request->message);
+
 //dd($request->all());
 
-        if($request->model_source_type_name !='') {
-            $source_type = 'model';
-            $section = 'model';
-            $category = $request->model_source_type_name;
+        $sections = ['model', 'topic', 'committee'];
+//todo look at docs for proper save todo, to not continually make data, this is an update method
+        //todo I probably dont need timestamps
+
+        MessageCategory::where('message_id', $message->id)->delete();
+
+        foreach ($sections as $section) {
+            foreach ($request['source_type'][$section] as $category) {
+                [$type, $name] = explode(' ', $category);
+                $data['message_id'] = $message->id;
+                $data['type'] = $type;
+                $data['name'] = $name;
+                //todo wrong thing to do here, there is another way to save
+                 $mc = new MessageCategory($data);
+                 $mc->save();
+            }
         }
 
-
-
-
-
-
-        $message->fill($request->message);
         $message->save();
 
         $result = $this->attachmentService->updateAttachment($request, $message);
-
         if (null !== ($request->attachments)) {
             $result = $this->attachmentService->createAttachment($request, $message);
-
             if ($result) {
                 Session::flash('success', 'You uploaded '.Str::plural('file', $request->attachments));
             } else {

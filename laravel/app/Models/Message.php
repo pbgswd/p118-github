@@ -49,20 +49,25 @@ class Message extends Model implements HasAttachment, Searchable
             return new SearchResult(
                 $this,
                 $this->title,
-                \route('admin_message_edit', $this->id)
+                \route('admin_message_edit', [$this->id, $this->slug])
             );
         }
 
         return new SearchResult(
             $this,
             $this->subject,
-            \route('message', $this->id)
+            \route('message', [$this->id, $this->slug])
         );
     }
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function message_categories(): BelongsToMany
+    {
+        return $this->belongsToMany(MessageCategory::class, 'message_categories');
     }
 
     public function attachments(): BelongsToMany

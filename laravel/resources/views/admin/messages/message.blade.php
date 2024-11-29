@@ -6,7 +6,6 @@
     {!! csrf_field() !!}
     <div class="row mt-6">
         <div class="col-12">
-            <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
             <h4 class="mt-4">
                 <a href="{{route('admin_messages')}}">List Messages</a>
                 @if($data['action'] == 'Edit')
@@ -34,42 +33,43 @@
         @endif
         <div class="col-12 my-4">
             <h4 class="my-3">Select a topic, model, or committee for the message</h4>
+            @if($data['action'] == 'Edit')
+                Currently selected categories for this message are....(todo)
+            @endif
         </div>
         <div class="col-12 my-4">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link {{$data['message']['section'] == 'topic' ? 'active' : '' }}" id="nav-topic-tab" data-bs-toggle="tab" data-bs-target="#nav-topic" type="button" role="tab" aria-controls="nav-topic" aria-selected="false">Topic</button>
-                    <button class="nav-link {{$data['message']['section'] == 'model' ? 'active' : '' }}" id="nav-model-tab" data-bs-toggle="tab" data-bs-target="#nav-model" type="button" role="tab" aria-controls="nav-model" aria-selected="false">Model</button>
-                    <button class="nav-link {{$data['message']['section'] == 'committee' ? 'active' : ''}}" id="nav-committee-tab" data-bs-toggle="tab" data-bs-target="#nav-committee" type="button" role="tab" aria-controls="nav-committee" aria-selected="false">Committee</button>
+                    <button class="nav-link {{$data['message']['section'] == 'topic' ? 'active' : '' }}" id="nav-topic-tab" data-bs-toggle="tab" data-bs-target="#nav-topic" type="button" role="tab" aria-controls="nav-topic" aria-selected="false">Topics</button>
+                    <button class="nav-link {{$data['message']['section'] == 'model' ? 'active' : '' }}" id="nav-model-tab" data-bs-toggle="tab" data-bs-target="#nav-model" type="button" role="tab" aria-controls="nav-model" aria-selected="false">Content Sections</button>
+                    <button class="nav-link {{$data['message']['section'] == 'committee' ? 'active' : ''}}" id="nav-committee-tab" data-bs-toggle="tab" data-bs-target="#nav-committee" type="button" role="tab" aria-controls="nav-committee" aria-selected="false">Committees</button>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade {{$data['message']['section'] == 'topic' ? 'show active' : '' }}
                 p-4" id="nav-topic" role="tabpanel" aria-labelledby="nav-topic-tab" tabindex="0">
-                    <select class="form-select" name='topic_source_type_name' aria-label="Default select example">
-                        @if($data['message']['category'] != 'topic') <option value="">Select A Topic</option> @endif
+                    <select multiple size=10 class="form-select" name='source_type[topic][]' aria-label="Default select example">
+
                         @foreach($data['topic_subscription_options'] as $t)
-                            <option value="{{$t['slug']}}" {{$t['slug'] == $data['message']['category']  ? 'selected' : ''}}>{{$t['name']}}</option>
+                            <option value="topic {{$t['slug']}}" {{$t['slug'] == $data['message']['category']  ? 'selected' : ''}}>{{$t['name']}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="tab-pane fade {{$data['message']['section'] == 'model' ? 'show active' : '' }}
                  p-4" id="nav-model" role="tabpanel" aria-labelledby="nav-model-tab" tabindex="0">
-                    <select class="form-select" name='model_source_type_name' aria-label="Default select example">
-                        @if($data['message']['section'] != 'model')
-                            <option value="">Select A Content Type</option>
-                        @endif
+                    <select multiple size=10 class="form-select" name='source_type[model][]' aria-label="Default select example">
+
                         @foreach($data['model_subscription_options'] as $m)
-                            <option value="{{$m['model']}}" {{$m['model'] == ucfirst($data['message']['category']) ? 'selected' : ''}}>{{$m['name']}}</option>
+                            <option value="model {{$m['model']}}" {{$m['model'] == ucfirst($data['message']['category']) ? 'selected' : ''}}>{{$m['name']}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="tab-pane fade {{$data['message']['section'] == 'committee' ? 'show active' : '' }}
                  p-4" id="nav-committee" role="tabpanel" aria-labelledby="nav-committee-tab" tabindex="0">
-                    <select class="form-select" name='committee_source_type_name' aria-label="Default select example">
-                        @if($data['message']['section'] != 'committee') <option value="">Select A Committee</option> @endif
+                    <select multiple size=10 class="form-select" name='source_type[committee][]' aria-label="Default select example">
+
                         @foreach($data['committee_subscription_options'] as $comm)
-                            <option value="{{$comm['slug']}}" {{$comm['slug'] == $data['message']['category'] ? 'selected' : ''}} >{{$comm['name']}}</option>
+                            <option value="committee {{$comm['slug']}}" {{$comm['slug'] == $data['message']['category'] ? 'selected' : ''}} >{{$comm['name']}}</option>
                         @endforeach
                     </select>
                 </div>
