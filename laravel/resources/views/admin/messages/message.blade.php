@@ -1,17 +1,18 @@
 @extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-envelope-open-text"></i>', 'title' => $data['action'] .' Message'])
 @section('content')
 @include('admin.admin_partials.admin_tinymce')
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <form name="{{$data['action']}}" method="POST" action="{{url()->current()}}" enctype="multipart/form-data">
     {!! csrf_field() !!}
     <div class="row mt-6">
         <div class="col-12">
+            <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
             <h4 class="mt-4">
                 <a href="{{route('admin_messages')}}">List Messages</a>
                 @if($data['action'] == 'Edit')
-                        | <a href="#sending" title="Top of page">
+                        | <a href="#sending" title="Sending Section">
                             Jump to sending section <i class="fas fa-angle-down"></i>
                         </a>
-                    </h4>
                 @endif
             </h4>
         </div>
@@ -33,10 +34,6 @@
         @endif
         <div class="col-12 my-4">
             <h4 class="my-3">Select a topic, model, or committee for the message</h4>
-            @if($data['action'] == 'Edit')
-                info about source url, or type etc
-                <p>Currently:  </p>
-            @endif
         </div>
         <div class="col-12 my-4">
             <nav>
@@ -52,7 +49,7 @@
                     <select class="form-select" name='topic_source_type_name' aria-label="Default select example">
                         @if($data['message']['category'] != 'topic') <option value="">Select A Topic</option> @endif
                         @foreach($data['topic_subscription_options'] as $t)
-                            <option value="{{$t['slug']}}"> FIX{{$t['name']}}</option>
+                            <option value="{{$t['slug']}}" {{$t['slug'] == $data['message']['category']  ? 'selected' : ''}}>{{$t['name']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -60,9 +57,10 @@
                  p-4" id="nav-model" role="tabpanel" aria-labelledby="nav-model-tab" tabindex="0">
                     <select class="form-select" name='model_source_type_name' aria-label="Default select example">
                         @if($data['message']['section'] != 'model')
-                        <option value="">Select A Content Type  {{$data['message']['section']}}   </option> @endif
+                            <option value="">Select A Content Type</option>
+                        @endif
                         @foreach($data['model_subscription_options'] as $m)
-                            <option value="{{$m['model']}}" {{$m['model'] == ucfirst($data['message']['section']) ? 'selected' : ''}} >{{$m['model']}}</option>
+                            <option value="{{$m['model']}}" {{$m['model'] == ucfirst($data['message']['category']) ? 'selected' : ''}}>{{$m['name']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -71,7 +69,7 @@
                     <select class="form-select" name='committee_source_type_name' aria-label="Default select example">
                         @if($data['message']['section'] != 'committee') <option value="">Select A Committee</option> @endif
                         @foreach($data['committee_subscription_options'] as $comm)
-                            <option value="{{$comm['slug']}}" {{$comm['slug'] == $data['message']['section'] ? 'selected' : ''}} >{{$comm['name']}}</option>
+                            <option value="{{$comm['slug']}}" {{$comm['slug'] == $data['message']['category'] ? 'selected' : ''}} >{{$comm['name']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -117,20 +115,13 @@
             <h2>File Attachments</h2>
         </div>
         <div class="row mt-lg-2">
-            <div class="col-md-6 p-4">
+            <div class="col-12 p-4">
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
                         Add File(s) To Message
                     </label>
                     <input type="file" id="inputFile" name="attachments[]" multiple />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <button class="btn btn-outline-light">Media library button, todo</button>
-                <div x-data="{ imageUrl: '' }">
-                    <input type="text" x-model="imageUrl" placeholder="Enter image URL">
-                    <img :src="imageUrl" alt="Image">
                 </div>
             </div>
         </div>

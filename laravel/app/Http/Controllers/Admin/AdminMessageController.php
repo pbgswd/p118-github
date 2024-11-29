@@ -146,14 +146,14 @@ class AdminMessageController extends Controller
         if ($message->state == 'sending') {
             Session::flash('warning', 'The message, '.$message->subject.
             ', can no longer be edited because it has been sent to the mail queue');
-            // return redirect()->route('admin_messages');
             return redirect()->back()->with('error', 'You cannot edit content because it has been sent to the mail queue.');
         }
 
-        if ($message->state === 'sent') {
+        if ($message->state == 'sent') {
             // Redirect back with an error message or show a message
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
+
 
         $data = [
             'message' => $message,
@@ -162,7 +162,7 @@ class AdminMessageController extends Controller
             'model_subscription_options' => Options::model_subscription_options(),
             'action' => 'Edit',
         ];
-
+//dd($data);
         return view('admin.messages.message', ['data' => $data]);
     }
 
@@ -174,6 +174,21 @@ class AdminMessageController extends Controller
             // Redirect back with an error message or show a message
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
+//todo set value for section, category.
+        // And what if I wanted to have a message associated with more than one section and category?
+        // model_source_type_name || topic_source_type_name || committee_source_type_name
+//dd($request->all());
+
+        if($request->model_source_type_name !='') {
+            $source_type = 'model';
+            $section = 'model';
+            $category = $request->model_source_type_name;
+        }
+
+
+
+
+
 
         $message->fill($request->message);
         $message->save();

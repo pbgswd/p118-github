@@ -1,7 +1,6 @@
 @extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-paperclip"></i> <i class="far fa-image"></i>',
 'title' => ' List Attachements and Images'])
 @section('content')
-
     <div class="container my-6">
         <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
         <div x-data="imageInserter()">
