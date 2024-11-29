@@ -15,6 +15,7 @@ use App\Models\FaqData;
 use App\Models\Feature;
 use App\Models\Meeting;
 use App\Models\Memoriam;
+use App\Models\Message;
 use App\Models\Organization;
 use App\Models\Page;
 use App\Models\Policy;
@@ -57,6 +58,7 @@ class LocalSearchController extends Controller
                 ->registerModel(UserInfo::class, 'about')
                 ->registerModel(Faq::class, 'faq_topic')
                 //->registerModel(FaqData::class, ['question', 'answer'])
+                ->registerModel(Message::class, ['subject', 'content'])
                 ->search($request->search),
         ];
 

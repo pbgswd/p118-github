@@ -16,6 +16,7 @@ use App\Models\FaqData;
 use App\Models\Feature;
 use App\Models\Meeting;
 use App\Models\Memoriam;
+use App\Models\Message;
 use App\Models\Organization;
 use App\Models\Page;
 use App\Models\Policy;
@@ -233,6 +234,16 @@ class AdminSearchController extends Controller
             'results' => (new Search)
                 ->registerModel(Memoriam::class, static function (ModelSearchAspect $aspect) {
                     $aspect->addSearchableAttribute('title')
+                        ->addSearchableAttribute('content')
+                        ->withoutGlobalScope(LiveScope::class);
+                })->search($request->search),
+        ];
+        $data['models']['Message'] = [
+            'name' => 'In Messages',
+            'search' => $request->search,
+            'results' => (new Search)
+                ->registerModel(Message::class, static function (ModelSearchAspect $aspect) {
+                    $aspect->addSearchableAttribute('subject')
                         ->addSearchableAttribute('content')
                         ->withoutGlobalScope(LiveScope::class);
                 })->search($request->search),

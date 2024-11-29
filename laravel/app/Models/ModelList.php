@@ -140,6 +140,13 @@ class ModelList
                 'pub_route' => 'faq_show',
                 'admin_route' => 'admin_faq_edit',
             ],
+            'Message' => [
+                'name' => 'Messages',
+                'pub_route_list' => 'messages',
+                'admin_route_list' => 'admin_messages_list',
+                'pub_route' => 'message',
+                'admin_route' => 'admin_message_edit',
+            ],
         ];
     }
 }

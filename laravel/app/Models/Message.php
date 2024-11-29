@@ -48,7 +48,7 @@ class Message extends Model implements HasAttachment, Searchable
         if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
-                $this->title,
+                $this->subject,
                 \route('admin_message_edit', [$this->id, $this->slug])
             );
         }
