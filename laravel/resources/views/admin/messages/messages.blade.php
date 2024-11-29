@@ -60,8 +60,6 @@
             <th scope="col">#</th>
             <th scope="col">Subject</th>
             <th scope="col">Author</th>
-            <th scope="col"> @sortablelink('section','Section')</th>
-            <th scope="col"> @sortablelink('category','Category')</th>
             <th scope="col"> @sortablelink('state','State')</th>
             <th scope="col"> @sortablelink('count','Count')</th>
             <th scope="col"> Edit</th>
@@ -95,8 +93,6 @@
                     <a href="{{route('member', $msg['user_id'])}}" class="text-break">
                         {{$msg['user']->name}}</a>
                 </td>
-                <td>{{$msg->section}}</td>
-                <td>{{$msg->category}}</td>
                 <td>{{$msg->state}}</td>
                 <td>{{$msg->count}}</td>
                 <td>

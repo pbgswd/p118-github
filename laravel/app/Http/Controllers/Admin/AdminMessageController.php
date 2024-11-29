@@ -52,10 +52,26 @@ class AdminMessageController extends Controller
     public function create(): View
     {
         //todo policy, intitial state for pull down menus
+
+        //todo selected value in each collection
         $data = [
-            'committee_subscription_options' => Committee::where('live', 1)->get(),
-            'topic_subscription_options' => Topic::where('live', 1)->get(),
-            'model_subscription_options' => Options::model_subscription_options(),
+            'committee_subscription_options' => Committee::where('live', 1)
+                ->get()
+                ->map(function ($committee) {
+                    $committee->selected = '';
+                    return $committee;
+                }),
+            'topic_subscription_options' => Topic::where('live', 1)
+                ->get()
+                ->map(function ($topic) {
+                    $topic->selected = '';
+                    return $topic;
+                }),
+            'model_subscription_options' => collect(Options::model_subscription_options())
+                ->map(function ($model) {
+                    $model['selected'] = '';
+                    return $model;
+                }),
             'message' => new Message,
             'message_meta_data' => ['source_type' => 'model', 'source_type_name' => 'message'],
             'message_sending' => 'normal',
@@ -132,7 +148,7 @@ class AdminMessageController extends Controller
         Session::flash('success', 'A new message, '.$message->subject.
             ', has been created');
 
-        return redirect()->route('admin_message_edit', $message->id);
+        return redirect()->route('admin_message_edit', [$message->id, $message->slug]);
     }
 
     /**
@@ -146,10 +162,12 @@ class AdminMessageController extends Controller
 
         $message_categories = MessageCategory::where('message_id', $message->id)->get();
 
-
+        foreach($message_categories as $mc) {
+            $mc['field'] = $mc->type . " " . $mc->name;
+            $mc_data[] = $mc;
+        }
 
  //todo sort out message_categories data so it can be handled by the blade template
-
 
         if ($message->state == 'sending') {
             Session::flash('warning', 'The message, '.$message->subject.
@@ -163,15 +181,69 @@ class AdminMessageController extends Controller
         }
 
 
+
+        $committee_options = Committee::where('live', 1)
+            ->get()
+            ->map(function ($committee) use ($mc_data) {
+                $isSelected = count(array_filter($mc_data, function ($mcItem) use ($committee) {
+                        return $mcItem->type === 'committee' &&
+                            'committee ' . $committee->slug === $mcItem['field'];
+                    })) > 0;
+                $committee->selected = $isSelected ? 'selected' : '';
+                return $committee;
+            });
+
+        $counts['committee'] = $committee_options
+            ->filter(function ($committee) {
+                return $committee['selected'] === 'selected';
+            })
+            ->count();
+
+        $topic_options = Topic::where('live', 1)
+            ->get()
+            ->map(function ($topic) use ($mc_data) {
+                $isSelected = count(array_filter($mc_data, function ($mcItem) use ($topic) {
+                        return $mcItem->type === 'topic' &&
+                            'topic ' . $topic->slug === $mcItem['field'];
+                    })) > 0;
+                $topic->selected = $isSelected ? 'selected' : '';
+                return $topic;
+            });
+
+        $counts['topic'] = $topic_options
+            ->filter(function ($topic) {
+                return $topic['selected'] === 'selected';
+            })
+            ->count();
+
+        $model_options = collect(Options::model_subscription_options())
+            ->map(function ($model) use ($mc_data) {
+                $isSelected = count(array_filter($mc_data, function ($mcItem) use ($model) {
+                        return $mcItem->type === 'model' &&
+                            'model ' . $model['model'] === $mcItem['field'];
+                    })) > 0;
+                $model['selected'] = $isSelected ? 'selected' : '';
+                return $model;
+            });
+
+        $counts['model'] = $model_options
+            ->filter(function ($model) {
+                return $model['selected'] === 'selected';
+            })
+            ->count();
+
+        $counts['total'] = array_sum($counts);
+
         $data = [
             'message' => $message,
-            'message_categories' => $message_categories,
-            'committee_subscription_options' => Committee::where('live', 1)->get(),
-            'topic_subscription_options' => Topic::where('live', 1)->get(),
-            'model_subscription_options' => Options::model_subscription_options(),
+            'message_categories' => $mc_data,
+            'committee_subscription_options' => $committee_options,
+            'topic_subscription_options' => $topic_options,
+            'model_subscription_options' => $model_options,
+            'counts' => $counts,
             'action' => 'Edit',
         ];
-//dd($data);
+
         return view('admin.messages.message', ['data' => $data]);
     }
 
@@ -185,26 +257,20 @@ class AdminMessageController extends Controller
         }
         $message->fill($request->message);
 
-//dd($request->all());
-
         $sections = ['model', 'topic', 'committee'];
-//todo look at docs for proper save todo, to not continually make data, this is an update method
-        //todo I probably dont need timestamps
 
         MessageCategory::where('message_id', $message->id)->delete();
 
-        foreach ($sections as $section) {
-            foreach ($request['source_type'][$section] as $category) {
-                [$type, $name] = explode(' ', $category);
+        foreach ($request['source_type'] as $category) {
+            foreach ($category as $cat) {
+                [$type, $name] = explode(' ', $cat);
                 $data['message_id'] = $message->id;
                 $data['type'] = $type;
                 $data['name'] = $name;
-                //todo wrong thing to do here, there is another way to save
-                 $mc = new MessageCategory($data);
-                 $mc->save();
+                $mc = new MessageCategory($data);
+                $mc->save();
             }
         }
-
         $message->save();
 
         $result = $this->attachmentService->updateAttachment($request, $message);
@@ -217,7 +283,7 @@ class AdminMessageController extends Controller
             }
         }
 
-        Session::flash('success', 'You have updated '.$message->subject);
+        Session::flash('success', 'You have updated ' . $message->subject);
 
         return redirect()->route('admin_message_edit', [$message->id, $message->slug]);
     }
@@ -225,6 +291,7 @@ class AdminMessageController extends Controller
     public function preview(Message $message): View
     {
         $message->load('user', 'attachments');
+        //todo message categories info
         $data = [
             'message' => $message,
         ];

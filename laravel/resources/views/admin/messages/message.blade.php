@@ -19,11 +19,6 @@
     <div class="col-12 mx-2">
         @if($data['action'] == 'Edit')
             <div class="col-12 border border-1 rounded p-4">
-                <p>Created by: <a href="{{route('member', $data['message']->user->id)}}">
-                        {{$data['message']->user->name}}</a>. |
-                Created At: {{$data['message']->created_at->format('F j Y H:i:s') }}.  |
-                    Last Updated At: {{ $data['message']->updated_at->format('F j Y H:i:s') }}
-                </p>
                 <p>
                     Source URL: <a href="{{$data['message']->source_url ?? ''}}">
                         {{$data['message']->source_url ?? ''}}
@@ -32,44 +27,47 @@
             </div>
         @endif
         <div class="col-12 my-4">
-            <h4 class="my-3">Select a topic, model, or committee for the message</h4>
-            @if($data['action'] == 'Edit')
-                Currently selected categories for this message are....(todo)
-            @endif
+            <h4 class="my-3">
+                @if($data['action'] == 'Create')
+                    Select a topic, model, or committee for the message
+                @else
+                    {{$data['counts']['total']}} categories selected
+                @endif
+            </h4>
         </div>
         <div class="col-12 my-4">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link {{$data['message']['section'] == 'topic' ? 'active' : '' }}" id="nav-topic-tab" data-bs-toggle="tab" data-bs-target="#nav-topic" type="button" role="tab" aria-controls="nav-topic" aria-selected="false">Topics</button>
-                    <button class="nav-link {{$data['message']['section'] == 'model' ? 'active' : '' }}" id="nav-model-tab" data-bs-toggle="tab" data-bs-target="#nav-model" type="button" role="tab" aria-controls="nav-model" aria-selected="false">Content Sections</button>
-                    <button class="nav-link {{$data['message']['section'] == 'committee' ? 'active' : ''}}" id="nav-committee-tab" data-bs-toggle="tab" data-bs-target="#nav-committee" type="button" role="tab" aria-controls="nav-committee" aria-selected="false">Committees</button>
+                    <button class="nav-link active" id="nav-topic-tab" data-bs-toggle="tab" data-bs-target="#nav-topic" type="button" role="tab" aria-controls="nav-topic" aria-selected="false">Topics ({{$data['counts']['topic'] ?? 0}})</button>
+                    <button class="nav-link" id="nav-model-tab" data-bs-toggle="tab" data-bs-target="#nav-model" type="button" role="tab" aria-controls="nav-model" aria-selected="false">Content Sections ({{$data['counts']['model'] ?? 0}})</button>
+                    <button class="nav-link" id="nav-committee-tab" data-bs-toggle="tab" data-bs-target="#nav-committee" type="button" role="tab" aria-controls="nav-committee" aria-selected="false">Committees ({{$data['counts']['committee'] ?? 0}})</button>
                 </div>
             </nav>
+
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade {{$data['message']['section'] == 'topic' ? 'show active' : '' }}
                 p-4" id="nav-topic" role="tabpanel" aria-labelledby="nav-topic-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[topic][]' aria-label="Default select example">
-
                         @foreach($data['topic_subscription_options'] as $t)
-                            <option value="topic {{$t['slug']}}" {{$t['slug'] == $data['message']['category']  ? 'selected' : ''}}>{{$t['name']}}</option>
+                            <option value="topic {{$t['slug']}}" {{$t['selected']}}>{{$t['name']}}  {{$t['selected']}}</option>
                         @endforeach
                     </select>
                 </div>
+
                 <div class="tab-pane fade {{$data['message']['section'] == 'model' ? 'show active' : '' }}
                  p-4" id="nav-model" role="tabpanel" aria-labelledby="nav-model-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[model][]' aria-label="Default select example">
-
                         @foreach($data['model_subscription_options'] as $m)
-                            <option value="model {{$m['model']}}" {{$m['model'] == ucfirst($data['message']['category']) ? 'selected' : ''}}>{{$m['name']}}</option>
+                            <option value="model {{$m['model']}}" {{$m['selected']}}>{{$m['name']}}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="tab-pane fade {{$data['message']['section'] == 'committee' ? 'show active' : '' }}
+
+                <div class="tab-pane fade {{'committee' == 'committee' ? 'show active' : '' }}
                  p-4" id="nav-committee" role="tabpanel" aria-labelledby="nav-committee-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[committee][]' aria-label="Default select example">
-
                         @foreach($data['committee_subscription_options'] as $comm)
-                            <option value="committee {{$comm['slug']}}" {{$comm['slug'] == $data['message']['category'] ? 'selected' : ''}} >{{$comm['name']}}</option>
+                            <option value="committee {{$comm['slug']}}" {{$comm['selected']}}>{{$comm['name']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -77,7 +75,8 @@
         </div>
         <div class="col-12 my-4">
             <h3>Subject</h3>
-            <input x-model="subject" type="text" name="message[subject]" value="{{ old('message.subject', $data['message']->subject)}}" size="60" required />
+            <input type="text" name="message[subject]" value="{{ old('message.subject', $data['message']->subject)}}"
+                   placeholder="add the message subject" size="60" required />
         </div>
     </div>
     <div class="row">
@@ -109,8 +108,8 @@
                 <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
             </div>
         </div>
-    </div>
-    <div class="row m-4 border border-1 rounded">
+
+    <div class="row ml-4 mr-4 border border-1 rounded">
         <div class="col-12 p-4">
             <h2>File Attachments</h2>
         </div>
@@ -125,7 +124,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-lg-2">
+
             @if ($data['action'] == 'Edit')
                 <div class="col-12">
                     <h2><i class="fas fa-paperclip"></i> Files</h2>
@@ -195,6 +194,18 @@
             @endif
         </div>
     </div>
+    @if ($data['action'] == 'Edit')
+        <div class="row mt-2">
+            <div class="col-12 border border-1 rounded p-4 text-center">
+                <p>Created by: <a href="{{route('member', $data['message']->user->id)}}">
+                        {{$data['message']->user->name}}</a>. |
+                    Created At: {{$data['message']->created_at->format('F j Y H:i:s') }}.  |
+                    Last Updated At: {{ $data['message']->updated_at->format('F j Y H:i:s') }}
+                </p>
+            </div>
+        </div>
+    @endif
+
     <div class="row my-5">
         <div class="col-sm-12 col-md-6 mx-auto text-center">
             <i class="fas fa-edit fa-2x"></i>
