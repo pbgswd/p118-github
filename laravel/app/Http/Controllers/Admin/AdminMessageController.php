@@ -297,7 +297,7 @@ class AdminMessageController extends Controller
                         ->from('message_categories')
                         ->whereRaw('message_categories.type = message_selections.type')
                         ->whereRaw('message_categories.name = message_selections.name')
-                        ->whereRaw('message_categories.message_id = '. $message->id);
+                        ->whereRaw('message_categories.message_id = ?', [$message->id]);
                 });
             })
             ->distinct()
