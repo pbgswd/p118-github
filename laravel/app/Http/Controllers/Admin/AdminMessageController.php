@@ -85,59 +85,27 @@ class AdminMessageController extends Controller
     {
         //todo form request validator, policy
         $message = new Message($request->message);
-        $message['user_id'] = Auth::id();
 
-    //todo slug, source_url
+        $message['user_id'] = Auth::id();
+        $message['slug'] = Str::slug($message['subject'], '-'); // model method?
 
         $message->save();
+        $message['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $message['slug'];
+        $message->save();
 
-
-        if (! is_null($request->model_source_type_name)) {
-
-            //todo things that belong to any model
-
-            $source_type = 'model';
-            $source_type_name = $request->model_source_type_name;
-
-            $source_id = '';
-            $source_slug = '';
-            $source_url = '';
-
-            if ($request->model_source_type_name == 'Message') {
-                $source_id = $message->id;
-                $source_slug = '';
-                $source_url = strtolower($request->model_source_type_name).'/'.$source_id;
+        foreach ($request['source_type'] as $category) {
+            foreach ($category as $cat) {
+                [$type, $name] = explode(' ', $cat);
+                $data['message_id'] = $message->id;
+                $data['type'] = $type;
+                $data['name'] = $name;
+                $mc = new MessageCategory($data);
+                $mc->save();
             }
         }
 
-        if (! is_null($request->topic_source_type_name)) {
-
-            //todo things that belong to topic
-
-            $source_id = '';
-            $source_slug = '';
-            $source_url = '';
-
-            $source_type = 'topic';
-            $source_type_name = $request->topic_source_type_name;
-        }
-
-        if (! is_null($request->committee_source_type_name)) {
-
-            //todo things that belong to any committee
-
-            $source_id = '';
-            $source_slug = '';
-            $source_url = '';
-
-            $source_type = 'committee';
-            $source_type_name = $request->committee_source_type_name;
-        }
-
-
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $message);
-
             if ($result) {
                 Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
             } else {
@@ -145,8 +113,7 @@ class AdminMessageController extends Controller
             }
         }
 
-        Session::flash('success', 'A new message, '.$message->subject.
-            ', has been created');
+        Session::flash('success', 'A new message, ' . $message->subject . ', has been created');
 
         return redirect()->route('admin_message_edit', [$message->id, $message->slug]);
     }
@@ -161,7 +128,7 @@ class AdminMessageController extends Controller
         $message->load(['user', 'attachments']);
 
         $message_categories = MessageCategory::where('message_id', $message->id)->get();
-
+        $mc_data = [];
         foreach($message_categories as $mc) {
             $mc['field'] = $mc->type . " " . $mc->name;
             $mc_data[] = $mc;
@@ -255,7 +222,10 @@ class AdminMessageController extends Controller
             // Redirect back with an error message or show a message
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
+
         $message->fill($request->message);
+
+        $message['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $message['slug'];
 
         $sections = ['model', 'topic', 'committee'];
 
@@ -320,10 +290,15 @@ class AdminMessageController extends Controller
         // ProcessMessages::dispatch(['id' => $message->id]);
         // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
-        $subs = User::where( 'is_banned', '!=', 1)
-            ->whereHas('message_selections', function ($query) use ($message) {
-            $query->where('type', $message->section)->where('name', $message->category);
-        })->get();
+        $subs = User::where('is_banned', '!=', 1)
+            ->whereHas('message_selections', function ($query) {
+                $query->whereIn('type', function ($subQuery) {
+                    $subQuery->select('type')
+                        ->from('message_categories');
+                });
+            })
+            ->distinct()
+            ->get();
 
         foreach ($subs as $sub) {
             $emailQueueMsg = new EmailQueue([
@@ -333,7 +308,8 @@ class AdminMessageController extends Controller
             $emailQueueMsg->save();
         }
 
-        Session::flash('success', 'The message, '.$message->subject.', has been sent to the mail queue and is going out now');
+        Session::flash('success', 'The message, ' . $message->subject .
+            ', has been sent to the mail queue and is going out now');
 
         return redirect()->route('admin_messages');
     }
@@ -345,6 +321,7 @@ class AdminMessageController extends Controller
         Message::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Message $message) {
+                MessageCategory::where('message_id', $message->id)->delete();
                 //todo only destroy attachments if not from other content
                 $this->attachmentService->destroyAttachments($message);
                 $message->delete();

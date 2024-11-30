@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -23,7 +24,6 @@ class Message extends Model implements HasAttachment, Searchable
         'section',
         'category',
         'subject',
-        'slug',
         'content',
         'user_id',
         'count',
@@ -32,8 +32,6 @@ class Message extends Model implements HasAttachment, Searchable
 
     public $sortable = [
         'id',
-        'section',
-        'category',
         'user_id',
         'count',
         'created_at',
@@ -63,6 +61,13 @@ class Message extends Model implements HasAttachment, Searchable
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function setTitleAttribute($value): string
+    {
+        $this->attributes['slug'] = Str::slug($value, '-');
+
+        return $this->attributes['subject'] = $value;
     }
 
     public function message_categories(): BelongsToMany

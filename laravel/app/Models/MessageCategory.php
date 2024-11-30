@@ -13,4 +13,6 @@ class MessageCategory extends Model
         'type',
         'name',
     ];
+
+
 }
