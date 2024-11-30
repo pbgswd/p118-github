@@ -291,10 +291,13 @@ class AdminMessageController extends Controller
         // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
         $subs = User::where('is_banned', '!=', 1)
-            ->whereHas('message_selections', function ($query) {
-                $query->whereIn('type', function ($subQuery) {
-                    $subQuery->select('type')
-                        ->from('message_categories');
+            ->whereHas('message_selections', function ($query)  use ($message) {
+                $query->whereExists(function ($subQuery) use ($message) {
+                    $subQuery->select('*')
+                        ->from('message_categories')
+                        ->whereRaw('message_categories.type = message_selections.type')
+                        ->whereRaw('message_categories.name = message_selections.name')
+                        ->whereRaw('message_categories.message_id = '. $message->id);
                 });
             })
             ->distinct()
