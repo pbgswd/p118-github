@@ -29,16 +29,16 @@
         <div class="col-12 my-4">
             <h4 class="my-3">
                 @if($data['action'] == 'Create')
-                    Select a topic, model, or committee for the message
+                    Select a topic, model, or committee for the message, and save.
                 @else
-                    {{$data['counts']['total']}} categories selected
+                    {{$data['counts']['total']}} categories selected. Save any changes before sending.
                 @endif
             </h4>
         </div>
         <div class="col-12 my-4">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-topic-tab" data-bs-toggle="tab" data-bs-target="#nav-topic" type="button" role="tab" aria-controls="nav-topic" aria-selected="false">Topics ({{$data['counts']['topic'] ?? 0}})</button>
+                    <button class="nav-link" id="nav-topic-tab" data-bs-toggle="tab" data-bs-target="#nav-topic" type="button" role="tab" aria-controls="nav-topic" aria-selected="false">Topics ({{$data['counts']['topic'] ?? 0}})</button>
                     <button class="nav-link" id="nav-model-tab" data-bs-toggle="tab" data-bs-target="#nav-model" type="button" role="tab" aria-controls="nav-model" aria-selected="false">Content Sections ({{$data['counts']['model'] ?? 0}})</button>
                     <button class="nav-link" id="nav-committee-tab" data-bs-toggle="tab" data-bs-target="#nav-committee" type="button" role="tab" aria-controls="nav-committee" aria-selected="false">Committees ({{$data['counts']['committee'] ?? 0}})</button>
                 </div>
@@ -49,7 +49,7 @@
                 p-4" id="nav-topic" role="tabpanel" aria-labelledby="nav-topic-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[topic][]' aria-label="Default select example">
                         @foreach($data['topic_subscription_options'] as $t)
-                            <option value="topic {{$t['slug']}}" {{$t['selected']}}>{{$t['name']}}  {{$t['selected']}}</option>
+                            <option value="topic {{$t['slug']}}" {{$t['selected']}}>{{$t['name']}}</option>
                         @endforeach
                     </select>
                 </div>
