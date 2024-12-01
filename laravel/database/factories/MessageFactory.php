@@ -30,4 +30,8 @@ class MessageFactory extends Factory
         ];
     }
 
+    //todo make message_cagtegories data for messages
+
+    //todo make user message_selections data
+
 }

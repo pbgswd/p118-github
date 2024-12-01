@@ -201,6 +201,19 @@ class AdminMessageController extends Controller
 
         $counts['total'] = array_sum($counts);
 
+        $counts['recipients'] = User::where('is_banned', '!=', 1)
+            ->whereHas('message_selections', function ($query)  use ($message) {
+                $query->whereExists(function ($subQuery) use ($message) {
+                    $subQuery->select('*')
+                        ->from('message_categories')
+                        ->whereRaw('message_categories.type = message_selections.type')
+                        ->whereRaw('message_categories.name = message_selections.name')
+                        ->whereRaw('message_categories.message_id = ?', [$message->id]);
+                });
+            })
+            ->distinct()
+            ->count();
+
         $data = [
             'message' => $message,
             'message_categories' => $mc_data,
@@ -224,7 +237,7 @@ class AdminMessageController extends Controller
         }
 
         $message->fill($request->message);
-
+//todo update it properly. if it is from message, just the slug. If it is from another model, the whole thing?
         $message['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $message['slug'];
 
         $sections = ['model', 'topic', 'committee'];
@@ -283,25 +296,22 @@ class AdminMessageController extends Controller
     {
         //todo policy
         Log::info('About to move command to jobs table '.$message->id);
-        $message->state = 'sending';
-        $message->save();
-
         // Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
         // ProcessMessages::dispatch(['id' => $message->id]);
         // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
-        $subs = User::where('is_banned', '!=', 1)
-            ->whereHas('message_selections', function ($query)  use ($message) {
-                $query->whereExists(function ($subQuery) use ($message) {
-                    $subQuery->select('*')
-                        ->from('message_categories')
-                        ->whereRaw('message_categories.type = message_selections.type')
-                        ->whereRaw('message_categories.name = message_selections.name')
-                        ->whereRaw('message_categories.message_id = ?', [$message->id]);
-                });
-            })
-            ->distinct()
-            ->get();
+         $subs = User::where('is_banned', '!=', 1)
+             ->whereHas('message_selections', function ($query)  use ($message) {
+                 $query->whereExists(function ($subQuery) use ($message) {
+                     $subQuery->select('*')
+                         ->from('message_categories')
+                         ->whereRaw('message_categories.type = message_selections.type')
+                         ->whereRaw('message_categories.name = message_selections.name')
+                         ->whereRaw('message_categories.message_id = ?', [$message->id]);
+                 });
+             })
+             ->distinct()
+             ->get();
 
         foreach ($subs as $sub) {
             $emailQueueMsg = new EmailQueue([
@@ -310,6 +320,9 @@ class AdminMessageController extends Controller
             ]);
             $emailQueueMsg->save();
         }
+
+        $message->state = 'sending';
+        $message->save();
 
         Session::flash('success', 'The message, ' . $message->subject .
             ', has been sent to the mail queue and is going out now');

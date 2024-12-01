@@ -24,6 +24,11 @@ return new class extends Migration
            $table->dropColumn('category');
        });
 
+       Schema::table('users', function (Blueprint $table) {
+          //todo set default is_banned=0
+           $table->tinyInteger('is_banned')->default(0)->index()->change();
+       });
+
     }
 
     /**

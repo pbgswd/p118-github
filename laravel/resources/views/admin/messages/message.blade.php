@@ -27,13 +27,24 @@
             </div>
         @endif
         <div class="col-12 my-4">
-            <h4 class="my-3">
+
                 @if($data['action'] == 'Create')
-                    Select a topic, model, or committee for the message, and save.
+                    <h4 class="my-3">
+                        Select a topic, model, or committee for the message, and save.
+                    </h4>
                 @else
-                    {{$data['counts']['total']}} categories selected. Save any changes before sending.
+                    <h3><i class="fas fa-exclamation-circle" style="color:blue"></i> Save any changes before sending.</h3>
+                    <h4 class="my-3">
+                        <i class="fas fa-info-circle" style="color:cadetblue"></i>
+                        {{$data['counts']['total']}} {{Str::plural('category', $data['counts']['total'])}} selected.
+                    </h4>
+                    <h5 class="my-3">
+                        <i class="fas fa-info-circle" style="color:cadetblue"></i>
+                    {{$data['counts']['recipients']}} {{Str::plural('recipient', $data['counts']['recipients'])}}
+                        based on the selected categories for this message.
+                    </h5>
                 @endif
-            </h4>
+
         </div>
         <div class="col-12 my-4">
             <nav>
@@ -230,8 +241,10 @@
         <div class="row p-4 mt-5 border border-1 rounded">
             <a name="sending"></a>
             <div class="col-12 text-center mb-4">
-                <h2>Sending</h2>
-                <h3>Note: The content can no longer be modified after it has been sent out.</h3>
+                <h2><i class="far fa-paper-plane mx-2" style="color:orange;"></i> Sending</h2>
+                <h3><i class="fas fa-exclamation-circle" style="color:blue"></i> Save any changes before sending.</h3>
+                <h3><i class="fas fa-exclamation-circle" style="color:indianred"></i>
+                    Note: The content can no longer be modified after it has been sent out.</h3>
             </div>
             <div class="col-sm-12 col-md-3 mx-auto text-center">
                 <i class="fas fa-glasses fa-2x"></i>
@@ -241,7 +254,7 @@
                 </a>
             </div>
             <div class="col-sm-12 col-md-3 mx-auto ml-3 text-center">
-                <i class="far fa-paper-plane fa-2x mx-2"></i>
+                <i class="far fa-paper-plane fa-2x mx-2" style="color:orange;"></i>
                 <a href="{{route('admin_message_send', [$data['message']->id, $data['message']->slug])}}"
                    class="btn btn-outline-danger">
                     Send to mail queue
