@@ -52,6 +52,24 @@
                     </div>
                 </div>
             @endif
+
+            <div class="d-flex justify-content-center">
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        @if ($data['previous'])
+                            <li class="page-item"><a class="page-link" href="{{ route('message', [$data['previous']->id, $data['previous']->slug]) }}">Previous</a></li>
+                        @endif
+                        @if($data['next'])
+                            <li class="page-item"><a class="page-link" href="{{ route('message', [$data['next']->id, $data['next']->slug])}}">Next</a></li>
+                        @endif
+                    </ul>
+                </nav>
+
+
+            </div>
+
+
         </div>
     </div>
 </div>

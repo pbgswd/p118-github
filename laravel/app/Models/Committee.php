@@ -162,4 +162,10 @@ class Committee extends LiveableModel implements HasAttachment, Searchable
     {
         return $this->access_level;
     }
+
+    public function message_selections(): HasMany
+    {
+        return $this->hasMany(MessageSelection::class, 'name', 'slug')
+            ->where('type', 'committee');
+    }
 }

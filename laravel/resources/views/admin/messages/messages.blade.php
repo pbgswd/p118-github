@@ -10,7 +10,8 @@
         <ul>
             <li>Send to all members in the website database</li>
             <li>Replaces what MailChimp is used for</li>
-            <li>Members must be non suspended</li>
+            <li>Messages can be associated with multiple categories</li>
+            <li>Members must be non suspended to receive messages</li>
             <li>Members can manage their email preferences on their profile:
             receive immediately, daily, weekly, unsubscribe</li>
         </ul>
@@ -19,9 +20,9 @@
         <ul>
             <li>Messages can be previewed before sending</li>
             <li>Messages to go out are put in a mail queue and sent out in batches</li>
-            <li>Messages will be a content type that can be viewed on the website</li>
+            <li>Messages has a content type that can be viewed on the website</li>
             <li>After messages are sent, they are 'read-only'. No editing. </li>
-            <li><a href="{{route('admin_email_queue_list')}}">List of mail queue</a></li>
+            <li><a href="{{route('admin_email_queue_list')}}">List of mail currently in the queue</a></li>
         </ul>
     </div>
 </div>
@@ -45,6 +46,10 @@
                 {{ $data['sent'] . ' ' . Str::plural('message', $data['sent']) }} sent.
             </li>
         </ul>
+        <h4 class="mt-5">
+            {{$data['subscriber_count']}} of {{$data['users']}} {{Str::plural('member', $data['users'])}}
+            have at least one subscription, or {{ round($data['subscriber_count'] / $data['users'], 2) }} %.
+        </h4>
     </div>
     <div class="col-12 mt-3">
         <a href="{{route('admin_message_create')}}">Create new Message</a>
@@ -130,6 +135,43 @@
         </div>
     </div>
     </form>
+<div class="row">
+    <hr />
+    <h3>Message Subscription Categories</h3>
+    <div class="col-4 p-4">
+        <h3>Topics</h3>
+        <ul class="list-group">
+            @foreach($data['categories']['Topics'] as $t)
+                <li class="list-group-item">
+                    {{$t->name}} ( {{$t->user_count}} {{Str::plural('subscriber', $t->user_count)}} )
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="col-4 p-4">
+            <h3>Content</h3>
+        <ul class="list-group">
+            @foreach($data['categories']['Models'] as $k => $v)
+                <li class="list-group-item">{{$k}}  ( {{$v}} {{Str::plural('subscriber', $v)}} )</li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="col-4 p-4">
+            <h3>Committees</h3>
+        <ul class="list-group">
+            @foreach($data['categories']['Committees'] as $c)
+                <li class="list-group-item">
+                    {{$c->name}}  ( {{$c->user_count}} {{Str::plural('subscriber', $c->user_count)}} )
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <h4 class="mt-5">
+        {{$data['subscriber_count']}} of {{$data['users']}} {{Str::plural('member', $data['users'])}}
+        have at least one subscription, or {{ round($data['subscriber_count'] / $data['users'], 2) }} %.
+    </h4>
+</div>
+
     <div class="row">
         <div class="col-12 mt-3 text-center d-flex justify-content-center">
             <div class="list-group">

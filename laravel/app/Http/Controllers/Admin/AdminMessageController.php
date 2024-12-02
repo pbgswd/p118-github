@@ -9,6 +9,7 @@ use App\Models\Committee;
 use App\Models\EmailQueue;
 use App\Models\Message;
 use App\Models\MessageCategory;
+use App\Models\MessageSelection;
 use App\Models\Options;
 use App\Models\Topic;
 use App\Models\User;
@@ -16,6 +17,7 @@ use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -35,16 +37,50 @@ class AdminMessageController extends Controller
     {
         //todo policy
         $data = [];
+
+        $topics = Topic::where('live', 1)
+            ->withCount(['message_selections as user_count' => function ($query) {
+                $query->where('type', 'topic');
+            }])
+            ->get();
+
+        $committees = Committee::where('live', 1)
+            ->withCount(['message_selections as user_count' => function ($query) {
+                $query->where('type', 'committee');
+            }])
+            ->get();
+
+        $subscriber_count = MessageSelection::distinct('user_id')->count('user_id');
+        $users = User::all()->count();
+
+        $models = collect(Options::model_subscription_options())->mapWithKeys(function ($modelOption) {
+            return [
+                $modelOption['name'] => MessageSelection::where('type', 'model')
+                    ->where('name', $modelOption['model'])
+                    ->distinct('user_id')
+                    ->count('user_id')
+            ];
+        });
+
+        $data = [
+            'total_messages' => Message::all()->count(),
+            'total_emails_sent' => Message::sum('count'),
+            'subscriber_count' => MessageSelection::distinct('user_id')->count('user_id'),
+            'users' => User::all()->count(),
+            'not_sent' => Message::where('state', 'not_sent')->count(),
+            'sending' => Message::where('state', 'sending')->count(),
+            'sent' => Message::where('state', 'sent')->count(),
+            'categories' => [
+                'Topics' => $topics,
+                'Models' => $models,
+                'Committees' => $committees,
+                ],
+            ];
+
         $data['messages'] = Message::sortable()
             ->with('user')
             ->orderBy('id', 'DESC')
             ->paginate(20);
-
-        $data['total_messages'] = Message::all()->count();
-        $data['total_emails_sent'] = Message::sum('count');
-        $data['not_sent'] = Message::where('state', 'not_sent')->count();
-        $data['sending'] = Message::where('state', 'sending')->count();
-        $data['sent'] = Message::where('state', 'sent')->count();
 
         return view('admin.messages.messages', ['data' => $data]);
     }
@@ -134,8 +170,6 @@ class AdminMessageController extends Controller
             $mc_data[] = $mc;
         }
 
- //todo sort out message_categories data so it can be handled by the blade template
-
         if ($message->state == 'sending') {
             Session::flash('warning', 'The message, '.$message->subject.
             ', can no longer be edited because it has been sent to the mail queue');
@@ -146,8 +180,6 @@ class AdminMessageController extends Controller
             // Redirect back with an error message or show a message
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
-
-
 
         $committee_options = Committee::where('live', 1)
             ->get()

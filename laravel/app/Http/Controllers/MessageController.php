@@ -40,48 +40,23 @@ class MessageController extends Controller
     {
         $message->load('user', 'attachments');
 
-        //todo distinguish between types and pull in the data
-        $committee = [];
-        $model = [];
-        $topic = [];
+        //todo prove pagination works
 
-        $modelSubOptions = Options::model_subscription_options();
+        $next = Message::where('updated_at', '>', $message->updated_at)
+            ->where ('state', 'sent')
+            ->orderBy('updated_at', 'asc')
+            ->first();
 
-        switch ($message->type) {
-            case 'model':
-                $modelSubOptions = Options::model_subscription_options();
-
-                $row = array_search($message->name, array_column($modelSubOptions, 'model'));
-
-                $class = 'App\\Models\\'.$message->name;
-
-                //dd(['class' => $message->name, 'key' => $modelSubOptions[$row]['key']]);
-                //key will be slug or  id
-                $model = $class::where($modelSubOptions[$row]['key'], '=', $message->slug)->first();
-
-                break;
-            case 'topic':
-                //todo differentiate between a page or post
-                //we have nothing that gets page or post though we can have a data relation, source_url var for data pushed in to Messages model data
-                $topic = Topic::where('slug', $message->name)->first();
-                //   dd($topic[0]);
-                break;
-            case 'committee':
-                $committee = Committee::where('slug', $message->name)->first();
-                break;
-            default:
-                $committee = [];
-                $model = [];
-                $topic = [];
-                break;
-        }
-        //dd([$message, $committee, $model, $topic]);
+        $previous = Message::where('updated_at', '<', $message->updated_at)
+            ->where ('state', 'sent')
+            ->orderBy('updated_at', 'desc')
+            ->first();
 
         $data = [
             'message' => $message,
+            'next' => $next,
+            'previous' => $previous,
         ];
-
-        //  dd($data['message']->attachments);
 
         return view('message', ['data' => $data]);
     }

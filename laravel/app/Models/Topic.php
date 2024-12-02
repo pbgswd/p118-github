@@ -10,6 +10,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
@@ -176,5 +177,11 @@ class Topic extends LiveableModel implements HasAttachment, Searchable
     public function getAttachmentAccessLevel(): string
     {
         return $this->access_level;
+    }
+
+    public function message_selections(): HasMany
+    {
+        return $this->hasMany(MessageSelection::class, 'name', 'name')
+            ->where('type', 'topic');
     }
 }
