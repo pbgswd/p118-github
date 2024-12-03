@@ -150,6 +150,7 @@ class UserController extends Controller
             'user_roles' => $member_roles,
             'committees' => Committee::where('live', '=', 1)->get(),
             'selections' => $selections,
+            'user_selections' => MessageSelection::where('user_id', '=', $user->id)->count(),
             'topic_subscription_options' => $topics,
             'model_subscription_options' => Options::model_subscription_options(),
             'committee_subscription_options' => Committee::where('live', '=', 1)->get(),

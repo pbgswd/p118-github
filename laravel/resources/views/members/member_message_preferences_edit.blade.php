@@ -4,6 +4,16 @@
     <div class="row">
         <div class="col-12 my-6 py-2 text-center align-content-center">
             <h2><i class="far fa-envelope-open"></i> Message Preferences</h2>
+
+            @if($data['user_selections'] > 0 )
+                <h4>
+                    You have subscribed to {{$data['user_selections']}}
+                    message {{Str::plural('category', $data['user_selections'])}}.
+                </h4>
+            @else
+                <h3>You have no subscription selections. Select some categories of information that align with your own interests.</h3>
+            @endif
+
             <h5>Modify your preferences for email messages sent to you from IATSE Local 118.</h5>
             <p>The Local sends out 5-10 messages per week to members.</p>
             <h3><a class="btn btn-outline-primary" href="{{route('messages')}}">Message Archive</a></h3>

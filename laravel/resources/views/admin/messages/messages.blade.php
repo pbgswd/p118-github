@@ -99,7 +99,7 @@
                         {{$msg['user']->name}}</a>
                 </td>
                 <td>{{$msg->state}}</td>
-                <td>{{$msg->count}}</td>
+                <td class="text-center">{{$msg->count}}</td>
                 <td>
                     @if($msg->state == 'not_sent')
                         <a href="{{route('admin_message_edit', [$msg['id'], $msg['slug']])}}"
