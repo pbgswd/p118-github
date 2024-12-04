@@ -5,6 +5,6 @@
   <meta name="viewport" content="width=device-width"/>
   <link href="https://iatse118.com/css/email.css" rel="stylesheet" />
 </head>
-<body>
+<body style="background-color: #fafafa">
 @yield('content')
 @include('emails.footer')

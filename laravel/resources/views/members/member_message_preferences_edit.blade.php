@@ -16,6 +16,8 @@
 
             <h5>Modify your preferences for email messages sent to you from IATSE Local 118.</h5>
             <p>The Local sends out 5-10 messages per week to members.</p>
+            <p>Sender: {{env("MAIL_FROM_ADDRESS")}}.</p>
+            <p><a href="{{env('APP_URL')}}/Membership_List_5.30.19.vcf" target="_blank">Add us to your address book.</p>
             <h3><a class="btn btn-outline-primary" href="{{route('messages')}}">Message Archive</a></h3>
 
         </div>

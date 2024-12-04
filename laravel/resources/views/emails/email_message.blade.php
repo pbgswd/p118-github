@@ -2,14 +2,21 @@
 @section('content')
     <table class="body">
         <tr>
-            <td>
+            <td style="padding: 12px;">
                 <table class="row">
                     <tr>
-                        <td class="wrapper last">
-                            <table class="twelve columns">
+                        <td class="wrapper last" style="text-align: center; padding-bottom:1rem;">
+                            <a href="{{route('message', [$data['message']['id'], $data['message']['slug']])}}"
+                               title="Link to {{$data['message']['subject']}}" target="_blank">
+                                View message on website >>
+                            </a>
+                        </td>
+                        <td class="expander"></td>
+                    </tr>
+                            <table class="twelve columns"  style="background-color: #FFFFFF; border-bottom: 1px solid #CCCCCC;">
                                 <tr>
-                                    <td>
-                                        <a href="https://iatse118.com/" title="IATSE Local 118">
+                                    <td style="padding-top: 1rem; padding-bottom: 1rem; padding-left: 2rem; padding-right: 2rem;">
+                                        <a href="https://iatse118.com/" title="IATSE Local 118" style="text-align: center;">
                                             <img src="https://iatse118.com/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png" style="margin-right: 1rem;"/>
                                             <h1>email</h1>
                                         </a>
@@ -17,27 +24,18 @@
                                     <td class="expander"></td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:center;">
-                                        <hr />
-                                        <h2 class="lead" style="padding-top: 1rem; padding-bottom: 1rem;">{{$data['message']['subject']}}</h2>
-                                        <hr />
+                                    <td style="text-align:center; padding: 2rem;">
+                                        <hr style="height: 3px; background-color: black; border: none;" />
+                                        <h2 class="lead" style=" font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; text-align:center;">
+                                            {{$data['message']['subject']}}
+                                        </h2>
+                                        <hr style="height: 3px; background-color: black; border: none;" />
                                     </td>
                                     <td class="expander"></td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td  style="padding: 2rem;">
                                         {!! $data['message']['content'] !!}
-                                    </td>
-                                    <td class="expander"></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:center;">
-                                        <h5 class="lead" style="padding-top: 1rem; padding-bottom: 1rem; text-align:center;">
-                                            <a href="{{route('message', [$data['message']['id'], $data['message']['slug']])}}"
-                                               title="Link to {{$data['message']['subject']}}" target="_blank">
-                                                link to message on website >>
-                                            </a>
-                                        </h5>
                                     </td>
                                     <td class="expander"></td>
                                 </tr>
