@@ -28,7 +28,7 @@ class SendEmailsNow extends Command
 
     public function handle(): int
     {
-        $messageLimit = 5;
+        $messageLimit = 10;
 
         $message = Message::where('state', 'sending')->first();
 
@@ -49,9 +49,9 @@ class SendEmailsNow extends Command
 
             foreach($subs as $sub) {
                 Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message, $sub, $data) {
-                    $m->from(env('MAIL_FROM_ADDRESS'), config('app.name').'Subscription message local 118');
+                    $m->from(env('MAIL_FROM_ADDRESS'), config('app.name').'IATSE Local 118 - $message->subject');
                     $m->to($sub->user->email, $sub->user->name);
-                    $m->replyTo(config('mail.from.address'), 'no reply');
+                    $m->replyTo(config('mail.from.address'), 'IATSE Local 118');
                     $m->subject($message->subject);
 
                     if ($message->attachments->count() > 0) {
@@ -63,12 +63,15 @@ class SendEmailsNow extends Command
                         }
                     }
                 });
+
                 $message->increment('count');
+
                 EmailQueue::where('user_id', $sub->user->id)
-                    ->where('message_id', $message->id)->delete();
+                    ->where('message_id', $message->id)
+                    ->delete();
             }
-            $count = EmailQueue::where('message_id', $message->id)->count();
-            if($count == 0) {
+
+            if(EmailQueue::where('message_id', $message->id)->count() == 0) {
                 $message->state = 'sent';
                 $message->save();
             }

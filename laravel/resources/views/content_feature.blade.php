@@ -30,6 +30,9 @@
             </a>
         </div>
         <div class="col-12 border border-dark rounded mb-2 p-1">
+            <a href="{{route('messages')}}"><i class="fas fa-envelope-open-text"></i> Messages</a>
+        </div>
+        <div class="col-12 border border-dark rounded mb-2 p-1">
             <a href="{{route('members')}}"><i class="fas fa-user-friends"></i> Member List</a>
         </div>
         <div class="col-12 border border-dark rounded mb-2 p-1">

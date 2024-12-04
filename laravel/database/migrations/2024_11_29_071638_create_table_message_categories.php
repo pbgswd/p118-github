@@ -29,7 +29,6 @@ return new class extends Migration
            DB::statement('UPDATE users set `is_banned` = 0 where `is_banned` IS NULL');
            $table->tinyInteger('is_banned')->default(0)->index()->change();
        });
-
     }
 
     /**
