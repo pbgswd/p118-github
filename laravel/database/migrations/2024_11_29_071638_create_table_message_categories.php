@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -25,7 +26,7 @@ return new class extends Migration
        });
 
        Schema::table('users', function (Blueprint $table) {
-          //todo set default is_banned=0
+           DB::statement('UPDATE users set `is_banned` = 0 where `is_banned` IS NULL');
            $table->tinyInteger('is_banned')->default(0)->index()->change();
        });
 
