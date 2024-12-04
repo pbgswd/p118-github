@@ -27,15 +27,15 @@
         <link rel="stylesheet" href="/css/ckeditor5.css">
 
         <!-- Favicons -->
-        <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
-        <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">
+        <link rel="icon" href="/icons/favicon-32x32.png" sizes="32x32" type="image/png">
+        <link rel="icon" href="/icons/favicon-16x16.png" sizes="16x16" type="image/png">
         <link rel="manifest" href="/manifest.json">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#563d7c">
+        <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#563d7c">
         <meta name="msapplication-config" content="/browserconfig.xml">
         <meta name="theme-color" content="#563d7c">
-        <link rel="icon" href="/favicon.ico"><!-- 32×32 -->
-        <link rel="icon" href="/icon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png"><!-- 180×180 -->
+        <link rel="icon" href="/icons/favicon.ico"><!-- 32×32 -->
+        <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><!-- 180×180 -->
         <link rel="manifest" href="/manifest.webmanifest">
     </head>
     <body>
