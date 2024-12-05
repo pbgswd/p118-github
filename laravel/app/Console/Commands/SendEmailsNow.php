@@ -49,9 +49,9 @@ class SendEmailsNow extends Command
 
             foreach($subs as $sub) {
                 Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message, $sub, $data) {
-                    $m->from(env('MAIL_FROM_ADDRESS'), config('app.name').'IATSE Local 118 - $message->subject');
+                    $m->from(env('MAIL_FROM_ADDRESS'), config('app.name') . ' - '. $message->subject);
                     $m->to($sub->user->email, $sub->user->name);
-                    $m->replyTo(config('mail.from.address'), 'IATSE Local 118');
+                    $m->replyTo(config('mail.from.address'), config('app.name'));
                     $m->subject($message->subject);
 
                     if ($message->attachments->count() > 0) {

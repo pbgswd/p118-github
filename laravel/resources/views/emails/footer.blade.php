@@ -40,7 +40,11 @@
                 <tr>
                     <td>
                         <p style="text-align:center;">
-                            <b><a href="https://iatse118.com/" target="_blank" title="IATSE Local 118">https://iatse118.com/</a></b>
+                            <b>
+                                <a href="{{env('APP_URL')}}" target="_blank" title="IATSE Local 118">
+                                    {{env('APP_URL')}}
+                                </a>
+                            </b>
                             <br />
                             <br /> <br />
                             <b>Our Mailing address is:</b><br />

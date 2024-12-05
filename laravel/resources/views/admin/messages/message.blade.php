@@ -49,14 +49,14 @@
         <div class="col-12 my-4">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link" id="nav-topic-tab" data-bs-toggle="tab" data-bs-target="#nav-topic" type="button" role="tab" aria-controls="nav-topic" aria-selected="false">Topics ({{$data['counts']['topic'] ?? 0}})</button>
-                    <button class="nav-link" id="nav-model-tab" data-bs-toggle="tab" data-bs-target="#nav-model" type="button" role="tab" aria-controls="nav-model" aria-selected="false">Content Sections ({{$data['counts']['model'] ?? 0}})</button>
+                    <button class="nav-link" id="nav-topic-tab" data-bs-toggle="tab" data-bs-target="#nav-topic" type="button" role="tab" aria-controls="nav-topic" aria-selected="">Topics ({{$data['counts']['topic'] ?? 0}})</button>
+                    <button class="nav-link show active" id="nav-model-tab" data-bs-toggle="tab" data-bs-target="#nav-model" type="button" role="tab" aria-controls="nav-model" aria-selected="false">Content Sections ({{$data['counts']['model'] ?? 0}})</button>
                     <button class="nav-link" id="nav-committee-tab" data-bs-toggle="tab" data-bs-target="#nav-committee" type="button" role="tab" aria-controls="nav-committee" aria-selected="false">Committees ({{$data['counts']['committee'] ?? 0}})</button>
                 </div>
             </nav>
 
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade {{$data['message']['section'] == 'topic' ? 'show active' : '' }}
+                <div class="tab-pane fade show active
                 p-4" id="nav-topic" role="tabpanel" aria-labelledby="nav-topic-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[topic][]' aria-label="Default select example">
                         @foreach($data['topic_subscription_options'] as $t)
@@ -65,7 +65,7 @@
                     </select>
                 </div>
 
-                <div class="tab-pane fade {{$data['message']['section'] == 'model' ? 'show active' : '' }}
+                <div class="tab-pane fade
                  p-4" id="nav-model" role="tabpanel" aria-labelledby="nav-model-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[model][]' aria-label="Default select example">
                         @foreach($data['model_subscription_options'] as $m)
@@ -74,7 +74,7 @@
                     </select>
                 </div>
 
-                <div class="tab-pane fade {{'committee' == 'committee' ? 'show active' : '' }}
+                <div class="tab-pane fade
                  p-4" id="nav-committee" role="tabpanel" aria-labelledby="nav-committee-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[committee][]' aria-label="Default select example">
                         @foreach($data['committee_subscription_options'] as $comm)
