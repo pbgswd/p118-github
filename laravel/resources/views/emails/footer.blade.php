@@ -53,16 +53,17 @@
                 </tr>
                 <tr>
                     <td style="text-align: center">
-                        <a href="{{env('APP_URL')}}/Membership_List_5.30.19.vcf" target="_blank">Add us to your address book.</a>
+                        <a href="{{env('APP_URL')}}/email/Membership_List_5.30.19.vcf" target="_blank">
+                            Add us to your address book.
+                        </a>
                     </td>
                 </tr>
-    <tr>
-        <td style="text-align: center; padding-bottom:4rem;">
-            <strong>How to update my email preferences?</strong><br />
-            Log in to {{env('APP_URL')}}, and go to the Message Preferences<br />
-            tab on your personal profile page.
-        </td>
-    </tr>
+                <tr>
+                    <td style="text-align: center; padding-bottom:4rem;">
+                        <strong>How to update my email preferences?</strong><br />
+                        Log in to {{env('APP_URL')}}, and go to the Message Preferences<br />
+                        tab on your personal profile page.
+                    </td>
                     <td class="expander"></td>
                 </tr>
             </table>

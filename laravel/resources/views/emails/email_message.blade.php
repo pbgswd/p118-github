@@ -1,4 +1,4 @@
-@extends('layouts.email')
+@extends('layouts.email', ['title' => env('APP_NAME') . " email message - " . $data['message']['subject']])
 @section('content')
     <table class="body">
         <tr>
@@ -15,16 +15,15 @@
                     </tr>
                             <table class="twelve columns"  style="background-color: #FFFFFF; border-bottom: 1px solid #CCCCCC;">
                                 <tr>
-                                    <td style="padding-top: 1rem; padding-bottom: 1rem; padding-left: 2rem; padding-right: 2rem;">
+                                    <td style="padding-top: 1rem; padding-bottom: 1rem; padding-left: 2rem; padding-right: 2rem; justify-content: center; display: flex;" >
                                         <a href="https://iatse118.com/" title="IATSE Local 118" style="text-align: center;">
-                                            <img src="https://iatse118.com/storage/public/wrITw0NW1mBky0LidKwgBwtOg9mLcUuDCmQDuiPk.png" style="margin-right: 1rem;"/>
-                                            <h1>email</h1>
+                                            <img src="{{env('APP_URL')}}/email/118_logo_webp.webp" style="margin-right: 1rem;"/>
                                         </a>
                                     </td>
                                     <td class="expander"></td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align:center; padding: 2rem;">
+                                    <td style="text-align:center; padding: 1rem;">
                                         <hr style="height: 3px; background-color: black; border: none;" />
                                         <h2 class="lead" style=" font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; text-align:center;">
                                             {{$data['message']['subject']}}

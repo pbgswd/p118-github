@@ -3,6 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width"/>
+    <title>{{$title}}</title>
   <link href="https://iatse118.com/css/email.css" rel="stylesheet" />
 </head>
 <body style="background-color: #fafafa">
