@@ -104,7 +104,7 @@
                         </a>
                     </h3>
                 </div>
-                <div class="d-none d-md-block col-12 m-0 mt-4 pt-4 rounded">
+                <div class="d-none d-md-block col-12 m-4 pt-4 pb-5 rounded">
                     {!! $data['contactPage'][0]->content ?? '' !!}
                 </div>
             @endauth
