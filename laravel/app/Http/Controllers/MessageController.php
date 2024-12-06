@@ -26,7 +26,7 @@ class MessageController extends Controller
             ->with('user', 'attachments')
             ->where('state', '!=', 'not_sent')
             ->orderBy('updated_at', 'desc')
-            ->paginate(20);
+            ->paginate(10);
 
         $data = [
             'messages' => $messages,

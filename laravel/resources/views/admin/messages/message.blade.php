@@ -27,7 +27,6 @@
             </div>
         @endif
         <div class="col-12 my-4">
-
                 @if($data['action'] == 'Create')
                     <h4 class="my-3">
                         Select a topic, model, or committee for the message, and save.
@@ -44,7 +43,6 @@
                         based on the selected categories for this message.
                     </h5>
                 @endif
-
         </div>
         <div class="col-12 my-4">
             <nav>
@@ -56,8 +54,7 @@
             </nav>
 
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active
-                p-4" id="nav-topic" role="tabpanel" aria-labelledby="nav-topic-tab" tabindex="0">
+                <div class="tab-pane fadep-4" id="nav-topic" role="tabpanel" aria-labelledby="nav-topic-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[topic][]' aria-label="Default select example">
                         @foreach($data['topic_subscription_options'] as $t)
                             <option value="topic {{$t['slug']}}" {{$t['selected']}}>{{$t['name']}}</option>
@@ -65,8 +62,7 @@
                     </select>
                 </div>
 
-                <div class="tab-pane fade
-                 p-4" id="nav-model" role="tabpanel" aria-labelledby="nav-model-tab" tabindex="0">
+                <div class="tab-pane fade show active p-4" id="nav-model" role="tabpanel" aria-labelledby="nav-model-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[model][]' aria-label="Default select example">
                         @foreach($data['model_subscription_options'] as $m)
                             <option value="model {{$m['model']}}" {{$m['selected']}}>{{$m['name']}}</option>
@@ -74,8 +70,7 @@
                     </select>
                 </div>
 
-                <div class="tab-pane fade
-                 p-4" id="nav-committee" role="tabpanel" aria-labelledby="nav-committee-tab" tabindex="0">
+                <div class="tab-pane fade p-4" id="nav-committee" role="tabpanel" aria-labelledby="nav-committee-tab" tabindex="0">
                     <select multiple size=10 class="form-select" name='source_type[committee][]' aria-label="Default select example">
                         @foreach($data['committee_subscription_options'] as $comm)
                             <option value="committee {{$comm['slug']}}" {{$comm['selected']}}>{{$comm['name']}}</option>
