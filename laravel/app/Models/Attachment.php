@@ -127,4 +127,9 @@ class Attachment extends Model implements Searchable
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function venue(): BelongsTo
+    {
+        return $this->belongsTo(Venue::class);
+    }
 }
