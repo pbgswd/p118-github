@@ -1,6 +1,6 @@
 import {
-    ClassicEditor,AccessibilityHelp,Autoformat,Autosave,BlockQuote,Bold,Essentials,
-    FullPage,GeneralHtmlSupport,Heading,HtmlComment,HtmlEmbed,Indent,IndentBlock,Italic,
+    ClassicEditor,Alignment,AccessibilityHelp,Autoformat,Autosave,BlockQuote,Bold,Essentials,
+    FullPage,GeneralHtmlSupport,Heading,Highlight,HorizontalLine,HtmlComment,HtmlEmbed,Indent,IndentBlock,Italic,
     Link,List,ListProperties,MediaEmbed,Paragraph,PasteFromOffice,SelectAll,ShowBlocks,
     SourceEditing,Table,TableCaption,TableCellProperties,TableColumnResize,TableProperties,
     TableToolbar,TextTransformation,TodoList,Underline,Undo
@@ -12,12 +12,14 @@ const editorConfig = {
             'undo',	'redo',	'|', 'sourceEditing','showBlocks','|',
             'heading','|','bold','italic','underline','|',
             'link','mediaEmbed','insertTable','blockQuote','htmlEmbed','|',
-            'bulletedList',	'numberedList','todoList','outdent','indent'
+            'highlight', 'horizontalLine',
+            'alignment', 'bulletedList', 'numberedList','todoList','outdent','indent'
         ],
         shouldNotGroupWhenFull: false
     },
     plugins: [
         AccessibilityHelp,
+        Alignment,
         Autoformat,
         Autosave,
         BlockQuote,
@@ -26,6 +28,8 @@ const editorConfig = {
         FullPage,
         GeneralHtmlSupport,
         Heading,
+        Highlight,
+        HorizontalLine,
         HtmlComment,
         HtmlEmbed,
         Indent,
