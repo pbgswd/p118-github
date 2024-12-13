@@ -20,11 +20,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-       Schema::table('messages', function (Blueprint $table) {
-           $table->dropColumn('section');
-           $table->dropColumn('category');
-       });
-
        Schema::table('users', function (Blueprint $table) {
            DB::statement('UPDATE users set `is_banned` = 0 where `is_banned` IS NULL');
            $table->tinyInteger('is_banned')->default(0)->index()->change();

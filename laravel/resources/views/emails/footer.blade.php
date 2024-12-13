@@ -12,7 +12,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="display: flex; align-items: center; gap: 10px; justify-content: center;"">
+                    <td style="display: flex; align-items: center; gap: 10px; justify-content: center;">
                         <a href="https://x.com/118IATSE/" title="{{env('APP_NAME')}} on X" target="_blank">
                             <img src="{{env('APP_URL')}}/email/x-email-icon.png"  style="max-width: 50%; height: auto;" />
                         </a>
@@ -31,7 +31,7 @@
 
                 <tr>
                     <td>
-                        <hr style="height: 3px; background-color: gray;my msg border: none;" />
+                        <hr style="height: 3px; background-color: gray; border: none;" />
                         <p style="text-align:center; margin-top: 2rem;">
                             Copyright &copy; <?php echo date('Y'); ?> IATSE Local 118, All rights reserved.
                         </p>
@@ -57,7 +57,9 @@
                 </tr>
                 <tr>
                     <td style="text-align: center">
-                        <a href="{{env('APP_URL')}}/email/Membership_List_5.30.19.vcf" target="_blank">
+                        <a target="_blank"
+                           rel="noopener noreferrer"
+                           href="{{env('APP_URL')}}/email/Membership_List_5.30.19.vcf" download="file">
                             Add us to your address book.
                         </a>
                     </td>

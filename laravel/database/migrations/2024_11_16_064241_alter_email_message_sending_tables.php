@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::dropIfExists('message_metadata'); //delete model
         Schema::dropIfExists('message_sending'); //delete model
         Schema::dropIfExists('message_frequency_preferences'); //delete model
@@ -19,10 +18,8 @@ return new class extends Migration
 
         Schema::table('messages', function (Blueprint $table) {
             $table->string('source_url')->after('id')->nullable();
-            $table->string('section')->after('source_url')->nullable();//section (model, topic, committee)
-            $table->string('category')->after('section')->nullable(); //category (what kind of model, topic, or committee)
-            $table->string('subject')->after('category')->index()->change();
-            $table->text('content')->after('slug')->fulltext()->change();
+            $table->string('subject')->index()->change();
+            $table->text('content')->fulltext()->change();
             $table->integer('count')->after('user_id')->default(0);
             $table->string('state')->after('count')->default('not_sent')->index();
         });
@@ -34,7 +31,6 @@ return new class extends Migration
             $table->index(['message_id', 'user_id']);
             $table->timestamps();
         });
-
     }
 
     /**

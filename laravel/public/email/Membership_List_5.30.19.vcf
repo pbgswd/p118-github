@@ -1,8 +1,7 @@
 BEGIN:VCARD
 VERSION;TYPE=WORK:3.0
-PROFILE:VCARD
 URL;VALUE=URI:https://iatse118.com
-N;CHARSET=UTF-8:IATSE Local 118;;;;
+N;CHARSET=UTF-8:IATSE Local 118 (optional: add name components here)
 FN;CHARSET=UTF-8:IATSE Local 118
 ORG;CHARSET=UTF-8:IATSE Local 118
 EMAIL:no-reply@iatse118.com

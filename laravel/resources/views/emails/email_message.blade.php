@@ -16,7 +16,7 @@
                             <table class="twelve columns"  style="background-color: #FFFFFF; border-bottom: 1px solid #CCCCCC;">
                                 <tr>
                                     <td style="padding-top: 1rem; padding-bottom: 1rem; padding-left: 2rem; padding-right: 2rem; justify-content: center; display: flex;" >
-                                        <a href="https://iatse118.com/" title="IATSE Local 118" style="text-align: center;">
+                                        <a href="{{env('APP_URL')}}" title="IATSE Local 118" style="text-align: center;">
                                             <img src="{{env('APP_URL')}}/email/118_logo_webp.webp" style="margin-right: 1rem;"/>
                                         </a>
                                     </td>
