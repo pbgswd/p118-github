@@ -20,10 +20,9 @@
     <div class="container mb-6" style="background: rgba(220,220,220,0.8); padding: 1rem;">
         <div class="row border border-dark rounded" style=" margin: 1rem;">
             <div class="col-12 m-6 h-90 w-90 mx-auto" style="padding: 2rem;">
-                <i class="fas fa-scroll"></i>
-                {{$data['message']->subject}}
-                From: {{$data['message']->updated_at->format('F j Y')}}
-                <p>Sent by: {{$data['message']['user']->name}}</p>
+
+                <h2><i class="fas fa-envelope-open-text"></i> {{$data['message']->subject}}</h2>
+                Sent: {{$data['message']->updated_at->format('F j Y')}}
                 <p>{{$data['message']->section}}</p>
                 <p>{{$data['message']->category}}</p>
                 <div class="p-6">
@@ -52,25 +51,38 @@
                     </div>
                 </div>
             @endif
-
+            <div class="row">
+                <div class="col-12">
+                    <h5>Message {{Str::plural('Category', count($data['message_categories']))}}:
+                        @foreach($data['message_categories'] as $msgcat)
+                            {{(ucfirst($msgcat->name))}}@if($loop->remaining),@else.@endif
+                        @endforeach
+                    </h5>
+                    <p class="fw-bold">Update your personal message preferences on your
+                        <a href="{{route('member_edit', Auth::id())}}">profile page.</a>
+                    </p>
+                </div>
+            </div>
             <div class="d-flex justify-content-center">
-
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         @if ($data['previous'])
-                            <li class="page-item"><a class="page-link" href="{{ route('message', [$data['previous']->id, $data['previous']->slug]) }}">Previous</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="{{ route('message', [$data['previous']->id, $data['previous']->slug]) }}">
+                                    Older Messages
+                                </a>
+                            </li>
                         @endif
                         @if($data['next'])
-                            <li class="page-item"><a class="page-link" href="{{ route('message', [$data['next']->id, $data['next']->slug])}}">Next</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="{{ route('message', [$data['next']->id, $data['next']->slug])}}">
+                                    Newer Messages
+                                </a>
+                            </li>
                         @endif
                     </ul>
                 </nav>
-
-
             </div>
-
-
         </div>
     </div>
-</div>
 @endsection

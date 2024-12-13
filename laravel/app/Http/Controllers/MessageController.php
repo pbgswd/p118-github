@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Committee;
 use App\Models\Message;
+use App\Models\MessageCategory;
 use App\Models\MessageFrequencyPreferences;
 use App\Models\MessageSelection;
 use App\Models\Options;
@@ -39,21 +40,23 @@ class MessageController extends Controller
     public function show(Message $message): View
     {
         $message->load('user', 'attachments');
+        $message_categories = MessageCategory::where('message_id', $message->id)->get();
 
-        //todo prove pagination works
+        //todo why wont messageCategories not load, what is the probnlem?
 
-        $next = Message::where('updated_at', '>', $message->updated_at)
+        $next = Message::where('id', '>', $message->id)
             ->where ('state', 'sent')
-            ->orderBy('updated_at', 'asc')
+            ->orderBy('id', 'asc')
             ->first();
 
-        $previous = Message::where('updated_at', '<', $message->updated_at)
+        $previous = Message::where('id', '<', $message->id)
             ->where ('state', 'sent')
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('id', 'desc')
             ->first();
 
         $data = [
             'message' => $message,
+            'message_categories' => $message_categories,
             'next' => $next,
             'previous' => $previous,
         ];

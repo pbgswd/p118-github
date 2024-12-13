@@ -5,9 +5,12 @@
         <div class="row mb-2">
             <div class="col-12 my-3">
                 <h1>
-                    <i class="fas fa-scroll"></i>
+                    <i class="fas fa-envelope-open-text"></i>
                     Local 118 Messages
                 </h1>
+                <p class="fw-bold">Update your personal message preferences on your
+                    <a href="{{route('member_edit', Auth::id())}}">profile page.</a>
+                </p>
                 @can('edit articles')
                     <div class="text-end">
                         <a href="{{route('admin_messages')}}" title="Admin Messages">
@@ -31,24 +34,20 @@
                 <thead>
                 <tr>
                     <th> @sortablelink('subject', 'Subject') </th>
-                    <th> @sortablelink('type', 'Type') </th>
-                    <th> @sortablelink('name', 'Name') </th>
                     <th> @sortablelink('date', 'Date') </th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ( $data['messages'] as $message )
                     <tr>
-                        <td class="text-left text-wrap" style="width: 50%;">
+                        <td class="text-left text-wrap fw-bold">
                             <a title="{{ $message->subject }}" href="{{ route('message', [$message->id, $message->slug]) }}">{{ $message->subject }}</a>
                         </td>
-                        <td>{{$message->section}}</td>
-                        <td>{{$message->category}}</td>
                         <td>{{ $message->updated_at->format('F j Y') }}</td>
                     </tr>
                 @endforeach
                 <tr>
-                    <td colspan="4">&nbsp;</td>
+                    <td colspan="2">&nbsp;</td>
                 </tr>
                 </tbody>
             </table>
