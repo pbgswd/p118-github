@@ -22,11 +22,10 @@ class MessageController extends Controller
      */
     public function index(): View
     {
-        //todo where send_status_now != 'no'
         $messages = Message::sortable()
             ->with('user', 'attachments')
             ->where('state', '!=', 'not_sent')
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('id', 'desc')
             ->paginate(10);
 
         $data = [
@@ -39,10 +38,8 @@ class MessageController extends Controller
 
     public function show(Message $message): View
     {
-        $message->load('user', 'attachments');
+        $message->load('user', 'attachments');   //todo why wont messageCategories relation load, what is the problem?
         $message_categories = MessageCategory::where('message_id', $message->id)->get();
-
-        //todo why wont messageCategories not load, what is the probnlem?
 
         $next = Message::where('id', '>', $message->id)
             ->where ('state', 'sent')

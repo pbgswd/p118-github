@@ -94,7 +94,7 @@
                 <div class="col-12 mb-4">
                     <div class=" col editor-container editor-container_classic-editor" id="editor-container">
                         <div class="editor-container__editor">
-                                <textarea name="message[content]" id="textarea" placeholder="Content" class="form-control text-black">
+                                <textarea name="message[content]" id="textarea" placeholder="Content" class="form-control text-black" required>
                                 </textarea>
                         </div>
                     </div>

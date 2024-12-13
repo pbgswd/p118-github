@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Messages\DestroyMessageRequest;
+use App\Http\Requests\Messages\StoreMessageRequest;
+use App\Http\Requests\Messages\UpdateMessageRequest;
 use App\Jobs\ProcessMessages;
 use App\Models\Committee;
 use App\Models\EmailQueue;
@@ -117,11 +119,9 @@ class AdminMessageController extends Controller
         return view('admin.messages.message', ['data' => $data]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreMessageRequest $request): RedirectResponse
     {
-        //todo form request validator, policy
         $message = new Message($request->message);
-
         $message['user_id'] = Auth::id();
         $message['slug'] = Str::slug($message['subject'], '-'); // model method?
 
@@ -259,7 +259,7 @@ class AdminMessageController extends Controller
         return view('admin.messages.message', ['data' => $data]);
     }
 
-    public function update(Request $request, Message $message): RedirectResponse
+    public function update(UpdateMessageRequest $request, Message $message): RedirectResponse
     {
         //todo form request validator, policy
 
@@ -370,7 +370,6 @@ class AdminMessageController extends Controller
             ->find($request->id)
             ->each(function (Message $message) {
                 MessageCategory::where('message_id', $message->id)->delete();
-                //todo only destroy attachments if not from other content
                 $this->attachmentService->destroyAttachments($message);
                 $message->delete();
             });

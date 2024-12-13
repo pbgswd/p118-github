@@ -75,7 +75,6 @@ class Message extends Model implements HasAttachment, Searchable
         return $this->belongsToMany(MessageCategory::class, 'message_categories');
     }
 
-
     public function messageCategories(): BelongsToMany
     {
         return $this->belongsToMany(MessageCategory::class, 'message_categories');

@@ -83,14 +83,18 @@
                 <td class="text-break">
                     <i class="far fa-envelope-open"></i>
                     @if($msg['state'] == 'not_sent')
-                        <a href="{{route('admin_message_edit', [$msg['id'], $msg['slug']])}}"
-                            title="Edit {{$msg['subject']}}">
-                            {{$msg['subject']}}
-                        </a>
+                            <a href="{{route('admin_message_edit', [$msg['id'], $msg['slug']])}}"
+                                title="Edit {{$msg['subject']}}">
+                                    {{$msg['subject']}}
+                            </a>
                     @else
                         <span class="text-secondary"
                               title="The message cannot no longer be modified because it has been sent out.">
                             {{$msg['subject']}}
+                            <a href="{{route('message', [$msg->id, $msg->slug])}}"
+                               title="View message page for {{$msg->subject}} on website" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </span>
                     @endif
                 </td>
