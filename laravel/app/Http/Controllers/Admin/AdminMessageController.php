@@ -121,6 +121,12 @@ class AdminMessageController extends Controller
 
     public function store(StoreMessageRequest $request): RedirectResponse
     {
+        $sourceTypes = $request->input('source_type');
+
+        if (empty($sourceTypes['topic']) && empty($sourceTypes['model']) && empty($sourceTypes['committee'])) {
+            return redirect()->back()->with('error', 'Please select at least one message category.');
+        }
+
         $message = new Message($request->message);
         $message['user_id'] = Auth::id();
         $message['slug'] = Str::slug($message['subject'], '-'); // model method?
@@ -260,7 +266,13 @@ class AdminMessageController extends Controller
 
     public function update(UpdateMessageRequest $request, Message $message): RedirectResponse
     {
-        //todo form request validator, policy
+        //todo policy
+
+        $sourceTypes = $request->input('source_type');
+
+        if (empty($sourceTypes['topic']) && empty($sourceTypes['model']) && empty($sourceTypes['committee'])) {
+            return redirect()->back()->with('error', 'Please select at least one message category.');
+        }
 
         if ($message->state === 'sent') {
             // Redirect back with an error message or show a message
@@ -268,6 +280,7 @@ class AdminMessageController extends Controller
         }
 
         $message->fill($request->message);
+
 //todo update it properly. if it is from message, just the slug. If it is from another model, the whole thing?
         $message['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $message['slug'];
 

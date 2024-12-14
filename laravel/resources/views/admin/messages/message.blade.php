@@ -29,7 +29,7 @@
         <div class="col-12 my-4">
                 @if($data['action'] == 'Create')
                     <h4 class="my-3">
-                        Select a topic, model, or committee for the message, and save.
+                        Select a topic, model, or committee for the message.
                     </h4>
                 @else
                     <h3><i class="fas fa-exclamation-circle" style="color:blue"></i> Save any changes before sending.</h3>
@@ -44,6 +44,7 @@
                     </h5>
                 @endif
         </div>
+
         <div class="col-12 my-4">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">

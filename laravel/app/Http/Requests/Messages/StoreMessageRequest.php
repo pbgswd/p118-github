@@ -21,15 +21,15 @@ class StoreMessageRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //source_type[topic][] source_type[model][] source_type[committee][]
-
-            'source_type.topic.*' => 'nullable|string',
-            'source_type.model.*' => 'nullable|string',
-            'source_type.committee.*' => 'nullable|string',
-            'source_type.*.*' => 'required_without_all:source_type.topic.*,source_type.model.*,source_type.committee.*',
-            'message.subject' => 'required|unique:messages,subject|max:255',
+        $rules = [
+            'message.subject' => 'required|max:255',
             'message.content' => 'string|required',
         ];
+
+        if ($this->route()->parameter('message')) {
+            $rules['message.subject'] .= '|unique:messages,subject,' . $this->route('message')->slug . ',slug,id,' . $this->route('message')->id;
+        }
+
+        return $rules;
     }
 }
