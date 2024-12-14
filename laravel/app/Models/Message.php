@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
@@ -75,9 +76,9 @@ class Message extends Model implements HasAttachment, Searchable
         return $this->belongsToMany(MessageCategory::class, 'message_categories');
     }
 
-    public function messageCategories(): BelongsToMany
+    public function messageCategories(): HasMany
     {
-        return $this->belongsToMany(MessageCategory::class, 'message_categories');
+        return $this->hasMany(MessageCategory::class);
     }
 
     public function attachments(): BelongsToMany

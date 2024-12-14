@@ -38,8 +38,7 @@ class MessageController extends Controller
 
     public function show(Message $message): View
     {
-        $message->load('user', 'attachments');   //todo why wont messageCategories relation load, what is the problem?
-        $message_categories = MessageCategory::where('message_id', $message->id)->get();
+        $message->load('user', 'attachments', 'messageCategories');   //todo why wont messageCategories relation load, what is the problem?
 
         $next = Message::where('id', '>', $message->id)
             ->where ('state', 'sent')
@@ -53,7 +52,6 @@ class MessageController extends Controller
 
         $data = [
             'message' => $message,
-            'message_categories' => $message_categories,
             'next' => $next,
             'previous' => $previous,
         ];

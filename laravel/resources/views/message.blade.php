@@ -53,8 +53,8 @@
             @endif
             <div class="row">
                 <div class="col-12">
-                    <h5>Message {{Str::plural('Category', count($data['message_categories']))}}:
-                        @foreach($data['message_categories'] as $msgcat)
+                    <h5>Message {{Str::plural('Category', count($data['message']['messageCategories']))}}:
+                        @foreach($data['message']['messageCategories'] as $msgcat)
                             {{(ucfirst($msgcat->name))}}@if($loop->remaining),@else.@endif
                         @endforeach
                     </h5>

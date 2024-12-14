@@ -19,6 +19,7 @@ return new class extends Migration
         Schema::table('messages', function (Blueprint $table) {
             $table->string('source_url')->after('id')->nullable();
             $table->string('subject')->index()->change();
+            $table->integer('user_id')->references('id')->on('users')->change();
             $table->text('content')->fulltext()->change();
             $table->integer('count')->after('user_id')->default(0);
             $table->string('state')->after('count')->default('not_sent')->index();

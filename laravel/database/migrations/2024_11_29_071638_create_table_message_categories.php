@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('message_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('message_id')->references('id')->on('messages')->index();
+            $table->integer('message_id')->references('id')->on('messages')->index();
             $table->string('type');
             $table->string('name');
             $table->timestamps();
