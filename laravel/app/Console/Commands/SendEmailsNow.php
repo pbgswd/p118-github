@@ -33,7 +33,7 @@ class SendEmailsNow extends Command
         $message = Message::where('state', 'sending')->first();
 
         if($message) {
-            $message->load('user', 'attachments');
+            $message->load('user', 'attachments', 'messageCategories');
 
             $data['message']['id'] = $message->id;
             $data['message']['slug'] = $message->slug;

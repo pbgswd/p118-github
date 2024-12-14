@@ -161,11 +161,10 @@ class AdminMessageController extends Controller
     {
         //todo policy
 
-        $message->load(['user', 'attachments']);
+        $message->load(['user', 'attachments', 'messageCategories']);
 
-        $message_categories = MessageCategory::where('message_id', $message->id)->get();
         $mc_data = [];
-        foreach($message_categories as $mc) {
+        foreach($message['messageCategories'] as $mc) {
             $mc['field'] = $mc->type . " " . $mc->name;
             $mc_data[] = $mc;
         }
@@ -305,8 +304,8 @@ class AdminMessageController extends Controller
 
     public function preview(Message $message): View
     {
-        $message->load('user', 'attachments');
-        //todo message categories info
+        $message->load('user', 'attachments', 'messageCategories');
+
         $data = [
             'message' => $message,
         ];
@@ -316,7 +315,7 @@ class AdminMessageController extends Controller
 
     public function preview_strict(Message $message): View
     {
-        $message->load('user', 'attachments');
+        $message->load('user', 'attachments', 'messageCategories');
         $data = [
             'message' => $message,
             'attachments' => $message->attachments,
@@ -364,10 +363,7 @@ class AdminMessageController extends Controller
 
     public function destroy(DestroyMessageRequest $request): RedirectResponse
     {
-        //todo form request validator, policy
-
-        Message::withoutGlobalScopes()
-            ->find($request->id)
+        Message::find($request->id)
             ->each(function (Message $message) {
                 MessageCategory::where('message_id', $message->id)->delete();
                 $this->attachmentService->destroyAttachments($message);
