@@ -157,6 +157,9 @@ class AdminPostController extends Controller
             $any_post->topics()->detach();
         }
 
+        //todo set action to see if a 'send to message' has been made, then send data in to messages, and send user to message edit
+
+
         Session::flash('success', 'You have edited the post');
 
         return redirect()->route('post_edit', [$any_post->slug]);
