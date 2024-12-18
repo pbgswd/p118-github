@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\DestroyPostRequest;
 use App\Http\Requests\Posts\StorePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
+use App\Models\Attachment;
 use App\Models\Message;
+use App\Models\MessageCategory;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Services\AttachmentService;
@@ -41,6 +43,7 @@ class AdminPostController extends Controller
         $posts = Post::withoutGlobalScopes()
             ->sortable()
             ->with('topics', 'attachments')
+            ->orderBy('updated_at', 'desc')
             ->paginate(20);
 
         return view('admin.listposts', ['data' => ['posts' => $posts]]);
@@ -157,9 +160,6 @@ class AdminPostController extends Controller
             $any_post->topics()->detach();
         }
 
-        //todo set action to see if a 'send to message' has been made, then send data in to messages, and send user to message edit
-
-
         Session::flash('success', 'You have edited the post');
 
         return redirect()->route('post_edit', [$any_post->slug]);
@@ -190,52 +190,75 @@ class AdminPostController extends Controller
      */
     public function message(Post $post): RedirectResponse
     {
+        Session::flash('warning', 'this is for an additional messaging feature that will be set up soon');
+        return redirect()->route('post_edit', [$post->slug]);
 
         //todo get data from post, store it in message, redirect to edit message?
-
         $this->authorize('message', Post::class);
-
         $post->load('user', 'attachments', 'topics');
 
-        $assignedTopics = [];
-        foreach ($post->topics as $topic) {
-            $assignedTopics[] = $topic->pivot->topic_id;
-        }
+       // dd($post->attachments);
 
-        //todo fix after restructring in to relations
+        $message = [
+            'source_url' => env('APP_URL') . '/post/' . $post->slug,
+            'subject' => $post->title,
+            'slug' => $post->slug,
+            'content' => $post->content,
+            'user_id' => Auth::id(),
+        ];
 
-        $msg = new Message;
-
-        $msg->subject = $post->title;
-        $msg->slug = $post->slug;
-        $msg->content = $post->content;
-        $msg->user_id = Auth::id();
-
+        $msg = new Message($message);
         $msg->save();
 
-        $msg->messageSending()->create(['message_id' => $msg->id,
-            'send_priority' => 'normal']);
+        foreach ($post->topics as $topic) {
+            $data['message_id'] = $msg->id;
+            $data['type'] = 'topic';
+            $data['name'] = $topic->slug;
+            $msgCategory = new MessageCategory($data);
+            $msgCategory->save();
+        }
 
-        // $msg->priority = 'regular';
-        //  $msg->sent = 0;
+        //$msg->id
 
-        //todo get correct topic for data
+        foreach($post->attachments as $attachment) {
 
-        $msg->messageMeta()->create(['message_id' => $msg->id,
-            'source_id' => $post->id,
-            'source_slug' => $post->slug,
-            'source_type' => 'topic',
-            'source_type_name' => 'post',
-            'source_url' => 'post/'.$post->slug,
-        ]);
+            dd($attachment);
+            //todo save attachments
+            //? get attachement store in messages folder?
+            // or refer to original attachment?
+            $attachment = new Attachment($attachment);
+            $attachment->save();
 
-        //todo save attachments
-        //? get attachement store in messages folder?
-        // or refer to original attachment?
+            //copy files into messages folder storage/app/messages
 
-        Session::flash('success', 'new message saved');
 
-        return redirect()->route('admin_message_edit', $msg->id);
+            // table attachment_message
+            $data = [
+                'attachment_id' => $attachment->id,
+                'message_id' => $msg->id,
+            ];
+
+            $msg->attachments()->attach($data);
+
+        }
+
+        /****
+ if (null !== ($request->file('attachments'))) {
+         * $result = $this->attachmentService->createAttachment($request, $message);
+         * if ($result) {
+         * Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+         * } else {
+         * Session::flash('error', 'You have an upload problem');
+         * }
+         * }
+         *
+         *
+         */
+
+
+        Session::flash('success', 'new message from posts saved');
+
+        return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
 
     }
 }

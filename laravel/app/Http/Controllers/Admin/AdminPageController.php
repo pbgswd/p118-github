@@ -37,6 +37,7 @@ class AdminPageController extends Controller
         $pages = Page::withoutGlobalScopes()
             ->sortable()
             ->with('topics', 'user', 'attachments')
+            ->orderBy('updated_at', 'desc')
             ->paginate(20);
         $count = Page::withoutGlobalScopes()->count();
 

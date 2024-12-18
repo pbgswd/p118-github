@@ -166,6 +166,9 @@ class AdminMessageController extends Controller
     public function edit(Message $message)
     {
         //todo policy
+        //trait
+// messages, post,  etc
+        //http://p118.dev/ message /36/this-is-a-test-message-today
 
         $message->load(['user', 'attachments', 'messageCategories']);
 
@@ -280,9 +283,9 @@ class AdminMessageController extends Controller
         }
 
         $message->fill($request->message);
-
+        $message->save();
 //todo update it properly. if it is from message, just the slug. If it is from another model, the whole thing?
-        $message['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $message['slug'];
+    //    $message['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $message['slug'];
 
         $sections = ['model', 'topic', 'committee'];
 
@@ -298,7 +301,6 @@ class AdminMessageController extends Controller
                 $mc->save();
             }
         }
-        $message->save();
 
         $result = $this->attachmentService->updateAttachment($request, $message);
         if (null !== ($request->attachments)) {
