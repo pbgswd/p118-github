@@ -59,7 +59,7 @@
                         @endforeach
                     </h5>
                     <p class="fw-bold">Update your personal message preferences on your
-                        <a href="{{route('member_edit', Auth::id())}}">profile page.</a>
+                        <a href="{{route('member', Auth::id())}}">profile page.</a>
                     </p>
                 </div>
             </div>
@@ -80,7 +80,6 @@
                                 </a>
                             </li>
                         @endif
-
                     </ul>
                 </nav>
             </div>
