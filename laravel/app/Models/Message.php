@@ -22,8 +22,6 @@ class Message extends Model implements HasAttachment, Searchable
 
     protected $fillable = [
         'source_url',
-        'section',
-        'category',
         'subject',
         'content',
         'user_id',
@@ -64,7 +62,7 @@ class Message extends Model implements HasAttachment, Searchable
         return $this->belongsTo(User::class);
     }
 
-    public function setTitleAttribute($value): string
+    public function setSubjectAttribute($value): string
     {
         $this->attributes['slug'] = Str::slug($value, '-');
 

@@ -282,10 +282,12 @@ class AdminMessageController extends Controller
             return redirect()->back()->with('error', 'You cannot edit content that has already been sent.');
         }
 
-        $message->fill($request->message);
+        $data = $request->validated();
+        $data['message']['slug'] = Str::slug($data['message']['subject'], '-');
+        //todo unless the source of the message is from another model.
+        $data['message']['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $data['message']['slug'];
+        $message->fill($data['message']);
         $message->save();
-//todo update it properly. if it is from message, just the slug. If it is from another model, the whole thing?
-    //    $message['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $message['slug'];
 
         $sections = ['model', 'topic', 'committee'];
 
