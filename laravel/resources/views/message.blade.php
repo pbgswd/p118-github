@@ -21,6 +21,29 @@
         <div class="row border border-dark rounded" style=" margin: 1rem;">
             <div class="col-12 m-6 h-90 w-90 mx-auto" style="padding: 2rem;">
 
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if($data['next'])
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ route('message', [$data['next']->id, $data['next']->slug])}}">
+                                        Newer Messages
+                                    </a>
+                                </li>
+                            @endif
+                            @if ($data['previous'])
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ route('message', [$data['previous']->id, $data['previous']->slug]) }}">
+                                        Older Messages
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </nav>
+                </div>
+
+
+
                 <h2><i class="fas fa-envelope-open-text"></i> {{$data['message']->subject}}</h2>
                 Sent: {{$data['message']->updated_at->format('F j Y')}}
                 <p>{{$data['message']->section}}</p>
