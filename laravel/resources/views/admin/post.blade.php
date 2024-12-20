@@ -25,7 +25,7 @@
                 <h4>
                     <a href="{{route('admin_post_message', $data['post']->slug)}}">
                         <i class="far fa-envelope-open"></i>
-                        Send to message
+                        Send to message TODO
                     </a>
                 </h4>
             </div>
@@ -43,11 +43,6 @@
                     <input type="text" class="form-control"  placeholder="Title" name="post[title]"
                            value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 font-weight-bold mt-2">
-                @foreach($data['topics'] as $topic)
-                    {{ in_array($topic->id, $data['assignedTopics']) ? $topic->name . " | " : '' }}
-                @endforeach
             </div>
             @include('layouts.admin-select-topics')
             <div class="row">

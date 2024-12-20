@@ -171,7 +171,7 @@ class AdminMessageController extends Controller
         //http://p118.dev/ message /36/this-is-a-test-message-today
 
         $message->load(['user', 'attachments', 'messageCategories']);
-
+//dd($message);
         $mc_data = [];
         foreach($message['messageCategories'] as $mc) {
             $mc['field'] = $mc->type . " " . $mc->name;
@@ -305,6 +305,7 @@ class AdminMessageController extends Controller
         }
 
         $result = $this->attachmentService->updateAttachment($request, $message);
+
         if (null !== ($request->attachments)) {
             $result = $this->attachmentService->createAttachment($request, $message);
             if ($result) {

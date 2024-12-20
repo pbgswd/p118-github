@@ -17,6 +17,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -180,7 +181,8 @@ class AdminPostController extends Controller
                 $post->delete();
             });
 
-        Session::flash('success', 'You have deleted '.count($request->id).' '.Str::plural('post', count($request->id)).'.');
+        Session::flash('success', 'You have deleted '. count($request->id) . ' ' .
+            Str::plural('post', count($request->id)).'.');
 
         return redirect()->route('posts_list');
     }
@@ -190,8 +192,8 @@ class AdminPostController extends Controller
      */
     public function message(Post $post): RedirectResponse
     {
-        Session::flash('warning', 'this is for an additional messaging feature that will be set up soon');
-        return redirect()->route('post_edit', [$post->slug]);
+       // Session::flash('warning', 'this is for an additional messaging feature that will be set up soon');
+        //return redirect()->route('post_edit', [$post->slug]);
 
         //todo get data from post, store it in message, redirect to edit message?
         $this->authorize('message', Post::class);
@@ -218,28 +220,14 @@ class AdminPostController extends Controller
             $msgCategory->save();
         }
 
-        //$msg->id
-
+        //insert attachments directly in to pivot table
         foreach($post->attachments as $attachment) {
-
-            dd($attachment);
-            //todo save attachments
-            //? get attachement store in messages folder?
-            // or refer to original attachment?
-            $attachment = new Attachment($attachment);
-            $attachment->save();
-
-            //copy files into messages folder storage/app/messages
-
-
-            // table attachment_message
             $data = [
                 'attachment_id' => $attachment->id,
                 'message_id' => $msg->id,
             ];
-
-            $msg->attachments()->attach($data);
-
+            $result = DB::table('attachment_message')
+                ->insert([$data]);
         }
 
         /****

@@ -159,7 +159,7 @@
                                 </td>
                                 <td>
                                     <a href="{{route('attachment_download',
-                                            [$data['message']->getAttachmentFolder(), $ma->id])}}"
+                                            [$ma->subfolder, $ma->id])}}"
                                        title="Download {{$ma->file_name}}">{{$ma->file_name}}
                                     </a>
                                     <input type="hidden" name='attachment[{{$ma->id}}][access_level]' value='public'>
