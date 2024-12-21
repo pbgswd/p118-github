@@ -56,8 +56,8 @@ class SendEmailsNow extends Command
 
                     if ($message->attachments->count() > 0) {
                         foreach ($message->attachments as $att) {
-                            $file = 'storage/app/'.$message->getAttachmentFolder().'/'.$att->file;
-                            $mime = mime_content_type($file);
+                            $file = 'storage/app/' . $att->subfolder . '/' . $att->file;
+                            $mime = mime_content_type(getcwd()."/".$file);
                             $file_name = $att->file_name;
                             $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
                         }

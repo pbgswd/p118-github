@@ -13,43 +13,43 @@
                         </td>
                         <td class="expander"></td>
                     </tr>
-                            <table class="twelve columns"  style="background-color: #FFFFFF; border-bottom: 1px solid #CCCCCC;">
-                                <tr>
-                                    <td style="padding-top: 1rem; padding-bottom: 1rem; padding-left: 2rem; padding-right: 2rem; justify-content: center; display: flex;" >
-                                        <a href="{{env('APP_URL')}}" title="IATSE Local 118" style="text-align: center;">
-                                            <img src="{{env('APP_URL')}}/email/118_logo_webp.webp" style="margin-right: 1rem;"/>
-                                        </a>
-                                    </td>
-                                    <td class="expander"></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:center; padding: 1rem;">
-                                        <hr style="height: 3px; background-color: black; border: none;" />
-                                        <h2 class="lead" style=" font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; text-align:center;">
-                                            {{$data['message']['subject']}}
-                                        </h2>
-                                        <hr style="height: 3px; background-color: black; border: none;" />
-                                    </td>
-                                    <td class="expander"></td>
-                                </tr>
-                                <tr>
-                                    <td  style="padding: 2rem;">
-                                        {!! $data['message']['content'] !!}
-                                    </td>
-                                    <td class="expander"></td>
-                                </tr>
-                            </table>
-                        </td>
+                    <tr>
+                       <td align="center">
+                           <table class="twelve columns"  style="background-color: #FFFFFF; border-bottom: 1px solid #CCCCCC;">
+                               <tr>
+                                   <td align="center" style="padding-top: 1rem; padding-bottom: 1rem; padding-left: 2rem; padding-right: 2rem; text-align:center; justify-content: center; display: flex;">
+                                       <a href="{{env('APP_URL')}}" title="IATSE Local 118" style="text-align: center;">
+                                           <img src="{{env('APP_URL')}}/email/118_logo_webp.webp" style="margin-right: 1rem; display: block; margin: 0 auto;" />
+                                       </a>
+                                   </td>
+                                   <td class="expander"></td>
+                               </tr>
+                               <tr>
+                                   <td style="text-align:center; padding: 1rem;">
+                                       <hr style="height: 3px; background-color: black; border: none;" />
+                                       <h2 class="lead" style=" font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; text-align:center;">
+                                           {{$data['message']['subject']}}
+                                       </h2>
+                                       <hr style="height: 3px; background-color: black; border: none;" />
+                                   </td>
+                                   <td class="expander"></td>
+                               </tr>
+                               <tr>
+                                   <td  style="padding: 2rem;">
+                                       {!! $data['message']['content'] !!}
+                                   </td>
+                                   <td class="expander"></td>
+                               </tr>
+                           </table>
+                       </td>
                     </tr>
-
                 </table>
                 @if(count($data['attachments']) > 0)
                     <table class="twelve columns">
                         <tr>
-                            <td style="padding-left: 2rem;">
+                            <td style="padding-left: 2rem; padding-top:2em;">
                                 {{count($data['attachments'])}}
-                                {{Str::plural('attachment', count($data['attachments']))}}
-                                with this message.
+                                {{Str::plural('Attachment', count($data['attachments']))}}
                             </td>
                         </tr>
                         <tr>

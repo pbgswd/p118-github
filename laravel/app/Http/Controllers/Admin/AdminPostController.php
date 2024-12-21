@@ -199,7 +199,6 @@ class AdminPostController extends Controller
         $this->authorize('message', Post::class);
         $post->load('user', 'attachments', 'topics');
 
-       // dd($post->attachments);
 
         $message = [
             'source_url' => env('APP_URL') . '/post/' . $post->slug,
@@ -220,7 +219,6 @@ class AdminPostController extends Controller
             $msgCategory->save();
         }
 
-        //insert attachments directly in to pivot table
         foreach($post->attachments as $attachment) {
             $data = [
                 'attachment_id' => $attachment->id,
@@ -229,20 +227,6 @@ class AdminPostController extends Controller
             $result = DB::table('attachment_message')
                 ->insert([$data]);
         }
-
-        /****
- if (null !== ($request->file('attachments'))) {
-         * $result = $this->attachmentService->createAttachment($request, $message);
-         * if ($result) {
-         * Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
-         * } else {
-         * Session::flash('error', 'You have an upload problem');
-         * }
-         * }
-         *
-         *
-         */
-
 
         Session::flash('success', 'new message from posts saved');
 

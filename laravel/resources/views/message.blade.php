@@ -41,13 +41,18 @@
                         </ul>
                     </nav>
                 </div>
-
-
-
-                <h2><i class="fas fa-envelope-open-text"></i> {{$data['message']->subject}}</h2>
-                Sent: {{$data['message']->updated_at->format('F j Y')}}
-                <p>{{$data['message']->section}}</p>
-                <p>{{$data['message']->category}}</p>
+                <h2 class="text-center">
+                    <i class="fas fa-envelope-open-text"></i>
+                    {{$data['message']->subject}}
+                </h2>
+                <p class="text-center">Sent: {{$data['message']->updated_at->format('F j Y')}}</p>
+                @if($data['message_origin'] != 'message')
+                    <p class="text-center">
+                        <a href="{{$data['message']->source_url}}">
+                          Original post:  {{$data['message']->source_url}}
+                        </a>
+                    </p>
+                @endif
                 <div class="p-6">
                     {!! $data['message']->content !!}
                 </div>
@@ -56,19 +61,21 @@
                 <div class="row mt-4 mb-6 p-2">
                     <h4>
                         <i class="far fa-folder-open"></i>
-                        Attachments
+                        {{$data['message']->attachments->count() . ' ' .
+                            Str::plural('Attachment', $data['message']->attachments->count())}}
                     </h4>
                     <div class="col-12 mb-6">
                         <ul class="list-group mb-6">
                             @forelse($data['message']->attachments as $att)
                                 <li class="list-group-item">
-                                    <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->file_name}}" target="_blank">
+                                    <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                       title="Download {{$att->file_name}}" target="_blank">
                                         <i class="fas fa-file-download fa-1x"></i>
                                         {{$att->description ? : $att->file_name}}
                                     </a>
                                 </li>
                             @empty
-                                <li class="list-group-item"> No attachments </li>
+                                <li class="list-group-item"> No attachments</li>
                             @endforelse
                         </ul>
                     </div>
@@ -81,7 +88,7 @@
                             {{(ucfirst($msgcat->name))}}@if($loop->remaining),@else.@endif
                         @endforeach
                     </h5>
-                    <p class="fw-bold">Update your personal message preferences on your
+                    <p class="fw-bold text-center">Update your personal message preferences on your
                         <a href="{{route('member', Auth::id())}}">profile page.</a>
                     </p>
                 </div>

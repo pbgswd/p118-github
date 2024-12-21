@@ -50,8 +50,12 @@ class MessageController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
+        $path = parse_url($message->source_url, PHP_URL_PATH);
+        $segments = explode('/', trim($path, '/'));
+
         $data = [
             'message' => $message,
+            'message_origin' => $segments[0],
             'next' => $next,
             'previous' => $previous,
         ];
