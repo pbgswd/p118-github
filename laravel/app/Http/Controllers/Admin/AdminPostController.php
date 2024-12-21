@@ -119,6 +119,7 @@ class AdminPostController extends Controller
         $data = [
             'post' => $post,
             'topics' => Topic::all(),
+            'existing_message' => Message::where('source_url',  env('APP_URL') . '/post/' . $post->slug)->count(),
             'assignedTopics' => $assignedTopics,
             'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
             'action' => 'Edit',
@@ -192,13 +193,15 @@ class AdminPostController extends Controller
      */
     public function message(Post $post): RedirectResponse
     {
-       // Session::flash('warning', 'this is for an additional messaging feature that will be set up soon');
-        //return redirect()->route('post_edit', [$post->slug]);
-
-        //todo get data from post, store it in message, redirect to edit message?
         $this->authorize('message', Post::class);
-        $post->load('user', 'attachments', 'topics');
 
+        $existing = Message::where('source_url',  env('APP_URL') . '/post/' . $post->slug)->count();
+        if($existing > 0){
+            Session::flash('warning', 'A message from this content has already been created');
+            return redirect()->route('post_edit', [$post->slug]);
+        }
+
+        $post->load('user', 'attachments', 'topics');
 
         $message = [
             'source_url' => env('APP_URL') . '/post/' . $post->slug,
@@ -231,6 +234,5 @@ class AdminPostController extends Controller
         Session::flash('success', 'new message from posts saved');
 
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
-
     }
 }

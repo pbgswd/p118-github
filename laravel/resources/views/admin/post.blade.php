@@ -21,14 +21,16 @@
                     </a>
                 </h4>
             </div>
-            <div class="col-12 col-md-4 text-md-right">
-                <h4>
-                    <a href="{{route('admin_post_message', $data['post']->slug)}}">
-                        <i class="far fa-envelope-open"></i>
-                        Send to message TODO
-                    </a>
-                </h4>
-            </div>
+            @if($data['existing_message'] == 0)
+                <div class="col-12 col-md-4 text-md-right">
+                    <h4>
+                        <a href="{{route('admin_post_message', $data['post']->slug)}}">
+                            <i class="far fa-envelope-open"></i>
+                            Send as a message
+                        </a>
+                    </h4>
+                </div>
+            @endif
         @endif
     </div>
     <form method="post" name="post" action="{{url()->current()}}" enctype="multipart/form-data"
