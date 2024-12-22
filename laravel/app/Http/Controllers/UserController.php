@@ -135,9 +135,16 @@ class UserController extends Controller
         $topics = Topic::where('live', '=', 1)->get();
         $committees = Committee::where('live', '=', 1)->pluck('name', 'slug')->toArray();
 
-        $selected_topics = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'topic']])->pluck('name')->toArray();
-        $selected_models = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'model']])->pluck('name')->toArray();
-        $selected_committees = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'committee']])->pluck('name')->toArray();
+        if(MessageSelection::where('user_id', 1)->exists() === false) {
+            Session::flash('success', 'Please update your message preferences');
+        }
+
+        $selected_topics = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'topic']])
+            ->pluck('name')->toArray();
+        $selected_models = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'model']])
+            ->pluck('name')->toArray();
+        $selected_committees = MessageSelection::where([['user_id', '=', $user->id], ['type', '=', 'committee']])
+            ->pluck('name')->toArray();
 
         $selections = [
             'topics' => array_combine($selected_topics, $selected_topics),
@@ -149,7 +156,7 @@ class UserController extends Controller
             'user' => $user,
             'user_roles' => $member_roles,
             'committees' => Committee::where('live', '=', 1)->get(),
-            'selections' => $selections,
+            'selections' => $selections ,
             'user_selections' => MessageSelection::where('user_id', '=', $user->id)->count(),
             'topic_subscription_options' => $topics,
             'model_subscription_options' => Options::model_subscription_options(),
