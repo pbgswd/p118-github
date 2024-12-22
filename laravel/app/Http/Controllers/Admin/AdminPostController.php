@@ -13,6 +13,7 @@ use App\Models\MessageCategory;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Services\AttachmentService;
+use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,9 +30,10 @@ class AdminPostController extends Controller
      */
     private $attachmentService;
 
-    public function __construct(AttachmentService $attachmentService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
         $this->attachmentService = $attachmentService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -193,18 +195,28 @@ class AdminPostController extends Controller
      */
     public function message(Post $post): RedirectResponse
     {
+        //this method as a service
+        //todo can I prep the data consistently enough to pass in to a Service
+        // slugs, ids, titles to subject
+        // identifier, 'post'; topic, model, committee
+
         $this->authorize('message', Post::class);
 
-        $existing = Message::where('source_url',  env('APP_URL') . '/post/' . $post->slug)->count();
-        if($existing > 0){
+        $source_url = env('APP_URL') . '/post/' . $post->slug;
+
+        if(Message::where('source_url',  $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
             return redirect()->route('post_edit', [$post->slug]);
         }
 
         $post->load('user', 'attachments', 'topics');
 
+        $post->source_url = $source_url;
+//todo format data to pass in to MessageService
+        $this->messageService->createMessage($post);
+//dd(1);
         $message = [
-            'source_url' => env('APP_URL') . '/post/' . $post->slug,
+            'source_url' => $source_url,
             'subject' => $post->title,
             'slug' => $post->slug,
             'content' => $post->content,

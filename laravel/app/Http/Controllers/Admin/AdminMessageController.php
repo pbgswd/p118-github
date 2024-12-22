@@ -165,13 +165,8 @@ class AdminMessageController extends Controller
      */
     public function edit(Message $message)
     {
-        //todo policy
-        //trait
-// messages, post,  etc
-        //http://p118.dev/ message /36/this-is-a-test-message-today
-
         $message->load(['user', 'attachments', 'messageCategories']);
-//dd($message);
+
         $mc_data = [];
         foreach($message['messageCategories'] as $mc) {
             $mc['field'] = $mc->type . " " . $mc->name;

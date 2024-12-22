@@ -38,7 +38,15 @@ class MessageController extends Controller
 
     public function show(Message $message): View
     {
-        $message->load('user', 'attachments', 'messageCategories');   //todo why wont messageCategories relation load, what is the problem?
+        $message->load('user', 'attachments', 'messageCategories');
+
+        //todo messageCategories returns things with hyphens, like ' Young-workers-committee' how to fix?
+        // I want 'Young Workers Committee' the name, not the slug
+
+        $category_titles = [];
+        foreach ($message->messageCategories as $category) {
+            $category_titles[] = ucwords(str_replace('-', ' ', $category->name));
+        }
 
         $next = Message::where('id', '>', $message->id)
             ->where ('state', 'sent')
@@ -55,6 +63,7 @@ class MessageController extends Controller
 
         $data = [
             'message' => $message,
+            'category_titles' => $category_titles,
             'message_origin' => $segments[0],
             'next' => $next,
             'previous' => $previous,

@@ -84,8 +84,8 @@
             <div class="row">
                 <div class="col-12">
                     <h5>Message {{Str::plural('Category', count($data['message']['messageCategories']))}}:
-                        @foreach($data['message']['messageCategories'] as $msgcat)
-                            {{(ucfirst($msgcat->name))}}@if($loop->remaining),@else.@endif
+                        @foreach($data['category_titles'] as $msgcat)
+                            {{$msgcat}}@if($loop->remaining),@else.@endif
                         @endforeach
                     </h5>
                     <p class="fw-bold text-center">Update your personal message preferences on your
