@@ -140,6 +140,11 @@ Route::middleware('web', 'auth')->group(function () {
 
         Route::delete('committee/{committee}/post/{committeePost}/destroy', 'destroy')
             ->name('public_committee_post_destroy');
+        Route::get('admin/committee/{committee}/post/{committeePost}/message', 'message')->name('committee_post_message_to_admin');
+    });
+
+    Route::controller(CNS\Admin\AdminCommitteePostController::class)->group(function () {
+        Route::get('admin/committee/{committee}/post/{committeePost}/message', 'message')->name('committee_post_message_to_admin');
     });
 
     Route::controller(CNS\MeetingController::class)->group(function () {
