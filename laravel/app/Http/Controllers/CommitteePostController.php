@@ -7,8 +7,10 @@ use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\Message;
 use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -23,9 +25,10 @@ class CommitteePostController extends Controller
      */
     private $attachmentService;
 
-    public function __construct(AttachmentService $attachmentService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
         $this->attachmentService = $attachmentService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -90,7 +93,7 @@ class CommitteePostController extends Controller
             'data' => [
                 'post' => $committeePost,
                 'action' => 'Edit',
-                'access_levels' => Options::access_levels(),
+                'existing_message' => Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->exists(),                'access_levels' => Options::access_levels(),
                 'title' => 'Edit '.$committeePost->title,
             ],
         ]);

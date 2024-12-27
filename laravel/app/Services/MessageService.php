@@ -15,18 +15,14 @@ class MessageService
 
     public function createCommitteePostMessage($data): Message
     {
-//todo slug has to be the name of the committee, but also has to be the name of the committee and the name of the committee post
-
         $message = [
             'source_url' => $data->source_url,
             'subject' => $data->title,
             'slug' => $data->committee->slug .'-'. $data->slug,
-            //'committee_post_slug' => $data->committee->slug .'-'. $data->slug,
             'content' => $data->content,
             'user_id' => Auth::id(),
         ];
-//todo sort out slug var between committee post and post, page, assume its several even if it is actually 1
-        //$message['topics'][0]['slug'] = $data->committee->slug;
+
         $message['topics'][0]['slug'] = $data->committee->slug;
         $message['attachments'] = $data->attachments;
 
@@ -51,7 +47,6 @@ class MessageService
     }
     public function createPostMessage($data): Message
     {
-       // dd($data);
         $message = [
             'source_url' => $data->source_url,
             'subject' => $data->title,

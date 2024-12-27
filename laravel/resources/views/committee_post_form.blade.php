@@ -19,10 +19,22 @@
                         [$data['post']['committee']->slug, $data['post']->slug])}}">
                         {{$data['post']->title}}
                     </a>
+                    <br />
+                    @if($data['existing_message'] === false)
+                        <div class="col-12 col-md-4 mt-4 text-md-right">
+                            <h4>
+                                <a href="{{route('admin_committee_post_message', [$data['post']['committee']->slug, $data['post']->slug])}}">
+                                    <i class="far fa-envelope-open"></i>
+                                    Send as a message
+                                </a>
+                            </h4>
+                        </div>
+                    @endif
                 @endif
             </h3>
         </div>
     </div>
+
     <div class="row my-3">
         <div class="col-12">
             <form method="post" name="post" action="{{ url()->current() }}" enctype="multipart/form-data"

@@ -109,8 +109,6 @@ class AdminCommitteePostController extends Controller
 
         $any_committee_post->load('creator', 'admin_post_comments', 'attachments');
 
-        // http://p118.dev/committee/training-committee/post/training-committee-meeting-minutes-dec-15th-2021
-
         $data = [
             'post' => $any_committee_post,
             'committee' => $committee,
