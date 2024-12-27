@@ -24,7 +24,7 @@
                         <!--
                         <div class="col-12 col-md-4 mt-4 text-md-right">
                             <h4>
-                                <a href="{{route('committee_post_message_to_admin', [$data['post']['committee']->slug, $data['post']->slug])}}">
+                                <a href="">
                                     <i class="far fa-envelope-open"></i>
                                     Send as a message
                                 </a>
