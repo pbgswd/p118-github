@@ -294,6 +294,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/page/{any_page}/edit', 'edit')->name('page_edit');
         Route::post('/page/{any_page}/edit', 'update')->name('admin_update_page');
         Route::delete('/page/delete', 'destroy')->name('page_destroy');
+        Route::get('/page/{any_page}/message', 'message')->name('admin_page_message');
     });
 
     Route::controller(CNS\Admin\AdminPostController::class)->group(function () {
@@ -367,6 +368,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('committee/{committee}/post/{any_committee_post}/edit', 'edit')->name('admin_committee_post_edit');
         Route::post('committee/{committee}/post/{any_committee_post}/edit', 'update');
         Route::delete('committee/{committee}/post/delete', 'destroy')->name('committee_post_destroy');
+        Route::get('/committee/{committee}/post/{any_committee_post}/message', 'message')->name('admin_committee_post_message');
     });
 
     /**

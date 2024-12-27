@@ -121,7 +121,7 @@ class AdminPostController extends Controller
         $data = [
             'post' => $post,
             'topics' => Topic::all(),
-            'existing_message' => Message::where('source_url',  env('APP_URL') . '/post/' . $post->slug)->count(),
+            'existing_message' => Message::where('source_url',  env('APP_URL') . '/post/' . $post->slug)->exists(),
             'assignedTopics' => $assignedTopics,
             'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
             'action' => 'Edit',
@@ -195,53 +195,19 @@ class AdminPostController extends Controller
      */
     public function message(Post $post): RedirectResponse
     {
-        //this method as a service
-        //todo can I prep the data consistently enough to pass in to a Service
-        // slugs, ids, titles to subject
-        // identifier, 'post'; topic, model, committee
-
-        $this->authorize('message', Post::class);
+        $this->authorize('update', Post::class);
 
         $source_url = env('APP_URL') . '/post/' . $post->slug;
-
         if(Message::where('source_url',  $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
             return redirect()->route('post_edit', [$post->slug]);
         }
 
         $post->load('user', 'attachments', 'topics');
-
         $post->source_url = $source_url;
-//todo format data to pass in to MessageService
-        $this->messageService->createMessage($post);
-//dd(1);
-        $message = [
-            'source_url' => $source_url,
-            'subject' => $post->title,
-            'slug' => $post->slug,
-            'content' => $post->content,
-            'user_id' => Auth::id(),
-        ];
 
-        $msg = new Message($message);
-        $msg->save();
+        $msg = $this->messageService->createPostMessage($post);
 
-        foreach ($post->topics as $topic) {
-            $data['message_id'] = $msg->id;
-            $data['type'] = 'topic';
-            $data['name'] = $topic->slug;
-            $msgCategory = new MessageCategory($data);
-            $msgCategory->save();
-        }
-
-        foreach($post->attachments as $attachment) {
-            $data = [
-                'attachment_id' => $attachment->id,
-                'message_id' => $msg->id,
-            ];
-            $result = DB::table('attachment_message')
-                ->insert([$data]);
-        }
 
         Session::flash('success', 'new message from posts saved');
 

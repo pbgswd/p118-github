@@ -8,9 +8,11 @@ use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
 use App\Models\Committee;
 use App\Models\CommitteePost;
+use App\Models\Message;
 use App\Models\Options;
 use App\Models\User;
 use App\Services\AttachmentService;
+use App\Services\MessageService;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -26,9 +28,10 @@ class AdminCommitteePostController extends Controller
      */
     private $attachmentService;
 
-    public function __construct(AttachmentService $attachmentService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
         $this->attachmentService = $attachmentService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -106,9 +109,12 @@ class AdminCommitteePostController extends Controller
 
         $any_committee_post->load('creator', 'admin_post_comments', 'attachments');
 
+        // http://p118.dev/committee/training-committee/post/training-committee-meeting-minutes-dec-15th-2021
+
         $data = [
             'post' => $any_committee_post,
             'committee' => $committee,
+            'existing_message' => Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug)->exists(),
             'action' => 'Edit',
             'access_levels' => Options::access_levels(),
         ];
@@ -144,6 +150,26 @@ class AdminCommitteePostController extends Controller
         return redirect()->route('admin_committee_post_edit',
             [$committeePost->committee->slug, $committeePost->slug]);
     }
+
+    public function message(Committee $committee, CommitteePost $any_committee_post): RedirectResponse
+    {
+        $this->authorize('update', $committee);
+
+        $source_url = env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug;
+
+        if(Message::where('source_url',  $source_url)->exists()) {
+            Session::flash('warning', 'A message from this content has already been created');
+            return redirect()->route('admin_committee_post_edit', [$committee->slug, $any_committee_post->slug]);
+        }
+
+        $any_committee_post->load('creator', 'attachments', 'committee');
+        $any_committee_post->source_url = $source_url;
+        $msg = $this->messageService->createCommitteePostMessage($any_committee_post);
+
+        Session::flash('success', 'new message from posts saved');
+        return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
+    }
+
 
     /**
      * @throws Exception

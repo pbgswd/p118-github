@@ -54,4 +54,5 @@ class PagePolicy
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
+
 }

@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Page\DestroyPageRequest;
 use App\Http\Requests\Page\StorePageRequest;
 use App\Http\Requests\Page\UpdatePageRequest;
+use App\Models\Message;
 use App\Models\Options;
 use App\Models\Page;
 use App\Models\Topic;
 use App\Services\AttachmentService;
+use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,9 +25,10 @@ class AdminPageController extends Controller
     /**
      * @var AttachmentService
      */
-    public function __construct(AttachmentService $attachmentService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
         $this->attachmentService = $attachmentService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -119,6 +122,7 @@ class AdminPageController extends Controller
         $data = [
             'page' => $page,
             'topics' => Topic::all(),
+            'existing_message' => Message::where('source_url',  env('APP_URL') . '/page/' . $page->slug)->exists(),
             'assignedTopics' => $page->topics->pluck('id')->toArray(),
             'access_levels' => Options::access_levels(),
             'action' => 'Edit',
@@ -162,6 +166,26 @@ class AdminPageController extends Controller
 
         return redirect()->route('page_edit', [$any_page->slug]);
     }
+
+    public function message(Page $page): RedirectResponse
+    {
+        $this->authorize('update', Page::class);
+
+        $source_url = env('APP_URL') . '/page/' . $page->slug;
+        if(Message::where('source_url',  $source_url)->exists()) {
+            Session::flash('warning', 'A message from this content has already been created');
+            return redirect()->route('page_edit', [$page->slug]);
+        }
+
+        $page->load('user', 'attachments', 'topics');
+        $page->source_url = $source_url;
+        $msg = $this->messageService->createPageMessage($page);
+
+        Session::flash('success', 'new message from posts saved');
+        return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
+    }
+
+
 
     /**
      * @throws AuthorizationException

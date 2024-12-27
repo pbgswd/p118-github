@@ -40,14 +40,6 @@ class PostPolicy
     /**
      * @throws \Exception
      */
-    public function message(User $user): bool
-    {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
-    }
-
-    /**
-     * @throws \Exception
-     */
     public function update(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);

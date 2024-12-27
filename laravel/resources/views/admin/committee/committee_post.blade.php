@@ -4,12 +4,12 @@
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <div class="row mb-5">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <h4>
                 <a href="{{route('admin_committee_show', $data['committee']->slug)}}">
                     <i class="far fa-arrow-alt-circle-left"></i>
                     {{$data['committee']->name}} Page
-                </a> |
+                </a> <br />
                 <a href="{{ route('committee_posts_list', $data['committee']->slug) }}">
                     <i class="far fa-arrow-alt-circle-left"></i>
                     List of posts
@@ -17,13 +17,25 @@
             </h4>
         </div>
         @if($data['action'] == 'Edit')
-            <div class="col-12 col-md-6 text-md-right">
-                <a href="{{route('public_committee_post_show',
+            <div class="col-12 col-md-4 text-md-right">
+                <h4>
+                    <a href="{{route('public_committee_post_show',
                     [$data['committee']->slug, $data['post']->slug])}}"
-                    title="View {{$data['post']->title}}">
-                    <i class="fas fa-eye"></i> View on website
-                </a>
+                       title="View {{$data['post']->title}}">
+                        <i class="fas fa-eye"></i> View on website
+                    </a>
+                </h4>
             </div>
+            @if($data['existing_message'] === false)
+                <div class="col-12 col-md-4 text-md-right">
+                    <h4>
+                        <a href="{{route('admin_committee_post_message', [$data['committee']->slug, $data['post']->slug])}}">
+                            <i class="far fa-envelope-open"></i>
+                            Send as a message
+                        </a>
+                    </h4>
+                </div>
+            @endif
         @endif
     </div>
 

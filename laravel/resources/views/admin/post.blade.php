@@ -21,7 +21,7 @@
                     </a>
                 </h4>
             </div>
-            @if($data['existing_message'] == 0)
+            @if($data['existing_message'] === false)
                 <div class="col-12 col-md-4 text-md-right">
                     <h4>
                         <a href="{{route('admin_post_message', $data['post']->slug)}}">
