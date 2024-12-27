@@ -9,7 +9,7 @@
                     Local 118 Messages
                 </h1>
                 <p class="fw-bold">Update your personal message preferences on your
-                    <a href="{{route('member_edit', Auth::id())}}">profile page.</a>
+                    <a href="{{route('member', Auth::id())}}">profile page.</a>
                 </p>
                 @can('edit articles')
                     <div class="text-end">
