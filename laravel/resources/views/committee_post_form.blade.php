@@ -12,28 +12,42 @@
             </h4>
         </div>
         <div class="col-12 mt-3">
-            <h3>
-                {{$data['action']}} Committee Post
+            <h3>{{$data['action']}} Committee Post</h3>
                 @if($data['action'] == "Edit")
-                    <a href="{{route('public_committee_post_show',
+                    <h4>
+                        <a href="{{route('public_committee_post_show',
                         [$data['post']['committee']->slug, $data['post']->slug])}}">
-                        {{$data['post']->title}}
-                    </a>
+                            {{$data['post']->title}}
+                        </a>
+                    </h4>
                     <br />
                     @if($data['existing_message'] === false)
-                        <!--
                         <div class="col-12 col-md-4 mt-4 text-md-right">
                             <h4>
-                                <a href="">
+                                <a href="{{route('admin_committee_post_message', [$data['post']['committee']->slug, $data['post']->slug])}}">
                                     <i class="far fa-envelope-open"></i>
-                                    Send as a message
+                                    Send as a Message
                                 </a>
                             </h4>
                         </div>
-                        -->
+                    @else
+                        @if($data['existing_message']['state'] != 'not_sent')
+                            Sent as a message on {{date_format($data['existing_message']['updated_at'], 'l, M j g:i:s A')}}
+                            <a href="{{route('message', [$data['existing_message']['id'], $data['existing_message']['slug']])}}"
+                               title="View message for this post on the website" target="_blank">
+                                View Message
+                            </a>
+                        @else
+                            @if($data['existing_message']['state'] == 'not_sent')
+                                There is an unsent message for this post.
+                                <a href="{{route('admin_message_edit',[$data['existing_message']['id'], $data['existing_message']['slug']])}}">
+                                    Edit message
+                                </a>
+                            @endif
+                       @endif
                     @endif
                 @endif
-            </h3>
+
         </div>
     </div>
 

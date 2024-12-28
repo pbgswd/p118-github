@@ -33,6 +33,15 @@
                     By {{ $data['committeepost']->creator->name  ?? $data['committeepost']->author_name }},
                     {{ \Carbon\Carbon::parse($data['committeepost']->updated_at)->format(' F j, Y') }}
                 </h5>
+                <h6>
+                    @if($data['existing_message']['state'] != 'not_sent')
+                        Sent as a message on {{date_format($data['existing_message']['updated_at'], 'l, M j g:i:s A')}}
+                        <a href="{{route('message', [$data['existing_message']['id'], $data['existing_message']['slug']])}}"
+                           title="View message for this post on the website" target="_blank">
+                            View Message
+                        </a>
+                    @endif
+                </h6>
                 {!! $data['committeepost']->content !!}
             </div>
         </div>

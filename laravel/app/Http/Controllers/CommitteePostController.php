@@ -90,12 +90,12 @@ class CommitteePostController extends Controller
         $committeePost->load('creator', 'committee', 'attachments');
 
         if(Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->exists()) {
-            $existing_message = Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->get();
+            $existing_message = Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->first();
         }
         else {
             $existing_message = false;
         }
-dd($existing_message);
+
         return view('committee_post_form', [$committee->slug, $committeePost->slug], [
             'data' => [
                 'post' => $committeePost,
@@ -148,6 +148,15 @@ dd($existing_message);
         ) {
             $data['canManage'] = 1;
         }
+
+        if(Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->exists()) {
+            $data['existing_message'] = Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->first();
+        }
+        else {
+            $data['existing_message'] = false;
+        }
+
+
         $data['title'] = $committeePost->title;
 
         return view('committee_post', ['data' => $data]);
