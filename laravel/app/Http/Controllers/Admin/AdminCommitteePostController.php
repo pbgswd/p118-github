@@ -109,10 +109,17 @@ class AdminCommitteePostController extends Controller
 
         $any_committee_post->load('creator', 'admin_post_comments', 'attachments');
 
+        if(Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug)->exists()) {
+            $existing_message = Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug)->first();
+        }
+        else {
+            $existing_message = false;
+        }
+
         $data = [
             'post' => $any_committee_post,
             'committee' => $committee,
-            'existing_message' => Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug)->exists(),
+            'existing_message' => $existing_message,
             'action' => 'Edit',
             'access_levels' => Options::access_levels(),
         ];

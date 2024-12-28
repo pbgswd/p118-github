@@ -26,16 +26,21 @@
                     </a>
                 </h4>
             </div>
-            @if($data['existing_message'] === false)
+
                 <div class="col-12 col-md-4 text-md-right">
                     <h4>
-                        <a href="{{route('admin_committee_post_message', [$data['committee']->slug, $data['post']->slug])}}">
-                            <i class="far fa-envelope-open"></i>
-                            Send as a message
-                        </a>
+                        @if($data['existing_message'] === false)
+                            <a href="{{route('admin_committee_post_message', [$data['committee']->slug, $data['post']->slug])}}">
+                                <i class="far fa-envelope-open"></i>
+                                Send as a message
+                            </a>
+                        @else
+                            Sent as a message on {{date_format($data['existing_message']['updated_at'], 'l, M j g:i:s A')}} <br />
+                            {{$data['existing_message']['id']}} | {{$data['existing_message']['slug']}} (todo route)
+                        @endif
                     </h4>
                 </div>
-            @endif
+
         @endif
     </div>
 

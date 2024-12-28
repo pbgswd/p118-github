@@ -89,11 +89,19 @@ class CommitteePostController extends Controller
 
         $committeePost->load('creator', 'committee', 'attachments');
 
+        if(Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->exists()) {
+            $existing_message = Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->get();
+        }
+        else {
+            $existing_message = false;
+        }
+dd($existing_message);
         return view('committee_post_form', [$committee->slug, $committeePost->slug], [
             'data' => [
                 'post' => $committeePost,
                 'action' => 'Edit',
-                'existing_message' => Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->exists(),                'access_levels' => Options::access_levels(),
+                'existing_message' => $existing_message,
+                'access_levels' => Options::access_levels(),
                 'title' => 'Edit '.$committeePost->title,
             ],
         ]);
