@@ -30,6 +30,7 @@ class MessageController extends Controller
 
         $data = [
             'messages' => $messages,
+            'title' => "Messages",
             'count' => Message::where('state', '!=', 'not_sent')->count(),
         ];
 
@@ -39,9 +40,6 @@ class MessageController extends Controller
     public function show(Message $message): View
     {
         $message->load('user', 'attachments', 'messageCategories');
-
-        //todo messageCategories returns things with hyphens, like ' Young-workers-committee' how to fix?
-        // I want 'Young Workers Committee' the name, not the slug
 
         $category_titles = [];
         foreach ($message->messageCategories as $category) {
@@ -63,6 +61,7 @@ class MessageController extends Controller
 
         $data = [
             'message' => $message,
+            'title' => $message->subject,
             'category_titles' => $category_titles,
             'message_origin' => $segments[0],
             'next' => $next,

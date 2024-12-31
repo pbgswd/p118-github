@@ -26,14 +26,16 @@
                         <ul class="pagination">
                             @if($data['next'])
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ route('message', [$data['next']->id, $data['next']->slug])}}">
+                                    <a class="page-link" href="{{ route('message', [$data['next']->id, $data['next']->slug])}}"
+                                       title="Next Message: {{$data['next']->subject}}">
                                         Newer Messages
                                     </a>
                                 </li>
                             @endif
                             @if ($data['previous'])
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ route('message', [$data['previous']->id, $data['previous']->slug]) }}">
+                                    <a class="page-link" href="{{ route('message', [$data['previous']->id, $data['previous']->slug])}}"
+                                       title="Previous Message: {{$data['previous']->subject}}">
                                         Older Messages
                                     </a>
                                 </li>
@@ -98,14 +100,16 @@
                     <ul class="pagination">
                         @if($data['next'])
                             <li class="page-item">
-                                <a class="page-link" href="{{ route('message', [$data['next']->id, $data['next']->slug])}}">
+                                <a class="page-link" href="{{ route('message', [$data['next']->id, $data['next']->slug])}}"
+                                   title="Next Message: {{$data['next']->subject}}">
                                     Newer Messages
                                 </a>
                             </li>
                         @endif
                         @if ($data['previous'])
                             <li class="page-item">
-                                <a class="page-link" href="{{ route('message', [$data['previous']->id, $data['previous']->slug]) }}">
+                                <a class="page-link" href="{{ route('message', [$data['previous']->id, $data['previous']->slug]) }}"
+                                   title="Previous Message: {{$data['previous']->subject}}">
                                     Older Messages
                                 </a>
                             </li>
