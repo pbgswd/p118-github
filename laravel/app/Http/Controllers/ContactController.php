@@ -22,8 +22,7 @@ class ContactController extends Controller
         $data = [];
 
         if (Auth::user()) {
-            $data = ['contactPage' => Page::withoutGlobalScopes()
-                ->where('slug', 'contact-us')->get(), ];
+            $data = ['contactPage' => Page::withoutGlobalScopes()->where('slug', 'contact-us')->get(), ];
         }
         $data['title'] = 'Contact '.env('APP_NAME');
 
@@ -34,8 +33,7 @@ class ContactController extends Controller
     {
         $recaptcha = new ReCaptcha(getenv('GOOGLE_RECAPTCHA_V3_SECRET_KEY'));
 
-        $resp = $recaptcha->verify($request->input('g-recaptcha-response'),
-            $request->ip());
+        $resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
 
         $sub_time = $request->session()->get('submission_time');
 
@@ -46,39 +44,31 @@ class ContactController extends Controller
             return redirect()->route('contact');
         }
 
-        $cc = config('app.env') == 'production' ? []
-            : Options::testing_address_update_contacts();
+        $cc = config('app.env') == 'production' ? [] : Options::testing_address_update_contacts();
 
         $errors = $resp->isSuccess() ?: $resp->getErrorCodes();
 
-        if (($resp->getScore() < getenv('GOOGLE_RECAPTCHA_THRESHOLD'))
-            && config('app.env') == 'production') {
+        if (($resp->getScore() < getenv('GOOGLE_RECAPTCHA_THRESHOLD')) && config('app.env') == 'production') {
 
             $request->session()->put('submission_time', Carbon::now());
             $request->session()->put('suspicious', 'true');
 
-            Session::flash('warning',
-                'Your message was rejected by the Recaptcha filter.
-                Please wait before trying again.');
+            Session::flash('warning', 'Your message was rejected by the Recaptcha filter. Please wait before trying again.');
         } else {
             Mail::send('emails.contact', ['data' => $request->all()],
                 function ($m) use ($request, $cc) {
-                    $m->from(config('mail.from.address'), config('app.name').
-                        'Contact Page Message from '.$request['name']);
-                    $m->to(config('mail.office_admin.address'),
-                        config('mail.office_admin.name'));
+                    $m->from(config('mail.from.address'), config('app.name'). 'Contact Page Message from '.$request['name']);
+                    $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
                     if ($cc != '') {
                         $m->cc($cc, $cc);
                     }
                     $m->replyTo($request['email'], $request['name']);
-                    $m->subject('Contact Page '.$request['subject'].' from '.
-                        $request['name']);
+                    $m->subject('Contact Page '.$request['subject'].' from '. $request['name']);
 
                     Session::flash('success', 'Message Sent');
 
                     $al = new ActivityLog([
-                        'activity' => $request['name'] .
-                            ' sent a message via the contact page',
+                        'activity' => $request['name'] . ' sent a message via the contact page',
                         'ip_address' => $_SERVER['REMOTE_ADDR'],
                         'user_agent' => $_SERVER['HTTP_USER_AGENT'],
                         'model' => 'Admin']);

@@ -34,7 +34,7 @@
                     {{ \Carbon\Carbon::parse($data['committeepost']->updated_at)->format(' F j, Y') }}
                 </h5>
                 <h6>
-                    @if($data['existing_message']['state'] != 'not_sent')
+                    @if(!empty($data['existing_message']) && $data['existing_message'] !='not_sent')
                         Sent as a message on {{date_format($data['existing_message']['updated_at'], 'l, M j g:i:s A')}}
                         <a href="{{route('message', [$data['existing_message']['id'], $data['existing_message']['slug']])}}"
                            title="View message for this post on the website" target="_blank">

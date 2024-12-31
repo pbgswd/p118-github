@@ -47,7 +47,7 @@
                             </b>
                             <br />
                             <br /> <br />
-                            <b>Our Mailing address is:</b><br />
+                            <b>Our Mailing address:</b><br />
                             IATSE Local 118<br />
                             #206 – 2940 Main Street<br />
                             Vancouver, BC V5T 3G3<br />
@@ -67,7 +67,8 @@
                 <tr>
                     <td style="text-align: center; padding-bottom:4rem;">
                         <strong>How to update my email preferences?</strong><br />
-                        Log in to {{env('APP_URL')}}, and go to the Message Preferences<br />
+                        Log in to <a href="{{env('APP_URL')}}">{{env('APP_URL')}}</a>,
+                        and go to the Message Preferences<br />
                         tab on your personal profile page.
                     </td>
                     <td class="expander"></td>
