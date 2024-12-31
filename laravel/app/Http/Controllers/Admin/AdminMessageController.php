@@ -278,9 +278,15 @@ class AdminMessageController extends Controller
         }
 
         $data = $request->validated();
+
         $data['message']['slug'] = Str::slug($data['message']['subject'], '-');
-        //todo unless the source of the message is from another model.
-        $data['message']['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $data['message']['slug'];
+
+        $data['message']['source_url'] = $message->source_url;
+
+        if(strstr($message->source_url, '/message/')) {
+            $data['message']['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $data['message']['slug'];
+        }
+
         $message->fill($data['message']);
         $message->save();
 
@@ -338,7 +344,7 @@ class AdminMessageController extends Controller
 
     public function send(Message $message): RedirectResponse
     {
-        //todo policy
+        //todo policy committee, content mgrs
         Log::info('About to move command to jobs table '.$message->id);
         // Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
         // ProcessMessages::dispatch(['id' => $message->id]);

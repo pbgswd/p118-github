@@ -149,13 +149,14 @@ class CommitteePostController extends Controller
             $data['canManage'] = 1;
         }
 
-        if(Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->exists()) {
-            $data['existing_message'] = Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->first();
+        $source_url = env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug;
+
+        if(Message::where('source_url', $source_url)->exists()) {
+            $data['existing_message'] = Message::where('source_url',  $source_url)->first();
         }
         else {
             $data['existing_message'] = false;
         }
-
 
         $data['title'] = $committeePost->title;
 
