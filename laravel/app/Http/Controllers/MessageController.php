@@ -24,14 +24,14 @@ class MessageController extends Controller
     {
         $messages = Message::sortable()
             ->with('user', 'attachments')
-            ->where('state', '!=', 'not_sent')
+            ->where('state', 'sent')
             ->orderBy('id', 'desc')
             ->paginate(10);
 
         $data = [
             'messages' => $messages,
             'title' => "Messages",
-            'count' => Message::where('state', '!=', 'not_sent')->count(),
+            'count' => Message::where('state', 'sent')->count(),
         ];
 
         return view('messages', ['data' => $data]);
