@@ -3,15 +3,6 @@
         <td class="wrapper last">
             <table class="twelve columns">
                 <tr>
-                    <td style="padding-left:1rem;">
-                        <p style="text-align:left;">
-                            In Solidarity, <br />
-                            The Executive Board <br />
-                            I.A.T.S.E. Local 118 <br />
-                        </p>
-                    </td>
-                </tr>
-                <tr>
                     <td style="display: flex; align-items: center; gap: 10px; justify-content: center;">
                         <a href="https://x.com/118IATSE/" title="{{env('APP_NAME')}} on X" target="_blank">
                             <img src="{{env('APP_URL')}}/email/x-email-icon.png"  style="max-width: 50%; height: auto;" />
