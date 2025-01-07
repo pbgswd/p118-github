@@ -7,8 +7,10 @@ use App\Http\Requests\Employment\DestroyEmploymentRequest;
 use App\Http\Requests\Employment\StoreEmploymentRequest;
 use App\Http\Requests\Employment\UpdateEmploymentRequest;
 use App\Models\Employment;
+use App\Models\Message;
 use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -19,10 +21,12 @@ class AdminEmploymentController extends Controller
 {
     /** @var AttachmentService */
     private AttachmentService $attachmentService;
+    private MessageService $messageService;
 
-    public function __construct(AttachmentService $attachmentService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
         $this->attachmentService = $attachmentService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -96,6 +100,7 @@ class AdminEmploymentController extends Controller
         $data = [
             'employment' => $employment,
             'action' => 'Edit',
+            'existing_message' => Message::where('source_url',  env('APP_URL') . '/job/' . $employment->id)->exists(),
             'access_levels' => Options::access_levels(),
         ];
 
@@ -148,4 +153,31 @@ class AdminEmploymentController extends Controller
 
         return redirect()->route('admin_employment_list');
     }
+
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function message(Employment $employment): RedirectResponse
+    {
+
+        $this->authorize('update', Employment::class);
+
+        $source_url = env('APP_URL') . '/job/' . $employment->id;
+
+        if(Message::where('source_url',  $source_url)->exists()) {
+            Session::flash('warning', 'A message from this content has already been created');
+            return redirect()->route('admin_employment_edit', [$employment->id]);
+        }
+
+        $employment->load('user');
+        $employment->source_url = $source_url;
+
+        $msg = $this->messageService->createEmploymentMessage($employment);
+
+        Session::flash('success', 'new message from posts saved');
+
+        return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
+    }
+
 }

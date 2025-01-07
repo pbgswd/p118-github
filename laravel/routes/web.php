@@ -414,11 +414,10 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('employment-list/', 'index')->name('admin_employment_list');
         Route::get('employment/create', 'create')->name('admin_employment_create');
         Route::post('employment/create', 'store');
-        Route::get('/employment/{any_employment}/edit', 'edit')
-            ->name('admin_employment_edit');
+        Route::get('/employment/{any_employment}/edit', 'edit')->name('admin_employment_edit');
         Route::post('employment/{any_employment}/edit', 'update')->name('admin_employment_update');
-        Route::delete('/employment/delete', 'destroy')
-            ->name('admin_employment_destroy');
+        Route::delete('/employment/delete', 'destroy')->name('admin_employment_destroy');
+        Route::get('/employment/{any_employment}/message', 'message')->name('admin_employment_message');
     });
 
     Route::controller(CNS\Admin\AdminByLawController::class)->group(function () {

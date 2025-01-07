@@ -211,5 +211,4 @@ class AdminMemoriamController extends Controller
 
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
     }
-
 }

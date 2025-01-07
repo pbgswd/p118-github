@@ -14,6 +14,29 @@ class MessageService
         $this->attachmentService = $attachmentService;
     }
 
+    public function createEmploymentMessage($data): Message
+    {
+
+        $additional_data = "<hr />
+                            <b>Date Posted: " . $data['created_at']->format('F j Y') ."</b>
+                            <br />
+                            <b>End date for application: " . $data['deadline']->format('F j Y') .
+                            "</b>";
+
+        $message = [
+            'source_url' => $data->source_url,
+            'subject' => "Job Posting: " . $data->title,
+            'slug' => 'job-posting-'. $data->id,
+            'content' => $data->description . $additional_data,
+            'user_id' => Auth::id(),
+        ];
+
+        $message['topics'][0]['slug'] = 'Employment';
+        $message['attachments'] = $data->attachments;
+
+        return self::createMessage($message, 'model');
+    }
+
     public function createMemoriamMessage($data): Message
     {
         $message = [
