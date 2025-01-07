@@ -9,23 +9,23 @@ use Illuminate\Support\Facades\DB;
 
 class MessageService
 {
+    private AttachmentService $attachmentService;
     public function __construct(AttachmentService $attachmentService) {
         $this->attachmentService = $attachmentService;
     }
 
     public function createMemoriamMessage($data): Message
     {
-        //todo change array, slug,
         $message = [
             'source_url' => $data->source_url,
-            'subject' => $data->title,
-            'slug' => 'memoriam-'. $data->slug,
+            'subject' => "In Memoriam: ". $data->title,
+            'slug' => 'in-memoriam-'. $data->slug,
             'content' => $data->content,
             'user_id' => Auth::id(),
         ];
 
-        $message['topics'][0]['slug'] = $data->committee->slug;
-        $message['attachments'] = $data->attachments;
+        $message['topics'][0]['slug'] = 'Memoriam';
+        $message['attachments'] = [];
 
         return self::createMessage($message, 'model');
     }
@@ -80,6 +80,7 @@ class MessageService
 
     public function createMessage($data, $msg_category_type): Message
     {
+
         $msg = new Message($data);
         $msg->save();
 

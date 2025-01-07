@@ -1,8 +1,8 @@
 @extends('layouts.email', ['title' => env('APP_NAME') . " email message - " . $data['message']['subject']])
 @section('content')
-    <table class="body">
+    <table class="body" style="margin-left: auto; margin-right: auto;">
         <tr>
-            <td style="padding: 12px;">
+            <td style="padding: 12px; text-align: center;">
                 <table class="row">
                     <tr>
                         <td class="wrapper last" style="text-align: center; padding-bottom:1rem;">
@@ -11,15 +11,14 @@
                                 View message on website >>
                             </a>
                         </td>
-                        <td class="expander"></td>
                     </tr>
                     <tr>
                        <td align="center">
-                           <table class="twelve columns"  style="background-color: #FFFFFF; border-bottom: 1px solid #CCCCCC;">
+                           <table class="twelve columns" style="background-color: #FFFFFF; border-bottom: 1px solid #CCCCCC; margin-left: auto; margin-right: auto; padding:2px;">
                                <tr>
-                                   <td align="center" style="padding-top: 1rem; padding-bottom: 1rem; padding-left: 2rem; padding-right: 2rem; text-align:center; justify-content: center; display: flex;">
-                                       <a href="{{env('APP_URL')}}" title="IATSE Local 118" style="text-align: center;">
-                                           <img src="{{env('APP_URL')}}/email/118_logo_webp.webp" style="margin-right: 1rem; display: block; margin: 0 auto;" />
+                                   <td align="center" style="padding-top: 1rem; padding-bottom: 1rem; padding-left: 2rem; padding-right: 2rem; text-align:center; margin-left: auto; margin-right: auto; display: flex;">
+                                       <a href="{{env('APP_URL')}}" title="IATSE Local 118" style="text-align: center; margin-left: auto; margin-right: auto; ">
+                                           <img src="{{env('APP_URL')}}/email/118_logo_webp.webp" style="margin-left: auto; margin-right: auto; display: block;" />
                                        </a>
                                    </td>
                                    <td class="expander"></td>

@@ -130,7 +130,7 @@ class AdminMemoriamController extends Controller
             'folder' => $folder,
             'model_name' => 'In Memoriam',
         ];
-//dd($data);
+
         return view('admin.memoriam', ['data' => $data]);
     }
 

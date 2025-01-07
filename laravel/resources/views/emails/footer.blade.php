@@ -1,9 +1,9 @@
-<table class="row" style="margin-top: 1rem;">
+<table class="body" style="margin-top: 1rem; margin-left: auto; margin-right: auto;">
     <tr>
         <td class="wrapper last">
-            <table class="twelve columns">
+            <table class="row" style="margin-left: auto; margin-right: auto; text-align: center;">
                 <tr>
-                    <td style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+                    <td align="center" style="padding-top: 1rem; padding-bottom: 1rem; padding-left: 2rem; padding-right: 2rem; text-align:center; margin-left: auto; margin-right: auto; display: flex;">
                         <a href="https://x.com/118IATSE/" title="{{env('APP_NAME')}} on X" target="_blank">
                             <img src="{{env('APP_URL')}}/email/x-email-icon.png"  style="max-width: 50%; height: auto;" />
                         </a>
@@ -16,7 +16,6 @@
                         <a href="{{env('APP_URL')}}" title="{{env('APP_NAME')}}" target="_blank">
                             <img src="{{env('APP_URL')}}/email/118-email-icon.png"  style="max-width: 50%; height: auto;" />
                         </a>
-
                     </td>
                 </tr>
 
@@ -29,8 +28,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <p style="text-align:center;">
+                    <td align="center">
+                        <p style="text-align:center; margin-left: auto; margin-right: auto;">
                             <b>
                                 <a href="{{env('APP_URL')}}" target="_blank" title="IATSE Local 118">
                                     {{env('APP_URL')}}

@@ -46,7 +46,7 @@ class SendEmailsNow extends Command
                 ->where('message_id', $message->id)
                 ->limit($messageLimit)
                 ->get();
-
+//todo error, check it with both mailpit and aws
             foreach($subs as $sub) {
                 Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message, $sub, $data) {
                     $m->from(env('MAIL_FROM_ADDRESS'), config('app.name') .' - '. $message->subject);

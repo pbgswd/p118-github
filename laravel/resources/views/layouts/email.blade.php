@@ -6,6 +6,6 @@
     <title>{{$title ?? "IATSE Local 118 Email Message"}}</title>
   <link href="https://iatse118.com/css/email.css" rel="stylesheet" />
 </head>
-<body style="background-color: #fafafa">
+<body style="background-color: #fafafa; margin-left: auto; margin-right: auto;">
 @yield('content')
 @include('emails.footer')
