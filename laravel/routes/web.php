@@ -408,6 +408,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/meeting/{any_meeting}/edit', 'edit')->name('meeting_edit');
         Route::post('/meeting/{any_meeting}/edit', 'update');
         Route::delete('/meeting/delete', 'destroy')->name('meeting_destroy');
+        Route::get('/meeting/{any_meeting}/message', 'message')->name('admin_meeting_message');
     });
 
     Route::controller(CNS\Admin\AdminEmploymentController::class)->group(function () {

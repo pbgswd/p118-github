@@ -14,6 +14,27 @@ class MessageService
         $this->attachmentService = $attachmentService;
     }
 
+    public function createMeetingMessage($data): Message
+    {
+        $additional_data = "<hr />
+                            <b>Date of Meeting: " . $data['date']->format('F j Y') ."</b>
+                            </b>";
+
+        $message = [
+            'source_url' => $data->source_url,
+            'subject' => "Meeting Minutes: " . $data->title,
+            'slug' => 'meeting-minutes-'. $data->id,
+            'content' => $data->description . $additional_data,
+            'user_id' => Auth::id(),
+        ];
+
+        $message['topics'][0]['slug'] = 'Meeting';
+        $message['attachments'] = $data->attachments;
+
+        return self::createMessage($message, 'model');
+    }
+
+
     public function createEmploymentMessage($data): Message
     {
 

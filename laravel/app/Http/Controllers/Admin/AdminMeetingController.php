@@ -7,8 +7,10 @@ use App\Http\Requests\Meetings\DestroyMeetingRequest;
 use App\Http\Requests\Meetings\StoreMeetingRequest;
 use App\Http\Requests\Meetings\UpdateMeetingRequest;
 use App\Models\Meeting;
+use App\Models\Message;
 use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -21,10 +23,11 @@ class AdminMeetingController extends Controller
      * @var AttachmentService
      */
     private AttachmentService $attachmentService;
-
-    public function __construct(AttachmentService $attachmentService)
+    private MessageService $messageService;
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
         $this->attachmentService = $attachmentService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -108,6 +111,7 @@ class AdminMeetingController extends Controller
                 'data' => [
                     'meeting' => $meeting,
                     'action' => 'Edit',
+                    'existing_message' => Message::where('source_url',  env('APP_URL') . '/meeting/' . $meeting->id)->exists(),
                     'access_levels' => Options::access_levels(),
                 ],
             ]
@@ -160,4 +164,28 @@ class AdminMeetingController extends Controller
 
         return redirect()->route('meetings_list');
     }
+    /**
+     * @throws AuthorizationException
+     */
+    public function message(Meeting $meeting): RedirectResponse
+    {
+        $this->authorize('update', Meeting::class);
+
+        $source_url = env('APP_URL') . '/minutes/' . $meeting->id;
+
+        if(Message::where('source_url',  $source_url)->exists()) {
+            Session::flash('warning', 'A message from this content has already been created');
+            return redirect()->route('meeting_edit', [$meeting->id]);
+        }
+
+        $meeting->load('user');
+        $meeting->source_url = $source_url;
+
+        $msg = $this->messageService->createMeetingMessage($meeting);
+
+        Session::flash('success', 'new message from posts saved');
+
+        return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
+    }
+
 }
