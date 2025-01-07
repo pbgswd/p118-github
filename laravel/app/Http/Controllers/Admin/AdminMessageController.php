@@ -15,6 +15,7 @@ use App\Models\MessageSelection;
 use App\Models\Options;
 use App\Models\Topic;
 use App\Models\User;
+use App\Services\AttachmentService;
 use App\Services\MessageAttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,8 +28,7 @@ use Illuminate\View\View;
 
 class AdminMessageController extends Controller
 {
-    /** @var MesssageAttachmentService */
-    private $attachmentService;
+    private MessageAttachmentService $attachmentService;
 
     public function __construct(MessageAttachmentService $attachmentService)
     {

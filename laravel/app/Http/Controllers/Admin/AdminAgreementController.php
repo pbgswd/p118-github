@@ -21,7 +21,7 @@ use Illuminate\View\View;
 class AdminAgreementController extends Controller
 {
     /** @var AttachmentService */
-    private $attachmentService;
+    private AttachmentService $attachmentService;
 
     /**
      * AgreementController constructor.

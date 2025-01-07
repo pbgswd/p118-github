@@ -22,7 +22,7 @@ class AdminCarouselController extends Controller
     /**
      * @var CarouselImageService
      */
-    private $carouselimageservice;
+    private CarouselImageService $carouselimageservice;
 
     public function __construct(CarouselImageService $carouselimageservice)
     {

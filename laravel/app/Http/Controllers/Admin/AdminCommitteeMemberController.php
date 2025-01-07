@@ -19,7 +19,7 @@ use Illuminate\View\View;
 
 class AdminCommitteeMemberController extends Controller
 {
-    private $emailCommitteeMembershipService;
+    private EmailCommitteeMembershipService $emailCommitteeMembershipService;
 
     public function __construct(EmailCommitteeMembershipService $emailCommitteeMembershipService)
     {

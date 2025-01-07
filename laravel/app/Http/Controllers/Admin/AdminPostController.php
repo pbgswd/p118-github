@@ -28,7 +28,8 @@ class AdminPostController extends Controller
     /**
      * @var AttachmentService
      */
-    private $attachmentService;
+    private AttachmentService $attachmentService;
+    private MessageService $messageService;
 
     public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {

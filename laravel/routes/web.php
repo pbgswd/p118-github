@@ -206,6 +206,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('memoriam/{any_memoriam}/edit', 'edit')->name('admin_memoriam_edit');
         Route::post('memoriam/{any_memoriam}/edit', 'update');
         Route::delete('memoriam/delete', 'destroy')->name('admin_memoriam_destroy');
+        Route::get('/memoriam/{any_memoriam}/message', 'message')->name('admin_memoriam_message');
     });
 
     Route::controller(CNS\Admin\AdminProofReaderController::class)->group(function () {

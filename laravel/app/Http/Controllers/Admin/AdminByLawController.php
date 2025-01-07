@@ -19,7 +19,7 @@ use Illuminate\View\View;
 class AdminByLawController extends Controller
 {
     /** @var AttachmentService */
-    private $attachmentService;
+    private AttachmentService $attachmentService;
 
     /**
      * BylawController constructor.

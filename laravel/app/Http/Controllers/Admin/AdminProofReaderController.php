@@ -17,7 +17,7 @@ class AdminProofReaderController extends Controller
     /**
      * @var ProofreaderService
      */
-    private $proofreaderService;
+    private ProofreaderService $proofreaderService;
 
     public function __construct(ProofreaderService $proofreaderService)
     {

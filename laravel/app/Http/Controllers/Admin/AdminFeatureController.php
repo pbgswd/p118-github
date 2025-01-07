@@ -22,7 +22,7 @@ use Spatie\Image\Exceptions\InvalidManipulation;
 class AdminFeatureController extends Controller
 {
     /** @var AttachmentService */
-    private $attachmentService;
+    private AttachmentService $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
     {

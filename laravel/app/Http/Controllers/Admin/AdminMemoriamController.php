@@ -7,8 +7,10 @@ use App\Http\Requests\Memoriam\DestroyMemoriamRequest;
 use App\Http\Requests\Memoriam\StoreMemoriamRequest;
 use App\Http\Requests\Memoriam\UpdateMemoriamRequest;
 use App\Models\Memoriam;
+use App\Models\Message;
 use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\MessageService;
 use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -21,11 +23,13 @@ class AdminMemoriamController extends Controller
     /**
      * @var UserImageService
      */
-    private $userImageService;
+    private UserImageService $userImageService;
+    private MessageService $messageService;
 
-    public function __construct(UserImageService $userImageService)
+    public function __construct(UserImageService $userImageService, MessageService $messageService)
     {
         $this->userImageService = $userImageService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -37,7 +41,7 @@ class AdminMemoriamController extends Controller
 
         $memoriam = Memoriam::withoutGlobalScopes()
             ->sortable()
-            ->orderBy('date')
+            ->orderBy('date', 'desc')
             ->paginate(10);
 
         $mem = new Memoriam;
@@ -118,13 +122,15 @@ class AdminMemoriamController extends Controller
             $memoriam->thumb_size = AttachmentService::human_filesize(
                 \filesize(\storage_path('app/'.$folder.'/'.$memoriam->thumb))) ?: null;
         }
-
+//todo verify enough data for memoriam message
         $data = [
             'memoriam' => $memoriam,
+            'existing_message' => Message::where('source_url',  env('APP_URL') . '/memoriam/' . $memoriam->slug)->exists(),
             'action' => 'Edit',
             'folder' => $folder,
+            'model_name' => 'In Memoriam',
         ];
-
+//dd($data);
         return view('admin.memoriam', ['data' => $data]);
     }
 
@@ -179,4 +185,31 @@ class AdminMemoriamController extends Controller
 
         return redirect()->route('admin_memoriam_list');
     }
+
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function message(Memoriam $memoriam): RedirectResponse
+    {
+
+        $this->authorize('update', Memoriam::class);
+
+        $source_url = env('APP_URL') . '/memoriam/' . $memoriam->slug;
+
+        if(Message::where('source_url',  $source_url)->exists()) {
+            Session::flash('warning', 'A message from this content has already been created');
+            return redirect()->route('admin_memoriam_edit', [$memoriam->slug]);
+        }
+
+        $memoriam->load('user');
+        $memoriam->source_url = $source_url;
+
+        $msg = $this->messageService->createMemoriamMessage($memoriam);
+
+        Session::flash('success', 'new message from posts saved');
+
+        return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
+    }
+
 }

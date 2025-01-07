@@ -13,6 +13,23 @@ class MessageService
         $this->attachmentService = $attachmentService;
     }
 
+    public function createMemoriamMessage($data): Message
+    {
+        //todo change array, slug,
+        $message = [
+            'source_url' => $data->source_url,
+            'subject' => $data->title,
+            'slug' => 'memoriam-'. $data->slug,
+            'content' => $data->content,
+            'user_id' => Auth::id(),
+        ];
+
+        $message['topics'][0]['slug'] = $data->committee->slug;
+        $message['attachments'] = $data->attachments;
+
+        return self::createMessage($message, 'model');
+    }
+
     public function createCommitteePostMessage($data): Message
     {
         $message = [

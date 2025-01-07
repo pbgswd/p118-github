@@ -39,7 +39,7 @@ class AdminUserController extends Controller
      * @var EmailMemberUpdateService
      * @var UserImageService
      */
-    private $emailMemberUpdateService;
+    private EmailMemberUpdateService $emailMemberUpdateService;
 
     public function __construct(EmailMemberUpdateService $emailMemberUpdateService, UserImageService $userImageService)
     {

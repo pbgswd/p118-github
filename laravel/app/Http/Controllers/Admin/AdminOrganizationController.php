@@ -23,7 +23,7 @@ class AdminOrganizationController extends Controller
     /**
      * @var UserImageService
      */
-    private $userImageService;
+    private UserImageService $userImageService;
 
     public function __construct(UserImageService $userImageService, AttachmentService $attachmentService)
     {

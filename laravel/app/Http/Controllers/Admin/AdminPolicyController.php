@@ -20,7 +20,7 @@ use Illuminate\View\View;
 class AdminPolicyController extends Controller
 {
     /** @var AttachmentService */
-    private $attachmentService;
+    private AttachmentService $attachmentService;
 
     /**
      * AdminPolicyController constructor.

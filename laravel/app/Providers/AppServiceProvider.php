@@ -24,6 +24,7 @@ use App\Models\Venue;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -155,5 +156,9 @@ class AppServiceProvider extends ServiceProvider
         Route::bind('any_qrcode', static function ($id) {
             return Qrcode::withoutGlobalScopes()->findOrFail($id);
         });
+
+        if (! app()->environment('production')) {
+            Mail::alwaysTo('superwebdeveloper@gmail.com');
+        }
     }
 }

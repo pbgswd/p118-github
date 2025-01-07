@@ -22,6 +22,8 @@ use Illuminate\View\View;
 
 class AdminPageController extends Controller
 {
+    private AttachmentService $attachmentService;
+    private MessageService $messageService;
     /**
      * @var AttachmentService
      */

@@ -20,7 +20,7 @@ use Illuminate\View\View;
 
 class AdminVenueController extends Controller
 {
-    private $attachmentService;
+    private AttachmentService $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
     {

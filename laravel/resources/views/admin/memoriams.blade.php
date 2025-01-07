@@ -62,7 +62,7 @@
                             </td>
                             <td>{{$mem->date->format('F j Y') ?? ''}}</td>
                             <td>
-                                <a href="{{ route('admin_memoriam_edit', $mem->id) }}" title="Edit {{ $mem->title }} ">
+                                <a href="{{ route('admin_memoriam_edit', $mem->slug) }}" title="Edit {{ $mem->title }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
