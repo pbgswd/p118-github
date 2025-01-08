@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Policies\AdminDestroyPolicy;
 use App\Http\Requests\Policies\AdminStorePolicy;
 use App\Http\Requests\Policies\AdminUpdatePolicy;
-use App\Models\Options;
+use App\Models\Message;
 use App\Models\Policy;
+use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\MessageService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
@@ -21,13 +23,14 @@ class AdminPolicyController extends Controller
 {
     /** @var AttachmentService */
     private AttachmentService $attachmentService;
-
+    private MessageService $messageService;
     /**
      * AdminPolicyController constructor.
      */
-    public function __construct(AttachmentService $attachmentService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
         $this->attachmentService = $attachmentService;
+        $this->messageService = $messageService;
     }
 
     public function index(): View
@@ -80,6 +83,7 @@ class AdminPolicyController extends Controller
         $data = [
             'policy' => $any_policy->loadWithoutGlobalScopes('user', 'attachments'),
             'action' => 'Edit',
+            'existing_message' => Message::where('source_url',  env('APP_URL') . '/policies/' . $any_policy->id)->exists(),
             'access_levels' => Options::access_levels(),
         ];
 
@@ -135,5 +139,26 @@ class AdminPolicyController extends Controller
             ' and any related files deleted.');
 
         return redirect()->route('policies_list');
+    }
+
+    public function message(Policy $policy): RedirectResponse
+    {
+        //$this->authorize('update', Policy::class);
+
+        $source_url = env('APP_URL') . '/policies/' . $policy->id;
+
+        if(Message::where('source_url',  $source_url)->exists()) {
+            Session::flash('warning', 'A message from this content has already been created');
+            return redirect()->route('admin_policy_edit', [$policy->id]);
+        }
+
+        $policy->load('user');
+        $policy->source_url = $source_url;
+
+        $msg = $this->messageService->createPolicyMessage($policy);
+
+        Session::flash('success', 'new message from posts saved');
+
+        return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
     }
 }

@@ -14,6 +14,26 @@ class MessageService
         $this->attachmentService = $attachmentService;
     }
 
+    public function createPolicyMessage($data): Message
+    {
+        $additional_data = "<hr />
+                            <b>Date Policy is in Effect: " . $data['date']->format('F j Y') ."</b>
+                            </b>";
+
+        $message = [
+            'source_url' => $data->source_url,
+            'subject' => "Policy: " . $data->title,
+            'slug' => 'policy-'. $data->id,
+            'content' => $data->description . $additional_data,
+            'user_id' => Auth::id(),
+        ];
+
+        $message['topics'][0]['slug'] = 'Policy';
+        $message['attachments'] = $data->attachments;
+
+        return self::createMessage($message, 'model');
+    }
+
     public function createMeetingMessage($data): Message
     {
         $additional_data = "<hr />

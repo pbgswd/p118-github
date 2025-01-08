@@ -4,7 +4,7 @@
 @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <h3>
                 <a href="{{ route('policies_list') }}">
                     <i class="far fa-arrow-alt-circle-left"></i>
@@ -13,12 +13,22 @@
             </h3>
         </div>
         @if($data['action'] == 'Edit')
-            <div class="col-12 col-md-6 text-md-right">
+            <div class="col-12 col-md-4 text-md-right">
                 <a href="{{route('policy_show_public', $data['policy']->id)}}"
                    title="View {{$data['policy']->title}}">
                     <i class="fas fa-eye"></i> View on website
                 </a>
             </div>
+            @if($data['existing_message'] === false)
+                <div class="col-12 col-md-4 text-md-right">
+                    <h4>
+                        <a href="{{route('admin_policy_message', $data['policy']->id)}}">
+                            <i class="far fa-envelope-open"></i>
+                            Send as a message
+                        </a>
+                    </h4>
+                </div>
+            @endif
         @endif
     </div>
     <form method="post" name="policy" action="{{ url()->current() }}" enctype="multipart/form-data"

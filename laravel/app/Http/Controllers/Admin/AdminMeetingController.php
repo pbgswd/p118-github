@@ -164,6 +164,7 @@ class AdminMeetingController extends Controller
 
         return redirect()->route('meetings_list');
     }
+
     /**
      * @throws AuthorizationException
      */
