@@ -86,9 +86,25 @@ class EmploymentController extends Controller
     {
         $employment->load('user', 'attachments');
 
-        return view('employment', ['data' => ['employment' => $employment,
-            'year' => session('year', ''),
-            'title' => $employment->title.' - Employment Posting', ],
+        $next = Employment::where('id', '>', $employment->id)
+            ->where('live', 1)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        $previous = Employment::where('id', '<', $employment->id)
+            ->where('live', 1)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        return view('employment', [
+            'data' => [
+                'employment' => $employment,
+                'year' => session('year', ''),
+                'title' => $employment->title.' - Employment Posting',
+                'next' => $next,
+                'previous' => $previous,
+
+                ],
         ]);
     }
 }

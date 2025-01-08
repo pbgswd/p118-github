@@ -40,7 +40,7 @@ class AgreementController extends Controller
 
         if (Auth::check() == false) {
             $data['agreements'] = Agreement::where([['live', 1], ['access_level', 'public']])
-                ->orderBy('until', 'desc')
+                ->orderBy('id', 'desc')
                 ->sortable()
                 ->paginate(20);
 
@@ -48,7 +48,7 @@ class AgreementController extends Controller
         } else {
             $data['agreements'] = Agreement::where('live', 1)
                 ->sortable()
-                ->orderBy('until', 'desc')
+                ->orderBy('id', 'desc')
                 ->paginate(20);
 
             $data['count'] = Agreement::where('live', 1)->count();
@@ -61,6 +61,34 @@ class AgreementController extends Controller
     {
         $agreement->load('user', 'attachments', 'organizations', 'venues');
 
-        return view('agreement_view', ['data' => ['agreement' => $agreement, 'title' => $agreement->title]]);
+        if (Auth::check() == false) {
+            $next = Agreement::where('id', '>', $agreement->id)
+                ->where([['live', 1], ['access_level', 'public']])
+                ->orderBy('id', 'asc')
+                ->first();
+
+            $previous = Agreement::where('id', '<', $agreement->id)
+                ->where([['live', 1], ['access_level', 'public']])
+                ->orderBy('id', 'desc')
+                ->first();
+        } else {
+            $next = Agreement::where('id', '>', $agreement->id)
+                ->where('live', 1)
+                ->orderBy('id', 'asc')
+                ->first();
+
+            $previous = Agreement::where('id', '<', $agreement->id)
+                ->where('live', 1)
+                ->orderBy('id', 'desc')
+                ->first();
+        }
+
+        return view('agreement_view', ['data' => [
+            'agreement' => $agreement,
+            'title' => $agreement->title,
+            'next' => $next,
+            'previous' => $previous,
+            ]
+        ]);
     }
 }

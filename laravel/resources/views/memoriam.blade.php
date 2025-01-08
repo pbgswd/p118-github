@@ -48,5 +48,27 @@
                 {!! $data['memoriam']->content !!}
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('memoriam', [$data['next']->slug])}}"
+                               title="Next Memorials: {{$data['next']->title}}">
+                                Newer Memorials
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('memoriam', [$data['previous']->slug])}}"
+                               title="Previous Memorial: {{$data['previous']->title}}">
+                                Older Memorials
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
     </div>
 @endsection

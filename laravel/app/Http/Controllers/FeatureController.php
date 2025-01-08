@@ -41,10 +41,23 @@ class FeatureController extends Controller
                 .$feature['image'];
         }
 
+        $next = Feature::where('id', '>', $feature->id)
+            ->where('live', 1)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        $previous = Feature::where('id', '<', $feature->id)
+            ->where('live', 1)
+            ->orderBy('id', 'desc')
+            ->first();
+
+
         $data = [
             'feature' => $feature,
             'action' => 'Edit',
             'title' => $feature->title,
+            'next' => $next,
+            'previous' => $previous,
         ];
 
         return view('feature', ['data' => $data]);

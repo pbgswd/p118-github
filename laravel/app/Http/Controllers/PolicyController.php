@@ -26,7 +26,22 @@ class PolicyController extends Controller
     {
         $policy->load('user', 'attachments');
 
-        return view('policy_view', ['data' => ['policy' => $policy,
-            'title' => $policy->title]]);
+        $next = Policy::where('id', '>', $policy->id)
+            ->where('live', 1)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        $previous = Policy::where('id', '<', $policy->id)
+            ->where('live', 1)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        return view('policy_view', ['data' => [
+            'policy' => $policy,
+            'title' => $policy->title,
+            'next' => $next,
+            'previous' => $previous,
+            ]
+        ]);
     }
 }

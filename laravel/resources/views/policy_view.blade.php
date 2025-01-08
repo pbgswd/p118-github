@@ -20,6 +20,31 @@
                 </div>
             @endcan
         </div>
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('policy_show_public', [$data['next']->id])}}"
+                               title="Next Policies: {{$data['next']->title}}">
+                                Newer Policies
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('policy_show_public', [$data['previous']->id])}}"
+                               title="Previous Policies: {{$data['previous']->title}}">
+                                Older Policies
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
+
+
     <div class="col-12 text-center">
         <h1>
             <i class="fas fa-scroll"></i>
@@ -58,7 +83,32 @@
                 </div>
             </div>
         @endif
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('policy_show_public', [$data['next']->id])}}"
+                               title="Next Policies: {{$data['next']->title}}">
+                                Newer Policies
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('policy_show_public', [$data['previous']->id])}}"
+                               title="Previous Policies: {{$data['previous']->title}}">
+                                Older Policies
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
+
     </div>
-    </div>
+
+</div>
 
 @endsection

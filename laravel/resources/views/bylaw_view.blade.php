@@ -53,6 +53,30 @@
                 @endif
             </div>
         </div>
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('bylaw_show', [$data['next']->id])}}"
+                               title="Next Bylaws: {{$data['next']->title}}">
+                                Newer Bylaws
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('bylaw_show', [$data['previous']->id])}}"
+                               title="Previous Bylaws: {{$data['previous']->title}}">
+                                Older Bylaws
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
+
     </div>
 </div>
 @endsection

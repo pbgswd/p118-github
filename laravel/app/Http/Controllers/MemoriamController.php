@@ -31,11 +31,23 @@ class MemoriamController extends Controller
     {
         $folder = $memoriam->getAttachmentFolder();
 
+        $next = Memoriam::where('date', '>', $memoriam->date)
+            ->where('live', 1)
+            ->orderBy('date', 'asc')
+            ->first();
+
+        $previous = Memoriam::where('date', '<', $memoriam->date)
+            ->where('live', 1)
+            ->orderBy('date', 'desc')
+            ->first();
+
         $data = [
             'memoriam' => $memoriam,
             'folder' => $folder,
             'tn_prefix' => Options::memoriam_thumb_values()['tn_str'],
             'title' => ' - '.$memoriam->title.', In Memoriam',
+            'next' => $next,
+            'previous' => $previous,
         ];
 
         return view('memoriam', ['data' => $data]);

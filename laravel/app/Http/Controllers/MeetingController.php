@@ -81,8 +81,23 @@ class MeetingController extends Controller
     {
         $meeting->load('user', 'attachments');
 
-        return view('meeting', ['data' => ['meeting' => $meeting,
-            'year' => session('year', ''), 'title' => $meeting->title],
+        $next = Meeting::where('id', '>', $meeting->id)
+            ->where('live', 1)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        $previous = Meeting::where('id', '<', $meeting->id)
+            ->where('live', 1)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        return view('meeting', ['data' => [
+            'meeting' => $meeting,
+            'year' => session('year', ''),
+            'title' => $meeting->title,
+            'next' => $next,
+            'previous' => $previous,
+            ],
         ]);
     }
 }

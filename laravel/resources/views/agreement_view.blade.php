@@ -18,6 +18,28 @@
                 </div>
             @endcan
         </div>
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('agreement_show', [$data['next']->id])}}"
+                               title="Next Agreement: {{$data['next']->subject}}">
+                                Newer Agreements
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('agreement_show', [$data['previous']->id])}}"
+                               title="Previous Agreement: {{$data['previous']->subject}}">
+                                Older Agreements
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
         <div class="row">
             <div class="col-12 text-center">
                 <h1>

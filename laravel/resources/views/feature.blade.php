@@ -10,7 +10,6 @@
                         Features
                     </a>
                 </h4>
-
             </div>
             <div class="col-6 text-end">
                 @can(['edit articles'])
@@ -21,6 +20,31 @@
                 @endcan
             </div>
         </div>
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('feature', [$data['next']->slug])}}"
+                               title="Next Feature: {{$data['next']->subject}}">
+                                Newer Features
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('feature', [$data['previous']->slug])}}"
+                               title="Previous Feature: {{$data['previous']->subject}}">
+                                Older Features
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
+
+
         @if($data['feature']->image)
         <div class="col-12 text-center d-flex align-items-center justify-content-center">
             <picture>
@@ -40,5 +64,29 @@
         <div class="col-12">
             {!! $data['feature']->content !!}
         </div>
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('feature', [ $data['next']->slug])}}"
+                               title="Next Feature: {{$data['next']->subject}}">
+                                Newer Features
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('feature', [$data['previous']->slug])}}"
+                               title="Previous Feature: {{$data['previous']->subject}}">
+                                Older Features
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
+
     </div>
 @endsection

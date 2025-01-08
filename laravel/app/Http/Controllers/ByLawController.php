@@ -37,7 +37,23 @@ class ByLawController extends Controller
     {
         $bylaw->load('user', 'attachments');
 
-        return view('bylaw_view', ['data' => ['bylaw' => $bylaw,
-            'title' => $bylaw->title.' -  Constitution and Bylaws']]);
+        $next = Bylaw::where('id', '>', $bylaw->id)
+            ->where('live', 1)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        $previous = Bylaw::where('id', '<', $bylaw->id)
+            ->where('live', 1)
+            ->orderBy('id', 'desc')
+            ->first();
+
+
+        return view('bylaw_view', ['data' => [
+            'bylaw' => $bylaw,
+            'title' => $bylaw->title.' -  Constitution and Bylaws',
+            'next' => $next,
+            'previous' => $previous,
+            ]
+        ]);
     }
 }

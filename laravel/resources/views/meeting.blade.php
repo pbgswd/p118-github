@@ -55,7 +55,28 @@
                 </ul>
             </div>
         @endif
-
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('meeting', [$data['next']->id])}}"
+                               title="Next Minute: {{$data['next']->title}}">
+                                Newer Minutes
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('meeting', [$data['previous']->id])}}"
+                               title="Previous Minute: {{$data['previous']->title}}">
+                                Older Minutes
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 @endsection

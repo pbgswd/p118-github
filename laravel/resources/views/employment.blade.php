@@ -25,6 +25,28 @@
                 </div>
             @endcan
         </div>
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('job_view', [$data['next']->id])}}"
+                               title="Next Job Posting: {{$data['next']->title}}">
+                                Newer Job Postings
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('job_view', [$data['previous']->id])}}"
+                               title="Previous Job Posting: {{$data['previous']->title}}">
+                                Older Job Postings
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
         <div class="row">
             <div class="col-12 my-5 text-center">
                 <h1>{{$data['employment']->title}}</h1>
@@ -81,6 +103,28 @@
                 </div>
             </div>
         @endif
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('job_view', [$data['next']->id])}}"
+                               title="Next Job Posting: {{$data['next']->title}}">
+                                Newer Job Postings
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('job_view', [$data['previous']->id])}}"
+                               title="Previous Job Posting: {{$data['previous']->title}}">
+                                Older Job Postings
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 @endsection

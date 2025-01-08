@@ -23,7 +23,8 @@ class CommitteePostController extends Controller
     /**
      * @var AttachmentService
      */
-    private $attachmentService;
+    private AttachmentService $attachmentService;
+    private MessageService $messageService;
 
     public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
@@ -159,6 +160,18 @@ class CommitteePostController extends Controller
         }
 
         $data['title'] = $committeePost->title;
+
+        $data['next'] = CommitteePost::where('updated_at', '>', $committeePost->updated_at)
+            ->where('committee_id', $committeePost->committee_id)
+            ->where('live', 1)
+            ->orderBy('updated_at')
+            ->first();
+
+        $data['previous'] = CommitteePost::where('updated_at', '<', $committeePost->updated_at)
+            ->where('committee_id', $committeePost->committee_id)
+            ->where('live', 1)
+            ->orderBy('updated_at', 'desc')
+            ->first();
 
         return view('committee_post', ['data' => $data]);
     }

@@ -24,6 +24,7 @@
                 </div>
             @endcan
         </div>
+
         <div class="row mt-3">
             <div class="col-12">
                 <h1 class="text-center">
@@ -77,6 +78,28 @@
                 </h5>
             </div>
         @endif
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if($data['next'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('public_committee_post_show', [$data['committeepost']->committee->slug, $data['next']->slug])}}"
+                               title="Next Post: {{$data['next']->title}}">
+                                Newer Posts
+                            </a>
+                        </li>
+                    @endif
+                    @if ($data['previous'])
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('public_committee_post_show', [$data['committeepost']->committee->slug, $data['previous']->slug])}}"
+                               title="Previous Post: {{$data['previous']->title}}">
+                                Older Posts
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 @endsection
