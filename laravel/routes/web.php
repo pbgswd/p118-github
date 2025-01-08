@@ -230,6 +230,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('feature/{any_feature}/edit', 'edit')->name('admin_feature_edit');
         Route::post('feature/{any_feature}/edit', 'update');
         Route::delete('feature/delete', 'destroy')->name('admin_feature_destroy');
+        Route::get('/feature/{any_feature}/message', 'message')->name('admin_feature_message');
     });
 
     Route::controller(CNS\Admin\AdminPolicyController::class)->group(function () {

@@ -8,8 +8,11 @@ use App\Http\Requests\Feature\DestroyFeatureRequest;
 use App\Http\Requests\Feature\StoreFeatureRequest;
 use App\Http\Requests\Feature\UpdateFeatureRequest;
 use App\Models\Feature;
+use App\Models\Meeting;
+use App\Models\Message;
 use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\MessageService;
 use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -23,11 +26,12 @@ class AdminFeatureController extends Controller
 {
     /** @var AttachmentService */
     private AttachmentService $attachmentService;
-
-    public function __construct(AttachmentService $attachmentService)
+    private MessageService $messageService;
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
         //todo not using attachment service
         $this->attachmentService = $attachmentService;
+        $this->messageService = $messageService;
     }
 
     /**
@@ -125,6 +129,7 @@ class AdminFeatureController extends Controller
         $data = [
             'feature' => $feature,
             'action' => 'Edit',
+            'existing_message' => Message::where('source_url',  env('APP_URL') . '/feature/' . $feature->slug)->exists(),
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
         ];
@@ -188,5 +193,29 @@ class AdminFeatureController extends Controller
         Session::flash('success', 'You have deleted the Feature');
 
         return redirect()->route('admin_features_list');
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function message(Feature $feature): RedirectResponse
+    {
+
+        $this->authorize('update', Feature::class);
+
+        $source_url = env('APP_URL') . '/feature/' . $feature->slug;
+
+        if(Message::where('source_url',  $source_url)->exists()) {
+            Session::flash('warning', 'A message from this content has already been created');
+            return redirect()->route('admin_feature_edit', [$feature->slug]);
+        }
+
+        $feature->source_url = $source_url;
+
+        $msg = $this->messageService->createFeatureMessage($feature);
+
+        Session::flash('success', 'new message from feature saved');
+
+        return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
     }
 }

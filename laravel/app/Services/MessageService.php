@@ -9,10 +9,40 @@ use Illuminate\Support\Facades\DB;
 
 class MessageService
 {
-    private AttachmentService $attachmentService;
-    public function __construct(AttachmentService $attachmentService) {
-        $this->attachmentService = $attachmentService;
+    public function createFeatureMessage($data): Message
+    {
+        $imageData = '';
+        if(!is_null($data['image'])) {
+            $imageData = "<img src='" . env('APP_URL') .'/storage/public/tn_250x250_'. $data['image'] . "' alt='" .
+                $data['title'] . "'
+                    style='display: block; margin-left:auto; margin-right:auto; max-width: none; width: auto; height: auto;' />
+                    <br />";
+            $imageData = "<div style='text-align: center; display: block; margin-left:auto; margin-right:auto;'>
+                            $imageData
+                        </div>";
+        }
+
+        $url = '';
+        if(!is_null($data['url'])) {
+            $url = "<br /><hr /><a href='" . $data['url'] . "' target='_blank'>" . $data['url'] . "</a> <hr />";
+        }
+
+        $additional_data = "<hr /> <b>Published: " . $data['date']->format('F j Y') . "</b>";
+
+        $message = [
+            'source_url' => $data->source_url,
+            'subject' => "Feature Message: " . $data->title,
+            'slug' => 'feature-'. $data->slug,
+            'content' => $imageData . " " . $url . " " . $data->content . " " . $additional_data,
+            'user_id' => Auth::id(),
+        ];
+
+        $message['topics'][0]['slug'] = 'Feature';
+        $message['attachments'] = [];
+
+        return self::createMessage($message, 'model');
     }
+
 
     public function createPolicyMessage($data): Message
     {
@@ -80,11 +110,13 @@ class MessageService
 
     public function createMemoriamMessage($data): Message
     {
+        $additional_data = "<hr /> <b>Date of passing: " . $data['date']->format('F j Y') . "</b>";
+
         $message = [
             'source_url' => $data->source_url,
             'subject' => "In Memoriam: ". $data->title,
             'slug' => 'in-memoriam-'. $data->slug,
-            'content' => $data->content,
+            'content' => $data->content . $additional_data,
             'user_id' => Auth::id(),
         ];
 
