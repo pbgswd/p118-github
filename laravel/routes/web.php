@@ -242,6 +242,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::post('/policy/{any_policy}/edit', 'update');
         Route::delete('/policy/delete', 'destroy')->name('admin_policy_destroy');
         Route::get('/policy/{any_policy}/message', 'message')->name('admin_policy_message');
+        Route::get('/policy/{any_policy}/feature', 'feature')->name('admin_policy_feature');
     });
 
     Route::controller(CNS\Admin\AdminTopicController::class)->group(function () {

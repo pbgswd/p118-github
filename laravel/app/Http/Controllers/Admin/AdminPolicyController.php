@@ -168,7 +168,8 @@ class AdminPolicyController extends Controller
 
     public function feature(Policy $policy): RedirectResponse
     {
-        $this->authorize('update', Policy::class);
+        $this->authorize('update', Auth::user());
+
         $policy->source_url = env('APP_URL') . '/policies/' . $policy->id;
         $msg = $this->featureService->createPolicyFeature($policy);
         Session::flash('success', 'new feature from policies saved');
