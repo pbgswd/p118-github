@@ -4,7 +4,7 @@
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <div class="row mb-5">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <h4>
                 <a href="{{route('admin_committee_show', $data['committee']->slug)}}">
                     <i class="far fa-arrow-alt-circle-left"></i>
@@ -17,7 +17,7 @@
             </h4>
         </div>
         @if($data['action'] == 'Edit')
-            <div class="col-12 col-md-4 text-md-right">
+            <div class="col-12 col-md-3 text-md-right">
                 <h4>
                     <a href="{{route('public_committee_post_show', [$data['committee']->slug, $data['post']->slug])}}"
                        title="View {{$data['post']->title}}" target="_blank">
@@ -25,7 +25,7 @@
                     </a>
                 </h4>
             </div>
-            <div class="col-12 col-md-4 text-md-right">
+            <div class="col-12 col-md-3 text-md-right">
                 <h5>
                     @if($data['existing_message'] === false)
                         <a href="{{route('admin_committee_post_message', [$data['committee']->slug, $data['post']->slug])}}">
@@ -42,6 +42,14 @@
                         @endif
                     @endif
                 </h5>
+            </div>
+            <div class="col-12 col-md-3 text-md-right">
+                <h4>
+                    <a href="{{route('admin_committee_post_feature', [$data['committee']->slug, $data['post']->slug])}}">
+                        <i class="far fa-envelope-open"></i>
+                        Send to Features
+                    </a>
+                </h4>
             </div>
         @endif
     </div>

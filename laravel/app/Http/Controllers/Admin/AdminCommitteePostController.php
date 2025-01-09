@@ -12,6 +12,7 @@ use App\Models\Message;
 use App\Models\Options;
 use App\Models\User;
 use App\Services\AttachmentService;
+use App\Services\FeatureService;
 use App\Services\MessageService;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -27,11 +28,14 @@ class AdminCommitteePostController extends Controller
      * @var AttachmentService
      */
     private AttachmentService $attachmentService;
+    private MessageService $messageService;
+    private FeatureService $featureService;
 
-    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService, FeatureService $featureService)
     {
         $this->attachmentService = $attachmentService;
         $this->messageService = $messageService;
+        $this->featureService = $featureService;
     }
 
     /**
@@ -173,6 +177,15 @@ class AdminCommitteePostController extends Controller
 
         Session::flash('success', 'new message from posts saved');
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
+    }
+
+    public function feature(Committee $committee, CommitteePost $any_committee_post): RedirectResponse
+    {
+        $this->authorize('update', $committee);
+        $any_committee_post->source_url = env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug;
+        $msg = $this->featureService->createCommitteePostFeature($any_committee_post);
+        Session::flash('success', 'new feature from ' . $committee->name . ' Committee Post saved');
+        return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
 
 

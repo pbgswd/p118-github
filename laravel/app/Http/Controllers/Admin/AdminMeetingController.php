@@ -10,6 +10,7 @@ use App\Models\Meeting;
 use App\Models\Message;
 use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\FeatureService;
 use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -24,10 +25,12 @@ class AdminMeetingController extends Controller
      */
     private AttachmentService $attachmentService;
     private MessageService $messageService;
-    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
+    private FeatureService $featureService;
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService, FeatureService $featureService)
     {
         $this->attachmentService = $attachmentService;
         $this->messageService = $messageService;
+        $this->featureService = $featureService;
     }
 
     /**
@@ -187,6 +190,15 @@ class AdminMeetingController extends Controller
         Session::flash('success', 'new message from posts saved');
 
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
+    }
+
+    public function feature(Meeting $meeting): RedirectResponse
+    {
+        $this->authorize('update', Meeting::class);
+        $meeting->source_url = env('APP_URL') . '/minutes/' . $meeting->id;
+        $msg = $this->featureService->createMeetingFeature($meeting);
+        Session::flash('success', 'new feature from Meeting Minutes saved');
+        return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
 
 }

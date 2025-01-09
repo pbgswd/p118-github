@@ -11,6 +11,7 @@ use App\Models\Options;
 use App\Models\Page;
 use App\Models\Topic;
 use App\Services\AttachmentService;
+use App\Services\FeatureService;
 use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -24,13 +25,15 @@ class AdminPageController extends Controller
 {
     private AttachmentService $attachmentService;
     private MessageService $messageService;
+    private FeatureService $featureService;
     /**
      * @var AttachmentService
      */
-    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService, FeatureService $featureService)
     {
         $this->attachmentService = $attachmentService;
         $this->messageService = $messageService;
+        $this->featureService = $featureService;
     }
 
     /**
@@ -183,11 +186,18 @@ class AdminPageController extends Controller
         $page->source_url = $source_url;
         $msg = $this->messageService->createPageMessage($page);
 
-        Session::flash('success', 'new message from posts saved');
+        Session::flash('success', 'new message from pages saved');
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
     }
 
-
+    public function feature(Page $page): RedirectResponse
+    {
+        $this->authorize('update', Page::class);
+        $page->source_url = env('APP_URL') . '/page/' . $page->slug;
+        $msg = $this->featureService->createPageFeature($page);
+        Session::flash('success', 'new feature from Pages saved');
+        return redirect()->route('admin_feature_edit', [$msg->slug]);
+    }
 
     /**
      * @throws AuthorizationException

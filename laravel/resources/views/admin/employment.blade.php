@@ -4,7 +4,7 @@
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <div class="row">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <h3>
                 <a href="{{ route('admin_employment_list') }}">
                     <i class="far fa-arrow-alt-circle-left"></i> List of employment postings
@@ -12,14 +12,14 @@
             </h3>
         </div>
         @if($data['action'] == 'Edit')
-            <div class="col-12 col-md-4 text-md-right">
+            <div class="col-12 col-md-3 text-md-right">
                 <a href="{{route('job_view', $data['employment']->id)}}"
                    title="View {{$data['employment']->title}}">
                     <i class="fas fa-eye"></i> View on website
                 </a>
             </div>
             @if($data['existing_message'] === false)
-                <div class="col-12 col-md-4 text-md-right">
+                <div class="col-12 col-md-3 text-md-right">
                     <h4>
                         <a href="{{route('admin_employment_message', $data['employment']->id)}}">
                             <i class="far fa-envelope-open"></i>
@@ -28,6 +28,14 @@
                     </h4>
                 </div>
             @endif
+            <div class="col-12 col-md-3 text-md-right">
+                <h4>
+                    <a href="{{route('admin_employment_feature', $data['employment']->id)}}">
+                        <i class="far fa-envelope-open"></i>
+                        Send to Features
+                    </a>
+                </h4>
+            </div>
         @endif
     </div>
 

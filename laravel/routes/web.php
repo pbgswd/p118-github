@@ -207,6 +207,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::post('memoriam/{any_memoriam}/edit', 'update');
         Route::delete('memoriam/delete', 'destroy')->name('admin_memoriam_destroy');
         Route::get('/memoriam/{any_memoriam}/message', 'message')->name('admin_memoriam_message');
+        Route::get('/memoriam/{any_memoriam}/feature', 'feature')->name('admin_memoriam_feature');
     });
 
     Route::controller(CNS\Admin\AdminProofReaderController::class)->group(function () {
@@ -298,6 +299,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::post('/page/{any_page}/edit', 'update')->name('admin_update_page');
         Route::delete('/page/delete', 'destroy')->name('page_destroy');
         Route::get('/page/{any_page}/message', 'message')->name('admin_page_message');
+        Route::get('/page/{any_page}/feature', 'feature')->name('admin_page_feature');
     });
 
     Route::controller(CNS\Admin\AdminPostController::class)->group(function () {
@@ -308,6 +310,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::post('/post/{any_post}/edit', 'update');
         Route::delete('/post/delete', 'destroy')->name('post_destroy');
         Route::get('/post/{any_post}/message', 'message')->name('admin_post_message');
+        Route::get('/post/{any_post}/feature', 'feature')->name('admin_post_feature');
     });
 
     Route::controller(CNS\AttachmentController::class)->group(function () {
@@ -372,6 +375,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::post('committee/{committee}/post/{any_committee_post}/edit', 'update');
         Route::delete('committee/{committee}/post/delete', 'destroy')->name('committee_post_destroy');
         Route::get('/committee/{committee}/post/{any_committee_post}/message', 'message')->name('admin_committee_post_message');
+        Route::get('/committee/{committee}/{any_committee_post}/feature', 'feature')->name('admin_committee_post_feature');
     });
 
     /**
@@ -392,6 +396,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/agreement/delete', 'destroy')->name('agreement_destroy');
         Route::get('/agreement/{any_agreement}/edit', 'edit')->name('agreement_edit');
         Route::post('/agreement/{any_agreement}/edit', 'update');
+        Route::get('/agreement/{any_agreement}/feature', 'feature')->name('admin_agreement_feature');
     });
 
     Route::controller(CNS\Admin\AdminOrganizationController::class)->group(function () {
@@ -411,6 +416,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::post('/meeting/{any_meeting}/edit', 'update');
         Route::delete('/meeting/delete', 'destroy')->name('meeting_destroy');
         Route::get('/meeting/{any_meeting}/message', 'message')->name('admin_meeting_message');
+        Route::get('/meeting/{any_meeting}/feature', 'feature')->name('admin_meeting_feature');
     });
 
     Route::controller(CNS\Admin\AdminEmploymentController::class)->group(function () {
@@ -421,6 +427,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::post('employment/{any_employment}/edit', 'update')->name('admin_employment_update');
         Route::delete('/employment/delete', 'destroy')->name('admin_employment_destroy');
         Route::get('/employment/{any_employment}/message', 'message')->name('admin_employment_message');
+        Route::get('/employment/{any_employment}/feature', 'feature')->name('admin_employment_feature');
     });
 
     Route::controller(CNS\Admin\AdminByLawController::class)->group(function () {
@@ -430,6 +437,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/bylaw/{any_bylaw}/edit', 'edit')->name('admin_bylaw_edit');
         Route::post('bylaw/{any_bylaw}/edit', 'update');
         Route::delete('/bylaw/delete', 'destroy')->name('admin_bylaw_destroy');
+        Route::get('/bylaw/{any_bylaw}/feature', 'feature')->name('admin_bylaw_feature');
     });
 
     Route::controller(CNS\Admin\AdminQrCodeController::class)->group(function () {

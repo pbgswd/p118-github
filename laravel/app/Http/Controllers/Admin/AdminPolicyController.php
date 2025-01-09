@@ -10,6 +10,7 @@ use App\Models\Message;
 use App\Models\Policy;
 use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\FeatureService;
 use App\Services\MessageService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -24,13 +25,16 @@ class AdminPolicyController extends Controller
     /** @var AttachmentService */
     private AttachmentService $attachmentService;
     private MessageService $messageService;
+    private FeatureService $featureService;
+
     /**
      * AdminPolicyController constructor.
      */
-    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService, FeatureService $featureService)
     {
         $this->attachmentService = $attachmentService;
         $this->messageService = $messageService;
+        $this->featureService = $featureService;
     }
 
     public function index(): View
@@ -73,7 +77,7 @@ class AdminPolicyController extends Controller
                 Session::flash('error', 'You have an upload problem');
             }
         }
-        Session::flash('success', 'policy posting saved');
+        Session::flash('success', 'policy policying saved');
 
         return redirect()->route('admin_policy_edit', [$policy->id]);
     }
@@ -135,7 +139,7 @@ class AdminPolicyController extends Controller
                 $policy->delete();
             });
 
-        Session::flash('success', Str::plural(count([$request->id]).' posting', count([$request->id])).
+        Session::flash('success', Str::plural(count([$request->id]).' policying', count([$request->id])).
             ' and any related files deleted.');
 
         return redirect()->route('policies_list');
@@ -157,8 +161,18 @@ class AdminPolicyController extends Controller
 
         $msg = $this->messageService->createPolicyMessage($policy);
 
-        Session::flash('success', 'new message from posts saved');
+        Session::flash('success', 'new message from policys saved');
 
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
     }
+
+    public function feature(Policy $policy): RedirectResponse
+    {
+        $this->authorize('update', Policy::class);
+        $policy->source_url = env('APP_URL') . '/policies/' . $policy->id;
+        $msg = $this->featureService->createPolicyFeature($policy);
+        Session::flash('success', 'new feature from policies saved');
+        return redirect()->route('admin_feature_edit', [$msg->slug]);
+    }
+
 }

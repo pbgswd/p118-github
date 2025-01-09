@@ -10,6 +10,7 @@ use App\Models\Memoriam;
 use App\Models\Message;
 use App\Models\Options;
 use App\Services\AttachmentService;
+use App\Services\FeatureService;
 use App\Services\MessageService;
 use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -25,11 +26,13 @@ class AdminMemoriamController extends Controller
      */
     private UserImageService $userImageService;
     private MessageService $messageService;
+    private FeatureService $featureService;
 
-    public function __construct(UserImageService $userImageService, MessageService $messageService)
+    public function __construct(UserImageService $userImageService, MessageService $messageService, FeatureService $featureService)
     {
         $this->userImageService = $userImageService;
         $this->messageService = $messageService;
+        $this->featureService = $featureService;
     }
 
     /**
@@ -192,23 +195,26 @@ class AdminMemoriamController extends Controller
      */
     public function message(Memoriam $memoriam): RedirectResponse
     {
-
         $this->authorize('update', Memoriam::class);
-
         $source_url = env('APP_URL') . '/memoriam/' . $memoriam->slug;
-
         if(Message::where('source_url',  $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
             return redirect()->route('admin_memoriam_edit', [$memoriam->slug]);
         }
-
         $memoriam->load('user');
         $memoriam->source_url = $source_url;
-
         $msg = $this->messageService->createMemoriamMessage($memoriam);
-
         Session::flash('success', 'new message from posts saved');
 
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
+    }
+
+    public function feature(Memoriam $memoriam): RedirectResponse
+    {
+        $this->authorize('update', Memoriam::class);
+        $memoriam->source_url = env('APP_URL') . '/memoriam/' . $memoriam->slug;
+        $msg = $this->featureService->createMemoriamFeature($memoriam);
+        Session::flash('success', 'new feature from In Memoriam saved');
+        return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
 }

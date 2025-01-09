@@ -13,6 +13,7 @@ use App\Models\MessageCategory;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Services\AttachmentService;
+use App\Services\FeatureService;
 use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -30,11 +31,13 @@ class AdminPostController extends Controller
      */
     private AttachmentService $attachmentService;
     private MessageService $messageService;
+    private FeatureService $featureService;
 
-    public function __construct(AttachmentService $attachmentService, MessageService $messageService)
+    public function __construct(AttachmentService $attachmentService, MessageService $messageService, FeatureService $featureService)
     {
         $this->attachmentService = $attachmentService;
         $this->messageService = $messageService;
+        $this->featureService = $featureService;
     }
 
     /**
@@ -209,9 +212,20 @@ class AdminPostController extends Controller
 
         $msg = $this->messageService->createPostMessage($post);
 
-
         Session::flash('success', 'new message from posts saved');
 
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function feature(Post $post): RedirectResponse
+    {
+        $this->authorize('update', Post::class);
+        $post->source_url = env('APP_URL') . '/post/' . $post->slug;
+        $msg = $this->featureService->createPostFeature($post);
+        Session::flash('success', 'new feature from posts saved');
+        return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
 }

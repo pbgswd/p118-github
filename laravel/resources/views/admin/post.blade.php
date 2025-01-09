@@ -4,7 +4,7 @@
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <div class="row my-4">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <h4>
                 <a href="{{ route('posts_list') }}">
                     <i class="far fa-arrow-alt-circle-left"></i>
@@ -13,7 +13,7 @@
             </h4>
         </div>
         @if ($data['action'] == 'Edit')
-            <div class="col-12 col-md-4 text-md-right">
+            <div class="col-12 col-md-3 text-md-right">
                 <h4>
                     <a href="{{route('post_show', $data['post']->slug)}}"
                        title="View {{$data['post']->title}}">
@@ -22,7 +22,7 @@
                 </h4>
             </div>
             @if($data['existing_message'] === false)
-                <div class="col-12 col-md-4 text-md-right">
+                <div class="col-12 col-md-3 text-md-right">
                     <h4>
                         <a href="{{route('admin_post_message', $data['post']->slug)}}">
                             <i class="far fa-envelope-open"></i>
@@ -31,6 +31,14 @@
                     </h4>
                 </div>
             @endif
+            <div class="col-12 col-md-3 text-md-right">
+                <h4>
+                    <a href="{{route('admin_post_feature', $data['post']->slug)}}">
+                        <i class="far fa-envelope-open"></i>
+                        Send to Feature
+                    </a>
+                </h4>
+            </div>
         @endif
     </div>
     <form method="post" name="post" action="{{url()->current()}}" enctype="multipart/form-data"
