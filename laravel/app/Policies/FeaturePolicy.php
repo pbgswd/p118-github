@@ -15,7 +15,7 @@ class FeaturePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['super-admin', 'writer']) ||
+        return $user->hasRole(['super-admin', 'writer', 'committee']) ||
             $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
     }
 
@@ -32,7 +32,7 @@ class FeaturePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
+        return $user->hasRole(['super-admin', 'writer', 'committee']) || $user->hasPermission(['create articles']);
     }
 
     /**
@@ -40,7 +40,7 @@ class FeaturePolicy
      */
     public function update(User $user): bool
     {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);
+        return $user->hasRole(['super-admin', 'writer', 'committee']) || $user->hasPermission(['update articles']);
     }
 
     /**
@@ -49,16 +49,16 @@ class FeaturePolicy
     public function delete(User $user): bool
     {
         // admin moderator
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
+        return $user->hasRole(['super-admin', 'writer', 'committee']) || $user->hasPermission(['delete articles']);
     }
 
     public function restore(User $user): bool
     {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
+        return $user->hasRole(['super-admin', 'writer', 'committee']) || $user->hasPermission(['create articles']);
     }
 
     public function forceDelete(User $user): bool
     {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
+        return $user->hasRole(['super-admin', 'writer', 'committee']) || $user->hasPermission(['delete articles']);
     }
 }
