@@ -22,7 +22,7 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'message.subject' => 'required|max:255',
+            'message.subject' => 'required|unique:messages,subject|max:255',
             'message.content' => 'string|required',
         ];
 
