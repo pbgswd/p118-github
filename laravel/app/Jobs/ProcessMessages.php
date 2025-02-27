@@ -20,7 +20,7 @@ class ProcessMessages implements ShouldQueue
      *
      * @return void
      */
-    protected $taskData;
+    protected Message $taskData;
 
     public function __construct($taskData)
     {
