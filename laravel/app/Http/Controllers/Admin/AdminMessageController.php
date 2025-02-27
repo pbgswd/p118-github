@@ -347,6 +347,7 @@ class AdminMessageController extends Controller
         //todo policy committee, content mgrs
         Log::info('About to move command to jobs table '.$message->id);
         // Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
+        //todo put ProcessMessages to work.
         // ProcessMessages::dispatch(['id' => $message->id]);
         // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
