@@ -3,13 +3,13 @@
         <div class="container border border-dark rounded mt-3" style="background: rgba(220,220,220,0.8);">
             <div class="row d-flex justify-content-around mb-2 mb-md-3">
                 <div class="col-12 mt-3 text-center">
-                    <h1>Meeting Minutes</h1>
+                    <h1>General and Executive Meetings</h1>
                 </div>
                 @if($data['year'] == '')
                     <div class="col-12 text-center">
                         <h3>
                            <span class="badge rounded-pill text-bg-primary">
-                               {{ $data['count'] }} Meeting {{ Str::plural('Minute', $data['count']) }}
+                               {{ $data['count'] }} {{ Str::plural('Meeting', $data['count']) }}
                            </span>
                         </h3>
                     </div>
@@ -22,9 +22,9 @@
                         <div class="col-12 pt-2">
                             <h5>
                                 @if($data['year'] == '')
-                                   View Minutes By Year
+                                   View Meetings By Year
                                 @else
-                                    {{ $data['count'] }} Meeting Minutes for {{$data['year']}}
+                                    {{ $data['count'] }} {{ Str::plural('Meeting', $data['count']) }} for {{$data['year']}}
                                 @endif
                             </h5>
                         </div>
@@ -47,7 +47,7 @@
                     @if($data['year'] != '')
                         <div class="row">
                             <div class="col-12 text-sm-center text-lg-start">
-                                <a href="{{route('list_meetings')}}">List all Meeting Minutes</a>
+                                <a href="{{route('list_meetings')}}">List all Meetings</a>
                             </div>
                         </div>
                     @endif

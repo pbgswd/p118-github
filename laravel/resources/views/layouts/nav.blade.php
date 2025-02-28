@@ -122,9 +122,9 @@
                         Members
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{route('list_meetings')}}" title="Meeting Minutes">
+                        <li><a class="dropdown-item" href="{{route('list_meetings')}}" title="Meetings">
                                 <i class="far fa-folder"></i>
-                                Meeting Minutes</a></li>
+                                Meetings</a></li>
                         <li><a class="dropdown-item" href="{{route('topic_show','Financial')}}" title="Financial">
                                 <i class="far fa-folder"></i> Financial</a></li>
                         <li><a class="dropdown-item" href="{{route('committees')}}" title="Committees">

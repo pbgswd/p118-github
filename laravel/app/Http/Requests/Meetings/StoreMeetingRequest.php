@@ -30,6 +30,8 @@ class StoreMeetingRequest extends FormRequest
     {
         return [
             'meeting.title' => 'string|required|max:255',
+            'meeting.date' => 'date|required',
+            'meeting.meeting_type' => 'string|required',
             'meeting.description' => 'string|nullable',
         ];
     }
@@ -39,7 +41,7 @@ class StoreMeetingRequest extends FormRequest
         $meeting = \array_merge(
             $this->input('meeting'),
             [
-                'user_id' => Auth::id(),
+                'user_id' => Auth::user()->id,
             ]
         );
 

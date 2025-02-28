@@ -99,6 +99,13 @@ class Options
         return array_combine($membership, $membership);
     }
 
+    public static function meeting_types(): array
+    {
+        $types = ['General', 'Executive', 'Committee', 'Special', 'Other'];
+
+        return array_combine($types, $types);
+    }
+
     public static function model_subscription_options(): array
     {
         /**

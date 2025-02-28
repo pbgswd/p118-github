@@ -14,6 +14,7 @@ use App\Services\FeatureService;
 use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -67,6 +68,7 @@ class AdminMeetingController extends Controller
                     'meeting' => $meeting,
                     'action' => 'Add',
                     'access_levels' => Options::access_levels(),
+                    'meeting_types' => Options::meeting_types(),
                 ],
             ]
         );
@@ -78,8 +80,9 @@ class AdminMeetingController extends Controller
     public function store(StoreMeetingRequest $request): RedirectResponse
     {
         $this->authorize('create', Meeting::class);
-
-        $meeting = new Meeting($request->meeting);
+        $data = $request->validated();
+        $meeting = new Meeting($data['meeting']);
+        $meeting->user_id = Auth::user()->id;
 
         $meeting->save();
 
@@ -116,6 +119,7 @@ class AdminMeetingController extends Controller
                     'action' => 'Edit',
                     'existing_message' => Message::where('source_url',  env('APP_URL') . '/meeting/' . $meeting->id)->exists(),
                     'access_levels' => Options::access_levels(),
+                    'meeting_types' => Options::meeting_types(),
                 ],
             ]
         );
@@ -128,7 +132,9 @@ class AdminMeetingController extends Controller
     {
         $this->authorize('update', Meeting::class);
 
-        $any_meeting->fill($request->meeting);
+        $data = $request->validated();
+
+        $any_meeting->fill($data['meeting']);
         $any_meeting->save();
 
         $result = $this->attachmentService->updateAttachment($request, $any_meeting);

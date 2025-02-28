@@ -30,6 +30,8 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
     use HasFactory;
     use Sortable;
 
+    protected $table = 'meetings';
+
     protected $policies = [
         self::class => MeetingPolicy::class,
     ];
@@ -40,6 +42,7 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
     protected $fillable = [
         'title',
         'description',
+        'meeting_type',
         'date',
         'live',
         'user_id',
@@ -48,6 +51,7 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
     public $sortable = [
         'id',
         'title',
+        'meeting_type',
         'live',
         'date',
         'created_at',

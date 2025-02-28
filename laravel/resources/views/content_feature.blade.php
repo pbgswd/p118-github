@@ -54,7 +54,7 @@
             <a href="{{route('executive')}}"><i class="fas fa-users"></i> Executive</a>
         </div>
         <div class="col-12 border border-dark rounded mb-2 p-1">
-            <a href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meeting Minutes</a>
+            <a href="{{route('list_meetings')}}"><i class="far fa-folder"></i> Meetings</a>
         </div>
         <div class="col-12 border border-dark rounded mb-2 p-1">
             <a href="{{route('agreements_list_public')}}"><i class="far fa-handshake"></i> Collective Agreements</a>

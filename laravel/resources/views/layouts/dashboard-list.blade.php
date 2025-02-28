@@ -161,7 +161,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('meetings_list') }}">
                         <span data-feather="file"></span>
-                        Meeting Minutes
+                        Meetings
                     </a>
                 </li>
                 <li class="nav-item">

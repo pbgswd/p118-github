@@ -8,11 +8,11 @@
                     @if($data['year'] == '')
                         <a href="{{route('list_meetings')}}">
                             <i class="far fa-arrow-alt-circle-left"></i>
-                            Meeting Minutes
+                            Meetings
                         </a>
                     @else
                         <a href="{{route('list_meetings_year', $data['year'])}}">
-                            Back to all {{$data['year']}} Meeting Minutes
+                            Back to all {{$data['year']}} Meetings
                         </a>
                     @endif
                 </h4>

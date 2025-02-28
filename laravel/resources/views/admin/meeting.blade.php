@@ -1,5 +1,5 @@
 @extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' =>  $data["action"] .
-    ' Meeting Minutes' .  ($data["action"] == 'Edit' ?  ' - ' . $data['meeting']->title : '') ])
+    ' Meeting' .  ($data["action"] == 'Edit' ?  ' - ' . $data['meeting']->title : '') ])
 @section('content')
 @include('admin.admin_partials.admin_tinymce')
 <div class="container">
@@ -54,22 +54,49 @@
         <div class="row my-3">
             <div class="form-group">
                 <div class="col-12">
-                    <h4><i class="fas fa-calendar-alt"></i> Date</h4>
+                    <h4><i class="fas fa-calendar-alt"></i> Date
+                        @if($data['action'] == 'Edit')
+                            (Currently: {{$data['meeting']->date->format('F d, Y')}}))
+                        @endif
+                    </h4>
                 </div>
-                <div class="col-12">
+
+                <div class="col-4">
                     <input
-                        type="text"
+                        type="date"
                         class="form-control"
                         placeholder="YYYY-MM-DD"
                         name="meeting[date]"
                         value="{{ old('meeting.date', \optional($data['meeting']->date)->toDateString())}}"
-                        size="80"
+                        size="10"
                         data-provide="datepicker"
                         data-date-format="yyyy-mm-dd"
                         required />
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-12 my-3">
+                    <h4>Meeting Type</h4>
+                </div>
+                <div class="col-12 my-3">
+                    <select class="form-select"  name="meeting[meeting_type]" aria-label="Select">
+                        @if($data['action'] == 'Edit')
+                            <option value="{{$data['meeting']->meeting_type}}" selected>{{$data['meeting']->meeting_type}}</option>
+                        @else
+                            <option selected>Select a meeting type</option>
+                        @endif
+                        @foreach($data['meeting_types'] as $meeting_type)
+                            <option value="{{$meeting_type}}">{{$meeting_type}}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="form-group">
                 <div class="col-12 mt-3">

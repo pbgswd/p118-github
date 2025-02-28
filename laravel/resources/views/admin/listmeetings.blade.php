@@ -1,12 +1,13 @@
 @extends('layouts.dashboard',  ['title_icon' => '<i class="far fa-folder-open"></i>', 'title' =>
-    ' List Meetings and Minutes'])
+    ' Meetings'])
 @section('content')
     <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
               {{$data['count']}}
            </span>
-           Meetings and Minutes. | <a href="{{ route('meeting_create') }}">Add new entry <i class="far fa-arrow-alt-circle-right"></i></a>
+           Meetings. | <a href="{{ route('meeting_create') }}">Add new meeting
+                <i class="far fa-arrow-alt-circle-right"></i></a>
         </h3>
     </div>
 @if (count($data['meetings']) > 0)

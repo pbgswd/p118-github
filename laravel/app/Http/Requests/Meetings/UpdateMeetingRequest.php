@@ -27,6 +27,8 @@ class UpdateMeetingRequest extends FormRequest
         return [
             'meeting.title' => 'string|required|max:255',
             'meeting.description' => 'string|nullable',
+            'meeting.date' => 'date|required',
+            'meeting.meeting_type' => 'string|required',
         ];
     }
 }
