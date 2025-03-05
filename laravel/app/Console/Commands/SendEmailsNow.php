@@ -30,10 +30,10 @@ class SendEmailsNow extends Command
     {
         $messageLimit = 10;
 
-        $message = Message::where('state', 'sending')->first();
+        $message = Message::whereIn('state', ['sending', 'testing'])->first();
 
         if($message) {
-            $message->load('user', 'attachments', 'messageCategories');
+            $message->load('attachments', 'messageCategories');
 
             $data['message']['id'] = $message->id;
             $data['message']['slug'] = $message->slug;
@@ -46,6 +46,7 @@ class SendEmailsNow extends Command
                 ->where('message_id', $message->id)
                 ->limit($messageLimit)
                 ->get();
+
 //todo error, check it with both mailpit and aws
             foreach($subs as $sub) {
                 Mail::send('emails.email_message', ['data' => $data], function ($m) use ($message, $sub, $data) {
@@ -64,17 +65,26 @@ class SendEmailsNow extends Command
                     }
                 });
 
-                $message->increment('count');
+                if($message->state != 'testing') {
+                    $message->increment('count');
 
-                EmailQueue::where('user_id', $sub->user->id)
-                    ->where('message_id', $message->id)
-                    ->delete();
+                    EmailQueue::where('user_id', $sub->user->id)
+                        ->where('message_id', $message->id)
+                        ->delete();
+                }
             }
 
-            if(EmailQueue::where('message_id', $message->id)->count() == 0) {
-                $message->state = 'sent';
+            if($message->state != 'testing') {
+                if (EmailQueue::where('message_id', $message->id)->count() == 0) {
+                    $message->state = 'sent';
+                    $message->save();
+                }
+            }
+            else {
+                $message->state = 'not_sent';
                 $message->save();
             }
+
         }
         return Command::SUCCESS;
     }
