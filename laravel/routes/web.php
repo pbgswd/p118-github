@@ -141,13 +141,34 @@ Route::middleware('web', 'auth')->group(function () {
         Route::delete('committee/{committee}/post/{committeePost}/destroy', 'destroy')
             ->name('public_committee_post_destroy');
     });
-
+/*
     Route::controller(CNS\MeetingController::class)->group(function () {
         Route::post('minutes', 'post_year')->name('post_year');
         Route::get('minutes/year/{year}', 'index_by_year')->name('list_meetings_year');
         Route::get('minutes', 'index')->name('list_meetings');
         Route::get('minutes/{meeting}', 'show')->name('meeting');
     });
+*/
+    Route::controller(CNS\MeetingController::class)->group(function () {
+        Route::post('meetings', 'post_year')->name('post_year');
+        Route::get('meetings/year/{year}', 'index_by_year')->name('list_meetings_year');
+        Route::get('meetings', 'index')->name('list_meetings');
+        Route::get('meeting/{meeting}', 'show')->name('meeting');
+    });
+
+    Route::controller(CNS\MotionController::class)->group(function () {
+    //    Route::get('motions', 'index')->name('motions');
+        Route::get('motion/create', 'create')->name('motion_create');
+        Route::post('motion/create', 'store');
+
+        Route::get('motion/{motion}', 'show')->name('motion');
+        Route::get('motion/{motion}/edit', 'edit')->name('motion_edit');
+        Route::post('motion/{motion}/edit', 'update');
+        Route::delete('motion/{motion}/destroy', 'destroy')->name('motion_destroy');
+    });
+
+
+
 
     Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
 });
@@ -181,6 +202,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('message/{message}/{slug}/preview', 'preview')->name('admin_message_preview');
         Route::get('message/{message}/{slug}/preview_strict', 'preview_strict')->name('admin_message_preview_strict');
         Route::get('message/{message}/send', 'send')->name('admin_message_send');
+        Route::get('message/{message}/test-send', 'test_send')->name('admin_message_test_send');
         Route::delete('message/delete', 'destroy')->name('admin_message_destroy');
     })->middleware(CheckMessagingFeatureStatus::class);
 
@@ -418,6 +440,17 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/meeting/delete', 'destroy')->name('meeting_destroy');
         Route::get('/meeting/{any_meeting}/message', 'message')->name('admin_meeting_message');
         Route::get('/meeting/{any_meeting}/feature', 'feature')->name('admin_meeting_feature');
+    });
+
+    Route::controller(CNS\Admin\AdminMotionController::class)->group(function () {
+        Route::get('/motions', 'index')->name('admin_motions_list');
+        Route::get('/motion/create', 'create')->name('admin_motion_create');
+        Route::post('/motion/create', 'store');
+        Route::get('/motion/{any_motion}/edit', 'edit')->name('admin_motion_edit');
+        Route::post('/motion/{any_motion}/edit', 'admin_motion_update');
+        Route::delete('/motion/delete', 'destroy')->name('admin_motion_destroy');
+      //  Route::get('/motion/{any_motion}/message', 'message')->name('admin_motion_message');
+       // Route::get('/motion/{any_motion}/feature', 'feature')->name('admin_motion_feature');
     });
 
     Route::controller(CNS\Admin\AdminEmploymentController::class)->group(function () {
