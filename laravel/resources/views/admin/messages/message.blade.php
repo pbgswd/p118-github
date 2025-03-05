@@ -235,7 +235,7 @@
 
     @if ($data['action'] == 'Edit')
         <div class="row p-4 mt-5 border border-1 rounded">
-            <a name="sending"></a>
+            <div id="sending"></div>
             <div class="col-12 text-center mb-4">
                 <h2><i class="far fa-paper-plane mx-2" style="color:orange;"></i> Sending</h2>
                 <h3><i class="fas fa-exclamation-circle" style="color:blue"></i> Save any changes before sending.</h3>
@@ -249,6 +249,16 @@
                     Preview before sending
                 </a>
             </div>
+            <div class="col-sm-12 col-md-3 mx-auto text-center">
+                <i class="fas fa-envelope fa-2x"></i>
+                <a href="{{route('admin_message_test_send', [$data['message']->id, $data['message']->slug])}}"
+                   class="btn btn-outline-info mx-2">
+                    Email to me only as a test
+                </a>
+            </div>
+
+
+
             <div class="col-sm-12 col-md-3 mx-auto ml-3 text-center">
                 <i class="far fa-paper-plane fa-2x mx-2" style="color:orange;"></i>
                 <a href="{{route('admin_message_send', [$data['message']->id, $data['message']->slug])}}"
