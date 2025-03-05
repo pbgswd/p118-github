@@ -381,6 +381,27 @@ class AdminMessageController extends Controller
         return redirect()->route('admin_messages');
     }
 
+    public function test_send(Message $message): RedirectResponse
+    {
+         $emailQueueMsg = new EmailQueue([
+            'message_id' => $message->id,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        $emailQueueMsg->save();
+
+        $message->state = 'testing';
+        $message->save();
+
+        Log::info('Test message ' . $message->subject .' sent to ' . Auth::user()->name );
+
+        Session::flash('success', 'The message, ' . $message->subject .
+            ', has been sent to the mail queue and is going out now as a test only to you');
+
+        return redirect()->route('admin_message_edit', [$message->id, $message->slug]);
+    }
+
+
     public function destroy(DestroyMessageRequest $request): RedirectResponse
     {
         Message::find($request->id)
