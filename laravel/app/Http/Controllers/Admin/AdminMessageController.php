@@ -304,9 +304,9 @@ class AdminMessageController extends Controller
                 $mc->save();
             }
         }
-
+//dd($request->all());
         $result = $this->attachmentService->updateAttachment($request, $message);
-
+	
         if (null !== ($request->attachments)) {
             $result = $this->attachmentService->createAttachment($request, $message);
             if ($result) {

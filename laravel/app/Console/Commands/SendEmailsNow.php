@@ -42,10 +42,18 @@ class SendEmailsNow extends Command
             $data['message']['content'] = $message->content;
             $data['attachments'] = $message->attachments ?? 0;
 
-            $subs = EmailQueue::distinct()->with('user')
-                ->where('message_id', $message->id)
-                ->limit($messageLimit)
-                ->get();
+	    if($message->state == 'sending') {
+	        $subs = EmailQueue::distinct()->with('user')
+            	    ->where('message_id', $message->id)
+		    ->limit($messageLimit)
+                    ->get();
+           }
+
+	   if($message->state == 'testing') {
+               $subs = EmailQueue::with('user')
+	       ->where([['message_id',$message->id],['user_id', $message->user_id]])
+	       ->get();
+	   }
 
 //todo error, check it with both mailpit and aws
             foreach($subs as $sub) {
@@ -57,34 +65,38 @@ class SendEmailsNow extends Command
 
                     if ($message->attachments->count() > 0) {
                         foreach ($message->attachments as $att) {
+			
                             $file = 'storage/app/' . $att->subfolder . '/' . $att->file;
-                            $mime = mime_content_type(getcwd()."/".$file);
+
+			    $mime = mime_content_type(getcwd()."/".$file);
                             $file_name = $att->file_name;
                             $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
                         }
                     }
                 });
 
-                if($message->state != 'testing') {
+                if($message->state == 'sending') {
                     $message->increment('count');
 
                     EmailQueue::where('user_id', $sub->user->id)
                         ->where('message_id', $message->id)
                         ->delete();
                 }
-            }
 
-            if($message->state != 'testing') {
-                if (EmailQueue::where('message_id', $message->id)->count() == 0) {
-                    $message->state = 'sent';
-                    $message->save();
+		if($message->state != 'testing') {
+                    if (EmailQueue::where('message_id', $message->id)->count() == 0) {
+                        $message->state = 'sent';
+                        $message->save();
+                    }
                 }
-            }
-            else {
-                $message->state = 'not_sent';
-                $message->save();
-            }
 
+		if($message->state == 'testing') {
+		     EmailQueue::where([['message_id',$message->id],['user_id', $message->user_id]])
+		     ->delete();
+		     $message->state = 'not_sent';
+                     $message->save();
+		}
+            }
         }
         return Command::SUCCESS;
     }
