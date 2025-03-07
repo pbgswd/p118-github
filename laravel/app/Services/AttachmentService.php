@@ -16,9 +16,6 @@ class AttachmentService
 {
     public function createAttachment(Request $request, HasAttachment $model): bool
     {
-    dd($request->file); 
-    dd(1);
-    dd($model); 
         foreach ($request->file('attachments') as $file) {
             $attachment = new Attachment;
             $attachment['user_id']  = Auth::id();
@@ -27,8 +24,7 @@ class AttachmentService
             $attachment['subfolder'] = $model->getAttachmentFolder();
             $attachment['file'] = $file->store('', $attachment['subfolder']);
             $attachment->save();
-
-	    $model->attachments()->attach($attachment);
+	        $model->attachments()->attach($attachment);
         }
         return true;
     }
@@ -46,7 +42,6 @@ class AttachmentService
                         Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
                         Attachment::destroy($v['id']);
                     }
-
                     continue;
                 }
 
@@ -60,10 +55,8 @@ class AttachmentService
                     }
                 }
             }
-
             return true;
         }
-
         return false;
     }
 
