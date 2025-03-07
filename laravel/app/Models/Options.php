@@ -106,6 +106,13 @@ class Options
         return array_combine($types, $types);
     }
 
+    public static function motion_types(): array
+    {
+        $types = ['Motion', 'New Business'];
+
+        return array_combine($types, $types);
+    }
+
     public static function model_subscription_options(): array
     {
         /**

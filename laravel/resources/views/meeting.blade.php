@@ -6,12 +6,12 @@
             <div class="col-12 col-md-6 mt-3">
                 <h4>
                     @if($data['year'] == '')
-                        <a href="{{route('list_meetings')}}">
+                        <a href="{{route('list_meetings')}}" title="List Meetings">
                             <i class="far fa-arrow-alt-circle-left"></i>
                             Meetings
                         </a>
                     @else
-                        <a href="{{route('list_meetings_year', $data['year'])}}">
+                        <a href="{{route('list_meetings_year', $data['year'])}}" title="List Meetings">
                             Back to all {{$data['year']}} Meetings
                         </a>
                     @endif
@@ -25,13 +25,62 @@
                 @endcan
             </div>
         </div>
-        <div class="col-12 text-center">
-            <h1>
-                {{$data['meeting']->title}}
-            </h1>
+        <div class="row">
+            <div class="col-3 mx-auto mb-3 text-center">
+                <div class="badge bg-primary text-sm text-center">
+                    {{$data['meeting']->meeting_type}} Meeting
+                </div>
+            </div>
+            <div class="col-12 text-center">
+                <h1>
+                    {{$data['meeting']->title}}
+                </h1>
+            </div>
         </div>
-        <div class="col-12">
-            <p>{!! $data['meeting']->description !!}</p>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h5>
+                    @if($data['meeting']->date > now())
+                        Scheduled: {{$data['meeting']->date->format('F j, Y')}}
+                        , {{$data['meeting']->date->format('g:i:s A')}}
+                        <div class="badge bg-warning text-dark">Upcoming</div>
+                        {{ Carbon\Carbon::today()->diffInDays($data['meeting']->date)  }} days until meeting.
+                    @else
+                        Held on: {{$data['meeting']->date->format('F j, Y')}}
+                    @endif
+                </h5>
+            </div>
+            <div class="col-12">
+                <p>{!! $data['meeting']->description !!}</p>
+            </div>
+        </div>
+        <div class="row">
+            @if(count($data['meeting']->motions) > 0 && $data['meeting']->meeting_type == 'General')
+                <div class="col-12 mb-3">
+                    <h5>
+                        <i class="far fa-file-alt"></i>
+                        Submitted Motions and New Business
+                    </h5>
+                </div>
+                @forelse($data['meeting']->motions as $motion)
+                    <div class="col-12 mb-3">
+                        <h6>
+                            <a href="{{route('motion',$motion->id)}}" title="View {{$motion->title}}">
+                                <i class="far fa-file-alt"></i>
+                                <span class="badge bg-warning text-dark">{{ucfirst($motion->submission_type)}}</span>
+                                {{$motion->user->name}} - {{$motion->title}}
+                            </a>
+                        </h6>
+                    </div>
+                @empty
+                    <div class="col-12 mb-3">
+                        <h6>
+                            <i class="far fa-file-alt"></i>
+                            No Motions or New Business have been submitted through the website.
+                        </h6>
+                    </div>
+                @endforelse
+            @endif
         </div>
         @if(count($data['meeting']->attachments) > 0)
             <div class="col-12 mb-3">
@@ -47,7 +96,7 @@
                                 <i class="fas fa-file-download fa-1x"></i>
                                 {{$att->description ? $att->description .' '. $data['meeting']->date->format('F j Y')
                                     : $att->file_name}}
-                            </a> &nbsp;
+                            </a>
                         </li>
                     @empty
                         <li class="list-group-item">No files</li>
@@ -61,16 +110,16 @@
                     @if($data['next'])
                         <li class="page-item">
                             <a class="page-link" href="{{ route('meeting', [$data['next']->id])}}"
-                               title="Next Minute: {{$data['next']->title}}">
-                                Newer Minutes
+                               title="Next Meeting: {{$data['next']->title}}">
+                                Newer Meetings
                             </a>
                         </li>
                     @endif
                     @if ($data['previous'])
                         <li class="page-item">
                             <a class="page-link" href="{{ route('meeting', [$data['previous']->id])}}"
-                               title="Previous Minute: {{$data['previous']->title}}">
-                                Older Minutes
+                               title="Previous Meeting: {{$data['previous']->title}}">
+                                Older Meetings
                             </a>
                         </li>
                     @endif
@@ -80,7 +129,3 @@
     </div>
 </div>
 @endsection
-
-
-
-

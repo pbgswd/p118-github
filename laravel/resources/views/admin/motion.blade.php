@@ -1,44 +1,30 @@
 @extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' =>  $data["action"] .
-    ' Meeting' .  ($data["action"] == 'Edit' ?  ' - ' . $data['meeting']->title : '') ])
+    ' motion' .  ($data["action"] == 'Edit' ?  ' - ' . $data['motion']->title : '') ])
 @section('content')
-@include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <div class="row">
         <div class="col-12 col-md-3">
-            <a href="{{ route('meetings_list') }}">
+            <a href="{{ route('admin_motions_list') }}">
                 <i class="far fa-arrow-alt-circle-left"></i>
-                List of meetings
+                List of Motions
             </a>
         </div>
         @if($data['action'] == 'Edit')
             <div class="col-12 col-md-3 text-md-right">
-                <a href="{{route('meeting', $data['meeting']->id)}}"
-                   title="View {{$data['meeting']->title}}">
+                <a href="{{route('motion', $data['motion']->id)}}"
+                   title="View {{$data['motion']->title}}">
                     <i class="fas fa-eye"></i> View on website
                 </a>
             </div>
-            @if($data['existing_message'] === false)
-                <div class="col-12 col-md-3 text-md-right">
-                    <h4>
-                        <a href="{{route('admin_meeting_message', $data['meeting']->id)}}">
-                            <i class="far fa-envelope-open"></i>
-                            Send as a message
-                        </a>
-                    </h4>
-                </div>
-            @endif
-            <div class="col-12 col-md-3 text-md-right">
-                <h4>
-                    <a href="{{route('admin_meeting_feature', $data['meeting']->id)}}">
-                        <i class="far fa-envelope-open"></i>
-                        Send to Feature
-                    </a>
-                </h4>
-            </div>
         @endif
     </div>
-
-    <form method="post" name="meeting" action="{{ url()->current() }}" enctype="multipart/form-data"
+    <div class="row mt-3">
+        <div class="col-12">
+            <h3>
+                {{Auth::user()->name}} - {{$data['action']}} Motion
+            </h3>
+        </div>
+    <form method="post" name="Motion" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row">
@@ -47,64 +33,51 @@
                     <h4>Title</h4>
                 </div>
                 <div class="col-12 my-3">
-                    <input type="text" class="form-control"  placeholder="Title" name="meeting[title]"
-                           value="{{ old('meeting.title', $data['meeting']->title)}}" size="80" required/>
+                    <input type="text" class="form-control"  placeholder="Add a Title" name="motion[title]"
+                           value="{{ old('motion.title', $data['motion']->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
         <div class="row my-3">
-                <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+                <div class="col-12">
                     <h4><i class="fas fa-calendar-alt"></i> Date
                         @if($data['action'] == 'Edit')
-                            (Currently: {{$data['meeting']->date->format('F d, Y')}})
+                            (Currently: {{$data['motion']->date->format('F d, Y')}}))
                         @endif
                     </h4>
+                </div>
+
+                <div class="col-4">
                     <input
                         type="date"
                         class="form-control"
                         placeholder="YYYY-MM-DD"
-                        name="meeting[date]"
-                        value="{{ old('meeting.date', \optional($data['meeting']->date)->toDateString())}}"
+                        name="Motion[date]"
+                        value="{{ old('motion.date', \optional($data['motion']->date)->toDateString())}}"
                         size="10"
                         data-provide="datepicker"
                         data-date-format="yyyy-mm-dd"
                         required />
                 </div>
-                <div class="col-sm-12 col-md-6">
-                    <div class="form-group">
-                        <h4><i class="far fa-clock"></i> </i> Meeting Start Time
-                            @if($data['action'] == 'Edit')
-                                (Currently: {{$data['meeting']->date->format('g:i:s A')}})
-                            @endif
-                        </h4>
-                        <input
-                            type="time"
-                            class="form-control"
-                            placeholder="hh:mm:ss am/pm"
-                            name="meeting[time]"
-                            value="{{ old('meeting.date', \optional($data['meeting']->date)->toTimeString())}}"
-                            size="10"
-                            data-provide="timepicker"
-                            data-date-format="hh:mm:ss am/pm"
-                            required />
-                    </div>
-                </div>
+            </div>
         </div>
         <div class="row">
             <div class="form-group">
                 <div class="col-12 my-3">
-                    <h4>Meeting Type</h4>
+                    <h4>Motion Type</h4>
                 </div>
                 <div class="col-12 my-3">
-                    <select class="form-select"  name="meeting[meeting_type]" aria-label="Select">
+                    <select class="form-select"  name="motion[motion_type]" aria-label="Select">
                         @if($data['action'] == 'Edit')
-                            <option value="{{$data['meeting']->meeting_type}}" selected>{{$data['meeting']->meeting_type}}</option>
+                            <option value="{{$data['motion']->motion_type}}" selected>{{$data['motion']->motion_type}}</option>
                         @else
-                            <option selected>Select a meeting type</option>
+                            <option selected>Select a Motion type</option>
                         @endif
-                        @foreach($data['meeting_types'] as $meeting_type)
-                            <option value="{{$meeting_type}}">{{$meeting_type}}</option>
+                        @foreach($data['motion_types'] as $motion_type)
+                            <option value="{{$motion_type}}">{{$motion_type}}</option>
                         @endforeach
+
                     </select>
                 </div>
             </div>
@@ -118,7 +91,7 @@
                     <div class="col-12 mb-4">
                         <div class=" col editor-container editor-container_classic-editor" id="editor-container">
                             <div class="editor-container__editor">
-                                <textarea name="meeting[description]" id="textarea" placeholder="Content" class="form-control text-black">
+                                <textarea name="motion[description]" id="textarea" placeholder="Content" class="form-control text-black">
                                 </textarea>
                             </div>
                         </div>
@@ -132,22 +105,12 @@
                         }
                     </script>
                     <script>
-                        var textarea = @json($data['meeting']->description ?? '');
+                        var textarea = @json($data['motion']->description ?? '');
                         var textarea1 = @json($data['textarea1'] ?? '');
                     </script>
                     <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
             </div>
-        </div>
-        <div class="col-12">
-            <h4>Status</h4>
-        </div>
-        <div class="col-12">
-            <label>
-                <input name="meeting[live]" type="hidden" value="0" />
-                <input name="meeting[live]" type="checkbox" value="1" {{ checked( old('meeting.live', $data['meeting']->live)) }} /> Check now to make Live
-            </label>
-            <p>ie.: Draft or Published.</p>
         </div>
         <div class="row my-5">
             <h4>Files</h4>
@@ -155,14 +118,14 @@
                 <div class="form-group">
                     <label for="exampleInputFile">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                        Add File(s) To Meeting
+                        Add File(s) To Motion
                     </label>
                     <input type="file" id="inputFile" name="attachments[]" multiple />
                 </div>
             </div>
         </div>
         @if ($data['action'] == 'Edit')
-            @if(count($data['meeting']->attachments) > 0)
+            @if(count($data['motion']->attachments) > 0)
                 <div class="col-12">
                     <table class="table table-striped table-sm">
                         <thead>
@@ -177,7 +140,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($data['meeting']->attachments as $ma)
+                            @forelse ($data['motion']->attachments as $ma)
                                 <tr>
                                     <td>
                                         <div class="checkbox">
@@ -187,7 +150,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', [$data['meeting']->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
+                                        <a href="{{route('attachment_download', [$data['Motion']->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
                                     </td>
                                     <td>
                                         <div class="form-group">
@@ -233,12 +196,12 @@
     </form>
     @if ($data['action'] == 'Edit')
          <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0 text-md-end">
-             <form name="delete" method="POST" action="{{route('meeting_destroy')}}">
+             <form name="delete" method="POST" action="{{route('motion_destroy')}}">
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $data['meeting']->id }}">
-                <input class="btn btn-outline-danger" type="submit" value="Delete Meeting">
+                <input type="hidden" name="id[]" value="{{ $data['motion']->id }}">
+                <input class="btn btn-outline-danger" type="submit" value="Delete Motion">
             </form>
          </div>
     @endif

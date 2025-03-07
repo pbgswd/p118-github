@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Meetings\QueryMeetingYearRequest;
 use App\Models\Meeting;
+use App\Models\Motion;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -29,13 +30,26 @@ class MeetingController extends Controller
 
         $count = Meeting::withoutGlobalScopes()->count();
 
+        $upcoming = Meeting::withoutGlobalScopes()
+            ->where('live', 1)
+            ->where('date', '>=', date('Y-m-d'))
+            ->withCount('motions')
+            ->orderBy('date', 'asc')
+            ->get();
+
+
+        $newmotions = Motion::where('meeting_id', null)->with('user')->get();
+
         $data = [
             'meetings' => $meetings,
             'count' => $count,
             'years' => $years,
             'year' => '',
             'pagination' => $pagination,
-            'title' => 'Meeting Minutes',
+            'title' => 'Meetings',
+            'upcoming' => $upcoming,
+            'newmotions' => $newmotions,
+            'action' => 'Create',
         ];
 
         return view('list_meetings_minutes', ['data' => $data]);
@@ -59,12 +73,21 @@ class MeetingController extends Controller
         $count = Meeting::withoutGlobalScopes()
             ->whereBetween('date', [$year.'-01-01', $year.'-12-31'])->count();
 
+        $upcoming = Meeting::withoutGlobalScopes()
+            ->where('live', 1)
+            ->where('date', '>=', date('Y-m-d'))
+            ->orderBy('date', 'asc')
+            ->get();
+
         $data = [
             'meetings' => $meetings,
             'count' => $count,
             'years' => $years,
             'year' => $year,
-            'title' => $year.' Meeting Minutes',
+            'upcoming' => $upcoming,
+            'title' => $year.' Meetings',
+            'newmotions' => [],
+
         ];
 
         return view('list_meetings_minutes', ['data' => $data]);
@@ -79,7 +102,8 @@ class MeetingController extends Controller
 
     public function show(Meeting $meeting): View
     {
-        $meeting->load('user', 'attachments');
+        $meeting->load('user', 'attachments', 'motions');
+        $meeting->motions->load('user');
 
         $next = Meeting::where('id', '>', $meeting->id)
             ->where('live', 1)

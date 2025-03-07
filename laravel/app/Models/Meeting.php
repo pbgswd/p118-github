@@ -8,6 +8,7 @@ use App\Policies\MeetingPolicy;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
@@ -90,6 +91,12 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function motions(): HasMany
+    {
+        return $this->hasMany(Motion::class);
+    }
+
 
     public function attachments(): BelongsToMany
     {

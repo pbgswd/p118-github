@@ -86,6 +86,12 @@ return [
             'url' => env('APP_URL').'/messages',
             'visibility' => 'public',
         ],
-    ],
 
+        'motions' => [
+            'driver' => 'local',
+            'root' => storage_path('app/motions'),
+            'url' => env('APP_URL').'/motions',
+            'visibility' => 'public',
+        ],
+    ],
 ];

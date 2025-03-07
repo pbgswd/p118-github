@@ -16,12 +16,6 @@ class UserPolicy
 
         return $test == true ? true : false;
 
-        /* if ($test) {
-               return true;
-           }
-           else {
-               return false;
-           }*/
     }
 
     /**

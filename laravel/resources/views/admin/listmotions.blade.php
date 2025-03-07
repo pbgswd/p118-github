@@ -1,17 +1,17 @@
 @extends('layouts.dashboard',  ['title_icon' => '<i class="far fa-folder-open"></i>', 'title' =>
-    ' Meetings'])
+    ' Motions and New Business for General Meetings'])
 @section('content')
     <div class="container">
         <h3>
            <span class="badge badge-primary badge-pill">
               {{$data['count']}}
            </span>
-           Meetings. | <a href="{{ route('meeting_create') }}">Add new meeting
+           Motions. | <a href="{{ route('admin_motion_create') }}">Add new Motion
                 <i class="far fa-arrow-alt-circle-right"></i></a>
         </h3>
     </div>
-@if (count($data['meetings']) > 0)
-    <form name="delete" method="POST" action="{{route('meeting_destroy')}}">
+@if ($data['count'] > 0)
+    <form name="delete" method="POST" action="{{route('admin_motion_destroy')}}">
         {!! csrf_field() !!}
         {!! method_field('DELETE') !!}
         <div class="form-group">
@@ -23,14 +23,14 @@
                         <th> @sortablelink('title', 'Title')
                         <th>file</th>
                         <th> Edit </th>
-                        <th> @sortablelink('date', 'Meeting Date') </th>
-                        <th>@sortablelink('meeting_type', 'Meeting Type')</th>
+                        <th> @sortablelink('date', 'Motion Date') </th>
+                        <th>@sortablelink('Motion_type', 'Motion Type')</th>
                         <th> @sortablelink('created_at', 'Created At') </th>
                         <th> @sortablelink('updated_at', 'Updated At') </th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ( $data['meetings'] as $a )
+                    @foreach ( $data['motions'] as $a )
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -40,8 +40,9 @@
                                 </div>
                             </td>
                             <td>
+                                <h6>{{$a->user->name}}</h6>
                                 <h4>
-                                    <a title="{{ $a->title }}" href="{{ route('meeting_edit', $a->id) }}">
+                                    <a title="{{ $a->title }}" href="{{ route('admin_motion_edit', $a->id) }}">
                                         {{ $a->title }}
                                     </a>
                                 </h4>
@@ -49,6 +50,7 @@
                                     {{$a->attachments->count()}}
                                     {{Str::plural('Attachment', $a->attachments->count())}}
                                 </h6>
+                                for what meeting?
                             </td>
                             <td>
                                 @if(null !== ($a->attachments))
@@ -58,18 +60,18 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('meeting_edit', $a->id) }}" title="Edit {{ $a->title }} ">
+                                <a href="{{ route('admin_motion_edit', $a->id) }}" title="Edit {{ $a->title }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $a->date->format('F j Y') }} </td>
-                            <td> {{ $a->meeting_type }} </td>
+                            <td> {{ $a->date->format('F j Y') }}  </td>
+                            <td> {{ $a->submission_type }} </td>
                             <td> {{ $a->created_at->format('F j Y H:i:s') }} </td>
                             <td> {{ $a->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="7">&nbsp;</td>
+                        <td colspan="8">&nbsp;</td>
                     </tr>
                     </tbody>
                 </table>
@@ -83,7 +85,7 @@
             <div class="col-6">
                 <div class="list-group">
                     <ul class="pagination">
-                        {!! $data['meetings']->links() !!}
+                        {!! $data['motions']->links() !!}
                     </ul>
                 </div>
             </div>

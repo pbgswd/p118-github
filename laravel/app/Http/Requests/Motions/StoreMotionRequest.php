@@ -1,20 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Meetings;
+namespace App\Http\Requests\Motions;
 
 use App\Traits\ModifiesInputTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-/**
- * Class StoreMeetingRequest.
- *
- * @property mixed[] $meeting
- */
-class StoreMeetingRequest extends FormRequest
+class StoreMotionRequest extends FormRequest
 {
     use ModifiesInputTrait;
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -25,27 +19,27 @@ class StoreMeetingRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'meeting.title' => 'string|required|max:255',
-            'meeting.date' => 'date|required',
-            'meeting.time' => 'string|required',
-            'meeting.meeting_type' => 'string|required',
-            'meeting.description' => 'string|nullable',
+            'motion.title' => 'required|string|max:255',
+            'motion.description' => 'string|required|max:10000',
+            'motion.submission_type' => 'required|string',
         ];
     }
 
     protected function modifyInput(): void
     {
-        $meeting = \array_merge(
-            $this->input('meeting'),
+        $motion = \array_merge(
+            $this->input('motion'),
             [
                 'user_id' => Auth::user()->id,
             ]
         );
 
-        $this->merge(['meeting' => $meeting]);
+        $this->merge(['motion' => $motion]);
     }
 }

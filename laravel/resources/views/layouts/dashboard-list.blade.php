@@ -165,6 +165,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin_motions_list') }}">
+                        <span data-feather="file"></span>
+                        Motions
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin_bylaws_list') }}">
                         <span data-feather="file"></span>
                         Constitution & By-Laws
