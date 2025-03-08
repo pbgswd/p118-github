@@ -36,8 +36,7 @@
                                     @if((Carbon\Carbon::today()->diffInDays($upcoming->date)) > 10)
                                         {{(Carbon\Carbon::today()->diffInDays($upcoming->date))-10}}
                                         days remaining for new motions.
-
-                                        @else
+                                    @else
                                         <span class="badge bg-warning text-dark">Motions closed</span>
                                     @endif
                                     {{$upcoming->motions->count()}} {{Str::plural('motion', $upcoming->motions->count())}} submitted.
@@ -46,7 +45,7 @@
                         @empty
                             <tr>
                                 <td>
-                                    <div class="col-12 text-center">
+                                    <div class="col-12 text-center px-2">
                                         No new meetings scheduled right now. Check back for updates.
                                     </div>
                                 </td>
@@ -86,30 +85,55 @@
                                         <div class="col-sm-12 col-md-6 mb-2 float-end">
                                             <input type="radio" class="btn-check float-end" name="motion[submission_type]"
                                                    value="Motion" id="option5" autocomplete="off"
-                                                    @if((Carbon\Carbon::today()->diffInDays($upcoming->date))-10 > 0))
-                                                        required
+                                                   @if($data['upcoming']->count() > 0)
+                                                        @if((Carbon\Carbon::today()->diffInDays($upcoming->date)-10 > 0))
+                                                            required
+                                                        @else
+                                                            disabled
+                                                        @endif
                                                     @else
-                                                        disabled
+                                                        required
                                                     @endif
                                             >
                                             <label class="btn btn-outline-primary" for="option5">New Motion</label>
-
-                                            <div class="col-12 mt-3 py-6">
-                                                @if((Carbon\Carbon::today()->diffInDays($upcoming->date))-10 > 0)
+<br />
+                                            @if($data['upcoming']->count() > 0)
+                                                there is an upcoming meetings scheduled <br />
+                                                @if((Carbon\Carbon::today()->diffInDays($upcoming->date)-10 > 0))
+                                                    there is an upcoming meeting, more than 10 days, go ahead and add a motion,
+                                                    field is visible, required <br />
                                                     <span style="font-size: 3em; color: Tomato;">
                                                         <i class="fas fa-exclamation-triangle"></i>
                                                     </span>
-                                                <p>General Meeting motions must be received by the Executive Committee at <br />
-                                                    least 10 days prior to the meeting date.</p>
+                                                    <p>General Meeting motions must be received by the Executive Committee at <br />
+                                                        least 10 days prior to the meeting date.</p>
                                                 @else
+                                                    field is visible, but not allowed to add as motion. Field is
+                                                    disabled (when there is an upcoming general meeting but in less than 10 days).
+                                                    Allowed after date of meeting <br />
                                                     <span style="font-size: 3em; color: orangered;">
                                                         <i class="far fa-times-circle"></i>
                                                     </span>
                                                     <p>Unable to submit new Motions with less than 10 days prior to
                                                         Meeting date.</p>
                                                 @endif
+                                            @else
+                                                Nothing upcoming scheduled,<br />
+                                                go ahead and add something <br />
+                                                to be attached to the next meeting <br />
 
-                                            </div>
+                                                <span style="font-size: 3em; color: Tomato;">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                    </span>
+                                                <p>Go ahead! General Meeting motions must be received by the Executive Committee at <br />
+                                                    least 10 days prior to the meeting date.</p>
+
+                                            @endif
+                                            <br />
+
+
+
+
                                         </div>
                                         <div class="col-sm-12 col-md-6 mb-2">
                                             <input type="radio" class="btn-check" name="motion[submission_type]"
