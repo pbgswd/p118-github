@@ -91,7 +91,7 @@
                 <div class="form-group">
                     <h4>Date of passing</h4>
                     <input
-                        type="text"
+                        type="date"
                         class="form-control"
                         placeholder="YYYY-MM-DD"
                         name="memoriam[date]"
