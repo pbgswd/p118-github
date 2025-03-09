@@ -70,7 +70,7 @@
                 <div class="form-group">
                     <h4>Start Date of by-law</h4>
                         <input
-                            type="text"
+                            type="date"
                             class="form-control"
                             placeholder="YYYY-MM-DD"
                             name="bylaw[date]"
