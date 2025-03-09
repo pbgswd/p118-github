@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-lg-10">
                     <input
-                        type='text'
+                        type='date'
                         name="employment[deadline]"
                         class="form-control"
                         placeholder="YYYY-MM-DD"
@@ -75,7 +75,7 @@
                         style='width: 300px;'
                         value="{{ old('employment.date', (
                             $data['employment']->deadline != null ?
-                            $data['employment']->deadline->format('Y-m-d') :
+                            $data['employment']->deadline->toDateString() :
                              \Carbon\Carbon::now()->format('Y-m-d')) )}}"
                     >
                 </div>
