@@ -132,7 +132,7 @@
                 <div class="form-group">
                     <h4>Start Date of Agreement</h4>
                         <input
-                            type="text"
+                            type="date"
                             class="form-control"
                             placeholder="YYYY-MM-DD"
                             name="agreement[from]"
@@ -147,7 +147,7 @@
                 <div class="form-group">
                     <h4>End Date of Agreement</h4>
                         <input
-                            type="text"
+                            type="date"
                             class="form-control"
                             placeholder="YYYY-MM-DD"
                             name="agreement[until]"
