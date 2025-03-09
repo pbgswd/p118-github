@@ -82,7 +82,7 @@ class AdminFaqController extends Controller
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
         ];
-
+//dd($data);
         return view('admin.faq_topic_create', ['data' => $data]);
     }
 
@@ -94,26 +94,28 @@ class AdminFaqController extends Controller
         $this->authorize('update', Faq::class);
         $this->authorize('update', $any_faq);
 
-        $any_faq->fill($request->faq);
+        $any_faq->fill($request->validated()['faq']);
         $any_faq->save();
 
-        $faq = Faq::latest()->first();
-
-        if (isset($request->faq['faq_data'])) {
-            foreach ($request->faq['faq_data'] as $fd) {
+        if (isset($request->validated()['faq']['faq_data'])) {
+            foreach ($request->validated()['faq']['faq_data'] as $fd)
+            {
                 if ($fd['delete'] == 1) {
                     FaqData::where('id', $fd['id'])->delete();
                 } else {
                     unset($fd['delete']);
-                    $faq->faqs_data()->upsert([$fd], ['id']);
+                    FaqData::where('id', $fd['id'])->update($fd);
                 }
             }
         }
 
-        if ($request->new['question'] != '') {
-            $faq_data = new FaqData($request->input('new'));
+        if ($request->validated()['new']['question'] != '') {
+            $faq_data = new FaqData($request->validated()['new']);
             $faq_data->faq()->associate($any_faq);
             $faq_data->save();
+        }
+        else {
+            //try again, empty question
         }
 
         Session::flash('success', 'You have updated a Faq topic');

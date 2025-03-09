@@ -79,9 +79,19 @@ class AdminMotionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Motion $motion)
+    public function edit(Motion $motion): View
     {
+
         dd($motion);
+        $motion->load('user', 'meeting', 'attachments');
+
+        $data = [
+            'motion' => $motion,
+            'motion_types' => Options::motion_types(),
+            'action' => 'Edit',
+        ];
+dd($data['motion']);
+        return view('admin.motion', ['data' => $data]);
     }
 
     /**

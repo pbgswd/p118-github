@@ -140,5 +140,6 @@ const editorConfig = {
 };
 
 ClassicEditor.create(document.querySelector('#textarea'), editorConfig);
-ClassicEditor.create(document.querySelector('#textarea_1'), editorConfig);
+ClassicEditor.create(document.querySelector('#textarea1'), editorConfig);
+ClassicEditor.create(document.querySelector('#textarea2'), editorConfig);
 

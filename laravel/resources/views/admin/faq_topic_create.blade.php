@@ -3,6 +3,69 @@
 @section('content')
 <div class="container">
     <div class="row">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal 1
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body"> 1
+                        <textarea name="faq[description]" id="textarea1" placeholder="Content" class="form-control text-black">
+                        </textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+            Launch demo modal 2
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal2" tabindex="-2" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel2">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body"> 2
+                        <textarea name="faq[description]" id="textarea2" placeholder="Content" class="form-control text-black">
+                        </textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <div class="row">
         <p class="lead">
             FAQs have a top level topic term, with a list of questions and answers attached.
         </p>
@@ -67,7 +130,8 @@
                     </script>
                     <script>
                         var textarea = @json($data['faq']->description ?? '');
-                        var textarea1 = @json($data['textarea1'] ?? '');
+                        var textarea1 = @json("asdfasdfasdf" ?? '');
+                        var textarea2 = @json("asdfasdfasdf22222222222" ?? '');
                     </script>
                     <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
                 </div>
@@ -108,11 +172,10 @@
                 @foreach( $data['faq']['faqs_data'] as $fd )
                     <div class="col-12 border border-dark rounded p-2 m-2 mb-6">
                         <input type="hidden" name="faq[faq_data][{{$fd->id}}][id]" value="{{$fd->id}}" />
-                        <input type="hidden" name="faq[faq_data][{{$fd->id}}][faq_id]"
-                               value="{{$data['faq']->id}}" />
+                        <input type="hidden" name="faq[faq_data][{{$fd->id}}][faq_id]" value="{{$data['faq']->id}}" />
                         <div class="form-group">
                             <div class="col-12">
-                                <h4>Question</h4>
+                                <h4>Question --  {{$fd->id}}  -- </h4>
                                 <input type="text" class="form-control"  placeholder="Question"
                                        name="faq[faq_data][{{$fd->id}}][question]"
                                        value="{{ old('faq.faq_data.question', $fd->question)}}" size="80"
@@ -123,10 +186,12 @@
                         <div class="form-group my-4">
                             <div class="col-12">
                                 <h4>Answer</h4>
-                                <textarea name="faq[faq_data][{{$fd->id}}][answer]" id="faq-faq_data-answer"
+                                <textarea name="faq[faq_data][{{$fd->id}}][answer]" id="textarea{{$fd->id}}"
                                           placeholder="Description content"
                                           class="form-control">{{old('faq.faq_data.answer', $fd->answer)}}
                                 </textarea>
+
+
                             </div>
                         </div>
                         <div class="row my-4">
