@@ -92,7 +92,7 @@
                 <div class="form-group">
                     <h4>Publish Date</h4>
                     <input
-                        type="text"
+                        type="date"
                         class="form-control"
                         placeholder="YYYY-MM-DD"
                         name="feature[date]"
