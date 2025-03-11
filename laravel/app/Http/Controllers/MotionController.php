@@ -66,17 +66,19 @@ class MotionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Motion $motion)
+    public function edit(Motion $motion): View
     {
-        //
+        $motion->load('user', 'meeting', 'attachments');
+        return view('motion-edit', ['data' => ['motion' => $motion]]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMotionRequest $request, Motion $motion)
+    public function update(UpdateMotionRequest $request, Motion $motion): RedirectResponse
     {
-        //
+
+        return redirect('motion_edit', $motion->id);
     }
 
     /**

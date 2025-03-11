@@ -13,11 +13,6 @@
             </div>
             <div class="col-sm-12 col-md-6 text-end">
                 <h4>
-                    @if($data['motion']->user_id == Auth::user()->id)
-                        <div class="badge bg-primary-outline">
-                            <a href="{{route('motion_edit', $data['motion']->id)}}">Edit</a>
-                        </div>
-                    @endif
                     @can(['edit articles'])
                         <div class="badge bg-primary-outline">
                             <a href="{{route('admin_motion_edit', $data['motion']->id)}}">Admin Edit</a>
@@ -29,7 +24,7 @@
         <div class="row">
             <div class="col-12 mt-3 mx-auto text-center">
                 <h1 class="text-center">
-                   Proposed   {{$data['motion']->submission_type}}
+                 Edit  Proposed   {{$data['motion']->submission_type}}
                 </h1>
                 <h2>
                     Submitted by

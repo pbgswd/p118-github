@@ -94,24 +94,21 @@ class AdminMeetingController extends Controller
         $meeting->user_id = Auth::user()->id;
         $meeting->save();
 
-        //attach any orphan motions to this meeting
-
            if($meeting->meeting_type == 'General') {
                $motions = Motion::where('meeting_id', null)->get();
                $savedcount = intval(0);
                foreach ($motions as $motion) {
-                   $motion->meeting_id = $meeting->id;
-                   if((Carbon::today()->diffInDays($motion->date)-10) > 0) {
+                   if((Carbon::today()->diffInDays($meeting->date)-10) > 0) {
+                       $motion->meeting_id = $meeting->id;
                        $motion->save();
                        $savedcount++;
                        //todo send email to executive with new attached motion
                    }
                }
-
-               $flash_motion_msg = Str::of('submission')->plural($savedcount) . ' attached to meeting';
+               $flash_motion_msg = $savedcount . " " . Str::of('submission')->plural($savedcount) .
+                   ' attached to meeting';
            }
 
-        //todo setup flash message for motions attached to meeting
         Session::flash('success', 'Meeting saved. '.$flash_motion_msg ?? '');
 
         if (null !== ($request->file('attachments'))) {
@@ -170,30 +167,14 @@ class AdminMeetingController extends Controller
 
         $any_meeting->fill($data['meeting']);
 
-        $now = Carbon::now();
-        $date_in_ten = $now->addDays(10);
-
         $any_meeting->date = new \DateTime($data['meeting']['date'].' '.$data['meeting']['time']);
 
-        //dd($any_meeting->isDirty('date'));
-//dd($data['meeting']['date']);
-        $datefromsubmission = Carbon::createFromFormat('Y-m-d', $data['meeting']['date']);
-
-       // dd($datefromsubmission->format('Y-m-d'));
-        //todo only if the date was changed and less than 10 days away, detach motions from meeting
-        if($any_meeting->isDirty('date') && $any_meeting->date < $date_in_ten) {
-            // what if I am just updating the content of the meeting, the date hasnt changed?
-          // Motion::Where('meeting_id', $any_meeting->id)->update(['meeting_id' => null]);
-            dd('date changed, less than 10 days away');
-        }
-        //todo what if you update the meeting date and it is now has 10 days, do you allow the new motions to be attached to the meeting?
         $any_meeting->save();
 
         $result = $this->attachmentService->updateAttachment($request, $any_meeting);
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $any_meeting);
-
             if ($result) {
                 Session::flash('success', 'You uploaded '.
                     count([$request->file('attachments')]).' files');
