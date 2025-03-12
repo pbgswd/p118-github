@@ -83,7 +83,6 @@ class AdminMotionController extends Controller
 
         $motion->save();
 
-
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $motion);
             if ($result) {
@@ -92,6 +91,8 @@ class AdminMotionController extends Controller
                 Session::flash('error', 'You have an upload problem');
             }
         }
+
+
 
         //todo send email to execs and user and mals to say motion has been submitted
 
@@ -136,7 +137,7 @@ class AdminMotionController extends Controller
         $motion->save();
 //todo determine access level
         $result = $this->attachmentService->updateAttachment($request, $motion);
-
+//todo description in file attachments
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $motion);
             if ($result) {

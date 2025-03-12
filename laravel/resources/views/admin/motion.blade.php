@@ -1,5 +1,5 @@
 @extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' =>  $data["action"] .
-    ' motion' .  ($data["action"] == 'Edit' ?  ' - ' . $data['motion']->title : '') ])
+    ' Motion or New Business ' .  ($data["action"] == 'Edit' ?  ' - ' . $data['motion']->title : '') ])
 @section('content')
 <div class="container">
     <div class="row">
@@ -21,7 +21,7 @@
     <div class="row mt-3">
         <div class="col-12">
             <h3>
-                {{Auth::user()->name}} - {{$data['action']}} Motion
+                Creator: {{$data['action'] == 'Edit' ? $data['motion']->user->name : Auth::user()->name}}
             </h3>
         </div>
     <form method="post" name="Motion" action="{{ url()->current() }}" enctype="multipart/form-data"
@@ -112,8 +112,9 @@
             <div class="col-sm-12 col-md-6 mb-2 mx-auto text-center">
                 <input type="radio" class="btn-check" name="motion[submission_type]"
                        value="New Business" id="option5" autocomplete="off"
-                       @if($data['upcoming']->count() > 0 && Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date)-48 > 0
-                             || $data['upcoming']->count() == 0)
+                       @if($data['upcoming']->count() > 0
+                           && Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date)-48 > 0
+                           || $data['upcoming']->count() == 0)
                            required
                        @else
                            disabled
