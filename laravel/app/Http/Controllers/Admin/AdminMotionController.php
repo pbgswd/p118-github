@@ -9,6 +9,7 @@ use App\Http\Requests\Motions\UpdateMotionRequest;
 use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\Options;
+use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -17,6 +18,13 @@ use Illuminate\Support\Facades\Session;
 
 class AdminMotionController extends Controller
 {
+    private AttachmentService $attachmentService;
+
+    public function __construct(AttachmentService $attachmentService)
+    {
+        $this->attachmentService = $attachmentService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -41,13 +49,19 @@ class AdminMotionController extends Controller
      */
     public function create(): View
     {
-        //todo show create motion form
-        //todo indicate next general meetings date
-        //todo 10 days rule
-        //attach to next general meeting
+        $this->authorize('create', Motion::class);
+
+            $upcoming = Meeting::withoutGlobalScopes()
+            ->where('live', 1)
+            ->where('date', '>=', date('Y-m-d'))
+            ->withCount('motions')
+            ->orderBy('date', 'asc')
+            ->get();
+
         $data = [
             'motion' => new Motion(),
             'motion_types' => Options::motion_types(),
+            'upcoming' => $upcoming,
             'action' => 'Create',
         ];
 
@@ -63,16 +77,27 @@ class AdminMotionController extends Controller
         $motion->user_id = auth()->id();
 
         $meeting = Meeting::where([['meeting_type', '=', 'General'], ['live', '=',  1], ['date', '>', now()]])->first();
+
         $motion->meeting_id = $meeting->id ?? null;
         $motion->date = now();
 
         $motion->save();
 
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $motion);
+            if ($result) {
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
         //todo send email to execs and user and mals to say motion has been submitted
 
         Session::flash('success', 'You have submitted a ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
 
-        return redirect()->route('list_meetings');
+        return redirect()->route('admin_motion_edit', $motion->id);
     }
 
 
@@ -81,25 +106,50 @@ class AdminMotionController extends Controller
      */
     public function edit(Motion $motion): View
     {
+        $this->authorize('update', Motion::class);
 
-        dd($motion);
         $motion->load('user', 'meeting', 'attachments');
+
+        $upcoming = Meeting::withoutGlobalScopes()
+            ->where('live', 1)
+            ->where('date', '>=', date('Y-m-d'))
+            ->withCount('motions')
+            ->orderBy('date', 'asc')
+            ->get();
 
         $data = [
             'motion' => $motion,
             'motion_types' => Options::motion_types(),
+            'upcoming' => $upcoming,
             'action' => 'Edit',
         ];
-dd($data['motion']);
+
         return view('admin.motion', ['data' => $data]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMotionRequest $request, Motion $motion)
+    public function update(UpdateMotionRequest $request, Motion $motion): RedirectResponse
     {
-        dd($motion);
+        $motion->fill($request->validated()['motion']);
+        $motion->save();
+//todo determine access level
+        $result = $this->attachmentService->updateAttachment($request, $motion);
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $motion);
+            if ($result) {
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
+        //todo mail updates?
+
+        Session::flash('success', 'You have updated a motion or new business');
+        return redirect()->route('admin_motion_edit', $motion->id);
     }
 
     /**
@@ -108,11 +158,12 @@ dd($data['motion']);
     public function destroy(DestroyMotionRequest $motion): RedirectResponse
     {
 
-      //  $this->authorize('delete', Motion::class);
+        $this->authorize('delete', Motion::class);
+
         Motion::withoutGlobalScopes()
             ->find($motion->id)
             ->each(function (Motion $motion) {
-               // $this->attachmentService->destroyAttachments($motion);
+                $this->attachmentService->destroyAttachments($motion);
                 $motion->delete();
             });
 

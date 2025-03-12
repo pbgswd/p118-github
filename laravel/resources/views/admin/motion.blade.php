@@ -38,50 +38,125 @@
                 </div>
             </div>
         </div>
-        <div class="row my-3">
-            <div class="form-group">
+        @if($data['action'] == 'Edit')
+            <div class="row my-3">
                 <div class="col-12">
-                    <h4><i class="fas fa-calendar-alt"></i> Date
-                        @if($data['action'] == 'Edit')
-                            (Currently: {{$data['motion']->date->format('F d, Y')}}))
-                        @endif
+                    <h4>
+                        <i class="fas fa-calendar-alt"></i> Date
+                            (Currently stored date, will be updated: {{$data['motion']->date->format('F d, Y')}})
                     </h4>
                 </div>
-
-                <div class="col-4">
-                    <input
-                        type="date"
-                        class="form-control"
-                        placeholder="YYYY-MM-DD"
-                        name="Motion[date]"
-                        value="{{ old('motion.date', \optional($data['motion']->date)->toDateString())}}"
-                        size="10"
-                        data-provide="datepicker"
-                        data-date-format="yyyy-mm-dd"
-                        required />
-                </div>
+            </div>
+        @endif
+        <div class="row">
+            <div class="col-12 my-3">
+                <h4>Type of submission</h4>
             </div>
         </div>
         <div class="row">
-            <div class="form-group">
-                <div class="col-12 my-3">
-                    <h4>Motion Type</h4>
-                </div>
-                <div class="col-12 my-3">
-                    <select class="form-select"  name="motion[motion_type]" aria-label="Select">
-                        @if($data['action'] == 'Edit')
-                            <option value="{{$data['motion']->motion_type}}" selected>{{$data['motion']->motion_type}}</option>
-                        @else
-                            <option selected>Select a Motion type</option>
+            <div class="col-sm-12 col-md-6 mb-2 text-center">
+                <input type="radio" class="btn-check float-auto" name="motion[submission_type]"
+                       value="Motion" id="option4" autocomplete="off"
+                       @if($data['upcoming']->count() > 0 && (Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10 > 0)
+                            || $data['upcoming']->count() == 0)
+                           required
+                       @else
+                           disabled
+                    @endif
+                      {{$data['motion']->submission_type == "Motion" ? 'checked' : ''}}
+                >
+                <label class="btn btn-outline-primary" for="option4">New Motion</label>
+                <br />
+                <div class="card text-bg-info text-white my-3 mx-auto h-80" style="max-width: 20rem;">
+                    <div class="card-header">
+                        <h4>For New Motions</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            @if($data['upcoming']->count() > 0)
+                                The next General Meeting will be held
+                                {{$data['upcoming'][0]->date->format('F j Y')}},
+                                {{$data['upcoming'][0]->date->format('g:i:s A')}}, in
+                                {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
+                                {{Str::plural('day', Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date))}}.
+                            @else
+                                Your motion will be attached to the next meeting.
+                            @endif
+                        </p>
+                        <h4 class="card-title">
+                            <strong>Submit in time</strong>
+                        </h4>
+                        @if($data['upcoming']->count() > 0)
+                            @if(Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10 > 0)
+                                <p class="card-text h4">
+                                    {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10}}
+                                    {{Str::plural('day', (Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10))}}
+                                    remaining to submit new motions.
+                                </p>
+                            @else
+                                <p class="card-text">
+                                    Unable to submit new Motions with less than 10 days
+                                    prior to Meeting date.
+                                </p>
+                            @endif
                         @endif
-                        @foreach($data['motion_types'] as $motion_type)
-                            <option value="{{$motion_type}}">{{$motion_type}}</option>
-                        @endforeach
+                        <p class="card-text">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            General Meeting motions must be received by the Executive Committee at
+                            least <u>10 days</u> prior to the meeting date.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-                    </select>
+            <div class="col-sm-12 col-md-6 mb-2 mx-auto text-center">
+                <input type="radio" class="btn-check" name="motion[submission_type]"
+                       value="New Business" id="option5" autocomplete="off"
+                       @if($data['upcoming']->count() > 0 && Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date)-48 > 0
+                             || $data['upcoming']->count() == 0)
+                           required
+                       @else
+                           disabled
+                    @endif
+                    {{$data['motion']->submission_type == "New Business" ? 'checked' : ''}}
+                >
+                <label class="btn btn-outline-primary" for="option5">New Business</label>
+                <div class="card text-bg-info text-white my-3 mx-auto h-80" style="max-width: 20rem;">
+                    <div class="card-header"><h4>For New Business</h4></div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            @if($data['upcoming']->count() > 0)
+                                @if(Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date->subDays(2)) > 48)
+                                    New Business submissions allowed until
+                                    {{$data['upcoming'][0]->date->subDays(2)->format('F j Y')}},
+                                    {{$data['upcoming'][0]->date->format('g:i:s A')}}.
+                                    @if(Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date->subDays(2)) < 73)
+                                        {{Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date->subDays(2))}}
+                                        {{Str::plural('hour', Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date->subDays(2)))}}
+                                        remaining to submit new business.
+                                    @endif
+                                @else
+                                    Unable to submit New Business with less than 48 hours
+                                    prior to Meeting time.
+                                @endif
+                                <br />
+                            @else
+                                Your new business will be attached to the next meeting.
+                            @endif
+                        </p>
+                        <h4 class="card-title">
+                            <strong>Submit in time</strong>
+                        </h4>
+                        <p class="card-text">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            New Business must be received by the Executive Committee at
+                            least <u>48 hours</u> prior to the meeting start time.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="form-group">
                 <div class="col-12 mt-3">
@@ -132,7 +207,6 @@
                             <tr>
                                 <th> # </th>
                                 <th> File </th>
-                                <th> Access Level </th>
                                 <th> <i class="far fa-edit"></i> </th>
                                 <th> Description </th>
                                 <th> Created At </th>
@@ -150,15 +224,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', [$data['Motion']->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ select_options($data['access_levels'],
-                                                old('attachment.access_level', $ma->access_level),
-                                                ['name' => 'attachment['.$ma->id.'][access_level]',
-                                                'class' => 'form-control']) }}
-                                        </div>
+                                        <a href="{{route('attachment_download', [$data['motion']->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
                                     </td>
                                     <td>
                                         <a title="Edit page for {{ $ma->file_name }}" href="{{ route('admin_attachment_edit', $ma->id) }}"><i class="far fa-edit"></i></a>
@@ -196,7 +262,7 @@
     </form>
     @if ($data['action'] == 'Edit')
          <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0 text-md-end">
-             <form name="delete" method="POST" action="{{route('motion_destroy')}}">
+             <form name="delete" method="POST" action="{{route('admin_motion_destroy')}}">
                  {!! csrf_field() !!}
                  {!! method_field('DELETE') !!}
                 <i class="far fa-trash-alt fa-2x"></i>

@@ -18,6 +18,12 @@ class Motion extends Model implements HasAttachment, Searchable
 
     protected $table = 'motions';
 
+    protected $guard_name = 'web';
+
+    protected $policies = [
+        self::class => Motion::class,
+    ];
+
     protected $fillable = [
         'title',
         'description',

@@ -36,8 +36,8 @@ class Faq extends LiveableModel implements Searchable
     protected $guard_name = 'web';
 
     protected $policies = [
-        self::class => FaqPolicy::class,
-    ];
+        self::class => Faq::class,
+        ];
 
     public $fillable = [
         'faq_topic',

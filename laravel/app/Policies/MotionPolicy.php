@@ -13,7 +13,8 @@ class MotionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->hasRole(['super-admin', 'writer']) ||
+            $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
     }
 
     /**
@@ -21,7 +22,8 @@ class MotionPolicy
      */
     public function view(User $user, Motion $motion): bool
     {
-        return false;
+        //todo auth logged in
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
 
     /**
@@ -29,38 +31,38 @@ class MotionPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Motion $motion): bool
+    public function update(User $user): bool
     {
-        return false;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Motion $motion): bool
+    public function delete(User $user): bool
     {
-        return false;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Motion $motion): bool
+    public function restore(User $user): bool
     {
-        return false;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Motion $motion): bool
+    public function forceDelete(User $user): bool
     {
-        return false;
+        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
     }
 }

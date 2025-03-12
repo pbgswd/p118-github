@@ -3,10 +3,9 @@
 @section('content')
     <div class="container">
         <h3>
-           <span class="badge badge-primary badge-pill">
-              {{$data['count']}}
-           </span>
-           Motions. | <a href="{{ route('admin_motion_create') }}">Add new Motion
+            <span class="badge rounded-pill text-bg-primary">
+              {{$data['count']}} {{Str::plural('Motion', $data['count'])}}
+            </span> | <a href="{{ route('admin_motion_create') }}">Add new Motion
                 <i class="far fa-arrow-alt-circle-right"></i></a>
         </h3>
     </div>
@@ -18,16 +17,16 @@
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
-                    <tr>
-                        <th> @sortablelink('id','#') </th>
-                        <th> @sortablelink('title', 'Title')
-                        <th>file</th>
-                        <th> Edit </th>
-                        <th> @sortablelink('date', 'Motion Date') </th>
-                        <th>@sortablelink('Motion_type', 'Motion Type')</th>
-                        <th> @sortablelink('created_at', 'Created At') </th>
-                        <th> @sortablelink('updated_at', 'Updated At') </th>
-                    </tr>
+                        <tr>
+                            <th> @sortablelink('id','#') </th>
+                            <th> @sortablelink('title', 'Title')
+                            <th>file</th>
+                            <th> Edit </th>
+                            <th> @sortablelink('date', 'Motion Date') </th>
+                            <th>@sortablelink('Motion_type', 'Motion Type')</th>
+                            <th> @sortablelink('created_at', 'Created At') </th>
+                            <th> @sortablelink('updated_at', 'Updated At') </th>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach ( $data['motions'] as $a )

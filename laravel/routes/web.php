@@ -446,8 +446,8 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/motions', 'index')->name('admin_motions_list');
         Route::get('/motion/create', 'create')->name('admin_motion_create');
         Route::post('/motion/create', 'store');
-        Route::get('/motion/{any_motion}/edit', 'edit')->name('admin_motion_edit');
-        Route::post('/motion/{any_motion}/edit', 'admin_motion_update');
+        Route::get('/motion/{motion}/edit', 'edit')->name('admin_motion_edit');
+        Route::post('/motion/{motion}/edit', 'update')->name('admin_motion_update');
         Route::delete('/motion/delete', 'destroy')->name('admin_motion_destroy');
       //  Route::get('/motion/{any_motion}/message', 'message')->name('admin_motion_message');
        // Route::get('/motion/{any_motion}/feature', 'feature')->name('admin_motion_feature');
