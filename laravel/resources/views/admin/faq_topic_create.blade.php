@@ -7,7 +7,7 @@
             FAQs have a top level topic term, with a list of questions and answers attached.
         </p>
         <div class="h2 text-warning-emphasis">
-        Work in progress, it does, work but is being fixed, msg me if you need help - PG.
+            Work in progress, it does work, but is being fixed, msg me if you need help - PG.
         </div>
     </div>
     <div class="row">
@@ -31,6 +31,10 @@
                 <li class="list-group-item">
                     Created by: {{$data['faq']['user']->name}}
                 </li>
+
+                <a href="{{route('admin_faq_data_create', $data['faq']->slug )}}">
+                    create a new question and answer pair </a>
+
             @endif
         </ul>
     </div>
@@ -115,6 +119,9 @@
             <div class="row">
                 @foreach( $data['faq']['faqs_data'] as $fd )
                     <div class="col-12 border border-dark rounded p-2 m-2 mb-6">
+                        <h3>
+                            <a href="{{route('admin_faq_data_edit', [$data['faq']->slug, $fd->id])}}">Edit {{$fd->question}}</a>
+                        </h3>
                         <input type="hidden" name="faq[faq_data][{{$fd->id}}][id]" value="{{$fd->id}}" />
                         <input type="hidden" name="faq[faq_data][{{$fd->id}}][faq_id]" value="{{$data['faq']->id}}" />
                         <div class="form-group">
@@ -208,10 +215,6 @@
                                     <textarea name="new[answer]" id="faq-faq_data-answer"
                                               placeholder="Answer content"
                                               class="form-control"></textarea>
-
-
-
-
                                     </div>
                                 </div>
                                 <div class="row my-2">

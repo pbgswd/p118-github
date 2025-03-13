@@ -494,13 +494,11 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/faq/delete', 'destroy')->name('admin_faq_destroy');
     });
 
-    //todo faqData handle faq variable
-
     Route::controller(CNS\Admin\AdminFaqDataController::class)->group(function () {
-        Route::get('/faq_data/create', 'create')->name('admin_faq_data_create');
-        Route::post('/faq_data/create', 'store');
-        Route::get('/faq_data/{any_faq_data}/edit', 'edit')->name('admin_faq_data_edit');
-        Route::post('faq_data/{any_faq_data}/edit', 'update');
+        Route::get('/faq/{faq}/faq_data/create', 'create')->name('admin_faq_data_create');
+        Route::post('/faq/{faq}/faq_data/create', 'store');
+        Route::get('/faq/{faq}/faq_data/{faq_data}/edit', 'edit')->name('admin_faq_data_edit');
+        Route::post('/faq/{faq}/{faq_data}/edit', 'update');
         Route::delete('/faq_data/delete', 'destroy')->name('admin_faq_data_destroy');
     });
 
