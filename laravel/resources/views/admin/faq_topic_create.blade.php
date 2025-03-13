@@ -3,72 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal 1
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body"> 1
-                        <textarea name="faq[description]" id="textarea1" placeholder="Content" class="form-control text-black">
-                        </textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-            Launch demo modal 2
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal2" tabindex="-2" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel2">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body"> 2
-                        <textarea name="faq[description]" id="textarea2" placeholder="Content" class="form-control text-black">
-                        </textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-    </div>
-
-    <div class="row">
         <p class="lead">
             FAQs have a top level topic term, with a list of questions and answers attached.
         </p>
+        <div class="h2 text-warning-emphasis">
+        Work in progress, it does, work but is being fixed, msg me if you need help - PG.
+        </div>
     </div>
     <div class="row">
         <ul class="list-group list-group-horizontal">
@@ -99,26 +39,30 @@
         {!! csrf_field() !!}
         <div class="row my-4">
             <div class="form-group">
-                <div class="col-12">
-                    <h4>Faq Topic</h4>
-                    <input type="text" class="form-control"  placeholder="Topic" name="faq[faq_topic]"
-                           value="{{ old('faq.faq_topic', $data['faq']->faq_topic)}}" size="80" required/>
+                <div class="col-sm-12 col-md-8">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">FAQ topic</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                               placeholder="Topic" name="faq[faq_topic]"
+                               value="{{ old('faq.faq_topic', $data['faq']->faq_topic)}}" size="40" required/>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row my-4">
             <div class="form-group">
-                <div class="col-12">
-                    <h4>Content</h4>
-                </div>
+
                 <div class="col-12">
                     <div class="col-12 mb-4">
-                        <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                        <div class="col input-group editor-container editor-container_classic-editor" id="editor-container">
+                            <span class="input-group-text">Description</span>
                             <div class="editor-container__editor">
                             <textarea name="faq[description]" id="textarea" placeholder="Content" class="form-control text-black">
                             </textarea>
                             </div>
                         </div>
+
+
                     </div>
                     <script type="importmap">
                         {
@@ -174,15 +118,18 @@
                         <input type="hidden" name="faq[faq_data][{{$fd->id}}][id]" value="{{$fd->id}}" />
                         <input type="hidden" name="faq[faq_data][{{$fd->id}}][faq_id]" value="{{$data['faq']->id}}" />
                         <div class="form-group">
-                            <div class="col-12">
-                                <h4>Question --  {{$fd->id}}  -- </h4>
-                                <input type="text" class="form-control"  placeholder="Question"
-                                       name="faq[faq_data][{{$fd->id}}][question]"
-                                       value="{{ old('faq.faq_data.question', $fd->question)}}" size="80"
-                                       required/>
+                            <div class="col-sm-12 col-md-8">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Question {{$fd->id}}</span>
+                                    <input type="text" class="form-control" aria-label="Sizing example input"
+                                           aria-describedby="inputGroup-sizing-default"
+                                           placeholder="Question"
+                                           name="faq[faq_data][{{$fd->id}}][question]"
+                                           value="{{ old('faq.faq_data.question', $fd->question)}}" size="80"
+                                           required/>
+                                </div>
                             </div>
                         </div>
-
                         <div class="form-group my-4">
                             <div class="col-12">
                                 <h4>Answer</h4>
@@ -190,8 +137,6 @@
                                           placeholder="Description content"
                                           class="form-control">{{old('faq.faq_data.answer', $fd->answer)}}
                                 </textarea>
-
-
                             </div>
                         </div>
                         <div class="row my-4">
@@ -214,7 +159,7 @@
                             </div>
                         </div>
                         <div class="form-group my-4">
-                            <div class="col-12 my-4">
+                            <div class="col-sm-12 col-md-6 my-4">
                                 <h4>Sort Order (largest number is first)</h4>
                                 <input type="text" class="form-control"  placeholder="sort_order"
                                        name="faq[faq_data][{{$fd->id}}][sort_order]"
@@ -263,6 +208,10 @@
                                     <textarea name="new[answer]" id="faq-faq_data-answer"
                                               placeholder="Answer content"
                                               class="form-control"></textarea>
+
+
+
+
                                     </div>
                                 </div>
                                 <div class="row my-2">
