@@ -38,27 +38,33 @@
 </div>
 <div class="container border border-dark rounded mt-2 pb-3">
     <div class="row m-3">
-        <h3>
-            {{count($data['faq']['faqs_data'])}} Questions & Answers
-        </h3>
+        <h2>
+            {{count($data['faq']['faqs_data'])}} Frequently Asked Questions & The Answers
+        </h2>
     </div>
-    @forelse ( $data['faq']['faqs_data'] as $fd )
-         <div class="row">
-             <div class="col-12">
-                 <p class="d-inline-flex my-2">
-                     <a class="btn btn-outline-primary btn-lg" data-bs-toggle="collapse" href="#collapse{{$fd->id}}"
-                        aria-expanded="false" aria-controls="collapseExample">
-                         {{$fd->question}}
-                     </a>
-                </p>
-                <div class="collapse" id="collapse{{$fd->id}}">
-                    <div class="card card-body">
-                       {!! $fd->answer !!}
+
+    <div class="row">
+        <div class="col-12">
+            @forelse ( $data['faq']['faqs_data'] as $fd )
+                <div class="accordion mb-3" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{$fd->id}}" aria-expanded="false" aria-controls="collapseOne">
+                                <h3>{{$fd->question}}</h3>
+                            </button>
+                        </h2>
+                        <div id="collapse{{$fd->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {!! $fd->answer !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
-             </div>
+            @empty
+                No FAQs for {{$data['faq']->faq_topic}}
+            @endforelse
         </div>
-    @empty
-        No FAQs for {{$data['faq']->faq_topic}}
-    @endforelse
+    </div>
+</div>
 @endsection
