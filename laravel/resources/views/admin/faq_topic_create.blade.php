@@ -119,67 +119,42 @@
             <div class="row">
                 @foreach( $data['faq']['faqs_data'] as $fd )
                     <div class="col-12 border border-dark rounded p-2 m-2 mb-6">
-                        <h3>
-                            <a href="{{route('admin_faq_data_edit', [$data['faq']->slug, $fd->id])}}">Edit {{$fd->question}}</a>
+                        <h3>{{$fd->question}}
+                            <a href="{{route('admin_faq_data_edit', [$data['faq']->slug, $fd->id])}}">Edit </a>
                         </h3>
-                        <input type="hidden" name="faq[faq_data][{{$fd->id}}][id]" value="{{$fd->id}}" />
-                        <input type="hidden" name="faq[faq_data][{{$fd->id}}][faq_id]" value="{{$data['faq']->id}}" />
-                        <div class="form-group">
-                            <div class="col-sm-12 col-md-8">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Question {{$fd->id}}</span>
-                                    <input type="text" class="form-control" aria-label="Sizing example input"
-                                           aria-describedby="inputGroup-sizing-default"
-                                           placeholder="Question"
-                                           name="faq[faq_data][{{$fd->id}}][question]"
-                                           value="{{ old('faq.faq_data.question', $fd->question)}}" size="80"
-                                           required/>
-                                </div>
-                            </div>
-                        </div>
+
+                    </div>
                         <div class="form-group my-4">
                             <div class="col-12">
                                 <h4>Answer</h4>
-                                <textarea name="faq[faq_data][{{$fd->id}}][answer]" id="textarea{{$fd->id}}"
-                                          placeholder="Description content"
-                                          class="form-control">{{old('faq.faq_data.answer', $fd->answer)}}
-                                </textarea>
+                                {!! $fd->answer !!}
+
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12 col-md-6">
                                 <h4>Live with topic</h4>
-                                <label>
-                                    <input name="faq[faq_data][{{$fd->id}}][live]" type="hidden" value="0" />
-                                    <input name="faq[faq_data][{{$fd->id}}][live]" type="checkbox" value="1"
-                                        {{ checked( old('faq.faq_data.live', $fd->live)) }} />
-                                    Check now to make Live
-                                </label>
+                                {{$fd->live == 1 ? 'Live': 'No'}}
+
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <h4>Access Level for FAQ question & answer</h4>
-                                <div class="form-group">
-                                    {{ select_options($data['access_levels'], old('faq.faq_data.access_level',
-                                        $fd->access_level), ['name' => 'faq[faq_data]['. $fd->id .'][access_level]',
-                                        'class' => 'form-control']) }}
-                                </div>
+                                {{$fd->access_level}}
+
                             </div>
                         </div>
                         <div class="form-group my-4">
                             <div class="col-sm-12 col-md-6 my-4">
                                 <h4>Sort Order (largest number is first)</h4>
-                                <input type="text" class="form-control"  placeholder="sort_order"
-                                       name="faq[faq_data][{{$fd->id}}][sort_order]"
-                                       value="{{ old('faq.faq_data.sort_order', $fd->sort_order) }}" size="80"
-                                       required />
+                                {{$fd->sort_order}}
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-12 my-4 input-group-lg">
                                 <h5>Delete this question and answer</h5>
                                 <label>
-                                    <input name="faq[faq_data][{{$fd->id}}][delete]" type="hidden" value="0" />
-                                    <input name="faq[faq_data][{{$fd->id}}][delete]" type="checkbox" value="1" />
+                                    <input name="faq_data[{{$fd->id}}][delete]" type="hidden" value="0" />
+                                    <input name="faq_data[{{$fd->id}}][delete]" type="checkbox" value="1" />
                                     Check to delete, and then submit.
                                 </label>
                                 <hr />
@@ -189,70 +164,6 @@
                 @endforeach
             </div>
         @endif
-            <!-- begin section to be generated -->
-        <div class="row mb-6">
-                    <div class="col-12">
-                        <button class="btn btn-primary m-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                                aria-expanded="false" aria-controls="collapseExample">
-                            <i class="fa fa-plus"></i>
-                            Add a question and answer
-                        </button>
-                        <div class="collapse" id="collapseExample">
-                            <div class="card card-body">
-                                <div class="form-group">
-                                    <div class="col-12 mb-6">
-                                        <h4>Question</h4>
-                                        <input type="text" class="form-control"  placeholder="Question"
-                                               name="new[question]"
-                                               value="" size="40">
-                                    </div>
-                                </div>
-                                <div class="form-group my-4">
-                                    <div class="col-12">
-                                        <h4>Answer</h4>
-                                    </div>
-                                    <div class="col-12">
-                                    <textarea name="new[answer]" id="faq-faq_data-answer"
-                                              placeholder="Answer content"
-                                              class="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row my-2">
-                                    <div class="col-sm-12 col-md-6">
-                                        <h4>Live with topic</h4>
-
-                                        <label>
-                                            <input name="new[live]" type="hidden" value="0" />
-                                            <input name="new[live]" type="checkbox" value="1"
-                                            />
-                                            Check now to make Live (ie.: Draft or Published).
-                                        </label>
-                                    </div>
-
-                                    <div class="col-sm-12 col-md-6">
-                                        <h4>Access Level for FAQ question & answer</h4>
-                                        <div class="form-group">
-                                            {{ select_options($data['access_levels'], old('faq.faq_data.access_level',
-                                                'public'), ['name' => 'new[access_level]',
-                                                'class' => 'form-control']) }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-12 mb-5">
-                                        <h4>Sort Order</h4>
-                                        <input type="text" class="form-control"  placeholder="Sort order: 100, 200, etc. "
-                                               name="new[sort_order]"
-                                               value="" size="10"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    <!-- end of section to be generated -->
-
             <div class="row my-5">
                 <div class="col-sm-12 col-md-6 mb-sm-5 mb-md-0 float-start">
                     <i class="fas fa-edit fa-2x mx-2"></i>

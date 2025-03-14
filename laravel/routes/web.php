@@ -498,7 +498,9 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/faq/{faq}/faq_data/create', 'create')->name('admin_faq_data_create');
         Route::post('/faq/{faq}/faq_data/create', 'store');
         Route::get('/faq/{faq}/faq_data/{faq_data}/edit', 'edit')->name('admin_faq_data_edit');
-        Route::post('/faq/{faq}/{faq_data}/edit', 'update');
+
+        Route::post('/faq/{any_faq}/faq_data/{faq_data}/edit', 'update');
+
         Route::delete('/faq_data/delete', 'destroy')->name('admin_faq_data_destroy');
     });
 

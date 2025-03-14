@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Policies\FaqPolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -85,4 +86,10 @@ class FaqData extends LiveableModel implements Searchable
             \route('faq_show', $data->all())
         );
     }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
 }
