@@ -48,6 +48,11 @@ return [
         'name' => env('MAIL_OFFICE_EMAIL_NAME'),
     ],
 
+    'executive' => [
+        'address' => 'executive@iatse118.com',
+        'name' => 'IATSE Local 118 Executive',
+    ],
+
     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
     'username' => env('MAIL_USERNAME'),
