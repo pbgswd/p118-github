@@ -122,6 +122,8 @@ class AdminMeetingController extends Controller
             }
         }
 
+        //todo when a meeting has been created, and motions ahve been newly associated with a meeting, send an email
+
         return redirect()->route('meeting_edit', [$meeting->id]);
     }
 

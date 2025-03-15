@@ -306,7 +306,7 @@ class AdminMessageController extends Controller
         }
 //dd($request->all());
         $result = $this->attachmentService->updateAttachment($request, $message);
-	
+
         if (null !== ($request->attachments)) {
             $result = $this->attachmentService->createAttachment($request, $message);
             if ($result) {
@@ -344,10 +344,10 @@ class AdminMessageController extends Controller
 
     public function send(Message $message): RedirectResponse
     {
-        //todo policy committee, content mgrs
+        // todo policy committee, content mgrs
         Log::info('About to move command to jobs table '.$message->id);
         // Log::info('About to execute ProcessMessages dispatch for message with id '.$message->id);
-        //todo put ProcessMessages to work.
+        // todo put ProcessMessages to work.
         // ProcessMessages::dispatch(['id' => $message->id]);
         // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 

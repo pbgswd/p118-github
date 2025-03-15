@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Motions\DestroyMotionRequest;
 use App\Http\Requests\Motions\StoreMotionRequest;
 use App\Http\Requests\Motions\UpdateMotionRequest;
+use App\Models\ActivityLog;
 use App\Models\Meeting;
 use App\Models\Motion;
 use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -84,6 +87,7 @@ class AdminMotionController extends Controller
         $motion->save();
 
         if (null !== ($request->file('attachments'))) {
+
             $result = $this->attachmentService->createAttachment($request, $motion);
             if ($result) {
                 Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
@@ -94,7 +98,9 @@ class AdminMotionController extends Controller
 
 
 
-        //todo send email to execs and user and mals to say motion has been submitted
+
+
+
 
         Session::flash('success', 'You have submitted a ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
 
@@ -135,9 +141,9 @@ class AdminMotionController extends Controller
     {
         $motion->fill($request->validated()['motion']);
         $motion->save();
-//todo determine access level
+//todo issue here
         $result = $this->attachmentService->updateAttachment($request, $motion);
-//todo description in file attachments
+
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $motion);
             if ($result) {
@@ -146,8 +152,59 @@ class AdminMotionController extends Controller
                 Session::flash('error', 'You have an upload problem');
             }
         }
-
+        $motion->load('attachments');
         //todo mail updates?
+
+        //todo send email to execs and user and mals to say motion has been submitted
+
+        /**
+         * send to executive
+         * send to member
+         */
+
+        $cc = Auth::user()->email;
+
+        $motion->name = Auth::user()->name;
+        $motion->email = Auth::user()->email;
+        $motion->mail_subject = $motion->subject;
+        $motion->mail_body = $motion->description;
+
+        //todo motion template
+        //todo email_message.blade
+
+        Mail::send('emails.contact', ['data' => $motion],
+            function ($m) use ($motion, $cc) {
+                $m->from(config('mail.from.address'), config('app.name'). 'Motion Submission from '. Auth::user()->name);
+                $m->to(config('mail.executive.address'), config('mail.executive.name'));
+                $m->cc($cc, $cc);
+                $m->replyTo(Auth::user()->email ,Auth::user()->name);
+
+                $m->subject(" Motions & New Business Submission from " . Auth::user()->name . ": " . $motion->title);
+                if ($motion->attachments->count() > 0) {
+                    foreach ($motion->attachments as $att) {
+                  //      dd($att);
+                        $file = 'storage/motions/' . $att->file;
+                        //dd($file);
+                        $mime = mime_content_type(getcwd() . "/" . $file);
+                        $file_name = $att->file_name;
+                        $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
+                    }
+                }
+                Session::flash('success', 'Message Sent');
+            });
+
+
+
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . ' sent a Motion or New Business, ' . $motion->title,
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
+
+
+
+
 
         Session::flash('success', 'You have updated a motion or new business');
         return redirect()->route('admin_motion_edit', $motion->id);

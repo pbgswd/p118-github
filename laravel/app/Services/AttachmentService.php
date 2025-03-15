@@ -31,6 +31,8 @@ class AttachmentService
 
     public function updateAttachment(Request $request, HasAttachment $model): bool
     {
+       // dd([$request->files, $model]);
+
         if (isset($request->attachment)) {
             foreach ($request->attachment as $k => $v) {
                 $attachment = Attachment::find($k);

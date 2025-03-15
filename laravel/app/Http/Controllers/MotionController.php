@@ -58,7 +58,7 @@ class MotionController extends Controller
     public function show(Motion $motion): View
     {
         $motion->load('user', 'meeting', 'attachments');
-
+//dd($motion);
         return view('motion', ['data' => ['motion' => $motion]]);
     }
 
@@ -69,7 +69,27 @@ class MotionController extends Controller
     public function edit(Motion $motion): View
     {
         $motion->load('user', 'meeting', 'attachments');
-        return view('motion-edit', ['data' => ['motion' => $motion]]);
+
+
+        $upcoming = Meeting::withoutGlobalScopes()
+            ->where('live', 1)
+            ->where('date', '>=', date('Y-m-d'))
+            ->withCount('motions')
+            ->orderBy('date', 'asc')
+            ->get();
+
+
+        $newmotions = Motion::where('meeting_id', null)->with('user')->get();
+
+        $data = [
+            'action' => 'Edit',
+            'motion' => $motion,
+            'upcoming' => $upcoming,
+            'newmotions' => $newmotions,
+        ];
+
+
+        return view('motion-edit', ['data' => $data]);
     }
 
     /**
