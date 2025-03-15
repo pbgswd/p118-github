@@ -19,7 +19,7 @@ class AttachmentService
         foreach ($request->file('attachments') as $file) {
             $attachment = new Attachment;
             $attachment['user_id']  = Auth::id();
-            $attachment['access_level']= $model->getAttachmentAccessLevel();
+            $attachment['access_level'] = $model->getAttachmentAccessLevel();
             $attachment['file_name'] = $file->getClientOriginalName();
             $attachment['subfolder'] = $model->getAttachmentFolder();
             $attachment['file'] = $file->store('', $attachment['subfolder']);
@@ -49,7 +49,7 @@ class AttachmentService
 
                 foreach ($keys as $k) {
                     if ($attachment->id == $k) {
-                        $attachment->access_level = $request->attachment[$k]['access_level'];
+                        $attachment->access_level = $request->attachment[$k]['access_level'] ?? $model->getAttachmentAccessLevel();
                         $attachment->description = \trim($request->attachment[$k]['description']);
                         $attachment->save();
                     }
