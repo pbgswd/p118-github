@@ -185,18 +185,12 @@ class AdminMotionController extends Controller
                 Session::flash('success', 'Message Sent');
             });
 
-
-
         $al = new ActivityLog([
             'activity' => Auth::user()->name . ' sent a Motion or New Business, ' . $motion->title,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
         $al->save();
-
-
-
-
 
         Session::flash('success', 'You have updated a motion or new business');
         return redirect()->route('admin_motion_edit', $motion->id);

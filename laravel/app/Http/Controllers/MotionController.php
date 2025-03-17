@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Motions\DestroyMotionRequest;
 use App\Http\Requests\Motions\StoreMotionRequest;
 use App\Http\Requests\Motions\UpdateMotionRequest;
+use App\Models\ActivityLog;
 use App\Models\Meeting;
 use App\Models\Motion;
 use App\Services\AttachmentService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -49,9 +51,6 @@ class MotionController extends Controller
                 $allowed =  $date->diffInHours($meeting->date)-10 > $date ? true : false;
             }
         }
-dd($allowed);
-
-
 
         if($allowed) {
 
@@ -69,7 +68,6 @@ dd($allowed);
                 }
             }
 
-
             //todo send email to execs and user and mals to say motion has been submitted
 
             Session::flash('info', 'You have submitted a ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
@@ -78,6 +76,13 @@ dd($allowed);
             Session::flash('warning', 'Cant submit this. Contact the Executive to discuss.');
         }
 
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . ' created a Motion or New Business, ' . $motion->title,
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+
+        $al->save();
 
         return redirect()->route('list_meetings');
     }
@@ -129,6 +134,14 @@ dd($allowed);
 
         //todo send email to execs and user and mals to say motion has been submitted
 
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . ' updated a Motion or New Business, ' . $motion->title,
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
+
+
         Session::flash('info', 'You have updated the ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
         return redirect()->route('motion_edit', $motion->id);
     }
@@ -140,6 +153,13 @@ dd($allowed);
     {
         //todo update policy
         $this->authorize('delete', Motion::class);
+
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . ' deleted a Motion or New Business, ' . $motion->title,
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
 
         Motion::withoutGlobalScopes()
             ->find($motion->id)

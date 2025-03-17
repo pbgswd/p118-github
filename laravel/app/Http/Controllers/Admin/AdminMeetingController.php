@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Meetings\DestroyMeetingRequest;
 use App\Http\Requests\Meetings\StoreMeetingRequest;
 use App\Http\Requests\Meetings\UpdateMeetingRequest;
+use App\Models\ActivityLog;
 use App\Models\Meeting;
 use App\Models\Message;
 use App\Models\Motion;
@@ -89,11 +90,8 @@ class AdminMeetingController extends Controller
         $this->authorize('create', Meeting::class);
         $data = $request->validated();
         $meeting = new Meeting($data['meeting']);
-
         $meeting->date = new \DateTime($data['meeting']['date'].' '.$data['meeting']['time']);
-
         $meeting->user_id = Auth::user()->id;
-
         $meeting->save();
 
            if($meeting->meeting_type == 'General' && $meeting->live == 1) {
@@ -135,6 +133,14 @@ class AdminMeetingController extends Controller
 
         //todo when a meeting has been created, and motions ahve been newly associated with a meeting, send an email
 
+
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . ' created a new meeting, ' . $meeting->title,
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
+
         return redirect()->route('meeting_edit', [$meeting->id]);
     }
 
@@ -144,11 +150,8 @@ class AdminMeetingController extends Controller
     public function edit(Meeting $meeting): View
     {
         $this->authorize('update', Meeting::class);
-
         $meeting->load('user', 'motions', 'attachments');
-
         $meeting->motions->load('user');
-
         $meeting->time = $meeting->date->format('H:i');
 
         return view(
@@ -176,13 +179,9 @@ class AdminMeetingController extends Controller
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
         $this->authorize('update', Meeting::class);
-
         $data = $request->validated();
-
         $any_meeting->fill($data['meeting']);
-
         $any_meeting->date = new \DateTime($data['meeting']['date'] .' '. $data['meeting']['time']);
-
         $any_meeting->save();
 
         if($any_meeting->meeting_type != 'General') {
@@ -203,6 +202,13 @@ class AdminMeetingController extends Controller
 
         Session::flash('success', 'You have edited the meeting information');
 
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . ' updated a new meeting, ' . $any_meeting->title,
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
+
         return redirect()->route('meeting_edit', [$any_meeting->id]);
     }
 
@@ -212,6 +218,14 @@ class AdminMeetingController extends Controller
     public function destroy(DestroyMeetingRequest $request): RedirectResponse
     {
         $this->authorize('delete', Meeting::class);
+
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . ' deleted a meeting or meetings.',
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
+        $al->save();
+
         Meeting::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Meeting $meeting) {
