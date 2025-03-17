@@ -1,4 +1,4 @@
-@extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Meetings'])
+`@extends('layouts.jumbo',  ['title' => '<i class="fas fa-list"></i> List Meetings'])
 @section('content')
         <div class="container border border-dark rounded mt-3" style="background: rgba(220,220,220,0.8);">
             <div class="row d-flex justify-content-around mb-2 mb-md-3">
@@ -108,12 +108,13 @@
                                         <div class="col-sm-12 col-md-6 mb-2 float-end">
                                             <input type="radio" class="btn-check float-end" name="motion[submission_type]"
                                                    value="Motion" id="option4" autocomplete="off"
-                                                   @if($data['upcoming']->count() > 0 && (Carbon\Carbon::today()->diffInDays($upcoming->date)-10 > 0)
-                                                        || $data['upcoming']->count() == 0)
-                                                            required
-                                                        @else
-                                                            disabled
-                                                        @endif
+                                                   @if($data['upcoming']->count() > 0 &&
+                                                        (Carbon\Carbon::today()->diffInDays($upcoming->date)-10 > 0) ||
+                                                        $data['upcoming']->count() == 0)
+                                                        required
+                                                   @else
+                                                        disabled
+                                                   @endif
                                             >
                                             <label class="btn btn-outline-primary" for="option4">New Motion</label>
                                             <br />
@@ -323,15 +324,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- end create a template for this chunk of code -->
-
-
                 @if($data['newmotions']->count() > 0)
                     <div class="row d-flex mx-auto">
                         <div class="col border border-dark rounded pb-2 m-2 mb-3 mb-md-3">
                             <div class="col-12 m-3 text-center">
-                                <h3>Submissions for next General Meeting</h3>
+                                <h4>Submissions for next General Meeting</h4>
                             </div>
                             <table class="table-responsive mx-auto bg-light p-2 my-2">
                                 @foreach($data['newmotions'] as $newmotion)
@@ -345,8 +343,16 @@
                                             </a>
                                             <a title="{{ $newmotion->title }}" href="{{route('motion', $newmotion->id)}}">
                                                 <i class="far fa-file-alt"></i> {{ $newmotion->title }}
-                                                Submitted: {{ $newmotion->date->format('F j Y') }}
                                             </a>
+                                        </td>
+                                        <td>
+                                            {{ $newmotion->created_at->format('M j Y, g:i:s A') }}
+                                        </td>
+                                            <td class="p-2 float-end">
+                                                @if($newmotion->updated_at > $newmotion->created_at)
+                                                    Updated: {{$newmotion->updated_at->format('M j Y, g:i:s A')}}
+                                                @endif
+                                            </td>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -41,8 +41,8 @@
             <div class="col-12 text-center">
                 <h5>
                     @if($data['meeting']->date > now())
-                        Scheduled: {{$data['meeting']->date->format('F j, Y')}}
-                        , {{$data['meeting']->date->format('g:i:s A')}}
+                        Scheduled: {{$data['meeting']->date->format('F j, Y')}},
+                        {{$data['meeting']->date->format('g:i:s A')}}
                         <div class="badge bg-warning text-dark">Upcoming</div>
                         {{ Carbon\Carbon::today()->diffInDays($data['meeting']->date)  }} days until meeting.
                     @else
@@ -57,20 +57,49 @@
         <div class="row">
             @if(count($data['meeting']->motions) > 0 && $data['meeting']->meeting_type == 'General')
                 <div class="col-12 mb-3">
-                    <h5>
+                    <h3>
                         <i class="far fa-file-alt"></i>
                         Submitted Motions and New Business
-                    </h5>
+                    </h3>
                 </div>
                 @forelse($data['meeting']->motions as $motion)
                     <div class="col-12 mb-3">
-                        <h6>
+                        <h4>{{$motion->user->name}}
                             <a href="{{route('motion',$motion->id)}}" title="View {{$motion->title}}">
-                                <i class="far fa-file-alt"></i>
                                 <span class="badge bg-warning text-dark">{{ucfirst($motion->submission_type)}}</span>
-                                {{$motion->user->name}} - {{$motion->title}}
+                                 - {{$motion->title}}
                             </a>
-                        </h6>
+                            <span class="float-end">
+                               @if($motion->user_id == Auth::user()->id)
+                                   @if($motion->submission_type == 'Motion' &&
+                                       ($data['upcoming']->count() > 0 &&
+                                       (Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10 > 0) ||
+                                       $data['upcoming']->count() == 0))
+                                            <a class="btn btn-outline-primary" href="{{route('motion_edit', $motion->id)}}"
+                                               title="{{Auth::user()->name . "can edit"}}"
+                                               role="button">
+                                                Edit
+                                            </a>
+                                   @endif
+                                   @if($motion->submission_type == 'New Business' &&
+                                        ($data['upcoming']->count() > 0 &&
+                                        Carbon\Carbon::today()->diffInHours($data['upcoming']->date)-48 > 0 )
+                                        || $data['upcoming']->count() == 0)
+                                           <a class="btn btn-outline-primary" href="{{route('motion_edit', $motion->id)}}"
+                                              title="{{Auth::user()->name . " can edit"}}"
+                                              role="button">
+                                                Edit
+                                            </a>
+                                   @endif
+                               @endif
+                               @can(['create articles'])
+                                   <a class="btn btn-outline-primary" href="{{route('admin_motion_edit', $motion->id)}}"
+                                          title="Admin Edit" role="button">
+                                                Admin Edit
+                                   </a>
+                               @endcan
+                            </span>
+                        </h4>
                     </div>
                 @empty
                     <div class="col-12 mb-3">

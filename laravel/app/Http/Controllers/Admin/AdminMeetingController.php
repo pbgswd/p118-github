@@ -43,14 +43,16 @@ class AdminMeetingController extends Controller
     {
         $this->authorize('viewAny', Meeting::class);
 
-        $data = [];
-        $data['meetings'] = Meeting::withoutGlobalScopes()
+        $meetings = Meeting::withoutGlobalScopes()
             ->sortable()
-            ->with('user', 'attachments')
+            ->with('user', 'attachments', 'motions')
             ->orderBy('date', 'desc')
             ->paginate(20);
 
-        $data['count'] = Meeting::withoutGlobalScopes()->count();
+        $data = [
+            'meetings' => $meetings,
+            'count' => Meeting::withoutGlobalScopes()->count(),
+        ];
 
         return view('admin.listmeetings', ['data' => $data]);
     }
@@ -64,8 +66,7 @@ class AdminMeetingController extends Controller
         $meeting = new Meeting;
         $meeting->live = $meeting->getDefaultLiveStatus();
 
-
-        //todo data count of motions that are not attached to a meeting to be attached to this meeting
+        Session::flash('info', 'New General Meetings will get any unattached New Motions and New Business when Status is set to live');
 
         return view(
             'admin.meeting',
@@ -92,24 +93,34 @@ class AdminMeetingController extends Controller
         $meeting->date = new \DateTime($data['meeting']['date'].' '.$data['meeting']['time']);
 
         $meeting->user_id = Auth::user()->id;
+
         $meeting->save();
 
-           if($meeting->meeting_type == 'General') {
+           if($meeting->meeting_type == 'General' && $meeting->live == 1) {
                $motions = Motion::where('meeting_id', null)->get();
                $savedcount = intval(0);
                foreach ($motions as $motion) {
-                   if((Carbon::today()->diffInDays($meeting->date)-10) > 0) {
+                   // Motion
+                   if(( Carbon::today()->diffInDays($meeting->date) - 10 ) > 0 && $motion->submission_type == 'Motion') {
+                       $motion->meeting_id = $meeting->id;
+                       $motion->save();
+                       $savedcount++;
+                       //todo send email to executive with new attached motion
+                   }
+                    // New Business
+                   if(( Carbon::today()->diffInHours($meeting->date) - 48 ) > 0 && $motion->submission_type == 'New Business') {
                        $motion->meeting_id = $meeting->id;
                        $motion->save();
                        $savedcount++;
                        //todo send email to executive with new attached motion
                    }
                }
-               $flash_motion_msg = $savedcount . " " . Str::of('submission')->plural($savedcount) .
-                   ' attached to meeting';
+               if($savedcount > 0) {
+                   Session::flash('info', $savedcount . " " . Str::of('motion')->plural($savedcount) .' added to the meeting.');
+               }
            }
 
-        Session::flash('success', 'Meeting saved. '.$flash_motion_msg ?? '');
+        Session::flash('success', 'Meeting saved.');
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $meeting);
@@ -135,6 +146,7 @@ class AdminMeetingController extends Controller
         $this->authorize('update', Meeting::class);
 
         $meeting->load('user', 'motions', 'attachments');
+
         $meeting->motions->load('user');
 
         $meeting->time = $meeting->date->format('H:i');
@@ -169,9 +181,13 @@ class AdminMeetingController extends Controller
 
         $any_meeting->fill($data['meeting']);
 
-        $any_meeting->date = new \DateTime($data['meeting']['date'].' '.$data['meeting']['time']);
+        $any_meeting->date = new \DateTime($data['meeting']['date'] .' '. $data['meeting']['time']);
 
         $any_meeting->save();
+
+        if($any_meeting->meeting_type != 'General') {
+            Motion::where('meeting_id', $any_meeting->id)->update(['meeting_id' => null]);
+        }
 
         $result = $this->attachmentService->updateAttachment($request, $any_meeting);
 

@@ -1,11 +1,9 @@
 @extends('layouts.jumbo')
 @section('content')
-
 <div class="jumbotron">
     <div class="container border border-dark rounded" style="background: rgba(220,220,220,0.8);">
         <div class="row">
             <div class="col-sm-12 col-md-6 text-start">
-
             <a href="{{route('list_meetings')}}" title="List Meetings">
                 <i class="far fa-arrow-alt-circle-left"></i>
                 Meetings
@@ -30,7 +28,7 @@
                     Submitted by
                     <a href="{{route('member', $data['motion']->user->id)}}" title="{{$data['motion']->user->name}}">
                         {{$data['motion']->user->name}}</a>,
-                    {{$data['motion']->date->format('F j, Y')}}
+                    {{$data['motion']->created_at->format('F j, Y, h:i:s A')}}
                 </h2>
             </div>
         </div>
@@ -44,7 +42,7 @@
                         </div>
                         <a href="{{route('meeting', $data['motion']->meeting->id)}}">
                             {{$data['motion']->meeting->title}}
-                            {{$data['motion']->meeting->date->format('F j, Y')}}
+                            {{$data['motion']->meeting->date->format('F j, Y, h:i:s A')}}
                         </a>
                     @else
                         For the next General meeting to be scheduled
@@ -52,7 +50,6 @@
                 </h3>
             </div>
         </div>
-
         <form method="post" name="Motion" action="{{ url()->current() }}" enctype="multipart/form-data"
               class="needs-validation" novalidate>
             {!! csrf_field() !!}
@@ -72,8 +69,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row mb-3">
             <div class="col-12 text-center">
                 <h4>Type of submission</h4>
@@ -81,12 +76,14 @@
             <div class="col-sm-12 col-md-6 mb-2 text-center">
                 <input type="radio" class="btn-check float-end" name="motion[submission_type]"
                        value="Motion" id="option4" autocomplete="off"
-                       @if($data['upcoming']->count() > 0 && (Carbon\Carbon::today()->diffInDays($upcoming->date)-10 > 0)
-                            || $data['upcoming']->count() == 0)
+                       @if($data['upcoming']->count() > 0 &&
+                            (Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10 > 0) ||
+                            $data['upcoming']->count() == 0)
                            required
                        @else
                            disabled
-                    @endif
+                       @endif
+                    {{$data['motion']->submission_type == "Motion" ? 'checked' : ''}}
                 >
                 <label class="btn btn-outline-primary" for="option4">New Motion</label>
                 <br />
@@ -98,10 +95,10 @@
                         <p class="card-text">
                             @if($data['upcoming']->count() > 0)
                                 The next General Meeting will be held
-                                {{$upcoming->date->format('F j Y')}},
-                                {{$upcoming->date->format('g:i:s A')}}, in
-                                {{Carbon\Carbon::today()->diffInDays($upcoming->date)}}
-                                {{Str::plural('day', Carbon\Carbon::today()->diffInDays($upcoming->date))}}.
+                                {{$data['upcoming']->date->format('F j Y')}},
+                                {{$data['upcoming']->date->format('g:i:s A')}}, in
+                                {{Carbon\Carbon::today()->diffInDays($data['upcoming']->date)}}
+                                {{Str::plural('day', Carbon\Carbon::today()->diffInDays($data['upcoming']->date))}}.
                             @else
                                 Your motion will be attached to the next meeting.
                             @endif
@@ -111,10 +108,10 @@
                         </h4>
 
                         @if($data['upcoming']->count() > 0)
-                            @if(Carbon\Carbon::today()->diffInDays($upcoming->date)-10 > 0)
+                            @if(Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10 > 0)
                                 <p class="card-text h4">
-                                    {{Carbon\Carbon::today()->diffInDays($upcoming->date)-10}}
-                                    {{Str::plural('day', (Carbon\Carbon::today()->diffInDays($upcoming->date)-10))}}
+                                    {{Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10}}
+                                    {{Str::plural('day', (Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10))}}
                                     remaining to submit new motions.
                                 </p>
                             @else
@@ -135,12 +132,14 @@
             <div class="col-sm-12 col-md-6 mb-2 text-center">
                 <input type="radio" class="btn-check float-end" name="motion[submission_type]"
                        value="New Business" id="option5" autocomplete="off"
-                       @if($data['upcoming']->count() > 0 && Carbon\Carbon::today()->diffInHours($upcoming->date)-48 > 0
-                             || $data['upcoming']->count() == 0)
+                       @if($data['upcoming']->count() > 0 &&
+                            Carbon\Carbon::today()->diffInHours($data['upcoming']->date)-48 > 0 ||
+                            $data['upcoming']->count() == 0)
                            required
                        @else
                            disabled
                     @endif
+                    {{$data['motion']->submission_type == "New Business" ? 'checked' : ''}}
                 >
                 <label class="btn btn-outline-primary" for="option5">New Business</label>
                 <div class="card text-bg-info text-white my-3 mx-auto h-80" style="max-width: 20rem;">
@@ -148,13 +147,13 @@
                     <div class="card-body">
                         <p class="card-text">
                             @if($data['upcoming']->count() > 0)
-                                @if(Carbon\Carbon::today()->diffInHours($upcoming->date->subDays(2)) > 48)
+                                @if(Carbon\Carbon::today()->diffInHours($data['upcoming']->date->subDays(2)) > 48)
                                     New Business submissions allowed until
-                                    {{$upcoming->date->subDays(2)->format('F j Y')}},
-                                    {{$upcoming->date->format('g:i:s A')}}.
-                                    @if(Carbon\Carbon::today()->diffInHours($upcoming->date->subDays(2)) < 73)
-                                        {{Carbon\Carbon::today()->diffInHours($upcoming->date->subDays(2))}}
-                                        {{Str::plural('hour', Carbon\Carbon::today()->diffInHours($upcoming->date->subDays(2)))}}
+                                    {{$data['upcoming']->date->subDays(2)->format('F j Y')}},
+                                    {{$data['upcoming']->date->format('g:i:s A')}}.
+                                    @if(Carbon\Carbon::today()->diffInHours($data['upcoming']->date->subDays(2)) < 73)
+                                        {{Carbon\Carbon::today()->diffInHours($data['upcoming']->date->subDays(2))}}
+                                        {{Str::plural('hour', Carbon\Carbon::today()->diffInHours($data['upcoming']->date->subDays(2)))}}
                                         remaining to submit new business.
                                     @endif
                                 @else
@@ -178,13 +177,13 @@
                 </div>
             </div>
         </div>
-        <div class="row my-4 text-center">
+        <div class="row my-4">
             <div class="form-group">
-                    <div class="col-12 mb-4">
-                        <div class="col input-group editor-container editor-container_classic-editor" id="editor-container">
+                    <div class="col-sm-12 col-md-12 mb-4">
+                        <div class="col-12 text-center input-group editor-container editor-container_classic-editor" id="editor-container">
                             <span class="input-group-text">Description</span>
                             <div class="editor-container__editor">
-                                <textarea name="faq[description]" id="textarea" placeholder="Content" class="form-control text-black">
+                                <textarea name="motion[description]" id="textarea" placeholder="Content" class="form-control text-black">
                                 </textarea>
                             </div>
                         </div>
@@ -213,7 +212,8 @@
                 <ul class="list-group mb-6">
                     @forelse($data['motion']->attachments as $ma)
                         <li class="list-group-item h5">
-                            <a href="{{route('attachment_download', [$data['motion']->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
+                            <a href="{{route('attachment_download', [$data['motion']->getAttachmentFolder(), $ma->id])}}"
+                               title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
                             {{$ma->description}}
                         </li>
                     @empty
@@ -232,7 +232,7 @@
         </form>
         @if ($data['action'] == 'Edit')
             <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0 text-md-end">
-                <form name="delete" method="POST" action="{{route('admin_motion_destroy')}}">
+                <form name="delete" method="POST" action="{{route('motion_destroy')}}">
                     {!! csrf_field() !!}
                     {!! method_field('DELETE') !!}
                     <i class="far fa-trash-alt fa-2x"></i>

@@ -1,6 +1,5 @@
 @extends('layouts.jumbo')
 @section('content')
-
 <div class="jumbotron">
     <div class="container border border-dark rounded" style="background: rgba(220,220,220,0.8);">
         <div class="row">
@@ -35,7 +34,7 @@
                     Submitted by
                     <a href="{{route('member', $data['motion']->user->id)}}" title="{{$data['motion']->user->name}}">
                         {{$data['motion']->user->name}}</a>,
-                    {{$data['motion']->date->format('F j, Y')}}
+                    {{$data['motion']->created_at->format('F j, Y')}}
                 </h2>
             </div>
         </div>
@@ -49,7 +48,7 @@
                         </div>
                         <a href="{{route('meeting', $data['motion']->meeting->id)}}">
                             {{$data['motion']->meeting->title}}
-                            {{$data['motion']->meeting->date->format('F j, Y')}}
+                            {{$data['motion']->meeting->created_at->format('F j, Y')}}
                         </a>
                     @else
                         For the next General meeting to be scheduled

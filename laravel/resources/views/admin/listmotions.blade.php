@@ -20,9 +20,7 @@
                         <tr>
                             <th> @sortablelink('id','#') </th>
                             <th> @sortablelink('title', 'Title')
-                            <th>file</th>
                             <th> Edit </th>
-                            <th> @sortablelink('date', 'Motion Date') </th>
                             <th>@sortablelink('Motion_type', 'Motion Type')</th>
                             <th> @sortablelink('created_at', 'Created At') </th>
                             <th> @sortablelink('updated_at', 'Updated At') </th>
@@ -47,50 +45,49 @@
                                 </h4>
                                 <h6>
                                     {{$a->attachments->count()}}
-                                    {{Str::plural('Attachment', $a->attachments->count())}}
-                                </h6>
-                                for what meeting?
-                            </td>
-                            <td>
-                                @if(null !== ($a->attachments))
-                                    @foreach($a->attachments as $att)
-                                        <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->file_name}}"><i class="fas fa-file-download fa-2x"></i></a>
-                                    @endforeach
+                                    {{Str::plural('Attachment', $a->attachments->count())}}.
+
+                                @if(isset($a->meeting->title))
+                                    <a href="{{route('meeting_edit', $a->meeting->id)}}">
+                                        {{$a->meeting->title}}
+                                    </a>
+                                @else
+                                    Not yet assigned to a meeting.
                                 @endif
+                                </h6>
                             </td>
                             <td>
                                 <a href="{{ route('admin_motion_edit', $a->id) }}" title="Edit {{ $a->title }} ">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
-                            <td> {{ $a->date->format('F j Y') }}  </td>
                             <td> {{ $a->submission_type }} </td>
                             <td> {{ $a->created_at->format('F j Y H:i:s') }} </td>
                             <td> {{ $a->updated_at->format('F j Y H:i:s') }} </td>
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="8">&nbsp;</td>
+                        <td colspan="7">&nbsp;</td>
                     </tr>
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <i class="far fa-trash-alt fa-2x"></i>
+            <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
+        </div>
+        <div class="col-6">
+            <div class="list-group">
+                <ul class="pagination">
+                    {!! $data['motions']->links() !!}
+                </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <i class="far fa-trash-alt fa-2x"></i>
-                <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
-            </div>
-            <div class="col-6">
-                <div class="list-group">
-                    <ul class="pagination">
-                        {!! $data['motions']->links() !!}
-                    </ul>
-                </div>
-            </div>
-            <div class="col"></div>
-        </div>
-        <div class="row" style="margin-top:6em;"></div>
+        <div class="col"></div>
+    </div>
+    <div class="row mt-6"></div>
     </form>
 @endif
     <div class="row" style="margin-top:30px;"></div>

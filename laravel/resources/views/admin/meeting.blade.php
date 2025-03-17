@@ -95,7 +95,7 @@
                 <div class="col-12 my-3">
                     <h4>Meeting Type</h4>
                 </div>
-                <div class="col-12 my-3">
+                <div class="col-12 col-md-6 my-3">
                     <select class="form-select"  name="meeting[meeting_type]" aria-label="Select">
                         @if($data['action'] == 'Edit')
                             <option value="{{$data['meeting']->meeting_type}}" selected>{{$data['meeting']->meeting_type}}</option>
@@ -217,14 +217,49 @@
                             @endforelse
                             <tr>
                                 <td colspan="7">
-                                    <i class="far fa-trash-alt"></i> Select checkbox to delete a file
+                                    <i class="far fa-trash-alt"></i>
+                                    Select checkbox to delete a file
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             @endif
+            @if($data['meeting']->meeting_type == 'General')
+                <div class="row my-5">
+                    <div class="col-sm-12 col-md-6 mb-sm-5 mb-md-0">
+                        <h4>Motions & New Business</h4>
+                        <ul class="list-group">
+                            @if( $data['meeting']->motions->count() > 0 )
+                                @foreach($data['meeting']->motions as $motion)
+                                    <li class="list-group-item">
+                                        <span class="badge bg-primary text-sm">
+                                        {{$motion->submission_type}}
+                                        </span>
+                                        {{$motion->user->name}}:
+                                        <a href="{{route('admin_motion_edit', $motion->id)}}">
+                                            {{$motion->title}}
+                                        </a>
+                                        <span class="float-end">
+                                        @if($motion->updated_at > $motion->created_at)
+                                            Last Updated at {{$motion->updated_at->format('F d, Y, g:i:s A')}}
+                                        @else
+                                            Submitted: {{$motion->created_at->format('F d, Y, g:i:s A')}}
+                                        @endif
+                                        </span>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li class="list-group-item">
+                                    No motions assigned
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </div>
+            @endif
         @endif
+
         <div class="row mb-lg-5">
             <div class="col-sm-12 col-md-6 mb-sm-5 mb-md-0">
                 <i class="fas fa-edit fa-2x"></i>

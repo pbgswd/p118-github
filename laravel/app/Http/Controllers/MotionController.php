@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Motions\DestroyMotionRequest;
 use App\Http\Requests\Motions\StoreMotionRequest;
 use App\Http\Requests\Motions\UpdateMotionRequest;
 use App\Models\Meeting;
 use App\Models\Motion;
 use App\Services\AttachmentService;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class MotionController extends Controller
@@ -27,27 +30,54 @@ class MotionController extends Controller
 
         //todo enforce input, meeting must be 10 days away to allow for attachment to meeting
         //todo
-
         $meeting = Meeting::where([['meeting_type', '=', 'General'], ['live', '=',  1], ['date', '>', now()]])->first();
-        $motion->meeting_id = $meeting->id ?? null;
-        $motion->date = now();
+        $allowed = false;
 
-        $motion->save();
+        $date = Carbon::now();
+       // dd([$meeting, $date->format('l jS \o\f F Y h:i:s A')]);
 
-        if (null !== ($request->file('attachments'))) {
-            $result = $this->attachmentService->createAttachment($request, $motion);
-            if ($result) {
-                Session::flash('success', 'You uploaded '.
-                    count([$request->file('attachments')]).' files');
-            } else {
-                Session::flash('error', 'You have an upload problem');
+        if(null !== $meeting) {
+          // no upcoming meeting
+            $allowed = true;
+        }
+        else {
+            // an upcoming meeting
+            if($motion->submission_type == 'Motion') {
+                $allowed =  $date->diffInDays($meeting->date)-10 > $date ? true : false;
+            }
+            if($motion->submission_type == 'New Business') {
+                $allowed =  $date->diffInHours($meeting->date)-10 > $date ? true : false;
             }
         }
+dd($allowed);
 
 
-        //todo send email to execs and user and mals to say motion has been submitted
 
-        Session::flash('success', 'You have submitted a ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
+        if($allowed) {
+
+            $motion->meeting_id = $meeting->id ?? null;
+
+            $motion->save();
+
+            if (null !== ($request->file('attachments'))) {
+                $result = $this->attachmentService->createAttachment($request, $motion);
+                if ($result) {
+                    Session::flash('success', 'You uploaded '.
+                        count([$request->file('attachments')]) .' ' . Str::plural('files', count([$request->file('attachments')])));
+                } else {
+                    Session::flash('error', 'You have an upload problem');
+                }
+            }
+
+
+            //todo send email to execs and user and mals to say motion has been submitted
+
+            Session::flash('info', 'You have submitted a ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
+        }
+        else {
+            Session::flash('warning', 'Cant submit this. Contact the Executive to discuss.');
+        }
+
 
         return redirect()->route('list_meetings');
     }
@@ -58,7 +88,7 @@ class MotionController extends Controller
     public function show(Motion $motion): View
     {
         $motion->load('user', 'meeting', 'attachments');
-//dd($motion);
+
         return view('motion', ['data' => ['motion' => $motion]]);
     }
 
@@ -68,26 +98,24 @@ class MotionController extends Controller
      */
     public function edit(Motion $motion): View
     {
+        //todo policy
+
         $motion->load('user', 'meeting', 'attachments');
 
+//todo dont allow editing after date limits based on date/New Motion/New Business
 
         $upcoming = Meeting::withoutGlobalScopes()
             ->where('live', 1)
             ->where('date', '>=', date('Y-m-d'))
             ->withCount('motions')
             ->orderBy('date', 'asc')
-            ->get();
-
-
-        $newmotions = Motion::where('meeting_id', null)->with('user')->get();
+            ->first();
 
         $data = [
             'action' => 'Edit',
             'motion' => $motion,
             'upcoming' => $upcoming,
-            'newmotions' => $newmotions,
         ];
-
 
         return view('motion-edit', ['data' => $data]);
     }
@@ -97,15 +125,32 @@ class MotionController extends Controller
      */
     public function update(UpdateMotionRequest $request, Motion $motion): RedirectResponse
     {
+        //todo policy
 
-        return redirect('motion_edit', $motion->id);
+        //todo send email to execs and user and mals to say motion has been submitted
+
+        Session::flash('info', 'You have updated the ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
+        return redirect()->route('motion_edit', $motion->id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Motion $motion)
+    public function destroy(DestroyMotionRequest $motion): RedirectResponse
     {
-        //
+        //todo update policy
+        $this->authorize('delete', Motion::class);
+
+        Motion::withoutGlobalScopes()
+            ->find($motion->id)
+            ->each(function (Motion $motion) {
+                $this->attachmentService->destroyAttachments($motion);
+                $motion->delete();
+            });
+
+        Session::flash('success', Str::plural(count([$motion->id]).' Motion', count([$motion->id])).
+            ' and any related files deleted.');
+
+        return redirect()->route('list_meetings');
     }
 }

@@ -34,7 +34,7 @@ class AdminMotionController extends Controller
     public function index(): View
     {
         $motions = Motion::with('user', 'meeting')
-            ->orderBy('date', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate(20);
 
         $count = Motion::count();
@@ -82,12 +82,10 @@ class AdminMotionController extends Controller
         $meeting = Meeting::where([['meeting_type', '=', 'General'], ['live', '=',  1], ['date', '>', now()]])->first();
 
         $motion->meeting_id = $meeting->id ?? null;
-        $motion->date = now();
 
         $motion->save();
 
         if (null !== ($request->file('attachments'))) {
-
             $result = $this->attachmentService->createAttachment($request, $motion);
             if ($result) {
                 Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
@@ -96,13 +94,7 @@ class AdminMotionController extends Controller
             }
         }
 
-
-
-
-
-
-
-        Session::flash('success', 'You have submitted a ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
+        Session::flash('success', 'You have submitted a ' . $motion->submission_type . ' successfully. It will be reviewed.');
 
         return redirect()->route('admin_motion_edit', $motion->id);
     }

@@ -19,33 +19,51 @@
         @endif
     </div>
     <div class="row mt-3">
-        <div class="col-12">
+        <div class="col-sm-12 col-md-6">
             <h3>
                 Creator: {{$data['action'] == 'Edit' ? $data['motion']->user->name : Auth::user()->name}}
             </h3>
         </div>
+        <div class="col-sm-12 col-md-6">
+            <h3>
+                @if(null !== $data['motion']['meeting_id'])
+                    This {{$data['motion']->submission_type}} is attached to {{$data['motion']['meeting']['title']}},
+                    {{$data['motion']['meeting']['date']->format('F j Y, h:i:s A')}}
+                @endif
+            </h3>
+        </div>
+    </div>
+
     <form method="post" name="Motion" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row">
             <div class="form-group">
                 <div class="col-12 my-3">
-                    <h4>Title</h4>
-                </div>
-                <div class="col-12 my-3">
-                    <input type="text" class="form-control"  placeholder="Add a Title" name="motion[title]"
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                    <input type="text" class="form-control" placeholder="Add a Title" name="motion[title]"
+                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                            value="{{ old('motion.title', $data['motion']->title)}}" size="80" required/>
                 </div>
             </div>
         </div>
         @if($data['action'] == 'Edit')
             <div class="row my-3">
-                <div class="col-12">
+                <div class="col-sm-12 col-md-6">
                     <h4>
-                        <i class="fas fa-calendar-alt"></i> Date
-                            (Currently stored date, will be updated: {{$data['motion']->date->format('F d, Y')}})
+                        <i class="fas fa-calendar-alt"></i>
+                        Created At: {{$data['motion']->created_at->format('F d, Y, g:i:s A')}}
                     </h4>
                 </div>
+                @if($data['motion']->updated_at > $data['motion']->created_at)
+                    <div class="col-sm-12 col-md-6">
+                        <h4>
+                            <i class="fas fa-clock-alt"></i>
+                            Last Update: {{$data['motion']->updated_at->format('F d, Y, g:i:s A')}}
+                        </h4>
+                    </div>
+                @endif
             </div>
         @endif
         <div class="row">

@@ -164,11 +164,8 @@ Route::middleware('web', 'auth')->group(function () {
         Route::get('motion/{motion}', 'show')->name('motion');
         Route::get('motion/{motion}/edit', 'edit')->name('motion_edit');
         Route::post('motion/{motion}/edit', 'update');
-        Route::delete('motion/{motion}/destroy', 'destroy')->name('motion_destroy');
+        Route::delete('motion/destroy', 'destroy')->name('motion_destroy');
     });
-
-
-
 
     Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
 });

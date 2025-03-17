@@ -45,15 +45,21 @@
                                         {{ $a->title }}
                                     </a>
                                 </h4>
-                                <h6>
-                                    {{$a->attachments->count()}}
-                                    {{Str::plural('Attachment', $a->attachments->count())}}
-                                </h6>
+                                {{$a->attachments->count()}}
+                                {{Str::plural('Attachment', $a->attachments->count())}}.
+                                @if($a->motions->count() > 0)
+                                    {{$a->motions->count()}} {{Str::plural('motion', $a->motions->count())}} submitted.
+                                @else
+                                    No motions submitted yet.
+                                @endif
                             </td>
                             <td>
                                 @if(null !== ($a->attachments))
                                     @foreach($a->attachments as $att)
-                                        <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}" title="Download {{$att->file_name}}"><i class="fas fa-file-download fa-2x"></i></a>
+                                        <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                                           title="Download {{$att->file_name}}">
+                                            <i class="fas fa-file-download fa-2x"></i>
+                                        </a>
                                     @endforeach
                                 @endif
                             </td>
