@@ -16,13 +16,12 @@ class MotionFactory extends Factory
      */
     public function definition(): array
     {
-        $ids = [1, 136, 142, 148, 135];
+        $ids = [1, 656, 647, 142, 422, 240];
         $types = ['Motion', 'New Business'];
 
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'date' => now(),
             'user_id' => $ids[array_rand($ids)],
             'meeting_id' => null,
             'submission_type' => $types[array_rand($types)],
