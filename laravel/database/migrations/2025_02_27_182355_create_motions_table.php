@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->dateTime('date');
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('meeting_id')->nullable();
             $table->foreign('meeting_id')->references('id')->on('meetings')->onDelete('set null');
