@@ -32,6 +32,7 @@ class StoreMeetingRequest extends FormRequest
             'meeting.title' => 'string|required|max:255',
             'meeting.date' => 'date|required',
             'meeting.time' => 'string|required',
+            'meeting.live' => 'boolean',
             'meeting.meeting_type' => 'string|required',
             'meeting.description' => 'string|nullable',
         ];
