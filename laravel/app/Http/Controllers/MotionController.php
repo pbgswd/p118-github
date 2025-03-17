@@ -27,16 +27,20 @@ class MotionController extends Controller
      */
     public function store(StoreMotionRequest $request): RedirectResponse
     {
+        //todo policy
+
         $motion = new Motion($request->validated()['motion']);
         $motion->user_id = auth()->id();
 
         //todo enforce input, meeting must be 10 days away to allow for attachment to meeting
         //todo
-        $meeting = Meeting::where([['meeting_type', '=', 'General'], ['live', '=',  1], ['date', '>', now()]])->first();
-        $allowed = false;
 
+        $meeting = Meeting::where([['meeting_type', '=', 'General'], ['live', '=',  1], ['date', '>', now()]])
+            ->orderBy('date', 'asc')
+            ->first();
+
+        $allowed = false;
         $date = Carbon::now();
-       // dd([$meeting, $date->format('l jS \o\f F Y h:i:s A')]);
 
         if(null !== $meeting) {
           // no upcoming meeting
@@ -62,7 +66,8 @@ class MotionController extends Controller
                 $result = $this->attachmentService->createAttachment($request, $motion);
                 if ($result) {
                     Session::flash('success', 'You uploaded '.
-                        count([$request->file('attachments')]) .' ' . Str::plural('files', count([$request->file('attachments')])));
+                        count([$request->file('attachments')]) .' ' .
+                        Str::plural('files', count([$request->file('attachments')])));
                 } else {
                     Session::flash('error', 'You have an upload problem');
                 }
@@ -70,19 +75,21 @@ class MotionController extends Controller
 
             //todo send email to execs and user and mals to say motion has been submitted
 
-            Session::flash('info', 'You have submitted a ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
+            Session::flash('info', 'You have submitted a ' . $motion->submission_type .
+                ' successfully. It will be reviewed by the Executive.');
+
+            $al = new ActivityLog([
+                'activity' => Auth::user()->name . ' created a Motion or New Business, ' . $motion->title,
+                'ip_address' => $_SERVER['REMOTE_ADDR'],
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                'model' => 'Admin']);
+
+            $al->save();
+
         }
         else {
             Session::flash('warning', 'Cant submit this. Contact the Executive to discuss.');
         }
-
-        $al = new ActivityLog([
-            'activity' => Auth::user()->name . ' created a Motion or New Business, ' . $motion->title,
-            'ip_address' => $_SERVER['REMOTE_ADDR'],
-            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-            'model' => 'Admin']);
-
-        $al->save();
 
         return redirect()->route('list_meetings');
     }
@@ -93,7 +100,6 @@ class MotionController extends Controller
     public function show(Motion $motion): View
     {
         $motion->load('user', 'meeting', 'attachments');
-
         return view('motion', ['data' => ['motion' => $motion]]);
     }
 
@@ -132,6 +138,23 @@ class MotionController extends Controller
     {
         //todo policy
 
+        $data = $request->validated();
+        $motion->fill($data['motion']);
+        $motion->save();
+
+//todo file attachments - handle description, delete
+
+        if (null !== ($request->file('attachments'))) {
+            $result = $this->attachmentService->createAttachment($request, $motion);
+            if ($result) {
+                Session::flash('success', 'You uploaded '.
+                    count([$request->file('attachments')]) .' ' .
+                    Str::plural('file', count([$request->file('attachments')])));
+            } else {
+                Session::flash('error', 'You have an upload problem');
+            }
+        }
+
         //todo send email to execs and user and mals to say motion has been submitted
 
         $al = new ActivityLog([
@@ -152,6 +175,7 @@ class MotionController extends Controller
     public function destroy(DestroyMotionRequest $motion): RedirectResponse
     {
         //todo update policy
+
         $this->authorize('delete', Motion::class);
 
         $al = new ActivityLog([
@@ -160,6 +184,9 @@ class MotionController extends Controller
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
         $al->save();
+
+        //todo send email to notify of deletion
+
 
         Motion::withoutGlobalScopes()
             ->find($motion->id)

@@ -76,6 +76,8 @@ class AdminMotionController extends Controller
      */
     public function store(StoreMotionRequest $request): RedirectResponse
     {
+        //todo policy
+
         $motion = new Motion($request->validated()['motion']);
         $motion->user_id = auth()->id();
 
@@ -105,6 +107,8 @@ class AdminMotionController extends Controller
      */
     public function edit(Motion $motion): View
     {
+        //todo policy
+
         $this->authorize('update', Motion::class);
 
         $motion->load('user', 'meeting', 'attachments');
@@ -131,9 +135,11 @@ class AdminMotionController extends Controller
      */
     public function update(UpdateMotionRequest $request, Motion $motion): RedirectResponse
     {
+        //todo policy
+
         $motion->fill($request->validated()['motion']);
         $motion->save();
-//todo issue here
+
         $result = $this->attachmentService->updateAttachment($request, $motion);
 
         if (null !== ($request->file('attachments'))) {
@@ -201,6 +207,7 @@ class AdminMotionController extends Controller
      */
     public function destroy(DestroyMotionRequest $motion): RedirectResponse
     {
+        //todo policy
 
         $this->authorize('delete', Motion::class);
 
@@ -210,6 +217,8 @@ class AdminMotionController extends Controller
                 $this->attachmentService->destroyAttachments($motion);
                 $motion->delete();
             });
+
+        //todo message deletion
 
         Session::flash('success', Str::plural(count([$motion->id]).' Motion', count([$motion->id])).
             ' and any related files deleted.');

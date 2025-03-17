@@ -56,7 +56,7 @@
         </div>
         <div class="row">
             @if(count($data['meeting']->motions) > 0 && $data['meeting']->meeting_type == 'General')
-                <div class="col-12 mb-3">
+                <div class="col-12 my-4">
                     <h3>
                         <i class="far fa-file-alt"></i>
                         Submitted Motions and New Business

@@ -204,6 +204,27 @@
                 </div>
             </div>
         </div>
+
+            <div class="row my-3">
+                <div class="col-12">
+                    <div class="form-group float-start mb-3">
+                        <label for="exampleInputFile">
+                            <h4>
+                                <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                                Add File(s) To your motion or new business.
+                            </h4>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupFile01">Attach files</label>
+                        <input type="file" id="inputFile" name="attachments[]" class="form-control" id="inputGroupFile01" multiple>
+                    </div>
+                </div>
+            </div>
+
+
         <div class="row mb-4">
             <div class="col-12 text-left">
                 <h3>Attached files</h3>

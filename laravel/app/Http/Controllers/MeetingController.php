@@ -74,9 +74,13 @@ class MeetingController extends Controller
 
         $upcoming = Meeting::withoutGlobalScopes()
             ->where('live', 1)
-            ->where('date', '>=', date('Y-m-d'))
+            ->where('date', '>=', now())
             ->orderBy('date', 'asc')
             ->get();
+
+        $meeting = Meeting::where([['meeting_type', '=', 'General'], ['live', '=',  1], ['date', '>', now()]])
+            ->orderBy('date', 'asc')
+            ->first();
 
         $data = [
             'meetings' => $meetings,

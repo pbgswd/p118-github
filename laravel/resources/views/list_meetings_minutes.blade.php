@@ -36,7 +36,7 @@
                                     @if((Carbon\Carbon::today()->diffInDays($upcoming->date)) > 10)
                                         {{(Carbon\Carbon::today()->diffInDays($upcoming->date))-10}}
                                     {{Str::plural('day', Carbon\Carbon::today()->diffInDays($upcoming->date)-10)}}
-                                        remaining for new motions.
+                                        remaining for submissions.
                                     @else
                                         <span class="badge bg-warning text-dark">Motions closed</span>
                                     @endif
@@ -76,9 +76,11 @@
                                         <h4>
                                             @if($data['upcoming']->count() > 0)
                                                 The next General Meeting will be on
-                                                {{$upcoming->date->format('F j Y')}},
-                                                {{$upcoming->date->format('g:i:s A')}},
-                                                in {{Carbon\Carbon::today()->diffInDays($upcoming->date)}} days.
+                                                {{$data['upcoming'][0]->date->format('F j Y')}},
+                                                {{$data['upcoming'][0]->date->format('g:i:s A')}},
+                                                in {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
+                                                {{Str::plural('day', Carbon\Carbon::today()
+                                                    ->diffInDays($data['upcoming'][0]->date))}}.
                                             @else
                                                 Your submission will be attached to the next scheduled meeting.
                                             @endif
@@ -316,7 +318,10 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
-                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                            <button class="btn btn-outline-primary" type="submit">Submit</button>
+                                        </div>
+                                        <div class="col-12">
+                                            Submissions will be reviewed for appropriate and complete information.
                                         </div>
                                     </div>
                                 </form>

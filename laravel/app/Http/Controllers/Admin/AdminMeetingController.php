@@ -181,7 +181,6 @@ class AdminMeetingController extends Controller
         $this->authorize('update', Meeting::class);
         $data = $request->validated();
         $any_meeting->fill($data['meeting']);
-        $any_meeting->date = new \DateTime($data['meeting']['date'] .' '. $data['meeting']['time']);
         $any_meeting->save();
 
         if($any_meeting->meeting_type != 'General') {
