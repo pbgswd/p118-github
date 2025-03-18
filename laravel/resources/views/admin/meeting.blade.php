@@ -187,7 +187,10 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', [$data['meeting']->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
+                                        <a href="{{route('attachment_download', [$data['meeting']->getAttachmentFolder(), $ma->id])}}"
+                                           title="Download {{$ma->file_name}}">
+                                            {{$ma->file_name}}
+                                        </a>
                                     </td>
                                     <td>
                                         <div class="form-group">
@@ -198,10 +201,15 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a title="Edit page for {{ $ma->file_name }}" href="{{ route('admin_attachment_edit', $ma->id) }}"><i class="far fa-edit"></i></a>
+                                        <a title="Edit page for {{ $ma->file_name }}"
+                                           href="{{ route('admin_attachment_edit', $ma->id) }}">
+                                            <i class="far fa-edit"></i>
+                                        </a>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$ma->id}}][description]" value="{{ old('attachments.description', $ma->description)}}" size="40"/>
+                                        <input type="text" class="form-control"  placeholder="Add a description for this file"
+                                               name="attachment[{{$ma->id}}][description]"
+                                               value="{{ old('attachments.description', $ma->description)}}" size="40"/>
                                     </td>
                                     <td>
                                         {{$ma->created_at}}
@@ -230,30 +238,27 @@
                     <div class="col-sm-12 col-md-6 mb-sm-5 mb-md-0">
                         <h4>Motions & New Business</h4>
                         <ul class="list-group">
-                            @if( $data['meeting']->motions->count() > 0 )
-                                @foreach($data['meeting']->motions as $motion)
+                                @forelse($data['meeting']->motions as $motion)
                                     <li class="list-group-item">
                                         <span class="badge bg-primary text-sm">
-                                        {{$motion->submission_type}}
+                                            {{$motion->submission_type}}
                                         </span>
                                         {{$motion->user->name}}:
                                         <a href="{{route('admin_motion_edit', $motion->id)}}">
                                             {{$motion->title}}
                                         </a>
-                                        <span class="float-end">
-                                        @if($motion->updated_at > $motion->created_at)
-                                            Last Updated at {{$motion->updated_at->format('F d, Y, g:i:s A')}}
-                                        @else
-                                            Submitted: {{$motion->created_at->format('F d, Y, g:i:s A')}}
-                                        @endif
+                                        <span class="p mt-3 float-end">
+                                            Created {{$motion->created_at->format('F d, Y, g:i:s A')}}.
+                                            @if($motion->updated_at > $motion->created_at)
+                                               & Last Updated {{$motion->updated_at->format('F d, Y, g:i:s A')}}.
+                                            @endif
                                         </span>
                                     </li>
-                                @endforeach
-                            @else
-                                <li class="list-group-item">
-                                    No motions assigned
-                                </li>
-                            @endif
+                                @empty
+                                    <li class="list-group-item">
+                                        No motions assigned
+                                    </li>
+                                @endforelse
                         </ul>
                     </div>
                 </div>

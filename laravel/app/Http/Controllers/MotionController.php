@@ -67,7 +67,7 @@ class MotionController extends Controller
                 if ($result) {
                     Session::flash('success', 'You uploaded '.
                         count([$request->file('attachments')]) .' ' .
-                        Str::plural('files', count([$request->file('attachments')])));
+                        Str::plural('file', count([$request->file('attachments')])));
                 } else {
                     Session::flash('error', 'You have an upload problem');
                 }
@@ -100,7 +100,13 @@ class MotionController extends Controller
     public function show(Motion $motion): View
     {
         $motion->load('user', 'meeting', 'attachments');
-        return view('motion', ['data' => ['motion' => $motion]]);
+
+        $data = [
+            'motion' => $motion,
+            'title' => $motion->submission_type . ' ' . $motion->title,
+        ];
+
+        return view('motion', ['data' => $data]);
     }
 
 
@@ -126,6 +132,7 @@ class MotionController extends Controller
             'action' => 'Edit',
             'motion' => $motion,
             'upcoming' => $upcoming,
+            'title' => 'Edit ' . $motion->submission_type . ' ' . $motion->title,
         ];
 
         return view('motion-edit', ['data' => $data]);
@@ -143,6 +150,10 @@ class MotionController extends Controller
         $motion->save();
 
 //todo file attachments - handle description, delete
+        //todo default access level
+
+
+        $result = $this->attachmentService->updateAttachment($request, $motion);
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $motion);
@@ -154,6 +165,9 @@ class MotionController extends Controller
                 Session::flash('error', 'You have an upload problem');
             }
         }
+
+
+
 
         //todo send email to execs and user and mals to say motion has been submitted
 

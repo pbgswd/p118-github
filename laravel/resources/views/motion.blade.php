@@ -10,49 +10,56 @@
                 Meetings
             </a>
             </div>
-            <div class="col-sm-12 col-md-6 text-end">
+            <div class="col-sm-12 col-md-6 pt-2 text-end">
                 <h4>
                     @if($data['motion']->user_id == Auth::user()->id)
-                        <div class="badge bg-primary-outline">
-                            <a href="{{route('motion_edit', $data['motion']->id)}}">Edit</a>
-                        </div>
+                        <a class="btn btn-outline-primary"
+                           title="Edit {{$data['motion']->submission_type}} {{$data['motion']->title}}"
+                           href="{{route('motion_edit', $data['motion']->id)}}">Edit Motion</a>
                     @endif
                     @can(['edit articles'])
-                        <div class="badge bg-primary-outline">
-                            <a href="{{route('admin_motion_edit', $data['motion']->id)}}">Admin Edit</a>
-                        </div>
+                        <a class="btn btn-outline-primary"
+                           title="Admin Edit {{$data['motion']->submission_type}} {{$data['motion']->title}}"
+                           href="{{route('admin_motion_edit', $data['motion']->id)}}">Admin Edit</a>
                     @endcan
                 </h4>
             </div>
         </div>
         <div class="row">
             <div class="col-12 mt-3 mx-auto text-center">
+                <div class="badge bg-primary text-sm text-center mb-4">
+                    {{$data['motion']->meeting->meeting_type}}
+                    Meeting
+                </div>
                 <h1 class="text-center">
                    Proposed   {{$data['motion']->submission_type}}
                 </h1>
                 <h2>
-                    Submitted by
-                    <a href="{{route('member', $data['motion']->user->id)}}" title="{{$data['motion']->user->name}}">
-                        {{$data['motion']->user->name}}</a>,
-                    {{$data['motion']->created_at->format('F j, Y')}}
+                     @if(!is_null($data['motion']->meeting_id))
+                        <a href="{{route('meeting', $data['motion']->meeting->id)}}">
+                            {{$data['motion']->meeting->title}}
+                            {{$data['motion']->meeting->date->format('F j, Y, h:i:s A')}}
+                        </a>
+                    @else
+                        For the next General Meeting to be scheduled.
+                    @endif
                 </h2>
+                <h3>
+                    Submitted by
+                    {{$data['motion']->user->name}}
+                </h3>
+                <h4>
+                    Created {{$data['motion']->created_at->format('F j, Y')}}.
+                    @if($data['motion']->updated_at > $data['motion']->created_at)
+                        Last Update: {{$data['motion']->updated_at->format('F j, Y')}}.
+                    @endif
+                </h4>
             </div>
         </div>
         <div class="row">
             <div class="col-12 text-center">
                 <h3>
-                    @if(!is_null($data['motion']->meeting_id))
-                        <div class="badge bg-primary text-sm">
-                            {{$data['motion']->meeting->meeting_type}}
-                            Meeting
-                        </div>
-                        <a href="{{route('meeting', $data['motion']->meeting->id)}}">
-                            {{$data['motion']->meeting->title}}
-                            {{$data['motion']->meeting->created_at->format('F j, Y')}}
-                        </a>
-                    @else
-                        For the next General meeting to be scheduled
-                    @endif
+
                 </h3>
             </div>
             <div class="col-12 mt-3">

@@ -45,7 +45,7 @@ class MeetingController extends Controller
             'years' => $years,
             'year' => '',
             'pagination' => $pagination,
-            'title' => 'Meetings',
+            'title' => 'Meetings, Minutes, Documents, Motions, New Business',
             'upcoming' => $upcoming,
             'newmotions' => $newmotions,
             'action' => 'Create',

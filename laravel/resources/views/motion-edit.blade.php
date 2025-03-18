@@ -9,12 +9,19 @@
                 Meetings
             </a>
             </div>
-            <div class="col-sm-12 col-md-6 text-end">
+            <div class="col-sm-12 col-md-6 pt-2 text-end">
                 <h4>
+                    <a class="btn btn-outline-primary"
+                       title="Return to View for {{$data['motion']->submission_type}} {{$data['motion']->title}}"
+                       href="{{route('motion', $data['motion']->id)}}">
+                        Return to Motion
+                    </a>
                     @can(['edit articles'])
-                        <div class="badge bg-primary-outline">
-                            <a href="{{route('admin_motion_edit', $data['motion']->id)}}">Admin Edit</a>
-                        </div>
+                        <a class="btn btn-outline-primary"
+                           title="Admin Edit {{$data['motion']->submission_type}} {{$data['motion']->title}}"
+                           href="{{route('admin_motion_edit', $data['motion']->id)}}">
+                            Admin Edit
+                        </a>
                     @endcan
                 </h4>
             </div>
@@ -53,7 +60,6 @@
         <form method="post" name="Motion" action="{{ url()->current() }}" enctype="multipart/form-data"
               class="needs-validation" novalidate>
             {!! csrf_field() !!}
-
         <div class="row my-3">
             <div class="col-12">
                 <div class="input-group mb-3">
@@ -106,7 +112,6 @@
                         <h4 class="card-title">
                             <strong>Submit in time</strong>
                         </h4>
-
                         @if($data['upcoming']->count() > 0)
                             @if(Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10 > 0)
                                 <p class="card-text h4">
@@ -178,78 +183,117 @@
             </div>
         </div>
         <div class="row my-4">
+            <div class="col-12">
+                <h4>Description</h4>
+            </div>
             <div class="form-group">
-                    <div class="col-sm-12 col-md-12 mb-4">
-                        <div class="col-12 text-center input-group editor-container editor-container_classic-editor" id="editor-container">
-                            <span class="input-group-text">Description</span>
-                            <div class="editor-container__editor">
-                                <textarea name="motion[description]" id="textarea" placeholder="Content" class="form-control text-black">
-                                </textarea>
-                            </div>
-                        </div>
-                    <script type="importmap">
-                        {
-                            "imports": {
-                                "ckeditor5": "/js/ckeditor5/ckeditor5.js",
-                                "ckeditor5/": "/js/ckeditor5/"
-                            }
-                        }
-                    </script>
-                    <script>
-                        var textarea = @json($data['motion']->description ?? '');
-                        var textarea1 = @json("asdfasdfasdf" ?? '');
-                        var textarea2 = @json("asdfasdfasdf22222222222" ?? '');
-                    </script>
-                    <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
-                </div>
-            </div>
-        </div>
-
-            <div class="row my-3">
-                <div class="col-12">
-                    <div class="form-group float-start mb-3">
-                        <label for="exampleInputFile">
-                            <h4>
-                                <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                                Add File(s) To your motion or new business.
-                            </h4>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupFile01">Attach files</label>
-                        <input type="file" id="inputFile" name="attachments[]" class="form-control" id="inputGroupFile01" multiple>
+                <div class="col-12 mb-4">
+                <div class=" col editor-container editor-container_classic-editor" id="editor-container">
+                    <div class="editor-container__editor">
+                        <textarea name="motion[description]" id="textarea" placeholder="Content" class="form-control text-black">
+                        </textarea>
                     </div>
                 </div>
             </div>
+            <script type="importmap">
+                {
+                    "imports": {
+                        "ckeditor5": "/js/ckeditor5/ckeditor5.js",
+                        "ckeditor5/": "/js/ckeditor5/"
+                    }
+                }
+            </script>
+            <script>
+                var textarea = @json($data['motion']->description ?? '');
+                var textarea1 = @json('');
+            </script>
+            <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
+        </div>
 
-
-        <div class="row mb-4">
-            <div class="col-12 text-left">
-                <h3>Attached files</h3>
+        <div class="row my-3">
+            <div class="col-12">
+                <div class="form-group float-start mb-3">
+                    <label for="exampleInputFile">
+                        <h4>
+                            <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                            Add File(s).
+                        </h4>
+                    </label>
+                </div>
             </div>
-            <div class="col-12 mb-6">
-                <ul class="list-group mb-6">
-                    @forelse($data['motion']->attachments as $ma)
-                        <li class="list-group-item h5">
-                            <a href="{{route('attachment_download', [$data['motion']->getAttachmentFolder(), $ma->id])}}"
-                               title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
-                            {{$ma->description}}
-                        </li>
-                    @empty
-                        <li class="list-group-item">
-                            No attached files
-                        </li>
-                    @endforelse
-                </ul>
+            <div class="col-sm-12 col-md-8">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupFile01">Attach files</label>
+                    <input type="file" id="inputFile" name="attachments[]" class="form-control" id="inputGroupFile01" multiple>
+                </div>
             </div>
         </div>
-            <div class="row mb-lg-5">
-                <div class="col-sm-12 col-md-6 mb-sm-5 mb-md-0">
-                    <i class="fas fa-edit fa-2x"></i>
-                    <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
+        <div class="row my-2">
+            <div class="col-12">
+                <h4>Files</h4>
+            </div>
+        </div>
+        @if ($data['action'] == 'Edit')
+            @if(count($data['motion']->attachments) > 0)
+                <div class="col-12">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> File </th>
+                            <th> Description </th>
+                            <th> Created At </th>
+                            <th> Updated At </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse ($data['motion']->attachments as $ma)
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="attachment[{{$ma->id}}][id]" value="{{$ma->id}}" />
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="{{route('attachment_download', [$data['motion']->getAttachmentFolder(), $ma->id])}}"
+                                       title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"  placeholder="Add a description for this file"
+                                           name="attachment[{{$ma->id}}][description]"
+                                           value="{{ old('attachments.description', $ma->description)}}" size="40"/>
+                                </td>
+                                <td>
+                                    {{$ma->created_at}}
+                                </td>
+                                <td>
+                                    {{$ma->updated_at}}
+                                </td>
+                            </tr>
+                        @empty
+                            <td colspan="7">
+                                No attached files
+                            </td>
+                        @endforelse
+                        <tr>
+                            <td colspan="7">
+                                <i class="far fa-trash-alt"></i> Select checkbox to delete a file
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
+            @endif
+        @endif
+        <div class="row mb-lg-5">
+            <div class="col-sm-12 col-md-6 mb-sm-5 mb-md-0">
+                <i class="fas fa-edit fa-2x"></i>
+                <input class="btn btn-outline-primary"
+                       title="Apply edits"
+                       type="submit" value="{{ $data['action'] }}" />
+            </div>
         </form>
         @if ($data['action'] == 'Edit')
             <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0 text-md-end">
@@ -258,12 +302,13 @@
                     {!! method_field('DELETE') !!}
                     <i class="far fa-trash-alt fa-2x"></i>
                     <input type="hidden" name="id[]" value="{{ $data['motion']->id }}">
-                    <input class="btn btn-outline-danger" type="submit" value="Delete Motion">
+                    <input class="btn btn-outline-danger"
+                       title="Delete {{$data['motion']->submission_type}} Permanently"
+                       type="submit" value="Delete {{$data['motion']->submission_type}}">
                 </form>
             </div>
         @endif
     </div>
-
 @endsection
 
 

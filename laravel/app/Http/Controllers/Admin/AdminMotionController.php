@@ -149,6 +149,8 @@ class AdminMotionController extends Controller
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
+
+
         }
         $motion->load('attachments');
         //todo mail updates?

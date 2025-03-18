@@ -25,15 +25,17 @@
             </h3>
         </div>
         <div class="col-sm-12 col-md-6">
-            <h3>
+            <h4>
                 @if(null !== $data['motion']['meeting_id'])
-                    This {{$data['motion']->submission_type}} is attached to {{$data['motion']['meeting']['title']}},
-                    {{$data['motion']['meeting']['date']->format('F j Y, h:i:s A')}}
+                    This {{$data['motion']->submission_type}} is attached to
+                    <a href="{{route('meeting_edit', $data['motion']['meeting']->id)}}" title="View meeting">
+                        {{$data['motion']['meeting']['title']}},
+                        {{$data['motion']['meeting']['date']->format('F j Y, h:i:s A')}}
+                    </a>
                 @endif
-            </h3>
+            </h4>
         </div>
     </div>
-
     <form method="post" name="Motion" action="{{ url()->current() }}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
         {!! csrf_field() !!}
@@ -179,7 +181,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-12 mt-3">
-                    <h4>Content</h4>
+                    <h4>Description</h4>
                 </div>
                 <div class="col-12">
                     <div class="col-12 mb-4">
@@ -243,13 +245,15 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{route('attachment_download', [$data['motion']->getAttachmentFolder(), $ma->id])}}" title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
+                                        <a href="{{route('attachment_download', [$data['motion']->getAttachmentFolder(), $ma->id])}}"
+                                           title="Download {{$ma->file_name}}">{{$ma->file_name}}</a>
                                     </td>
                                     <td>
                                         <a title="Edit page for {{ $ma->file_name }}" href="{{ route('admin_attachment_edit', $ma->id) }}"><i class="far fa-edit"></i></a>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control"  placeholder="Add a description for this file" name="attachment[{{$ma->id}}][description]" value="{{ old('attachments.description', $ma->description)}}" size="40"/>
+                                        <input type="text" class="form-control"  placeholder="Add a description for this file"
+                                               name="attachment[{{$ma->id}}][description]" value="{{ old('attachments.description', $ma->description)}}" size="40"/>
                                     </td>
                                     <td>
                                         {{$ma->created_at}}
@@ -273,23 +277,23 @@
                 </div>
             @endif
         @endif
-        <div class="row mb-lg-5">
-            <div class="col-sm-12 col-md-6 mb-sm-5 mb-md-0">
+        <div class="row mb-5">
+            <div class="col-sm-12 col-md-6 mt-5">
                 <i class="fas fa-edit fa-2x"></i>
                 <input class="btn btn-outline-primary" type="submit" value="{{ $data['action'] }}" />
             </div>
     </form>
-    @if ($data['action'] == 'Edit')
-         <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0 text-md-end">
-             <form name="delete" method="POST" action="{{route('admin_motion_destroy')}}">
-                 {!! csrf_field() !!}
-                 {!! method_field('DELETE') !!}
-                <i class="far fa-trash-alt fa-2x"></i>
-                <input type="hidden" name="id[]" value="{{ $data['motion']->id }}">
-                <input class="btn btn-outline-danger" type="submit" value="Delete Motion">
-            </form>
-         </div>
-    @endif
-    </div>
+            @if ($data['action'] == 'Edit')
+                 <div class="col-sm-12 col-md-6 mt-5 text-md-end">
+                     <form name="delete" method="POST" action="{{route('admin_motion_destroy')}}">
+                         {!! csrf_field() !!}
+                         {!! method_field('DELETE') !!}
+                        <i class="far fa-trash-alt fa-2x"></i>
+                        <input type="hidden" name="id[]" value="{{ $data['motion']->id }}">
+                        <input class="btn btn-outline-danger" type="submit" value="Delete Motion">
+                    </form>
+                 </div>
+            @endif
+        </div>
 </div>
 @endsection

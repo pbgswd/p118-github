@@ -180,6 +180,8 @@ class AdminMeetingController extends Controller
     {
         $this->authorize('update', Meeting::class);
         $data = $request->validated();
+
+        $data['meeting']['date'] = new \DateTime($data['meeting']['date'].' '.$data['meeting']['time']);
         $any_meeting->fill($data['meeting']);
         $any_meeting->save();
 
