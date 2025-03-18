@@ -57,6 +57,14 @@
                 </h3>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <h6 class="my-4 text-center">Please note the submission deadlines and any updates for Motions are 10 days prior to the
+                    schedule meeting, and New Business will be accepted until 48 hours before
+                    the meeting.
+                </h6>
+            </div>
+        </div>
         <form method="post" name="Motion" action="{{ url()->current() }}" enctype="multipart/form-data"
               class="needs-validation" novalidate>
             {!! csrf_field() !!}
@@ -228,13 +236,14 @@
                 </div>
             </div>
         </div>
-        <div class="row my-2">
-            <div class="col-12">
-                <h4>Files</h4>
-            </div>
-        </div>
+
         @if ($data['action'] == 'Edit')
             @if(count($data['motion']->attachments) > 0)
+                <div class="row my-2">
+                    <div class="col-12">
+                        <h4>Files</h4>
+                    </div>
+                </div>
                 <div class="col-12">
                     <table class="table table-striped table-sm">
                         <thead>
