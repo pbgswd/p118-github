@@ -1,7 +1,7 @@
 @extends('layouts.dashboard',  ['title_icon' => '<i class="fas fa-tachometer-alt"></i></i>', 'title' => 'Admin Dashboard'])
 @section('content')
 <div class="container">
-    <div class="row border border-dark rounded p-3 mb-4 bg-body-secondary">
+    <div class="row border border-dark rounded p-3 m-4 bg-body-secondary">
         <h4><i class="fas fa-search"></i> Admin Search</h4>
         <form name="adminsearch" method="post" action="/admin/search">
             @csrf
@@ -41,8 +41,10 @@
         </p>
     </div>
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
-        <h4 class="text-center">Site content information</h4>
-        <div class="col-sm-12 col-md-4 mb-3 h-100">
+        <div class="col-12 mb-4">
+            <h3 class="text-center">Site content information</h3>
+        </div>
+        <div class="col-sm-12 col-md-3 mb-3 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Users Info</h5>
                 <div class="card-body">
@@ -53,7 +55,8 @@
                         <li>{{$data['counts']['executives']}} Executives</li>
                         <li>{{$data['counts']['is_banned']}} Are banned Users</li>
                         <li><a href="{{route('admin_users_list_banned')}}">List banned Users</a></li>
-                        <li><a href="{{ route('committees_list') }}">
+                        <li>
+                            <a href="{{ route('committees_list') }}">
                                 {!! $data['counts']['committees'] !!} Committees
                             </a>
                         </li>
@@ -66,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 mb-3 h-100">
+        <div class="col-sm-12 col-md-3 mb-3 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Content Info</h5>
                 <div class="card-body">
@@ -89,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4  mb-3 h-100">
+        <div class="col-sm-12 col-md-3 mb-3 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Additional Resources</h5>
                     <ul class="card-body">
@@ -99,21 +102,16 @@
                     </ul>
             </div>
         </div>
-    </div>
-    <div class="row border border-dark rounded p-3 pb-5 mt-4">
-        <div class="col-12">
-            <h3>New stuff, work in progress, not safe to use yet</h3>
-        </div>
         @if(env('ENABLE_MESSAGING_FEATURE')==1)
-            <div class="col-sm-12 col-md-4 mb-3 ">
-                <div class="card p-3 h-100">
-                    <h5 class="card-title">Email Messaging</h5>
+            <div class="col-sm-12 col-md-3 mb-3">
+                <div class="card h-100 pt-3">
+                    <h5 class="card-title text-center">Email Messaging</h5>
                     <div class="card-body">
-                     Mailer for general communication, work in progress.
+                        Info on Mailer.
                         <div class="mt-3">
                             <ul class="list-group">
                                 <li class="list-group-item"><a href="{{route('admin_messages')}}">List Messages
-                                    ( {{$data['messages_count']}} {{Str::plural('message', $data['messages_count'])}} )</a></li>
+                                        ( {{$data['messages_count']}} {{Str::plural('message', $data['messages_count'])}} )</a></li>
                                 <li class="list-group-item"><a href="{{route('admin_message_create')}}">Create Message</a></li>
                                 <li class="list-group-item"><a href="{{route('admin_email_queue_list')}}">View Mail Queue</a></li>
                                 <li class="list-group-item">{{$data['counts']['total_messages']}} Total messages</li>
@@ -129,6 +127,15 @@
                 </div>
             </div>
         @endif
+
+
+
+    </div>
+    <div class="row border border-dark rounded p-3 pb-5 mt-4">
+        <div class="col-12">
+            <h3>New stuff, work in progress, not safe to use yet</h3>
+        </div>
+
         <div class="col-sm-12 col-md-4 mb-3 mt-sm-2 mt-md-0 h-100">
             <div class="card p-3">
                 <h5 class="card-title">Media insert, work in progress</h5>
