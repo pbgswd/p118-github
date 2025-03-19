@@ -42,14 +42,14 @@ class MotionController extends Controller
         $allowed = false;
         $date = Carbon::now();
 
-        if(null !== $meeting) {
+        if(null == $meeting) {
           // no upcoming meeting
             $allowed = true;
         }
         else {
             // an upcoming meeting
             if($motion->submission_type == 'Motion') {
-                $allowed =  $date->diffInDays($meeting->date)-10 > $date ? true : false;
+                $allowed =  $date->diffInDays($meeting->date) - 10 > $date ?? false;
             }
             if($motion->submission_type == 'New Business') {
                 $allowed =  $date->diffInHours($meeting->date)-10 > $date ? true : false;

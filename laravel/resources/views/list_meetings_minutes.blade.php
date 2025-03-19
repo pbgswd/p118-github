@@ -21,8 +21,8 @@
                 <div class="row d-flex justify-content-around mb-2 mb-md-3">
                     <div class="col-12 text-center">
                         <h3>
-                            {{$data['upcoming']->count()}}
-                            Upcoming {{Str::plural('Meeting', $data['upcoming']->count())}}
+                            {{$data['upcoming']->count() == 0 ? 'No' : $data['upcoming']->count()}}
+                             General {{Str::plural('Meeting', $data['upcoming']->count())}} Scheduled
                         </h3>
                     </div>
                     <div class="col-12 d-flex">
@@ -83,9 +83,9 @@
                     <div class="col-12 mb-2 d-flex mx-auto text-center align-content-center">
                         <button class="btn btn-outline-primary mx-auto" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
-                           <h2>Propose a New Motion or New Business for the next General Meeting
+                           <h3>NEW: Propose a New Motion or New Business for the next General Meeting
                                <i class="bi bi-chevron-double-down"></i>
-                           </h2>
+                           </h3>
                         </button>
                     </div>
                     <div class="col-12">
@@ -364,7 +364,7 @@
                     </div><!-- end create a template for this chunk of code -->
                     @if($data['newmotions']->count() > 0)
                         <div class="row d-flex mx-auto">
-                            <div class="col border border-dark rounded pb-2 m-2 mb-3 mb-md-3">
+                            <div class="col border border-dark rounded pb-2 mb-3 mb-md-3">
                                 <div class="col-12 m-3 text-center">
                                     <h4>Submissions for next General Meeting</h4>
                                 </div>
@@ -401,7 +401,7 @@
             <div class="row d-flex justify-content-around mb-2 mb-md-3">
                 <form method="post" action="{{route('post_year')}}">
                     @csrf
-                    <div class="row justify-content-around border border-dark rounded pb-2 m-2 mb-3 mb-md-3">
+                    <div class="row justify-content-around border border-dark rounded pb-2 mb-3 mb-md-3">
                         <div class="row">
                             <div class="col-12 pt-2">
                                 <h5>
@@ -447,7 +447,7 @@
                     @endif
                 </h4>
             </div>
-                <div class="col-12 mx-2">
+                <div class="col-12 p-0">
                     <div class="table-responsive border border-dark rounded bg-light">
                     <table class="table">
                         <thead>
