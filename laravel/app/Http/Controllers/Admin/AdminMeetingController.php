@@ -178,7 +178,7 @@ class AdminMeetingController extends Controller
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
-        $this->authorize('update', Meeting::class);
+        $this->authorize('update', Meeting::class, );
         $data = $request->validated();
 
         $data['meeting']['date'] = new \DateTime($data['meeting']['date'].' '.$data['meeting']['time']);
@@ -204,7 +204,7 @@ class AdminMeetingController extends Controller
         Session::flash('success', 'You have edited the meeting information');
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . ' updated a new meeting, ' . $any_meeting->title,
+            'activity' => Auth::user()->name . ' updated a meeting, ' . $any_meeting->title,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);

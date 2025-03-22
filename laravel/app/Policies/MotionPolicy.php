@@ -4,17 +4,23 @@ namespace App\Policies;
 
 use App\Models\Motion;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MotionPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['super-admin', 'writer']) ||
-            $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
+        return true;
+     //   return $user->hasRole(['super-admin', 'writer']) ||
+         //   $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
     }
 
     /**
@@ -22,7 +28,7 @@ class MotionPolicy
      */
     public function view(User $user, Motion $motion): bool
     {
-        //todo auth logged in
+        //todo auth logged in for admin
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
 
@@ -32,14 +38,19 @@ class MotionPolicy
     public function create(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
+        // or Auth::user()
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user): bool
+    public function update(User $user, Motion $motion): Response
     {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['update articles']);
+        return $user->id === $motion->user_id
+            || $user->hasRole(['super-admin', 'writer'])
+            || $user->hasPermission(['create articles'])
+            ? Response::allow()
+            : Response::deny('You do not own this content, you may not edit it.');
     }
 
     /**
@@ -48,6 +59,7 @@ class MotionPolicy
     public function delete(User $user): bool
     {
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
+        // or $motion->user->id == Auth::user()->id
     }
 
     /**

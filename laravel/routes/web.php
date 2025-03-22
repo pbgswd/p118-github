@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers as CNS;
+use App\Http\Controllers\MotionController;
 use App\Http\Middleware\CheckMessagingFeatureStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -149,6 +150,11 @@ Route::middleware('web', 'auth')->group(function () {
         Route::get('minutes/{meeting}', 'show')->name('meeting');
     });
 */
+
+    Route::middleware('check.motion.policy')->group(function () {
+        Route::put('/motions/{motion}', [CNS\MotionController::class, 'update']);
+    });
+
     Route::controller(CNS\MeetingController::class)->group(function () {
         Route::post('meetings', 'post_year')->name('post_year');
         Route::get('meetings/year/{year}', 'index_by_year')->name('list_meetings_year');
@@ -159,7 +165,7 @@ Route::middleware('web', 'auth')->group(function () {
     Route::controller(CNS\MotionController::class)->group(function () {
     //    Route::get('motions', 'index')->name('motions');
         Route::get('motion/create', 'create')->name('motion_create');
-        Route::post('motion/create', 'store');
+        Route::post('motion/create/{meeting?}', 'store');
 
         Route::get('motion/{motion}', 'show')->name('motion');
         Route::get('motion/{motion}/edit', 'edit')->name('motion_edit');

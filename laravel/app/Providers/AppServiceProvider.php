@@ -13,6 +13,7 @@ use App\Models\Faq;
 use App\Models\Feature;
 use App\Models\Meeting;
 use App\Models\Memoriam;
+use App\Models\Motion;
 use App\Models\Organization;
 use App\Models\Page;
 use App\Models\Policy;
@@ -21,9 +22,11 @@ use App\Models\Qrcode;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
+use App\Policies\MotionPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
@@ -75,7 +78,6 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('admin.admin_topics_menu', 'App\Composers\ViewComposers@adminTopicsMenu');
          */
 
-
         RateLimiter::for('post', function (Request $request) {
             return [
                 Limit::perMinute(10)->by(optional($request->email) ?: $request->ip()),
@@ -96,8 +98,6 @@ class AppServiceProvider extends ServiceProvider
                 Limit::perMinute(20),
             ];
         });
-
-       // parent::boot();
 
         Route::bind('any_agreement', static function ($id) {
             return Agreement::withoutGlobalScopes()->findOrFail($id);
@@ -156,6 +156,8 @@ class AppServiceProvider extends ServiceProvider
         Route::bind('any_qrcode', static function ($id) {
             return Qrcode::withoutGlobalScopes()->findOrFail($id);
         });
+
+       Gate::policy(Motion::class, MotionPolicy::class);
 
         if (! app()->environment('production')) {
             Mail::alwaysTo('superwebdeveloper@gmail.com');

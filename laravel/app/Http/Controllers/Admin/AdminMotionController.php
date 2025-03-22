@@ -12,7 +12,9 @@ use App\Models\Motion;
 use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -108,8 +110,8 @@ class AdminMotionController extends Controller
     public function edit(Motion $motion): View
     {
         //todo policy
-
-        $this->authorize('update', Motion::class);
+        $response = $this->authorize('update', [Auth::user(), $motion]);
+      //  $this->authorize('update', Motion::class);
 
         $motion->load('user', 'meeting', 'attachments');
 
@@ -135,7 +137,14 @@ class AdminMotionController extends Controller
      */
     public function update(UpdateMotionRequest $request, Motion $motion): RedirectResponse
     {
-        //todo policy
+
+        //todo policy Admin  allowed
+       // $response = $this->authorize('update', $motion);
+
+        $response = Gate::inspect('update', $motion);
+        if ($response->denied()) {
+            return back()->with('error', $response->message());
+        }
 
         $motion->fill($request->validated()['motion']);
         $motion->save();
@@ -149,10 +158,8 @@ class AdminMotionController extends Controller
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
-
-
         }
-        $motion->load('attachments');
+        $motion->load('attachments', 'user');
         //todo mail updates?
 
         //todo send email to execs and user and mals to say motion has been submitted
@@ -171,10 +178,11 @@ class AdminMotionController extends Controller
 
         //todo motion template
         //todo email_message.blade
+        //todo send to exec, author
 
         Mail::send('emails.contact', ['data' => $motion],
             function ($m) use ($motion, $cc) {
-                $m->from(config('mail.from.address'), config('app.name'). 'Motion Submission from '. Auth::user()->name);
+                $m->from(config('mail.from.address'), config('app.name'). ' ' .  $motion->submission_type . ' updated by'. Auth::user()->name);
                 $m->to(config('mail.executive.address'), config('mail.executive.name'));
                 $m->cc($cc, $cc);
                 $m->replyTo(Auth::user()->email ,Auth::user()->name);
@@ -182,9 +190,7 @@ class AdminMotionController extends Controller
                 $m->subject(" Motions & New Business Submission from " . Auth::user()->name . ": " . $motion->title);
                 if ($motion->attachments->count() > 0) {
                     foreach ($motion->attachments as $att) {
-                  //      dd($att);
                         $file = 'storage/motions/' . $att->file;
-                        //dd($file);
                         $mime = mime_content_type(getcwd() . "/" . $file);
                         $file_name = $att->file_name;
                         $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
@@ -194,10 +200,16 @@ class AdminMotionController extends Controller
             });
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . ' sent a Motion or New Business, ' . $motion->title,
+            'activity' => "Admin Edit to ".
+                $motion->submission_type . ": " .
+                Auth::user()->name . ' updated a ' .
+                $motion->submission_type . ' ' .
+                $motion->title .', created by: '.
+                $motion->user->name,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
+
         $al->save();
 
         Session::flash('success', 'You have updated a motion or new business');

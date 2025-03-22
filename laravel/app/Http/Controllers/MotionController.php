@@ -8,13 +8,17 @@ use App\Http\Requests\Motions\UpdateMotionRequest;
 use App\Models\ActivityLog;
 use App\Models\Meeting;
 use App\Models\Motion;
+use App\Models\User;
 use App\Services\AttachmentService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use function Aws\boolean_value;
 
 class MotionController extends Controller
 {
@@ -25,50 +29,49 @@ class MotionController extends Controller
         /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMotionRequest $request): RedirectResponse
+    public function store(StoreMotionRequest $request, Meeting $meeting = null): RedirectResponse
     {
         //todo policy
 
         $motion = new Motion($request->validated()['motion']);
         $motion->user_id = auth()->id();
 
-        //todo enforce input, meeting must be 10 days away to allow for attachment to meeting
-        //todo
-
-        $meeting = Meeting::where([['meeting_type', '=', 'General'], ['live', '=',  1], ['date', '>', now()]])
-            ->orderBy('date', 'asc')
-            ->first();
+        if (null !== $meeting) {
+            $motion->meeting_id = $meeting->id;
+        } else {
+            $meeting = Meeting::where([['meeting_type', '=', 'General'], ['live', '=',  1], ['date', '>', now()]])
+                ->orderBy('date', 'asc')
+                ->first() ?? null;
+            $motion->meeting_id = $meeting->id ?? null;
+        }
 
         $allowed = false;
         $date = Carbon::now();
 
         if(null == $meeting) {
-          // no upcoming meeting
             $allowed = true;
         }
         else {
             // an upcoming meeting
             if($motion->submission_type == 'Motion') {
-                $allowed =  $date->diffInDays($meeting->date) - 10 > $date ?? false;
+                $allowed =  $date->diffInDays($meeting->date) - 10 > 10 ? 10 : false;
             }
             if($motion->submission_type == 'New Business') {
-                $allowed =  $date->diffInHours($meeting->date)-10 > $date ? true : false;
+                $allowed =  $date->diffInHours($meeting->date)-48 > 48 ? true : false;
             }
         }
 
         if($allowed) {
-
-            $motion->meeting_id = $meeting->id ?? null;
-
             $motion->save();
 
             if (null !== ($request->file('attachments'))) {
                 $result = $this->attachmentService->createAttachment($request, $motion);
                 if ($result) {
                     Session::flash('success', 'You uploaded '.
-                        count([$request->file('attachments')]) .' ' .
+                        count([$request->file('attachments')]) . ' ' .
                         Str::plural('file', count([$request->file('attachments')])));
-                } else {
+                }
+                else {
                     Session::flash('error', 'You have an upload problem');
                 }
             }
@@ -113,13 +116,15 @@ class MotionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Motion $motion): View
+    public function edit(Motion $motion)
     {
-        //todo policy
+        $response = Gate::inspect('update', $motion);
+
+        if ($response->denied()) {
+            Session::flash('error', 'You dont own this ' . $motion->submission_type . ' so you may not edit it.');
+        }
 
         $motion->load('user', 'meeting', 'attachments');
-
-//todo dont allow editing after date limits based on date/New Motion/New Business
 
         $upcoming = Meeting::withoutGlobalScopes()
             ->where('live', 1)
@@ -143,7 +148,11 @@ class MotionController extends Controller
      */
     public function update(UpdateMotionRequest $request, Motion $motion): RedirectResponse
     {
-        //todo policy
+        $response = Gate::inspect('update', $motion);
+
+        if ($response->denied()) {
+            return back()->with('error', $response->message());
+        }
 
         $data = $request->validated();
         $motion->fill($data['motion']);

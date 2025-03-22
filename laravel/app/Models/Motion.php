@@ -4,8 +4,10 @@ namespace App\Models;
 
 use App\Constants\AccessLevelConstants;
 use App\Models\Interfaces\HasAttachment;
+use App\Policies\MotionPolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Searchable\Searchable;
@@ -20,9 +22,9 @@ class Motion extends Model implements HasAttachment, Searchable
 
     protected $guard_name = 'web';
 
-    protected $policies = [
-        self::class => Motion::class,
-    ];
+//    protected $policies = [
+//        self::class => Motion::class,
+//    ];
 
     protected $fillable = [
         'title',
@@ -38,9 +40,15 @@ class Motion extends Model implements HasAttachment, Searchable
         ];
     }
 
-    public function user(): HasOne
+    protected $policies = [
+        self::class => MotionPolicy::class,
+    ];
+
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+       // return $this->hasOne(User::class, 'id', 'user_id');
+
+        return $this->belongsTo(User::class);
     }
 
     public function meeting(): HasOne
