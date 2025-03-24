@@ -13,6 +13,12 @@ class MotionPolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability): bool
+    {
+        return $user->hasRole(['super-admin', 'writer'])
+            || $user->hasPermissionTo('create articles');
+    }
+
     /**
      * Determine whether the user can view any models.
      */
@@ -35,10 +41,9 @@ class MotionPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
-        // or Auth::user()
+        return $user ? Response::allow() : Response::deny('You must be logged in to create a motion.');
     }
 
     /**
@@ -46,20 +51,19 @@ class MotionPolicy
      */
     public function update(User $user, Motion $motion): Response
     {
-        return $user->id === $motion->user_id
-            || $user->hasRole(['super-admin', 'writer'])
-            || $user->hasPermission(['create articles'])
-            ? Response::allow()
-            : Response::deny('You do not own this content, you may not edit it.');
+        return $user->id === $motion->user_id ?
+            Response::allow() :
+            Response::deny('You do not own this content, you may not edit it.');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user): bool
+    public function delete(User $user, Motion $motion): Response
     {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
-        // or $motion->user->id == Auth::user()->id
+         return $motion->user_id === $user->id ?
+             Response::allow() :
+             Response::deny('You cannot delete this ' . $motion->submission_type );
     }
 
     /**
@@ -67,7 +71,7 @@ class MotionPolicy
      */
     public function restore(User $user): bool
     {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
+        return $user->hasPermission(['create articles']);
     }
 
     /**
@@ -75,6 +79,6 @@ class MotionPolicy
      */
     public function forceDelete(User $user): bool
     {
-        return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['delete articles']);
+        return $user->hasPermission(['delete articles']);
     }
 }
