@@ -109,6 +109,7 @@ class MotionController extends Controller
 
         $data = [
             'motion' => $motion,
+            'upcoming' => [],
             'title' => $motion->submission_type . ' ' . $motion->title,
         ];
 

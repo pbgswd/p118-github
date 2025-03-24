@@ -37,6 +37,8 @@ class MeetingController extends Controller
             ->orderBy('date', 'asc')
             ->get();
 
+
+
         $newmotions = Motion::where('meeting_id', null)->with('user')->get();
 
         $data = [
@@ -121,17 +123,20 @@ class MeetingController extends Controller
         $upcoming = Meeting::withoutGlobalScopes()
             ->where('live', 1)
             ->where('date', '>=', date('Y-m-d'))
+            ->withCount('motions')
             ->orderBy('date', 'asc')
-            ->first();
+            ->get();
 
-        return view('meeting', ['data' => [
+        $data = [
             'meeting' => $meeting,
             'year' => session('year', ''),
             'title' => $meeting->title,
             'next' => $next,
             'upcoming' => $upcoming,
             'previous' => $previous,
-            ],
-        ]);
+            'action' => 'Create',
+        ];
+
+        return view('meeting', ['data' => $data]);
     }
 }

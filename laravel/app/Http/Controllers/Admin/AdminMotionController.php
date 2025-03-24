@@ -78,7 +78,12 @@ class AdminMotionController extends Controller
      */
     public function store(StoreMotionRequest $request): RedirectResponse
     {
-        //todo policy
+
+        $response = Gate::inspect('create', Motion::class);
+
+        if ($response->denied()) {
+            return back()->with('error', $response->message());
+        }
 
         $motion = new Motion($request->validated()['motion']);
         $motion->user_id = auth()->id();
@@ -109,10 +114,11 @@ class AdminMotionController extends Controller
      */
     public function edit(Motion $motion): View
     {
-        //todo policy
-        $response = $this->authorize('update', [Auth::user(), $motion]);
-      //  $this->authorize('update', Motion::class);
+        $response = Gate::inspect('update', $motion);
 
+        if ($response->denied()) {
+            Session::flash('error', 'You may not edit this content');
+        }
         $motion->load('user', 'meeting', 'attachments');
 
         $upcoming = Meeting::withoutGlobalScopes()
@@ -137,10 +143,6 @@ class AdminMotionController extends Controller
      */
     public function update(UpdateMotionRequest $request, Motion $motion): RedirectResponse
     {
-
-        //todo policy Admin  allowed
-       // $response = $this->authorize('update', $motion);
-
         $response = Gate::inspect('update', $motion);
         if ($response->denied()) {
             return back()->with('error', $response->message());
@@ -221,13 +223,13 @@ class AdminMotionController extends Controller
      */
     public function destroy(DestroyMotionRequest $motion): RedirectResponse
     {
-        //todo policy
-
-        $this->authorize('delete', Motion::class);
-
         Motion::withoutGlobalScopes()
             ->find($motion->id)
             ->each(function (Motion $motion) {
+                $response = Gate::inspect('delete', $motion);
+                if ($response->denied()) {
+                    return back()->with('error', $response->message());
+                }
                 $this->attachmentService->destroyAttachments($motion);
                 $motion->delete();
             });

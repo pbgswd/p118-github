@@ -55,90 +55,91 @@
             </div>
         </div>
 
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <h5>
-                        <i class="far fa-folder-open"></i>
-                        Files
-                    </h5>
-                    <ul class="list-group">
-                        @forelse($data['meeting']->attachments as $att)
-                            <li class="list-group-item">
-                                <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
-                                   title="Download {{$att->file_name}}" target="_blank">
-                                    <i class="fas fa-file-download fa-1x"></i>
-                                    {{$att->description ??  $att->file_name}}
-                                </a>
-                            </li>
-                        @empty
-                            <li class="list-group-item">No files</li>
-                        @endforelse
-                    </ul>
-                </div>
-            </div>
-
-
-
-        @if(count($data['meeting']->motions) > 0 && $data['meeting']->meeting_type == 'General')
         <div class="row">
-            <div class="col-12 my-4">
-                <h3>
-                    <i class="far fa-file-alt"></i>
-                    Submitted Motions and New Business
-                </h3>
+            <div class="col-12 mb-3">
+                <h5>
+                    <i class="far fa-folder-open"></i>
+                    Files
+                </h5>
+                <ul class="list-group">
+                    @forelse($data['meeting']->attachments as $att)
+                        <li class="list-group-item">
+                            <a href="{{route('attachment_download', [$att->subfolder, $att->id])}}"
+                               title="Download {{$att->file_name}}" target="_blank">
+                                <i class="fas fa-file-download fa-1x"></i>
+                                {{$att->description ??  $att->file_name}}
+                            </a>
+                        </li>
+                    @empty
+                        <li class="list-group-item">No files</li>
+                    @endforelse
+                </ul>
             </div>
         </div>
 
-            @forelse($data['meeting']->motions as $motion)
+        @if($data['meeting']->meeting_type == 'General' && $data['meeting']->date > now())
+            @include('layouts.motion_input_fields')
+        @endif
+
+        @if(count($data['meeting']->motions) > 0 && $data['meeting']->meeting_type == 'General')
             <div class="row">
-                <div class="col-12 p-4 border-bottom border-dark rounded-bottom">
-                    <h4>
-                        <span class="badge bg-warning text-dark">{{ucfirst($motion->submission_type)}}</span>
-                            {{$motion->user->name}}
-                    </h4>
-                    <h4>
-                        <a href="{{route('motion',$motion->id)}}" title="View {{$motion->title}}">
-                           {{$motion->title}}
-                        </a>
-                    </h4>
-                    <span class="h6">
-                        Created: {{$motion->created_at->format('F j Y, h:i:s A')}}
-                        @if($motion->updated_at > $motion->created_at)
-                            Last Updated: {{$motion->updated_at->format('F j Y, h:i:s A')}}
-                        @endif
-                    </span>
-                    <span class="float-end">
-                       @if($motion->user_id == Auth::user()->id)
-                           @if($motion->submission_type == 'Motion' &&
-                               ($data['upcoming']->count() > 0 &&
-                               (Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10 > 0) ||
-                               $data['upcoming']->count() == 0))
-                                    <a class="btn btn-outline-primary" href="{{route('motion_edit', $motion->id)}}"
-                                       title="{{Auth::user()->name . "can edit"}}"
-                                       role="button">
-                                        Edit
-                                    </a>
-                           @endif
-                           @if($motion->submission_type == 'New Business' &&
-                                ($data['upcoming']->count() > 0 &&
-                                Carbon\Carbon::today()->diffInHours($data['upcoming']->date)-48 > 0 )
-                                || $data['upcoming']->count() == 0)
-                                   <a class="btn btn-outline-primary" href="{{route('motion_edit', $motion->id)}}"
-                                      title="{{Auth::user()->name . " can edit"}}"
-                                      role="button">
-                                        Edit
-                                    </a>
-                           @endif
-                       @endif
-                       @can(['create articles'])
-                           <a class="btn btn-outline-primary" href="{{route('admin_motion_edit', $motion->id)}}"
-                                  title="Admin Edit" role="button">
-                                        Admin Edit
-                           </a>
-                       @endcan
-                    </span>
+                <div class="col-12 my-4">
+                    <h3>
+                        <i class="far fa-file-alt"></i>
+                        Submitted Motions and New Business
+                    </h3>
                 </div>
             </div>
+            @forelse($data['meeting']->motions as $motion)
+                <div class="row">
+                    <div class="col-12 p-4 border-bottom border-dark rounded-bottom">
+                        <h4>
+                            <span class="badge bg-warning text-dark">{{ucfirst($motion->submission_type)}}</span>
+                                {{$motion->user->name}}
+                        </h4>
+                        <h4>
+                            <a href="{{route('motion',$motion->id)}}" title="View {{$motion->title}}">
+                               {{$motion->title}}
+                            </a>
+                        </h4>
+                        <span class="h6">
+                            Created: {{$motion->created_at->format('F j Y, h:i:s A')}}
+                            @if($motion->updated_at > $motion->created_at)
+                                Last Updated: {{$motion->updated_at->format('F j Y, h:i:s A')}}
+                            @endif
+                        </span>
+                        <span class="float-end">
+                           @if($motion->user_id == Auth::user()->id)
+                               @if($motion->submission_type == 'Motion' &&
+                                   ($data['upcoming']->count() > 0 &&
+                                   (Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10 > 0) ||
+                                   $data['upcoming']->count() == 0))
+                                        <a class="btn btn-outline-primary" href="{{route('motion_edit', $motion->id)}}"
+                                           title="{{Auth::user()->name . "can edit"}}"
+                                           role="button">
+                                            Edit
+                                        </a>
+                               @endif
+                               @if($motion->submission_type == 'New Business' &&
+                                    ($data['upcoming']->count() > 0 &&
+                                    Carbon\Carbon::today()->diffInHours($data['upcoming']->date)-48 > 0 )
+                                    || $data['upcoming']->count() == 0)
+                                       <a class="btn btn-outline-primary" href="{{route('motion_edit', $motion->id)}}"
+                                          title="{{Auth::user()->name . " can edit"}}"
+                                          role="button">
+                                            Edit
+                                        </a>
+                               @endif
+                           @endif
+                           @can(['create articles'])
+                               <a class="btn btn-outline-primary" href="{{route('admin_motion_edit', $motion->id)}}"
+                                      title="Admin Edit" role="button">
+                                            Admin Edit
+                               </a>
+                           @endcan
+                        </span>
+                    </div>
+                </div>
             @empty
                 <div class="row">
                     <div class="col-12 mb-3">
