@@ -87,12 +87,13 @@
             <div class="col-12 text-center">
                 <h4>Type of submission</h4>
             </div>
+
             <div class="col-sm-12 col-md-6 mb-2 text-center">
                 <input type="radio" class="btn-check float-end" name="motion[submission_type]"
                        value="Motion" id="option4" autocomplete="off"
-                       @if($data['upcoming']->count() > 0 &&
-                            (Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10 > 0) ||
-                            $data['upcoming']->count() == 0)
+                       @if( (null !== $data['upcoming'] &&
+                            (Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10 > 0)) ||
+                            ( null == $data['upcoming'] ))
                            required
                        @else
                            disabled
@@ -107,7 +108,7 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text">
-                            @if($data['upcoming']->count() > 0)
+                            @if( null !== $data['upcoming'])
                                 The next General Meeting will be held
                                 {{$data['upcoming']->date->format('F j Y')}},
                                 {{$data['upcoming']->date->format('g:i:s A')}}, in
@@ -120,8 +121,8 @@
                         <h4 class="card-title">
                             <strong>Submit in time</strong>
                         </h4>
-                        @if($data['upcoming']->count() > 0)
-                            @if(Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10 > 0)
+                        @if((null !== $data['upcoming'] &&
+                            Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10 > 0))
                                 <p class="card-text h4">
                                     {{Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10}}
                                     {{Str::plural('day', (Carbon\Carbon::today()->diffInDays($data['upcoming']->date)-10))}}
@@ -133,7 +134,6 @@
                                     prior to Meeting date.
                                 </p>
                             @endif
-                        @endif
                         <p class="card-text">
                             <i class="fas fa-exclamation-triangle"></i>
                             General Meeting motions must be received by the Executive Committee at
@@ -145,9 +145,9 @@
             <div class="col-sm-12 col-md-6 mb-2 text-center">
                 <input type="radio" class="btn-check float-end" name="motion[submission_type]"
                        value="New Business" id="option5" autocomplete="off"
-                       @if($data['upcoming']->count() > 0 &&
-                            Carbon\Carbon::today()->diffInHours($data['upcoming']->date)-48 > 0 ||
-                            $data['upcoming']->count() == 0)
+                       @if((null !== $data['upcoming'] &&
+                            Carbon\Carbon::today()->diffInHours($data['upcoming']->date)-48 > 0) ||
+                            null == $data['upcoming'])
                            required
                        @else
                            disabled
@@ -159,7 +159,7 @@
                     <div class="card-header"><h4>For New Business</h4></div>
                     <div class="card-body">
                         <p class="card-text">
-                            @if($data['upcoming']->count() > 0)
+                            @if(null !== $data['upcoming'])
                                 @if(Carbon\Carbon::today()->diffInHours($data['upcoming']->date->subDays(2)) > 48)
                                     New Business submissions allowed until
                                     {{$data['upcoming']->date->subDays(2)->format('F j Y')}},

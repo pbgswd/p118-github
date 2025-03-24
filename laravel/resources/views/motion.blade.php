@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-12 mt-3 mx-auto text-center">
                 <div class="badge bg-primary text-sm text-center mb-4">
-                    {{$data['motion']->meeting->meeting_type}}
+                    {{$data['motion']->meeting->meeting_type ?? 'upcoming'}}
                     Meeting
                 </div>
                 <h1 class="text-center">
@@ -57,11 +57,6 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 text-center">
-                <h3>
-
-                </h3>
-            </div>
             <div class="col-12 mt-3">
                 <h2 class="text-center">{{$data['motion']->title}}</h2>
                 <p>{!! $data['motion']->description !!}</p>

@@ -14,11 +14,10 @@ use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use function Aws\boolean_value;
+
 
 class MotionController extends Controller
 {
@@ -31,7 +30,11 @@ class MotionController extends Controller
      */
     public function store(StoreMotionRequest $request, Meeting $meeting = null): RedirectResponse
     {
-        //todo policy
+        $response = Gate::inspect('create', Motion::class);
+
+        if ($response->denied()) {
+            return back()->with('error', $response->message());
+        }
 
         $motion = new Motion($request->validated()['motion']);
         $motion->user_id = auth()->id();
@@ -52,19 +55,24 @@ class MotionController extends Controller
             $allowed = true;
         }
         else {
-            // an upcoming meeting
             if($motion->submission_type == 'Motion') {
-                $allowed =  $date->diffInDays($meeting->date) - 10 > 10 ? 10 : false;
+                $allowed =  $date->diffInDays($motion->meeting->date) - 10 < 0 ? false : true;
             }
+
             if($motion->submission_type == 'New Business') {
-                $allowed =  $date->diffInHours($meeting->date)-48 > 48 ? true : false;
+                $allowed =  $date->diffInHours($motion->meeting->date) - 48 < 0 ? false : true;
             }
         }
 
-        if($allowed) {
-            $motion->save();
+        if( false == $allowed) {
+            return back()->with('error', 'It is too late to create this ' .
+                $motion->submission_type .
+                '. You can always contact the Executive to discuss.');
+        }
 
-            if (null !== ($request->file('attachments'))) {
+        $motion->save();
+
+        if (null !== ($request->file('attachments'))) {
                 $result = $this->attachmentService->createAttachment($request, $motion);
                 if ($result) {
                     Session::flash('success', 'You uploaded '.
@@ -78,21 +86,16 @@ class MotionController extends Controller
 
             //todo send email to execs and user and mals to say motion has been submitted
 
-            Session::flash('info', 'You have submitted a ' . $motion->submission_type .
-                ' successfully. It will be reviewed by the Executive.');
+        Session::flash('info', 'You have submitted a ' . $motion->submission_type .
+            ' successfully. It will be reviewed by the Executive.');
 
-            $al = new ActivityLog([
-                'activity' => Auth::user()->name . ' created a Motion or New Business, ' . $motion->title,
-                'ip_address' => $_SERVER['REMOTE_ADDR'],
-                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-                'model' => 'Admin']);
+        $al = new ActivityLog([
+            'activity' => Auth::user()->name . ' created a Motion or New Business, ' . $motion->title,
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'Admin']);
 
-            $al->save();
-
-        }
-        else {
-            Session::flash('warning', 'Cant submit this. Contact the Executive to discuss.');
-        }
+        $al->save();
 
         return redirect()->route('list_meetings');
     }
@@ -116,12 +119,12 @@ class MotionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Motion $motion)
+    public function edit(Motion $motion): View
     {
         $response = Gate::inspect('update', $motion);
 
         if ($response->denied()) {
-            Session::flash('error', 'You dont own this ' . $motion->submission_type . ' so you may not edit it.');
+            Session::flash('error', 'You are not the author of this ' . $motion->submission_type . ' so you may not edit it.');
         }
 
         $motion->load('user', 'meeting', 'attachments');
@@ -154,13 +157,34 @@ class MotionController extends Controller
             return back()->with('error', $response->message());
         }
 
+        $motion->load('meeting');
+
+        $allowed = false;
+        $date = Carbon::now();
+
+        if(null == $motion->meeting) {
+            $allowed = true;
+        }
+        else {
+            // an upcoming meeting
+            if($motion->submission_type == 'Motion') {
+                $allowed = $date->diffInDays($motion->meeting->date) - 10 < 0 ? false : true;
+            }
+
+            if($motion->submission_type == 'New Business') {
+                $allowed = $date->diffInHours($motion->meeting->date) - 48 < 0 ? false : true;
+            }
+        }
+
+        if($allowed == false) {
+            return back()->with('error', 'It is too late to edit this '
+                . $motion->submission_type .
+                '. Contact the Executive to discuss.');
+        }
+
         $data = $request->validated();
         $motion->fill($data['motion']);
         $motion->save();
-
-//todo file attachments - handle description, delete
-        //todo default access level
-
 
         $result = $this->attachmentService->updateAttachment($request, $motion);
 
@@ -187,8 +211,8 @@ class MotionController extends Controller
             'model' => 'Admin']);
         $al->save();
 
-
         Session::flash('info', 'You have updated the ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
+
         return redirect()->route('motion_edit', $motion->id);
     }
 
@@ -197,26 +221,28 @@ class MotionController extends Controller
      */
     public function destroy(DestroyMotionRequest $motion): RedirectResponse
     {
-        //todo update policy
+        $id = $motion->id[0];
 
-        $this->authorize('delete', Motion::class);
+        $motion = Motion::where('id', $id)->with('attachments')->first();
+
+        $response = Gate::inspect('delete', $motion);
+
+        if ($response->denied()) {
+            return back()->with('error', $response->message());
+        }
 
         $al = new ActivityLog([
             'activity' => Auth::user()->name . ' deleted a Motion or New Business, ' . $motion->title,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
+
         $al->save();
 
         //todo send email to notify of deletion
 
-
-        Motion::withoutGlobalScopes()
-            ->find($motion->id)
-            ->each(function (Motion $motion) {
-                $this->attachmentService->destroyAttachments($motion);
-                $motion->delete();
-            });
+        $this->attachmentService->destroyAttachments($motion);
+        $motion->delete();
 
         Session::flash('success', Str::plural(count([$motion->id]).' Motion', count([$motion->id])).
             ' and any related files deleted.');
