@@ -184,7 +184,8 @@ class AdminMotionController extends Controller
 
         Mail::send('emails.contact', ['data' => $motion],
             function ($m) use ($motion, $cc) {
-                $m->from(config('mail.from.address'), config('app.name'). ' ' .  $motion->submission_type . ' updated by'. Auth::user()->name);
+                $m->from(config('mail.from.address'), config('app.name'). ' ' .  $motion->submission_type .
+                    ' updated by'. Auth::user()->name);
                 $m->to(config('mail.executive.address'), config('mail.executive.name'));
                 $m->cc($cc, $cc);
                 $m->replyTo(Auth::user()->email ,Auth::user()->name);
@@ -236,7 +237,8 @@ class AdminMotionController extends Controller
 
         //todo message deletion
 
-        Session::flash('success', Str::plural(count([$motion->id]).' Motion', count([$motion->id])).
+        Session::flash('success', count($motion->id) . ' ' .
+            Str::plural('Motion', count($motion->id)) .
             ' and any related files deleted.');
 
         return redirect()->route('admin_motions_list');

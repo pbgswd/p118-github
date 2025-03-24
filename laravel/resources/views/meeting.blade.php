@@ -122,7 +122,7 @@
                                @endif
                                @if($motion->submission_type == 'New Business' &&
                                     ($data['upcoming']->count() > 0 &&
-                                    Carbon\Carbon::today()->diffInHours($data['upcoming']->date)-48 > 0 )
+                                    Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date)-48 > 0 )
                                     || $data['upcoming']->count() == 0)
                                        <a class="btn btn-outline-primary" href="{{route('motion_edit', $motion->id)}}"
                                           title="{{Auth::user()->name . " can edit"}}"

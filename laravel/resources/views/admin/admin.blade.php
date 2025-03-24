@@ -131,6 +131,63 @@
 
 
     </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-3 my-4">
+            <h3>Admin Users</h3>
+            @forelse ($data['users']['admin'] as $admin)
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{{route('user_edit', $admin->id)}}">{{$admin->name}}</a></h5>
+                    </div>
+                </div>
+            @empty
+                no users
+            @endforelse
+        </div>
+        <div class="col-sm-12 col-md-3 my-4">
+            <h3>Commitee admins</h3>
+            @forelse ($data['users']['committee'] as $comm )
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{{route('user_edit', $comm->id)}}">{{$comm->name}}</a></h5>
+                    </div>
+                </div>
+            @empty
+                no users
+            @endforelse
+        </div>
+        <div class="col-sm-12 col-md-3 my-4">
+            <h3>Writers</h3>
+            @forelse ($data['users']['writer'] as $writer)
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{{route('user_edit', $writer->id)}}">{{$writer->name}}</a></h5>
+                    </div>
+                </div>
+            @empty
+                no users
+            @endforelse
+        </div>
+        <div class="col-sm-12 col-md-3 my-4">
+            <h3>Office</h3>
+            @forelse ($data['users']['office'] as $office)
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{{route('user_edit', $office->id)}}">{{$office->name}}</a></h5>
+                    </div>
+                </div>
+            @empty
+                no users
+            @endforelse
+        </div>
+    </div>
+
+
+
+
+
+
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12">
             <h3>New stuff, work in progress, not safe to use yet</h3>
