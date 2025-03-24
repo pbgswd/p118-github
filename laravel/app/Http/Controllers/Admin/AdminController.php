@@ -42,9 +42,6 @@ class AdminController extends Controller
 
     public function index(): View
     {
-        $emailQueueCount = EmailQueue::count();
-        $messagesCount = Message::count();
-
         $counts['pages'] = Page::count();
         $counts['posts'] = Post::count();
         $counts['topics'] = Topic::count();
@@ -63,18 +60,17 @@ class AdminController extends Controller
         $counts['memoriam'] = Memoriam::count();
         $counts['attachments'] = Attachment::count();
         $counts['proofread'] = Proofreader::count();
-
         $counts['membership'] = Membership::where('membership_type', 'Member')->count();
         $counts['is_banned'] = User::where('is_banned', 1)->count();
         $counts['office'] = Membership::where('membership_type', 'Office')->count();
         $counts['invite'] = count(InviteUser::all());
-
         $counts['total_messages'] = Message::all()->count();
         $counts['total_emails_sent'] = Message::sum('count');
         $counts['not_sent'] = Message::where('state', 'not_sent')->count();
         $counts['sending'] = Message::where('state', 'sending')->count();
         $counts['sent'] = Message::where('state', 'sent')->count();
-
+        $emailQueueCount = EmailQueue::count();
+        $messagesCount = Message::count();
         //todo look at events in Laravel https://laravel.com/docs/11.x/events
         $al = new ActivityLog([
             'activity' => Auth::user()->name . ' accessed the admin dashboard',
