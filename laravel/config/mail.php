@@ -53,6 +53,11 @@ return [
         'name' => 'IATSE Local 118 Executive',
     ],
 
+    'motion_recipient' => [
+        'address' => 'office@iatse118.com',
+        'name' => 'IATSE Local 118 Motions & New Business',
+    ],
+
     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
     'username' => env('MAIL_USERNAME'),

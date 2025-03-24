@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -84,16 +85,38 @@ class MotionController extends Controller
                 }
             }
 
-            //todo send email to execs and user and mals to say motion has been submitted
+        $cc = $motion->user->email;
+
+        $motion->subject = $motion->submission_type . " Created by " . $motion->user->name . ": " . $motion->title;
+
+        Mail::send('emails.email_motion', ['data' => $motion],
+            function ($m) use ($motion, $cc) {
+                $m->from(config('mail.from.address'), config('app.name') . ' Motions & New Business');
+                $m->to(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
+                $m->cc($cc, $cc);
+                $m->replyTo($motion->user->email, $motion->user->name);
+                $m->subject($motion->subject);
+
+                if ($motion->attachments->count() > 0) {
+                    foreach ($motion->attachments as $att) {
+                        $file = 'storage/motions/' . $att->file;
+                        $mime = mime_content_type(getcwd() . "/" . $file);
+                        $file_name = $att->file_name;
+                        $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
+                    }
+                }
+                Session::flash('success', 'Message Sent');
+            });
+
 
         Session::flash('info', 'You have submitted a ' . $motion->submission_type .
-            ' successfully. It will be reviewed by the Executive.');
+            ' successfully. It will be emailed for review by the Executive.');
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . ' created a Motion or New Business, ' . $motion->title,
+            'activity' => Auth::user()->name . ' created a ' . $motion->submission_type . ', ' . $motion->title,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-            'model' => 'Admin']);
+            'model' => 'Motion']);
 
         $al->save();
 
@@ -200,19 +223,40 @@ class MotionController extends Controller
             }
         }
 
+        $motion->load('attachments', 'user', 'meeting');
 
+        $cc = $motion->user->email;
 
+        $motion->subject = $motion->submission_type . " Update by member " . Auth::user()->name . ": " . $motion->title;
 
-        //todo send email to execs and user and mals to say motion has been submitted
+        Mail::send('emails.email_motion', ['data' => $motion],
+            function ($m) use ($motion, $cc) {
+                $m->from(config('mail.from.address'), config('app.name') . ' Motions & New Business');
+                $m->to(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
+                $m->cc($cc, $cc);
+                $m->replyTo($motion->user->email, $motion->user->name);
+                $m->subject($motion->subject);
+
+                if ($motion->attachments->count() > 0) {
+                    foreach ($motion->attachments as $att) {
+                        $file = 'storage/motions/' . $att->file;
+                        $mime = mime_content_type(getcwd() . "/" . $file);
+                        $file_name = $att->file_name;
+                        $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
+                    }
+                }
+                Session::flash('success', 'Message Sent');
+            });
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . ' updated a Motion or New Business, ' . $motion->title,
+            'activity' => Auth::user()->name . ' updated a ' . $motion->submission_type . ', ' . $motion->title,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
         $al->save();
 
-        Session::flash('info', 'You have updated the ' . $motion->submission_type . ' successfully. It will be reviewed by the Executive.');
+        Session::flash('info', 'You have updated the ' . $motion->submission_type . ' successfully. It will be emailed
+            to the Executive for review.');
 
         return redirect()->route('motion_edit', $motion->id);
     }
@@ -224,13 +268,44 @@ class MotionController extends Controller
     {
         $id = $motion->id[0];
 
-        $motion = Motion::where('id', $id)->with('attachments')->first();
+        $motion = Motion::where('id', $id)->with('attachments', 'user', 'meeting')->first();
 
         $response = Gate::inspect('delete', $motion);
 
         if ($response->denied()) {
             return back()->with('error', $response->message());
         }
+
+        $cc = $motion->user->email;
+
+        $motion->subject = "Deletion of ". $motion->submission_type . " by " . Auth::user()->name . ": " .
+            $motion->title;
+
+        $motion->delete_message = "<h4 style='padding-bottom:4rem;'>This " . $motion->submission_type .
+            " was deleted by " . Auth::user()->name . ". Deleted information is below.
+              If you have any questions, please contact the Executive.</h4>";
+
+        Mail::send('emails.email_motion', ['data' => $motion],
+            function ($m) use ($motion, $cc) {
+                $m->from(config('mail.from.address'), config('app.name') . ' Motions & New Business');
+                $m->to(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
+                $m->cc($cc, $cc);
+                $m->replyTo(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
+                $m->subject($motion->subject);
+
+                if ($motion->attachments->count() > 0) {
+                    foreach ($motion->attachments as $att) {
+                        $file = 'storage/motions/' . $att->file;
+                        $mime = mime_content_type(getcwd() . "/" . $file);
+                        $file_name = $att->file_name;
+                        $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
+                    }
+                }
+            Session::flash('success', 'Email Notification of deletion sent');
+        });
+
+        $this->attachmentService->destroyAttachments($motion);
+        $motion->delete();
 
         $al = new ActivityLog([
             'activity' => Auth::user()->name . ' deleted a Motion or New Business, ' . $motion->title,
@@ -240,14 +315,8 @@ class MotionController extends Controller
 
         $al->save();
 
-        //todo send email to notify of deletion
-
-        $this->attachmentService->destroyAttachments($motion);
-        $motion->delete();
-
         Session::flash('success', Str::plural(count([$motion->id]).' Motion', count([$motion->id])).
-            ' and any related files deleted.');
-
+            ' and any related files deleted. An email to report the deletion was sent to you and the Executive' );
         return redirect()->route('list_meetings');
     }
 }

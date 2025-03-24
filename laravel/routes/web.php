@@ -109,7 +109,7 @@ Route::middleware('web', 'auth')->group(function () {
         Route::get('messages', 'index')->name('messages');
         Route::get('message/{message}/{slug}', 'show')->name('message');
         Route::post('member/{user}/message_preferences', 'update')->name('update_message_preferences');
-    })->middleware(CheckMessagingFeatureStatus::class);
+    });
 
     Route::controller(CNS\UserController::class)->group(function () {
         Route::get('/members', 'index')->name('members');
@@ -142,20 +142,9 @@ Route::middleware('web', 'auth')->group(function () {
         Route::delete('committee/{committee}/post/{committeePost}/destroy', 'destroy')
             ->name('public_committee_post_destroy');
     });
-/*
-    Route::controller(CNS\MeetingController::class)->group(function () {
-        Route::post('minutes', 'post_year')->name('post_year');
-        Route::get('minutes/year/{year}', 'index_by_year')->name('list_meetings_year');
-        Route::get('minutes', 'index')->name('list_meetings');
-        Route::get('minutes/{meeting}', 'show')->name('meeting');
-    });
-*/
-
-    Route::middleware('check.motion.policy')->group(function () {
-        Route::put('/motions/{motion}', [CNS\MotionController::class, 'update']);
-    });
 
     Route::controller(CNS\MeetingController::class)->group(function () {
+        Route::permanentRedirect('minutes', 'meetings');
         Route::post('meetings', 'post_year')->name('post_year');
         Route::get('meetings/year/{year}', 'index_by_year')->name('list_meetings_year');
         Route::get('meetings', 'index')->name('list_meetings');
