@@ -19,9 +19,20 @@ class AdminFaqDataController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Faq $faq)
+    public function create(Faq $faq): View
     {
-        dd([__METHOD__, $faq]);
+
+    $faq_data = new FaqData();
+    $faq_data['faq'] = $faq;
+        $data = [
+            'action' => 'Create',
+            'faq' => $faq,
+            'faq_data' => $faq_data,
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(),
+                AccessLevelConstants::getConstants()),
+        ];
+
+        return view('admin.faq_data', ['data' => $data]);
     }
 
     /**
@@ -29,7 +40,14 @@ class AdminFaqDataController extends Controller
      */
     public function store(StoreFaqDataRequest $request, Faq $faq)
     {
-        dd([__METHOD__, $faq, $request->validated()]);
+        $data = $request->validated();
+        $faq_data = new FaqData($data['faq_data']);
+        $faq_data->faq_id = $faq->id;
+        $faq_data->save();
+        Session::flash('info', 'FAQ question and answer created.');
+
+
+        return redirect()->route('admin_faq_data_edit', ['faq' => $faq->slug, 'faq_data' => $faq_data->id]);
     }
 
     /**
@@ -56,6 +74,8 @@ class AdminFaqDataController extends Controller
         $data = $request->validated()['faq_data'];
         $faqData->fill($data);
         $faqData->save();
+
+        Session::flash('info', 'FAQ question updated.');
 
         return redirect()->route('admin_faq_data_edit', ['faq' => $faq->slug, 'faq_data' => $faqData->id]);
     }
