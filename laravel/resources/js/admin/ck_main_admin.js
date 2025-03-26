@@ -9,11 +9,11 @@ import {
 const editorConfig = {
     toolbar: {
         items: [
-            'undo',	'redo',	'|', 'sourceEditing','showBlocks','|',
+            'undo',	'redo','|','showBlocks','|',
             'heading','|','bold','italic','underline','|',
             'link','mediaEmbed','insertTable','blockQuote','htmlEmbed','|',
             'highlight', 'horizontalLine',
-            'alignment', 'bulletedList', 'numberedList','todoList','outdent','indent'
+            'alignment', 'bulletedList', 'numberedList','todoList','outdent','indent', 'sourceEditing'
         ],
         shouldNotGroupWhenFull: false
     },

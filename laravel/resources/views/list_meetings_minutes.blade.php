@@ -10,9 +10,7 @@
                     @endcan
                 </div>
             </div>
-
             <div class="row d-flex justify-content-around mb-2 mb-md-3">
-
                 <div class="col-12 mt-3 text-center">
                     <h1>Meetings</h1>
                     <h2>Minutes, Documents, Motions, New Business</h2>
