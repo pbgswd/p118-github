@@ -82,19 +82,19 @@ class AdminController extends Controller
         $activities = ActivityLog::orderBy('id', 'DESC')
             ->limit(5)->get();
 
-        $users['admin'] = User::whereHas('roles', function ($q) {
+        $users['admin'] = User::where('is_banned', 0)->whereHas('roles', function ($q) {
             $q->where('name', 'super-admin');
         })->get();
 
-        $users['writer'] = User::whereHas('roles', function ($q) {
+        $users['writer'] = User::where('is_banned', 0)->whereHas('roles', function ($q) {
             $q->where('name', 'writer');
         })->get();
 
-        $users['office'] = User::whereHas('roles', function ($q) {
+        $users['office'] = User::where('is_banned', 0)->whereHas('roles', function ($q) {
             $q->where('name', 'office');
         })->get();
 
-        $users['committee'] = User::whereHas('roles', function ($q) {
+        $users['committee'] = User::where('is_banned', 0)->whereHas('roles', function ($q) {
             $q->where('name', 'committee');
         })->get();
 

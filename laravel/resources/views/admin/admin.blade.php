@@ -134,7 +134,8 @@
 
     <div class="row">
         <div class="col-sm-12 col-md-3 my-4">
-            <h3>Admin Users</h3>
+            <h3>Super Admins</h3>
+            <h6>Manage Everything</h6>
             @forelse ($data['users']['admin'] as $admin)
                 <div class="card">
                     <div class="card-body">
@@ -146,7 +147,8 @@
             @endforelse
         </div>
         <div class="col-sm-12 col-md-3 my-4">
-            <h3>Commitee admins</h3>
+            <h3>Committee Admins</h3>
+            <h6>Manage Committees</h6>
             @forelse ($data['users']['committee'] as $comm )
                 <div class="card">
                     <div class="card-body">
@@ -158,7 +160,8 @@
             @endforelse
         </div>
         <div class="col-sm-12 col-md-3 my-4">
-            <h3>Writers</h3>
+            <h3>Writer/Editor Privileges</h3>
+            <h6>Manage Content</h6>
             @forelse ($data['users']['writer'] as $writer)
                 <div class="card">
                     <div class="card-body">
@@ -170,7 +173,8 @@
             @endforelse
         </div>
         <div class="col-sm-12 col-md-3 my-4">
-            <h3>Office</h3>
+            <h3>Office Admins</h3>
+            <h6>Manage Users</h6>
             @forelse ($data['users']['office'] as $office)
                 <div class="card">
                     <div class="card-body">
