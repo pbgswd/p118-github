@@ -72,7 +72,7 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <h4><i class="far fa-clock"></i> </i> Meeting Start Time
+                        <h4><i class="far fa-clock"></i> </i> <label for="meetingTime">Meeting Start Time</label>
                             @if($data['action'] == 'Edit')
                                 (Currently: {{$data['meeting']->date->format('g:i:s A')}})
                             @endif
@@ -81,8 +81,9 @@
                             type="time"
                             class="form-control"
                             placeholder="hh:mm:ss am/pm"
+                            id="meetingTime"
                             name="meeting[time]"
-                            value="{{ old('meeting.date', \optional($data['meeting']->date)->toTimeString())}}"
+                            value="{{ $data['meeting']->date ? $data['meeting']->date->toTimeString() : '' }}"
                             size="10"
                             data-provide="timepicker"
                             data-date-format="hh:mm:ss am/pm"
@@ -96,11 +97,11 @@
                     <h4>Meeting Type</h4>
                 </div>
                 <div class="col-12 col-md-6 my-3">
-                    <select class="form-select"  name="meeting[meeting_type]" aria-label="Select">
+                    <select class="form-select"  name="meeting[meeting_type]" aria-label="Select" required>
                         @if($data['action'] == 'Edit')
                             <option value="{{$data['meeting']->meeting_type}}" selected>{{$data['meeting']->meeting_type}}</option>
                         @else
-                            <option selected>Select a meeting type</option>
+                            <option value="" selected>Select a meeting type</option>
                         @endif
                         @foreach($data['meeting_types'] as $meeting_type)
                             <option value="{{$meeting_type}}">{{$meeting_type}}</option>
@@ -284,4 +285,5 @@
     @endif
     </div>
 </div>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 @endsection
