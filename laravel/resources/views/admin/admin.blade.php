@@ -40,6 +40,20 @@
             field above to find records.
         </p>
     </div>
+    @can(['create users', 'edit users', 'delete users'])
+        <div class="row">
+            <div class="col-12 border border-blue rounded p-3 mt-4">
+                <h4 class="text-center">Frequently used</h4>
+                <h4>
+                    <nav class="nav flex-column flex-sm-row">
+                        <a class="flex-sm-fill text-sm-center nav-link" href="{{ route('admin_messages') }}">Messages</a>
+                        <a class="flex-sm-fill text-sm-center nav-link" href="{{ route('meetings_list') }}">Meetings</a>
+                        <a class="flex-sm-fill text-sm-center nav-link" href="{{ route('admin_features_list') }}">Features</a>
+                    </nav>
+                </h4>
+            </div>
+        </div>
+    @endcan
     <div class="row border border-dark rounded p-3 pb-5 mt-4">
         <div class="col-12 mb-4">
             <h3 class="text-center">Site content information</h3>
@@ -127,12 +141,11 @@
                 </div>
             </div>
         @endif
-
-
-
     </div>
-
     <div class="row">
+        <div class="col-12 mt-4 text-center">
+            <h2>Members with website privileges</h2>
+        </div>
         <div class="col-sm-12 col-md-3 my-4">
             <h3>Super Admins</h3>
             <h6>Manage Everything</h6>
