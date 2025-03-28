@@ -45,12 +45,12 @@
                                         {{ $a->title }}
                                     </a>
                                 </h4>
-                                {{$a->attachments->count()}}
-                                {{Str::plural('Attachment', $a->attachments->count())}}.
+                                @if($a->attachments->count() > 0)
+                                    {{$a->attachments->count()}}
+                                    {{Str::plural('Attachment', $a->attachments->count())}}.
+                                @endif
                                 @if($a->motions->count() > 0)
                                     {{$a->motions->count()}} {{Str::plural('motion', $a->motions->count())}} submitted.
-                                @else
-                                    No motions submitted yet.
                                 @endif
                             </td>
                             <td>

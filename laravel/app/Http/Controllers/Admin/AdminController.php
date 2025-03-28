@@ -28,6 +28,7 @@ use App\Models\Proofreader;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
+use Illuminate\Support\Benchmark;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
