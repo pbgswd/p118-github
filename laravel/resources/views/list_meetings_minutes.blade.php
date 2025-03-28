@@ -32,26 +32,51 @@
                                         {{$upcoming->meeting_type}}
                                         Meeting </span>
                                 </td>
-                                <td class="px-2 text-left">
+                                <td class="px-2 py-2 text-left">
                                     <a title="{{ $upcoming->title }}" href="{{route('meeting', $upcoming->id)}}">
-                                    {{ $upcoming->title }}
+                                        {{ $upcoming->title }}
                                         <i class="far fa-calendar-alt"></i>
                                         {{ $upcoming->date->format('F j Y') }},
                                         <i class="far fa-clock"></i>
-                                        {{$upcoming->date->format('g:i:s A')}}
+                                        {{$upcoming->date->format('g:i:s A')}},
                                     </a>
-
-                                    In {{Carbon\Carbon::today()->diffInDays($upcoming->date)}} days.
-
-                                    @if((Carbon\Carbon::today()->diffInDays($upcoming->date)) > 10)
-                                        {{(Carbon\Carbon::today()->diffInDays($upcoming->date))-10}}
-                                    {{Str::plural('day', Carbon\Carbon::today()->diffInDays($upcoming->date)-10)}}
-                                        remaining for submissions.
+                                    @if(Carbon\Carbon::today()->diffInDays($upcoming->date) == 0)
+                                        <span class="badge bg-warning text-white">Today</span>
                                     @else
-                                        <span class="badge bg-warning text-dark">Motions closed</span>
+                                        in {{Carbon\Carbon::today()->diffInDays($upcoming->date)}}
+                                        {{Str::plural('day', Carbon\Carbon::today()->diffInDays($upcoming->date) )}}.
                                     @endif
-                                    {{$upcoming->motions->count()}} {{Str::plural('motion', $upcoming->motions->count())}}
-                                    submitted.
+                                    @if((Carbon\Carbon::today()->diffInDays($upcoming->date)) > 10)
+                                        <span class="badge rounded-pill text-bg-success text-white mt-2">
+                                            {{(Carbon\Carbon::today()->diffInDays($upcoming->date))-10}}
+                                            {{Str::plural('day', Carbon\Carbon::today()->diffInDays($upcoming->date)-10)}}
+                                            for Motions.
+                                        </span>
+                                    @else
+                                        <span class="badge rounded-pill text-bg-dark mt-2">
+                                            Motions closed
+                                        </span>
+                                    @endif
+                                    @if(Carbon\Carbon::today()->diffInHours($upcoming->date) - 48 <  73 &&
+                                            Carbon\Carbon::today()->diffInHours($upcoming->date) - 48 > 0)
+                                        <span class="badge rounded-pill text-bg-success text-white mt-2">
+                                            {{Carbon\Carbon::today()->diffInHours($upcoming->date) - 48}}
+                                            {{Str::plural('hour', Carbon\Carbon::today()->diffInHours($upcoming->date) - 48)}}
+                                            remaining for New Business.
+                                        </span>
+                                    @else
+                                        @if(Carbon\Carbon::today()->diffInHours($upcoming->date) - 48 <  0)
+                                            <span class="badge rounded-pill text-bg-dark mt-2">New Business closed</span>
+                                        @else
+                                            <span class="badge rounded-pill text-bg-success text-white mt-2">
+                                            New Business Accepted
+                                        </span>
+                                        @endif
+                                    @endif
+
+                                        <span class="badge rounded-pill text-bg-info text-white mt-2">
+                                            {{$upcoming->motions->count()}} {{Str::plural('Submission', $upcoming->motions->count())}}
+                                        </span>
                                 </td>
                             </tr>
                         @empty

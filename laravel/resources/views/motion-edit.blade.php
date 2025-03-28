@@ -146,7 +146,7 @@
                 <input type="radio" class="btn-check float-end" name="motion[submission_type]"
                        value="New Business" id="option5" autocomplete="off"
                        @if((null !== $data['upcoming'] &&
-                            Carbon\Carbon::today()->diffInHours($data['upcoming']->date)-48 > 0) ||
+                            Carbon\Carbon::today()->diffInHours($data['upcoming']->date) - 48 > 0) ||
                             null == $data['upcoming'])
                            required
                        @else
