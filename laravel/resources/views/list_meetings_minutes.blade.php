@@ -73,7 +73,6 @@
                                         </span>
                                         @endif
                                     @endif
-
                                         <span class="badge rounded-pill text-bg-info text-white mt-2">
                                             {{$upcoming->motions->count()}} {{Str::plural('Submission', $upcoming->motions->count())}}
                                         </span>
@@ -101,10 +100,7 @@
                         </a>
                     </div>
                 </div>
-
                 @include('layouts.motion_input_fields')
-
-
                     @if($data['newmotions']->count() > 0)
                         <div class="row d-flex mx-auto">
                             <div class="col border border-dark rounded pb-2 mb-3 mb-md-3">
