@@ -27,9 +27,13 @@
                                                 The next General Meeting will be on
                                                 {{$data['upcoming'][0]->date->format('F j Y')}},
                                                 {{$data['upcoming'][0]->date->format('g:i:s A')}},
+                                                @if(Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date) == 0)
+                                                    TODAY.
+                                                @else
                                                 in {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
                                                 {{Str::plural('day', Carbon\Carbon::today()
                                                     ->diffInDays($data['upcoming'][0]->date))}}.
+                                                @endif
                                             @else
                                                 Your submission will be attached to the next scheduled meeting.
                                             @endif
@@ -83,7 +87,7 @@
                                                                 {{$data['upcoming'][0]->date->format('F j Y')}},
                                                                 {{$data['upcoming'][0]->date->format('g:i:s A')}},
                                                                 @if(Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date) == 0)
-                                                                    , today.
+                                                                    TODAY.
                                                                 @else
                                                                     in {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
                                                                     {{Str::plural('day', Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date))}}.
