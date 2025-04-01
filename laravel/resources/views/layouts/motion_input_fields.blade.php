@@ -18,9 +18,9 @@
                                             <strong><u>by using this form which sends an email to the Executive,</u></strong>
                                             or by making a submission in writing.
                                         </h6>
-                                        <h6 class="mb-4">Please note the submission deadlines for Motions are 10 days prior to the
-                                            schedule meeting, and New Business will be accepted until 48 hours before
-                                            the meeting.
+                                        <h6 class="mb-4">Please note the submission deadlines for Motions are 10 days
+                                            prior to the schedule meeting, and New Business for discussion will be
+                                            accepted until 48 hours before the meeting.
                                         </h6>
                                         <h4>
                                             @if($data['upcoming']->count() > 0)
@@ -74,16 +74,20 @@
                                                 <br />
                                                 <div class="card text-bg-info text-white my-3 mx-auto h-80" style="max-width: 20rem;">
                                                     <div class="card-header">
-                                                        <h4>For New Motions</h4>
+                                                        <h4>New Motions</h4>
                                                     </div>
                                                     <div class="card-body">
                                                         <p class="card-text">
                                                             @if($data['upcoming']->count() > 0)
                                                                 The next General Meeting will be held
                                                                 {{$data['upcoming'][0]->date->format('F j Y')}},
-                                                                {{$data['upcoming'][0]->date->format('g:i:s A')}}, in
-                                                                {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
-                                                                {{Str::plural('day', Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date))}}.
+                                                                {{$data['upcoming'][0]->date->format('g:i:s A')}},
+                                                                @if(Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date) == 0)
+                                                                    , today.
+                                                                @else
+                                                                    in {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
+                                                                    {{Str::plural('day', Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date))}}.
+                                                                @endif
                                                             @else
                                                                 Your motion will be attached to the next meeting.
                                                             @endif
@@ -126,9 +130,10 @@
                                                 >
                                                 <label class="btn btn-outline-primary" for="option5">New Business</label>
                                                 <div class="card text-bg-info text-white my-3 mx-auto h-80" style="max-width: 20rem;">
-                                                    <div class="card-header"><h4>For New Business</h4></div>
+                                                    <div class="card-header"><h4>New Business</h4></div>
                                                     <div class="card-body">
                                                         <p class="card-text">
+                                                            ( For discussion only )<br />
                                                             @if($data['upcoming']->count() > 0)
                                                                 @if(Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date->subDays(2)) > 48)
                                                                     New Business submissions allowed until
