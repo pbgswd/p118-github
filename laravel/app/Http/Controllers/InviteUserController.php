@@ -249,6 +249,8 @@ class InviteUserController extends Controller
         $membership->membership_type = $inviteUser->membership_type;
         $user->membership()->save($membership);
 
+        //todo: add user to mailing list, send a general message to opt user in after.
+
         InviteUser::where('email', $inviteUser->email)->delete();
 
         $al = new ActivityLog([

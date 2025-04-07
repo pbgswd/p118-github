@@ -22,8 +22,13 @@ class ContactController extends Controller
         $data = [];
 
         if (Auth::user()) {
-            $data = ['contactPage' => Page::withoutGlobalScopes()->where('slug', 'contact-us')->get(), ];
+            $data = [
+                'contactPage' => Page::withoutGlobalScopes()->where('slug', 'contact-us')->get(),
+                ];
         }
+
+        $data['office-hours'] = Page::withoutGlobalScopes()->where('slug', 'office-hours')->first();
+
         $data['title'] = 'Contact '.env('APP_NAME');
 
         return view('contact', ['data' => $data]);
