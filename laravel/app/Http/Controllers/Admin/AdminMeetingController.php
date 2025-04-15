@@ -97,9 +97,11 @@ class AdminMeetingController extends Controller
            if($meeting->meeting_type == 'General' && $meeting->live == 1) {
                $motions = Motion::where('meeting_id', null)->get();
                $savedcount = intval(0);
+
                foreach ($motions as $motion) {
                    // Motion
                    if(( Carbon::today()->diffInDays($meeting->date) - 10 ) > 0 && $motion->submission_type == 'Motion') {
+
                        $motion->meeting_id = $meeting->id;
                        $motion->save();
                        $savedcount++;
@@ -185,8 +187,8 @@ class AdminMeetingController extends Controller
         $any_meeting->fill($data['meeting']);
         $any_meeting->save();
 
-        if($any_meeting->meeting_type != 'General') {
-            Motion::where('meeting_id', $any_meeting->id)->update(['meeting_id' => null]);
+        if($any_meeting->meeting_type == 'General' && (Carbon::today()->diffInDays($any_meeting->date) - 10 >= 0)) {
+            Motion::where('meeting_id', null)->update(['meeting_id' => $any_meeting->id]);
         }
 
         $result = $this->attachmentService->updateAttachment($request, $any_meeting);
