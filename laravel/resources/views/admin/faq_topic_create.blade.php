@@ -7,7 +7,7 @@
             FAQs have a top level topic term, with a list of questions and answers attached.
         </p>
         <div class="h2 text-warning-emphasis">
-            Work in progress, it does work, but is being fixed, msg me if you need help - PG.
+            Create the topic, then you can add questions and answers.
         </div>
     </div>
     <div class="row">
@@ -31,14 +31,13 @@
                 <li class="list-group-item">
                     Created by: {{$data['faq']['user']->name}}
                 </li>
-
-                <a href="{{route('admin_faq_data_create', $data['faq']->slug )}}">
-                    create a new question and answer pair </a>
-
+                <li class="list-group-item">
+                    <a href="{{route('admin_faq_data_create', $data['faq']->slug )}}">
+                        create a new question and answer pair </a>
+                </li>
             @endif
         </ul>
     </div>
-
     <form method="post" name="employment" action="{{ url()->current() }}" enctype="multipart/form-data" class="needs-validation" novalidate>
         {!! csrf_field() !!}
         <div class="row my-4">
@@ -55,7 +54,6 @@
         </div>
         <div class="row my-4">
             <div class="form-group">
-
                 <div class="col-12">
                     <div class="col-12 mb-4">
                         <div class="col input-group editor-container editor-container_classic-editor" id="editor-container">
@@ -65,8 +63,6 @@
                             </textarea>
                             </div>
                         </div>
-
-
                     </div>
                     <script type="importmap">
                         {
@@ -122,35 +118,34 @@
                         <h3>{{$fd->question}}
                             <a href="{{route('admin_faq_data_edit', [$data['faq']->slug, $fd->id])}}">Edit </a>
                         </h3>
-
                     </div>
-                        <div class="form-group my-4">
+                        <div class="form-group my-2">
                             <div class="col-12">
                                 <h4>Answer</h4>
                                 {!! $fd->answer !!}
-
                             </div>
                         </div>
-                        <div class="row my-4">
+                        <div class="row my-2">
                             <div class="col-sm-12 col-md-6">
-                                <h4>Live with topic</h4>
+                                <h4>Publish status:
                                 {{$fd->live == 1 ? 'Live': 'No'}}
-
+                                </h4>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <h4>Access Level for FAQ question & answer</h4>
+                                <h4>Access Level:
                                 {{$fd->access_level}}
-
+                                </h4>
                             </div>
                         </div>
-                        <div class="form-group my-4">
-                            <div class="col-sm-12 col-md-6 my-4">
-                                <h4>Sort Order (largest number is first)</h4>
+                        <div class="form-group my-2">
+                            <div class="col-sm-12 col-md-6">
+                                <h4>Sort Order (largest number is first)
                                 {{$fd->sort_order}}
+                                </h4>
                             </div>
                         </div>
-                        <div class="row my-4">
-                            <div class="col-12 my-4 input-group-lg">
+                        <div class="row my-2">
+                            <div class="col-12 input-group-lg">
                                 <h5>Delete this question and answer</h5>
                                 <label>
                                     <input name="faq_data[{{$fd->id}}][delete]" type="hidden" value="0" />
@@ -160,10 +155,9 @@
                                 <hr />
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-        @endif
+                    @endforeach
+                </div>
+            @endif
             <div class="row my-5">
                 <div class="col-sm-12 col-md-6 mb-sm-5 mb-md-0 float-start">
                     <i class="fas fa-edit fa-2x mx-2"></i>
@@ -183,5 +177,6 @@
             @endif
         </div>
     </div>
+</div>
 </div>
 @endsection
