@@ -75,13 +75,18 @@ class AdminEmploymentController extends Controller
         $this->authorize('create', Employment::class);
         $employment = new Employment($request->employment);
 
+        if($employment->deadline > now()) {
+            $employment->status = 1;
+        }
+
         $employment->save();
 
         if (null !== ($request->file('attachments'))) {
             $result = $this->attachmentService->createAttachment($request, $employment);
 
             if ($result) {
-                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' files');
+                Session::flash('success', 'You uploaded '. count($request->file('attachments')) . ' ' .
+                    Str::plural('file', count($request->file('attachments'))));
             } else {
                 Session::flash('error', 'You have an upload problem');
             }
@@ -118,6 +123,10 @@ class AdminEmploymentController extends Controller
         $this->authorize('update', Employment::class);
 
         $any_employment->fill($request->employment);
+
+        if($any_employment->deadline > now()) {
+            $any_employment->status = 1;
+        }
 
         $any_employment->save();
 
