@@ -48,7 +48,7 @@
         </ul>
         <h4 class="mt-5">
             {{$data['subscriber_count']}} of {{$data['users']}} {{Str::plural('member', $data['users'])}}
-            have at least one subscription, or {{ round($data['subscriber_count'] / $data['users'], 2) }} %.
+            have at least one subscription.
         </h4>
     </div>
     <div class="col-12 mt-3">
