@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Constants\AccessLevelConstants;
 use App\Http\Requests\Attachments\DestroyAttachmentRequest;
 use App\Http\Requests\Attachments\StoreAttachmentRequest;
@@ -38,7 +39,7 @@ class AttachmentController extends Controller
      */
     public function index_icons(Attachment $attachment): View
     {
-        $this->authorize('viewAny', Auth::user());
+        Gate::authorize('viewAny', Auth::user());
 
         $data = [];
         $data['content'] = fake()->paragraph();
@@ -86,7 +87,7 @@ class AttachmentController extends Controller
      */
     public function index(Attachment $attachment): View
     {
-        $this->authorize('viewAny', Auth::user());
+        Gate::authorize('viewAny', Auth::user());
 
         $data = [];
         $data['attachments'] = Attachment::with('user')->orderBy('id', 'DESC')->paginate(30);
@@ -101,7 +102,7 @@ class AttachmentController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Auth::user());
+        Gate::authorize('create', Auth::user());
 
         $attachment = new Attachment;
 
@@ -120,7 +121,7 @@ class AttachmentController extends Controller
      */
     public function store(StoreAttachmentRequest $request): RedirectResponse
     {
-        $this->authorize('create', Auth::user());
+        Gate::authorize('create', Auth::user());
 
         $attachment = '';
 
@@ -154,7 +155,7 @@ class AttachmentController extends Controller
      */
     public function edit(Attachment $attachment)
     {
-        $this->authorize('update', Auth::user());
+        Gate::authorize('update', Auth::user());
 
         if (! \file_exists(\storage_path('app/'.$attachment->subfolder).'/'.$attachment->file)) {
             Session::flash('error', $attachment->file_name.' was not found on the server');
@@ -180,7 +181,7 @@ class AttachmentController extends Controller
      */
     public function update(UpdateAttachmentRequest $request, Attachment $attachment): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        Gate::authorize('update', Auth::user());
         $attachment->fill($request->attachment);
         $attachment->save();
 
@@ -194,7 +195,7 @@ class AttachmentController extends Controller
      */
     public function destroy(DestroyAttachmentRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Auth::user());
+        Gate::authorize('delete', Auth::user());
 
         $attachments = Attachment::find($request->id);
         foreach ($attachments as $a) {

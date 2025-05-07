@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\UpdateMemberEmergencyContact;
 use App\Http\Requests\User\DestroyUser;
@@ -51,7 +52,7 @@ class AdminUserController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Auth::user());
+        Gate::authorize('viewAny', Auth::user());
 
         $users = User::with(
             [
@@ -74,7 +75,7 @@ class AdminUserController extends Controller
      */
     public function banned(): View
     {
-        $this->authorize('viewAny', Auth::user());
+        Gate::authorize('viewAny', Auth::user());
 
         $users = User::with(
             [
@@ -138,7 +139,7 @@ class AdminUserController extends Controller
      */
     public function store(StoreUser $request): RedirectResponse
     {
-        $this->authorize('create', Auth::user());
+        Gate::authorize('create', Auth::user());
         Session::flash('warning', 'Store method blocked off. Contact admin for support.');
 
         return redirect()->route('users_list');
@@ -178,7 +179,7 @@ class AdminUserController extends Controller
      */
     public function edit(User $user, UserImageService $service): View
     {
-        $this->authorize('admin_update', Auth::user());
+        Gate::authorize('admin_update', Auth::user());
 
         $user->load('phone_number',
             'user_info',
@@ -230,7 +231,7 @@ class AdminUserController extends Controller
      */
     public function update(UpdateUser $request, UserImageService $service, User $user): RedirectResponse
     {
-        $this->authorize('admin_update', Auth::user());
+        Gate::authorize('admin_update', Auth::user());
 
         $user->load('phone_number', 'membership');
 
@@ -327,7 +328,7 @@ class AdminUserController extends Controller
      */
     public function admin_edit_address(User $user): View
     {
-        $this->authorize('update', $user);
+        Gate::authorize('update', $user);
 
         $currentUser = Auth::user();
         $regions = $this->getFormOptions(['statesprovs']);
@@ -350,7 +351,7 @@ class AdminUserController extends Controller
         EmailMemberUpdateAddressService $service,
         User $user
     ): RedirectResponse {
-        $this->authorize('update', $user);
+        Gate::authorize('update', $user);
         $message = [];
         // dd($userRequest->all());
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
@@ -378,7 +379,7 @@ class AdminUserController extends Controller
      */
     public function admin_edit_emergency_contact(User $user): View
     {
-        $this->authorize('update', $user);
+        Gate::authorize('update', $user);
 
         $currentUser = Auth::user();
 
@@ -399,7 +400,7 @@ class AdminUserController extends Controller
         EmailMemberUpdateAddressService $service,
         User $user
     ): RedirectResponse {
-        $this->authorize('update', $user);
+        Gate::authorize('update', $user);
 
         $userRequest->validate([
             'emergency_contact_phone' => ['required',
@@ -431,7 +432,7 @@ class AdminUserController extends Controller
      */
     public function destroy(DestroyUser $request): RedirectResponse
     {
-        $this->authorize('delete', Auth::user());
+        Gate::authorize('delete', Auth::user());
 
         User::find($request->toArray())
             ->each(function (User $user) {

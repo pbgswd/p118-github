@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Committees\DestroyCommitteeRequest;
 use App\Http\Requests\Committees\StoreCommitteeRequest;
@@ -26,7 +27,7 @@ class AdminCommitteeController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Committee::class);
+        Gate::authorize('viewAny', Committee::class);
         $c = Committee::withoutGlobalScopes()->with('creator')->sortable()->paginate(10);
 
         $m = null;
@@ -46,7 +47,7 @@ class AdminCommitteeController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Committee::class);
+        Gate::authorize('create', Committee::class);
 
         $data = [
             'user_id' => Auth::id(),
@@ -63,7 +64,7 @@ class AdminCommitteeController extends Controller
      */
     public function store(StoreCommitteeRequest $request): RedirectResponse
     {
-        $this->authorize('create', Committee::class);
+        Gate::authorize('create', Committee::class);
 
         $committee = new Committee($request->input('committee'));
         $committee->user_id = Auth::id();
@@ -85,7 +86,7 @@ class AdminCommitteeController extends Controller
      */
     public function show(Committee $committee): View
     {
-        $this->authorize('view', $committee);
+        Gate::authorize('view', $committee);
 
         $committee->load('creator', 'active_committee_members', 'posts');
         $committee['committee_roles'] = Options::committee_roles();
@@ -127,7 +128,7 @@ class AdminCommitteeController extends Controller
     {
         $any_committee->load('creator', 'posts');
 
-        $this->authorize('update', $any_committee);
+        Gate::authorize('update', $any_committee);
 
         $file_info = null;
 
@@ -154,7 +155,7 @@ class AdminCommitteeController extends Controller
      */
     public function update(UpdateCommitteeRequest $request, Committee $any_committee): RedirectResponse
     {
-        $this->authorize('update', $any_committee);
+        Gate::authorize('update', $any_committee);
 
         $any_committee->fill($request->committee);
 
@@ -183,7 +184,7 @@ class AdminCommitteeController extends Controller
      */
     public function destroy(DestroyCommitteeRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Committee::class);
+        Gate::authorize('delete', Committee::class);
 
         Committee::withoutGlobalScopes()
             ->find($request->id)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employment\DestroyEmploymentRequest;
 use App\Http\Requests\Employment\StoreEmploymentRequest;
@@ -38,7 +39,7 @@ class AdminEmploymentController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Employment::class);
+        Gate::authorize('viewAny', Employment::class);
 
         $jobs = Employment::withoutGlobalScopes()
             ->sortable()
@@ -57,7 +58,7 @@ class AdminEmploymentController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Employment::class);
+        Gate::authorize('create', Employment::class);
 
         $data = [
             'employment' => new Employment,
@@ -73,7 +74,7 @@ class AdminEmploymentController extends Controller
      */
     public function store(StoreEmploymentRequest $request): RedirectResponse
     {
-        $this->authorize('create', Employment::class);
+        Gate::authorize('create', Employment::class);
         $employment = new Employment($request->employment);
 
         if ($employment->deadline > now()) {
@@ -102,7 +103,7 @@ class AdminEmploymentController extends Controller
      */
     public function edit(Employment $employment): View
     {
-        $this->authorize('update', Employment::class);
+        Gate::authorize('update', Employment::class);
 
         $employment->load('user', 'attachments');
 
@@ -121,7 +122,7 @@ class AdminEmploymentController extends Controller
      */
     public function update(UpdateEmploymentRequest $request, Employment $any_employment): RedirectResponse
     {
-        $this->authorize('update', Employment::class);
+        Gate::authorize('update', Employment::class);
 
         $any_employment->fill($request->employment);
 
@@ -153,7 +154,7 @@ class AdminEmploymentController extends Controller
      */
     public function destroy(DestroyEmploymentRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Employment::class);
+        Gate::authorize('delete', Employment::class);
 
         Employment::withoutGlobalScopes()
             ->find($request->id)
@@ -173,7 +174,7 @@ class AdminEmploymentController extends Controller
     public function message(Employment $employment): RedirectResponse
     {
 
-        $this->authorize('update', Employment::class);
+        Gate::authorize('update', Employment::class);
 
         $source_url = env('APP_URL').'/job/'.$employment->id;
 
@@ -195,7 +196,7 @@ class AdminEmploymentController extends Controller
 
     public function feature(Employment $employment): RedirectResponse
     {
-        $this->authorize('update', Employment::class);
+        Gate::authorize('update', Employment::class);
         $employment->source_url = env('APP_URL').'/job/'.$employment->id;
         $msg = $this->featureService->createEmploymentFeature($employment);
         Session::flash('success', 'new feature from Employment saved');

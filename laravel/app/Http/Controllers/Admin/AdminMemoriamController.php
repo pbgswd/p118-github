@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Memoriam\DestroyMemoriamRequest;
 use App\Http\Requests\Memoriam\StoreMemoriamRequest;
@@ -39,7 +40,7 @@ class AdminMemoriamController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Memoriam::class);
+        Gate::authorize('viewAny', Memoriam::class);
 
         $memoriam = Memoriam::withoutGlobalScopes()
             ->sortable()
@@ -63,7 +64,7 @@ class AdminMemoriamController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Memoriam::class);
+        Gate::authorize('create', Memoriam::class);
 
         $memoriam = new Memoriam;
 
@@ -81,7 +82,7 @@ class AdminMemoriamController extends Controller
      */
     public function store(StoreMemoriamRequest $request): RedirectResponse
     {
-        $this->authorize('create', Memoriam::class);
+        Gate::authorize('create', Memoriam::class);
 
         $memoriam = new Memoriam($request->input('memoriam'));
 
@@ -106,7 +107,7 @@ class AdminMemoriamController extends Controller
      */
     public function edit(Memoriam $memoriam): View
     {
-        $this->authorize('update', Memoriam::class);
+        Gate::authorize('update', Memoriam::class);
 
         $folder = $memoriam->getAttachmentFolder();
 
@@ -141,7 +142,7 @@ class AdminMemoriamController extends Controller
      */
     public function update(UpdateMemoriamRequest $request, Memoriam $any_memoriam): RedirectResponse
     {
-        $this->authorize('update', Memoriam::class);
+        Gate::authorize('update', Memoriam::class);
 
         $any_memoriam->fill($request->memoriam);
 
@@ -176,7 +177,7 @@ class AdminMemoriamController extends Controller
      */
     public function destroy(DestroyMemoriamRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Memoriam::class);
+        Gate::authorize('delete', Memoriam::class);
         // todo deal with attachments for memoriams safely
         Memoriam::withoutGlobalScopes()
             ->find($request->id)
@@ -193,7 +194,7 @@ class AdminMemoriamController extends Controller
      */
     public function message(Memoriam $memoriam): RedirectResponse
     {
-        $this->authorize('update', Memoriam::class);
+        Gate::authorize('update', Memoriam::class);
         $source_url = env('APP_URL').'/memoriam/'.$memoriam->slug;
         if (Message::where('source_url', $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
@@ -210,7 +211,7 @@ class AdminMemoriamController extends Controller
 
     public function feature(Memoriam $memoriam): RedirectResponse
     {
-        $this->authorize('update', Memoriam::class);
+        Gate::authorize('update', Memoriam::class);
         $memoriam->source_url = env('APP_URL').'/memoriam/'.$memoriam->slug;
         $msg = $this->featureService->createMemoriamFeature($memoriam);
         Session::flash('success', 'new feature from In Memoriam saved');

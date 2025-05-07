@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Models\InviteUser;
 use App\Models\Membership;
 use App\Models\User;
@@ -18,7 +19,7 @@ class ReInviteUserController extends Controller
      */
     public function index(): RedirectResponse
     {
-        $this->authorize('viewAny', InviteUser::class);
+        Gate::authorize('viewAny', InviteUser::class);
 
         DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')

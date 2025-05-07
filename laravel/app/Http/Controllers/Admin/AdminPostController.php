@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Constants\AccessLevelConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\DestroyPostRequest;
@@ -41,7 +42,7 @@ class AdminPostController extends Controller
      */
     public function index(Request $request): View
     {
-        $this->authorize('viewAny', Post::class);
+        Gate::authorize('viewAny', Post::class);
 
         $posts = Post::withoutGlobalScopes()
             ->sortable()
@@ -57,7 +58,7 @@ class AdminPostController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Post::class);
+        Gate::authorize('create', Post::class);
 
         $post = new Post;
 
@@ -78,7 +79,7 @@ class AdminPostController extends Controller
      */
     public function store(StorePostRequest $request): RedirectResponse
     {
-        $this->authorize('create', Post::class);
+        Gate::authorize('create', Post::class);
 
         $post = new Post($request->input('post'));
 
@@ -109,7 +110,7 @@ class AdminPostController extends Controller
      */
     public function edit(Post $post): View
     {
-        $this->authorize('update', Post::class);
+        Gate::authorize('update', Post::class);
 
         $post->load('user', 'attachments', 'topics');
 
@@ -136,7 +137,7 @@ class AdminPostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $any_post): RedirectResponse
     {
-        $this->authorize('update', Post::class);
+        Gate::authorize('update', Post::class);
 
         $any_post->fill($request->post);
         $any_post->save();
@@ -174,7 +175,7 @@ class AdminPostController extends Controller
      */
     public function destroy(DestroyPostRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Post::class);
+        Gate::authorize('delete', Post::class);
 
         Post::withoutGlobalScopes()
             ->find($request->id)
@@ -195,7 +196,7 @@ class AdminPostController extends Controller
      */
     public function message(Post $post): RedirectResponse
     {
-        $this->authorize('update', Post::class);
+        Gate::authorize('update', Post::class);
 
         $source_url = env('APP_URL').'/post/'.$post->slug;
         if (Message::where('source_url', $source_url)->exists()) {
@@ -219,7 +220,7 @@ class AdminPostController extends Controller
      */
     public function feature(Post $post): RedirectResponse
     {
-        $this->authorize('update', Post::class);
+        Gate::authorize('update', Post::class);
         $post->source_url = env('APP_URL').'/post/'.$post->slug;
         $msg = $this->featureService->createPostFeature($post);
         Session::flash('success', 'new feature from posts saved');

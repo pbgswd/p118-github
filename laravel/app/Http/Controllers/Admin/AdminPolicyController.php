@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Policies\AdminDestroyPolicy;
 use App\Http\Requests\Policies\AdminStorePolicy;
@@ -130,7 +131,7 @@ class AdminPolicyController extends Controller
     public function destroy(AdminDestroyPolicy $request): RedirectResponse
     {
         // todo permissions for Policy controller
-        $this->authorize('delete', Auth::user());
+        Gate::authorize('delete', Auth::user());
 
         /** @var Collection $policy */
         Policy::withoutGlobalScopes()
@@ -170,7 +171,7 @@ class AdminPolicyController extends Controller
 
     public function feature(Policy $policy): RedirectResponse
     {
-        $this->authorize('update', Auth::user());
+        Gate::authorize('update', Auth::user());
 
         $policy->source_url = env('APP_URL').'/policies/'.$policy->id;
         $msg = $this->featureService->createPolicyFeature($policy);

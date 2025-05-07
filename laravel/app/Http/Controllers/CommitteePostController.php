@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CommitteePost\DestroyCommitteePostRequest;
 use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
@@ -35,7 +36,7 @@ class CommitteePostController extends Controller
      */
     public function create(Committee $committee): View
     {
-        $this->authorize('create', [CommitteePost::class, $committee]);
+        Gate::authorize('create', [CommitteePost::class, $committee]);
 
         $post = new CommitteePost;
         $post['committee'] = $committee;
@@ -55,7 +56,7 @@ class CommitteePostController extends Controller
      */
     public function store(StoreCommitteePostRequest $request, Committee $committee): RedirectResponse
     {
-        $this->authorize('create', [CommitteePost::class, $committee]);
+        Gate::authorize('create', [CommitteePost::class, $committee]);
 
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
@@ -84,7 +85,7 @@ class CommitteePostController extends Controller
      */
     public function edit(Committee $committee, CommitteePost $committeePost): View
     {
-        $this->authorize('update', [CommitteePost::class, $committeePost]);
+        Gate::authorize('update', [CommitteePost::class, $committeePost]);
 
         $committeePost->load('creator', 'committee', 'attachments');
 
@@ -111,7 +112,7 @@ class CommitteePostController extends Controller
     public function update(UpdateCommitteePostRequest $request,
         Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
-        $this->authorize('update', [CommitteePost::class, $committeePost]);
+        Gate::authorize('update', [CommitteePost::class, $committeePost]);
 
         $committeePost->fill($request['post']);
         $committeePost->save();
@@ -178,7 +179,7 @@ class CommitteePostController extends Controller
     public function destroy(DestroyCommitteePostRequest $request,
         Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
-        $this->authorize('delete', [CommitteePost::class, $committeePost]);
+        Gate::authorize('delete', [CommitteePost::class, $committeePost]);
 
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)

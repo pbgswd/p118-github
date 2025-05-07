@@ -52,7 +52,7 @@ class AdminMotionController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Motion::class);
+        Gate::authorize('create', Motion::class);
 
         $upcoming = Meeting::withoutGlobalScopes()
             ->where('live', 1)

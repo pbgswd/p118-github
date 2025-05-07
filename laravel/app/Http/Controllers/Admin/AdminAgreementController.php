@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Agreements\DestroyAgreementRequest;
 use App\Http\Requests\Agreements\StoreAgreementRequest;
@@ -35,7 +36,7 @@ class AdminAgreementController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Agreement::class);
+        Gate::authorize('viewAny', Agreement::class);
 
         $data['agreements'] = Agreement::withoutGlobalScopes()
             ->sortable()
@@ -52,7 +53,7 @@ class AdminAgreementController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Agreement::class);
+        Gate::authorize('create', Agreement::class);
         $agreement = new Agreement;
 
         $data = [
@@ -71,7 +72,7 @@ class AdminAgreementController extends Controller
      */
     public function store(StoreAgreementRequest $request): RedirectResponse
     {
-        $this->authorize('create', Agreement::class);
+        Gate::authorize('create', Agreement::class);
 
         $agreement = new Agreement($request->agreement);
 
@@ -112,7 +113,7 @@ class AdminAgreementController extends Controller
      */
     public function edit(Agreement $agreement): View
     {
-        $this->authorize('update', Agreement::class);
+        Gate::authorize('update', Agreement::class);
 
         $agreement->load('user', 'attachments', 'organizations', 'venues');
 
@@ -144,7 +145,7 @@ class AdminAgreementController extends Controller
      */
     public function update(UpdateAgreementRequest $request, Agreement $any_agreement): RedirectResponse
     {
-        $this->authorize('update', Agreement::class);
+        Gate::authorize('update', Agreement::class);
 
         $any_agreement->fill($request->agreement);
 
@@ -190,7 +191,7 @@ class AdminAgreementController extends Controller
      */
     public function destroy(DestroyAgreementRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Agreement::class);
+        Gate::authorize('delete', Agreement::class);
         Agreement::withoutGlobalScopes()
             ->find($request->id)
             ->each(function (Agreement $agreement) {

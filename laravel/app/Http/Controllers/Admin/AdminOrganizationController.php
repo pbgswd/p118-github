@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Organization\DestroyOrganizationRequest;
 use App\Http\Requests\Organization\StoreOrganizationRequest;
@@ -33,7 +34,7 @@ class AdminOrganizationController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Organization::class);
+        Gate::authorize('viewAny', Organization::class);
         $data = [];
         $data['organizations'] = Organization::withoutGlobalScopes()->with('attachments', 'all_agreements')
             ->sortable()
@@ -48,7 +49,7 @@ class AdminOrganizationController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Organization::class);
+        Gate::authorize('create', Organization::class);
 
         $org = new Organization;
         $all_agreements = Agreement::withoutGlobalScopes()->orderBy('title')->get();
@@ -71,7 +72,7 @@ class AdminOrganizationController extends Controller
      */
     public function store(StoreOrganizationRequest $request): RedirectResponse
     {
-        $this->authorize('create', Organization::class);
+        Gate::authorize('create', Organization::class);
         $org = new Organization($request->organization);
 
         if ($request->file('image') !== null) {
@@ -106,7 +107,7 @@ class AdminOrganizationController extends Controller
      */
     public function edit(Organization $any_organization): View
     {
-        $this->authorize('update', Organization::class);
+        Gate::authorize('update', Organization::class);
 
         $any_organization->load('attachments');
 
@@ -152,7 +153,7 @@ class AdminOrganizationController extends Controller
     public function update(UpdateOrganizationRequest $request, Organization $any_organization): RedirectResponse
     {
         // dd($request->all());
-        $this->authorize('update', Organization::class);
+        Gate::authorize('update', Organization::class);
         $any_organization->fill($request->organization);
 
         if (isset($request['delete_image'])) {
@@ -205,7 +206,7 @@ class AdminOrganizationController extends Controller
      */
     public function destroy(DestroyOrganizationRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Organization::class);
+        Gate::authorize('delete', Organization::class);
         // todo verify organization delete image
         Organization::withoutGlobalScopes()
             ->find($request->id)

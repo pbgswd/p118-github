@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\InviteUser\DestroyInviteUserRequest;
 use App\Http\Requests\InviteUser\ProcessUserRequest;
 use App\Http\Requests\InviteUser\StoreInviteUserRequest;
@@ -31,7 +32,7 @@ class InviteUserController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', InviteUser::class);
+        Gate::authorize('viewAny', InviteUser::class);
 
         DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')
@@ -60,7 +61,7 @@ class InviteUserController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', InviteUser::class);
+        Gate::authorize('create', InviteUser::class);
 
         $invited = new InviteUser;
         $invited->role = ['member' => 'member'];
@@ -79,7 +80,7 @@ class InviteUserController extends Controller
      */
     public function store(StoreInviteUserRequest $request): RedirectResponse
     {
-        $this->authorize('create', InviteUser::class);
+        Gate::authorize('create', InviteUser::class);
 
         $invite = $request['invite'];
         $invite['password'] = str_replace('/', '', hash::make(Str::random(8)));
@@ -168,7 +169,7 @@ class InviteUserController extends Controller
      */
     public function process_import_invitation(): RedirectResponse
     {
-        $this->authorize('create', InviteUser::class);
+        Gate::authorize('create', InviteUser::class);
 
         DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM invite_users)')
@@ -278,7 +279,7 @@ class InviteUserController extends Controller
      */
     public function destroy(DestroyInviteUserRequest $request): RedirectResponse
     {
-        $this->authorize('delete', InviteUser::class);
+        Gate::authorize('delete', InviteUser::class);
 
         InviteUser::find($request->id)
             ->each(function (InviteUser $inviteUser) {

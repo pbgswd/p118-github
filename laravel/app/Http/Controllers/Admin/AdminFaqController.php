@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Constants\AccessLevelConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Faq\DestroyFaqRequest;
@@ -34,7 +35,7 @@ class AdminFaqController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Faq::class);
+        Gate::authorize('create', Faq::class);
 
         $data = [
             'faq' => new Faq,
@@ -51,7 +52,7 @@ class AdminFaqController extends Controller
      */
     public function store(StoreFaqRequest $request): RedirectResponse
     {
-        $this->authorize('create', Faq::class);
+        Gate::authorize('create', Faq::class);
 
         $faq = new Faq($request->input('faq'));
         $faq->user_id = Auth::id();
@@ -72,7 +73,7 @@ class AdminFaqController extends Controller
      */
     public function edit(Faq $faq): View
     {
-        $this->authorize('update', Faq::class);
+        Gate::authorize('update', Faq::class);
 
         $faq->load(['faqs_data', 'user'])->orderBy('faqs_data.sort_order', 'desc');
 
@@ -92,8 +93,8 @@ class AdminFaqController extends Controller
      */
     public function update(UpdateFaqRequest $request, Faq $any_faq): RedirectResponse
     {
-        $this->authorize('update', Faq::class);
-        $this->authorize('update', $any_faq);
+        Gate::authorize('update', Faq::class);
+        Gate::authorize('update', $any_faq);
 
         $any_faq->fill($request->validated()['faq']);
         $any_faq->save();
@@ -129,7 +130,7 @@ class AdminFaqController extends Controller
      */
     public function destroy(DestroyFaqRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Faq::class);
+        Gate::authorize('delete', Faq::class);
 
         Faq::withoutGlobalScopes()
             ->find($request->id)

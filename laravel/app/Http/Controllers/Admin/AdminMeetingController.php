@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Meetings\DestroyMeetingRequest;
 use App\Http\Requests\Meetings\StoreMeetingRequest;
@@ -42,7 +43,7 @@ class AdminMeetingController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Meeting::class);
+        Gate::authorize('viewAny', Meeting::class);
 
         $meetings = Meeting::withoutGlobalScopes()
             ->sortable()
@@ -63,7 +64,7 @@ class AdminMeetingController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Meeting::class);
+        Gate::authorize('create', Meeting::class);
         $meeting = new Meeting;
         $meeting->live = $meeting->getDefaultLiveStatus();
 
@@ -87,7 +88,7 @@ class AdminMeetingController extends Controller
      */
     public function store(StoreMeetingRequest $request): RedirectResponse
     {
-        $this->authorize('create', Meeting::class);
+        Gate::authorize('create', Meeting::class);
         $data = $request->validated();
         $meeting = new Meeting($data['meeting']);
         $meeting->date = new \DateTime($data['meeting']['date'].' '.$data['meeting']['time']);
@@ -150,7 +151,7 @@ class AdminMeetingController extends Controller
      */
     public function edit(Meeting $meeting): View
     {
-        $this->authorize('update', Meeting::class);
+        Gate::authorize('update', Meeting::class);
         $meeting->load('user', 'motions', 'attachments');
         $meeting->motions->load('user');
         $meeting->time = $meeting->date->format('H:i');
@@ -176,7 +177,7 @@ class AdminMeetingController extends Controller
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
-        $this->authorize('update', Meeting::class);
+        Gate::authorize('update', Meeting::class);
         $data = $request->validated();
 
         $data['meeting']['date'] = new \DateTime($data['meeting']['date'].' '.$data['meeting']['time']);
@@ -216,7 +217,7 @@ class AdminMeetingController extends Controller
      */
     public function destroy(DestroyMeetingRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Meeting::class);
+        Gate::authorize('delete', Meeting::class);
 
         $al = new ActivityLog([
             'activity' => Auth::user()->name.' deleted a meeting or meetings.',
@@ -244,7 +245,7 @@ class AdminMeetingController extends Controller
      */
     public function message(Meeting $meeting): RedirectResponse
     {
-        $this->authorize('update', Meeting::class);
+        Gate::authorize('update', Meeting::class);
 
         $source_url = env('APP_URL').'/minutes/'.$meeting->id;
 
@@ -268,7 +269,7 @@ class AdminMeetingController extends Controller
 
     public function feature(Meeting $meeting): RedirectResponse
     {
-        $this->authorize('update', Meeting::class);
+        Gate::authorize('update', Meeting::class);
         $meeting->source_url = env('APP_URL').'/minutes/'.$meeting->id;
 
         // todo construct data for feature for motions to be attached to meeting in the feature

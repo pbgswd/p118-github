@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Page\DestroyPageRequest;
 use App\Http\Requests\Page\StorePageRequest;
@@ -44,7 +45,7 @@ class AdminPageController extends Controller
      */
     public function index(Request $request): View
     {
-        $this->authorize('viewAny', Page::class);
+        Gate::authorize('viewAny', Page::class);
         $pages = Page::withoutGlobalScopes()
             ->sortable()
             ->with('topics', 'user', 'attachments')
@@ -68,7 +69,7 @@ class AdminPageController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Page::class);
+        Gate::authorize('create', Page::class);
 
         $page = new Page;
         $page['user_id'] = Auth::id();
@@ -93,7 +94,7 @@ class AdminPageController extends Controller
      */
     public function store(StorePageRequest $request): RedirectResponse
     {
-        $this->authorize('create', Page::class);
+        Gate::authorize('create', Page::class);
 
         $page = new Page($request->page);
 
@@ -123,7 +124,7 @@ class AdminPageController extends Controller
      */
     public function edit(Page $page): View
     {
-        $this->authorize('update', Page::class);
+        Gate::authorize('update', Page::class);
 
         $page->load('user', 'attachments', 'topics');
 
@@ -145,9 +146,9 @@ class AdminPageController extends Controller
      */
     public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
     {
-        $this->authorize('update', Page::class);
+        Gate::authorize('update', Page::class);
 
-        $this->authorize('update', $any_page);
+        Gate::authorize('update', $any_page);
 
         $any_page->fill($request->page);
         $any_page->save();
@@ -177,7 +178,7 @@ class AdminPageController extends Controller
 
     public function message(Page $page): RedirectResponse
     {
-        $this->authorize('update', Page::class);
+        Gate::authorize('update', Page::class);
 
         $source_url = env('APP_URL').'/page/'.$page->slug;
         if (Message::where('source_url', $source_url)->exists()) {
@@ -197,7 +198,7 @@ class AdminPageController extends Controller
 
     public function feature(Page $page): RedirectResponse
     {
-        $this->authorize('update', Page::class);
+        Gate::authorize('update', Page::class);
         $page->source_url = env('APP_URL').'/page/'.$page->slug;
         $msg = $this->featureService->createPageFeature($page);
         Session::flash('success', 'new feature from Pages saved');
@@ -210,7 +211,7 @@ class AdminPageController extends Controller
      */
     public function destroy(DestroyPageRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Page::class);
+        Gate::authorize('delete', Page::class);
 
         Page::withoutGlobalScopes()
             ->find($request->id)

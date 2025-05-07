@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Gate;
 use App\Constants\AccessLevelConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Feature\DestroyFeatureRequest;
@@ -39,7 +40,7 @@ class AdminFeatureController extends Controller
      */
     public function index(Request $request): View
     {
-        $this->authorize('viewAny', Feature::class);
+        Gate::authorize('viewAny', Feature::class);
 
         $features = Feature::withoutGlobalScopes()
             ->orderBy('date', 'desc')
@@ -60,7 +61,7 @@ class AdminFeatureController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Feature::class);
+        Gate::authorize('create', Feature::class);
 
         $feature = new Feature;
 
@@ -80,7 +81,7 @@ class AdminFeatureController extends Controller
      */
     public function store(StoreFeatureRequest $request, UserImageService $service): RedirectResponse
     {
-        $this->authorize('create', Feature::class);
+        Gate::authorize('create', Feature::class);
 
         $feature = new Feature($request->input('feature'));
 
@@ -106,7 +107,7 @@ class AdminFeatureController extends Controller
      */
     public function edit(Feature $feature, UserImageService $service): View
     {
-        $this->authorize('update', Feature::class);
+        Gate::authorize('update', Feature::class);
 
         if ($feature['image']) {
             $tn_str = Options::feature_thumb_values()['tn_str'];
@@ -143,7 +144,7 @@ class AdminFeatureController extends Controller
      */
     public function update(UpdateFeatureRequest $request, Feature $any_feature, UserImageService $service): RedirectResponse
     {
-        $this->authorize('update', Feature::class);
+        Gate::authorize('update', Feature::class);
 
         $any_feature->fill($request->input('feature'));
 
@@ -177,7 +178,7 @@ class AdminFeatureController extends Controller
      */
     public function destroy(DestroyFeatureRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Feature::class);
+        Gate::authorize('delete', Feature::class);
 
         Feature::withoutGlobalScopes()
             ->find($request->id)
@@ -201,7 +202,7 @@ class AdminFeatureController extends Controller
     public function message(Feature $feature): RedirectResponse
     {
 
-        $this->authorize('update', Feature::class);
+        Gate::authorize('update', Feature::class);
 
         $source_url = env('APP_URL').'/feature/'.$feature->slug;
 
