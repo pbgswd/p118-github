@@ -22,9 +22,9 @@ class Motion extends Model implements HasAttachment, Searchable
 
     protected $guard_name = 'web';
 
-//    protected $policies = [
-//        self::class => Motion::class,
-//    ];
+    //    protected $policies = [
+    //        self::class => Motion::class,
+    //    ];
 
     protected $fillable = [
         'title',
@@ -46,7 +46,7 @@ class Motion extends Model implements HasAttachment, Searchable
 
     public function user(): BelongsTo
     {
-       // return $this->hasOne(User::class, 'id', 'user_id');
+        // return $this->hasOne(User::class, 'id', 'user_id');
 
         return $this->belongsTo(User::class);
     }
@@ -76,7 +76,7 @@ class Motion extends Model implements HasAttachment, Searchable
         return AccessLevelConstants::MEMBERS;
     }
 
-//todo finish search
+    // todo finish search
     public function getSearchResult(): SearchResult
     {
         $modelList = new ModelList;

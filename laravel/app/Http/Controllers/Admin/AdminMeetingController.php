@@ -24,12 +24,12 @@ use Illuminate\View\View;
 
 class AdminMeetingController extends Controller
 {
-    /**
-     * @var AttachmentService
-     */
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
+
     private FeatureService $featureService;
+
     public function __construct(AttachmentService $attachmentService, MessageService $messageService, FeatureService $featureService)
     {
         $this->attachmentService = $attachmentService;
@@ -94,31 +94,31 @@ class AdminMeetingController extends Controller
         $meeting->user_id = Auth::user()->id;
         $meeting->save();
 
-           if($meeting->meeting_type == 'General' && $meeting->live == 1) {
-               $motions = Motion::where('meeting_id', null)->get();
-               $savedcount = intval(0);
+        if ($meeting->meeting_type == 'General' && $meeting->live == 1) {
+            $motions = Motion::where('meeting_id', null)->get();
+            $savedcount = intval(0);
 
-               foreach ($motions as $motion) {
-                   // Motion
-                   if(( Carbon::today()->diffInDays($meeting->date) - 10 ) > 0 && $motion->submission_type == 'Motion') {
+            foreach ($motions as $motion) {
+                // Motion
+                if ((Carbon::today()->diffInDays($meeting->date) - 10) > 0 && $motion->submission_type == 'Motion') {
 
-                       $motion->meeting_id = $meeting->id;
-                       $motion->save();
-                       $savedcount++;
-                       //todo send email to executive with new attached motion
-                   }
-                    // New Business
-                   if(( Carbon::today()->diffInHours($meeting->date) - 48 ) > 0 && $motion->submission_type == 'New Business') {
-                       $motion->meeting_id = $meeting->id;
-                       $motion->save();
-                       $savedcount++;
-                       //todo send email to executive with new attached motion
-                   }
-               }
-               if($savedcount > 0) {
-                   Session::flash('info', $savedcount . " " . Str::of('motion')->plural($savedcount) .' added to the meeting.');
-               }
-           }
+                    $motion->meeting_id = $meeting->id;
+                    $motion->save();
+                    $savedcount++;
+                    // todo send email to executive with new attached motion
+                }
+                // New Business
+                if ((Carbon::today()->diffInHours($meeting->date) - 48) > 0 && $motion->submission_type == 'New Business') {
+                    $motion->meeting_id = $meeting->id;
+                    $motion->save();
+                    $savedcount++;
+                    // todo send email to executive with new attached motion
+                }
+            }
+            if ($savedcount > 0) {
+                Session::flash('info', $savedcount.' '.Str::of('motion')->plural($savedcount).' added to the meeting.');
+            }
+        }
 
         Session::flash('success', 'Meeting saved.');
 
@@ -133,11 +133,10 @@ class AdminMeetingController extends Controller
             }
         }
 
-        //todo when a meeting has been created, and motions ahve been newly associated with a meeting, send an email
-
+        // todo when a meeting has been created, and motions ahve been newly associated with a meeting, send an email
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . ' created a new meeting, ' . $meeting->title,
+            'activity' => Auth::user()->name.' created a new meeting, '.$meeting->title,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
@@ -162,7 +161,7 @@ class AdminMeetingController extends Controller
                 'data' => [
                     'meeting' => $meeting,
                     'action' => 'Edit',
-                    'existing_message' => Message::where('source_url',  env('APP_URL') . '/meeting/' .
+                    'existing_message' => Message::where('source_url', env('APP_URL').'/meeting/'.
                         $meeting->id)->exists(),
                     'access_levels' => Options::access_levels(),
                     'meeting_types' => Options::meeting_types(),
@@ -172,22 +171,19 @@ class AdminMeetingController extends Controller
     }
 
     /**
-     * @param UpdateMeetingRequest $request
-     * @param Meeting $any_meeting
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws \DateMalformedStringException
      */
     public function update(UpdateMeetingRequest $request, Meeting $any_meeting): RedirectResponse
     {
-        $this->authorize('update', Meeting::class, );
+        $this->authorize('update', Meeting::class);
         $data = $request->validated();
 
         $data['meeting']['date'] = new \DateTime($data['meeting']['date'].' '.$data['meeting']['time']);
         $any_meeting->fill($data['meeting']);
         $any_meeting->save();
 
-        if($any_meeting->meeting_type == 'General' && (Carbon::today()->diffInDays($any_meeting->date) - 10 >= 0)) {
+        if ($any_meeting->meeting_type == 'General' && (Carbon::today()->diffInDays($any_meeting->date) - 10 >= 0)) {
             Motion::where('meeting_id', null)->update(['meeting_id' => $any_meeting->id]);
         }
 
@@ -206,7 +202,7 @@ class AdminMeetingController extends Controller
         Session::flash('success', 'You have edited the meeting information');
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . ' updated a meeting, ' . $any_meeting->title,
+            'activity' => Auth::user()->name.' updated a meeting, '.$any_meeting->title,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
@@ -223,7 +219,7 @@ class AdminMeetingController extends Controller
         $this->authorize('delete', Meeting::class);
 
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . ' deleted a meeting or meetings.',
+            'activity' => Auth::user()->name.' deleted a meeting or meetings.',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);
@@ -250,10 +246,11 @@ class AdminMeetingController extends Controller
     {
         $this->authorize('update', Meeting::class);
 
-        $source_url = env('APP_URL') . '/minutes/' . $meeting->id;
+        $source_url = env('APP_URL').'/minutes/'.$meeting->id;
 
-        if(Message::where('source_url',  $source_url)->exists()) {
+        if (Message::where('source_url', $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
+
             return redirect()->route('meeting_edit', [$meeting->id]);
         }
 
@@ -262,7 +259,7 @@ class AdminMeetingController extends Controller
 
         $msg = $this->messageService->createMeetingMessage($meeting);
 
-        //todo construct data for message for motions to be attached to meeting in the message
+        // todo construct data for message for motions to be attached to meeting in the message
 
         Session::flash('success', 'new message from posts saved');
 
@@ -272,14 +269,13 @@ class AdminMeetingController extends Controller
     public function feature(Meeting $meeting): RedirectResponse
     {
         $this->authorize('update', Meeting::class);
-        $meeting->source_url = env('APP_URL') . '/minutes/' . $meeting->id;
+        $meeting->source_url = env('APP_URL').'/minutes/'.$meeting->id;
 
-        //todo construct data for feature for motions to be attached to meeting in the feature
-
+        // todo construct data for feature for motions to be attached to meeting in the feature
 
         $msg = $this->featureService->createMeetingFeature($meeting);
         Session::flash('success', 'new feature from Meeting Minutes saved');
+
         return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
-
 }

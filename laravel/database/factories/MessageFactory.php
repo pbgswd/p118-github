@@ -25,13 +25,13 @@ class MessageFactory extends Factory
             'source_url' => $this->faker->url(),
             'subject' => $subject,
             'slug' => $slug,
-            'content' => 'content ' . $this->faker->paragraphs(4, true),
+            'content' => 'content '.$this->faker->paragraphs(4, true),
             'user_id' => 1,
         ];
     }
 
-    //todo make message_cagtegories data for messages
+    // todo make message_cagtegories data for messages
 
-    //todo make user message_selections data
+    // todo make user message_selections data
 
 }

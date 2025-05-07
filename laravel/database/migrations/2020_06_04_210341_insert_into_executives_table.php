@@ -9,7 +9,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //todo data from options for executive
+        // todo data from options for executive
         DB::table('executives')->insert(
             [
                 ['title' => 'President',

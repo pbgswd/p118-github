@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //I want all the columns changed, gone forever
+        // I want all the columns changed, gone forever
     }
 };

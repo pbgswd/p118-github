@@ -105,7 +105,7 @@ class AdminVenueControllerTest extends TestCase
                 'venue' => $venue->toArray(),
             ]);
         // both work, but issues
-        //$response->assertRedirect(route('venue_edit', [$venue->slug]));
+        // $response->assertRedirect(route('venue_edit', [$venue->slug]));
         $this->assertEquals(Session::get('success'), 'You have saved a new venue');
     }
 

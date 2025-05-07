@@ -24,11 +24,10 @@ use Illuminate\View\View;
 
 class AdminCommitteePostController extends Controller
 {
-    /**
-     * @var AttachmentService
-     */
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
+
     private FeatureService $featureService;
 
     public function __construct(AttachmentService $attachmentService, MessageService $messageService, FeatureService $featureService)
@@ -113,10 +112,9 @@ class AdminCommitteePostController extends Controller
 
         $any_committee_post->load('creator', 'admin_post_comments', 'attachments');
 
-        if(Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug)->exists()) {
-            $existing_message = Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug)->first();
-        }
-        else {
+        if (Message::where('source_url', env('APP_URL').'/committee/'.$committee->slug.'/post/'.$any_committee_post->slug)->exists()) {
+            $existing_message = Message::where('source_url', env('APP_URL').'/committee/'.$committee->slug.'/post/'.$any_committee_post->slug)->first();
+        } else {
             $existing_message = false;
         }
 
@@ -164,10 +162,11 @@ class AdminCommitteePostController extends Controller
     {
         $this->authorize('update', $committee);
 
-        $source_url = env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug;
+        $source_url = env('APP_URL').'/committee/'.$committee->slug.'/post/'.$any_committee_post->slug;
 
-        if(Message::where('source_url',  $source_url)->exists()) {
+        if (Message::where('source_url', $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
+
             return redirect()->route('admin_committee_post_edit', [$committee->slug, $any_committee_post->slug]);
         }
 
@@ -176,18 +175,19 @@ class AdminCommitteePostController extends Controller
         $msg = $this->messageService->createCommitteePostMessage($any_committee_post);
 
         Session::flash('success', 'new message from posts saved');
+
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
     }
 
     public function feature(Committee $committee, CommitteePost $any_committee_post): RedirectResponse
     {
         $this->authorize('update', $committee);
-        $any_committee_post->source_url = env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $any_committee_post->slug;
+        $any_committee_post->source_url = env('APP_URL').'/committee/'.$committee->slug.'/post/'.$any_committee_post->slug;
         $msg = $this->featureService->createCommitteePostFeature($any_committee_post);
-        Session::flash('success', 'new feature from ' . $committee->name . ' Committee Post saved');
+        Session::flash('success', 'new feature from '.$committee->name.' Committee Post saved');
+
         return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
-
 
     /**
      * @throws Exception

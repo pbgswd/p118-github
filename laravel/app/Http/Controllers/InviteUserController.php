@@ -70,7 +70,7 @@ class InviteUserController extends Controller
             'roles' => Role::get(),
             'membership' => Options::membership_levels(),
             'action' => 'Invite',
-            ],
+        ],
         ]);
     }
 
@@ -87,8 +87,7 @@ class InviteUserController extends Controller
         $invitation = new InviteUser($invite);
         $invitation->save();
 
-        Mail::send('emails.mail_invited_user', ['data' =>
-            ['invitation' => $invitation]],
+        Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]],
             function ($m) use ($invitation) {
                 $m->from(config('mail.from.address'),
                     config('mail.from.name').' Website Signup');
@@ -98,14 +97,14 @@ class InviteUserController extends Controller
             });
 
         $al = new ActivityLog([
-            'activity' => 'A website invitation has been sent to ' .
-                $invitation['name'] . '.',
+            'activity' => 'A website invitation has been sent to '.
+                $invitation['name'].'.',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'InviteUser']);
         $al->save();
 
-        Session::flash('success', 'Invitation for access sent to ' .
+        Session::flash('success', 'Invitation for access sent to '.
             $invitation['name']);
 
         return redirect()->route('admin_list_invited_users');
@@ -116,18 +115,18 @@ class InviteUserController extends Controller
      */
     public function show(InviteUser $inviteUser): View
     {
-//todo 48 hour signup limitation of 48 hours before need to reapply
-/***
-    $now = Carbon::now();
-    $allowedInvitationTime = 60 * 48; // 2 days
-    $interval = $now->diffInMinutes($inviteUser->updated_at);
-    if ($interval > $allowedInvitationTime) {
-        Session::flash('error',
- * "The invitation has expired as it is older than 48 hours.
-* Please contact the site to get a new invitation.");
-        return redirect()->route('hello');
-    }
-***/
+        // todo 48 hour signup limitation of 48 hours before need to reapply
+        /***
+            $now = Carbon::now();
+            $allowedInvitationTime = 60 * 48; // 2 days
+            $interval = $now->diffInMinutes($inviteUser->updated_at);
+            if ($interval > $allowedInvitationTime) {
+                Session::flash('error',
+         * "The invitation has expired as it is older than 48 hours.
+        * Please contact the site to get a new invitation.");
+                return redirect()->route('hello');
+            }
+        ***/
         if (User::where('email', $inviteUser->email)->first() !== null) {
             Session::flash('error',
                 'The invitation is no longer valid because you have been
@@ -206,8 +205,7 @@ class InviteUserController extends Controller
 
             $invitation->save();
 
-            Mail::send('emails.mail_invited_user', ['data' =>
-                ['invitation' => $invitation]],
+            Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]],
                 function ($m) use ($invitation) {
                     $m->from(config('mail.from.address'),
                         config('mail.from.name').' Website Signup');
@@ -232,7 +230,7 @@ class InviteUserController extends Controller
     }
 
     public function process_user(ProcessUserRequest $request,
-                                 InviteUser $inviteUser): RedirectResponse
+        InviteUser $inviteUser): RedirectResponse
     {
         $data = [
             'name' => $inviteUser->name,
@@ -259,11 +257,11 @@ class InviteUserController extends Controller
         InviteUser::where('email', $inviteUser->email)->delete();
 
         $al = new ActivityLog([
-            'activity' => $user->name .
+            'activity' => $user->name.
                 ' has completed website signup',
-                'ip_address' => $_SERVER['REMOTE_ADDR'],
-                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-                'model' => 'InviteUser']);
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'InviteUser']);
 
         $al->save();
 
@@ -287,7 +285,7 @@ class InviteUserController extends Controller
                 $inviteUser->delete();
             });
 
-        Session::flash('success', Str::plural(count([$request->id]) .
+        Session::flash('success', Str::plural(count([$request->id]).
             ' Invitation'.' deleted.'));
 
         return redirect()->route('users.admin_list_invited_users');

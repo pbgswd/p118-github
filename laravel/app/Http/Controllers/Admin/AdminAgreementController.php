@@ -20,7 +20,6 @@ use Illuminate\View\View;
 
 class AdminAgreementController extends Controller
 {
-    /** @var AttachmentService */
     private AttachmentService $attachmentService;
 
     /**

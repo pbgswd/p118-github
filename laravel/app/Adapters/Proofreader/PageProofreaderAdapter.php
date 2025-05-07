@@ -14,7 +14,7 @@ class PageProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Page Model - specific to this class
+        // Page Model - specific to this class
         return [
             self::NAME => 'Pages',
             self::PUB_ROUTE_LIST => 'pages',

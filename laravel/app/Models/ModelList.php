@@ -19,7 +19,7 @@ class ModelList
      */
     public static function getModelList(): array
     {
-        //metadata
+        // metadata
         return [
             'Agreement' => [
                 'name' => 'Agreements',

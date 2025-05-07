@@ -27,7 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //drop role
+        // drop role
         Schema::table('committee_user', function (Blueprint $table) {
             $table->dropColumn('created_at');
             $table->dropColumn('updated_at');

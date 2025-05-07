@@ -20,10 +20,10 @@ return new class extends Migration
             $table->timestamps();
         });
 
-       Schema::table('users', function (Blueprint $table) {
-           DB::statement('UPDATE users set `is_banned` = 0 where `is_banned` IS NULL');
-           $table->tinyInteger('is_banned')->default(0)->index()->change();
-       });
+        Schema::table('users', function (Blueprint $table) {
+            DB::statement('UPDATE users set `is_banned` = 0 where `is_banned` IS NULL');
+            $table->tinyInteger('is_banned')->default(0)->index()->change();
+        });
     }
 
     /**

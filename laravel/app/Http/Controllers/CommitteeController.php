@@ -41,8 +41,8 @@ class CommitteeController extends Controller
 
         $rank = \array_flip(\array_values(Options::committee_executive_roles()));
 
-        //todo something in this assignment is causing a deprecated error
-        //uasort(): Returning bool from comparison function is deprecated, return an integer less than, equal to, or greater than zero in /var/www/project118/laravel/vendor/laravel/framework/src/Illuminate/Collections/Collection.php
+        // todo something in this assignment is causing a deprecated error
+        // uasort(): Returning bool from comparison function is deprecated, return an integer less than, equal to, or greater than zero in /var/www/project118/laravel/vendor/laravel/framework/src/Illuminate/Collections/Collection.php
         $data['executives'] = $committee
             ->active_committee_members
             ->filter(static function (User $member) {

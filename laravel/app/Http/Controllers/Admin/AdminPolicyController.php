@@ -7,8 +7,8 @@ use App\Http\Requests\Policies\AdminDestroyPolicy;
 use App\Http\Requests\Policies\AdminStorePolicy;
 use App\Http\Requests\Policies\AdminUpdatePolicy;
 use App\Models\Message;
-use App\Models\Policy;
 use App\Models\Options;
+use App\Models\Policy;
 use App\Services\AttachmentService;
 use App\Services\FeatureService;
 use App\Services\MessageService;
@@ -22,9 +22,10 @@ use Illuminate\View\View;
 
 class AdminPolicyController extends Controller
 {
-    /** @var AttachmentService */
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
+
     private FeatureService $featureService;
 
     /**
@@ -87,7 +88,7 @@ class AdminPolicyController extends Controller
         $data = [
             'policy' => $any_policy->loadWithoutGlobalScopes('user', 'attachments'),
             'action' => 'Edit',
-            'existing_message' => Message::where('source_url',  env('APP_URL') . '/policies/' . $any_policy->id)->exists(),
+            'existing_message' => Message::where('source_url', env('APP_URL').'/policies/'.$any_policy->id)->exists(),
             'access_levels' => Options::access_levels(),
         ];
 
@@ -128,7 +129,7 @@ class AdminPolicyController extends Controller
      */
     public function destroy(AdminDestroyPolicy $request): RedirectResponse
     {
-        //todo permissions for Policy controller
+        // todo permissions for Policy controller
         $this->authorize('delete', Auth::user());
 
         /** @var Collection $policy */
@@ -147,12 +148,13 @@ class AdminPolicyController extends Controller
 
     public function message(Policy $policy): RedirectResponse
     {
-        //$this->authorize('update', Policy::class);
+        // $this->authorize('update', Policy::class);
 
-        $source_url = env('APP_URL') . '/policies/' . $policy->id;
+        $source_url = env('APP_URL').'/policies/'.$policy->id;
 
-        if(Message::where('source_url',  $source_url)->exists()) {
+        if (Message::where('source_url', $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
+
             return redirect()->route('admin_policy_edit', [$policy->id]);
         }
 
@@ -170,10 +172,10 @@ class AdminPolicyController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        $policy->source_url = env('APP_URL') . '/policies/' . $policy->id;
+        $policy->source_url = env('APP_URL').'/policies/'.$policy->id;
         $msg = $this->featureService->createPolicyFeature($policy);
         Session::flash('success', 'new feature from policies saved');
+
         return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
-
 }

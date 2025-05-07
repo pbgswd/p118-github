@@ -8,7 +8,6 @@ use App\Http\Requests\Feature\DestroyFeatureRequest;
 use App\Http\Requests\Feature\StoreFeatureRequest;
 use App\Http\Requests\Feature\UpdateFeatureRequest;
 use App\Models\Feature;
-use App\Models\Meeting;
 use App\Models\Message;
 use App\Models\Options;
 use App\Services\AttachmentService;
@@ -24,12 +23,13 @@ use Spatie\Image\Exceptions\InvalidManipulation;
 
 class AdminFeatureController extends Controller
 {
-    /** @var AttachmentService */
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
+
     public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
-        //todo not using attachment service
+        // todo not using attachment service
         $this->attachmentService = $attachmentService;
         $this->messageService = $messageService;
     }
@@ -129,7 +129,7 @@ class AdminFeatureController extends Controller
         $data = [
             'feature' => $feature,
             'action' => 'Edit',
-            'existing_message' => Message::where('source_url',  env('APP_URL') . '/feature/' . $feature->slug)->exists(),
+            'existing_message' => Message::where('source_url', env('APP_URL').'/feature/'.$feature->slug)->exists(),
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
         ];
@@ -203,10 +203,11 @@ class AdminFeatureController extends Controller
 
         $this->authorize('update', Feature::class);
 
-        $source_url = env('APP_URL') . '/feature/' . $feature->slug;
+        $source_url = env('APP_URL').'/feature/'.$feature->slug;
 
-        if(Message::where('source_url',  $source_url)->exists()) {
+        if (Message::where('source_url', $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
+
             return redirect()->route('admin_feature_edit', [$feature->slug]);
         }
 

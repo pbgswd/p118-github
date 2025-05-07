@@ -82,7 +82,8 @@ class AdminFaqController extends Controller
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
         ];
-//dd($data);
+
+        // dd($data);
         return view('admin.faq_topic_create', ['data' => $data]);
     }
 
@@ -98,8 +99,7 @@ class AdminFaqController extends Controller
         $any_faq->save();
 
         if (isset($request->validated()['faq']['faq_data'])) {
-            foreach ($request->validated()['faq']['faq_data'] as $fd)
-            {
+            foreach ($request->validated()['faq']['faq_data'] as $fd) {
                 if ($fd['delete'] == 1) {
                     FaqData::where('id', $fd['id'])->delete();
                 } else {
@@ -113,9 +113,8 @@ class AdminFaqController extends Controller
             $faq_data = new FaqData($request->validated()['new']);
             $faq_data->faq()->associate($any_faq);
             $faq_data->save();
-        }
-        else {
-            //try again, empty question
+        } else {
+            // try again, empty question
         }
 
         Session::flash('success', 'You have updated a Faq topic');

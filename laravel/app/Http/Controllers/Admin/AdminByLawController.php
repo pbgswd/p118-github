@@ -18,7 +18,6 @@ use Illuminate\View\View;
 
 class AdminByLawController extends Controller
 {
-    /** @var AttachmentService */
     private AttachmentService $attachmentService;
 
     /**

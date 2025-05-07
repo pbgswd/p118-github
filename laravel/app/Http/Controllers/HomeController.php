@@ -6,7 +6,7 @@ use Illuminate\Http\RedirectResponse;
 
 class HomeController extends Controller
 {
-    //todo does the site need HomeController any more?
+    // todo does the site need HomeController any more?
 
     /**
      * Create a new controller instance.

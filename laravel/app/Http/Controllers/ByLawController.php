@@ -47,13 +47,12 @@ class ByLawController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
-
         return view('bylaw_view', ['data' => [
             'bylaw' => $bylaw,
             'title' => $bylaw->title.' -  Constitution and Bylaws',
             'next' => $next,
             'previous' => $previous,
-            ]
+        ],
         ]);
     }
 }

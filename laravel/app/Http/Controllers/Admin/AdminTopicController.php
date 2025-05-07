@@ -18,7 +18,6 @@ use Illuminate\View\View;
 
 class AdminTopicController extends Controller
 {
-    /** @var AttachmentService */
     private AttachmentService $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)

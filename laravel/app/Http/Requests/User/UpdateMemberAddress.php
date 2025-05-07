@@ -20,7 +20,7 @@ class UpdateMemberAddress extends FormRequest
     public function rules(): array
     {
         return [
-            //unique:table,column,except,idColumn
+            // unique:table,column,except,idColumn
             'unit' => 'max:255|nullable',
             'street' => 'max:255|required',
             'city' => 'max:255|required',

@@ -14,7 +14,7 @@ class TopicProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Topic Model - specific to this class
+        // Topic Model - specific to this class
         return [
             self::NAME => 'Topics',
             self::PUB_ROUTE_LIST => 'topics',

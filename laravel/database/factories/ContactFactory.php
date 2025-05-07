@@ -16,7 +16,7 @@ class ContactFactory extends Factory
             'email' => $this->faker->email(),
             'mail_subject' => $this->faker->text(5),
             'mail_body' => $this->faker->text(200),
-            //'g-recaptcha-response'
+            // 'g-recaptcha-response'
         ];
     }
 }

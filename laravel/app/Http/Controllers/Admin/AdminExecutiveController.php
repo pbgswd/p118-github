@@ -67,7 +67,7 @@ class AdminExecutiveController extends Controller
 
         $executive->save();
 
-        //todo msg member that he she has a role.
+        // todo msg member that he she has a role.
 
         Session::flash('success', 'You have created a member executive role');
 

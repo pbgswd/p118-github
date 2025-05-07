@@ -22,7 +22,7 @@ class UpdateMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'message.subject' => 'required|max:255|unique:messages,subject,' . $this->route('message')->slug . ',slug,id,' . $this->route('message')->id,
+            'message.subject' => 'required|max:255|unique:messages,subject,'.$this->route('message')->slug.',slug,id,'.$this->route('message')->id,
             'message.content' => 'string|nullable',
         ];
     }

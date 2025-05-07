@@ -25,7 +25,7 @@ class AdminVenueController extends Controller
     public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;
-        //$this->userImageService = $userImageService;
+        // $this->userImageService = $userImageService;
     }
 
     /**

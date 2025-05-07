@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class MotionPolicy
 {
@@ -25,8 +24,8 @@ class MotionPolicy
     public function viewAny(User $user): bool
     {
         return true;
-     //   return $user->hasRole(['super-admin', 'writer']) ||
-         //   $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
+        //   return $user->hasRole(['super-admin', 'writer']) ||
+        //   $user->hasAnyPermission(['create articles', 'edit articles', 'publish articles', 'unpublish articles']);
     }
 
     /**
@@ -34,7 +33,7 @@ class MotionPolicy
      */
     public function view(User $user, Motion $motion): bool
     {
-        //todo auth logged in for admin
+        // todo auth logged in for admin
         return $user->hasRole(['super-admin', 'writer']) || $user->hasPermission(['create articles']);
     }
 
@@ -61,9 +60,9 @@ class MotionPolicy
      */
     public function delete(User $user, Motion $motion): Response
     {
-         return $motion->user_id === $user->id ?
-             Response::allow() :
-             Response::deny('You cannot delete this ' . $motion->submission_type );
+        return $motion->user_id === $user->id ?
+            Response::allow() :
+            Response::deny('You cannot delete this '.$motion->submission_type);
     }
 
     /**

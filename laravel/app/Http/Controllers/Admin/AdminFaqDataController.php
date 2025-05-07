@@ -9,7 +9,6 @@ use App\Http\Requests\FaqData\StoreFaqDataRequest;
 use App\Http\Requests\FaqData\UpdateFaqDataRequest;
 use App\Models\Faq;
 use App\Models\FaqData;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -22,8 +21,8 @@ class AdminFaqDataController extends Controller
     public function create(Faq $faq): View
     {
 
-    $faq_data = new FaqData();
-    $faq_data['faq'] = $faq;
+        $faq_data = new FaqData;
+        $faq_data['faq'] = $faq;
         $data = [
             'action' => 'Create',
             'faq' => $faq,
@@ -46,7 +45,6 @@ class AdminFaqDataController extends Controller
         $faq_data->save();
         Session::flash('info', 'FAQ question and answer created.');
 
-
         return redirect()->route('admin_faq_data_edit', ['faq' => $faq->slug, 'faq_data' => $faq_data->id]);
     }
 
@@ -55,7 +53,7 @@ class AdminFaqDataController extends Controller
      */
     public function edit(Faq $faq, FaqData $faqData): View
     {
-        $faqData->load('faq','user');
+        $faqData->load('faq', 'user');
         $data = [
             'faq_data' => $faqData,
             'action' => 'Edit',
@@ -85,10 +83,10 @@ class AdminFaqDataController extends Controller
      */
     public function destroy(DestroyFaqDataRequest $request, FaqData $faqData)
     {
-      //  $this->authorize('delete', FaqData::class);
+        //  $this->authorize('delete', FaqData::class);
 
         FaqData::find($request->validated()['id'])
-                ->each(function (FaqData $faq_data) {
+            ->each(function (FaqData $faq_data) {
                 $faq_data->delete();
             });
 

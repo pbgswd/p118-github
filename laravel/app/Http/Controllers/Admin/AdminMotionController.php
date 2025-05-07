@@ -12,14 +12,12 @@ use App\Models\Motion;
 use App\Models\Options;
 use App\Services\AttachmentService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class AdminMotionController extends Controller
 {
@@ -56,7 +54,7 @@ class AdminMotionController extends Controller
     {
         $this->authorize('create', Motion::class);
 
-            $upcoming = Meeting::withoutGlobalScopes()
+        $upcoming = Meeting::withoutGlobalScopes()
             ->where('live', 1)
             ->where('date', '>=', date('Y-m-d'))
             ->withCount('motions')
@@ -64,7 +62,7 @@ class AdminMotionController extends Controller
             ->get();
 
         $data = [
-            'motion' => new Motion(),
+            'motion' => new Motion,
             'motion_types' => Options::motion_types(),
             'upcoming' => $upcoming,
             'action' => 'Create',
@@ -104,11 +102,11 @@ class AdminMotionController extends Controller
 
         $cc = $motion->user->email;
 
-        $motion->subject = $motion->submission_type . " Created by Admin " . Auth::user()->name . ": " . $motion->title;
+        $motion->subject = $motion->submission_type.' Created by Admin '.Auth::user()->name.': '.$motion->title;
 
         Mail::send('emails.email_motion', ['data' => $motion],
             function ($m) use ($motion, $cc) {
-                $m->from(config('mail.from.address'), config('app.name') . ' Motions & New Business');
+                $m->from(config('mail.from.address'), config('app.name').' Motions & New Business');
                 $m->to(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
                 $m->cc($cc, $cc);
                 $m->replyTo(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
@@ -116,8 +114,8 @@ class AdminMotionController extends Controller
 
                 if ($motion->attachments->count() > 0) {
                     foreach ($motion->attachments as $att) {
-                        $file = 'storage/motions/' . $att->file;
-                        $mime = mime_content_type(getcwd() . "/" . $file);
+                        $file = 'storage/motions/'.$att->file;
+                        $mime = mime_content_type(getcwd().'/'.$file);
                         $file_name = $att->file_name;
                         $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
                     }
@@ -126,8 +124,8 @@ class AdminMotionController extends Controller
             });
 
         $al = new ActivityLog([
-            'activity' => "Admin ".
-                $motion->submission_type . ": Created by: " .
+            'activity' => 'Admin '.
+                $motion->submission_type.': Created by: '.
                 $motion->user->name,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
@@ -135,12 +133,10 @@ class AdminMotionController extends Controller
 
         $al->save();
 
-
-        Session::flash('success', 'You have submitted a ' . $motion->submission_type . ' successfully. It will be reviewed.');
+        Session::flash('success', 'You have submitted a '.$motion->submission_type.' successfully. It will be reviewed.');
 
         return redirect()->route('admin_motion_edit', $motion->id);
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -198,11 +194,11 @@ class AdminMotionController extends Controller
 
         $cc = $motion->user->email;
 
-        $motion->subject = $motion->submission_type . " Admin Update by " . Auth::user()->name . ": " . $motion->title;
+        $motion->subject = $motion->submission_type.' Admin Update by '.Auth::user()->name.': '.$motion->title;
 
         Mail::send('emails.email_motion', ['data' => $motion],
             function ($m) use ($motion, $cc) {
-                $m->from(config('mail.from.address'), config('app.name') . ' Motions & New Business');
+                $m->from(config('mail.from.address'), config('app.name').' Motions & New Business');
                 $m->to(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
                 $m->cc($cc, $cc);
                 $m->replyTo(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
@@ -210,8 +206,8 @@ class AdminMotionController extends Controller
 
                 if ($motion->attachments->count() > 0) {
                     foreach ($motion->attachments as $att) {
-                        $file = 'storage/motions/' . $att->file;
-                        $mime = mime_content_type(getcwd() . "/" . $file);
+                        $file = 'storage/motions/'.$att->file;
+                        $mime = mime_content_type(getcwd().'/'.$file);
                         $file_name = $att->file_name;
                         $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
                     }
@@ -220,11 +216,11 @@ class AdminMotionController extends Controller
             });
 
         $al = new ActivityLog([
-            'activity' => "Admin Edit to ".
-                $motion->submission_type . ": " .
-                Auth::user()->name . ' updated a ' .
-                $motion->submission_type . ' ' .
-                $motion->title .', created by: '.
+            'activity' => 'Admin Edit to '.
+                $motion->submission_type.': '.
+                Auth::user()->name.' updated a '.
+                $motion->submission_type.' '.
+                $motion->title.', created by: '.
                 $motion->user->name,
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
@@ -233,6 +229,7 @@ class AdminMotionController extends Controller
         $al->save();
 
         Session::flash('success', 'You have updated a motion or new business');
+
         return redirect()->route('admin_motion_edit', $motion->id);
     }
 
@@ -253,16 +250,16 @@ class AdminMotionController extends Controller
 
                 $cc = $motion->user->email;
 
-                $motion->subject = "Admin Deletion of ". $motion->submission_type . " by " . Auth::user()->name . ": " .
+                $motion->subject = 'Admin Deletion of '.$motion->submission_type.' by '.Auth::user()->name.': '.
                     $motion->title;
 
-                $motion->delete_message = "<h4 style='padding-bottom:4rem;'>This " . $motion->submission_type .
-                    " was deleted by " . Auth::user()->name . ". If you have any questions, please contact the
-                      Executive.</h4>";
+                $motion->delete_message = "<h4 style='padding-bottom:4rem;'>This ".$motion->submission_type.
+                    ' was deleted by '.Auth::user()->name.'. If you have any questions, please contact the
+                      Executive.</h4>';
 
                 Mail::send('emails.email_motion', ['data' => $motion],
                     function ($m) use ($motion, $cc) {
-                        $m->from(config('mail.from.address'), config('app.name') . ' Motions & New Business');
+                        $m->from(config('mail.from.address'), config('app.name').' Motions & New Business');
                         $m->to(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
                         $m->cc($cc, $cc);
                         $m->replyTo(config('mail.motion_recipient.address'), config('mail.motion_recipient.name'));
@@ -270,8 +267,8 @@ class AdminMotionController extends Controller
 
                         if ($motion->attachments->count() > 0) {
                             foreach ($motion->attachments as $att) {
-                                $file = 'storage/motions/' . $att->file;
-                                $mime = mime_content_type(getcwd() . "/" . $file);
+                                $file = 'storage/motions/'.$att->file;
+                                $mime = mime_content_type(getcwd().'/'.$file);
                                 $file_name = $att->file_name;
                                 $m->attach($file, ['as' => $file_name, 'mime' => $mime]);
                             }
@@ -283,11 +280,11 @@ class AdminMotionController extends Controller
                 $motion->delete();
 
                 $al = new ActivityLog([
-                    'activity' => "Admin Deletion to ".
-                        $motion->submission_type . ": " .
-                        Auth::user()->name . ' deleted a ' .
-                        $motion->submission_type . ' ' .
-                        $motion->title .', created originally by: '.
+                    'activity' => 'Admin Deletion to '.
+                        $motion->submission_type.': '.
+                        Auth::user()->name.' deleted a '.
+                        $motion->submission_type.' '.
+                        $motion->title.', created originally by: '.
                         $motion->user->name,
                     'ip_address' => $_SERVER['REMOTE_ADDR'],
                     'user_agent' => $_SERVER['HTTP_USER_AGENT'],
@@ -297,10 +294,10 @@ class AdminMotionController extends Controller
 
             });
 
-        //todo message deletion
+        // todo message deletion
 
-        Session::flash('success', count($motion->id) . ' ' .
-            Str::plural('Motion', count($motion->id)) .
+        Session::flash('success', count($motion->id).' '.
+            Str::plural('Motion', count($motion->id)).
             ' and any related files deleted.');
 
         return redirect()->route('admin_motions_list');

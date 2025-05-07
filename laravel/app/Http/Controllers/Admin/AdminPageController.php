@@ -24,8 +24,11 @@ use Illuminate\View\View;
 class AdminPageController extends Controller
 {
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
+
     private FeatureService $featureService;
+
     /**
      * @var AttachmentService
      */
@@ -127,7 +130,7 @@ class AdminPageController extends Controller
         $data = [
             'page' => $page,
             'topics' => Topic::all(),
-            'existing_message' => Message::where('source_url',  env('APP_URL') . '/page/' . $page->slug)->exists(),
+            'existing_message' => Message::where('source_url', env('APP_URL').'/page/'.$page->slug)->exists(),
             'assignedTopics' => $page->topics->pluck('id')->toArray(),
             'access_levels' => Options::access_levels(),
             'action' => 'Edit',
@@ -176,9 +179,10 @@ class AdminPageController extends Controller
     {
         $this->authorize('update', Page::class);
 
-        $source_url = env('APP_URL') . '/page/' . $page->slug;
-        if(Message::where('source_url',  $source_url)->exists()) {
+        $source_url = env('APP_URL').'/page/'.$page->slug;
+        if (Message::where('source_url', $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
+
             return redirect()->route('page_edit', [$page->slug]);
         }
 
@@ -187,15 +191,17 @@ class AdminPageController extends Controller
         $msg = $this->messageService->createPageMessage($page);
 
         Session::flash('success', 'new message from pages saved');
+
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
     }
 
     public function feature(Page $page): RedirectResponse
     {
         $this->authorize('update', Page::class);
-        $page->source_url = env('APP_URL') . '/page/' . $page->slug;
+        $page->source_url = env('APP_URL').'/page/'.$page->slug;
         $msg = $this->featureService->createPageFeature($page);
         Session::flash('success', 'new feature from Pages saved');
+
         return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
 

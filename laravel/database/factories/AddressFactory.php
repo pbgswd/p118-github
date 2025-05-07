@@ -18,7 +18,7 @@ class AddressFactory extends Factory
             'province' => $this->faker->state(),
             'postal_code' => $this->faker->postcode(),
             'country' => $this->faker->country(),
-            //'user_id' => \App\Models\User::factory(),
+            // 'user_id' => \App\Models\User::factory(),
         ];
     }
 }

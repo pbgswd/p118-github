@@ -189,9 +189,9 @@ class AdminCommitteeController extends Controller
             ->find($request->id)
             ->each(function (Committee $committee) {
 
-                //dump($committee);
-                //dump(Auth::user()->with('membership'));
-                //todo a plan to deal with orphaned committee posts other than deletion
+                // dump($committee);
+                // dump(Auth::user()->with('membership'));
+                // todo a plan to deal with orphaned committee posts other than deletion
                 $committee->posts()->delete();
                 // does user have the role
                 // what is the committee
@@ -203,9 +203,9 @@ class AdminCommitteeController extends Controller
                 if ($committee['image']) {
                     Storage::disk('committees')->delete($committee['image']);
                 }
-                //todo committee set to... archive?
-                //todo committee destroy committee relation?
-                //todo committee destroy committee posts?
+                // todo committee set to... archive?
+                // todo committee destroy committee relation?
+                // todo committee destroy committee posts?
 
                 $committee->delete();
             });

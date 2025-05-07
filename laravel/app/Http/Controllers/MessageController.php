@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Committee;
 use App\Models\Message;
-use App\Models\MessageCategory;
 use App\Models\MessageFrequencyPreferences;
 use App\Models\MessageSelection;
-use App\Models\Options;
-use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -30,7 +26,7 @@ class MessageController extends Controller
 
         $data = [
             'messages' => $messages,
-            'title' => "Messages",
+            'title' => 'Messages',
             'count' => Message::where('state', 'sent')->count(),
         ];
 
@@ -47,12 +43,12 @@ class MessageController extends Controller
         }
 
         $next = Message::where('id', '>', $message->id)
-            ->where ('state', 'sent')
+            ->where('state', 'sent')
             ->orderBy('id', 'asc')
             ->first();
 
         $previous = Message::where('id', '<', $message->id)
-            ->where ('state', 'sent')
+            ->where('state', 'sent')
             ->orderBy('id', 'desc')
             ->first();
 
@@ -73,10 +69,10 @@ class MessageController extends Controller
 
     public function update(Request $request, Message $message, User $user, MessageSelection $messageSelection): RedirectResponse
     {
-        //todo form request validator
-        //todo make a policy for this user, only this user
+        // todo form request validator
+        // todo make a policy for this user, only this user
 
-        //self::updateMessageFrequencyPreferences($request, $user);
+        // self::updateMessageFrequencyPreferences($request, $user);
 
         self::updateTopicSubscriptions($user, $request['message_selections']['topic'] ?? []);
 
@@ -143,7 +139,7 @@ class MessageController extends Controller
 
     public static function updateCommitteeSubscriptions(User $user, $sub): void
     {
-//todo form request validator
+        // todo form request validator
 
         $type = 'committee';
 
@@ -152,7 +148,7 @@ class MessageController extends Controller
             ['type', '=', $type],
         ])->delete();
 
-        //todo write closure / anonymous function
+        // todo write closure / anonymous function
         foreach ($sub as $s) {
             $ms = new MessageSelection;
             $ms->user_id = $user->id;

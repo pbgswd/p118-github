@@ -20,9 +20,10 @@ use Illuminate\View\View;
 
 class AdminEmploymentController extends Controller
 {
-    /** @var AttachmentService */
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
+
     private FeatureService $featureService;
 
     public function __construct(AttachmentService $attachmentService, MessageService $messageService, FeatureService $featureService)
@@ -75,7 +76,7 @@ class AdminEmploymentController extends Controller
         $this->authorize('create', Employment::class);
         $employment = new Employment($request->employment);
 
-        if($employment->deadline > now()) {
+        if ($employment->deadline > now()) {
             $employment->status = 1;
         }
 
@@ -85,7 +86,7 @@ class AdminEmploymentController extends Controller
             $result = $this->attachmentService->createAttachment($request, $employment);
 
             if ($result) {
-                Session::flash('success', 'You uploaded '. count($request->file('attachments')) . ' ' .
+                Session::flash('success', 'You uploaded '.count($request->file('attachments')).' '.
                     Str::plural('file', count($request->file('attachments'))));
             } else {
                 Session::flash('error', 'You have an upload problem');
@@ -108,7 +109,7 @@ class AdminEmploymentController extends Controller
         $data = [
             'employment' => $employment,
             'action' => 'Edit',
-            'existing_message' => Message::where('source_url',  env('APP_URL') . '/job/' . $employment->id)->exists(),
+            'existing_message' => Message::where('source_url', env('APP_URL').'/job/'.$employment->id)->exists(),
             'access_levels' => Options::access_levels(),
         ];
 
@@ -124,7 +125,7 @@ class AdminEmploymentController extends Controller
 
         $any_employment->fill($request->employment);
 
-        if($any_employment->deadline > now()) {
+        if ($any_employment->deadline > now()) {
             $any_employment->status = 1;
         }
 
@@ -166,7 +167,6 @@ class AdminEmploymentController extends Controller
         return redirect()->route('admin_employment_list');
     }
 
-
     /**
      * @throws AuthorizationException
      */
@@ -175,10 +175,11 @@ class AdminEmploymentController extends Controller
 
         $this->authorize('update', Employment::class);
 
-        $source_url = env('APP_URL') . '/job/' . $employment->id;
+        $source_url = env('APP_URL').'/job/'.$employment->id;
 
-        if(Message::where('source_url',  $source_url)->exists()) {
+        if (Message::where('source_url', $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
+
             return redirect()->route('admin_employment_edit', [$employment->id]);
         }
 
@@ -195,10 +196,10 @@ class AdminEmploymentController extends Controller
     public function feature(Employment $employment): RedirectResponse
     {
         $this->authorize('update', Employment::class);
-        $employment->source_url = env('APP_URL') . '/job/' . $employment->id;
+        $employment->source_url = env('APP_URL').'/job/'.$employment->id;
         $msg = $this->featureService->createEmploymentFeature($employment);
         Session::flash('success', 'new feature from Employment saved');
+
         return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
-
 }

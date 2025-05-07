@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //add email
+        // add email
         Schema::table('committees', function (Blueprint $table) {
             $table->string('email')->after('description');
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //drop email
+        // drop email
         Schema::table('committees', function (Blueprint $table) {
             $table->dropColumn('email');
         });

@@ -58,7 +58,7 @@ class UserController extends Controller
      */
     public function index(): View
     {
-        //todo authorize is having a problem, with a few select users, and my test user
+        // todo authorize is having a problem, with a few select users, and my test user
         //	$this->authorize('view', Auth::user());
 
         $users = User::with(['user_info', 'phone_number',
@@ -67,7 +67,7 @@ class UserController extends Controller
             ->orderBy('name')
             ->paginate(100, ['*'], __('page'))->onEachSide(0);
 
-        //todo exclude suspended, verify
+        // todo exclude suspended, verify
         $count = Membership::where('membership_type', 'Member')->count();
 
         return view('members.listusers', ['data' => ['users' => $users,
@@ -86,7 +86,7 @@ class UserController extends Controller
         $user->load('committee_memberships', 'phone_number',
             'user_info', 'membership',
             'allExecutiveRoles');
-        //'message_selections');
+        // 'message_selections');
 
         $member_roles = $user->getRoleNames()->toArray();
         $member_roles = array_combine($member_roles, $member_roles);
@@ -135,7 +135,7 @@ class UserController extends Controller
         $topics = Topic::where('live', '=', 1)->get();
         $committees = Committee::where('live', '=', 1)->pluck('name', 'slug')->toArray();
 
-        if(MessageSelection::where('user_id', 1)->exists() === false) {
+        if (MessageSelection::where('user_id', 1)->exists() === false) {
             Session::flash('success', 'Please update your message preferences');
         }
 
@@ -156,7 +156,7 @@ class UserController extends Controller
             'user' => $user,
             'user_roles' => $member_roles,
             'committees' => Committee::where('live', '=', 1)->get(),
-            'selections' => $selections ,
+            'selections' => $selections,
             'user_selections' => MessageSelection::where('user_id', '=', $user->id)->count(),
             'topic_subscription_options' => $topics,
             'model_subscription_options' => Options::model_subscription_options(),
@@ -188,7 +188,7 @@ class UserController extends Controller
         $message = [];
 
         if ($userRequest->user['email'] != $user->email) {
-            //todo forbid change to admin role email unless you already have that association
+            // todo forbid change to admin role email unless you already have that association
             $user->load('currentExecutiveRoles');
             $execEmails = Executive::pluck('email')->toArray();
 
@@ -206,7 +206,7 @@ class UserController extends Controller
         $user->fill($userRequest['user']);
         $user->save();
         $user->touch();
-        //todo review phone number validation see app/Rules/Phone.php
+        // todo review phone number validation see app/Rules/Phone.php
         if (isset($userRequest->user_phone['phone_number'])) {
             $userRequest->validate([
                 'user_phone.phone_number' => [new Phone],
@@ -234,7 +234,7 @@ class UserController extends Controller
 
         if ($user->user_info instanceof UserInfo) {
             $user_info = $userRequest['user_info'];
-            //todo user_info validation or migration update could fix the values issues here
+            // todo user_info validation or migration update could fix the values issues here
             $user_info['show_profile'] =
                 $userRequest['user_info']['show_profile'] ?? 0;
             $user_info['show_picture'] =
@@ -307,7 +307,7 @@ class UserController extends Controller
         EmailMemberUpdateAddressService $service,
         User $user): RedirectResponse
     {
-        //$this->authorize('update', $user);
+        // $this->authorize('update', $user);
         $message = [];
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message',
         ];
@@ -339,7 +339,7 @@ class UserController extends Controller
 
     public function update_password(ProcessUserRequest $request, User $user): RedirectResponse
     {
-        //$this->authorize('update', $user);
+        // $this->authorize('update', $user);
 
         $user->fill(['password' => bcrypt($request->password)]);
         $user->save();

@@ -19,9 +19,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AdminCarouselController extends Controller
 {
-    /**
-     * @var CarouselImageService
-     */
     private CarouselImageService $carouselimageservice;
 
     public function __construct(CarouselImageService $carouselimageservice)

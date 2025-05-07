@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers as CNS;
-use App\Http\Controllers\MotionController;
 use App\Http\Middleware\CheckMessagingFeatureStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-//Controller Name Space
+// Controller Name Space
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +26,7 @@ Route::middleware('web')->group(function () {
 
     Route::permanentRedirect('/apply.html', '/page/apply-for-overhire-work');
 
-    //Route::get('sendemail', [CNS\MailController::class, 'index']);
+    // Route::get('sendemail', [CNS\MailController::class, 'index']);
 
     Route::get('/', [CNS\HelloController::class, 'index'])->name('hello');
 
@@ -41,7 +40,7 @@ Route::middleware('web')->group(function () {
 
     Route::get('executive', [CNS\ExecutiveController::class, 'index'])->name('executive');
 
-    //Route::get('/hire-us', [CNS\HireUsController::class, 'show'])->name('hire-us'); // to be updated
+    // Route::get('/hire-us', [CNS\HireUsController::class, 'show'])->name('hire-us'); // to be updated
 
     Route::controller(CNS\PageController::class)->group(function () {
         // Route::redirect('/page/apply-for-overhire-work', '/page/not-accepting-new-hire-applications');
@@ -152,7 +151,7 @@ Route::middleware('web', 'auth')->group(function () {
     });
 
     Route::controller(CNS\MotionController::class)->group(function () {
-    //    Route::get('motions', 'index')->name('motions');
+        //    Route::get('motions', 'index')->name('motions');
         Route::get('motion/create', 'create')->name('motion_create');
         Route::post('motion/create/{meeting?}', 'store');
 
@@ -297,7 +296,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::post('/invite-new-user', 'store')->name('store_invited_user');
         Route::get('/invited_users', 'index')->name('admin_list_invited_users');
         Route::get('/invited_user/{inviteUser}', 'show')->name('show_invited_user');
-        //Route::get('/invitation-mailmsg' 'mail')->name('mail_invited_user');
+        // Route::get('/invitation-mailmsg' 'mail')->name('mail_invited_user');
         Route::delete('/invited_user/delete', 'destroy')->name('invited_user_destroy');
         Route::get('/invite_import-list', 'list_import')->name('list_import');
         Route::get('process_import_invitation', 'process_import_invitation')
@@ -337,7 +336,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/attachment/delete', 'destroy')->name('attachment_destroy');
     });
 
-    //todo build out media insert and integrate into attachments and other blades and route groups as needed ##############################
+    // todo build out media insert and integrate into attachments and other blades and route groups as needed ##############################
     Route::controller(CNS\AttachmentController::class)->group(function () {
         Route::get('/attachments_icons', 'index_icons')->name('attachments_icons_list');
         Route::get('/attachments/endless', 'endless')->name('endless');
@@ -367,7 +366,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
             ->name('admin_edit_committee_members');
         Route::post('committee/{committee}/admin-edit-committee-members/user/{user}', 'update')
             ->name('admin_update_committee_member');
-        //todo
+        // todo
         Route::delete('committee/{committee}/user/{user}/delete', 'destroy')
             ->name('admin_delete-committee_member');
     });
@@ -402,8 +401,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         route::post('committee_post/{any_committee_post}/committee_post_comment/edit/{any_committee_post_comment}', 'update');
         route::delete('committee_post_comment/delete/', 'destroy')->name('committee_post_comment_destroy');
     });
-    **/
-
+     **/
     Route::controller(CNS\Admin\AdminAgreementController::class)->group(function () {
         Route::get('agreements', 'index')->name('agreements_list');
         Route::get('agreement/create', 'create')->name('agreement_create');
@@ -441,8 +439,8 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/motion/{motion}/edit', 'edit')->name('admin_motion_edit');
         Route::post('/motion/{motion}/edit', 'update')->name('admin_motion_update');
         Route::delete('/motion/delete', 'destroy')->name('admin_motion_destroy');
-      //  Route::get('/motion/{any_motion}/message', 'message')->name('admin_motion_message');
-       // Route::get('/motion/{any_motion}/feature', 'feature')->name('admin_motion_feature');
+        //  Route::get('/motion/{any_motion}/message', 'message')->name('admin_motion_message');
+        // Route::get('/motion/{any_motion}/feature', 'feature')->name('admin_motion_feature');
     });
 
     Route::controller(CNS\Admin\AdminEmploymentController::class)->group(function () {

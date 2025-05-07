@@ -14,7 +14,7 @@ class AgreementProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Agreement Model - specific to this class
+        // Agreement Model - specific to this class
         return [
             self::NAME => 'Agreements',
             self::PUB_ROUTE_LIST => 'agreements_list_public',

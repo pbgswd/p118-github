@@ -14,7 +14,7 @@ class BylawProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //bylaw Model - specific to this class
+        // bylaw Model - specific to this class
         return [
             self::NAME => 'Constitution & Bylaws',
             self::PUB_ROUTE_LIST => 'bylaws_list_public',

@@ -14,7 +14,7 @@ class MemoriamProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Memoriam Model - specific to this class
+        // Memoriam Model - specific to this class
         return [
             self::NAME => 'In Memoriam',
             self::PUB_ROUTE_LIST => 'memoriam_list',

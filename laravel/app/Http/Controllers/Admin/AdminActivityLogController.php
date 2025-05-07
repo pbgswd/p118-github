@@ -30,7 +30,7 @@ class AdminActivityLogController extends Controller
     public function store($request): void
     {
         $activityLog = new ActivityLog($request);
-        //$activityLog['ip_address'] = $_SERVER['REMOTE_ADDR'];
+        // $activityLog['ip_address'] = $_SERVER['REMOTE_ADDR'];
         // $activityLog['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
         // $activityLog['model'] = $request['model'];
 

@@ -20,9 +20,6 @@ use Illuminate\View\View;
 
 class AdminOrganizationController extends Controller
 {
-    /**
-     * @var UserImageService
-     */
     private UserImageService $userImageService;
 
     public function __construct(UserImageService $userImageService, AttachmentService $attachmentService)
@@ -209,14 +206,14 @@ class AdminOrganizationController extends Controller
     public function destroy(DestroyOrganizationRequest $request): RedirectResponse
     {
         $this->authorize('delete', Organization::class);
-        //todo verify organization delete image
+        // todo verify organization delete image
         Organization::withoutGlobalScopes()
             ->find($request->id)
             ->each(static function (Organization $org) {
                 if ($org['image']) {
                     Storage::disk('public')->delete($org['image']);
                     Storage::disk('public')->delete(Options::venue_org_thumb_values()['tn_str'].$org['image']);
-                    //$this->userImageService->destroyImage($feature['image'], 'public',
+                    // $this->userImageService->destroyImage($feature['image'], 'public',
                     // Options::feature_thumb_values());
                 }
                 $org->delete();

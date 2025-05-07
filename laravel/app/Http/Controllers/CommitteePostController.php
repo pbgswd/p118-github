@@ -20,10 +20,8 @@ use Illuminate\View\View;
 
 class CommitteePostController extends Controller
 {
-    /**
-     * @var AttachmentService
-     */
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
 
     public function __construct(AttachmentService $attachmentService, MessageService $messageService)
@@ -90,10 +88,9 @@ class CommitteePostController extends Controller
 
         $committeePost->load('creator', 'committee', 'attachments');
 
-        if(Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->exists()) {
-            $existing_message = Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->first();
-        }
-        else {
+        if (Message::where('source_url', env('APP_URL').'/committee/'.$committee->slug.'/post/'.$committeePost->slug)->exists()) {
+            $existing_message = Message::where('source_url', env('APP_URL').'/committee/'.$committee->slug.'/post/'.$committeePost->slug)->first();
+        } else {
             $existing_message = false;
         }
 
@@ -150,12 +147,11 @@ class CommitteePostController extends Controller
             $data['canManage'] = 1;
         }
 
-        $source_url = env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug;
+        $source_url = env('APP_URL').'/committee/'.$committee->slug.'/post/'.$committeePost->slug;
 
-        if(Message::where('source_url', $source_url)->exists()) {
-            $data['existing_message'] = Message::where('source_url',  $source_url)->first();
-        }
-        else {
+        if (Message::where('source_url', $source_url)->exists()) {
+            $data['existing_message'] = Message::where('source_url', $source_url)->first();
+        } else {
             $data['existing_message'] = false;
         }
 

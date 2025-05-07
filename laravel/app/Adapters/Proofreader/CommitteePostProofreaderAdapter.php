@@ -21,7 +21,7 @@ class CommitteePostProofreaderAdapter extends BaseProofreaderAdapter
      */
     public function getMeta(): array
     {
-        //Committee Model - specific to this class
+        // Committee Model - specific to this class
         return [
             self::NAME => 'Committee Posts',
             self::PUB_ROUTE_LIST => 'committee',

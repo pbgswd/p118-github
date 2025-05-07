@@ -36,7 +36,6 @@ use Spatie\Permission\Models\Role;
 class AdminUserController extends Controller
 {
     /**
-     * @var EmailMemberUpdateService
      * @var UserImageService
      */
     private EmailMemberUpdateService $emailMemberUpdateService;
@@ -70,7 +69,6 @@ class AdminUserController extends Controller
         return view('admin.users.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
     }
 
-
     /**
      * @throws AuthorizationException
      */
@@ -94,7 +92,6 @@ class AdminUserController extends Controller
 
         return view('admin.users.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
     }
-
 
     public function create(): RedirectResponse
     {
@@ -293,7 +290,7 @@ class AdminUserController extends Controller
             $user->user_info()->save($user_info);
         }
 
-        //todo user role 'suspended' OR permission
+        // todo user role 'suspended' OR permission
 
         $user_roles = $user->getRoleNames()->toArray();
 
@@ -355,7 +352,7 @@ class AdminUserController extends Controller
     ): RedirectResponse {
         $this->authorize('update', $user);
         $message = [];
-        //dd($userRequest->all());
+        // dd($userRequest->all());
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
 
         foreach ($addr as $k => $a) {
@@ -440,7 +437,7 @@ class AdminUserController extends Controller
             ->each(function (User $user) {
                 $user_roles = $user->getRoleNames();
 
-                //todo make a dependency injection
+                // todo make a dependency injection
                 $al = new ActivityLog([
                     'activity' => Auth::user()->name.' deleting '.$user->name,
                     'ip_address' => $_SERVER['REMOTE_ADDR'],
@@ -466,7 +463,7 @@ class AdminUserController extends Controller
                 }
 
                 $user->executive_role()->delete();
-                //todo fix breakage when deleting user that has content such as posts, pages, etc, committee membership....
+                // todo fix breakage when deleting user that has content such as posts, pages, etc, committee membership....
 
                 //  Log::debug('attempting to destroy user '.$user->name.', id:'.$user->id);
                 User::destroy($user->id);
