@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Options;
-use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @property Controller $getFormOptions
  */
-abstract class Controller extends BaseController
+abstract class Controller
 {
 
     protected function getFormOptions(array $options, $data = [])
