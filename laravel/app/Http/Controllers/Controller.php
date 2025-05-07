@@ -9,7 +9,6 @@ use App\Models\Options;
  */
 abstract class Controller
 {
-
     protected function getFormOptions(array $options, $data = [])
     {
         foreach ($options as $option) {

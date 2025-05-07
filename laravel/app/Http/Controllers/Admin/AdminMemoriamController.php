@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Memoriam\DestroyMemoriamRequest;
 use App\Http\Requests\Memoriam\StoreMemoriamRequest;
@@ -16,6 +15,7 @@ use App\Services\MessageService;
 use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Spatie\Image\Exceptions\InvalidManipulation;

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Gate;
 use App\Constants\AccessLevelConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Feature\DestroyFeatureRequest;
@@ -17,6 +16,7 @@ use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CommitteePost\DestroyCommitteePostRequest;
 use App\Http\Requests\CommitteePost\StoreCommitteePostRequest;
 use App\Http\Requests\CommitteePost\UpdateCommitteePostRequest;
@@ -15,6 +14,7 @@ use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Gate;
 use App\Constants\CommitteeConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommitteeMember\DestroyCommitteeMember;
@@ -15,6 +14,7 @@ use App\Models\User;
 use App\Services\EmailCommitteeMembershipService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
