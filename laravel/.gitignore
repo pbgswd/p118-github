@@ -17,6 +17,7 @@ public/js/app.js
 public/js/dashboard.js
 bootstrap/cache/*
 /storage/*.key
+/storage/pail
 /vendor
 .env
 .phpunit.result.cache
@@ -32,5 +33,6 @@ storage/framework/cache/data/
 .env.dusk.local~
 .env.dusk.local.example~
 ../.idea/
+/.nova
 ../.idea/workspace.xml
 ../laradock/
