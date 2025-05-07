@@ -20,6 +20,7 @@ return [
             'timeout' => null,
             'verify_peer' => env('MAIL_VERIFY_PEER'),
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'scheme' => env('MAIL_SCHEME'),
         ],
 
         'mailgun' => [
@@ -35,6 +36,7 @@ return [
                 'ses',
                 'postmark',
             ],
+            'retry_after' => 60,
         ],
     ],
 
