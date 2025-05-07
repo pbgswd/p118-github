@@ -10,7 +10,6 @@
     "require": {
         "php": "^8.2",
         "doctrine/dbal": "^3.5",
-        "enlightn/enlightn": "^2.8",
         "google/recaptcha": "^1.2",
         "kyslik/column-sortable": "^7.0",
         "laravel/framework": "^12.12",
