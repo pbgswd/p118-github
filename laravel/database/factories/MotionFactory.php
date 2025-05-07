@@ -20,8 +20,8 @@ class MotionFactory extends Factory
         $types = ['Motion', 'New Business'];
 
         return [
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
+            'title' => $this->faker->sentence(),
+            'description' => $this->faker->paragraph(),
             'user_id' => $ids[array_rand($ids)],
             'meeting_id' => null,
             'submission_type' => $types[array_rand($types)],
