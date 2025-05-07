@@ -8,6 +8,7 @@ use App\Http\Requests\InviteUser\StoreInviteUserRequest;
 use App\Models\ActivityLog;
 use App\Models\InviteUser;
 use App\Models\Membership;
+use App\Models\MessageSelection;
 use App\Models\Options;
 use App\Models\User;
 use Carbon\Carbon;
@@ -249,16 +250,21 @@ class InviteUserController extends Controller
         $membership->membership_type = $inviteUser->membership_type;
         $user->membership()->save($membership);
 
-        //todo: add user to mailing list, send a general message to opt user in after.
+        $ms = new MessageSelection;
+        $ms->user_id = $user->id;
+        $ms->type = 'model';
+        $ms->name = 'Message';
+        $ms->save();
 
         InviteUser::where('email', $inviteUser->email)->delete();
 
         $al = new ActivityLog([
             'activity' => $user->name .
                 ' has completed website signup',
-            'ip_address' => $_SERVER['REMOTE_ADDR'],
-            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-            'model' => 'InviteUser']);
+                'ip_address' => $_SERVER['REMOTE_ADDR'],
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                'model' => 'InviteUser']);
+
         $al->save();
 
         Session::flash('success', 'Thank you! Your password has now been
