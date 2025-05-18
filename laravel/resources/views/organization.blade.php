@@ -58,7 +58,7 @@
                 <p>{!! $data['organization']->description !!}</p>
             </div>
             @if ($data['agreements']->count() > 0)
-                <div class="row border border-dark rounded mb-3 p-2">
+                <div class="row border border-dark rounded mb-3 mx-2 p-2">
                     <div class="col-12">
                         <h4>
                             Agreements with {{$data['organization']->name}}
@@ -72,7 +72,7 @@
                             @sortablelink('until', 'End Date')
                         </div>
                     @endif
-                    <div class="col-12">
+                    <div class="col-12 mx-2">
                         <ul class="list-group list-group-flush">
                             @forelse($data['agreements'] as $va)
                                 <li class="list-group-item">
