@@ -24,7 +24,7 @@ class ContactController extends Controller
         if (Auth::user()) {
             $data = [
                 'contactPage' => Page::withoutGlobalScopes()->where('slug', 'contact-us')->get(),
-                ];
+            ];
         }
 
         $data['office-hours'] = Page::withoutGlobalScopes()->where('slug', 'office-hours')->first();
@@ -62,18 +62,18 @@ class ContactController extends Controller
         } else {
             Mail::send('emails.contact', ['data' => $request->all()],
                 function ($m) use ($request, $cc) {
-                    $m->from(config('mail.from.address'), config('app.name'). 'Contact Page Message from '.$request['name']);
+                    $m->from(config('mail.from.address'), config('app.name').'Contact Page Message from '.$request['name']);
                     $m->to(config('mail.office_admin.address'), config('mail.office_admin.name'));
                     if ($cc != '') {
                         $m->cc($cc, $cc);
                     }
                     $m->replyTo($request['email'], $request['name']);
-                    $m->subject('Contact Page '.$request['subject'].' from '. $request['name']);
+                    $m->subject('Contact Page '.$request['subject'].' from '.$request['name']);
 
                     Session::flash('success', 'Message Sent');
 
                     $al = new ActivityLog([
-                        'activity' => $request['name'] . ' sent a message via the contact page',
+                        'activity' => $request['name'].' sent a message via the contact page',
                         'ip_address' => $_SERVER['REMOTE_ADDR'],
                         'user_agent' => $_SERVER['HTTP_USER_AGENT'],
                         'model' => 'Admin']);
@@ -81,6 +81,7 @@ class ContactController extends Controller
 
                 });
         }
+
         return redirect()->route('contact');
     }
 }

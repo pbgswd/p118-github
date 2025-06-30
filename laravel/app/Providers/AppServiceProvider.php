@@ -33,7 +33,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
-
 /**
  * Class AppServiceProvider.
  *
@@ -157,7 +156,7 @@ class AppServiceProvider extends ServiceProvider
             return Qrcode::withoutGlobalScopes()->findOrFail($id);
         });
 
-       Gate::policy(Motion::class, MotionPolicy::class);
+        Gate::policy(Motion::class, MotionPolicy::class);
 
         if (! app()->environment('production')) {
             Mail::alwaysTo('superwebdeveloper@gmail.com');

@@ -19,7 +19,6 @@ use App\Models\Meeting;
 use App\Models\Membership;
 use App\Models\Memoriam;
 use App\Models\Message;
-use App\Models\ModelList;
 use App\Models\Organization;
 use App\Models\Page;
 use App\Models\Policy;
@@ -28,7 +27,6 @@ use App\Models\Proofreader;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
-use Illuminate\Support\Benchmark;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -36,10 +34,7 @@ class AdminController extends Controller
 {
     protected $activityLog;
 
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function index(): View
     {
@@ -72,9 +67,9 @@ class AdminController extends Controller
         $counts['sent'] = Message::where('state', 'sent')->count();
         $emailQueueCount = EmailQueue::count();
         $messagesCount = Message::count();
-        //todo look at events in Laravel https://laravel.com/docs/11.x/events
+        // todo look at events in Laravel https://laravel.com/docs/11.x/events
         $al = new ActivityLog([
-            'activity' => Auth::user()->name . ' accessed the admin dashboard',
+            'activity' => Auth::user()->name.' accessed the admin dashboard',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'Admin']);

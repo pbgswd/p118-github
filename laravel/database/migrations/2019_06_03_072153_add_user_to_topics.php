@@ -15,7 +15,7 @@ return new class extends Migration
         DB::beginTransaction();
 
         Schema::table('topics', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->after('id')->default(1); //assuming user 1 exists if any users exist.
+            $table->unsignedBigInteger('user_id')->after('id')->default(1); // assuming user 1 exists if any users exist.
             $table->foreign('user_id')->references('id')->on('users');
         });
 

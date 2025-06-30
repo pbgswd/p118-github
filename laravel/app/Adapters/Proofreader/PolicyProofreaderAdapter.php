@@ -14,7 +14,7 @@ class PolicyProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Policy Model - specific to this class
+        // Policy Model - specific to this class
         return [
             self::NAME => 'Policies',
             self::PUB_ROUTE_LIST => 'policies_list_public',

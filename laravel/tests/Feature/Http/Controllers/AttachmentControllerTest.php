@@ -10,7 +10,7 @@ use Tests\TestCase;
  */
 class AttachmentControllerTest extends TestCase
 {
-    //todo admin attachment work
+    // todo admin attachment work
 
     /**
      * @test
@@ -72,7 +72,7 @@ class AttachmentControllerTest extends TestCase
      */
     public function download_returns_an_ok_response(): void
     {
-        //$this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $attachment = \App\Models\Attachment::factory()->create();
 
@@ -89,7 +89,7 @@ class AttachmentControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response(): void
     {
-        //$this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $attachment = \App\Models\Attachment::factory()->create();
 
@@ -98,7 +98,7 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('admin.attachment');
-        //$response->assertRedirect(route('attachments_list'));
+        // $response->assertRedirect(route('attachments_list'));
 
         /*
                 $response->assertOk();
@@ -158,7 +158,7 @@ class AttachmentControllerTest extends TestCase
      */
     public function update_returns_an_ok_response(): void
     {
-        //$this->markTestIncomplete( __FUNCTION__ .' has issues.');
+        // $this->markTestIncomplete( __FUNCTION__ .' has issues.');
 
         $attachment = \App\Models\Attachment::factory()->create();
 

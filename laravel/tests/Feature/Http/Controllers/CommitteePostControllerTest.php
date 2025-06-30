@@ -34,7 +34,7 @@ class CommitteePostControllerTest extends TestCase
     public function destroy_returns_an_ok_response(): void
     {
         $post = CommitteePost::find($this->committeePost);
-        //dd($post);
+        // dd($post);
 
         $response = $this->actingAs($this->committee_admin_user)
             ->delete(route('public_committee_post_destroy', [$this->committee, $post]),
@@ -95,7 +95,7 @@ class CommitteePostControllerTest extends TestCase
      */
     public function store_returns_an_ok_response(): void
     {
-        //$post = CommitteePost::factory()->make();
+        // $post = CommitteePost::factory()->make();
 
         $post = CommitteePost::factory()
             ->make(['committee_id' => $this->committee->id, 'user_id' => $this->user->id]);

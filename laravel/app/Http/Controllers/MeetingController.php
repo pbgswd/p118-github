@@ -37,8 +37,6 @@ class MeetingController extends Controller
             ->orderBy('date', 'asc')
             ->get();
 
-
-
         $newmotions = Motion::where('meeting_id', null)->with('user')->get();
 
         $data = [

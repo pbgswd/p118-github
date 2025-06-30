@@ -12,13 +12,13 @@ use App\Services\AttachmentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AdminTopicController extends Controller
 {
-    /** @var AttachmentService */
     private AttachmentService $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)
@@ -31,7 +31,7 @@ class AdminTopicController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Topic::class);
+        Gate::authorize('viewAny', Topic::class);
 
         $topics = Topic::withoutGlobalScopes()
             ->sortable()
@@ -43,7 +43,7 @@ class AdminTopicController extends Controller
 
     public function create(): View
     {
-        $this->authorize('create', Topic::class);
+        Gate::authorize('create', Topic::class);
 
         $topic = new Topic;
         $topic['user_id'] = Auth::id();
@@ -64,7 +64,7 @@ class AdminTopicController extends Controller
      */
     public function store(StoreTopicRequest $request): RedirectResponse
     {
-        $this->authorize('create', Topic::class);
+        Gate::authorize('create', Topic::class);
         $topic = new Topic($request->input('topic'));
         $topic->user_id = Auth::id();
 
@@ -89,7 +89,7 @@ class AdminTopicController extends Controller
      */
     public function edit(Topic $topic): View
     {
-        $this->authorize('update', Topic::class);
+        Gate::authorize('update', Topic::class);
 
         $data = [
             'topic' => $topic->load('user', 'attachments'),
@@ -106,7 +106,7 @@ class AdminTopicController extends Controller
      */
     public function update(UpdateTopicRequest $request, Topic $any_topic): RedirectResponse
     {
-        $this->authorize('update', Topic::class);
+        Gate::authorize('update', Topic::class);
 
         $any_topic->fill($request->topic);
         $any_topic->save();
@@ -134,7 +134,7 @@ class AdminTopicController extends Controller
      */
     public function destroy(DestroyTopicRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Topic::class);
+        Gate::authorize('delete', Topic::class);
 
         Topic::withoutGlobalScopes()
             ->find($request->id)

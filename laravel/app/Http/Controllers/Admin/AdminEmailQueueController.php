@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\EmailQueue;
 use App\Models\Message;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,10 +27,6 @@ class AdminEmailQueueController extends Controller
         return view('admin.messages.email_queue_list', ['data' => $data]);
     }
 
-    /**
-     * @param Message $message
-     * @return View
-     */
     public function show(Message $message): View
     {
         $message->load('user', 'attachments');
@@ -46,20 +41,16 @@ class AdminEmailQueueController extends Controller
         return view('emails.email_message', ['data' => $data]);
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function destroy(Request $request): RedirectResponse
     {
-        //todo hide this method as content will be immutable except for development work
+        // todo hide this method as content will be immutable except for development work
         Message::find($request->id)
             ->each(function (Message $emailQueue) {
                 $emailQueue->delete();
             });
 
-        Session::flash('success', count($request->id) . ' ' .
-            Str::plural('message', count($request->id)) .
+        Session::flash('success', count($request->id).' '.
+            Str::plural('message', count($request->id)).
             ' deleted from the outgoing email queue.');
 
         return redirect()->route('admin_email_queue_list');

@@ -28,8 +28,8 @@ class PageController extends Controller
 
     public function show(Page $page): View
     {
-        //todo public page policy if not public page?
-        //$this->authorize('view', Page::class);
+        // todo public page policy if not public page?
+        // $this->authorize('view', Page::class);
 
         if (Auth::check() === false
             && $page->access_level != AccessLevelConstants::PUBLIC) {

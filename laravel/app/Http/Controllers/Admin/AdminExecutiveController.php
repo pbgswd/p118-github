@@ -12,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -22,7 +23,7 @@ class AdminExecutiveController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Executive::class);
+        Gate::authorize('viewAny', Executive::class);
         /***
                $data = [];
                $data['executives'] = Executive::sortable()
@@ -39,7 +40,7 @@ class AdminExecutiveController extends Controller
      */
     public function create(User $user): View
     {
-        $this->authorize('create', Executive::class);
+        Gate::authorize('create', Executive::class);
 
         $data = [
             'user' => $user,
@@ -57,7 +58,7 @@ class AdminExecutiveController extends Controller
     public function store(StoreAdminExecutive $request, Executive $executive, User $user): RedirectResponse
     {
 
-        $this->authorize('create', Executive::class);
+        Gate::authorize('create', Executive::class);
 
         $executive = new ExecutiveMembership($request->input('executive'));
         $executive->user_id = $user->id;
@@ -67,7 +68,7 @@ class AdminExecutiveController extends Controller
 
         $executive->save();
 
-        //todo msg member that he she has a role.
+        // todo msg member that he she has a role.
 
         Session::flash('success', 'You have created a member executive role');
 
@@ -80,7 +81,7 @@ class AdminExecutiveController extends Controller
     public function edit(ExecutiveMembership $executive): View
     {
 
-        $this->authorize('update', Executive::class);
+        Gate::authorize('update', Executive::class);
 
         $executive->load('user');
 
@@ -100,7 +101,7 @@ class AdminExecutiveController extends Controller
     public function update(UpdateAdminExecutive $request,
         ExecutiveMembership $executive): RedirectResponse
     {
-        $this->authorize('update', Executive::class);
+        Gate::authorize('update', Executive::class);
 
         $executive->fill($request->input('executive'));
         $executive->save();
@@ -115,7 +116,7 @@ class AdminExecutiveController extends Controller
      */
     public function destroy(DestroyAdminExecutive $request): RedirectResponse
     {
-        $this->authorize('delete', Executive::class);
+        Gate::authorize('delete', Executive::class);
 
         ExecutiveMembership::find($request->id)
             ->each(function (ExecutiveMembership $executive) {

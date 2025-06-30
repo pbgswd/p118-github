@@ -26,7 +26,7 @@ return new class extends Migration
         ];
 
         foreach ($attachments as $att) {
-            $file_extension = strtolower(File::extension('storage/' . $att->subfolder . '/' . $att->file));
+            $file_extension = strtolower(File::extension('storage/'.$att->subfolder.'/'.$att->file));
             $file_type = $fileTypes[$file_extension] ?? (
                 in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']) ? 'image' : 'file'
             );

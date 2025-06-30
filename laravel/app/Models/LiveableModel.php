@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\LiveScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,19 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @method static withoutGlobalScope() Builder
  */
+#[ScopedBy([LiveScope::class])]
 class LiveableModel extends Model
 {
     use HasFactory;
-
-    /**
-     * Override boot method.
-     */
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::addGlobalScope(new LiveScope);
-    }
 
     /**
      * @param  string|array  $relations

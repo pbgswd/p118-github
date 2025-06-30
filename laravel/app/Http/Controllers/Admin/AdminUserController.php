@@ -24,6 +24,7 @@ use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -36,7 +37,6 @@ use Spatie\Permission\Models\Role;
 class AdminUserController extends Controller
 {
     /**
-     * @var EmailMemberUpdateService
      * @var UserImageService
      */
     private EmailMemberUpdateService $emailMemberUpdateService;
@@ -52,7 +52,7 @@ class AdminUserController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Auth::user());
+        Gate::authorize('viewAny', Auth::user());
 
         $users = User::with(
             [
@@ -70,13 +70,12 @@ class AdminUserController extends Controller
         return view('admin.users.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
     }
 
-
     /**
      * @throws AuthorizationException
      */
     public function banned(): View
     {
-        $this->authorize('viewAny', Auth::user());
+        Gate::authorize('viewAny', Auth::user());
 
         $users = User::with(
             [
@@ -94,7 +93,6 @@ class AdminUserController extends Controller
 
         return view('admin.users.listusers', ['data' => ['users' => $users, 'counts' => $counts]]);
     }
-
 
     public function create(): RedirectResponse
     {
@@ -141,7 +139,7 @@ class AdminUserController extends Controller
      */
     public function store(StoreUser $request): RedirectResponse
     {
-        $this->authorize('create', Auth::user());
+        Gate::authorize('create', Auth::user());
         Session::flash('warning', 'Store method blocked off. Contact admin for support.');
 
         return redirect()->route('users_list');
@@ -181,7 +179,7 @@ class AdminUserController extends Controller
      */
     public function edit(User $user, UserImageService $service): View
     {
-        $this->authorize('admin_update', Auth::user());
+        Gate::authorize('admin_update', Auth::user());
 
         $user->load('phone_number',
             'user_info',
@@ -233,7 +231,7 @@ class AdminUserController extends Controller
      */
     public function update(UpdateUser $request, UserImageService $service, User $user): RedirectResponse
     {
-        $this->authorize('admin_update', Auth::user());
+        Gate::authorize('admin_update', Auth::user());
 
         $user->load('phone_number', 'membership');
 
@@ -293,7 +291,7 @@ class AdminUserController extends Controller
             $user->user_info()->save($user_info);
         }
 
-        //todo user role 'suspended' OR permission
+        // todo user role 'suspended' OR permission
 
         $user_roles = $user->getRoleNames()->toArray();
 
@@ -330,7 +328,7 @@ class AdminUserController extends Controller
      */
     public function admin_edit_address(User $user): View
     {
-        $this->authorize('update', $user);
+        Gate::authorize('update', $user);
 
         $currentUser = Auth::user();
         $regions = $this->getFormOptions(['statesprovs']);
@@ -353,9 +351,9 @@ class AdminUserController extends Controller
         EmailMemberUpdateAddressService $service,
         User $user
     ): RedirectResponse {
-        $this->authorize('update', $user);
+        Gate::authorize('update', $user);
         $message = [];
-        //dd($userRequest->all());
+        // dd($userRequest->all());
         $addr = ['unit', 'street', 'city', 'province', 'postal_code', 'message'];
 
         foreach ($addr as $k => $a) {
@@ -381,7 +379,7 @@ class AdminUserController extends Controller
      */
     public function admin_edit_emergency_contact(User $user): View
     {
-        $this->authorize('update', $user);
+        Gate::authorize('update', $user);
 
         $currentUser = Auth::user();
 
@@ -402,7 +400,7 @@ class AdminUserController extends Controller
         EmailMemberUpdateAddressService $service,
         User $user
     ): RedirectResponse {
-        $this->authorize('update', $user);
+        Gate::authorize('update', $user);
 
         $userRequest->validate([
             'emergency_contact_phone' => ['required',
@@ -434,13 +432,13 @@ class AdminUserController extends Controller
      */
     public function destroy(DestroyUser $request): RedirectResponse
     {
-        $this->authorize('delete', Auth::user());
+        Gate::authorize('delete', Auth::user());
 
         User::find($request->toArray())
             ->each(function (User $user) {
                 $user_roles = $user->getRoleNames();
 
-                //todo make a dependency injection
+                // todo make a dependency injection
                 $al = new ActivityLog([
                     'activity' => Auth::user()->name.' deleting '.$user->name,
                     'ip_address' => $_SERVER['REMOTE_ADDR'],
@@ -466,7 +464,7 @@ class AdminUserController extends Controller
                 }
 
                 $user->executive_role()->delete();
-                //todo fix breakage when deleting user that has content such as posts, pages, etc, committee membership....
+                // todo fix breakage when deleting user that has content such as posts, pages, etc, committee membership....
 
                 //  Log::debug('attempting to destroy user '.$user->name.', id:'.$user->id);
                 User::destroy($user->id);

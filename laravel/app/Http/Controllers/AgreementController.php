@@ -6,7 +6,7 @@ use App\Models\Agreement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-//use App\Services\AgreementService;
+// use App\Services\AgreementService;
 
 class AgreementController extends Controller
 {
@@ -88,7 +88,7 @@ class AgreementController extends Controller
             'title' => $agreement->title,
             'next' => $next,
             'previous' => $previous,
-            ]
+        ],
         ]);
     }
 }

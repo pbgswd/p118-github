@@ -131,7 +131,7 @@ class Options
             ['model' => 'Bylaw', 'name' => 'Constitution and Bylaws', 'key' => 'id', 'description' => 'Updates to Constitution and Bylaws in Local 118'],
             ['model' => 'Policy', 'name' => 'Policies', 'key' => 'id', 'description' => 'Local 118 Policies'],
             ['model' => 'Meeting', 'name' => 'Meetings, Minutes, Motions', 'key' => 'id', 'description' => 'Information about meetings'],
-        // ['model' => 'Motion', 'name' => 'Motions and New Business', 'key' => 'id', 'description' => 'Motions and New Business for General Meetings'],
+            // ['model' => 'Motion', 'name' => 'Motions and New Business', 'key' => 'id', 'description' => 'Motions and New Business for General Meetings'],
             ['model' => 'Agreement', 'name' => 'Agreements', 'key' => 'id', 'description' => 'Agreements that Local 118 works under'],
             ['model' => 'Message', 'name' => 'Messages', 'key' => 'id', 'description' => 'Published strictly as a message'],
             ['model' => 'Memoriam', 'name' => 'In Memoriam', 'key' => 'slug', 'description' => 'Notification of the passing of members'],

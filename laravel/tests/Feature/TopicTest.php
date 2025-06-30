@@ -14,9 +14,9 @@ class TopicTest extends TestCase
      * Insert topics into topics table.
      */
     //    use RefreshDatabase; // deletes all data
-    public function testBasicTest(): void
+    public function test_basic_test(): void
     {
-        //todo this is an old test, it can be thrown out
+        // todo this is an old test, it can be thrown out
 
         /*        $response = $this->get('/admin/topic/');
 

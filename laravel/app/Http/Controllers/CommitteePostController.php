@@ -14,16 +14,15 @@ use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class CommitteePostController extends Controller
 {
-    /**
-     * @var AttachmentService
-     */
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
 
     public function __construct(AttachmentService $attachmentService, MessageService $messageService)
@@ -37,7 +36,7 @@ class CommitteePostController extends Controller
      */
     public function create(Committee $committee): View
     {
-        $this->authorize('create', [CommitteePost::class, $committee]);
+        Gate::authorize('create', [CommitteePost::class, $committee]);
 
         $post = new CommitteePost;
         $post['committee'] = $committee;
@@ -57,7 +56,7 @@ class CommitteePostController extends Controller
      */
     public function store(StoreCommitteePostRequest $request, Committee $committee): RedirectResponse
     {
-        $this->authorize('create', [CommitteePost::class, $committee]);
+        Gate::authorize('create', [CommitteePost::class, $committee]);
 
         $post = new CommitteePost($request->input('post'));
         $post->committee_id = $committee->id;
@@ -86,14 +85,13 @@ class CommitteePostController extends Controller
      */
     public function edit(Committee $committee, CommitteePost $committeePost): View
     {
-        $this->authorize('update', [CommitteePost::class, $committeePost]);
+        Gate::authorize('update', [CommitteePost::class, $committeePost]);
 
         $committeePost->load('creator', 'committee', 'attachments');
 
-        if(Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->exists()) {
-            $existing_message = Message::where('source_url',  env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug)->first();
-        }
-        else {
+        if (Message::where('source_url', env('APP_URL').'/committee/'.$committee->slug.'/post/'.$committeePost->slug)->exists()) {
+            $existing_message = Message::where('source_url', env('APP_URL').'/committee/'.$committee->slug.'/post/'.$committeePost->slug)->first();
+        } else {
             $existing_message = false;
         }
 
@@ -114,7 +112,7 @@ class CommitteePostController extends Controller
     public function update(UpdateCommitteePostRequest $request,
         Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
-        $this->authorize('update', [CommitteePost::class, $committeePost]);
+        Gate::authorize('update', [CommitteePost::class, $committeePost]);
 
         $committeePost->fill($request['post']);
         $committeePost->save();
@@ -150,12 +148,11 @@ class CommitteePostController extends Controller
             $data['canManage'] = 1;
         }
 
-        $source_url = env('APP_URL') . '/committee/'. $committee->slug .'/post/' . $committeePost->slug;
+        $source_url = env('APP_URL').'/committee/'.$committee->slug.'/post/'.$committeePost->slug;
 
-        if(Message::where('source_url', $source_url)->exists()) {
-            $data['existing_message'] = Message::where('source_url',  $source_url)->first();
-        }
-        else {
+        if (Message::where('source_url', $source_url)->exists()) {
+            $data['existing_message'] = Message::where('source_url', $source_url)->first();
+        } else {
             $data['existing_message'] = false;
         }
 
@@ -182,7 +179,7 @@ class CommitteePostController extends Controller
     public function destroy(DestroyCommitteePostRequest $request,
         Committee $committee, CommitteePost $committeePost): RedirectResponse
     {
-        $this->authorize('delete', [CommitteePost::class, $committeePost]);
+        Gate::authorize('delete', [CommitteePost::class, $committeePost]);
 
         CommitteePost::withoutGlobalScopes()
             ->find($request->id)

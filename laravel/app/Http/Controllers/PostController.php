@@ -12,9 +12,6 @@ use Illuminate\View\View;
 
 class PostController extends Controller
 {
-    /**
-     * @var AttachmentService
-     */
     private AttachmentService $attachmentService;
 
     public function __construct(AttachmentService $attachmentService)

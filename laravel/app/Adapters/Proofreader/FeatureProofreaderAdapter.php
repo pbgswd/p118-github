@@ -14,7 +14,7 @@ class FeatureProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Feature Model - specific to this class
+        // Feature Model - specific to this class
         return [
             self::NAME => 'Features',
             self::PUB_ROUTE_LIST => 'features',

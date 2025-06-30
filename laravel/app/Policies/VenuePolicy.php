@@ -21,7 +21,7 @@ class VenuePolicy
 
     public function view(User $user, Venue $venue): bool
     {
-        //public?
+        // public?
     }
 
     /**

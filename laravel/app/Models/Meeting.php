@@ -97,7 +97,6 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
         return $this->hasMany(Motion::class);
     }
 
-
     public function attachments(): BelongsToMany
     {
         return $this->belongsToMany(Attachment::class, 'attachment_meeting');

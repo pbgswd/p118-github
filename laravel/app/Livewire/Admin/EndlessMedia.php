@@ -10,7 +10,6 @@ use Livewire\Component;
 
 class EndlessMedia extends Component
 {
-
     public $perPage = 1000;
 
     public function render(): View
@@ -21,16 +20,17 @@ class EndlessMedia extends Component
             }])
             ->paginate($this->perPage);
         $attachments->each(function ($item) {
-            //todo have a thumb size for every image asset
+            // todo have a thumb size for every image asset
             $item->file_size =
                 round(File::size('storage/'.$item->subfolder.'/'.$item->file) /
                     1024, 2);
         });
-dd($attachments);
+        dd($attachments);
         $data['attachments'] = $attachments;
 
         return view('livewire.admin.endless-media', ['data' => $data]);
     }
+
     public function loadMore()
     {
         $this->perPage += 10;

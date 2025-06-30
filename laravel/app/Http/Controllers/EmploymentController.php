@@ -12,7 +12,7 @@ class EmploymentController extends Controller
 {
     public function __construct()
     {
-        //Artisan::call('employment:update-status');
+        // Artisan::call('employment:update-status');
     }
 
     public function index(): View
@@ -104,7 +104,7 @@ class EmploymentController extends Controller
                 'next' => $next,
                 'previous' => $previous,
 
-                ],
+            ],
         ]);
     }
 }

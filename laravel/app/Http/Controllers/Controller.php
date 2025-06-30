@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Options;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @property Controller $getFormOptions
  */
-abstract class Controller extends BaseController
+abstract class Controller
 {
-    use AuthorizesRequests, ValidatesRequests;
-
     protected function getFormOptions(array $options, $data = [])
     {
         foreach ($options as $option) {

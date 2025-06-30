@@ -51,7 +51,6 @@ class FeatureController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
-
         $data = [
             'feature' => $feature,
             'action' => 'Edit',

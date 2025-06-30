@@ -14,7 +14,7 @@ class EmploymentProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Employment Model - specific to this class
+        // Employment Model - specific to this class
         return [
             self::NAME => 'Jobs',
             self::PUB_ROUTE_LIST => 'jobs_list',

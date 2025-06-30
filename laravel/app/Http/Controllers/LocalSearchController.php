@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Search\LocalSearchResult;
 use App\Models\Agreement;
-use App\Models\Attachment;
 use App\Models\Bylaw;
 use App\Models\Committee;
 use App\Models\CommitteePost;
@@ -24,10 +23,8 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\UserInfo;
 use App\Models\Venue;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Kyslik\ColumnSortable\Sortable;
-use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
 
 class LocalSearchController extends Controller
@@ -57,13 +54,13 @@ class LocalSearchController extends Controller
                 ->registerModel(Venue::class, ['name', 'description'])
                 ->registerModel(UserInfo::class, 'about')
                 ->registerModel(Faq::class, 'faq_topic')
-                //->registerModel(FaqData::class, ['question', 'answer'])
+                // ->registerModel(FaqData::class, ['question', 'answer'])
                 ->registerModel(Message::class, ['subject', 'content'])
                 ->search($request->search),
         ];
 
-        //dd(class_basename($data['results'][0]->searchable));
-        //dd($data['results'][0]->searchable);
+        // dd(class_basename($data['results'][0]->searchable));
+        // dd($data['results'][0]->searchable);
         /*
          * https://laraveldaily.com/new-package-laravel-searchable-easily-search-in-multiple-models/
          * https://packagist.org/packages/spatie/laravel-searchable

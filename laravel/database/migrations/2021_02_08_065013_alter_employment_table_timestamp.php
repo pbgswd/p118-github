@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('employment', function (Blueprint $table) {
-            //$table->timestamp('deadline')->change();
+            // $table->timestamp('deadline')->change();
         });
     }
 };

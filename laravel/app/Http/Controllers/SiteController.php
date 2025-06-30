@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-//use Spatie\Sitemap\Sitemap;
-//use Spatie\Sitemap\SitemapGenerator;
-//use Spatie\Sitemap\Tags\Url;
+// use Spatie\Sitemap\Sitemap;
+// use Spatie\Sitemap\SitemapGenerator;
+// use Spatie\Sitemap\Tags\Url;
 
 class SiteController extends Controller
 {

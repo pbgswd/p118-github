@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //front_page landing_page to in_menu allow-comments
+        // front_page landing_page to in_menu allow-comments
         Schema::table('posts', function (Blueprint $table) {
             $table->renameColumn('front_page', 'in_menu');
             $table->renameColumn('landing_page', 'allow_comments');

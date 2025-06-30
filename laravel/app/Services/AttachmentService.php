@@ -8,7 +8,6 @@ use App\Models\Interfaces\HasAttachment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,20 +17,21 @@ class AttachmentService
     {
         foreach ($request->file('attachments') as $file) {
             $attachment = new Attachment;
-            $attachment['user_id']  = Auth::id();
+            $attachment['user_id'] = Auth::id();
             $attachment['access_level'] = $model->getAttachmentAccessLevel();
             $attachment['file_name'] = $file->getClientOriginalName();
             $attachment['subfolder'] = $model->getAttachmentFolder();
             $attachment['file'] = $file->store('', $attachment['subfolder']);
             $attachment->save();
-	        $model->attachments()->attach($attachment);
+            $model->attachments()->attach($attachment);
         }
+
         return true;
     }
 
     public function updateAttachment(Request $request, HasAttachment $model): bool
     {
-       // dd([$request->files, $model]);
+        // dd([$request->files, $model]);
 
         if (isset($request->attachment)) {
             foreach ($request->attachment as $k => $v) {
@@ -44,6 +44,7 @@ class AttachmentService
                         Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
                         Attachment::destroy($v['id']);
                     }
+
                     continue;
                 }
 
@@ -57,8 +58,10 @@ class AttachmentService
                     }
                 }
             }
+
             return true;
         }
+
         return false;
     }
 

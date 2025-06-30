@@ -19,7 +19,7 @@ class DestroyMotionRequest extends FormRequest
      */
     public function rules(): array
     {
-//todo admin, or the author only
+        // todo admin, or the author only
         return [
             'id' => 'required',
         ];

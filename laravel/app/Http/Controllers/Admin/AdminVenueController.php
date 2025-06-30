@@ -13,6 +13,7 @@ use App\Services\AttachmentService;
 use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -25,7 +26,7 @@ class AdminVenueController extends Controller
     public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;
-        //$this->userImageService = $userImageService;
+        // $this->userImageService = $userImageService;
     }
 
     /**
@@ -33,7 +34,7 @@ class AdminVenueController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Venue::class);
+        Gate::authorize('viewAny', Venue::class);
 
         $data['venues'] = Venue::withoutGlobalScopes()
             ->with('all_agreements', 'attachments')
@@ -49,7 +50,7 @@ class AdminVenueController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Venue::class);
+        Gate::authorize('create', Venue::class);
 
         $data = [
             'venue' => new Venue,
@@ -67,7 +68,7 @@ class AdminVenueController extends Controller
      */
     public function store(StoreVenueRequest $request, UserImageService $service): RedirectResponse
     {
-        $this->authorize('create', Venue::class);
+        Gate::authorize('create', Venue::class);
 
         $venue = new Venue($request->venue);
 
@@ -104,7 +105,7 @@ class AdminVenueController extends Controller
      */
     public function edit(Venue $any_venue): View
     {
-        $this->authorize('update', Venue::class);
+        Gate::authorize('update', Venue::class);
 
         $any_venue->load('member_agreements', 'attachments');
 
@@ -149,7 +150,7 @@ class AdminVenueController extends Controller
      */
     public function update(UpdateVenueRequest $request, UserImageService $service, Venue $any_venue): RedirectResponse
     {
-        $this->authorize('update', Venue::class);
+        Gate::authorize('update', Venue::class);
 
         $any_venue->fill($request['venue']);
 
@@ -200,7 +201,7 @@ class AdminVenueController extends Controller
      */
     public function destroy(DestroyVenueRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Venue::class);
+        Gate::authorize('delete', Venue::class);
 
         Venue::withoutGlobalScopes()
             ->find($request->id)

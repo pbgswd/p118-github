@@ -53,13 +53,13 @@ class CarouselImageService
 
         foreach ($widths as $w) {
 
-            //delete
+            // delete
             if ($request['delete_image_'.$w] !== null) {
                 Storage::disk($directory)->delete($request['carousel']['file_'.$w]);
                 $carousel['deleted'][] = $w;
             }
 
-            //upload
+            // upload
             if ($request->file('file.image_'.$w) !== null) {
                 $carousel['images']['file_'.$w] = $request->file('file.image_'.$w)->store('', $directory);
                 $carousel['images']['image_'.$w] = $request['file']['image_'.$w]->getClientOriginalName();
@@ -67,7 +67,7 @@ class CarouselImageService
 
         }
 
-        //ImageOptimizer::optimize(storage_path().$directory.$image);
+        // ImageOptimizer::optimize(storage_path().$directory.$image);
         /* if ($make_thumb) {
              $result = $this->generate_thumb($image, $directory, $thumb_values);
          }*/

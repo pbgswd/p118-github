@@ -11,7 +11,7 @@ class HistoryBlock
     {
         $data['foundingYear'] = 1904;
         $data['foundingDate'] = Carbon::createMidnightDate(1904, 9, 13);
-        $data['years'] = $data['foundingDate']->diffInYears(Carbon::today());
+        $data['years'] = (int)$data['foundingDate']->diffInYears(Carbon::today());
 
         $data['birthday'] = '';
 

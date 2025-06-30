@@ -12,9 +12,9 @@ class MessageService
     public function createFeatureMessage($data): Message
     {
         $imageData = '';
-        if(!is_null($data['image'])) {
-            $imageData = "<img src='" . env('APP_URL') .'/storage/public/tn_250x250_'. $data['image'] . "' alt='" .
-                $data['title'] . "'
+        if (! is_null($data['image'])) {
+            $imageData = "<img src='".env('APP_URL').'/storage/public/tn_250x250_'.$data['image']."' alt='".
+                $data['title']."'
                     style='display: block; margin-left:auto; margin-right:auto; max-width: none; width: auto; height: auto;' />
                     <br />";
             $imageData = "<div style='text-align: center; display: block; margin-left:auto; margin-right:auto;'>
@@ -23,17 +23,17 @@ class MessageService
         }
 
         $url = '';
-        if(!is_null($data['url'])) {
-            $url = "<br /><hr /><a href='" . $data['url'] . "' target='_blank'>" . $data['url'] . "</a> <hr />";
+        if (! is_null($data['url'])) {
+            $url = "<br /><hr /><a href='".$data['url']."' target='_blank'>".$data['url'].'</a> <hr />';
         }
 
-        $additional_data = "<hr /> <b>Published: " . $data['date']->format('F j Y') . "</b>";
+        $additional_data = '<hr /> <b>Published: '.$data['date']->format('F j Y').'</b>';
 
         $message = [
             'source_url' => $data->source_url,
-            'subject' => "Feature Message: " . $data->title,
-            'slug' => 'feature-'. $data->slug,
-            'content' => $imageData . " " . $url . " " . $data->content . " " . $additional_data,
+            'subject' => 'Feature Message: '.$data->title,
+            'slug' => 'feature-'.$data->slug,
+            'content' => $imageData.' '.$url.' '.$data->content.' '.$additional_data,
             'user_id' => Auth::id(),
         ];
 
@@ -43,18 +43,17 @@ class MessageService
         return self::createMessage($message, 'model');
     }
 
-
     public function createPolicyMessage($data): Message
     {
-        $additional_data = "<hr />
-                            <b>Date Policy is in Effect: " . $data['date']->format('F j Y') ."</b>
-                            </b>";
+        $additional_data = '<hr />
+                            <b>Date Policy is in Effect: '.$data['date']->format('F j Y').'</b>
+                            </b>';
 
         $message = [
             'source_url' => $data->source_url,
-            'subject' => "Policy: " . $data->title,
-            'slug' => 'policy-'. $data->id,
-            'content' => $data->description . $additional_data,
+            'subject' => 'Policy: '.$data->title,
+            'slug' => 'policy-'.$data->id,
+            'content' => $data->description.$additional_data,
             'user_id' => Auth::id(),
         ];
 
@@ -66,15 +65,15 @@ class MessageService
 
     public function createMeetingMessage($data): Message
     {
-        $additional_data = "<hr />
-                            <b>Date of Meeting: " . $data['date']->format('F j Y') ."</b>
-                            </b>";
+        $additional_data = '<hr />
+                            <b>Date of Meeting: '.$data['date']->format('F j Y').'</b>
+                            </b>';
 
         $message = [
             'source_url' => $data->source_url,
-            'subject' => "Meeting Minutes: " . $data->title,
-            'slug' => 'meeting-minutes-'. $data->id,
-            'content' => $data->description . $additional_data,
+            'subject' => 'Meeting Minutes: '.$data->title,
+            'slug' => 'meeting-minutes-'.$data->id,
+            'content' => $data->description.$additional_data,
             'user_id' => Auth::id(),
         ];
 
@@ -84,21 +83,20 @@ class MessageService
         return self::createMessage($message, 'model');
     }
 
-
     public function createEmploymentMessage($data): Message
     {
 
-        $additional_data = "<hr />
-                            <b>Date Posted: " . $data['created_at']->format('F j Y') ."</b>
+        $additional_data = '<hr />
+                            <b>Date Posted: '.$data['created_at']->format('F j Y').'</b>
                             <br />
-                            <b>End date for application: " . $data['deadline']->format('F j Y') .
-                            "</b>";
+                            <b>End date for application: '.$data['deadline']->format('F j Y').
+                            '</b>';
 
         $message = [
             'source_url' => $data->source_url,
-            'subject' => "Job Posting: " . $data->title,
-            'slug' => 'job-posting-'. $data->id,
-            'content' => $data->description . $additional_data,
+            'subject' => 'Job Posting: '.$data->title,
+            'slug' => 'job-posting-'.$data->id,
+            'content' => $data->description.$additional_data,
             'user_id' => Auth::id(),
         ];
 
@@ -110,13 +108,13 @@ class MessageService
 
     public function createMemoriamMessage($data): Message
     {
-        $additional_data = "<hr /> <b>Date of passing: " . $data['date']->format('F j Y') . "</b>";
+        $additional_data = '<hr /> <b>Date of passing: '.$data['date']->format('F j Y').'</b>';
 
         $message = [
             'source_url' => $data->source_url,
-            'subject' => "In Memoriam: ". $data->title,
-            'slug' => 'in-memoriam-'. $data->slug,
-            'content' => $data->content . $additional_data,
+            'subject' => 'In Memoriam: '.$data->title,
+            'slug' => 'in-memoriam-'.$data->slug,
+            'content' => $data->content.$additional_data,
             'user_id' => Auth::id(),
         ];
 
@@ -131,7 +129,7 @@ class MessageService
         $message = [
             'source_url' => $data->source_url,
             'subject' => $data->title,
-            'slug' => $data->committee->slug .'-'. $data->slug,
+            'slug' => $data->committee->slug.'-'.$data->slug,
             'content' => $data->content,
             'user_id' => Auth::id(),
         ];
@@ -158,6 +156,7 @@ class MessageService
         return self::createMessage($message, 'topic');
 
     }
+
     public function createPostMessage($data): Message
     {
         $message = [
@@ -188,7 +187,7 @@ class MessageService
             $msgCategory->save();
         }
 
-        foreach($data['attachments'] as $attachment) {
+        foreach ($data['attachments'] as $attachment) {
             $attachment_data = [
                 'attachment_id' => $attachment->id,
                 'message_id' => $msg->id,
@@ -196,6 +195,7 @@ class MessageService
             $result = DB::table('attachment_message')
                 ->insert([$attachment_data]);
         }
+
         return $msg;
     }
 }

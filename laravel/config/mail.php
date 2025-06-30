@@ -14,12 +14,13 @@ return [
             'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
             'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'encryption' => env('MAIL_SCHEME', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'verify_peer' => env('MAIL_VERIFY_PEER'),
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'scheme' => env('MAIL_SCHEME'),
         ],
 
         'mailgun' => [
@@ -35,6 +36,7 @@ return [
                 'ses',
                 'postmark',
             ],
+            'retry_after' => 60,
         ],
     ],
 
@@ -58,7 +60,7 @@ return [
         'name' => 'IATSE Local 118 Motions & New Business',
     ],
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_SCHEME', 'tls'),
 
     'username' => env('MAIL_USERNAME'),
 

@@ -7,6 +7,7 @@ use App\Models\Membership;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -18,7 +19,7 @@ class ReInviteUserController extends Controller
      */
     public function index(): RedirectResponse
     {
-        $this->authorize('viewAny', InviteUser::class);
+        Gate::authorize('viewAny', InviteUser::class);
 
         DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')

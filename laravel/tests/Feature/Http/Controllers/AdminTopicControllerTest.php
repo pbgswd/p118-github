@@ -105,7 +105,7 @@ class AdminTopicControllerTest extends TestCase
                 'topic' => $topic->toArray(),
             ]);
         // both work
-        //$this->assertEquals(Session::get('success'), 'You have saved a new topic');
+        // $this->assertEquals(Session::get('success'), 'You have saved a new topic');
         $response->assertRedirect(route('topic_edit', [$topic->slug]));
     }
 
