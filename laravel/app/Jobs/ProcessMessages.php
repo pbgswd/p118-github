@@ -2,9 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\EmailQueue;
 use App\Models\Message;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -32,7 +30,7 @@ class ProcessMessages implements ShouldQueue
      */
     public function handle(): void
     {
-        //todo
+        // todo
         $message->state = 'sending';
         $message->save();
 

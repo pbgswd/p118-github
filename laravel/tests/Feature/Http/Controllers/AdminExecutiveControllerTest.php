@@ -5,7 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
-//todo test to manage user exec roles
+// todo test to manage user exec roles
 /**
  * @see \App\Http\Controllers\Admin\AdminExecutiveController
  */

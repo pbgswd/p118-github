@@ -20,8 +20,8 @@ class OrganizationFactory extends Factory
             'slug' => \Illuminate\Support\Str::slug($name),
             'url' => $this->faker->url(),
             'description' => $this->faker->paragraph(),
-            'file_name' => '', //$file_name .'.jpg',
-            'image' => '', //bcrypt($file_name).'.jpg',
+            'file_name' => '', // $file_name .'.jpg',
+            'image' => '', // bcrypt($file_name).'.jpg',
             'access_level' => 'members',
             'live' => 1,
         ];

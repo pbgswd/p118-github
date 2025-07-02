@@ -24,9 +24,9 @@ class PostPolicy
      */
     public function view(User $user, Post $post): bool
     {
-        //todo differentiate between members and public content
+        // todo differentiate between members and public content
         //  dd([$user, $post]);
-        //return($post);
+        // return($post);
     }
 
     /**

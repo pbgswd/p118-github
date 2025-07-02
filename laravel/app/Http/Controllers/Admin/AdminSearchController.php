@@ -34,6 +34,7 @@ use Spatie\Searchable\Search;
 class AdminSearchController extends Controller
 {
     use Sortable;
+
     /**
      * Display a listing of the resource.
      */
@@ -249,34 +250,28 @@ class AdminSearchController extends Controller
                 })->search($request->search),
         ];
 
-        //todo model names from each search, make jumps to content sections
+        // todo model names from each search, make jumps to content sections
 
-        $data['count'] = array_reduce($data['models'], function($carry, $array) {
+        $data['count'] = array_reduce($data['models'], function ($carry, $array) {
             return $carry + count($array['results']);
         }, 0);
 
-        $data['title'] = $data['count'] .' Search ' .
-            Str::plural('Result', $data['count'] ?? 0 ) .
-            ' For "' . $data['search'] .'"';
+        $data['title'] = $data['count'].' Search '.
+            Str::plural('Result', $data['count'] ?? 0).
+            ' For "'.$data['search'].'"';
 
         return view('admin.search_admin', ['data' => $data]);
     }
 
-    /**
-     * @return View
-     */
     public function show(): View
     {
         $data['models'] = [];
         $data['count'] = 0;
-        $data['title'] = "Admin Search";
+        $data['title'] = 'Admin Search';
+
         return view('admin.search_admin', ['data' => $data]);
     }
 
-    /**
-     * @param AdminSearchResult $request
-     * @return View
-     */
     public function admin_attachment_search(AdminSearchResult $request): View
     {
         $data = [
@@ -286,6 +281,7 @@ class AdminSearchController extends Controller
                     'file_type'])
                 ->search($request->search),
         ];
+
         return view('admin.attachments.list_attachments_search_result', ['data' => $data]);
     }
 }

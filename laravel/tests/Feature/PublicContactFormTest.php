@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class PublicContactFormTest extends TestCase
 {
-    public function testPublicContactPage(): void
+    public function test_public_contact_page(): void
     {
         $date = new \DateTime;
         $date->setTimezone(new \DateTimeZone('America/Vancouver'));
@@ -18,7 +18,7 @@ class PublicContactFormTest extends TestCase
 
         echo "\n Attempting to send a message"."\n";
 
-        //todo mocking & stubs
+        // todo mocking & stubs
         $recaptcha = '6Ldv4sQaAAAAAJApVGt3T9XUyZcNFDrKLS_Umu1A';
 
         $response = $this->call('POST', '/contact',

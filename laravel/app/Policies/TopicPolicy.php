@@ -23,7 +23,7 @@ class TopicPolicy
      */
     public function view(User $user, Topics $topics): bool
     {
-        //public
+        // public
     }
 
     /**

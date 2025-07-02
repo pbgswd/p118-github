@@ -3,32 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ActivityLog;
-use App\Models\Agreement;
-use App\Models\Attachment;
-use App\Models\Bylaw;
-use App\Models\Carousel;
-use App\Models\Committee;
-use App\Models\EmailQueue;
-use App\Models\Employment;
-use App\Models\Executive;
-use App\Models\Faq;
-use App\Models\Feature;
-use App\Models\InviteUser;
-use App\Models\Meeting;
-use App\Models\Membership;
-use App\Models\Memoriam;
-use App\Models\Message;
-use App\Models\ModelList;
-use App\Models\Organization;
 use App\Models\Page;
-use App\Models\Policy;
-use App\Models\Post;
-use App\Models\Proofreader;
-use App\Models\Topic;
 use App\Models\User;
-use App\Models\Venue;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 
@@ -36,10 +12,7 @@ class AdminDeveloperController extends Controller
 {
     protected $activityLog;
 
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function index(): View
     {
@@ -53,19 +26,20 @@ class AdminDeveloperController extends Controller
 
     public function insert(): View
     {
-        //todo method for page for development
-        //todo file upload
-        //todo image library insert image
+        // todo method for page for development
+        // todo file upload
+        // todo image library insert image
 
-       $data['textarea'] = fake()->paragraph();
+        $data['textarea'] = fake()->paragraph();
 
         return view('admin.attachments.list_attachments_endless', ['data' => $data]);
     }
+
     public function drag(): View
     {
-        //todo method for page for development
-        //todo file upload
-        //todo image library insert image
+        // todo method for page for development
+        // todo file upload
+        // todo image library insert image
 
         $data['textarea'] = fake()->paragraph();
 

@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Services\EmailCommitteeMembershipService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -32,7 +33,7 @@ class AdminCommitteeMemberController extends Controller
     public function index(Committee $committee): View
     {
 
-        $this->authorize('update', $committee);
+        Gate::authorize('update', $committee);
         $data = [];
 
         $committee->load('active_committee_members')->sortable();
@@ -50,7 +51,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function search(SearchCommitteeMember $request, Committee $committee): View
     {
-        $this->authorize('update', $committee);
+        Gate::authorize('update', $committee);
 
         $data = [];
 
@@ -76,7 +77,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function create(Committee $committee, User $user): View
     {
-        $this->authorize('update', $committee);
+        Gate::authorize('update', $committee);
         $data = [];
         $data['committee'] = $committee;
         $data['committee_roles'] = $this->getFormOptions(['committee_roles']);
@@ -91,7 +92,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function store(StoreCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
-        $this->authorize('update', $committee);
+        Gate::authorize('update', $committee);
 
         $user->load('committee_memberships');
 
@@ -119,13 +120,13 @@ class AdminCommitteeMemberController extends Controller
      */
     public function edit(Committee $committee, User $user): View
     {
-        $this->authorize('update', $committee);
+        Gate::authorize('update', $committee);
 
         $user->load(['committee_memberships' => function ($query) use ($committee) {
             $query->where('committee_id', $committee->id);
         }]);
 
-        $this->authorize('update', $committee);
+        Gate::authorize('update', $committee);
 
         $data = [];
         $data['committee'] = $committee;
@@ -141,7 +142,7 @@ class AdminCommitteeMemberController extends Controller
      */
     public function update(UpdateCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
-        $this->authorize('update', $committee);
+        Gate::authorize('update', $committee);
 
         $user->load('committee_memberships');
 
@@ -187,9 +188,9 @@ class AdminCommitteeMemberController extends Controller
      */
     public function destroy(DestroyCommitteeMember $request, Committee $committee, User $user): RedirectResponse
     {
-        //todo prove unit test is going in this method AdminCommitteeMemberControllerTest::destroy_returns_an_ok_response
+        // todo prove unit test is going in this method AdminCommitteeMemberControllerTest::destroy_returns_an_ok_response
 
-        $this->authorize('update', $committee);
+        Gate::authorize('update', $committee);
 
         $committee->committee_members()->detach($user['id']);
 

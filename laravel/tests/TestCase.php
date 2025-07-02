@@ -100,7 +100,7 @@ abstract class TestCase extends BaseTestCase
 
         $this->committee->committee_members()->attach($this->user->id, ['role' => 'Member']);
 
-        //todo be able to retrieve committee members from the committee
+        // todo be able to retrieve committee members from the committee
 
         $committee = Committee::latest()->first();
 

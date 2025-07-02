@@ -14,7 +14,7 @@ class OrganizationProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Organization Model - specific to this class
+        // Organization Model - specific to this class
         return [
             self::NAME => 'Organizations',
             self::PUB_ROUTE_LIST => 'organizations',

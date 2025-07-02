@@ -17,6 +17,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -24,8 +25,11 @@ use Illuminate\View\View;
 class AdminPageController extends Controller
 {
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
+
     private FeatureService $featureService;
+
     /**
      * @var AttachmentService
      */
@@ -41,7 +45,7 @@ class AdminPageController extends Controller
      */
     public function index(Request $request): View
     {
-        $this->authorize('viewAny', Page::class);
+        Gate::authorize('viewAny', Page::class);
         $pages = Page::withoutGlobalScopes()
             ->sortable()
             ->with('topics', 'user', 'attachments')
@@ -65,7 +69,7 @@ class AdminPageController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Page::class);
+        Gate::authorize('create', Page::class);
 
         $page = new Page;
         $page['user_id'] = Auth::id();
@@ -90,7 +94,7 @@ class AdminPageController extends Controller
      */
     public function store(StorePageRequest $request): RedirectResponse
     {
-        $this->authorize('create', Page::class);
+        Gate::authorize('create', Page::class);
 
         $page = new Page($request->page);
 
@@ -120,14 +124,14 @@ class AdminPageController extends Controller
      */
     public function edit(Page $page): View
     {
-        $this->authorize('update', Page::class);
+        Gate::authorize('update', Page::class);
 
         $page->load('user', 'attachments', 'topics');
 
         $data = [
             'page' => $page,
             'topics' => Topic::all(),
-            'existing_message' => Message::where('source_url',  env('APP_URL') . '/page/' . $page->slug)->exists(),
+            'existing_message' => Message::where('source_url', env('APP_URL').'/page/'.$page->slug)->exists(),
             'assignedTopics' => $page->topics->pluck('id')->toArray(),
             'access_levels' => Options::access_levels(),
             'action' => 'Edit',
@@ -142,9 +146,9 @@ class AdminPageController extends Controller
      */
     public function update(UpdatePageRequest $request, Page $any_page): RedirectResponse
     {
-        $this->authorize('update', Page::class);
+        Gate::authorize('update', Page::class);
 
-        $this->authorize('update', $any_page);
+        Gate::authorize('update', $any_page);
 
         $any_page->fill($request->page);
         $any_page->save();
@@ -174,11 +178,12 @@ class AdminPageController extends Controller
 
     public function message(Page $page): RedirectResponse
     {
-        $this->authorize('update', Page::class);
+        Gate::authorize('update', Page::class);
 
-        $source_url = env('APP_URL') . '/page/' . $page->slug;
-        if(Message::where('source_url',  $source_url)->exists()) {
+        $source_url = env('APP_URL').'/page/'.$page->slug;
+        if (Message::where('source_url', $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
+
             return redirect()->route('page_edit', [$page->slug]);
         }
 
@@ -187,15 +192,17 @@ class AdminPageController extends Controller
         $msg = $this->messageService->createPageMessage($page);
 
         Session::flash('success', 'new message from pages saved');
+
         return redirect()->route('admin_message_edit', [$msg->id, $msg->slug]);
     }
 
     public function feature(Page $page): RedirectResponse
     {
-        $this->authorize('update', Page::class);
-        $page->source_url = env('APP_URL') . '/page/' . $page->slug;
+        Gate::authorize('update', Page::class);
+        $page->source_url = env('APP_URL').'/page/'.$page->slug;
         $msg = $this->featureService->createPageFeature($page);
         Session::flash('success', 'new feature from Pages saved');
+
         return redirect()->route('admin_feature_edit', [$msg->slug]);
     }
 
@@ -204,7 +211,7 @@ class AdminPageController extends Controller
      */
     public function destroy(DestroyPageRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Page::class);
+        Gate::authorize('delete', Page::class);
 
         Page::withoutGlobalScopes()
             ->find($request->id)

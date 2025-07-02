@@ -14,8 +14,7 @@ class HelloController extends Controller
         $value = $client->get('foo');
          **/
 
-        return view('hello', ['data' =>
-            ['title' => 'Vancouver Stagehands for Theatre and Live Events']
+        return view('hello', ['data' => ['title' => 'Vancouver Stagehands for Theatre and Live Events'],
         ]);
     }
 }

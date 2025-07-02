@@ -32,10 +32,10 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response(): void
     {
-        //todo get a user associated with the committee - know a user id and send it in
-        //dd($this->committee->committee_members[0]->id);
+        // todo get a user associated with the committee - know a user id and send it in
+        // dd($this->committee->committee_members[0]->id);
         Log::debug(['slug' => $this->committee->slug, 'user' => $this->committee->committee_members[0]->id]);
-        //todo supposed to be going in AdminCommitteeControllerMethod::destroy
+        // todo supposed to be going in AdminCommitteeControllerMethod::destroy
 
         $response = $this->actingAs($this->admin_user)
             ->delete(route('admin_delete-committee_member',
@@ -165,7 +165,7 @@ class AdminCommitteeMemberControllerTest extends TestCase
      */
     public function update_returns_an_ok_response(): void
     {
-        //todo update a member's status
+        // todo update a member's status
         $response = $this->actingAs($this->admin_user)
             ->post(route('admin_update_committee_member', [$this->committee, $this->committee_member]),
                 [

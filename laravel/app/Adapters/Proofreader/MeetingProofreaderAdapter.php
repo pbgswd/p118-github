@@ -14,7 +14,7 @@ class MeetingProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Meeting Model - specific to this class
+        // Meeting Model - specific to this class
         return [
             self::NAME => 'Meetings',
             self::PUB_ROUTE_LIST => 'list_meetings',

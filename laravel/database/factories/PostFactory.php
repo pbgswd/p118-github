@@ -11,7 +11,7 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        //todo should user be user with permissions admin_user?
+        // todo should user be user with permissions admin_user?
         return [
             //  'user_id' => \App\Models\User::factory(),
             'title' => $this->faker->sentence(),

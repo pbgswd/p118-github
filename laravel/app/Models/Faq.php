@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Policies\FaqPolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -37,7 +36,7 @@ class Faq extends LiveableModel implements Searchable
 
     protected $policies = [
         self::class => Faq::class,
-        ];
+    ];
 
     public $fillable = [
         'faq_topic',

@@ -27,7 +27,7 @@ class StoreMessageRequest extends FormRequest
         ];
 
         if ($this->route()->parameter('message')) {
-            $rules['message.subject'] .= '|unique:messages,subject,' . $this->route('message')->slug . ',slug,id,' . $this->route('message')->id;
+            $rules['message.subject'] .= '|unique:messages,subject,'.$this->route('message')->slug.',slug,id,'.$this->route('message')->id;
         }
 
         return $rules;

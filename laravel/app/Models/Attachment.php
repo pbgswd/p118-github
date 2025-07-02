@@ -8,9 +8,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -94,16 +92,15 @@ class Attachment extends Model implements Searchable
             'zip' => 'zip',
             'bin' => 'binary',
         ];
-        if(!$this->attributes['subfolder']) {
-           throw new \Exception('file subfolder not set');
+        if (! $this->attributes['subfolder']) {
+            throw new \Exception('file subfolder not set');
         }
-        $file_extension = strtolower(File::extension('storage/' . $this->attributes['subfolder'] . '/' . $value));
+        $file_extension = strtolower(File::extension('storage/'.$this->attributes['subfolder'].'/'.$value));
 
         $this->file_type = $fileTypes[$file_extension] ?? (
-            in_array($file_extension,['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']) ? 'image' : 'file');
+            in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']) ? 'image' : 'file');
         $this->attributes['file'] = $value;
     }
-
 
     public function setCalculatedProperties(): self
     {

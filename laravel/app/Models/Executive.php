@@ -42,11 +42,11 @@ class Executive extends Model implements Searchable
     {
         $modelList = new ModelList;
         $this->info = $modelList->getModelInfo('Executive');
-//todo return meaningful search result with executive model and related
+        // todo return meaningful search result with executive model and related
         if (request()->route()->getName() == 'admin_search') {
             return new SearchResult(
                 $this,
-                config('app.APP_NAME'). $this->title,
+                config('app.APP_NAME').$this->title,
                 \route('admin_executive_edit', $this->id),
             );
         }

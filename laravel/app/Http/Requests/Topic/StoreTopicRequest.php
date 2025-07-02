@@ -20,7 +20,7 @@ class StoreTopicRequest extends FormRequest
     public function rules(): array
     {
 
-        //$this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cant be tested without context. Use Feature test');
+        // $this->markTestSkipped(__FUNCTION__ . ' in ' . __FILE__ . ' cant be tested without context. Use Feature test');
 
         return [
             'topic.name' => 'required|unique:topics,name|max:255',

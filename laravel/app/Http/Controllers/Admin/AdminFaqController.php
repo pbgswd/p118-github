@@ -12,6 +12,7 @@ use App\Models\FaqData;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -34,7 +35,7 @@ class AdminFaqController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Faq::class);
+        Gate::authorize('create', Faq::class);
 
         $data = [
             'faq' => new Faq,
@@ -51,7 +52,7 @@ class AdminFaqController extends Controller
      */
     public function store(StoreFaqRequest $request): RedirectResponse
     {
-        $this->authorize('create', Faq::class);
+        Gate::authorize('create', Faq::class);
 
         $faq = new Faq($request->input('faq'));
         $faq->user_id = Auth::id();
@@ -72,7 +73,7 @@ class AdminFaqController extends Controller
      */
     public function edit(Faq $faq): View
     {
-        $this->authorize('update', Faq::class);
+        Gate::authorize('update', Faq::class);
 
         $faq->load(['faqs_data', 'user'])->orderBy('faqs_data.sort_order', 'desc');
 
@@ -82,7 +83,8 @@ class AdminFaqController extends Controller
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
         ];
-//dd($data);
+
+        // dd($data);
         return view('admin.faq_topic_create', ['data' => $data]);
     }
 
@@ -91,15 +93,14 @@ class AdminFaqController extends Controller
      */
     public function update(UpdateFaqRequest $request, Faq $any_faq): RedirectResponse
     {
-        $this->authorize('update', Faq::class);
-        $this->authorize('update', $any_faq);
+        Gate::authorize('update', Faq::class);
+        Gate::authorize('update', $any_faq);
 
         $any_faq->fill($request->validated()['faq']);
         $any_faq->save();
 
         if (isset($request->validated()['faq']['faq_data'])) {
-            foreach ($request->validated()['faq']['faq_data'] as $fd)
-            {
+            foreach ($request->validated()['faq']['faq_data'] as $fd) {
                 if ($fd['delete'] == 1) {
                     FaqData::where('id', $fd['id'])->delete();
                 } else {
@@ -113,9 +114,8 @@ class AdminFaqController extends Controller
             $faq_data = new FaqData($request->validated()['new']);
             $faq_data->faq()->associate($any_faq);
             $faq_data->save();
-        }
-        else {
-            //try again, empty question
+        } else {
+            // try again, empty question
         }
 
         Session::flash('success', 'You have updated a Faq topic');
@@ -130,7 +130,7 @@ class AdminFaqController extends Controller
      */
     public function destroy(DestroyFaqRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Faq::class);
+        Gate::authorize('delete', Faq::class);
 
         Faq::withoutGlobalScopes()
             ->find($request->id)

@@ -17,6 +17,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -31,7 +32,7 @@ class InviteUserController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', InviteUser::class);
+        Gate::authorize('viewAny', InviteUser::class);
 
         DB::table('invite_users')
             ->whereRaw('email IN (SELECT email FROM users)')
@@ -60,7 +61,7 @@ class InviteUserController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', InviteUser::class);
+        Gate::authorize('create', InviteUser::class);
 
         $invited = new InviteUser;
         $invited->role = ['member' => 'member'];
@@ -70,7 +71,7 @@ class InviteUserController extends Controller
             'roles' => Role::get(),
             'membership' => Options::membership_levels(),
             'action' => 'Invite',
-            ],
+        ],
         ]);
     }
 
@@ -79,7 +80,7 @@ class InviteUserController extends Controller
      */
     public function store(StoreInviteUserRequest $request): RedirectResponse
     {
-        $this->authorize('create', InviteUser::class);
+        Gate::authorize('create', InviteUser::class);
 
         $invite = $request['invite'];
         $invite['password'] = str_replace('/', '', hash::make(Str::random(8)));
@@ -87,8 +88,7 @@ class InviteUserController extends Controller
         $invitation = new InviteUser($invite);
         $invitation->save();
 
-        Mail::send('emails.mail_invited_user', ['data' =>
-            ['invitation' => $invitation]],
+        Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]],
             function ($m) use ($invitation) {
                 $m->from(config('mail.from.address'),
                     config('mail.from.name').' Website Signup');
@@ -98,14 +98,14 @@ class InviteUserController extends Controller
             });
 
         $al = new ActivityLog([
-            'activity' => 'A website invitation has been sent to ' .
-                $invitation['name'] . '.',
+            'activity' => 'A website invitation has been sent to '.
+                $invitation['name'].'.',
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'user_agent' => $_SERVER['HTTP_USER_AGENT'],
             'model' => 'InviteUser']);
         $al->save();
 
-        Session::flash('success', 'Invitation for access sent to ' .
+        Session::flash('success', 'Invitation for access sent to '.
             $invitation['name']);
 
         return redirect()->route('admin_list_invited_users');
@@ -116,18 +116,18 @@ class InviteUserController extends Controller
      */
     public function show(InviteUser $inviteUser): View
     {
-//todo 48 hour signup limitation of 48 hours before need to reapply
-/***
-    $now = Carbon::now();
-    $allowedInvitationTime = 60 * 48; // 2 days
-    $interval = $now->diffInMinutes($inviteUser->updated_at);
-    if ($interval > $allowedInvitationTime) {
-        Session::flash('error',
- * "The invitation has expired as it is older than 48 hours.
-* Please contact the site to get a new invitation.");
-        return redirect()->route('hello');
-    }
-***/
+        // todo 48 hour signup limitation of 48 hours before need to reapply
+        /***
+            $now = Carbon::now();
+            $allowedInvitationTime = 60 * 48; // 2 days
+            $interval = $now->diffInMinutes($inviteUser->updated_at);
+            if ($interval > $allowedInvitationTime) {
+                Session::flash('error',
+         * "The invitation has expired as it is older than 48 hours.
+        * Please contact the site to get a new invitation.");
+                return redirect()->route('hello');
+            }
+        ***/
         if (User::where('email', $inviteUser->email)->first() !== null) {
             Session::flash('error',
                 'The invitation is no longer valid because you have been
@@ -169,7 +169,7 @@ class InviteUserController extends Controller
      */
     public function process_import_invitation(): RedirectResponse
     {
-        $this->authorize('create', InviteUser::class);
+        Gate::authorize('create', InviteUser::class);
 
         DB::table('import_users')
             ->whereRaw('email IN (SELECT email FROM invite_users)')
@@ -206,8 +206,7 @@ class InviteUserController extends Controller
 
             $invitation->save();
 
-            Mail::send('emails.mail_invited_user', ['data' =>
-                ['invitation' => $invitation]],
+            Mail::send('emails.mail_invited_user', ['data' => ['invitation' => $invitation]],
                 function ($m) use ($invitation) {
                     $m->from(config('mail.from.address'),
                         config('mail.from.name').' Website Signup');
@@ -232,7 +231,7 @@ class InviteUserController extends Controller
     }
 
     public function process_user(ProcessUserRequest $request,
-                                 InviteUser $inviteUser): RedirectResponse
+        InviteUser $inviteUser): RedirectResponse
     {
         $data = [
             'name' => $inviteUser->name,
@@ -259,11 +258,11 @@ class InviteUserController extends Controller
         InviteUser::where('email', $inviteUser->email)->delete();
 
         $al = new ActivityLog([
-            'activity' => $user->name .
+            'activity' => $user->name.
                 ' has completed website signup',
-                'ip_address' => $_SERVER['REMOTE_ADDR'],
-                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-                'model' => 'InviteUser']);
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'model' => 'InviteUser']);
 
         $al->save();
 
@@ -280,14 +279,14 @@ class InviteUserController extends Controller
      */
     public function destroy(DestroyInviteUserRequest $request): RedirectResponse
     {
-        $this->authorize('delete', InviteUser::class);
+        Gate::authorize('delete', InviteUser::class);
 
         InviteUser::find($request->id)
             ->each(function (InviteUser $inviteUser) {
                 $inviteUser->delete();
             });
 
-        Session::flash('success', Str::plural(count([$request->id]) .
+        Session::flash('success', Str::plural(count([$request->id]).
             ' Invitation'.' deleted.'));
 
         return redirect()->route('users.admin_list_invited_users');

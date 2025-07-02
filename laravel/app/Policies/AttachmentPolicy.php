@@ -17,7 +17,7 @@ class AttachmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        //todo https://laravel.com/docs/6.x/authorization#policy-responses
+        // todo https://laravel.com/docs/6.x/authorization#policy-responses
 
         if ($user->hasRole('super-admin')) {
             return true;

@@ -18,14 +18,15 @@ class MessageAttachmentService
     {
         foreach ($request->file('attachments') as $file) {
             $attachment = new Attachment;
-            $attachment['user_id']  = Auth::id();
-            $attachment['access_level']= $model->getAttachmentAccessLevel();
+            $attachment['user_id'] = Auth::id();
+            $attachment['access_level'] = $model->getAttachmentAccessLevel();
             $attachment['file_name'] = $file->getClientOriginalName();
             $attachment['subfolder'] = $model->getAttachmentFolder();
             $attachment['file'] = $file->store('', $attachment['subfolder']);
             $attachment->save();
             $model->attachments()->attach($attachment);
         }
+
         return true;
     }
 
@@ -37,17 +38,15 @@ class MessageAttachmentService
                 $attachment = Attachment::find($k);
 
                 if (isset($v['id'])) {
-                        if ($attachment->subfolder == 'messages') {
-                            Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
-                            Attachment::destroy($v['id']);
-                        }
-                        else
-                        {
-                            DB::table('attachment_message')
-                                ->where('attachment_id', $attachment->id)
-                                ->where('message_id', $model->id)
-                                ->delete();
-                        }
+                    if ($attachment->subfolder == 'messages') {
+                        Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
+                        Attachment::destroy($v['id']);
+                    } else {
+                        DB::table('attachment_message')
+                            ->where('attachment_id', $attachment->id)
+                            ->where('message_id', $model->id)
+                            ->delete();
+                    }
 
                     continue;
                 }
@@ -62,8 +61,10 @@ class MessageAttachmentService
                     }
                 }
             }
+
             return true;
         }
+
         return false;
     }
 
@@ -71,24 +72,24 @@ class MessageAttachmentService
     {
         $model->load('attachments');
         foreach ($model->attachments as $attachment) {
-            if($attachment->subfolder == 'messages') {
+            if ($attachment->subfolder == 'messages') {
                 Storage::disk($model->getAttachmentFolder())->delete($attachment['file']);
                 Attachment::destroy($attachment['id']);
-            }
-            else {
+            } else {
                 DB::table('attachment_message')
                     ->where('attachment_id', $attachment->id)
                     ->where('message_id', $model->id)
                     ->delete();
             }
         }
+
         return true;
     }
 
     public function downloadAttachment(Attachment $attachment, string $folder): RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
     {
 
-        //todo handle foreign and local file attachments
+        // todo handle foreign and local file attachments
         if (Auth::check() === false && $attachment->access_level != AccessLevelConstants::PUBLIC) {
             Session::flash('error', 'Please log in first and try the download link again.');
 

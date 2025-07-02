@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('message_metadata'); //delete model
-        Schema::dropIfExists('message_sending'); //delete model
-        Schema::dropIfExists('message_frequency_preferences'); //delete model
-        Schema::dropIfExists('email_queue'); //delete model
+        Schema::dropIfExists('message_metadata'); // delete model
+        Schema::dropIfExists('message_sending'); // delete model
+        Schema::dropIfExists('message_frequency_preferences'); // delete model
+        Schema::dropIfExists('email_queue'); // delete model
 
         Schema::table('messages', function (Blueprint $table) {
             $table->string('source_url')->after('id')->nullable();
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //todo not going back to old schema. Re install db for now if needed.
+        // todo not going back to old schema. Re install db for now if needed.
     }
 };

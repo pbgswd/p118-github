@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class StoreMotionRequest extends FormRequest
 {
     use ModifiesInputTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      */

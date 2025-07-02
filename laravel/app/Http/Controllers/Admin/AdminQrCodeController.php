@@ -71,7 +71,7 @@ class AdminQrCodeController extends Controller
     public function edit(Qrcode $qrcode): View
     {
         $qrcode->load('user');
-        //todo load qr file
+        // todo load qr file
         $data = [
             'qrcode' => $qrcode,
             'action' => 'Edit',
@@ -113,7 +113,7 @@ class AdminQrCodeController extends Controller
     {
         $directory = $qrcode->getAttachmentFolder();
 
-        //dd($qrcode);
+        // dd($qrcode);
         return Storage::download($directory.'/'.$qrcode['file'],
             $qrcode['name'], ['Content-Disposition' => 'inline; filename="'.$qrcode['name'].'"']);
     }

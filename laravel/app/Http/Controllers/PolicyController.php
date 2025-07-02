@@ -41,7 +41,7 @@ class PolicyController extends Controller
             'title' => $policy->title,
             'next' => $next,
             'previous' => $previous,
-            ]
+        ],
         ]);
     }
 }

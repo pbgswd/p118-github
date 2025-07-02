@@ -8,7 +8,6 @@ use App\Http\Requests\Feature\DestroyFeatureRequest;
 use App\Http\Requests\Feature\StoreFeatureRequest;
 use App\Http\Requests\Feature\UpdateFeatureRequest;
 use App\Models\Feature;
-use App\Models\Meeting;
 use App\Models\Message;
 use App\Models\Options;
 use App\Services\AttachmentService;
@@ -17,6 +16,7 @@ use App\Services\UserImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -24,12 +24,13 @@ use Spatie\Image\Exceptions\InvalidManipulation;
 
 class AdminFeatureController extends Controller
 {
-    /** @var AttachmentService */
     private AttachmentService $attachmentService;
+
     private MessageService $messageService;
+
     public function __construct(AttachmentService $attachmentService, MessageService $messageService)
     {
-        //todo not using attachment service
+        // todo not using attachment service
         $this->attachmentService = $attachmentService;
         $this->messageService = $messageService;
     }
@@ -39,7 +40,7 @@ class AdminFeatureController extends Controller
      */
     public function index(Request $request): View
     {
-        $this->authorize('viewAny', Feature::class);
+        Gate::authorize('viewAny', Feature::class);
 
         $features = Feature::withoutGlobalScopes()
             ->orderBy('date', 'desc')
@@ -60,7 +61,7 @@ class AdminFeatureController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Feature::class);
+        Gate::authorize('create', Feature::class);
 
         $feature = new Feature;
 
@@ -80,7 +81,7 @@ class AdminFeatureController extends Controller
      */
     public function store(StoreFeatureRequest $request, UserImageService $service): RedirectResponse
     {
-        $this->authorize('create', Feature::class);
+        Gate::authorize('create', Feature::class);
 
         $feature = new Feature($request->input('feature'));
 
@@ -106,7 +107,7 @@ class AdminFeatureController extends Controller
      */
     public function edit(Feature $feature, UserImageService $service): View
     {
-        $this->authorize('update', Feature::class);
+        Gate::authorize('update', Feature::class);
 
         if ($feature['image']) {
             $tn_str = Options::feature_thumb_values()['tn_str'];
@@ -129,7 +130,7 @@ class AdminFeatureController extends Controller
         $data = [
             'feature' => $feature,
             'action' => 'Edit',
-            'existing_message' => Message::where('source_url',  env('APP_URL') . '/feature/' . $feature->slug)->exists(),
+            'existing_message' => Message::where('source_url', env('APP_URL').'/feature/'.$feature->slug)->exists(),
             'access_levels' => array_combine(AccessLevelConstants::getConstants(),
                 AccessLevelConstants::getConstants()),
         ];
@@ -143,7 +144,7 @@ class AdminFeatureController extends Controller
      */
     public function update(UpdateFeatureRequest $request, Feature $any_feature, UserImageService $service): RedirectResponse
     {
-        $this->authorize('update', Feature::class);
+        Gate::authorize('update', Feature::class);
 
         $any_feature->fill($request->input('feature'));
 
@@ -177,7 +178,7 @@ class AdminFeatureController extends Controller
      */
     public function destroy(DestroyFeatureRequest $request): RedirectResponse
     {
-        $this->authorize('delete', Feature::class);
+        Gate::authorize('delete', Feature::class);
 
         Feature::withoutGlobalScopes()
             ->find($request->id)
@@ -201,12 +202,13 @@ class AdminFeatureController extends Controller
     public function message(Feature $feature): RedirectResponse
     {
 
-        $this->authorize('update', Feature::class);
+        Gate::authorize('update', Feature::class);
 
-        $source_url = env('APP_URL') . '/feature/' . $feature->slug;
+        $source_url = env('APP_URL').'/feature/'.$feature->slug;
 
-        if(Message::where('source_url',  $source_url)->exists()) {
+        if (Message::where('source_url', $source_url)->exists()) {
             Session::flash('warning', 'A message from this content has already been created');
+
             return redirect()->route('admin_feature_edit', [$feature->slug]);
         }
 

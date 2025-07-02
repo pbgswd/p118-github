@@ -19,7 +19,7 @@ class DestroyAdminExecutive extends FormRequest
      */
     public function rules(): array
     {
-        //todo error
+        // todo error
         return [
             'id' => 'required',
         ];

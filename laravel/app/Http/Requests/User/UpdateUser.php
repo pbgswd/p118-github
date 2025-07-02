@@ -20,7 +20,7 @@ class UpdateUser extends FormRequest
     public function rules(): array
     {
         return [
-            //unique:table,column,except,idColumn
+            // unique:table,column,except,idColumn
             'user.name' => 'required|string|max:255',
             'user.email' => 'required|max:255|unique:users,email,'.$this->route('user')->id.',id',
             'user_phone.phone_number' => 'max:20',

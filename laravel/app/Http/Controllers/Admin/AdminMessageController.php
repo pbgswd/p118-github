@@ -15,12 +15,9 @@ use App\Models\MessageSelection;
 use App\Models\Options;
 use App\Models\Topic;
 use App\Models\User;
-use App\Services\AttachmentService;
 use App\Services\MessageAttachmentService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -37,7 +34,7 @@ class AdminMessageController extends Controller
 
     public function index(): View
     {
-        //todo policy
+        // todo policy
         $data = [];
 
         $topics = Topic::where('live', 1)
@@ -60,7 +57,7 @@ class AdminMessageController extends Controller
                 $modelOption['name'] => MessageSelection::where('type', 'model')
                     ->where('name', $modelOption['model'])
                     ->distinct('user_id')
-                    ->count('user_id')
+                    ->count('user_id'),
             ];
         });
 
@@ -76,8 +73,8 @@ class AdminMessageController extends Controller
                 'Topics' => $topics,
                 'Models' => $models,
                 'Committees' => $committees,
-                ],
-            ];
+            ],
+        ];
 
         $data['messages'] = Message::sortable()
             ->with('user')
@@ -89,25 +86,28 @@ class AdminMessageController extends Controller
 
     public function create(): View
     {
-        //todo policy, intitial state for pull down menus
+        // todo policy, intitial state for pull down menus
 
-        //todo selected value in each collection
+        // todo selected value in each collection
         $data = [
             'committee_subscription_options' => Committee::where('live', 1)
                 ->get()
                 ->map(function ($committee) {
                     $committee->selected = '';
+
                     return $committee;
                 }),
             'topic_subscription_options' => Topic::where('live', 1)
                 ->get()
                 ->map(function ($topic) {
                     $topic->selected = '';
+
                     return $topic;
                 }),
             'model_subscription_options' => collect(Options::model_subscription_options())
                 ->map(function ($model) {
                     $model['selected'] = '';
+
                     return $model;
                 }),
             'message' => new Message,
@@ -132,7 +132,7 @@ class AdminMessageController extends Controller
         $message['slug'] = Str::slug($message['subject'], '-'); // model method?
 
         $message->save();
-        $message['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $message['slug'];
+        $message['source_url'] = env('APP_URL').'/message/'.$message['id'].'/'.$message['slug'];
         $message->save();
 
         foreach ($request['source_type'] as $category) {
@@ -155,7 +155,7 @@ class AdminMessageController extends Controller
             }
         }
 
-        Session::flash('success', 'A new message, ' . $message->subject . ', has been created');
+        Session::flash('success', 'A new message, '.$message->subject.', has been created');
 
         return redirect()->route('admin_message_edit', [$message->id, $message->slug]);
     }
@@ -168,14 +168,15 @@ class AdminMessageController extends Controller
         $message->load(['user', 'attachments', 'messageCategories']);
 
         $mc_data = [];
-        foreach($message['messageCategories'] as $mc) {
-            $mc['field'] = $mc->type . " " . $mc->name;
+        foreach ($message['messageCategories'] as $mc) {
+            $mc['field'] = $mc->type.' '.$mc->name;
             $mc_data[] = $mc;
         }
 
         if ($message->state == 'sending') {
             Session::flash('warning', 'The message, '.$message->subject.
             ', can no longer be edited because it has been sent to the mail queue');
+
             return redirect()->back()->with('error', 'You cannot edit content because it has been sent to the mail queue.');
         }
 
@@ -188,10 +189,11 @@ class AdminMessageController extends Controller
             ->get()
             ->map(function ($committee) use ($mc_data) {
                 $isSelected = count(array_filter($mc_data, function ($mcItem) use ($committee) {
-                        return $mcItem->type === 'committee' &&
-                            'committee ' . $committee->slug === $mcItem['field'];
-                    })) > 0;
+                    return $mcItem->type === 'committee' &&
+                        'committee '.$committee->slug === $mcItem['field'];
+                })) > 0;
                 $committee->selected = $isSelected ? 'selected' : '';
+
                 return $committee;
             });
 
@@ -205,10 +207,11 @@ class AdminMessageController extends Controller
             ->get()
             ->map(function ($topic) use ($mc_data) {
                 $isSelected = count(array_filter($mc_data, function ($mcItem) use ($topic) {
-                        return $mcItem->type === 'topic' &&
-                            'topic ' . $topic->slug === $mcItem['field'];
-                    })) > 0;
+                    return $mcItem->type === 'topic' &&
+                        'topic '.$topic->slug === $mcItem['field'];
+                })) > 0;
                 $topic->selected = $isSelected ? 'selected' : '';
+
                 return $topic;
             });
 
@@ -221,10 +224,11 @@ class AdminMessageController extends Controller
         $model_options = collect(Options::model_subscription_options())
             ->map(function ($model) use ($mc_data) {
                 $isSelected = count(array_filter($mc_data, function ($mcItem) use ($model) {
-                        return $mcItem->type === 'model' &&
-                            'model ' . $model['model'] === $mcItem['field'];
-                    })) > 0;
+                    return $mcItem->type === 'model' &&
+                        'model '.$model['model'] === $mcItem['field'];
+                })) > 0;
                 $model['selected'] = $isSelected ? 'selected' : '';
+
                 return $model;
             });
 
@@ -237,7 +241,7 @@ class AdminMessageController extends Controller
         $counts['total'] = array_sum($counts);
 
         $counts['recipients'] = User::where('is_banned', '!=', 1)
-            ->whereHas('message_selections', function ($query)  use ($message) {
+            ->whereHas('message_selections', function ($query) use ($message) {
                 $query->whereExists(function ($subQuery) use ($message) {
                     $subQuery->select('*')
                         ->from('message_categories')
@@ -264,7 +268,7 @@ class AdminMessageController extends Controller
 
     public function update(UpdateMessageRequest $request, Message $message): RedirectResponse
     {
-        //todo policy
+        // todo policy
 
         $sourceTypes = $request->input('source_type');
 
@@ -283,8 +287,8 @@ class AdminMessageController extends Controller
 
         $data['message']['source_url'] = $message->source_url;
 
-        if(strstr($message->source_url, '/message/')) {
-            $data['message']['source_url'] = env('APP_URL') . '/message/' . $message['id'] . "/" . $data['message']['slug'];
+        if (strstr($message->source_url, '/message/')) {
+            $data['message']['source_url'] = env('APP_URL').'/message/'.$message['id'].'/'.$data['message']['slug'];
         }
 
         $message->fill($data['message']);
@@ -304,7 +308,7 @@ class AdminMessageController extends Controller
                 $mc->save();
             }
         }
-//dd($request->all());
+        // dd($request->all());
         $result = $this->attachmentService->updateAttachment($request, $message);
 
         if (null !== ($request->attachments)) {
@@ -316,7 +320,7 @@ class AdminMessageController extends Controller
             }
         }
 
-        Session::flash('success', 'You have updated ' . $message->subject);
+        Session::flash('success', 'You have updated '.$message->subject);
 
         return redirect()->route('admin_message_edit', [$message->id, $message->slug]);
     }
@@ -339,6 +343,7 @@ class AdminMessageController extends Controller
             'message' => $message,
             'attachments' => $message->attachments,
         ];
+
         return view('emails.email_message', ['data' => $data]);
     }
 
@@ -351,18 +356,18 @@ class AdminMessageController extends Controller
         // ProcessMessages::dispatch(['id' => $message->id]);
         // Log::info('ProcessMessages dispatch has been executed for message with id '.$message->id);
 
-         $subs = User::where('is_banned', '!=', 1)
-             ->whereHas('message_selections', function ($query)  use ($message) {
-                 $query->whereExists(function ($subQuery) use ($message) {
-                     $subQuery->select('*')
-                         ->from('message_categories')
-                         ->whereRaw('message_categories.type = message_selections.type')
-                         ->whereRaw('message_categories.name = message_selections.name')
-                         ->whereRaw('message_categories.message_id = ?', [$message->id]);
-                 });
-             })
-             ->distinct()
-             ->get();
+        $subs = User::where('is_banned', '!=', 1)
+            ->whereHas('message_selections', function ($query) use ($message) {
+                $query->whereExists(function ($subQuery) use ($message) {
+                    $subQuery->select('*')
+                        ->from('message_categories')
+                        ->whereRaw('message_categories.type = message_selections.type')
+                        ->whereRaw('message_categories.name = message_selections.name')
+                        ->whereRaw('message_categories.message_id = ?', [$message->id]);
+                });
+            })
+            ->distinct()
+            ->get();
 
         foreach ($subs as $sub) {
             $emailQueueMsg = new EmailQueue([
@@ -375,7 +380,7 @@ class AdminMessageController extends Controller
         $message->state = 'sending';
         $message->save();
 
-        Session::flash('success', 'The message, ' . $message->subject .
+        Session::flash('success', 'The message, '.$message->subject.
             ', has been sent to the mail queue and is going out now');
 
         return redirect()->route('admin_messages');
@@ -383,7 +388,7 @@ class AdminMessageController extends Controller
 
     public function test_send(Message $message): RedirectResponse
     {
-         $emailQueueMsg = new EmailQueue([
+        $emailQueueMsg = new EmailQueue([
             'message_id' => $message->id,
             'user_id' => Auth::user()->id,
         ]);
@@ -393,14 +398,13 @@ class AdminMessageController extends Controller
         $message->state = 'testing';
         $message->save();
 
-        Log::info('Test message ' . $message->subject .' sent to ' . Auth::user()->name );
+        Log::info('Test message '.$message->subject.' sent to '.Auth::user()->name);
 
-        Session::flash('success', 'The message, ' . $message->subject .
+        Session::flash('success', 'The message, '.$message->subject.
             ', has been sent to the mail queue and is going out now as a test only to you');
 
         return redirect()->route('admin_message_edit', [$message->id, $message->slug]);
     }
-
 
     public function destroy(DestroyMessageRequest $request): RedirectResponse
     {
@@ -411,7 +415,7 @@ class AdminMessageController extends Controller
                 $message->delete();
             });
 
-        Session::flash('success', 'You have deleted '.count($request->id) .' '.
+        Session::flash('success', 'You have deleted '.count($request->id).' '.
             Str::plural('message', count($request->id)).'.');
 
         return redirect()->route('admin_messages');

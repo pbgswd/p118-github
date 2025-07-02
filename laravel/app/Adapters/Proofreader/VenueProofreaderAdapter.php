@@ -14,7 +14,7 @@ class VenueProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Venue Model - specific to this class
+        // Venue Model - specific to this class
         return [
             self::NAME => 'Venues',
             self::PUB_ROUTE_LIST => 'venues',

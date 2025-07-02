@@ -13,6 +13,7 @@ class CheckMessagingFeatureStatus
         if (env('ENABLE_MESSAGING_FEATURE') == 0) {
             return redirect('/');
         }
+
         return $next($request);
     }
 }

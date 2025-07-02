@@ -23,8 +23,8 @@ class AdminCommitteePostCommentController extends Controller
      */
     public function create(CommitteePost $committeePost): View
     {
-        //todo enable permission
-        //$this->authorize('create', Auth::user());
+        // todo enable permission
+        // $this->authorize('create', Auth::user());
         $data = [];
         $data['post_comment'] = new CommitteePostComment;
 

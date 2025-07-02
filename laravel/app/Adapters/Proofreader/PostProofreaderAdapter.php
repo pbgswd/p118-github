@@ -14,7 +14,7 @@ class PostProofreaderAdapter extends BaseProofreaderAdapter
 
     public function getMeta(): array
     {
-        //Post Model - specific to this class
+        // Post Model - specific to this class
         return [
             self::NAME => 'Posts',
             self::PUB_ROUTE_LIST => 'posts',

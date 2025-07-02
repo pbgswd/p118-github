@@ -13,7 +13,7 @@ class Phone implements Rule
      */
     public function passes($attribute, $value)
     {
-        //todo review validation for phone number
+        // todo review validation for phone number
         return preg_match('/^[0-9]*$/', trim($value))
             && strlen(trim($value)) >= 10
             && strlen(trim($value)) <= 20;

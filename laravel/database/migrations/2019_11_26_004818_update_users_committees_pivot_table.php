@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //drop role
+        // drop role
         Schema::table('users_committees_pivot', function (Blueprint $table) {
             $table->dropColumn('role');
         });
