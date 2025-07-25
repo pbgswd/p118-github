@@ -21,6 +21,7 @@ class AdminUpdatePolicy extends FormRequest
     {
         return [
             'policy.title' => 'required|max:255',
+            'policy.description' => 'required',
             'policy.date' => 'required|date',
             'policy.live' => 'boolean',
         ];

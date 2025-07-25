@@ -101,6 +101,7 @@ class AdminPolicyController extends Controller
      */
     public function update(AdminUpdatePolicy $request, Policy $any_policy): RedirectResponse
     {
+        //dd([$request->validated(),$request->all()]);
         $any_policy->fill($request->policy);
 
         $any_policy->save();

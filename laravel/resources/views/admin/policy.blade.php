@@ -60,7 +60,7 @@
                     <div class="col-12 mb-4">
                         <div class=" col editor-container editor-container_classic-editor" id="editor-container">
                             <div class="editor-container__editor">
-                    <textarea name="user_info[about]" id="textarea" placeholder="Content" class="form-control text-black">
+                    <textarea name="policy[description]" id="textarea" placeholder="Content" class="form-control text-black">
                     </textarea>
                             </div>
                         </div>

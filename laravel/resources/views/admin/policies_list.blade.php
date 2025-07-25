@@ -80,11 +80,14 @@
 
     </div>
 </form>
-<div class="col-12">
-    <div class="list-group">
-        <ul class="pagination">
-            {{ $data['policies']->links() }}
-        </ul>
+<div class="row">
+    <div class="col-12">
+        <div class="list-group">
+            <ul class="pagination justify-content-center">
+                {{ $data['policies']->links() }}
+            </ul>
+        </div>
     </div>
 </div>
+
 @endsection

@@ -25,6 +25,7 @@ class AdminStorePolicy extends FormRequest
     {
         return [
             'policy.title' => 'required|max:255',
+            'policy.description' => 'required',
             'policy.date' => 'date',
             'policy.live' => 'boolean',
         ];
