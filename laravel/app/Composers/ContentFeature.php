@@ -37,7 +37,7 @@ class ContentFeature
             ['landing_page', 1],
             ['date', '<', NOW()]]
         )
-            ->orderBy('date', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $user = Auth::user();
