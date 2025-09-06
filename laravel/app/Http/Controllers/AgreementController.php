@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agreement;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -40,19 +41,21 @@ class AgreementController extends Controller
 
         if (Auth::check() == false) {
             $data['agreements'] = Agreement::where([['live', 1], ['access_level', 'public']])
-                ->orderBy('id', 'desc')
+                ->orderBy('title', 'asc')
                 ->sortable()
-                ->paginate(20);
+                ->paginate(50);
 
             $data['count'] = Agreement::where([['live', 1], ['access_level', 'public']])->count();
         } else {
             $data['agreements'] = Agreement::where('live', 1)
                 ->sortable()
-                ->orderBy('id', 'desc')
-                ->paginate(20);
+                ->orderBy('title', 'asc')
+                ->paginate(50);
 
             $data['count'] = Agreement::where('live', 1)->count();
         }
+
+        $data['current'] = Agreement::where([['live', 1], ['until', '>', now()]])->count();
 
         return view('agreements_list', ['data' => ['data' => $data, 'title' => 'Collective Agreements']]);
     }

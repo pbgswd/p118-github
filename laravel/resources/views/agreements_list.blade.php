@@ -11,14 +11,16 @@
         <div class="col-12 text-center">
             <h3>
                <span class="badge rounded-pill text-bg-primary">
-                   {{$data['data']['count']}}
-                   {{Str::plural( 'agreement', $data['data']['count'])}}
+                   {{$data['data']['current']}} Current
+                   {{Str::plural( 'agreement', $data['data']['current'])}}
                </span>
             </h3>
         </div>
     </div>
+
     <div class="row px-2">
         <div class="border border-dark rounded mb-4 bg-light">
+            <h3 class="m-2">Current Agreements</h3>
             <table class="table table-hover border rounded m-2">
                 <thead>
                     <tr>
@@ -29,9 +31,14 @@
                 </thead>
                 <tbody>
                 @forelse ($data['data']['agreements'] as $agreement)
-                    <tr>
+                    @if(\Carbon\Carbon::parse($agreement->until)->isFuture())
+                        <tr>
                         <td>
                             <h5>
+
+
+
+
                                 @if(\Carbon\Carbon::parse($agreement->until)->isPast())
                                     @auth
                                         <i>(Not current)</i>
@@ -49,6 +56,7 @@
                             {{ $agreement->until->format('F j Y') }}
                         </td>
                     </tr>
+                    @endif
                     @empty
                     <tr>
                         <td colspan="3">
@@ -62,6 +70,55 @@
             </table>
         </div>
     </div>
+
+
+    <div class="row px-2">
+        <div class="border border-dark rounded my-4 bg-light">
+            <h3 class="m-2">Earlier Agreements</h3>
+            <table class="table table-hover border rounded m-2">
+                <thead>
+                <tr>
+                    <th> @sortablelink('title', 'Title') </th>
+                    <th> @sortablelink('from', 'From') </th>
+                    <th> @sortablelink('until', 'Until') </th>
+                </tr>
+                </thead>
+                <tbody>
+                @forelse ($data['data']['agreements'] as $agreement)
+                    @if(\Carbon\Carbon::parse($agreement->until)->isPast())
+                        <tr>
+                        <td>
+                            <h5>
+                                <a title="{{ $agreement->title }}" href="{{route('agreement_show', $agreement->id)}}">
+                                    {{ $agreement->title }}
+                                </a>
+                            </h5>
+                        </td>
+                        <td>
+                            {{ $agreement->from->format('F j Y') }}
+                        </td>
+                        <td>
+                            {{ $agreement->until->format('F j Y') }}
+                        </td>
+                    </tr>
+                    @endif
+                @empty
+                    <tr>
+                        <td colspan="3">
+                            <a href="{{route('login')}}">Log in</a>
+                            to view available Agreements
+                        </td>
+                    </tr>
+                @endforelse
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
 
     <div class="d-flex justify-content-center">
         <div class="list-group">
