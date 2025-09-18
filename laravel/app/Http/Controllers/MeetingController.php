@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Meetings\QueryMeetingYearRequest;
 use App\Models\Meeting;
 use App\Models\Motion;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -15,6 +16,13 @@ class MeetingController extends Controller
     {
         $pagination = 30;
         session()->forget('year');
+
+        $mytimes = [];
+
+        $mytimes['carbon']['today'] =  Carbon::today()->timezone('America/Vancouver');
+        $mytimes['carbon']['date'] =  Carbon::createFromDate()->timezone('America/Vancouver');
+        $mytimes['carbon']['now'] =  Carbon::now()->timezone('America/Vancouver');
+        $mytimes['carbon']['utc'] =  Carbon::now();
 
         $years = DB::table('meetings')
             ->select(DB::raw('DISTINCT YEAR(date) as year'))
@@ -50,6 +58,8 @@ class MeetingController extends Controller
             'newmotions' => $newmotions,
             'action' => 'Create',
         ];
+
+        //todo use carbon ->timezone('America/Vancouver') in this blade to fix timezone error.
 
         return view('list_meetings_minutes', ['data' => $data]);
     }
