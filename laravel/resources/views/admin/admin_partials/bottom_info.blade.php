@@ -14,4 +14,5 @@
     <h3>Currently using {{config('app.env')}} environment, and Debug is set to
         {{config('app.debug') ? 'true': 'false'}}</h3>
     <h3>Using database {{env('DB_DATABASE')}}</h3>
+    <h3><?php echo date('D, M j, Y @ H:i:s T'); ?> </h3>
 </div>
