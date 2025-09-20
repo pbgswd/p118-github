@@ -43,13 +43,13 @@
                                     @if(Carbon\Carbon::today()->diffInDays($upcoming->date) == 0)
                                         <span class="badge bg-warning text-white">Today</span>
                                     @else
-                                        in {{Carbon\Carbon::today()->diffInDays($upcoming->date)}}
-                                        {{Str::plural('day', Carbon\Carbon::today()->diffInDays($upcoming->date) )}}.
+                                         in {{(int) Carbon\Carbon::today()->diffInDays($upcoming->date)}}
+                                      {{Str::plural('day', (int) Carbon\Carbon::today()->diffInDays($upcoming->date) )}}.
                                     @endif
                                     @if((Carbon\Carbon::today()->diffInDays($upcoming->date)) > 10)
                                         <span class="badge rounded-pill text-bg-success text-white mt-2">
-                                            {{(Carbon\Carbon::today()->diffInDays($upcoming->date))-10}}
-                                            {{Str::plural('day', Carbon\Carbon::today()->diffInDays($upcoming->date)-10)}}
+                                            {{((int) Carbon\Carbon::today()->diffInDays($upcoming->date))-10}}
+                                            {{Str::plural('day', (int) Carbon\Carbon::today()->diffInDays($upcoming->date)-10)}}
                                             for Motions.
                                         </span>
                                     @else
@@ -206,7 +206,7 @@
                                             </a>
                                             @if($a->date > now())
                                                 <span class="badge bg-warning text-dark">Upcoming</span>
-                                                In {{ Carbon\Carbon::today()->diffInDays($a->date)  }} days.
+                                                In {{(int) Carbon\Carbon::today()->diffInDays($a->date)  }} days.
                                             @endif
                                         </h5>
                                     </td>

@@ -44,7 +44,7 @@
                         Scheduled: {{$data['meeting']->date->format('F j, Y')}},
                         {{$data['meeting']->date->format('g:i:s A')}}
                         <div class="badge bg-warning text-dark">Upcoming</div>
-                        {{ Carbon\Carbon::today()->diffInDays($data['meeting']->date)  }} days until meeting.
+                        {{ (int) Carbon\Carbon::today()->diffInDays($data['meeting']->date)  }} days until meeting.
                     @else
                         Held on: {{$data['meeting']->date->format('F j, Y')}}
                     @endif
@@ -103,9 +103,9 @@
                             </a>
                         </h4>
                         <span class="h6">
-                            Created: {{$motion->created_at->format('F j Y, h:i:s A')}}
+                            Created: {{Carbon\Carbon::parse($motion->created_at, 'UTC')->tz(env('APP_TIMEZONE'))->format('F j Y, g:i:s A')}}
                             @if($motion->updated_at > $motion->created_at)
-                                Last Updated: {{$motion->updated_at->format('F j Y, h:i:s A')}}
+                               | Last Updated: {{Carbon\Carbon::parse($motion->updated_at, 'UTC')->tz(env('APP_TIMEZONE'))->format('F j Y, g:i:s A')}}
                             @endif
                         </span>
                         <span class="float-end">

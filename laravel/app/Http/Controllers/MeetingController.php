@@ -19,8 +19,8 @@ class MeetingController extends Controller
 
         $mytimes = [];
 
-        $mytimes['carbon']['today'] =  Carbon::today()->timezone('America/Vancouver');
-        $mytimes['carbon']['date'] =  Carbon::createFromDate()->timezone('America/Vancouver');
+        $mytimes['carbon']['today'] = Carbon::today()->timezone('America/Vancouver');
+        $mytimes['carbon']['date'] = Carbon::createFromDate()->timezone('America/Vancouver');
         $mytimes['carbon']['now'] =  Carbon::now()->timezone('America/Vancouver');
         $mytimes['carbon']['utc'] =  Carbon::now();
 

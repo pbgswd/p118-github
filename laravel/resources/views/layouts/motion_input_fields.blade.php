@@ -30,8 +30,8 @@
                                                 @if(Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date) == 0)
                                                     TODAY.
                                                 @else
-                                                in {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
-                                                {{Str::plural('day', Carbon\Carbon::today()
+                                                in {{ (int) Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
+                                                {{Str::plural('day', (int) Carbon\Carbon::today()
                                                     ->diffInDays($data['upcoming'][0]->date))}}.
                                                 @endif
                                             @else
@@ -67,7 +67,7 @@
                                                 <input type="radio" class="btn-check float-end" name="motion[submission_type]"
                                                        value="Motion" id="option4" autocomplete="off"
                                                        @if($data['upcoming']->count() > 0 &&
-                                                            (Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10 > 0) ||
+                                                            ((int) Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10 > 0) ||
                                                             $data['upcoming']->count() == 0)
                                                             required
                                                        @else
@@ -86,11 +86,11 @@
                                                                 The next General Meeting will be held
                                                                 {{$data['upcoming'][0]->date->format('F j Y')}},
                                                                 {{$data['upcoming'][0]->date->format('g:i:s A')}},
-                                                                @if(Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date) == 0)
+                                                                @if((int) Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date) == 0)
                                                                     TODAY.
                                                                 @else
-                                                                    in {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
-                                                                    {{Str::plural('day', Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date))}}.
+                                                                    in {{(int) Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)}}
+                                                                    {{Str::plural('day', (int) Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date))}}.
                                                                 @endif
                                                             @else
                                                                 Your motion will be attached to the next meeting.
@@ -103,8 +103,8 @@
                                                         @if($data['upcoming']->count() > 0)
                                                             @if(Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10 > 0)
                                                                 <p class="card-text h4">
-                                                                    {{Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10}}
-                                                                    {{Str::plural('day', (Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10))}}
+                                                                    {{(int) Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10}}
+                                                                    {{Str::plural('day', ((int) Carbon\Carbon::today()->diffInDays($data['upcoming'][0]->date)-10))}}
                                                                     remaining to submit new motions.
                                                                 </p>
                                                             @else
@@ -125,7 +125,7 @@
                                             <div class="col-sm-12 col-md-6 mb-2">
                                                 <input type="radio" class="btn-check float-end" name="motion[submission_type]"
                                                        value="New Business" id="option5" autocomplete="off"
-                                                       @if($data['upcoming']->count() > 0 && Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date)-48 > 0
+                                                       @if($data['upcoming']->count() > 0 && (int) Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date)-48 > 0
                                                              || $data['upcoming']->count() == 0)
                                                                required
                                                            @else
@@ -145,7 +145,7 @@
                                                                     {{$data['upcoming'][0]->date->format('g:i:s A')}}.
                                                                     @if(Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date->subDays(2)) < 73)
                                                                         {{Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date->subDays(2))}}
-                                                                        {{Str::plural('hour', Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date->subDays(2)))}}
+                                                                        {{Str::plural('hour', (int) Carbon\Carbon::today()->diffInHours($data['upcoming'][0]->date->subDays(2)))}}
                                                                         remaining to submit new business.
                                                                     @endif
                                                                 @else
