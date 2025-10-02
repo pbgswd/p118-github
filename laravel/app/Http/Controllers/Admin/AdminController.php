@@ -27,6 +27,7 @@ use App\Models\Proofreader;
 use App\Models\Topic;
 use App\Models\User;
 use App\Models\Venue;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -94,6 +95,9 @@ class AdminController extends Controller
             $q->where('name', 'committee');
         })->get();
 
+        $now = Carbon::now();
+
+        $now->tz('America/Vancouver');
         $data = [
             'user' => Auth::user(),
             'users' => $users,
@@ -101,6 +105,7 @@ class AdminController extends Controller
             'email_queue_count' => $emailQueueCount,
             'counts' => $counts,
             'messages_count' => $messagesCount,
+            'carbon_time' => "Carbon Time: " . $now->format('l F j, Y h:i:s A e'),
         ];
 
         return view('admin.admin', ['data' => $data]);

@@ -29,6 +29,8 @@ class MotionController extends Controller
     {
         $response = Gate::inspect('create', Motion::class);
 
+        //todo deal with motion date issue with carbon and date
+
         if ($response->denied()) {
             return back()->with('error', $response->message());
         }
@@ -39,6 +41,7 @@ class MotionController extends Controller
         if ($meeting !== null) {
             $motion->meeting_id = $meeting->id;
         } else {
+
             $meeting = Meeting::where([['meeting_type', '=', 'General'], ['live', '=',  1], ['date', '>', now()]])
                 ->orderBy('date', 'asc')
                 ->first() ?? null;

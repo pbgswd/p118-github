@@ -40,6 +40,11 @@ class Motion extends Model implements HasAttachment, Searchable
         ];
     }
 
+    public function getDateAttribute($value)
+    {
+        return $this->asDateTime($value)->setTimezone(env('APP_TIMEZONE'));
+    }
+
     protected $policies = [
         self::class => MotionPolicy::class,
     ];

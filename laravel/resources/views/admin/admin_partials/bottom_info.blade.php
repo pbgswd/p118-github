@@ -14,5 +14,8 @@
     <h3>Currently using {{config('app.env')}} environment, and Debug is set to
         {{config('app.debug') ? 'true': 'false'}}</h3>
     <h3>Using database {{env('DB_DATABASE')}}</h3>
-    <h3><?php echo date('D, M j, Y @ H:i:s T'); ?> </h3>
+    <h3>PHP server time: <?php echo date('D, M j, Y @ H:i:s T'); ?> </h3>
+    <?php date_default_timezone_set('America/Vancouver'); ?>
+    <h3>PHP local time: <?php echo date('D, M j, Y @ H:i:s T'); ?> </h3>
+    <h3>{{$data['carbon_time'] ?? ''}}</h3>
 </div>
