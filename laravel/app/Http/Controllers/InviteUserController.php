@@ -40,7 +40,7 @@ class InviteUserController extends Controller
 
         $invitations = InviteUser::with('user')
             ->sortable()
-            ->paginate(10);
+            ->paginate(50);
 
         $invitations->each(function ($item) {
             $item->since = $item->updated_at->diffForHumans(Carbon::now());
