@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -171,6 +172,16 @@ class User extends Authenticatable implements HasAttachment, Searchable
     public function executive_roles(): BelongsToMany
     {
         return $this->belongsToMany(ExecutiveMembership::class);
+    }
+
+    public function user_exec_role(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Executive::class,
+            'executive_user',
+            'user_id',
+            'executive_id',
+        )->withPivot('id', 'start_date', 'end_date',);
     }
 
     /**

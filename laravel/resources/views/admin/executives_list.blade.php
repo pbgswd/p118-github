@@ -16,72 +16,50 @@
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>
-                                <th> @sortablelink('id','#') </th>
+                                <th> id</th>
                                 <th>Name</th>
-                                <th> @sortablelink('title', 'Title') </th>
-                                <th> @sortablelink('current', 'Current') </th>
+                                <th>Title</th>
                                 <th> Edit </th>
-                                <th> @sortablelink('start_date', 'Start of Term') </th>
-                                <th> @sortablelink('end_date', 'End of Term') </th>
+                                <th> Start of Term </th>
+                                <th> End of Term </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($data as $e )
+                            @forelse ($data['users'] as $e )
                                 <tr>
                                     <td>
-                                        @if( !empty($e->user[0]))
+                                        @if( !empty($e->id))
                                             <div class="checkbox">
                                                 <label>
                                                     <input type="checkbox" name="id[]"
-                                                           value="{{$e->user[0]->pivot->id }}" />
+                                                           value="{{$e->id }}" />
                                                 </label>
                                             </div>
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!empty($e->user[0]))
-                                            <a href="{{route('user_edit', $e->user[0]->id)}}">
-                                                {{$e->user[0]->name}}
+                                        @if(!empty($e->name))
+                                            <a href="{{route('user_edit', $e->id)}}">
+                                                {{$e->name}}
                                             </a>
                                         @else
                                             <i>not filled</i>
                                         @endif
                                     </td>
                                     <td>
-                                        {{ $e->title }}
+                                        {{$e->user_exec_role[0]->title}}
                                     </td>
                                     <td>
-                                        @if( !empty($e->user[0]))
-                                            @if(\Carbon\Carbon::now() >
-                                                    \Carbon\Carbon::parse($e->user[0]->pivot->start_date)
-                                                &&
-                                                \Carbon\Carbon::now() <
-                                                    \Carbon\Carbon::parse($e->user[0]->pivot->end_date))
-                                                <i class='fas fa-check'></i>
-                                            @else
-                                                <i class='far fa-times-circle'></i>
-                                            @endif
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if( !empty($e->user[0]))
-                                            <a href="{{route('admin_executive_edit', $e->user[0]->pivot->id)}}"
-                                               title="Edit Executive Assignment for {{$e->user[0]->name}} ">
+                                            <a href="{{route('admin_executive_edit', $e->user_exec_role[0]->pivot->id)}}"
+                                               title="Edit Executive Assignment for {{$e->name}} ">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                        @else
-                                            <i>not filled</i>
-                                        @endif
                                     </td>
                                     <td>
-                                        @if( !empty($e->user[0]))
-                                            {{\Carbon\Carbon::parse($e->user[0]->pivot->start_date)->format('F j, Y')}}
-                                        @endif
+                                        {{\Carbon\Carbon::parse($e->user_exec_role[0]->pivot->start_date)->format('F j, Y')}}
                                     </td>
                                     <td>
-                                        @if( !empty($e->user[0]))
-                                            {{\Carbon\Carbon::parse($e->user[0]->pivot->end_date)->format('F j, Y')}}
-                                        @endif
+                                        {{\Carbon\Carbon::parse($e->user_exec_role[0]->pivot->end_date)->format('F j, Y')}}
                                     </td>
                                 </tr>
                             @empty
@@ -98,7 +76,6 @@
                 <i class="far fa-trash-alt fa-2x"></i>
                 <input class="btn btn-outline-danger" type="submit" value="Delete Selected">
             </div>
-            <div class="col"></div>
         </div>
     </form>
     <h5>

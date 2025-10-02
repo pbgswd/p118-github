@@ -30,7 +30,12 @@ class AdminExecutiveController extends Controller
          * ->with('user')->orderBy('created_at', 'desc')->paginate(20);
                $data['count'] = Executive::count();
         **/
-        $data = Executive::with('user')->get();
+
+        $users = User::whereHas('user_exec_role')->with('user_exec_role')->get();
+
+        $data = [
+          'users' => $users,
+        ];
 
         return view('admin.executives_list', ['data' => $data]);
     }
