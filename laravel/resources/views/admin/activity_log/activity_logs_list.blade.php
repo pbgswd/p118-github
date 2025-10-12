@@ -24,7 +24,7 @@
                 <td>{{$activity->ip_address}}</td>
                 <td>{{$activity->user_agent}}</td>
                 <td>{{$activity->model}}</td>
-                <td>{{ $activity->created_at->format('F j Y H:i:s') }}</td>
+                <td>{{ $activity->created_at->tz(env('APP_TIMEZONE'))->format('F j Y H:i:s') }}</td>
             </tr>
         @empty
             <tr>
