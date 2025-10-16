@@ -117,7 +117,7 @@
             </a>
         </div>
         <div class="col text-center">
-            <a href="http://www.iatse-intl.org/" title="IATSE International" target="_blank">
+            <a href="https://iatse.net/" title="IATSE International" target="_blank">
                 <img src="/storage/public/3qm1aQMeYkDEl30q8gh0iMiyorfRz6sqemdf0Skp.jpg"
                      alt="IATSE International" class="p-1 img-fluid association-img" />
             </a>
