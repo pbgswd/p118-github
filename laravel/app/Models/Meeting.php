@@ -69,7 +69,7 @@ class Meeting extends LiveableModel implements HasAttachment, Searchable
 
     public function getDateAttribute($value)
     {
-        return $this->asDateTime($value)->setTimezone(env('APP_TIMEZONE'));
+        return $this->asDateTime($value)->shiftTimezone(env('APP_TIMEZONE'));
     }
 
     public function getSearchResult(): SearchResult

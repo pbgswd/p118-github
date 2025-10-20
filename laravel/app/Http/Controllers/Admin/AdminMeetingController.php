@@ -153,6 +153,7 @@ class AdminMeetingController extends Controller
     {
         Gate::authorize('update', Meeting::class);
         $meeting->load('user', 'motions', 'attachments');
+
         $meeting->motions->load('user');
         $meeting->time = $meeting->date->format('H:i');
 
