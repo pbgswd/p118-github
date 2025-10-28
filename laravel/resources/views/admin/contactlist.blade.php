@@ -1,22 +1,22 @@
-@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"]. ' post ' .
-    ($data["action"] == 'Edit' ? $data['post']->title : '') ])
+@extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"]. ' Employer Contacts ' .
+    ($data["action"] == 'Edit' ? $data['contactlist']->title : '') ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
     <div class="row my-4">
         <div class="col-12 col-md-3">
             <h4>
-                <a href="{{ route('posts_list') }}">
+                <a href="{{ route('contactlistdata_list') }}">
                     <i class="far fa-arrow-alt-circle-left"></i>
-                    List of posts
+                    bla bla go back
                 </a>
             </h4>
         </div>
         @if ($data['action'] == 'Edit')
             <div class="col-12 col-md-3 text-md-right">
                 <h4>
-                    <a href="{{route('post_show', $data['post']->slug)}}"
-                       title="View {{$data['post']->title}}">
+                    <a href="{{route('post_show', $data['contactlist']->slug)}}"
+                       title="View {{$data['contactlist']->title}}">
                         <i class="fas fa-eye"></i> View on website
                     </a>
                 </h4>
@@ -24,7 +24,7 @@
             @if($data['existing_message'] === false)
                 <div class="col-12 col-md-3 text-md-right">
                     <h4>
-                        <a href="{{route('admin_post_message', $data['post']->slug)}}">
+                        <a href="{{route('admin_post_message', $data['contactlist']->slug)}}">
                             <i class="far fa-envelope-open"></i>
                             Send as a message
                         </a>
@@ -33,7 +33,7 @@
             @endif
             <div class="col-12 col-md-3 text-md-right">
                 <h4>
-                    <a href="{{route('admin_post_feature', $data['post']->slug)}}">
+                    <a href="{{route('admin_post_feature', $data['contactlist']->slug)}}">
                         <i class="far fa-envelope-open"></i>
                         Send to Feature
                     </a>
@@ -51,10 +51,10 @@
             <div class="col-12">
                 <div class="form-group">
                     <input type="text" class="form-control"  placeholder="Title" name="post[title]"
-                           value="{{ old('post.title', $data['post']->title)}}" size="80" required/>
+                           value="{{ old('contactlist.title', $data['contactlist']->title)}}" size="80" required/>
                 </div>
             </div>
-            @include('layouts.admin-select-topics')
+
             <div class="row">
                 <div class="form-group">
                     <div class="col-12 mt-3">
@@ -78,7 +78,7 @@
                             }
                         </script>
                         <script>
-                            var textarea = @json($data['post']->content ?? '');
+                            var textarea = @json($data['contactlist']->content ?? '');
                             var textarea1 = @json($data['textarea1'] ?? '');
                         </script>
                         <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
@@ -91,8 +91,8 @@
             </div>
             <div class="col-12 col-md-5 text-left">
                 <div class="form-group">
-                    {{ select_options($data['access_levels'], old('post.access_level',
-                        $data['post']->access_level), ['name' => 'post[access_level]',
+                    {{ select_options($data['access_levels'], old('contactlist.access_level',
+                        $data['contactlist']->access_level), ['name' => 'post[access_level]',
                         'class' => 'form-control']) }}
                 </div>
             </div>
@@ -107,14 +107,14 @@
                     <label>
                         <input name="post[front_page]" type="hidden" value="0" />
                         <input name="post[front_page]" type="checkbox" value="1"
-                            {{ checked(old('post.front_page',$data['post']->front_page)) }} /> Front Page
+                            {{ checked(old('post.front_page',$data['contactlist']->front_page ?? 0)) }} /> Front Page
                     </label>
                 </div>
                 <div class="p-2">
                     <label>
                         <input name="post[landing_page]" type="hidden" value="0" />
                         <input name="post[landing_page]" type="checkbox" value="1"
-                            {{ checked(old('post.landing_page', $data['post']->landing_page)) }} />
+                            {{ checked(old('post.landing_page', $data['contactlist']->landing_page ?? 0)) }} />
                         Landing Page
                     </label>
                 </div>
@@ -122,7 +122,7 @@
                     <label>
                          <input name="post[live]" type="hidden" value="0" />
                          <input name="post[live]" type="checkbox" value="1"
-                             {{ checked( old('post.live', $data['post']->live)) }} /> Check now to make Live
+                             {{ checked( old('post.live', $data['contactlist']->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>
@@ -140,82 +140,7 @@
                 </div>
             </div>
         </div>
-        @if ($data['action'] == 'Edit')
-            @if(count($data['post']->attachments) > 0)
-                <div class="col-md-12">
 
-                    <div class="table-responsive">
-                        <table class="table table-striped table-sm">
-                            <thead>
-                            <tr>
-                                <th> # </th>
-                                <th> File </th>
-                                <th> Access Level</th>
-                                <th> </th>
-                                <th> Description </th>
-                                <th> Created At </th>
-                                <th> Updated At </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($data['post']->attachments as $pa)
-                                <tr>
-                                    <td>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="attachment[{{$pa->id}}][id]"
-                                                       value="{{$pa->id}}" />
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('attachment_download',
-                                            [$data['post']->getAttachmentFolder(), $pa->id])}}"
-                                            title="Download {{$pa->file_name}}">
-                                            {{$pa->file_name}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ select_options($data['access_levels'],
-                                                old('attachment.access_level', $pa->access_level),
-                                                ['name' => 'attachment['.$pa->id.'][access_level]',
-                                                'class' => 'form-control']) }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a title="edit access_level, description for {{ $pa->file_name }}"
-                                           href="{{ route('admin_attachment_edit', $pa->id) }}">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control"
-                                               placeholder="Add a description for this file"
-                                               name="attachment[{{$pa->id}}][description]"
-                                               value="{{ old('attachments.description', $pa->description)}}"
-                                               size="40"/>
-                                    </td>
-                                    <td>
-                                        {{$pa->created_at}}
-                                    </td>
-                                    <td>
-                                        {{$pa->updated_at}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                            <tr>
-                                <td colspan="7">
-                                    <i class="far fa-trash-alt"></i>
-                                    Select checkbox to delete a file
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            @endif
-        @endif
         <div class="row m-0 mt-5 mb-5 p-0 pb-0">
             <div class="col text-left">
                 <i class="fas fa-edit fa-2x"></i>
@@ -224,19 +149,8 @@
     </form>
             @if ($data['action'] == 'Edit')
                  <div class="col text-right">
-                     <form name="delete" method="POST" action="{{route('post_destroy')}}">
-                         {!! csrf_field() !!}
-                         {!! method_field('DELETE') !!}
-                        <i class="far fa-trash-alt fa-2x"></i>
-                        <input type="hidden" name="id[]" value="{{ $data['post']->id }}">
-                        <input class="btn btn-outline-danger" type="submit" value="Delete">
-                    </form>
+
                  </div>
-            @endif
-            @if ( $data['action'] == 'Edit')
-                <div class="row mt-5 mb-3 pt-2 text-left"> &nbsp;
-                    Post added by {{$data['post']->user->name}}
-                </div>
             @endif
     </div>
 @endsection

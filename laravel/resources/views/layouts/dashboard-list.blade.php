@@ -1,4 +1,3 @@
-
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('hello') }}">
@@ -138,6 +137,12 @@
                     <a class="nav-link" href="{{ route('admin_carousel_list') }}">
                         <span data-feather="file"></span>
                         Carousel Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contactlist_list') }}">
+                        <span data-feather="file"></span>
+                        Employer Contacts
                     </a>
                 </li>
                 <li class="nav-item">

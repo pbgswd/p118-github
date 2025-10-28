@@ -267,6 +267,28 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::delete('/topic/delete', 'destroy')->name('topic_destroy');
     });
 
+    Route::controller(CNS\Admin\AdminContactlistController::class)->group(function () {
+        Route::get('/contactlist', 'index')->name('contactlist_list');
+        Route::get('/contactlist/create', 'create')->name('contactlist_create');
+        Route::post('/contactlist/create', 'store');
+        Route::get('/contactlist/{any_contact}/edit', 'edit')->name('contactlist_edit');
+        Route::post('/contactlist/{any_contact}/edit', 'update');
+        //Route::delete('/contactlist/delete', 'destroy')->name('topic_destroy');
+    });
+
+    Route::controller(CNS\Admin\AdminContactlistdataController::class)->group(function () {
+        Route::get('/contactlistdata', 'index')->name('contactlistdata_list');
+        Route::get('/contactlistdata/create', 'create')->name('contactlistdata_create');
+        Route::post('/contactlistdata/create', 'store');
+        Route::get('/contactlistdata/{any_contactlistdata}/edit', 'edit')->name('contactlistdata_edit');
+        Route::post('/contactlistdata/{any_contact}/edit', 'update');
+        Route::delete('/contactlistdata/delete', 'destroy')->name('contactlistdata_destroy');
+    });
+
+
+
+
+
     Route::controller(CNS\Admin\AdminUserController::class)->group(function () {
         Route::get('/users', 'index')->name('users_list');
         Route::get('/users/banned', 'banned')->name('admin_users_list_banned');
