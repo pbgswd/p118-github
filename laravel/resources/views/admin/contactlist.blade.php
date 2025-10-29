@@ -74,7 +74,7 @@
         {{$cld['notes']}} <br /><br />
         Access Level: {{$cld['access_level']}} <br />
         Live? {{$cld['live'] == 1 ? 'yes' : 'no'}}; updated at:{{$cld['updated_at']}}
-        <a href="{{$cld['id']}}" class="btn btn-primary">Edit {{$cld['name']}}</a>
+        <a href="{{route('contactlistdata_edit',$cld['id'])}}" class="btn btn-primary">Edit {{$cld['name']}}</a>
         <br />
 
     @endforeach

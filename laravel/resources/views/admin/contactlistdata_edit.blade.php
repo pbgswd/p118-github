@@ -1,5 +1,5 @@
 @extends('layouts.dashboard',  ['title_icon' => ' <i class="fas fa-edit"></i>', 'title' => $data["action"]. ' Employer Contacts ' .
-    ($data["action"] == 'Edit' ? $data['cldata']->title : '') ])
+    ($data["action"] == 'Edit' ? $data['cld']->title : '') ])
 @section('content')
     @include('admin.admin_partials.admin_tinymce')
 <div class="container">
@@ -15,8 +15,8 @@
         @if ($data['action'] == 'Edit')
             <div class="col-12 col-md-3 text-md-right">
                 <h4>
-                    <a href="{{route('post_show', $data['cldata']->id)}}"
-                       title="View {{$data['cldata']->title}}">
+                    <a href="#{{$data['cld']->id}}"
+                       title="View {{$data['cld']->title}}">
                         <i class="fas fa-eye"></i> View on website
                     </a>
                 </h4>
@@ -194,7 +194,7 @@
                             }
                         </script>
                         <script>
-                            var textarea = @json($data['cldata']->notes ?? '');
+                            var textarea = @json($data['cld']->notes ?? '');
                             var textarea1 = @json($data['textarea1'] ?? '');
                         </script>
                         <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>
@@ -208,7 +208,7 @@
             <div class="col-12 col-md-5 text-left">
                 <div class="form-group">
                     {{ select_options($data['access_levels'], old('contactlist.access_level',
-                        $data['cldata']->access_level), ['name' => 'contactlist[access_level]',
+                        $data['cld']->access_level), ['name' => 'contactlist[access_level]',
                         'class' => 'form-control']) }}
                 </div>
             </div>
@@ -222,7 +222,7 @@
                     <label>
                          <input name="contactlist[live]" type="hidden" value="0" />
                          <input name="contactlist[live]" type="checkbox" value="1"
-                             {{ checked( old('post.live', $data['cldata']->live)) }} /> Check now to make Live
+                             {{ checked( old('cld.live', $data['cld']->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
                 </div>

@@ -12,18 +12,19 @@ class Contactlistdata extends Model
     protected $table = 'contactlistdata';
 
     protected $fillable = [
-        'name',
-        'addr1',
-        'addr2',
+        'title',
+        'street1',
+        'street2',
         'city',
         'province',
-        'country',
         'postal_code',
-        'website',
+        'country',
+        'phone',
         'email',
-        'contact',
+        'website',
         'notes',
-        'live',
         'access_level',
+        'live',
+        'contact',
     ];
 }

@@ -81,8 +81,8 @@ class AdminContactlistController extends Controller
     {
 
 
-
         $contactlist->fill($request->validated()['contactlist']);
+        //dd($contactlist);
         $contactlist->save();
 
         Session::flash('success', 'You have updated the Employer Contact Information Page');

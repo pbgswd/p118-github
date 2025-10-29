@@ -25,7 +25,9 @@
     </div>
     <form method="post" name="post" action="{{url()->current()}}" enctype="multipart/form-data"
           class="needs-validation" novalidate>
+
         {!! csrf_field() !!}
+            <input type="hidden" name="_method" value="{{ $data['action'] == 'Edit' ? 'PUT' : 'POST' }}">
         <div class="row">
             <div class="col-12 mt-2">
                 <h4>Title</h4>
@@ -60,7 +62,7 @@
                             }
                         </script>
                         <script>
-                            var textarea = @json($data['textarea']->content ?? '');
+                            var textarea = @json($data['contactlist']->content ?? '');
                             var textarea1 = @json($data['textarea1'] ?? '');
                         </script>
                         <script type="module" src="{{mix('js/admin/ckeditor5/ck_main_admin.js')}}"></script>

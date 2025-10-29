@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Contactlist;
 use App\Models\Contactlistdata;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AdminContactlistdataController extends Controller
 {
@@ -21,7 +22,7 @@ class AdminContactlistdataController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         $cldata = new Contactlistdata;
 
@@ -40,7 +41,7 @@ class AdminContactlistdataController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -54,9 +55,17 @@ class AdminContactlistdataController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Contactlistdata $contactlistdata)
+    public function edit(Contactlistdata $any_contactlistdata): View
     {
-        //
+
+        $data = [
+            'action' => 'Edit',
+            'cld' => $any_contactlistdata,
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
+            'model_name' => 'contactlistdata',
+        ];
+
+        return view('admin.contactlistdata_edit', ['data' => $data]);
     }
 
     /**
@@ -64,7 +73,7 @@ class AdminContactlistdataController extends Controller
      */
     public function update(Request $request, Contactlistdata $contactlistdata)
     {
-        //
+        dd($request->all());
     }
 
     /**
