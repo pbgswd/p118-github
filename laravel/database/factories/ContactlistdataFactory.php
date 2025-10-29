@@ -28,6 +28,7 @@ class ContactlistdataFactory extends Factory
             'website' => fake()->url,
             'email' => fake()->email,
             'contact' => fake()->name,
+            'phone' => fake()->phoneNumber,
             'notes' => fake()->text(200),
             'access_level' => 'members',
             'live' => 1,

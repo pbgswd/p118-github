@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\AccessLevelConstants;
 use App\Http\Controllers\Controller;
 use App\Models\Contactlist;
 use App\Models\Contactlistdata;
@@ -22,7 +23,16 @@ class AdminContactlistdataController extends Controller
      */
     public function create()
     {
-        //
+        $cldata = new Contactlistdata;
+
+        $data = [
+            'action' => 'Create',
+            'cldata' => $cldata,
+            'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
+            'model_name' => 'contactlistdata',
+        ];
+
+        return view('admin.contactlistdata_edit', ['data' => $data]);
     }
 
     /**

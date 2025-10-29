@@ -23,7 +23,7 @@ class ContactlistFactory extends Factory
     {
         return [
             'title' => "Employer Contact List",
-            'content' => "use this list for several reasons, worksafe, t4, policy, lists etc",
+            'content' => "use this list for several reasons, worksafe, t4, policy, lists etc " . fake()->text(200),
             'live' => 1,
             'access_level' => 'members',
         ];

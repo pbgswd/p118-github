@@ -13,9 +13,19 @@ class Contactlist extends Model
 
     protected $fillable = [
         'title',
-        'content',
-        'live',
+        'street1',
+        'street2',
+        'city',
+        'province',
+        'postal_code',
+        'country',
+        'phone',
+        'email',
+        'website',
+        'notes',
         'access_level',
+        'live',
+        'contact',
     ];
 
 }
