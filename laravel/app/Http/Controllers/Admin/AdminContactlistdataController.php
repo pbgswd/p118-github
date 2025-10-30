@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Constants\AccessLevelConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Contactlistdata\DestroyContactlistdataRequest;
+use App\Http\Requests\Contactlistdata\StoreContactlistdataRequest;
 use App\Http\Requests\Contactlistdata\UpdateContactlistdataRequest;
 use App\Models\Contactlistdata;
 use Illuminate\Http\RedirectResponse;
@@ -32,7 +33,7 @@ class AdminContactlistdataController extends Controller
 
         $data = [
             'action' => 'Create',
-            'cldata' => $cldata,
+            'cld' => $cldata,
             'access_levels' => array_combine(AccessLevelConstants::getConstants(), AccessLevelConstants::getConstants()),
             'model_name' => 'contactlistdata',
         ];
@@ -43,9 +44,14 @@ class AdminContactlistdataController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreContactlistdataRequest $request)
     {
-        dd($request->all());
+        $contactlistdata = new Contactlistdata($request->input('cld'));
+        $contactlistdata->save();
+
+        Session::flash('success', 'You have saved the contact list entry.');
+
+        return redirect()->route('contactlistdata_edit', [$contactlistdata->id]);
     }
 
     /**

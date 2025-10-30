@@ -159,18 +159,6 @@
                 </div>
             </div>
         </div>
-        <div class="row my-2">
-            <div class="form-group">
-                <div class="col-sm-12 col-md-8">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Postal Code</span>
-                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                               placeholder="Postal Code" name="cld[postal_code]"
-                               value="{{ $data['cld']['postal_code'] ?? ''}}" size="40" required/>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
                 <div class="form-group">
                     <div class="col-12 mt-3">
