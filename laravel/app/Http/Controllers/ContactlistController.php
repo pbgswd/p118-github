@@ -16,9 +16,11 @@ class ContactlistController extends Controller
         $contactlist = Contactlist::all();
         $contactlistdata = Contactlistdata::all();
         $data = [
-            'contactlist' => $contactlist,
+            'contactlist' => $contactlist[0],
             'contactlistdata' => $contactlistdata,
             ];
+
+
 
         return view('employer_list', ['data' => $data]);
 
