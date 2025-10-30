@@ -164,6 +164,9 @@ Route::middleware('web', 'auth')->group(function () {
     Route::post('/search', [CNS\LocalSearchController::class, 'index'])->name('search');
 });
 
+Route::controller(CNS\ContactlistController::class)->group(function () {
+    Route::get('/contactlist', 'index')->name('contactlist_list_public');
+});
 /**
  * ADMIN SECTION
  */
