@@ -9,7 +9,6 @@ use App\Http\Requests\Contactlistdata\StoreContactlistdataRequest;
 use App\Http\Requests\Contactlistdata\UpdateContactlistdataRequest;
 use App\Models\Contactlistdata;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;

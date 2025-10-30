@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Constants\AccessLevelConstants;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Contactlist\StoreContactlistRequest;
 use App\Http\Requests\Contactlist\UpdateContactlistRequest;
 use App\Models\Contactlist;
 use App\Models\Contactlistdata;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -44,18 +44,11 @@ class AdminContactlistController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreContactlistRequest $request)
     {
         dd(__METHOD__);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contactlist $contactlist)
-    {
-        dd(__METHOD__);
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -79,10 +72,7 @@ class AdminContactlistController extends Controller
      */
     public function update(UpdateContactlistRequest $request, Contactlist $any_contactlist): RedirectResponse
     {
-
-
         $any_contactlist->fill($request->validated()['contactlist']);
-        //dd($contactlist);
         $any_contactlist->save();
 
         Session::flash('success', 'You have updated the Employer Contact Information Page');

@@ -11,7 +11,7 @@ class StoreContactlistRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreContactlistRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'contactlist.title' => 'required|max:255',
+            'contactlist.content' => 'required',
+            'contactlist.access_level' => 'required',
+            'contactlist.live' => 'boolean',
         ];
     }
 }
