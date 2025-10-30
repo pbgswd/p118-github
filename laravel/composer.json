@@ -34,12 +34,12 @@
         "unicodeveloper/laravel-password": "^1.0"
     },
     "require-dev": {
+        "fakerphp/faker": "^1.24",
+        "jasonmccreary/laravel-test-assertions": "^2.5",
+        "laravel-shift/factory-generator": "dev-master",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3",
-        "fakerphp/faker": "^1.23",
-        "jasonmccreary/laravel-test-assertions": "^2.5",
-        "laravel-shift/factory-generator": "dev-master"
+        "phpunit/phpunit": "^11.5.3"
     },
     "config": {
         "optimize-autoloader": true,
