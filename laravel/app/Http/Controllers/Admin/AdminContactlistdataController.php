@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Constants\AccessLevelConstants;
 use App\Http\Controllers\Controller;
-use App\Models\Contactlist;
+use App\Http\Requests\Contactlistdata\DestroyContactlistdataRequest;
+use App\Http\Requests\Contactlistdata\UpdateContactlistdataRequest;
 use App\Models\Contactlistdata;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AdminContactlistdataController extends Controller
@@ -45,14 +49,6 @@ class AdminContactlistdataController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Contactlistdata $contactlistdata)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Contactlistdata $any_contactlistdata): View
@@ -71,16 +67,29 @@ class AdminContactlistdataController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contactlistdata $contactlistdata)
+    public function update(UpdateContactlistdataRequest $request, Contactlistdata $any_contactlistdata): RedirectResponse
     {
-        dd($request->all());
+        $any_contactlistdata->fill($request->cld);
+        $any_contactlistdata->save();
+        Session::flash('success', 'You have edited the contact list entry.');
+
+        return redirect()->route('contactlistdata_edit', [$any_contactlistdata->id]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Contactlistdata $contactlistdata)
+    public function destroy(DestroyContactlistdataRequest $request): RedirectResponse
     {
-        //
+        Contactlistdata::withoutGlobalScopes()
+            ->find($request->id)
+            ->each(function (Contactlistdata $contactlistdata) {
+                $contactlistdata->delete();
+            });
+
+        Session::flash('success', 'You have deleted '.count($request->id).' '.
+            Str::plural('entry', count($request->id)).'.');
+
+        return redirect()->route('contactlist_list');
     }
 }

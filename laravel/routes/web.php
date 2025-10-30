@@ -271,8 +271,8 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/contactlist', 'index')->name('contactlist_list');
         Route::get('/contactlist/create', 'create')->name('contactlist_create');
         Route::post('/contactlist/create', 'store');
-        Route::get('/contactlist/edit', 'edit')->name('contactlist_edit');
-        Route::post('/contactlist/edit', 'update');
+        Route::get('/contactlist/{any_contactlist}/edit', 'edit')->name('contactlist_edit');
+        Route::post('/contactlist/{any_contactlist}/edit', 'update');
         //Route::delete('/contactlist/delete', 'destroy')->name('topic_destroy');
     });
 
@@ -281,7 +281,7 @@ Route::prefix('admin')->middleware(['role:super-admin|office|committee|writer'])
         Route::get('/contactlistdata/create', 'create')->name('contactlistdata_create');
         Route::post('/contactlistdata/create', 'store');
         Route::get('/contactlistdata/{any_contactlistdata}/edit', 'edit')->name('contactlistdata_edit');
-        Route::post('/contactlistdata/{any_contact}/edit', 'update');
+        Route::post('/contactlistdata/{any_contactlistdata}/edit', 'update');
         Route::delete('/contactlistdata/delete', 'destroy')->name('contactlistdata_destroy');
     });
 

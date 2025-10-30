@@ -77,13 +77,13 @@ class AdminContactlistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateContactlistRequest $request, Contactlist $contactlist): RedirectResponse
+    public function update(UpdateContactlistRequest $request, Contactlist $any_contactlist): RedirectResponse
     {
 
 
-        $contactlist->fill($request->validated()['contactlist']);
+        $any_contactlist->fill($request->validated()['contactlist']);
         //dd($contactlist);
-        $contactlist->save();
+        $any_contactlist->save();
 
         Session::flash('success', 'You have updated the Employer Contact Information Page');
 

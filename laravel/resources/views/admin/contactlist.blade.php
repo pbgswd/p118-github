@@ -6,7 +6,7 @@
     <div class="row my-4">
         <div class="col-12 col-md-6">
             <h4> edit form page
-                <a href="{{ route('contactlist_edit') }}">
+                <a href="{{ route('contactlist_edit', $data['contactlist']->id) }}">
                     <i class="far fa-arrow-alt-circle-left"></i>
                     go to edit page
                 </a>
@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                {{$data['contactlist']->content}}
+                {!! $data['contactlist']->content !!}
             </div>
         </div>
         <div class="row mt-3 mb-2 pb-2 pt-2">
@@ -64,14 +64,13 @@
        <h4> {{$cld['name']}}</h4>
         {{$cld['addr1']}}
         {{$cld['addr2']}} <br />
-        {{$cld['city']}}
-        {{$cld['province']}} {{$cld['country']}} {{$cld['postal_code']}} <br />
+        {{$cld['city']}} {{$cld['province']}} {{$cld['country']}} {{$cld['postal_code']}} <br />
         <a href="{{$cld['website']}}" title="{{$cld['name']}}" target="_blank">{{$cld['website']}}</a> <br />
         {{$cld['email']}} <br />
         Contact: {{$cld['contact']}} <br />
         Phone: {{$cld['phone']}} <br />
         Info: <br />
-        {{$cld['notes']}} <br /><br />
+        {!! $cld['notes'] !!} <br /><br />
         Access Level: {{$cld['access_level']}} <br />
         Live? {{$cld['live'] == 1 ? 'yes' : 'no'}}; updated at:{{$cld['updated_at']}}
         <a href="{{route('contactlistdata_edit',$cld['id'])}}" class="btn btn-primary">Edit {{$cld['name']}}</a>

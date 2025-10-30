@@ -12,7 +12,7 @@ class Contactlistdata extends Model
     protected $table = 'contactlistdata';
 
     protected $fillable = [
-        'title',
+        'name',
         'street1',
         'street2',
         'city',

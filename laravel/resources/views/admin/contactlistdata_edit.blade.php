@@ -180,7 +180,7 @@
                         <div class="col-12 mb-4">
                             <div class=" col editor-container editor-container_classic-editor" id="editor-container">
                                 <div class="editor-container__editor">
-                                <textarea name="contactlist[content]" id="textarea" placeholder="Content" class="form-control text-black">
+                                <textarea name="cld[notes]" id="textarea" placeholder="Content" class="form-control text-black">
                                 </textarea>
                                 </div>
                             </div>
@@ -207,8 +207,8 @@
             </div>
             <div class="col-12 col-md-5 text-left">
                 <div class="form-group">
-                    {{ select_options($data['access_levels'], old('contactlist.access_level',
-                        $data['cld']->access_level), ['name' => 'contactlist[access_level]',
+                    {{ select_options($data['access_levels'], old('cld.access_level',
+                        $data['cld']->access_level), ['name' => 'cld[access_level]',
                         'class' => 'form-control']) }}
                 </div>
             </div>
@@ -220,8 +220,8 @@
             <div class="col-12 col-md-6">
                 <div class="p-2">
                     <label>
-                         <input name="contactlist[live]" type="hidden" value="0" />
-                         <input name="contactlist[live]" type="checkbox" value="1"
+                         <input name="cld[live]" type="hidden" value="0" />
+                         <input name="cld[live]" type="checkbox" value="1"
                              {{ checked( old('cld.live', $data['cld']->live)) }} /> Check now to make Live
                     </label>
                     <p>ie.: Draft or Published.</p>
@@ -236,7 +236,15 @@
     </form>
             @if ($data['action'] == 'Edit')
                  <div class="col text-right">
-
+                     <div class="col-sm" style="float:right">
+                         <form name="delete" method="POST" action="{{route('contactlistdata_destroy')}}">
+                             {!! csrf_field() !!}
+                             {!! method_field('DELETE') !!}
+                             <i class="far fa-trash-alt fa-2x"></i>
+                             <input type="hidden" name="id[]" value="{{ $data['cld']->id }}">
+                             <input class="btn btn-outline-danger" type="submit" value="Delete Employment Contact">
+                         </form>
+                     </div>
                  </div>
             @endif
     </div>
