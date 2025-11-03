@@ -13,8 +13,8 @@ class Contactlistdata extends Model
 
     protected $fillable = [
         'name',
-        'street1',
-        'street2',
+        'addr1',
+        'addr2',
         'city',
         'province',
         'postal_code',
