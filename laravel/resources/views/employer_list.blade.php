@@ -27,7 +27,7 @@
                                 <a href="{{$cld['website']}}" title="{{$cld['name']}}" target="_blank">{{$cld['website']}}</a> <br />
                                 <a href="mailto:{{$cld['email']}}">{{$cld['email']}}</a> <br />
                                 Contact: {{$cld['contact']}} <br />
-                                Phone: <a href="tel:{{$cld['phone']}}">{$cld['phone']}}</a> <br />
+                                Phone: <a href="tel:{{$cld['phone']}}">{{$cld['phone']}}</a> <br />
                                 Info: <br />
                                 {!! $cld['notes'] !!} <br /><br />
                                 <br />
