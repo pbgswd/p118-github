@@ -25,16 +25,13 @@
                                 {{$cld['addr2']}} <br />
                                 {{$cld['city']}} {{$cld['province']}} {{$cld['country']}} {{$cld['postal_code']}} <br />
                                 <a href="{{$cld['website']}}" title="{{$cld['name']}}" target="_blank">{{$cld['website']}}</a> <br />
-                                {{$cld['email']}} <br />
+                                <a href="mailto:{{$cld['email']}}">{{$cld['email']}}</a> <br />
                                 Contact: {{$cld['contact']}} <br />
-                                Phone: {{$cld['phone']}} <br />
+                                Phone: <a href="tel:{{$cld['phone']}}">{$cld['phone']}}</a> <br />
                                 Info: <br />
                                 {!! $cld['notes'] !!} <br /><br />
-                                Access Level: {{$cld['access_level']}} <br />
-                                Live? {{$cld['live'] == 1 ? 'yes' : 'no'}}; updated at:{{$cld['updated_at']}}
                                 <br />
                                 </div>
-
                             </td>
                         </tr>
                     @empty
