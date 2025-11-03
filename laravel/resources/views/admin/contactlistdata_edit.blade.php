@@ -15,7 +15,7 @@
         @if ($data['action'] == 'Edit')
             <div class="col-12 col-md-3 text-md-right">
                 <h4>
-                    <a href="#{{$data['cld']->id}}"
+                    <a href="{{route('contactlist_list_public')}}#contact{{$data['cld']->id}}"
                        title="View {{$data['cld']->title}}">
                         <i class="fas fa-eye"></i> View on website
                     </a>

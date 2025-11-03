@@ -14,9 +14,9 @@
         </div>
         <div class="col-12 col-md-6 text-md-right">
             <h4>
-                <a href=""
-                   title="View {{$data['contactlist']->title}}">
-                    <i class="fas fa-eye"></i> View on website not yet implemented
+                <a href="{{route('contactlist_list_public')}}"
+                   title="View {{$data['contactlist']->title}}" target="_blank">
+                    <i class="fas fa-eye"></i> View {{$data['contactlist']->title}} on website
                 </a>
             </h4>
         </div>

@@ -11,15 +11,15 @@
         <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
-                    <tr>
-                        <th> List </th>
-                    </tr>
+
                 </thead>
                 <tbody>
                     @forelse ( $data['contactlistdata'] as $cld )
                         <tr>
-                            <td>
-                                <div class="row p-3">
+                            <td class="pt-6">
+                                <div class="row mx-6"></div>
+                                <a id="contact{{$cld['id']}}" class="mt-6"></a>
+                                <div class="row p-3 mt-6">
                                 <h4> {{$cld['name']}}</h4>
                                 {{$cld['addr1']}}
                                 {{$cld['addr2']}} <br />
