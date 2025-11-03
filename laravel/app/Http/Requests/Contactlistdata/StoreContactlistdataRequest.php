@@ -23,8 +23,8 @@ class StoreContactlistdataRequest extends FormRequest
     {
         return [
             'cld.name' => 'required|max:255',
-            'cld.street1' => 'max:255',
-            'cld.street2' => 'max:255',
+            'cld.addr1' => 'max:255',
+            'cld.addr2' => 'max:255',
             'cld.city' => 'max:255',
             'cld.province' => 'max:255',
             'cld.postal_code' => 'max:16',
