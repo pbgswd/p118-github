@@ -45,7 +45,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Address 1</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="Address 1" name="cld[addr1]"
-                               value="{{ $data['cld']['addr1'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['addr1'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Address 2</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="Address 2" name="cld[addr2]"
-                               value="{{ $data['cld']['addr2'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['addr2'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">City</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="City" name="cld[city]"
-                               value="{{ $data['cld']['city'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['city'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Province or State</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="Prov/state" name="cld[province]"
-                               value="{{ $data['cld']['province'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['province'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="Country eg: Canada, USA" name="cld[country]"
-                               value="{{ $data['cld']['country'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['country'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Postal Code</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="Postal Code" name="cld[postal_code]"
-                               value="{{ $data['cld']['postal_code'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['postal_code'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Website</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="https://www..." name="cld[website]"
-                               value="{{ $data['cld']['website'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['website'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="Email" name="cld[email]"
-                               value="{{ $data['cld']['email'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['email'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Contact Person</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="Contact Person" name="cld[contact]"
-                               value="{{ $data['cld']['contact'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['contact'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                                placeholder="Phone" name="cld[phone]"
-                               value="{{ $data['cld']['phone'] ?? ''}}" size="40" required/>
+                               value="{{ $data['cld']['phone'] ?? ''}}" size="40" />
                     </div>
                 </div>
             </div>
