@@ -52,7 +52,15 @@
                 </div>
             </div>
         </div>
+
+
+<div class="row my-3">
+
+
+</div>
         <div class="row my-3">
+
+
                 <div class="col-sm-12 col-md-6">
                     <h4><i class="fas fa-calendar-alt"></i> Date
                         @if($data['action'] == 'Edit')
@@ -70,24 +78,24 @@
                         data-date-format="yyyy-mm-dd"
                         required />
                 </div>
+
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
                         <h4><i class="far fa-clock"></i> </i> <label for="meetingTime">Meeting Start Time</label>
                             @if($data['action'] == 'Edit')
-                                (Currently: {{$data['meeting']->date->format('g:i:s A')}})
+                                (Currently: {{$data['meeting']->date->format('h:i A')}})
                             @endif
                         </h4>
                         <input
                             type="time"
                             class="form-control"
-                            placeholder="hh:mm:ss am/pm"
+                            placeholder="hh:mm am/pm"
                             id="meetingTime"
                             name="meeting[time]"
-                            value="{{ $data['meeting']->date ? $data['meeting']->date->toTimeString() : '' }}"
-                            size="10"
+                            value="{{ $data['meeting']->time ??'' }}"
+                            size="12"
                             data-provide="timepicker"
-                            data-date-format="hh:mm:ss am/pm"
-                            required />
+                            data-date-format="hh:mm am/pm" required />
                     </div>
                 </div>
         </div>

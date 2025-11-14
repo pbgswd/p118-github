@@ -38,7 +38,7 @@
                                         <i class="far fa-calendar-alt"></i>
                                         {{ $upcoming->date->format('F j Y') }},
                                         <i class="far fa-clock"></i>
-                                        {{$upcoming->date->format('g:i:s A')}},
+                                        {{$upcoming->date->format('g:i A')}},
                                     </a>
                                     @if(Carbon\Carbon::today()->diffInDays($upcoming->date) == 0)
                                         <span class="badge bg-warning text-white">Today</span>
@@ -214,7 +214,7 @@
                                     <td>
                                         {{$a->date->format('F j Y')}}
                                         @if($a->date > now())
-                                            {{$a->date->format('g:i:s A')}}
+                                            {{$a->date->format('g:i A')}}
                                         @endif
                                     </td>
                                 </tr>
