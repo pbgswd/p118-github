@@ -7,17 +7,17 @@
                         <table class="row" style="width: 100%; padding: 10px;">
                             <tr>
                                 <td style="text-align: center; font-size: 0; padding-top:2px;"> <!-- font-size: 0 removes unwanted spacing between inline-block elements -->
-                                    <a href="https://x.com/118IATSE/" title="p118 on X" target="_blank" style="display: inline-block; margin: 0 10px;">
+                                    <a href="https://x.com/118IATSE/" title="{{env('APP_NAME')}} on X" target="_blank" style="display: inline-block; margin: 0 10px;">
                                         <img  src="{{env('APP_URL')}}/email/x-email-icon.png" alt="X Icon" style="max-width: 50%; height: auto;" />
                                     </a>
-                                    <a href="https://www.facebook.com/IATSE118/" title="p118 on FaceBook" target="_blank" style="display: inline-block; margin: 0 10px;">
+                                    <a href="https://www.facebook.com/IATSE118/" title="{{env('APP_NAME')}} on FaceBook" target="_blank" style="display: inline-block; margin: 0 10px;">
                                         <img src="{{env('APP_URL')}}/email/fb-email-icon.png" alt="Facebook Icon" style="max-width: 50%; height: auto;" />
                                     </a>
-                                    <a href="https://www.instagram.com/IATSE118/" title="p118 on InstaGram" target="_blank" style="display: inline-block; margin: 0 10px;">
+                                    <a href="https://www.instagram.com/IATSE118/" title="{{env('APP_NAME')}} on InstaGram" target="_blank" style="display: inline-block; margin: 0 10px;">
                                         <img src="{{env('APP_URL')}}/email/insta-email-icon.png" alt="Instagram Icon" style="max-width: 50%; height: auto;" />
                                     </a>
-                                    <a href="http://p118.dev" title="p118" target="_blank" style="display: inline-block; margin: 0 10px;">
-                                        <img src="{{env('APP_URL')}}/email/118-email-icon.png" alt="p118 Icon" style="max-width: 50%; height: auto;" />
+                                    <a href="{{env('APP_URL')}}" title="p118" target="_blank" style="display: inline-block; margin: 0 10px;">
+                                        <img src="{{env('APP_URL')}}/email/118-email-icon.png" alt="{{env('APP_NAME')}} Icon" style="max-width: 50%; height: auto;" />
                                     </a>
                                 </td>
                             </tr>
