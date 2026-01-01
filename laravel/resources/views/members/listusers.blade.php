@@ -90,14 +90,14 @@
                             @if (!empty($i->user_info->share_phone) )
 
                                 <span class="d-sm-block d-md-none">
-                                    <a href="tel:{{ $i->phone_number->phone_number }}">
+                                    <a href="tel:{{ $i->phone_number->phone_number ?? '' }}">
                                         <i class="fas fa-phone-square"></i>
                                     </a>
                                 </span>
                                 <span class="d-none d-md-block">
                                     <h5 style="white-space: nowrap;">
-                                        <a href="tel:{{ $i->phone_number->phone_number }}">
-                                            <i class="fas fa-phone-square"></i> {{ $i->phone_number->phone_number }}
+                                        <a href="tel:{{ $i->phone_number->phone_number ?? '' }}">
+                                            <i class="fas fa-phone-square"></i> {{ $i->phone_number->phone_number ?? ''}}
                                         </a>
                                     </h5>
                                 </span>
