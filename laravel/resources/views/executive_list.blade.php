@@ -117,7 +117,7 @@
         @endforelse
         </div>
     </div>
-<hr />
+
     <div class="row border border-dark rounded my-3 p-2">
         <div class="col-12 text-center my-3">
             <h1>Local 118 Trustees</h1>
