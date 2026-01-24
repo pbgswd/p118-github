@@ -116,7 +116,7 @@
             <div class="text-center"> No entry</div>
         @endforelse
         </div>
-    </div>
+
 
     <div class="row border border-dark rounded my-3 p-2">
         <div class="col-12 text-center my-3">
