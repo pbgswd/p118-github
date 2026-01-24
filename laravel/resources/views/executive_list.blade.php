@@ -6,7 +6,7 @@
             <h1>Local 118 Executive</h1>
         </div>
         @forelse($data['executive'] as $e)
-            <div class="col-12 col-md-3 p-1">
+            <div class="col-12 col-md-4 p-1">
                 <div class="border border-dark rounded w-100 h-100 p-2 text-center">
                     <h4 class="text-center">
                         {{$e->title}}
