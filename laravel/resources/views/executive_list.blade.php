@@ -41,13 +41,15 @@
            No entry
         @endforelse
     </div>
+
     @auth
     <div class="row border border-dark rounded mt-2 p-2 my-3">
         <div class="col-12 text-center my-3">
-            <h1>Health & Welfare Administrators</h1>
+            <h1>Health & Welfare</h1>
         </div>
         @forelse($data['health'] as $h)
             @forelse($h->current_executive_user as $hw)
+                <div class="col-12-hidden col-md-4"></div>
                 <div class="col-12 col-md-4 p-1">
                     <div class="border border-dark rounded w-100 h-100 p-2 text-center">
                         <h4 class="text-center">
@@ -72,14 +74,50 @@
                         </h4>
                     </div>
                 </div>
+                <div class="col-md-4"></div>
             @empty
                 <div class="text-center"> No entry</div>
             @endforelse
         @empty
             <div class="text-center"> No entry</div>
         @endforelse
-    </div>
+        @forelse($data['health_trustees'] as $ht)
+            @forelse($ht->current_executive_user as $htu)
+                <div class="col-12 col-md-3 p-1">
+                    <div class="border border-dark rounded w-100 h-100 p-2 text-center">
+                        <h4 class="text-center">
+                            {{$ht->title}}
+                        </h4>
+                        <h4>
+                            @auth
+                                @if(true === $htu->user_info->show_profile)
+                                    <a title="{{ $htu->name }}" href="{{ route('member', $htu->id) }}">
+                                        {{$htu->name ?? ''}}
+                                    </a>
+                                @else
+                                    {{$htu->name ?? ''}}
+                                @endif
+                                <a href="mailto:{{$ht->email}}">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            @endauth
+                            @guest
+                                {{$htu->name ?? ''}}
+                            @endguest
+                        </h4>
+                    </div>
 
+                </div>
+
+            @empty
+                <div class="text-center"> No entry</div>
+            @endforelse
+        @empty
+            <div class="text-center"> No entry</div>
+        @endforelse
+        </div>
+    </div>
+<hr />
     <div class="row border border-dark rounded my-3 p-2">
         <div class="col-12 text-center my-3">
             <h1>Local 118 Trustees</h1>
