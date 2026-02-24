@@ -5,13 +5,19 @@
         <div class="col-12 text-center my-3">
             <h1>Local 118 Executive</h1>
         </div>
+        <div class="col-12-hidden col-md-4"></div>
         @forelse($data['executive'] as $e)
-            <div class="col-12 col-md-4 p-1">
+            <div class="col-12 {{ match($e->title) {
+                'President' => 'col-12-hidden col-md-4',
+                'Vice President', 'Business Agent' => 'col-12-hidden col-md-6',
+                default => 'col-md-4'
+            } }} mb-2">
                 <div class="border border-dark rounded w-100 h-100 p-2 text-center">
                     <h4 class="text-center">
                         {{$e->title}}
                     </h4>
                     @forelse($e->current_executive_user as $exec)
+
                         <div class="col mt-3 text-center align-self-center">
                             <h4>
                                 @auth
