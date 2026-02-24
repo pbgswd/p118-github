@@ -160,7 +160,7 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{{route('contact')}}" title="Contact Us">Contact Us</a></li>
-                    <li><a class="dropdown-item" href="{{route('page_show','payroll-trust-account')}}"
+                    <li><a class="dropdown-item" href="{{route('page_show','payroll-service-board')}}"
                            title="Payroll">Payroll</a></li>
                 </ul>
             </div>
